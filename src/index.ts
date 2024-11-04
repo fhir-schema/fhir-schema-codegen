@@ -1,3 +1,5 @@
+import exp from "constants";
+
 export interface TypeRef {
     name: string;
     package: string;
@@ -8,7 +10,7 @@ export interface Element {
     array?: boolean;
 }
 
-export interface Schema {
+export interface ClassSchema {
     kind: 'resource' | 'complex-type' | 'primitive';
     name: string;
     package: string;
@@ -16,8 +18,15 @@ export interface Schema {
     elements: { [key: string]: Element };
 }
 
+export interface FHIRSchema  {
+}
 
-
-export function test(label: string): string {
-    return label;
+export function schema2classes(schema: FHIRSchema): ClassSchema {
+    let res: ClassSchema = {
+        kind: 'resource',
+        name: '',
+        package: '',
+        elements: {}
+    };
+    return res;
 }
