@@ -9,7 +9,7 @@ const fschema: cg.FHIRSchema = {
     }
 }
 
-const cschema: cg.ClassSchema = {
+const cschema: cg.TypeSchema = {
     kind: 'resource',
     name: 'Patient',
     package: 'fhir.r4',
