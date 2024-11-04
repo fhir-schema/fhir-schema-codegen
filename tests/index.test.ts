@@ -1,7 +1,15 @@
 import * as cg from '../src/index';
 
+const fschema: cg.FHIRSchema = {
+    kind: 'resource',
+    name: 'Patient',
+    package: 'fhir.r4',
+    elements: {
+        name: { type: 'NumanName' }
+    }
+}
 
-const schema: cg.ClassSchema = {
+const cschema: cg.ClassSchema = {
     kind: 'resource',
     name: 'Patient',
     package: 'fhir.r4',
@@ -22,8 +30,8 @@ const schema: cg.ClassSchema = {
 
 describe('sch2class', () => {
     it('...', () => {
-        const result = cg.schema2classes(schema);
+        const result = cg.schema2classes(fschema);
         expect(result).toBe({});
-        console.log(schema);
+        console.log(cschema);
     });
 }); 

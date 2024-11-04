@@ -5,9 +5,15 @@ export interface TypeRef {
     package: string;
 }
 
-export interface Element {
+export interface ClassElement {
     type: TypeRef;
     array?: boolean;
+}
+
+export interface Element {
+    type: string;
+    array?: boolean;
+    elements?: { [key: string]: Element };
 }
 
 export interface ClassSchema {
@@ -15,17 +21,27 @@ export interface ClassSchema {
     name: string;
     package: string;
     base?: TypeRef;
+    nestedClasses?: ClassSchema[];
+    elements?: { [key: string]: ClassElement };
+}
+
+export interface FHIRSchema {
+    kind: 'resource' | 'complex-type' | 'primitive';
+    name: string;
+    package: string;
     elements: { [key: string]: Element };
 }
 
-export interface FHIRSchema  {
+function nestedClasses(schema: FHIRSchema): ClassSchema[] {
+    return [];
 }
 
 export function schema2classes(schema: FHIRSchema): ClassSchema {
     let res: ClassSchema = {
-        kind: 'resource',
-        name: '',
-        package: '',
+        kind: schema.kind,
+        name: schema.name,
+        package: schema.package,
+        nestedClasses: nestedClasses(schema),
         elements: {}
     };
     return res;
