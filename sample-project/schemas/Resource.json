@@ -1,0 +1,43 @@
+{
+    "url": "http://hl7.org/fhir/StructureDefinition/Resource",
+    "package-meta": {
+        "name": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "path": "/tmp/lw-fhir-schema-repository/hl7.fhir.r4.core#4.0.1"
+    },
+    "id": "Resource",
+    "name": "Resource",
+    "kind": "resource",
+    "type": "Resource",
+    "version": "4.0.1",
+    "elements": {
+        "id": {
+            "min": 0,
+            "max": 1,
+            "summary": true,
+            "type": "string"
+        },
+        "meta": {
+            "min": 0,
+            "max": 1,
+            "summary": true,
+            "type": "Meta"
+        },
+        "implicitRules": {
+            "min": 0,
+            "max": 1,
+            "summary": true,
+            "modifier": true,
+            "type": "uri"
+        },
+        "language": {
+            "binding": {
+                "valueSet": "http://hl7.org/fhir/ValueSet/languages",
+                "strength": "preferred"
+            },
+            "min": 0,
+            "max": 1,
+            "type": "code"
+        }
+    }
+}
