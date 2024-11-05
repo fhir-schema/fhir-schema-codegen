@@ -2,6 +2,7 @@ import * as cg from '../src/loader';
 
 const patientFHIRSchema: cg.FHIRSchema = {
     url: 'http://hl7.org/fhir/StructureDefinition/Patient',
+    base: "http://hl7.org/fhir/StructureDefinition/DomainResource",
     'package-meta': {
         name: 'fhir.r4',
         version: '4.0.1',
@@ -11,7 +12,7 @@ const patientFHIRSchema: cg.FHIRSchema = {
     kind: 'resource',
     elements: {
       active: { type: 'boolean', scalar: true },
-      name: { type: 'HumanName', array: true },
+      name:   { type: 'HumanName', array: true },
       gender: { 
         type: 'code', 
         scalar: true,
@@ -72,6 +73,10 @@ const patientTypeSchema: cg.TypeSchema = {
     kind: "resource",
     name: {
       name: "Patient",
+      package: "fhir.r4"
+    },
+    base: {
+      name: "DomainResource",
       package: "fhir.r4"
     },
     nestedTypes: [
@@ -148,15 +153,26 @@ const patientTypeSchema: cg.TypeSchema = {
       managingOrganization: {
         type: { name: "Reference", package: "fhir.r4" }
       }
-
     }
  };
 ;
+
 
 describe('sch2class', () => {
     it('...', () => {
         const result = cg.convert(patientFHIRSchema);
         console.log(JSON.stringify(result, null, 2));
         expect(result).toEqual(patientTypeSchema);
+    });
+}); 
+
+
+describe('loader', () => {
+    it('...', async () => {
+        let loader = new cg.SchemaLoader();
+        await loader.loadFromURL("https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz");
+
+        let primitives = loader.primitives();
+        console.log(primitives.length);
     });
 }); 

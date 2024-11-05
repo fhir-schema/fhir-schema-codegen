@@ -65,6 +65,9 @@ function extractNestedTypes(root: FHIRSchema, elements: { [key: string]: FHIRSch
     }); 
 }
 
+function extractBase(url: string): string {
+    return url.split('/').pop()!;
+}
 
 export function convert(schema: FHIRSchema): TypeSchema {
     let res: TypeSchema = {
@@ -73,11 +76,47 @@ export function convert(schema: FHIRSchema): TypeSchema {
         nestedTypes: extractNestedTypes(schema, schema.elements),
         fields: extractFields(schema, schema.elements)
     };
+    if (schema.base) {
+        res.base = { name: extractBase(schema.base), package: schema['package-meta'].name };
+    }
     return res;
 }
 
 export class SchemaLoader {
-    constructor(private path: string) {}
+    private fhirSchemas: FHIRSchema[] = [];
+    constructor() {}
+
+    async loadFromURL(url: string) {
+        return new Promise(async (resolve, reject) => {
+            let response = await fetch(url);
+
+            let text: string;
+            if (url.endsWith('.gz')) {
+                const buffer = await response.arrayBuffer();
+                const decompressed = await new Response(
+                    new Blob([buffer]).stream().pipeThrough(new DecompressionStream('gzip'))
+                ).text();
+                text = decompressed;
+            } else {
+                text = await response.text();
+            }
+            let schemas = text.split('\n')
+                .filter(line => line.trim().length > 0)
+                .map(line => JSON.parse(line));
+            console.log(schemas.length);
+            resolve(true);
+        });
+    }
+
+    async loadFromFile(path: string) {
+        return new Promise(async (resolve, reject) => {
+        });
+    }
+
+    async loadFromDirectory(path: string) {
+        return new Promise(async (resolve, reject) => {
+        });
+    }
 
     resources(): TypeSchema[] {
         return []
@@ -97,18 +136,4 @@ export class SchemaLoader {
     valueSets(): TypeSchema[] {
         return []
     }
-}
-
-let loader = new SchemaLoader('./tmp/schemas');
-
-for(let schema of loader.complexTypes()) {
-    console.log(schema.name);
-}
-
-for(let schema of loader.resources()) {
-    console.log(schema.name);
-}
-
-for(let schema of loader.profiles()) {
-    console.log(schema.name);
 }
