@@ -1,18 +1,18 @@
 export interface TypeRef {
     name: string;
     package: string;
+    parent?: string;
 }
 
-export interface ClassElement {
+export interface ClassField {
     type: TypeRef;
     array?: boolean;
 }
 
 export interface TypeSchema {
-    kind: 'resource' | 'complex-type' | 'primitive';
-    name: string;
-    package: string;
+    kind: 'resource' | 'complex-type' | 'primitive' | 'nested';
+    name: TypeRef;
     base?: TypeRef;
-    nestedClasses?: TypeSchema[];
-    elements?: { [key: string]: ClassElement };
+    nestedTypes?: TypeSchema[];
+    fields?: { [key: string]: ClassField };
 }
