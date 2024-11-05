@@ -1,6 +1,4 @@
 {
-    "abstract": false,
-    "fqn": "hl7.fhir.r4.core#4.0.1/HumanName",
     "url": "http://hl7.org/fhir/StructureDefinition/HumanName",
     "package-meta": {
         "name": "hl7.fhir.r4.core",
@@ -8,312 +6,52 @@
         "path": "/tmp/lw-fhir-schema-repository/hl7.fhir.r4.core#4.0.1"
     },
     "id": "HumanName",
+    "base": "http://hl7.org/fhir/StructureDefinition/Element",
     "name": "HumanName",
-    "extension": [
-        {
-            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
-            "valueCode": "normative"
-        },
-        {
-            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
-            "valueCode": "4.0.0"
-        }
-    ],
-    "status": "active",
     "kind": "complex-type",
-    "fhirVersion": "4.0.1",
     "type": "HumanName",
-    "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Element",
-    "publisher": "HL7 FHIR Standard",
-    "mapping": [
-        {
-            "identity": "v2",
-            "uri": "http://hl7.org/v2",
-            "name": "HL7 v2 Mapping"
-        },
-        {
-            "identity": "rim",
-            "uri": "http://hl7.org/v3",
-            "name": "RIM Mapping"
-        },
-        {
-            "identity": "servd",
-            "uri": "http://www.omg.org/spec/ServD/1.0/",
-            "name": "ServD"
-        }
-    ],
     "version": "4.0.1",
-    "meta": {
-        "lastUpdated": "2019-11-01T09:29:23.356+11:00"
-    },
-    "date": "2019-11-01T09:29:23+11:00",
-    "differential": {
-        "element": [
-            {
-                "min": 0,
-                "max": "*",
-                "path": "HumanName",
-                "id": "HumanName",
-                "short": "Name of a human - parts and usage",
-                "extension": [
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
-                        "valueCode": "normative"
-                    },
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
-                        "valueCode": "4.0.0"
-                    }
-                ],
-                "definition": "A human's name with the ability to identify parts and usage.",
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "EN (actually, PN)"
-                    },
-                    {
-                        "identity": "servd",
-                        "map": "ProviderName"
-                    }
-                ],
-                "comment": "Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts might or might not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely."
+    "elements": {
+        "use": {
+            "binding": {
+                "valueSet": "http://hl7.org/fhir/ValueSet/name-use",
+                "strength": "required"
             },
-            {
-                "binding": {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-                            "valueString": "NameUse"
-                        }
-                    ],
-                    "strength": "required",
-                    "description": "The use of a human name.",
-                    "valueSet": "http://hl7.org/fhir/ValueSet/name-use|4.0.1"
-                },
-                "min": 0,
-                "requirements": "Allows the appropriate name for a particular context of use to be selected from among a set of names.",
-                "max": "1",
-                "path": "HumanName.use",
-                "id": "HumanName.use",
-                "short": "usual | official | temp | nickname | anonymous | old | maiden",
-                "definition": "Identifies the purpose for this name.",
-                "type": [
-                    {
-                        "code": "code"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN.7, but often indicated by which field contains the name"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "unique(./use)"
-                    },
-                    {
-                        "identity": "servd",
-                        "map": "./NamePurpose"
-                    }
-                ],
-                "isModifierReason": "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old name etc.for a current/permanent one",
-                "comment": "Applications can assume that a name is current unless it explicitly says that it is temporary or old.",
-                "isModifier": true
-            },
-            {
-                "min": 0,
-                "requirements": "A renderable, unencoded form.",
-                "max": "1",
-                "path": "HumanName.text",
-                "id": "HumanName.text",
-                "short": "Text representation of the full name",
-                "definition": "Specifies the entire name as it should be displayed e.g. on an application UI. This may be provided instead of or as well as the specific parts.",
-                "type": [
-                    {
-                        "code": "string"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "implied by XPN.11"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "./formatted"
-                    }
-                ],
-                "comment": "Can provide both a text representation and parts. Applications updating a name SHALL ensure that when both text and parts are present,  no content is included in the text that isn't found in a part."
-            },
-            {
-                "min": 0,
-                "max": "1",
-                "path": "HumanName.family",
-                "id": "HumanName.family",
-                "short": "Family name (often called 'Surname')",
-                "definition": "The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.",
-                "type": [
-                    {
-                        "code": "string"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN.1/FN.1"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "./part[partType = FAM]"
-                    },
-                    {
-                        "identity": "servd",
-                        "map": "./FamilyName"
-                    }
-                ],
-                "alias": [
-                    "surname"
-                ],
-                "comment": "Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures)."
-            },
-            {
-                "min": 0,
-                "max": "*",
-                "path": "HumanName.given",
-                "id": "HumanName.given",
-                "short": "Given names (not always 'first'). Includes middle names",
-                "definition": "Given name.",
-                "type": [
-                    {
-                        "code": "string"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN.2 + XPN.3"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "./part[partType = GIV]"
-                    },
-                    {
-                        "identity": "servd",
-                        "map": "./GivenNames"
-                    }
-                ],
-                "alias": [
-                    "first name",
-                    "middle name"
-                ],
-                "comment": "If only initials are recorded, they may be used in place of the full name parts. Initials may be separated into multiple given names but often aren't due to paractical limitations.  This element is not called \"first name\" since given names do not always come first.",
-                "orderMeaning": "Given Names appear in the correct order for presenting the name"
-            },
-            {
-                "min": 0,
-                "max": "*",
-                "path": "HumanName.prefix",
-                "id": "HumanName.prefix",
-                "short": "Parts that come before the name",
-                "definition": "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the start of the name.",
-                "type": [
-                    {
-                        "code": "string"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN.5"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "./part[partType = PFX]"
-                    },
-                    {
-                        "identity": "servd",
-                        "map": "./TitleCode"
-                    }
-                ],
-                "orderMeaning": "Prefixes appear in the correct order for presenting the name"
-            },
-            {
-                "min": 0,
-                "max": "*",
-                "path": "HumanName.suffix",
-                "id": "HumanName.suffix",
-                "short": "Parts that come after the name",
-                "definition": "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the end of the name.",
-                "type": [
-                    {
-                        "code": "string"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN/4"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "./part[partType = SFX]"
-                    }
-                ],
-                "orderMeaning": "Suffixes appear in the correct order for presenting the name"
-            },
-            {
-                "min": 0,
-                "requirements": "Allows names to be placed in historical context.",
-                "max": "1",
-                "path": "HumanName.period",
-                "id": "HumanName.period",
-                "short": "Time period when name was/is in use",
-                "definition": "Indicates the period of time when this name was valid for the named person.",
-                "type": [
-                    {
-                        "code": "Period"
-                    }
-                ],
-                "isSummary": true,
-                "mapping": [
-                    {
-                        "identity": "v2",
-                        "map": "XPN.13 + XPN.14"
-                    },
-                    {
-                        "identity": "rim",
-                        "map": "./usablePeriod[type=\"IVL<TS>\"]"
-                    },
-                    {
-                        "identity": "servd",
-                        "map": "./StartDate and ./EndDate"
-                    }
-                ]
-            }
-        ]
-    },
-    "resourceType": "StructureDefinition",
-    "contact": [
-        {
-            "telecom": [
-                {
-                    "system": "url",
-                    "value": "http://hl7.org/fhir"
-                }
-            ]
+            "scalar": true,
+            "summary": true,
+            "modifier": true,
+            "type": "code"
+        },
+        "text": {
+            "scalar": true,
+            "summary": true,
+            "type": "string"
+        },
+        "family": {
+            "scalar": true,
+            "summary": true,
+            "type": "string"
+        },
+        "given": {
+            "summary": true,
+            "type": "string",
+            "array": true
+        },
+        "prefix": {
+            "summary": true,
+            "type": "string",
+            "array": true
+        },
+        "suffix": {
+            "summary": true,
+            "type": "string",
+            "array": true
+        },
+        "period": {
+            "scalar": true,
+            "summary": true,
+            "type": "Period"
         }
-    ],
-    "derivation": "specialization",
-    "description": "Base StructureDefinition for HumanName Type: A human's name with the ability to identify parts and usage.",
-    "purpose": "Need to be able to record names, along with notes about their use."
+    },
+    "derivation": "specialization"
 }
