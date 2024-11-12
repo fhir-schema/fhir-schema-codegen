@@ -20,7 +20,35 @@ export async function generate(options: TypeScriptGeneratorOptions) {
     await gen.dir(options.outputDir, async ()=>{
         for(let schema of loader.resources()) {
             await gen.file(schema.name.name + ".ts", () => {
-                gen.curlyBlock(['export', 'interface', schema.name.name], ()=> {
+                if (schema.allDependencies) {
+                    for (let dep of schema.allDependencies.filter(d => d.type == 'complex-type')) {
+                        gen.lineSM('import', '{', dep.name, '}', 'from', '"./types.ts"');
+                    }
+
+                    for (let dep of schema.allDependencies.filter(d => d.type == 'resource')) {
+                        gen.lineSM('import', '{', dep.name, '}', 'from', '"./'+ dep.name + '.ts"');
+                    }
+                }
+
+                gen.line();
+
+                if(schema.nestedTypes) {
+                    for(let subtype of schema.nestedTypes ) {
+                        let base = subtype.base ? 'extends ' + subtype.base.name : '';
+                        gen.curlyBlock(['export', 'interface', subtype.name.name, base], () => {
+                            if (subtype.fields) {
+                                for (const [fieldName, field] of Object.entries(subtype.fields)) {
+                                    let type = field.type.name;
+                                    gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
+                                }
+                            }
+                        });
+                    }
+                }
+                gen.line();
+
+                let base = schema.base ?  'extends ' + schema.base.name : '';
+                gen.curlyBlock(['export', 'interface', schema.name.name, base], ()=> {
                     if (schema.fields) {
                         for (const [fieldName, field] of Object.entries(schema.fields)) {
                             let type = field.type.name;
