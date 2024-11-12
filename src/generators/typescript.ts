@@ -18,6 +18,21 @@ export async function generate(options: TypeScriptGeneratorOptions) {
     await fs.mkdir(options.outputDir, { recursive: true });
     
     await gen.dir(options.outputDir, async ()=>{
+        await gen.file('types.ts', () => {
+            for(let schema of loader.complexTypes()) {
+                let base = schema.base ?  'extends ' + schema.base.name : '';
+                gen.curlyBlock(['export', 'interface', schema.name.name, base], ()=> {
+                    if (schema.fields) {
+                        for (const [fieldName, field] of Object.entries(schema.fields)) {
+                            let type = field.type.name;
+                            gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
+                        }
+                    }
+                });
+                gen.line();
+            }
+        });
+
         for(let schema of loader.resources()) {
             await gen.file(schema.name.name + ".ts", () => {
                 if (schema.allDependencies) {

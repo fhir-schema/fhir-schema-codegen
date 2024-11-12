@@ -214,7 +214,7 @@ export class SchemaLoader {
     complexTypes(): TypeSchema[] {
         return this.canonicalResources['FHIRSchema'].map((res: FHIRSchema)=>{
             return convert(res);
-        }).filter((res: TypeSchema)=> res.kind === 'complex-type' );
+        }).filter((res: TypeSchema)=> res.kind === 'complex-type' && res.base?.name !== 'Extension' );
     }
     extensions(): TypeSchema[] {
         return []
