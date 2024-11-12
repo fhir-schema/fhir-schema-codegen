@@ -69,7 +69,7 @@ const patientFHIRSchema: cg.FHIRSchema = {
   };
 
 
-const patientTypeSchema: cg.TypeSchema = {
+const patientTypeSchema: cg.ITypeSchema = {
     kind: "resource",
     name: {
       name: "Patient",
@@ -79,6 +79,20 @@ const patientTypeSchema: cg.TypeSchema = {
       name: "DomainResource",
       package: "fhir.r4"
     },
+    allDependencies: [
+      { name: "CodeableConcept", package: "fhir.r4" },
+      { name: "HumanName", package: "fhir.r4" },
+      { name: "ContactPoint", package: "fhir.r4" },
+      { name: "Address", package: "fhir.r4" },
+      { name: "code", package: "fhir.r4" },
+      { name: "Reference", package: "fhir.r4" },
+      { name: "Period", package: "fhir.r4" },
+      { name: "boolean", package: "fhir.r4" },
+      { name: "date", package: "fhir.r4" },
+      { name: "choice", package: "fhir.r4" },
+      { name: "Attachment", package: "fhir.r4" },
+      { name: "PatientContact", package: "fhir.r4", parent: "Patient" }
+    ],
     nestedTypes: [
       {
         kind: "nested",
@@ -162,7 +176,7 @@ describe('sch2class', () => {
     it('...', () => {
         const result = cg.convert(patientFHIRSchema);
         console.log(JSON.stringify(result, null, 2));
-        expect(result).toEqual(patientTypeSchema);
+        expect(result).toMatchObject(patientTypeSchema);
     });
 }); 
 

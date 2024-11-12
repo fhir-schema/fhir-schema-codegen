@@ -1,11 +1,12 @@
 import type { FHIRSchema, FHIRSchemaElement } from "./fhirschema";
-import type { ClassField, TypeRef, TypeSchema } from "./typeschema";
+import type { ClassField, TypeRef } from "./typeschema";
+import { TypeSchema } from "./typeschema";
 
 export { type FHIRSchema } from "./fhirschema";
-export { type TypeSchema } from "./typeschema";
+export { type ITypeSchema } from "./typeschema";
 
 
-function convertField(root: FHIRSchema, fieldName: string, field: FHIRSchemaElement): ClassField {
+function convertField(root: FHIRSchema, typeschema: TypeSchema, fieldName: string, field: FHIRSchemaElement): ClassField {
     let typename;
     let parent = null;
     if(field.elements) {
@@ -18,6 +19,9 @@ function convertField(root: FHIRSchema, fieldName: string, field: FHIRSchemaElem
         name: typename,
         package: root['package-meta'].name
     };
+    let typekey = typeref.package + "/" + typeref.name;
+
+    typeschema.ensureDep(typeref);
 
     if(parent) {
         typeref.parent = parent;
@@ -32,9 +36,9 @@ function convertField(root: FHIRSchema, fieldName: string, field: FHIRSchemaElem
     return result;
 }
 
-function extractFields(root: FHIRSchema, elements: { [key: string]: FHIRSchemaElement }): { [key: string]: ClassField } {
+function extractFields(root: FHIRSchema, typeschema: TypeSchema, elements: { [key: string]: FHIRSchemaElement }): { [key: string]: ClassField } {
     return Object.entries(elements).reduce((acc: { [key: string]: ClassField }, [key, field]) => {
-        acc[key] = convertField(root, key, field);
+        acc[key] = convertField(root, typeschema, key, field);
         return acc;
     }, {});
 }
@@ -43,22 +47,23 @@ function capCase(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-function extractNestedTypes(root: FHIRSchema, elements: { [key: string]: FHIRSchemaElement}): TypeSchema[] {
+function extractNestedTypes(root: FHIRSchema, typeschema: TypeSchema, elements: { [key: string]: FHIRSchemaElement}): TypeSchema[] {
     return Object.entries(elements).flatMap(([key, field]) => {
         if (field.elements) {
-            return [{
+            let schema = new TypeSchema({
                 kind: 'nested',
-                name: { 
-                    name: root.name + capCase(key), 
+                name: {
+                    name: root.name + capCase(key),
                     package: root['package-meta'].name,
                     parent: root.name
                 },
                 base: {
                     name: "BackboneElement",
                     package: root['package-meta'].name
-                },
-                fields: extractFields(root, field.elements)
-            }];
+                }
+            });
+            schema.fields = extractFields(root, typeschema, field.elements);
+            return [schema];
         } else {
             return [];
         }
@@ -70,12 +75,14 @@ function extractBase(url: string): string {
 }
 
 export function convert(schema: FHIRSchema): TypeSchema {
-    let res: TypeSchema = {
+    let res: TypeSchema = new TypeSchema({
         kind: schema.kind,
-        name: { name: schema.name, package: schema['package-meta'].name },
-        nestedTypes: extractNestedTypes(schema, schema.elements),
-        fields: extractFields(schema, schema.elements)
-    };
+        name: { name: schema.name, package: schema['package-meta'].name }
+    });
+
+    res.nestedTypes = extractNestedTypes(schema, res, schema.elements);
+    res.fields = extractFields(schema, res, schema.elements);
+
     if (schema.base) {
         res.base = { name: extractBase(schema.base), package: schema['package-meta'].name };
     }
