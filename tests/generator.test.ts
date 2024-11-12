@@ -22,11 +22,12 @@ describe('Generator', () => {
     test('should generate a simple file', async () => {
         await g.file("test.ts", () => {
             g.line('import * as fs from "fs";')
+            // g.line('import', '*', 'as', 'fs', 'from', '"fs"', ";")
+            // g.lineSM('import', '*', 'as', 'fs', 'from', '"fs"')
             g.line()
             g.curlyBlock(["class", "User"], () => {
                 g.line("name", ":", "string");
                 g.line("age", ":", "string");
-
             })
         });
 

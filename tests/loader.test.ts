@@ -46,7 +46,6 @@ const patientFHIRSchema: cg.FHIRSchema = {
           name: { type: 'HumanName', scalar: true },
           telecom: { type: 'ContactPoint', array: true },
           address: { type: 'Address', scalar: true },
-          gender: { type: 'code', scalar: true },
           organization: { 
             type: 'Reference',
             scalar: true,
@@ -69,29 +68,28 @@ const patientFHIRSchema: cg.FHIRSchema = {
   };
 
 
+
 const patientTypeSchema: cg.ITypeSchema = {
     kind: "resource",
-    name: {
-      name: "Patient",
-      package: "fhir.r4"
-    },
-    base: {
-      name: "DomainResource",
-      package: "fhir.r4"
-    },
+    name: { name: "Patient", package: "fhir.r4" },
+    base: { name: "DomainResource", package: "fhir.r4" },
     allDependencies: [
-      { name: "CodeableConcept", package: "fhir.r4" },
-      { name: "HumanName", package: "fhir.r4" },
-      { name: "ContactPoint", package: "fhir.r4" },
-      { name: "Address", package: "fhir.r4" },
-      { name: "code", package: "fhir.r4" },
-      { name: "Reference", package: "fhir.r4" },
-      { name: "Period", package: "fhir.r4" },
-      { name: "boolean", package: "fhir.r4" },
-      { name: "date", package: "fhir.r4" },
-      { name: "choice", package: "fhir.r4" },
-      { name: "Attachment", package: "fhir.r4" },
-      { name: "PatientContact", package: "fhir.r4", parent: "Patient" }
+      { name: "DomainResource", package: "fhir.r4", type: "resource"},
+      { name: "BackboneElement", package: "fhir.r4", type: "complex-type" },
+      { name: "CodeableConcept", package: "fhir.r4", type: "complex-type" },
+      { name: "HumanName", package: "fhir.r4", type: "complex-type" },
+      { name: "ContactPoint", package: "fhir.r4", type: "complex-type" },
+      { name: "Address", package: "fhir.r4", type: "complex-type" },
+      { name: "Reference", package: "fhir.r4", type: "complex-type" },
+      { name: "Period", package: "fhir.r4", type: "complex-type" },
+      { name: "boolean", package: "fhir.r4", type: "primitive-type" },
+      { name: "code", package: "fhir.r4", type: "primitive-type" },
+      { name: "administrative-gender", package: "fhir.r4", url: "http://hl7.org/fhir/ValueSet/administrative-gender", type: "valueset" },
+      { name: "date", package: "fhir.r4", type: "primitive-type" },
+      { name: "choice", package: "fhir.r4", type: "primitive-type" },
+      { name: "marital-status", package: "fhir.r4", type: "valueset", url: "http://hl7.org/fhir/ValueSet/marital-status" },
+      { name: "Attachment", package: "fhir.r4", type: "complex-type" },
+      { name: "PatientContact", package: "fhir.r4", parent: "Patient", type: "nested" }
     ],
     nestedTypes: [
       {
@@ -120,9 +118,6 @@ const patientTypeSchema: cg.ITypeSchema = {
           address: {
             type: { name: "Address", package: "fhir.r4" }
           },
-          gender: {
-            type: { name: "code", package: "fhir.r4" }
-          },
           organization: {
             type: { name: "Reference", package: "fhir.r4" }
           },
@@ -141,7 +136,15 @@ const patientTypeSchema: cg.ITypeSchema = {
         array: true
       },
       gender: {
-        type: { name: "code", package: "fhir.r4" }
+        type: { name: "code", package: "fhir.r4" },
+        binding: {
+          valueSet: { 
+            name: 'administrative-gender', 
+            package: "fhir.r4",
+            url: 'http://hl7.org/fhir/ValueSet/administrative-gender'
+          },
+          strength: 'required'
+        }
       },
       birthDate: {
         type: { name: "date", package: "fhir.r4" }
@@ -157,7 +160,7 @@ const patientTypeSchema: cg.ITypeSchema = {
         array: true
       },
       contact: {
-        type: { name: "PatientContact", package: "fhir.r4", parent: "Patient" },
+        type: { name: "PatientContact", package: "fhir.r4", parent: "Patient", type: "nested" },
         array: true
       },
       generalPractitioner: {
@@ -175,7 +178,7 @@ const patientTypeSchema: cg.ITypeSchema = {
 describe('sch2class', () => {
     it('...', () => {
         const result = cg.convert(patientFHIRSchema);
-        console.log(JSON.stringify(result, null, 2));
+        // console.log(JSON.stringify(result, null, 2));
         expect(result).toMatchObject(patientTypeSchema);
     });
 }); 
@@ -187,6 +190,11 @@ describe('loader', () => {
         await loader.loadFromURL("https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz");
 
         let primitives = loader.primitives();
-        console.log(primitives.length);
+        loader.complexTypes()
+        expect(loader.resources().length).toEqual(148);
+        loader.resources().forEach((res)=>{
+            // console.log(res.name.name);
+        });
+        loader.valueSets()
     });
 }); 

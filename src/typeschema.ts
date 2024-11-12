@@ -1,16 +1,24 @@
+export type TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'unknown';
+
 export interface TypeRef {
     name: string;
     package: string;
     parent?: string;
+    type?: TypeRefType;
+    url?: string;
 }
 
 export interface ClassField {
     type: TypeRef;
     array?: boolean;
+    binding?: {
+        valueSet?: TypeRef;
+        strength?: 'required' | 'extensible' | 'preferred' | 'example';
+    };
 }
 
 export interface ITypeSchema {
-    kind: 'resource' | 'complex-type' | 'primitive' | 'nested';
+    kind: TypeRefType;
     name: TypeRef;
     base?: TypeRef;
     fields?: { [key: string]: ClassField };
@@ -21,7 +29,7 @@ export interface ITypeSchema {
 export class TypeSchema  {
     private depsIdx: { [key: string]: boolean };
 
-    kind: 'resource' | 'complex-type' | 'primitive' | 'nested';
+    kind: TypeRefType;
     name: TypeRef;
     base?: TypeRef;
     allDependencies?: TypeRef[];

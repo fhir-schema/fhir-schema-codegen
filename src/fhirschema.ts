@@ -25,6 +25,8 @@ export interface FHIRSchemaElement {
     }
 }
 
+export type FHIRSchemaKind = 'resource' | 'complex-type' | 'primitive-type' | 'logical';
+
 
 export interface FHIRSchema {
     url: string;
@@ -43,7 +45,7 @@ export interface FHIRSchema {
     id?: string;
     base?: string;
     name: string;
-    kind: 'resource' | 'complex-type' | 'primitive';
+    kind: FHIRSchemaKind;
     derivation?: 'specialization' | 'constraint';
     type?: string;
     version?: string;
