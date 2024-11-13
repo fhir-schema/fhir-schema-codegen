@@ -8,6 +8,36 @@ export interface TypeScriptGeneratorOptions {
     outputDir: string;
 }
 
+const typeMap :  Record<string, string> = {
+    'boolean': 'boolean',
+    'integer': 'number',
+    'decimal': 'number',
+    'positiveInt': 'number',
+    'number': 'number'
+    // 'instant': 'date',
+    // 'dateTime': 'date',
+    // 'date': 'date'
+}
+
+function generateType(gen: Generator, schema: TypeSchema) {
+    let base = schema.base ? 'extends ' + schema.base.name : '';
+    gen.curlyBlock(['export', 'interface', schema.name.name, base], () => {
+        if (schema.fields) {
+            for (const [fieldName, field] of Object.entries(schema.fields)) {
+                let tp = field.type.name;
+                let type = tp;
+                if(field.type.type == 'primitive-type'  ) {
+                    type = typeMap[tp] || 'string'
+                } else {
+                    type = field.type.name;
+                }
+                gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
+            }
+        }
+    });
+    gen.line();
+}
+
 export async function generate(options: TypeScriptGeneratorOptions) {
     let loader = new SchemaLoader();
     await loader.loadFromURL("https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz");
@@ -20,16 +50,7 @@ export async function generate(options: TypeScriptGeneratorOptions) {
     await gen.dir(options.outputDir, async ()=>{
         await gen.file('types.ts', () => {
             for(let schema of loader.complexTypes()) {
-                let base = schema.base ?  'extends ' + schema.base.name : '';
-                gen.curlyBlock(['export', 'interface', schema.name.name, base], ()=> {
-                    if (schema.fields) {
-                        for (const [fieldName, field] of Object.entries(schema.fields)) {
-                            let type = field.type.name;
-                            gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
-                        }
-                    }
-                });
-                gen.line();
+                generateType(gen, schema);
             }
         });
 
@@ -49,28 +70,12 @@ export async function generate(options: TypeScriptGeneratorOptions) {
 
                 if(schema.nestedTypes) {
                     for(let subtype of schema.nestedTypes ) {
-                        let base = subtype.base ? 'extends ' + subtype.base.name : '';
-                        gen.curlyBlock(['export', 'interface', subtype.name.name, base], () => {
-                            if (subtype.fields) {
-                                for (const [fieldName, field] of Object.entries(subtype.fields)) {
-                                    let type = field.type.name;
-                                    gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
-                                }
-                            }
-                        });
+                        generateType(gen, subtype);
                     }
                 }
                 gen.line();
 
-                let base = schema.base ?  'extends ' + schema.base.name : '';
-                gen.curlyBlock(['export', 'interface', schema.name.name, base], ()=> {
-                    if (schema.fields) {
-                        for (const [fieldName, field] of Object.entries(schema.fields)) {
-                            let type = field.type.name;
-                            gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
-                        }
-                    }
-                });
+                generateType(gen, schema);
             });
         }
     });

@@ -12,21 +12,47 @@ function isUpcased(str: string): boolean {
     return str && str[0] === str[0].toUpperCase() || false;
 }   
 
-function convertField(root: FHIRSchema, typeschema: TypeSchema, fieldName: string, field: FHIRSchemaElement): ClassField {
+function convertField(root: FHIRSchema, typeschema: TypeSchema, path: string[], fieldName: string, field: FHIRSchemaElement): ClassField {
     let typename;
     let parent = null;
     let type: TypeRefType | undefined = undefined;
     if(field.elements) {
-        typename = root.name + capCase(fieldName);
+        typename = path.join('')
         parent = root.name;
         type = 'nested';
-    } else {
+
+        let nestedschema = new TypeSchema({
+            kind: 'nested',
+            name: {
+                name: typename,
+                package: root['package-meta'].name,
+                parent: root.name
+            },
+            base: {
+                name: "BackboneElement",
+                package: root['package-meta'].name
+            }
+        });
+        typeschema.ensureDep({ name: "BackboneElement", package: root['package-meta'].name, type: 'complex-type' });
+        nestedschema.fields = extractFields(root, typeschema, [...path], field.elements);
+        typeschema.nestedTypes ||= [];
+        typeschema.nestedTypes.push(nestedschema);
+    } else if(field.type) {
         typename = field.type;
         if(isUpcased(typename)) { 
             type = 'complex-type';
         } else {
             type = 'primitive-type';
         }
+    } else if(field.elementReference) {
+        type = 'nested'
+        const path = [...field.elementReference.slice(1)].filter(part => part !== 'elements');
+        typename = typeschema.name.name + path.map(capCase).join('');
+        // console.log('elementReference', typename);
+    } else {
+        // console.log('Unknown field type: ' + JSON.stringify(field))
+        typename = 'unknown';
+        type = 'unknown';
     }
     let typeref: TypeRef = {
         name: typename,
@@ -65,40 +91,18 @@ function convertField(root: FHIRSchema, typeschema: TypeSchema, fieldName: strin
     return result;
 }
 
-function extractFields(root: FHIRSchema, typeschema: TypeSchema, elements: { [key: string]: FHIRSchemaElement }): { [key: string]: ClassField } {
+function extractFields(root: FHIRSchema, typeschema: TypeSchema, path: string[], elements: { [key: string]: FHIRSchemaElement }): { [key: string]: ClassField } {
     return Object.entries(elements).reduce((acc: { [key: string]: ClassField }, [key, field]) => {
-        acc[key] = convertField(root, typeschema, key, field);
+        let newPath = [...path, capCase(key)];
+        acc[key] = convertField(root, typeschema, newPath, key, field);
         return acc;
     }, {});
 }
 
 function capCase(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function extractNestedTypes(root: FHIRSchema, typeschema: TypeSchema, elements: { [key: string]: FHIRSchemaElement}): TypeSchema[] {
-    return Object.entries(elements).flatMap(([key, field]) => {
-        if (field.elements) {
-            let schema = new TypeSchema({
-                kind: 'nested',
-                name: {
-                    name: root.name + capCase(key),
-                    package: root['package-meta'].name,
-                    parent: root.name
-                },
-                base: {
-                    name: "BackboneElement",
-                    package: root['package-meta'].name
-                }
-            });
-            typeschema.ensureDep({ name: "BackboneElement", package: root['package-meta'].name, type: 'complex-type' });
-            schema.fields = extractFields(root, typeschema, field.elements);
-            return [schema];
-        } else {
-            return [];
-        }
-    }); 
-}
 
 function extractBase(url: string): string {
     return url.split('/').pop()!;
@@ -132,8 +136,7 @@ export function convert(schema: FHIRSchema): TypeSchema {
     }
 
     if(schema.elements) {   
-        res.nestedTypes = extractNestedTypes(schema, res, schema.elements);
-        res.fields = extractFields(schema, res, schema.elements);
+        res.fields = extractFields(schema, res, [schema.name], schema.elements);
     }
 
     return res;

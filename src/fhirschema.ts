@@ -1,7 +1,7 @@
 export interface FHIRSchemaElement {
     scalar?: boolean;
     summary?: boolean;
-    type: string;
+    type?: string;
     array?: boolean;
     modifier?: boolean;
     refers?: string[];
@@ -20,6 +20,7 @@ export interface FHIRSchemaElement {
         [key: string]: FHIRSchemaElement
     };  
     required?: string[];
+    elementReference?: string[];
     elements?: {
         [key: string]: FHIRSchemaElement
     }
@@ -40,7 +41,7 @@ export interface FHIRSchema {
     'package-meta': {
         name: string;
         version: string;
-        path: string;
+        path?: string;
     };
     id?: string;
     base?: string;
