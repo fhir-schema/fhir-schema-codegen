@@ -102,6 +102,65 @@ export class TypeScriptGenerator extends Generator {
 }   
 ```
 
+This will produce something like this:
+
+```ts
+import { CodeableConcept } from "./types.ts";
+import { Reference } from "./types.ts";
+import { HumanName } from "./types.ts";
+import { Address } from "./types.ts";
+import { Identifier } from "./types.ts";
+import { Attachment } from "./types.ts";
+import { BackboneElement } from "./types.ts";
+import { ContactPoint } from "./types.ts";
+import { Period } from "./types.ts";
+import { DomainResource } from "./DomainResource.ts";
+
+export interface PatientLink extends BackboneElement {
+  other : Reference;
+  type : string;
+}
+
+export interface PatientCommunication extends BackboneElement {
+  language : CodeableConcept;
+  preferred? : boolean;
+}
+
+export interface PatientContact extends BackboneElement {
+  address? : Address;
+  gender? : string;
+  name? : HumanName;
+  organization? : Reference;
+  period? : Period;
+  relationship? : CodeableConcept[];
+  telecom? : ContactPoint[];
+}
+
+
+export interface Patient extends DomainResource {
+  active? : boolean;
+  address? : Address[];
+  birthDate? : string;
+  communication? : PatientCommunication[];
+  contact? : PatientContact[];
+  deceasedBoolean? : boolean;
+  deceasedDateTime? : string;
+  gender? : string;
+  generalPractitioner? : Reference[];
+  identifier? : Identifier[];
+  link? : PatientLink[];
+  managingOrganization? : Reference;
+  maritalStatus? : CodeableConcept;
+  multipleBirthBoolean? : boolean;
+  multipleBirthInteger? : number;
+  name? : HumanName[];
+  photo? : Attachment[];
+  telecom? : ContactPoint[];
+}
+
+
+```
+
 
 ## TODO
 
