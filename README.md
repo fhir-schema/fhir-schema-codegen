@@ -1,6 +1,8 @@
 # FHIR Schema Codegen
 
 Library to generate SDK from FHIR Schema.
+This is a very early stage of the library. 
+But it will progress quickly. Join the community - [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema)
 
 ## Usage
 
