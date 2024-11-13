@@ -1,15 +1,16 @@
 import * as fs from 'fs';
 import * as Path from 'path';
-import { SchemaLoader } from './loader';
+import { SchemaLoader, type LoaderOptions } from './loader';
 
-interface GeneratorOptions {
-    outputDir?: string;
+export interface GeneratorOptions {
+    outputDir: string;
+    loaderOptions?: LoaderOptions;
 }
 
 export class Generator {
 
     private opts: GeneratorOptions;
-    private writer: fs.WriteStream | null = null;
+    private fileDescriptor: number | null = null;
     private currentDir: string | null = null;
     filePath?: string;
     identLevel = 0;
@@ -18,36 +19,65 @@ export class Generator {
     constructor(opts: GeneratorOptions) {
         this.opts = opts;
         this.currentDir = opts.outputDir || null;
-        this.loader = new SchemaLoader();
+        this.loader = new SchemaLoader(opts.loaderOptions);
     }
 
-    async dir(path: string, gencontent: () => void) {
+    clear() {
+        if(this.opts.outputDir) {
+            console.log("rm", this.opts.outputDir);
+            return fs.rmSync(this.opts.outputDir, { recursive: true, force: true });
+        }
+    }
+
+    readFile(path: string): string {
+        return fs.readFileSync(Path.join(this.opts.outputDir || '', path), 'utf-8');
+    }
+
+    async init() {
+        await this.loader.load();
+    }
+    
+    generate() {
+    }
+
+    dir(path: string, gencontent: () => void) {
         this.currentDir = Path.join(this.opts.outputDir || '', path);
         if (!fs.existsSync(this.currentDir)) {
             fs.mkdirSync(this.currentDir, { recursive: true });
+            console.log("mkdir", this.currentDir);
         }
-        await gencontent();
+        gencontent();
     }   
 
-    async file(path: string, gencontent: () => void) {
+    file(path: string, gencontent: () => void) {
         this.filePath = Path.join(this.currentDir || '', path);
-        // console.log("writing to", this.filePath);
-        this.writer = fs.createWriteStream(this.filePath);
-        await gencontent();
-        this.writer.end();
-        await new Promise(resolve => this.writer!.end(resolve));
-        // console.log("file written", fs.existsSync(this.filePath));
+        if (!fs.existsSync(Path.dirname(this.filePath))) {
+            fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
+            console.log("mkdir", Path.dirname(this.filePath));
+        }
+        console.log("file", this.filePath);
+        this.fileDescriptor = fs.openSync(this.filePath, 'w');
+        
+        gencontent();
+
+        fs.closeSync(this.fileDescriptor);
+    }
+
+    jsonFile(path: string, content: any) {
+        this.file(path, () => {
+            this.write(JSON.stringify(content, null, 2));
+        });
     }
 
     ensureCurrentFile() {
-        if (!this.writer) {
+        if (!this.fileDescriptor) {
             throw new Error("No current file");
         }
     }
 
-    write(string: string) {
+    write(str: string) {
         this.ensureCurrentFile();
-        this.writer?.write(string);
+        fs.writeSync(this.fileDescriptor as number, str);
     }
 
     writeIdent() {
@@ -91,5 +121,6 @@ export class Generator {
     token(...tokens: string[]) {
         
     }
+
 
 }

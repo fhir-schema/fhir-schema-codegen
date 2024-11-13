@@ -160,9 +160,37 @@ export function convert(schema: FHIRSchema): TypeSchema {
     return res;
 }
 
+export interface LoaderOptions {
+    urls?: string[];
+    files?: string[];
+    dirs?: string[];
+}
+
 export class SchemaLoader {
+    private opts: LoaderOptions;
     private canonicalResources: { [key: string]: any } = {};
-    constructor() {}
+
+    constructor(opts: LoaderOptions = { urls: [], files: [], dirs: [] } ) {
+        this.opts = opts;
+    }
+
+    async load() {
+        if(this.opts.urls) {
+            for(let url of this.opts.urls) {
+                await this.loadFromURL(url);
+            }
+        }
+        if(this.opts.files) {
+            for(let file of this.opts.files) {
+                await this.loadFromFile(file);
+            }
+        }
+        if(this.opts.dirs) {
+            for(let dir of this.opts.dirs) {
+                await this.loadFromDirectory(dir);
+            }
+        }
+    }
 
     loadNDJSONContent(text: string) {
         let lines = text.split('\n')

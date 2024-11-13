@@ -4,37 +4,47 @@ import * as path from 'path';
 
 console.log(__dirname);
 
+
+class TestGenerator extends Generator {
+    generate() {
+        this.jsonFile("package.json", {
+            name: "test",
+            version: "0.0.1"
+        });
+
+
+        this.dir("src", async () => {
+            this.file("User.ts", () => {
+                this.line('import * as fs from "fs";')
+                this.line()
+                this.curlyBlock(["class", "User"], () => {
+                    this.lineSM("name", ":", "string");
+                    this.lineSM("age", ":", "string");
+                })
+            });
+        });
+    }
+}
+
 describe('Generator', () => {
     let g: Generator;
     const testOutputDir = path.join(__dirname, '../tmp/test-output');
 
     beforeEach(() => {
-        if (fs.existsSync(testOutputDir)) {
-            fs.rmSync(testOutputDir, { recursive: true });
-        }
-        fs.mkdirSync(testOutputDir, { recursive: true });
-        g = new Generator({ outputDir: testOutputDir });
+        g = new TestGenerator({ outputDir: testOutputDir });
     });
 
     afterEach(() => {
     });
 
     test('should generate a simple file', async () => {
-        await g.file("test.ts", () => {
-            g.line('import * as fs from "fs";')
-            // g.line('import', '*', 'as', 'fs', 'from', '"fs"', ";")
-            // g.lineSM('import', '*', 'as', 'fs', 'from', '"fs"')
-            g.line()
-            g.curlyBlock(["class", "User"], () => {
-                g.line("name", ":", "string");
-                g.line("age", ":", "string");
-            })
-        });
+        await g.init();
+        g.clear();  
+        g.generate();
 
         expect(fs.existsSync(g.filePath!)).toBe(true);
 
-        const content = fs.readFileSync(g.filePath!, 'utf-8');
-        console.log(content.trim().split('\n'));
+        const content = g.readFile('src/User.ts');
 
         expect(content.trim().split('\n'))
         .toEqual(
@@ -42,10 +52,13 @@ describe('Generator', () => {
                 'import * as fs from "fs";',
                 '',
                 'class User {',
-                '  name : string',
-                '  age : string',
+                '  name : string;',
+                '  age : string;',
                 '}'
+
             ]);
+        
+        expect(g.readFile("package.json")).toEqual(JSON.stringify({ name: "test", version: "0.0.1" }, null, 2));
     });
 
 }); 
