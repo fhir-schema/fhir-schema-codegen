@@ -23,15 +23,19 @@ function generateType(gen: Generator, schema: TypeSchema) {
     let base = schema.base ? 'extends ' + schema.base.name : '';
     gen.curlyBlock(['export', 'interface', schema.name.name, base], () => {
         if (schema.fields) {
-            for (const [fieldName, field] of Object.entries(schema.fields)) {
+            for (const [fieldName, field] of Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]))) {
                 let tp = field.type.name;
                 let type = tp;
+                let fieldSymbol = fieldName;
+                if(!field.required) {
+                    fieldSymbol += '?';
+                }
                 if(field.type.type == 'primitive-type'  ) {
                     type = typeMap[tp] || 'string'
                 } else {
                     type = field.type.name;
                 }
-                gen.lineSM(fieldName, ':', type + (field.array ? '[]' : ''));
+                gen.lineSM(fieldSymbol, ':', type + (field.array ? '[]' : ''));
             }
         }
     });
@@ -48,35 +52,37 @@ export async function generate(options: TypeScriptGeneratorOptions) {
     await fs.mkdir(options.outputDir, { recursive: true });
     
     await gen.dir(options.outputDir, async ()=>{
-        await gen.file('types.ts', () => {
-            for(let schema of loader.complexTypes()) {
-                generateType(gen, schema);
-            }
-        });
-
-        for(let schema of loader.resources()) {
-            await gen.file(schema.name.name + ".ts", () => {
-                if (schema.allDependencies) {
-                    for (let dep of schema.allDependencies.filter(d => d.type == 'complex-type')) {
-                        gen.lineSM('import', '{', dep.name, '}', 'from', '"./types.ts"');
-                    }
-
-                    for (let dep of schema.allDependencies.filter(d => d.type == 'resource')) {
-                        gen.lineSM('import', '{', dep.name, '}', 'from', '"./'+ dep.name + '.ts"');
-                    }
+        gen.dir('src', async () => {
+            await gen.file('types.ts', () => {
+                for (let schema of loader.complexTypes()) {
+                    generateType(gen, schema);
                 }
-
-                gen.line();
-
-                if(schema.nestedTypes) {
-                    for(let subtype of schema.nestedTypes ) {
-                        generateType(gen, subtype);
-                    }
-                }
-                gen.line();
-
-                generateType(gen, schema);
             });
-        }
+
+            for (let schema of loader.resources()) {
+                await gen.file(schema.name.name + ".ts", () => {
+                    if (schema.allDependencies) {
+                        for (let dep of schema.allDependencies.filter(d => d.type == 'complex-type')) {
+                            gen.lineSM('import', '{', dep.name, '}', 'from', '"./types.ts"');
+                        }
+
+                        for (let dep of schema.allDependencies.filter(d => d.type == 'resource')) {
+                            gen.lineSM('import', '{', dep.name, '}', 'from', '"./' + dep.name + '.ts"');
+                        }
+                    }
+
+                    gen.line();
+
+                    if (schema.nestedTypes) {
+                        for (let subtype of schema.nestedTypes) {
+                            generateType(gen, subtype);
+                        }
+                    }
+                    gen.line();
+
+                    generateType(gen, schema);
+                });
+            }
+        })
     });
 }

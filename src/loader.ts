@@ -1,5 +1,5 @@
 import { assert } from "console";
-import type { FHIRSchema, FHIRSchemaElement } from "./fhirschema";
+import type { FHIRSchema, FHIRSchemaBase, FHIRSchemaElement } from "./fhirschema";
 import type { ClassField, TypeRef } from "./typeschema";
 import { TypeRefType, TypeSchema } from "./typeschema";
 import fs from 'fs/promises';
@@ -12,7 +12,14 @@ function isUpcased(str: string): boolean {
     return str && str[0] === str[0].toUpperCase() || false;
 }   
 
-function convertField(root: FHIRSchema, typeschema: TypeSchema, path: string[], fieldName: string, field: FHIRSchemaElement): ClassField {
+function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchema, path: string[], fieldName: string, field: FHIRSchemaElement, node: FHIRSchemaBase): void {
+    if(field.choices) {
+        dest.choices ||= {};
+        dest.choices[fieldName] = {
+            choices: field.choices
+        };
+        return;
+    }
     let typename;
     let parent = null;
     let type: TypeRefType | undefined = undefined;
@@ -34,9 +41,12 @@ function convertField(root: FHIRSchema, typeschema: TypeSchema, path: string[], 
             }
         });
         typeschema.ensureDep({ name: "BackboneElement", package: root['package-meta'].name, type: 'complex-type' });
-        nestedschema.fields = extractFields(root, typeschema, [...path], field.elements);
+        addFields(nestedschema, root, typeschema, [...path], field);
         typeschema.nestedTypes ||= [];
         typeschema.nestedTypes.push(nestedschema);
+    } else if(field.choices) {
+        typename = 'choice'
+        type = 'choice';
     } else if(field.type) {
         typename = field.type;
         if(isUpcased(typename)) { 
@@ -73,6 +83,15 @@ function convertField(root: FHIRSchema, typeschema: TypeSchema, path: string[], 
         result.array = true;
     }
 
+    if(field.choiceOf) {
+        result.choiceOf = field.choiceOf;
+    }
+
+
+    if(node.required && node.required.some(req => req === fieldName)) {
+        result.required = true;
+    }
+
     if(field.binding) {
         let binding = field.binding;
         let vsref: TypeRef = {
@@ -88,21 +107,20 @@ function convertField(root: FHIRSchema, typeschema: TypeSchema, path: string[], 
         typeschema.ensureDep(vsref);
     }
 
-    return result;
+    dest.fields ||= {};
+    dest.fields[fieldName] = result;
 }
 
-function extractFields(root: FHIRSchema, typeschema: TypeSchema, path: string[], elements: { [key: string]: FHIRSchemaElement }): { [key: string]: ClassField } {
-    return Object.entries(elements).reduce((acc: { [key: string]: ClassField }, [key, field]) => {
+function addFields(dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchema, path: string[], node: FHIRSchemaBase): void {
+    Object.entries(node.elements || {}).forEach(([key, field]) => {
         let newPath = [...path, capCase(key)];
-        acc[key] = convertField(root, typeschema, newPath, key, field);
-        return acc;
-    }, {});
+        convertField(dest, root, typeschema, newPath, key, field, node);
+    });
 }
 
 function capCase(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
 
 function extractBase(url: string): string {
     return url.split('/').pop()!;
@@ -136,7 +154,7 @@ export function convert(schema: FHIRSchema): TypeSchema {
     }
 
     if(schema.elements) {   
-        res.fields = extractFields(schema, res, [schema.name], schema.elements);
+        addFields(res, schema, res, [schema.name], schema);
     }
 
     return res;
@@ -209,19 +227,23 @@ export class SchemaLoader {
             return convert(res);
         }).filter((res: TypeSchema)=> res.kind === 'profile' );
     }
+
     primitives(): TypeSchema[] {
         return this.canonicalResources['FHIRSchema'].map((res: FHIRSchema)=>{
             return convert(res);
         }).filter((res: TypeSchema)=> res.kind === 'primitive-type' );
     }
+
     complexTypes(): TypeSchema[] {
         return this.canonicalResources['FHIRSchema'].map((res: FHIRSchema)=>{
             return convert(res);
         }).filter((res: TypeSchema)=> res.kind === 'complex-type' && res.base?.name !== 'Extension' );
     }
+
     extensions(): TypeSchema[] {
         return []
     }
+
     valueSets(): TypeSchema[] {
         return []
     }

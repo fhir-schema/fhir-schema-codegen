@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as Path from 'path';
+import { SchemaLoader } from './loader';
 
 interface GeneratorOptions {
     outputDir?: string;
@@ -12,10 +13,12 @@ export class Generator {
     private currentDir: string | null = null;
     filePath?: string;
     identLevel = 0;
+    loader: SchemaLoader;
 
     constructor(opts: GeneratorOptions) {
         this.opts = opts;
         this.currentDir = opts.outputDir || null;
+        this.loader = new SchemaLoader();
     }
 
     async dir(path: string, gencontent: () => void) {
@@ -35,6 +38,7 @@ export class Generator {
         await new Promise(resolve => this.writer!.end(resolve));
         // console.log("file written", fs.existsSync(this.filePath));
     }
+
     ensureCurrentFile() {
         if (!this.writer) {
             throw new Error("No current file");
@@ -85,6 +89,7 @@ export class Generator {
     }
 
     token(...tokens: string[]) {
+        
     }
 
 }

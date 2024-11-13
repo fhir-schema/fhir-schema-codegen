@@ -1,4 +1,12 @@
-export interface FHIRSchemaElement {
+export interface FHIRSchemaBase {
+    required?: string[];
+    elements?: {
+        [key: string]: FHIRSchemaElement
+    }
+}
+
+export interface FHIRSchemaElement extends FHIRSchemaBase {
+    // TODO: deprecate
     scalar?: boolean;
     summary?: boolean;
     type?: string;
@@ -16,20 +24,16 @@ export interface FHIRSchemaElement {
             expression: string;
         }
     };
-    choices?: {
-        [key: string]: FHIRSchemaElement
-    };  
+    choices?: string[];
+    choiceOf?: string;
     required?: string[];
     elementReference?: string[];
-    elements?: {
-        [key: string]: FHIRSchemaElement
-    }
 }
 
 export type FHIRSchemaKind = 'resource' | 'complex-type' | 'primitive-type' | 'logical';
 
 
-export interface FHIRSchema {
+export interface FHIRSchema extends FHIRSchemaBase {
     url: string;
     constraints?: {
         [key: string]: {
@@ -50,8 +54,4 @@ export interface FHIRSchema {
     derivation?: 'specialization' | 'constraint';
     type?: string;
     version?: string;
-    required?: string[];
-    elements: {
-        [key: string]: FHIRSchemaElement
-    };
 }

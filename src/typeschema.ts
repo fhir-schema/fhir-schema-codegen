@@ -1,4 +1,4 @@
-export type TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'unknown';
+export type TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'choice' | 'unknown';
 
 export interface TypeRef {
     name: string;
@@ -9,19 +9,29 @@ export interface TypeRef {
 }
 
 export interface ClassField {
+    required?: boolean;
     type: TypeRef;
     array?: boolean;
+    choiceOf?: string;
+    choices?: string[];
     binding?: {
         valueSet?: TypeRef;
         strength?: 'required' | 'extensible' | 'preferred' | 'example';
     };
 }
 
+export interface ChoiceField {
+    required?: boolean;
+    choices?: string[];
+}
+
+
 export interface ITypeSchema {
     kind: TypeRefType;
     name: TypeRef;
     base?: TypeRef;
-    fields?: { [key: string]: ClassField };
+    fields?:  { [key: string]: ClassField };
+    choices?: { [key: string]: ChoiceField };
     allDependencies?: TypeRef[];
     nestedTypes?: ITypeSchema[];
 }
@@ -35,6 +45,7 @@ export class TypeSchema  {
     allDependencies?: TypeRef[];
     nestedTypes?: TypeSchema[];
     fields?: { [key: string]: ClassField };
+    choices?: { [key: string]: ChoiceField };
 
     constructor(schema: ITypeSchema) {
         this.depsIdx = {};

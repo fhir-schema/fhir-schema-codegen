@@ -24,10 +24,10 @@ const patientFHIRSchema: cg.FHIRSchema = {
       birthDate: { type: 'date', scalar: true },
       multipleBirth: {
         type: 'choice',
-        choices: {
-          multipleBirthBoolean: { type: 'boolean' },
-          multipleBirthInteger: { type: 'integer' }
-        }
+        choices: [
+         "multipleBirthBoolean",
+         "multipleBirthInteger"
+        ]
       },
       maritalStatus: {
         type: 'CodeableConcept',
@@ -108,11 +108,6 @@ const patientTypeSchema: cg.ITypeSchema = {
     },
     {
       name: "date",
-      package: "fhir.r4",
-      type: "primitive-type"
-    },
-    {
-      name: "choice",
       package: "fhir.r4",
       type: "primitive-type"
     },
@@ -262,13 +257,6 @@ const patientTypeSchema: cg.ITypeSchema = {
         type: "primitive-type"
       }
     },
-    multipleBirth: {
-      type: {
-        name: "choice",
-        package: "fhir.r4",
-        type: "primitive-type"
-      }
-    },
     maritalStatus: {
       type: {
         name: "CodeableConcept",
@@ -336,18 +324,14 @@ let questionnaireFHIRSchema: cg.FHIRSchema = {
   kind: 'resource',
   required: ['status'],
   elements: {
+    status: { type: 'code' },
     item: {
-      required: [
-        'linkId',
-        'type'
-      ],
+      required: [ 'linkId' ],
       type: 'BackboneElement',
       array: true,
       elements: {
-        text: {
-          scalar: true,
-          type: 'string'
-        },
+        text: { type: 'string' },
+        linkId: { type: 'string' },
         item: {
           elementReference: [ 'http://hl7.org/fhir/StructureDefinition/Questionnaire', 'elements', 'item' ],
           array: true
@@ -371,6 +355,7 @@ let questionnaireTypeSchema: cg.ITypeSchema = {
   base: { name: "DomainResource", package: "hl7.fhir.r4.core" },
   allDependencies: [
     { name: "DomainResource", package: "hl7.fhir.r4.core", type: "resource" },
+    { name: "code", package: "hl7.fhir.r4.core", type: "primitive-type" },
     { name: "BackboneElement", package: "hl7.fhir.r4.core", type: "complex-type" },
     { name: "string", package: "hl7.fhir.r4.core", type: "primitive-type" },
     { name: "QuestionnaireItem", package: "hl7.fhir.r4.core", type: "nested" },
@@ -396,6 +381,10 @@ let questionnaireTypeSchema: cg.ITypeSchema = {
       name: { name: "QuestionnaireItem", package: "hl7.fhir.r4.core", parent: "Questionnaire" },
       base: { name: "BackboneElement", package: "hl7.fhir.r4.core" },
       fields: {
+        linkId: {
+          type: { name: "string", package: "hl7.fhir.r4.core", type: "primitive-type" },
+          required: true
+        },
         text: {
           type: { name: "string", package: "hl7.fhir.r4.core", type: "primitive-type" }
         },
@@ -411,6 +400,10 @@ let questionnaireTypeSchema: cg.ITypeSchema = {
     }
   ],
   fields: {
+    status: {
+      type: { name: "code", package: "hl7.fhir.r4.core", type: "primitive-type" },
+      required: true
+    },  
     item: {
       type: {
         name: "QuestionnaireItem",
@@ -423,33 +416,99 @@ let questionnaireTypeSchema: cg.ITypeSchema = {
   }
 }
 
+let observationFHIRSchema: cg.FHIRSchema = {
+  url: "http://hl7.org/fhir/StructureDefinition/Observation",
+  'package-meta': {
+    name: "hl7.fhir.r4.core",
+    version: "4.0.1",
+    path: "/tmp/lw-fhir-schema-repository/hl7.fhir.r4.core#4.0.1"
+  },
+  id: "Observation",
+  base: "http://hl7.org/fhir/StructureDefinition/DomainResource",
+  name: "Observation",
+  kind: "resource",
+  type: "Observation",
+  version: "4.0.1",
+  derivation: "specialization",
+  elements: {
+    value: {
+      choices: [
+        "valueQuantity",
+        "valueString",
+      ],
+      scalar: true
+    },
+    valueString: {
+      scalar: true,
+      summary: true,
+      type: "string",
+      choiceOf: "value"
+    },
+    valueQuantity: {
+      summary: true,
+      type: "Quantity",
+      choiceOf: "value"
+    }
+  }
+}
+
+let observationTypeSchema: cg.ITypeSchema = {
+  kind: "resource",
+  name: { name: "Observation", package: "hl7.fhir.r4.core" },
+  base: { name: "DomainResource", package: "hl7.fhir.r4.core" },
+  allDependencies: [
+    { name: "DomainResource", package: "hl7.fhir.r4.core", type: "resource" },
+    { name: "string", package: "hl7.fhir.r4.core", type: "primitive-type" },
+    { name: "Quantity", package: "hl7.fhir.r4.core", type: "complex-type" }
+  ],
+  choices: {
+    value: {
+      choices: [ "valueQuantity", "valueString" ]
+    }
+  },
+  fields: {
+    valueString: {
+      type: { name: "string", package: "hl7.fhir.r4.core", type: "primitive-type" },
+      choiceOf: "value"
+    },
+    valueQuantity: {
+      type: { name: "Quantity", package: "hl7.fhir.r4.core", type: "complex-type" },
+      choiceOf: "value"
+    }
+  }
+}
 
 
 describe('sch2class', () => {
-    it('translate basic staf', () => {
-        const result = cg.convert(patientFHIRSchema);
-        console.log(JSON.stringify(result, null, 2));
-        expect(result).toMatchObject(patientTypeSchema);
-    });
-    it('translate recursive', () => {
-      const result = cg.convert(questionnaireFHIRSchema);
-      // console.log(JSON.stringify(result, null, 2));
-      expect(result).toMatchObject(questionnaireTypeSchema);
-    });
-}); 
+  it('translate basic staf', () => {
+    const result = cg.convert(patientFHIRSchema);
+    // console.log(JSON.stringify(result, null, 2));
+    expect(result).toMatchObject(patientTypeSchema);
+  });
+  it('translate recursive', () => {
+    const result = cg.convert(questionnaireFHIRSchema);
+    // console.log(JSON.stringify(result, null, 2));
+    expect(result).toMatchObject(questionnaireTypeSchema);
+  });
+  it('translate polymorphic', () => {
+    const result = cg.convert(observationFHIRSchema);
+    // console.log(JSON.stringify(result, null, 2));
+    expect(result).toMatchObject(observationTypeSchema);
+  });
+});
 
 
 describe('loader', () => {
-    it('...', async () => {
-        let loader = new cg.SchemaLoader();
-        await loader.loadFromURL("https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz");
+  it('...', async () => {
+    let loader = new cg.SchemaLoader();
+    await loader.loadFromURL("https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz");
 
-        let primitives = loader.primitives();
-        loader.complexTypes()
-        expect(loader.resources().length).toEqual(148);
-        loader.resources().forEach((res)=>{
-            // console.log(res.name.name);
-        });
-        loader.valueSets()
+    let primitives = loader.primitives();
+    loader.complexTypes()
+    expect(loader.resources().length).toEqual(148);
+    loader.resources().forEach((res) => {
+      // console.log(res.name.name);
     });
+    loader.valueSets()
+  });
 }); 
