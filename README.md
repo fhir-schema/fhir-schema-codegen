@@ -1,106 +1,107 @@
 # FHIR Schema Codegen
 
-This project is a tool to generate SDK from FHIR Schema.
+Library to generate SDK from FHIR Schema.
+
+## Usage
+
+TBD
+
+```bash
+npx fhirschema-codegen generate --generator typescript --output ./tmp/typescript --package hl7.fhir.r4.core
+``` 
 
 
 ## How it works
 
-### transform FHIR Schema to Type Schema
+1. Loader loads FHIR Schemas and Canonicals (from urls, files, directories, npm package - TBD)
+2. Transform [FHIR Schema](src/fhirschema.ts) to [Type Schema](src/typeschema.ts)
+3. Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on Type Schema (see [typescript.ts](src/generators/typescript.ts))
+Generator may define additional options and use conditional generation logic.
+4. Generator should be registered in CLI utility to be available in CLI.
 
-types and urls
+### TypeScript Example
 
-we need FHIR version in context (or name of base package)
-we need to translate url to package name :(
+```ts
+import { Generator, GeneratorOptions } from "../generator";
+import { TypeSchema } from "../typeschema";
 
-* hl7.com/fhir/SD/Patient  -> ?
-* HumanName -> ?
-* us-core/Patient -> ?
-
-Multiversion?
-
-fhir.r4.Patient
-fhir.r5.Patient
-
-```js
-//It's a matter of import 
-import HumanName from fhir.r4.types 
-
-class ? {
-    name HumanName[]
+export interface TypeScriptGeneratorOptions extends GeneratorOptions {
+    generateClasses?: boolean;
 }
 
-```
+const typeMap :  Record<string, string> = {
+    'boolean': 'boolean',
+    'integer': 'number',
+    'decimal': 'number',
+    'positiveInt': 'number',
+    'number': 'number'
+}
 
-generate pkg1, pgk2, pkg3 =>
-
-generate us-core ->
-depends on base - is it part of generated code or just reference
-
-```js
-ctx = {
-    currentPackage: ref
-    //relative resolve from package
-    resolve: ()=> {
-
+export class TypeScriptGenerator extends Generator {
+    constructor(opts: TypeScriptGeneratorOptions) {
+        super(opts);
     }
-}
+    generateType(schema: TypeSchema) {
+        let base = schema.base ? 'extends ' + schema.base.name : '';
+        this.curlyBlock(['export', 'interface', schema.name.name, base], () => {
+            if (schema.fields) {
+                for (const [fieldName, field] of Object.entries(schema.fields)) {
+                    let tp = field.type.name;
+                    let type = tp;
+                    let fieldSymbol = fieldName;
+                    if (!field.required) {
+                        fieldSymbol += '?';
+                    }
+                    if (field.type.type == 'primitive-type') {
+                        type = typeMap[tp] || 'string'
+                    } else {
+                        type = field.type.name;
+                    }
+                    this.lineSM(fieldSymbol, ':', type + (field.array ? '[]' : ''));
+                }
+            }
+        });
+        this.line();
+    }
+    generate() {
+        this.dir('src', async () => {
+            this.file('types.ts', () => {
+                for (let schema of this.loader.complexTypes()) {
+                    this.generateType(schema);
+                }
+            });
 
-url2import(ctx, url)
-import [url -> pkg / file]
+            for (let schema of this.loader.resources()) {
+                this.file(schema.name.name + ".ts", () => {
+                    if (schema.allDependencies) {
+                        for (let dep of schema.allDependencies.filter(d => d.type == 'complex-type')) {
+                            this.lineSM('import', '{', dep.name, '}', 'from', '"./types.ts"');
+                        }
 
-url2type(ctx, url) ->
-USPatient extends [ url -> Patient ]
+                        for (let dep of schema.allDependencies.filter(d => d.type == 'resource')) {
+                            this.lineSM('import', '{', dep.name, '}', 'from', '"./' + dep.name + '.ts"');
+                        }
+                    }
+
+                    this.line();
+
+                    if (schema.nestedTypes) {
+                        for (let subtype of schema.nestedTypes) {
+                            this.generateType(subtype);
+                        }
+                    }
+                    this.line();
+
+                    this.generateType(schema);
+                });
+            }
+        })
+    }
+}   
 ```
 
-pkg: us-core
-url: http://us-core
-base: fhir/Patient
-elements:
-  extensions:
-    race: 
-      url: http://us-core
-      binding: 
-        valueset: http:/ 
-  name: {type: HumanName}
 
+## TODO
 
-generate imports before usage
-ideally at the same place
-
-header.import(type)
-line('field', ':', type)
-
-or 
-
-prepare before generation in typeschema
-
-type: USPatient
-deps:
-- Patient: { pkg: core, file: ...}
-- RaceEnum: { pkg: us-core ...}
-nestedTypes: {}
-fields: {}
-
-Symbol(url | type) + ctx{currentType, pkg } -> import ()
-
-onType:     ()=>
-onBase:     ()=>
-onBinding:  ()=>
-
-pkg/
-  types.x  one file or file per type
-  Patient.x
-  Encounter.x
-  VitalSigns.x
-
-
-## fhir to type
-
-* translate url2coord { package, class }
-* if base url - url2coord { package, class } add dep
-* TODO: patterns / intefaces 
-* walk thro first level of elements (path = [])
-  * if element has type -> type2coord + add dep
-  * else generate nested type + add dep (local)
-  * if binding url -> binding2coord + add dep
-  
+* [ ] CLI
+* [ ] Documentation
