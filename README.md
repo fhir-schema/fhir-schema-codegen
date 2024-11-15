@@ -1,4 +1,8 @@
-# FHIR Schema Codegen
+# Your Project Name
+
+[![npm version](https://badge.fury.io/js/%40fhirschema%2Fcodegen.svg)](https://badge.fury.io/js/%40fhirschema%2Fcodegen)
+
+[![Tests](https://github.com/fhirschema/codegen/actions/workflows/test.yml/badge.svg)](https://github.com/fhirschema/codegen/actions/workflows/test.yml)
 
 Library to generate SDK from FHIR Schema.
 This is a very early stage of the library. 
