@@ -1,2 +1,2 @@
-import { TypeSchema } from "../typeschema";
 import { Generator } from "../generator";
+import { TypeSchema } from "../typeschema";
