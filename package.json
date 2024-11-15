@@ -1,9 +1,12 @@
 {
   "name": "@fhirschema/codegen",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/cli.js",
+  "bin": {
+    "fscg": "./dist/cli.js",
+    "fhirschema-codegen": "./dist/cli.js"
+  },
   "source": "src/cli.ts",
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fhir-schema/fhir-schema-codegen.git"
@@ -20,7 +23,13 @@
     "test:coverage": "jest --coverage",
     "get-schemas": "mkdir -p data && curl -L 'https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz' | gunzip > data/hl7.fhir.r4.core.ndjson"
   },
-  "keywords": ["fhir", "fhirschema", "codegen", "typescript", "javascript"],
+  "keywords": [
+    "fhir",
+    "fhirschema",
+    "codegen",
+    "typescript",
+    "javascript"
+  ],
   "author": "",
   "license": "ISC",
   "description": "",
