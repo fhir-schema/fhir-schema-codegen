@@ -1,8 +1,16 @@
 {
-  "name": "fhirschema-codegen",
+  "name": "@fhirschema/codegen",
   "version": "1.0.0",
   "main": "dist/cli.js",
   "source": "src/cli.ts",
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fhir-schema/fhir-schema-codegen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fhir-schema/fhir-schema-codegen/issues"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
@@ -12,7 +20,7 @@
     "test:coverage": "jest --coverage",
     "get-schemas": "mkdir -p data && curl -L 'https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz' | gunzip > data/hl7.fhir.r4.core.ndjson"
   },
-  "keywords": [],
+  "keywords": ["fhir", "fhirschema", "codegen", "typescript", "javascript"],
   "author": "",
   "license": "ISC",
   "description": "",
@@ -26,5 +34,8 @@
   "dependencies": {
     "@types/commander": "^2.12.0",
     "commander": "^12.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
