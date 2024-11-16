@@ -15,7 +15,16 @@ But it will progress quickly. Join the community - [FHIR Chat](https://chat.fhir
 TBD
 
 ```bash
-npx fhirschema-codegen generate --generator typescript --output ./tmp/typescript --package hl7.fhir.r4.core
+npm install -g @fhirschema/codegen
+
+# List packages
+fscg packages hl7.fhir.r4 | less
+
+# TODO: inspect fhir schema (type schemas as well)
+fscg inspect --output=tmp/schemas --package=hl7.fhir.r4.core:4.0.1
+
+# TODO: Generate code
+fscg generate --generator=typescript --output=./fhir.r4 --package=hl7.fhir.r4.core:4.0.1
 ``` 
 
 
