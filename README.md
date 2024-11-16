@@ -20,6 +20,9 @@ npm install -g @fhirschema/codegen
 # List packages
 fscg packages hl7.fhir.r4 | less
 
+# TODO: show ig content
+fscg show hl7.fhir.r4.core:4.0.1 | less
+
 # TODO: inspect fhir schema (type schemas as well)
 fscg inspect --output=tmp/schemas --package=hl7.fhir.r4.core:4.0.1
 
