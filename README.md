@@ -17,8 +17,11 @@ TBD
 ```bash
 npm install -g @fhirschema/codegen
 
-# List packages
+# List packages and find pakage coordinate <package>:<version>
 fscg packages hl7.fhir.r4 | less
+
+# Generate code
+fscg generate -g typescript -o /tmp/fhir.r4 -p hl7.fhir.r4.core:4.0.1
 
 # TODO: show ig content
 fscg package ls hl7.fhir.r4.core:4.0.1 | less
@@ -26,8 +29,6 @@ fscg package ls hl7.fhir.r4.core:4.0.1 | less
 # TODO: inspect fhir schema (type schemas as well)
 fscg package dump --output=tmp hl7.fhir.r4.core:4.0.1
 
-# TODO: Generate code
-fscg generate --generator=typescript --output=./fhir.r4 --package=hl7.fhir.r4.core:4.0.1
 ``` 
 
 
