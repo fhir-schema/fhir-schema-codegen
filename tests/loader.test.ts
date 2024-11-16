@@ -512,3 +512,10 @@ describe('loader', () => {
     loader.valueSets()
   });
 }); 
+
+describe.only('lookup', () => {
+  it.only('read_ndjson_gz', async () => {
+    let loader = new cg.SchemaLoader();
+    await loader.packageLookup('hl7.fhir');
+  });
+}); 

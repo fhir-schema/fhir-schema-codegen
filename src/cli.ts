@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import { TypeScriptGenerator } from './generators/typescript';
+import { SchemaLoader } from './loader';
 import path from 'path';
 import fs from 'fs';
 
@@ -21,6 +22,14 @@ program.command('help')
   .description('Display help information')
   .action(() => {
     program.help();
+  });
+
+program.command('packages')
+  .description('Display help information')
+  .argument('[criteria...]', 'Search criteria like hl7 fhir')
+  .action(async (criteria) => {
+    let loader = new SchemaLoader();
+    await loader.packageLookup(criteria.join(' '));
   });
 
 program.command('generate')

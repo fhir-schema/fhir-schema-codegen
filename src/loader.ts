@@ -7,6 +7,47 @@ import fs from 'fs/promises';
 export { type FHIRSchema } from "./fhirschema";
 export { type ITypeSchema } from "./typeschema";
 
+import { Readable } from 'stream';
+import { createInterface } from 'readline';
+
+export async function read_ndjson_gz(url: string, process: (line: any) => any): Promise<void> {
+    let result: any[] = [];
+    return new Promise((resolve, reject) => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url);
+                const stream = Readable.fromWeb(response.body!);
+
+                const rl = createInterface({
+                    input: stream,
+                    crlfDelay: Infinity
+                });
+
+                rl.on('line', (line) => {
+                    const json = JSON.parse(line);
+                    let res = process(json);
+                    if(res) {
+                        result.push(res);
+                    }
+                });
+
+                rl.on('error', (e) => {
+                    console.error('Error reading line:', e);
+                    reject(e);
+                });
+
+                rl.on('close', () => {
+                    resolve();
+                });
+
+            } catch (err) {
+                reject(err);
+            }
+        };
+
+        fetchData();
+    });
+}
 
 function isUpcased(str: string): boolean {
     return str && str[0] === str[0].toUpperCase() || false;
@@ -164,6 +205,7 @@ export interface LoaderOptions {
     urls?: string[];
     files?: string[];
     dirs?: string[];
+    packages?: string[];
 }
 
 export class SchemaLoader {
@@ -174,10 +216,20 @@ export class SchemaLoader {
         this.opts = opts;
     }
 
+    packageURL(pkgname: string): string {
+        let pkg = pkgname.replace('%23', '.');
+        return `https://storage.googleapis.com/fhir-schema-registry/1.0.0/${pkg}/package.ndjson.gz`;
+    }
+
     async load() {
         if(this.opts.urls) {
             for(let url of this.opts.urls) {
                 await this.loadFromURL(url);
+            }
+        }
+        if(this.opts.packages) {
+            for(let pkg of this.opts.packages) {
+                await this.loadFromURL(this.packageURL(pkg));
             }
         }
         if(this.opts.files) {
@@ -191,6 +243,15 @@ export class SchemaLoader {
             }
         }
     }
+
+    async packageLookup(text:string): Promise<void> {
+        console.log('Looking up packages:', text.replace(' ', '%'));
+        return read_ndjson_gz('http://get-ig.org/Package/$lookup?name=' + text.replace(' ', '%20'), (pkg) => {
+            console.log('*', pkg.name, ' versions: ' + (pkg.versions.reverse() || []).join(', '));
+            return pkg;
+        });
+    }
+
 
     loadNDJSONContent(text: string) {
         let lines = text.split('\n')
