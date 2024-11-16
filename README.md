@@ -1,6 +1,7 @@
 # Your Project Name
 
-[![npm version](https://badge.fury.io/js/%40fhirschema%2Fcodegen.svg)](https://badge.fury.io/js/%40fhirschema%2Fcodegen)
+[![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)   
+
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
