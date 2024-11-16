@@ -34,11 +34,12 @@ program.command('packages')
 
 program.command('generate')
   .description('Generate code from FHIR Schema')
-  .requiredOption('--generator <type>', 'Generator type (typescript)')
-  .requiredOption('--output <dir>', 'Output directory')
-  .requiredOption('--package <package>', 'FHIR package name')
-  .option('--generateClasses', 'Generate classes instead of interfaces (typescript only)')
+  .requiredOption('-g, --generator <type>', 'Generator type (' + Object.keys(generators).join(', ') + ')')
+  .requiredOption('-o, --output <file>', 'Output directory')
+  .requiredOption('-p, --package <package>', 'FHIR package name')
+  .option('-c, --generateClasses <boolean>', 'Generate classes instead of interfaces (typescript only)', 'false')
   .action(async (options) => {
+    console.log(options);
     const outputDir = path.resolve(process.cwd(), options.output);
     
     if (!fs.existsSync(outputDir)) {
@@ -46,17 +47,21 @@ program.command('generate')
     }
 
     switch (options.generator) {
-      case 'typescript':
-            const generator = new generators.typescript({
-          outputDir,
-          generateClasses: options.generateClasses
-        });
-        await generator.generate();
-        break;
-      default:
-        console.error(`Unknown generator: ${options.generator}`);
-        process.exit(1);
-    }
+          case 'typescript':
+              const generator = new generators.typescript({
+                  outputDir,
+                  loaderOptions: {
+                    packages: options.package.split(',').map((pkg: string) => pkg.trim())
+                  },
+                  generateClasses: options.generateClasses
+              });
+              await generator.init();
+              await generator.generate();
+              break;
+          default:
+              console.error(`Unknown generator: ${options.generator}`);
+              process.exit(1);
+      }
   });
 
 program.parse();

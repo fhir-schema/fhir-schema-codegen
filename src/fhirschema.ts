@@ -42,10 +42,12 @@ export interface FHIRSchema extends FHIRSchemaBase {
             expression: string;
         }
     };
-    'package-meta': {
-        name: string;
-        version: string;
-        path?: string;
+    meta?: {
+        package: {
+            name: string;
+            version: string;
+            path?: string;
+        };
     };
     id?: string;
     base?: string;

@@ -69,19 +69,20 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
         parent = root.name;
         type = 'nested';
 
+        let pkgname = root.meta?.package?.name || '';
         let nestedschema = new TypeSchema({
             kind: 'nested',
             name: {
                 name: typename,
-                package: root['package-meta'].name,
+                package: pkgname,
                 parent: root.name
             },
             base: {
                 name: "BackboneElement",
-                package: root['package-meta'].name
+                package: pkgname
             }
         });
-        typeschema.ensureDep({ name: "BackboneElement", package: root['package-meta'].name, type: 'complex-type' });
+        typeschema.ensureDep({ name: "BackboneElement", package: pkgname, type: 'complex-type' });
         addFields(nestedschema, root, typeschema, [...path], field);
         typeschema.nestedTypes ||= [];
         typeschema.nestedTypes.push(nestedschema);
@@ -105,9 +106,10 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
         typename = 'unknown';
         type = 'unknown';
     }
+    let pkgname = root.meta?.package?.name || '';
     let typeref: TypeRef = {
         name: typename,
-        package: root['package-meta'].name,
+        package: pkgname,
         type: type
     };
     let typekey = typeref.package + "/" + typeref.name;
@@ -137,7 +139,7 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
         let binding = field.binding;
         let vsref: TypeRef = {
             name: extractBase(binding.valueSet),
-            package: root['package-meta'].name,
+            package: pkgname,
             url: binding.valueSet,
             type: 'valueset'
         };
@@ -183,13 +185,14 @@ export function convert(schema: FHIRSchema): TypeSchema {
 
     assert(kind !== 'unknown', 'Unknown schema kind: ' + schema.kind + '/' + schema.derivation + ' ' + JSON.stringify(schema));
 
+    let pkgname = schema.meta?.package?.name || '';
     let res: TypeSchema = new TypeSchema({
         kind: kind,
-        name: { name: schema.name, package: schema['package-meta'].name }
+        name: { name: schema.name, package: pkgname }
     });
 
     if (schema.base) {
-        let ref = { name: extractBase(schema.base), package: schema['package-meta'].name }
+        let ref = { name: extractBase(schema.base), package: pkgname }
         res.base = ref;
         res.ensureDep({ name: ref.name, package: ref.package, type: 'resource' });
     }
@@ -217,8 +220,7 @@ export class SchemaLoader {
     }
 
     packageURL(pkgname: string): string {
-        let pkg = pkgname.replace('%23', '.');
-        return `https://storage.googleapis.com/fhir-schema-registry/1.0.0/${pkg}/package.ndjson.gz`;
+        return `http://get-ig.org/FHIRSchema?package=${pkgname}`;
     }
 
     async load() {
@@ -229,7 +231,7 @@ export class SchemaLoader {
         }
         if(this.opts.packages) {
             for(let pkg of this.opts.packages) {
-                await this.loadFromURL(this.packageURL(pkg));
+                await this.loadPackage(pkg);
             }
         }
         if(this.opts.files) {
@@ -265,6 +267,15 @@ export class SchemaLoader {
             this.canonicalResources[rt] ||= []
             this.canonicalResources[rt].push(resource);
         }
+    }
+
+    async loadPackage(pkg: string) {
+        return read_ndjson_gz(this.packageURL(pkg), (resource) => {
+            let rt = resource.resourceType;
+            console.log('*', rt);
+            this.canonicalResources[rt] ||= []
+            this.canonicalResources[rt].push(resource);
+        });
     }
 
     async loadFromURL(url: string) {

@@ -7,7 +7,7 @@ describe('TypeScript Generator', () => {
         let gen = new TypeScriptGenerator({
             outputDir: path.join(__dirname, '../../tmp/typescript'),
             loaderOptions: {
-                urls: ['https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz']
+                packages: ['hl7.fhir.r4.core:4.0.1']
             }
         });
 

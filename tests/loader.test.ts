@@ -3,10 +3,12 @@ import * as cg from '../src/loader';
 const patientFHIRSchema: cg.FHIRSchema = {
     url: 'http://hl7.org/fhir/StructureDefinition/Patient',
     base: "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    'package-meta': {
-        name: 'fhir.r4',
-        version: '4.0.1',
-        path: 'http://hl7.org/fhir/R4'
+    meta: {
+        package: {
+            name: 'fhir.r4',
+            version: '4.0.1',
+            path: 'http://hl7.org/fhir/R4'
+        }
     },
     name: 'Patient',
     kind: 'resource',
@@ -315,9 +317,11 @@ const patientTypeSchema: cg.ITypeSchema = {
 let questionnaireFHIRSchema: cg.FHIRSchema = {
   url: 'http://hl7.org/fhir/StructureDefinition/Questionnaire',
   name: 'Questionnaire',
-  'package-meta': {
-    name: 'hl7.fhir.r4.core',
-    version: '4.0.1',
+  meta: {
+    package: {
+      name: 'hl7.fhir.r4.core',
+      version: '4.0.1',
+    }
   },
   derivation: 'specialization',
   base: 'http://hl7.org/fhir/StructureDefinition/DomainResource',
@@ -418,10 +422,12 @@ let questionnaireTypeSchema: cg.ITypeSchema = {
 
 let observationFHIRSchema: cg.FHIRSchema = {
   url: "http://hl7.org/fhir/StructureDefinition/Observation",
-  'package-meta': {
-    name: "hl7.fhir.r4.core",
-    version: "4.0.1",
-    path: "/tmp/lw-fhir-schema-repository/hl7.fhir.r4.core#4.0.1"
+  meta: {
+    package: {
+      name: "hl7.fhir.r4.core",
+      version: "4.0.1",
+      path: "/tmp/lw-fhir-schema-repository/hl7.fhir.r4.core#4.0.1"
+    }
   },
   id: "Observation",
   base: "http://hl7.org/fhir/StructureDefinition/DomainResource",
@@ -501,8 +507,7 @@ describe('sch2class', () => {
 describe('loader', () => {
   it('...', async () => {
     let loader = new cg.SchemaLoader();
-    await loader.loadFromURL("https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz");
-
+    await loader.loadPackage("hl7.fhir.r4.core:4.0.1");
     let primitives = loader.primitives();
     loader.complexTypes()
     expect(loader.resources().length).toEqual(148);
@@ -513,8 +518,8 @@ describe('loader', () => {
   });
 }); 
 
-describe.only('lookup', () => {
-  it.only('read_ndjson_gz', async () => {
+describe('lookup', () => {
+  it('read_ndjson_gz', async () => {
     let loader = new cg.SchemaLoader();
     await loader.packageLookup('hl7.fhir');
   });
