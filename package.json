@@ -1,6 +1,6 @@
 {
   "name": "@fhirschema/codegen",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "niquola",
   "license": "ISC",
   "main": "dist/cli.js",
@@ -26,7 +26,13 @@
     "test:coverage": "jest --coverage",
     "get-schemas": "mkdir -p data && curl -L 'https://storage.googleapis.com/fhir-schema-registry/1.0.0/hl7.fhir.r4.core%234.0.1/package.ndjson.gz' | gunzip > data/hl7.fhir.r4.core.ndjson"
   },
-  "keywords": [ "fhir", "fhirschema", "codegen", "typescript", "javascript" ],
+  "keywords": [
+    "fhir",
+    "fhirschema",
+    "codegen",
+    "typescript",
+    "javascript"
+  ],
   "description": "",
   "devDependencies": {
     "@types/jest": "^29.5.14",
