@@ -32,6 +32,14 @@ program.command('packages')
     await loader.packageLookup(criteria.join(' '));
   });
 
+program.command('package-summary')
+  .description('list all resources in a package')
+  .requiredOption('-p, --package <package>', 'FHIR package name')
+  .action(async (options) => {
+    let loader = new SchemaLoader();
+    await loader.packageSummary(options.package);
+  });
+
 program.command('generate')
   .description('Generate code from FHIR Schema')
   .requiredOption('-g, --generator <type>', 'Generator type (' + Object.keys(generators).join(', ') + ')')

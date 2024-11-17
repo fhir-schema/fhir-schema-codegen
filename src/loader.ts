@@ -257,6 +257,20 @@ export class SchemaLoader {
         });
     }
 
+    async packageSummary(pkg:string): Promise<void> {
+        console.log('summary of', pkg);
+        let url = 'http://get-ig.org/CanonicalResource/$summary?package=' + pkg;
+        console.log('summary url', url);
+        let rt = '';
+        return read_ndjson_gz(url, (res) => {
+            if(rt !== res.resourcetype) {
+                rt = res.resourcetype;
+                console.log('\x1b[1m* ' + rt + '\x1b[0m');
+            }
+            console.log('  -', res.url);
+        });
+    }
+
 
     loadNDJSONContent(text: string) {
         let lines = text.split('\n')

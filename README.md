@@ -24,8 +24,8 @@ fscg packages hl7.fhir.r4 | less
 # Generate code
 fscg generate -g typescript -o /tmp/fhir.r4 -p hl7.fhir.r4.core:4.0.1
 
-# TODO: show ig content
-fscg package ls hl7.fhir.r4.core:4.0.1 | less
+# List all resources in a package
+fscg package-summary -p  hl7.fhir.us.core:5.0.1 | less
 
 # TODO: inspect fhir schema (type schemas as well)
 fscg package dump --output=tmp hl7.fhir.r4.core:4.0.1
