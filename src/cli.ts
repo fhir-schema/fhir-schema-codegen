@@ -2,13 +2,15 @@
 
 import { Command } from 'commander';
 import { TypeScriptGenerator } from './generators/typescript';
+import { CSharpGenerator } from './generators/csharp';
 import { SchemaLoader } from './loader';
 import path from 'path';
 import fs from 'fs';
 
 
 const generators = {
-  typescript: TypeScriptGenerator
+  typescript: TypeScriptGenerator,
+  csharp: CSharpGenerator
 }
 
 const program = new Command();
@@ -54,22 +56,34 @@ program.command('generate')
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    let generator;
     switch (options.generator) {
-          case 'typescript':
-              const generator = new generators.typescript({
-                  outputDir,
-                  loaderOptions: {
-                    packages: options.package.split(',').map((pkg: string) => pkg.trim())
-                  },
-                  generateClasses: options.generateClasses
-              });
-              await generator.init();
-              await generator.generate();
-              break;
-          default:
-              console.error(`Unknown generator: ${options.generator}`);
-              process.exit(1);
-      }
+      case "typescript":
+        generator = new generators.typescript({
+          outputDir,
+          loaderOptions: {
+            packages: options.package.split(",").map((pkg: string) => pkg.trim()),
+          },
+          generateClasses: options.generateClasses,
+        });
+        await generator.init();
+        await generator.generate();
+        break;
+      case "csharp":
+        generator = new generators.csharp({
+          outputDir,
+          loaderOptions: {
+            packages: options.package.split(",").map((pkg: string) => pkg.trim()),
+          },
+          generateClasses: options.generateClasses,
+        });
+        await generator.init();
+        await generator.generate();
+        break;
+      default:
+        console.error(`Unknown generator: ${options.generator}`);
+        process.exit(1);
+    }
   });
 
 program.parse();
