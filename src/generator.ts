@@ -122,5 +122,30 @@ export class Generator {
         
     }
 
-
+    
+    // String helpers
+    words(s: string) {
+        return s.split(/(?<=[a-z])(?=[A-Z])|[-_\s]/).filter(Boolean);
+    }
+    
+    capitalCase(s: string) {
+        return s[0].toUpperCase() + s.substring(1).toLowerCase();
+    }
+    
+    camelCase(s: string) {
+        const [first, ...rest] = this.words(s);
+        return [first.toLowerCase(), ...rest.map(this.capitalCase)].join('');
+    }
+    
+    pascalCase(s: string) {
+        return this.words(s).map(this.capitalCase).join('');
+    }
+    
+    snakeCase(s: string) {
+        return this.words(s).map(s => s.toLowerCase()).join('_')
+    }
+    
+    kebabCase(s: string) {
+        return this.words(s).map(s => s.toLowerCase()).join('-')
+    }
 }
