@@ -1,5 +1,7 @@
 export type TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'choice' | 'unknown';
 
+export type DerivationType = 'constraint' | 'specialization';
+
 export interface TypeRef {
     name: string;
     package: string;
@@ -25,7 +27,6 @@ export interface ChoiceField {
     choices?: string[];
 }
 
-
 export interface ITypeSchema {
     kind: TypeRefType;
     name: TypeRef;
@@ -34,6 +35,7 @@ export interface ITypeSchema {
     choices?: { [key: string]: ChoiceField };
     allDependencies?: TypeRef[];
     nestedTypes?: ITypeSchema[];
+    derivation?: DerivationType;
 }
 
 export class TypeSchema  {
@@ -46,12 +48,14 @@ export class TypeSchema  {
     nestedTypes?: TypeSchema[];
     fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
+    derivation?: DerivationType;
 
     constructor(schema: ITypeSchema) {
         this.depsIdx = {};
         this.kind = schema.kind;
         this.name = schema.name;
         this.base = schema.base;
+        this.derivation = schema.derivation;
     }
 
     ensureDep(typeref: TypeRef) {
@@ -62,5 +66,4 @@ export class TypeSchema  {
             this.depsIdx[typekey] = true;
         }
     }
-}   
-
+}

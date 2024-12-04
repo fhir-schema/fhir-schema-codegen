@@ -37,7 +37,7 @@ export class Generator {
     async init() {
         await this.loader.load();
     }
-    
+
     generate() {
     }
 
@@ -48,7 +48,7 @@ export class Generator {
             console.log("mkdir", this.currentDir);
         }
         gencontent();
-    }   
+    }
 
     file(path: string, gencontent: () => void) {
         this.filePath = Path.join(this.currentDir || '', path);
@@ -58,7 +58,7 @@ export class Generator {
         }
         console.log("file", this.filePath);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
-        
+
         gencontent();
 
         fs.closeSync(this.fileDescriptor);
@@ -95,7 +95,6 @@ export class Generator {
         this.write(tokens.join(' ') + ';\n');
     }
 
-
     curlyBlock(tokens: string[], gencontent: () => void) {
         this.write(tokens.join(' '));
         this.write(' {\n');
@@ -120,33 +119,6 @@ export class Generator {
     }
 
     token(...tokens: string[]) {
-        
-    }
 
-    
-    // String helpers
-    words(s: string) {
-        return s.split(/(?<=[a-z])(?=[A-Z])|[-_\s]/).filter(Boolean);
-    }
-    
-    capitalCase(s: string) {
-        return s[0].toUpperCase() + s.substring(1).toLowerCase();
-    }
-    
-    camelCase(s: string) {
-        const [first, ...rest] = this.words(s);
-        return [first.toLowerCase(), ...rest.map(this.capitalCase)].join('');
-    }
-    
-    pascalCase(s: string) {
-        return this.words(s).map(this.capitalCase).join('');
-    }
-    
-    snakeCase(s: string) {
-        return this.words(s).map(s => s.toLowerCase()).join('_')
-    }
-    
-    kebabCase(s: string) {
-        return this.words(s).map(s => s.toLowerCase()).join('-')
     }
 }

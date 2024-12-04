@@ -1,5 +1,6 @@
-import { Generator, GeneratorOptions } from "../generator";
-import { TypeRef, TypeSchema } from "../typeschema";
+import { Generator, GeneratorOptions } from '@fscg/generator';
+import { TypeRef, TypeSchema } from '@fscg/typeschema';
+import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints } from '@fscg/utils';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -9,40 +10,97 @@ import { TypeRef, TypeSchema } from "../typeschema";
 
 export interface PythonGeneratorOptions extends GeneratorOptions {}
 
-const typeMap :  Record<string, string> = {
-    boolean: "bool",
-    instant: "str",
-    time: "str",
-    date: "str",
-    dateTime: "str",
-        
-    decimal: "float",
-    integer: "int",
-    unsignedInt: "int",
-    positiveInt: "int",
-    integer64: "int",
-    base64Binary: "str",
-        
-    uri: "str",
-    url: "str",
-    canonical: "str",
-    oid: "str",
-    uuid: "str",
-        
-    string: "str",
-    code: "str",
-    markdown: "str",
-    id: "str",
-    xhtml: "str",
-}
+const typeMap: Record<string, string> = {
+    boolean: 'bool',
+    instant: 'str',
+    time: 'str',
+    date: 'str',
+    dateTime: 'str',
+
+    decimal: 'float',
+    integer: 'int',
+    unsignedInt: 'int',
+    positiveInt: 'PositiveInt',
+    integer64: 'int',
+    base64Binary: 'str',
+
+    uri: 'str',
+    url: 'str',
+    canonical: 'str',
+    oid: 'str',
+    uuid: 'str',
+
+    string: 'str',
+    code: 'str',
+    markdown: 'str',
+    id: 'str',
+    xhtml: 'str',
+};
+
+const pythonKeywords = new Set([
+    'False',
+    'None',
+    'True',
+    'and',
+    'as',
+    'assert',
+    'async',
+    'await',
+    'break',
+    'class',
+    'continue',
+    'def',
+    'del',
+    'elif',
+    'else',
+    'except',
+    'finally',
+    'for',
+    'from',
+    'global',
+    'if',
+    'import',
+    'in',
+    'is',
+    'lambda',
+    'nonlocal',
+    'not',
+    'or',
+    'pass',
+    'raise',
+    'return',
+    'try',
+    'while',
+    'with',
+    'yield',
+]);
+
+const fixReservedWords = (name: string) => {
+    if (pythonKeywords.has(name)) {
+        return name + '_';
+    }
+    return name;
+};
+
+const makeClassName = (fhirType: TypeRef): string => {
+    const name = fhirType.name;
+    const parent = fhirType.parent;
+    if (parent) {
+        return pascalCase(parent) + '_' + pascalCase(name.substring(parent.length));
+    }
+    return fixReservedWords(pascalCase(name));
+};
 
 export class PythonGenerator extends Generator {
     constructor(opts: PythonGeneratorOptions) {
-        super(opts);
+        super({ ...opts, tabSize: 4 });
     }
 
     toLangType(fhirType: TypeRef) {
-        return typeMap[fhirType.name] ?? fhirType.name;
+        if (typeMap[fhirType.name]) {
+            return typeMap[fhirType.name];
+        }
+        return makeClassName(fhirType);
     }
 
     curlyBlock(tokens: string[], gencontent: () => void) {
@@ -63,72 +121,92 @@ export class PythonGenerator extends Generator {
     }
 
     generateType(schema: TypeSchema) {
-        let base = schema.base ? '(' + schema.base.name + ')' : '';
-        let className = schema.name.name + base;
+        let className = makeClassName(schema.name);
+        let baseClass = schema.base ? '(' + schema.base.name + ')' : '';
+        let classDefinition = className + baseClass;
 
-        this.curlyBlock(['class', className], () => {
-            if (schema.fields) {
-                for (const [fieldName, field] of Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]))) {
-                    let fieldType = this.toLangType(field.type);
-                    let defaultValue = '';
+        this.curlyBlock(['class', classDefinition], () => {
+            if (!schema.fields) {
+                this.line('pass');
+                return;
+            }
 
-                    if(!field.array) {
-                        fieldType = this.wrapList(fieldType);
-                    }
+            let fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
+            for (const [fieldName, field] of fields) {
+                let fieldType = this.toLangType(field.type);
+                let defaultValue = '';
 
-                    if (!field.required) {
-                        fieldType = this.wrapOptional(fieldType);
-                        defaultValue = '= None';
-                    }
-
-                    const fieldSymbol = this.snakeCase(fieldName) + ":";
-
-                    this.line(fieldSymbol, fieldType, defaultValue);
+                if (field.array) {
+                    fieldType = this.wrapList(fieldType);
                 }
-            } else {
-                this.line('pass')
-            }            
+
+                if (!field.required) {
+                    fieldType = this.wrapOptional(fieldType);
+                    defaultValue = ' = None';
+                }
+
+                const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
+                this.line(fieldDecl);
+            }
         });
+    }
+
+    default_imports() {
+        this.line('from __future__ import annotations');
+        this.line('from', 'pydantic', 'import', '*');
+        this.line('from', 'typing', 'import', ['Optional', 'List'].join(', '));
+    }
+
+    generateNestedTypes(schema: TypeSchema) {
+        if (schema.nestedTypes) {
+            for (let subtype of schema.nestedTypes) {
+                this.generateType(subtype);
+            }
+        }
+    }
+
+    generateDependenciesImports(schema: TypeSchema) {
+        if (schema.allDependencies) {
+            for (const deps of schema.allDependencies) {
+                if (deps.type === 'resource') {
+                    this.line('from', snakeCase(deps.name), 'import', '*');
+                }
+            }
+        }
     }
 
     generate() {
         this.dir('src', async () => {
-            this.file('base.py', () => {    
-                this.line('from', 'pydantic', 'import', '*');
+            this.file('__init__.py', () => {});
+            this.file('complex_types.py', () => {
+                this.default_imports();
                 this.line();
 
-                for (let schema of this.loader.complexTypes()) {
+                for (let schema of sortSchemasByDeps(removeConstraints(this.loader.complexTypes()))) {
+                    this.generateNestedTypes(schema);
+                    this.line();
                     this.generateType(schema);
                 }
             });
 
-            for (let schema of this.loader.resources()) {
-                this.file(this.snakeCase(schema.name.name) + ".py", () => {
-                    this.line('from', 'pydantic', 'import', '*');
-                    this.line('from', 'typing', 'import', ['Optional', 'List'].join(', '));
-                    this.line('from', '.base', 'import', '*');
-
-                    // if (schema.allDependencies) {
-                    //     if (schema.allDependencies.filter(d => d.type == 'complex-type').length) {
-                    //         this.lineSM('using', 'Aidbox.FHIR.Base');
-                    //     }
-                        
-                    //     if (schema.allDependencies.filter(d => d.type == 'resource').length) {
-                    //         this.lineSM('using', 'Aidbox.FHIR.R4.Core');
-                    //     }
-                    // }
-
+            for (let schema of removeConstraints(this.loader.resources())) {
+                this.file(snakeCase(schema.name.name) + '.py', () => {
+                    this.default_imports();
                     this.line();
-                    
-                    if (schema.nestedTypes) {
-                        for (let subtype of schema.nestedTypes) {
-                            this.generateType(subtype);
-                        }
-                    }
 
+                    this.line('from', 'complex_types', 'import', '*');
+                    this.generateDependenciesImports(schema);
+                    this.line();
+
+                    this.line('# Nested Types');
+                    this.line();
+                    this.generateNestedTypes(schema);
+
+                    this.line('# Resource Type');
+                    this.line();
                     this.generateType(schema);
                 });
             }
-        })
+        });
     }
-}   
+}

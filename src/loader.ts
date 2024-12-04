@@ -188,7 +188,8 @@ export function convert(schema: FHIRSchema): TypeSchema {
     let pkgname = schema.meta?.package?.name || '';
     let res: TypeSchema = new TypeSchema({
         kind: kind,
-        name: { name: schema.name, package: pkgname }
+        name: { name: schema.name, package: pkgname},
+        derivation: schema.derivation,
     });
 
     if (schema.base) {
