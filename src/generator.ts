@@ -5,6 +5,7 @@ import { SchemaLoader, type LoaderOptions } from './loader';
 export interface GeneratorOptions {
     outputDir: string;
     loaderOptions?: LoaderOptions;
+    tabSize?: number;
 }
 
 export class Generator {
@@ -81,7 +82,7 @@ export class Generator {
     }
 
     writeIdent() {
-        this.write(' '.repeat(this.identLevel * 2));
+        this.write(' '.repeat(this.identLevel * (this.opts.tabSize || 2)));
     }
 
     line(...tokens: string[]) {
