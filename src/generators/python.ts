@@ -37,6 +37,11 @@ const typeMap: Record<string, string> = {
     xhtml: 'str',
 };
 
+const injectSuperClasses = (name: string) => {
+    if (name === 'Resource') return ['API'];
+    return [];
+};
+
 const pythonKeywords = new Set([
     'False',
     'None',
@@ -121,11 +126,11 @@ export class PythonGenerator extends Generator {
     }
 
     generateType(schema: TypeSchema) {
-        let className = makeClassName(schema.name);
-        let baseClass = schema.base ? '(' + schema.base.name + ')' : '';
-        let classDefinition = className + baseClass;
+        const className = makeClassName(schema.name);
+        const superClasses = [...(schema.base ? [schema.base.name] : []), ...injectSuperClasses(schema.name.name)];
+        const classDefinition = `class ${className}(${superClasses.join(", ")})`;
 
-        this.curlyBlock(['class', classDefinition], () => {
+        this.curlyBlock([classDefinition], () => {
             if (!schema.fields) {
                 this.line('pass');
                 return;
@@ -159,6 +164,8 @@ export class PythonGenerator extends Generator {
 
     generateNestedTypes(schema: TypeSchema) {
         if (schema.nestedTypes) {
+            this.line('# Nested Types');
+            this.line();
             for (let subtype of schema.nestedTypes) {
                 this.generateType(subtype);
             }
@@ -179,6 +186,7 @@ export class PythonGenerator extends Generator {
         this.dir('src', async () => {
             this.file('__init__.py', () => {});
             this.file('complex_types.py', () => {
+                // TODO: add comment about auto-generated file
                 this.default_imports();
                 this.line();
 
@@ -198,8 +206,6 @@ export class PythonGenerator extends Generator {
                     this.generateDependenciesImports(schema);
                     this.line();
 
-                    this.line('# Nested Types');
-                    this.line();
                     this.generateNestedTypes(schema);
 
                     this.line('# Resource Type');
