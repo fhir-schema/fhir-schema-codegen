@@ -5,6 +5,7 @@ import { SchemaLoader, type LoaderOptions } from './loader';
 export interface GeneratorOptions {
     outputDir: string;
     loaderOptions?: LoaderOptions;
+    tabSize?: number;
 }
 
 export class Generator {
@@ -36,7 +37,7 @@ export class Generator {
     async init() {
         await this.loader.load();
     }
-    
+
     generate() {
     }
 
@@ -47,7 +48,7 @@ export class Generator {
             console.log("mkdir", this.currentDir);
         }
         gencontent();
-    }   
+    }
 
     file(path: string, gencontent: () => void) {
         this.filePath = Path.join(this.currentDir || '', path);
@@ -57,7 +58,7 @@ export class Generator {
         }
         console.log("file", this.filePath);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
-        
+
         gencontent();
 
         fs.closeSync(this.fileDescriptor);
@@ -81,7 +82,7 @@ export class Generator {
     }
 
     writeIdent() {
-        this.write(' '.repeat(this.identLevel * 2));
+        this.write(' '.repeat(this.identLevel * (this.opts.tabSize || 2)));
     }
 
     line(...tokens: string[]) {
@@ -93,7 +94,6 @@ export class Generator {
         this.writeIdent();
         this.write(tokens.join(' ') + ';\n');
     }
-
 
     curlyBlock(tokens: string[], gencontent: () => void) {
         this.write(tokens.join(' '));
@@ -119,8 +119,6 @@ export class Generator {
     }
 
     token(...tokens: string[]) {
-        
+
     }
-
-
 }

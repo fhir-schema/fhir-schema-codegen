@@ -1,6 +1,7 @@
 node_modules/
 dist/
-coverage/ 
+coverage/
 package-lock.json
 data/
 tmp/
+.DS_Store

@@ -5,7 +5,7 @@ const patientFHIRSchema: cg.FHIRSchema = {
     base: "http://hl7.org/fhir/StructureDefinition/DomainResource",
     meta: {
         package: {
-            name: 'fhir.r4',
+            url: 'fhir.r4',
             version: '4.0.1',
             path: 'http://hl7.org/fhir/R4'
         }
@@ -310,8 +310,6 @@ const patientTypeSchema: cg.ITypeSchema = {
   }
 }
 
-;
-;
 
 
 let questionnaireFHIRSchema: cg.FHIRSchema = {
@@ -319,7 +317,7 @@ let questionnaireFHIRSchema: cg.FHIRSchema = {
   name: 'Questionnaire',
   meta: {
     package: {
-      name: 'hl7.fhir.r4.core',
+      url: 'hl7.fhir.r4.core',
       version: '4.0.1',
     }
   },
@@ -424,7 +422,7 @@ let observationFHIRSchema: cg.FHIRSchema = {
   url: "http://hl7.org/fhir/StructureDefinition/Observation",
   meta: {
     package: {
-      name: "hl7.fhir.r4.core",
+      url: "hl7.fhir.r4.core",
       version: "4.0.1",
       path: "/tmp/lw-fhir-schema-repository/hl7.fhir.r4.core#4.0.1"
     }
@@ -523,4 +521,4 @@ describe('lookup', () => {
     let loader = new cg.SchemaLoader();
     await loader.packageLookup('hl7.fhir');
   });
-}); 
+});

@@ -1,9 +1,6 @@
-import { Generator } from '../src/generator';
 import * as fs from 'fs';
 import * as path from 'path';
-
-console.log(__dirname);
-
+import { Generator } from '../src/generator';
 
 class TestGenerator extends Generator {
     generate() {
@@ -25,6 +22,7 @@ class TestGenerator extends Generator {
         });
     }
 }
+
 
 describe('Generator', () => {
     let g: Generator;
@@ -61,4 +59,4 @@ describe('Generator', () => {
         expect(g.readFile("package.json")).toEqual(JSON.stringify({ name: "test", version: "0.0.1" }, null, 2));
     });
 
-}); 
+});
