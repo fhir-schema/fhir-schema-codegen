@@ -7,8 +7,6 @@ import { TypeScriptGenerator } from './generators/typescript';
 import { SchemaLoader } from './loader';
 import path from 'path';
 import fs from 'fs';
-import { log } from 'console';
-
 
 const generators = {
   typescript: TypeScriptGenerator,
@@ -17,7 +15,6 @@ const generators = {
 }
 
 const program = new Command();
-
 program
   .name('fhirschema-codegen')
   .description('Generate code from FHIR Schema')
