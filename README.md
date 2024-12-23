@@ -1,4 +1,4 @@
-# Your Project Name
+# FHIR Schema Codegen
 
 [![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)   
 
