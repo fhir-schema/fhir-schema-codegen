@@ -1,7 +1,7 @@
 import { TypeSchema } from './typeschema';
 
 export const words = (s: string) => {
-    return s.split(/(?<=[a-z])(?=[A-Z])|[-_\s]/).filter(Boolean);
+    return s.split(/(?<=[a-z])(?=[A-Z])|[-_.\s]/).filter(Boolean);
 };
 
 export const capitalCase = (s: string) => {
