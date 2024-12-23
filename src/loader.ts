@@ -99,8 +99,8 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
     } else if(field.elementReference) {
         type = 'nested'
         const path = [...field.elementReference.slice(1)].filter(part => part !== 'elements');
+        parent = root.name
         typename = typeschema.name.name + path.map(capCase).join('');
-        // console.log('elementReference', typename);
     } else {
         // console.log('Unknown field type: ' + JSON.stringify(field))
         typename = 'unknown';
