@@ -69,7 +69,7 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
         parent = root.name;
         type = 'nested';
 
-        let pkgname = root.meta?.package?.name || '';
+        let pkgname = root.meta?.package?.url || '';
         let nestedschema = new TypeSchema({
             kind: 'nested',
             name: {
@@ -106,7 +106,7 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
         typename = 'unknown';
         type = 'unknown';
     }
-    let pkgname = root.meta?.package?.name || '';
+    let pkgname = root.meta?.package?.url || '';
     let typeref: TypeRef = {
         name: typename,
         package: pkgname,
@@ -185,7 +185,7 @@ export function convert(schema: FHIRSchema): TypeSchema {
 
     assert(kind !== 'unknown', 'Unknown schema kind: ' + schema.kind + '/' + schema.derivation + ' ' + JSON.stringify(schema));
 
-    let pkgname = schema.meta?.package?.name || '';
+    let pkgname = schema.meta?.package?.url || '';
     let res: TypeSchema = new TypeSchema({
         kind: kind,
         name: { name: schema.name, package: pkgname},
