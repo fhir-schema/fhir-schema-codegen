@@ -97,3 +97,18 @@ export const removeConstraints = (shemas: TypeSchema[]): TypeSchema[] => {
         return schema.derivation !== 'constraint';
     });
 };
+
+
+export const groupedByPackage = (schemas: TypeSchema[]): Record<string, TypeSchema[]> => {
+    let result: Record<string, TypeSchema[]> = {}
+
+    for (const schema of schemas) {
+        if (!result[schema.name.package]) {
+            result[schema.name.package] = []
+        }
+        result[schema.name.package].push(schema)
+    }
+
+
+    return result
+}

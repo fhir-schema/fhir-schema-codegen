@@ -1,6 +1,6 @@
 import { Generator, GeneratorOptions } from '@fscg/generator';
 import { TypeRef, TypeSchema } from '@fscg/typeschema';
-import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints } from '@fscg/utils';
+import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '@fscg/utils';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -37,8 +37,12 @@ const typeMap: Record<string, string> = {
     xhtml: 'str',
 };
 
+
 const injectSuperClasses = (name: string) => {
-    if (name === 'Resource') return ['API'];
+    if (name === 'Resource' || name === 'Element') {
+        return ['BaseModel_'];
+    }
+
     return [];
 };
 
@@ -78,6 +82,8 @@ const pythonKeywords = new Set([
     'while',
     'with',
     'yield',
+    // typings
+    'List'
 ]);
 
 const fixReservedWords = (name: string) => {
@@ -137,6 +143,8 @@ export class PythonGenerator extends Generator {
             }
 
             let fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
+            this.line(`resourceType: Literal['${className}'] = '${className}'`)
+
             for (const [fieldName, field] of fields) {
                 let fieldType = this.toLangType(field.type);
                 let defaultValue = '';
@@ -159,7 +167,7 @@ export class PythonGenerator extends Generator {
     default_imports() {
         this.line('from __future__ import annotations');
         this.line('from', 'pydantic', 'import', '*');
-        this.line('from', 'typing', 'import', ['Optional', 'List'].join(', '));
+        this.line('from', 'typing', 'import', ['Optional', 'List', 'Literal'].join(', '));
     }
 
     generateNestedTypes(schema: TypeSchema) {
@@ -176,43 +184,75 @@ export class PythonGenerator extends Generator {
         if (schema.allDependencies) {
             for (const deps of schema.allDependencies) {
                 if (deps.type === 'resource') {
-                    this.line('from', snakeCase(deps.name), 'import', '*');
+                    this.line('from', `.${snakeCase(deps.name)}`, 'import', '*');
                 }
             }
         }
     }
 
+    generateBaseModel() {
+        this.curlyBlock(['class BaseModel_(BaseModel)'], async () => {
+            this.line('pass');
+        })
+    }
+
+    generateReExport() {
+
+    }
+
     generate() {
-        this.dir('src', async () => {
-            this.file('__init__.py', () => {});
-            this.file('complex_types.py', () => {
-                // TODO: add comment about auto-generated file
-                this.default_imports();
-                this.line();
+        this.dir('.', async () => {
+            this.file('__init__.py', () => { });
+            const groupedComplexTypes = groupedByPackage(this.loader.complexTypes())
+            const groupedResources = groupedByPackage(this.loader.resources())
 
-                for (let schema of sortSchemasByDeps(removeConstraints(this.loader.complexTypes()))) {
-                    this.generateNestedTypes(schema);
-                    this.line();
-                    this.generateType(schema);
-                }
-            });
+            for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
+                this.dir(snakeCase(packageName), () => {
+                    this.file('base.py', () => {
+                        // TODO: add comment about auto-generated file
+                        this.default_imports();
+                        this.line();
 
-            for (let schema of removeConstraints(this.loader.resources())) {
-                this.file(snakeCase(schema.name.name) + '.py', () => {
-                    this.default_imports();
-                    this.line();
+                        this.generateBaseModel()
 
-                    this.line('from', 'complex_types', 'import', '*');
-                    this.generateDependenciesImports(schema);
-                    this.line();
-
-                    this.generateNestedTypes(schema);
-
-                    this.line('# Resource Type');
-                    this.line();
-                    this.generateType(schema);
-                });
+                        for (let schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
+                            this.generateNestedTypes(schema);
+                            this.line();
+                            this.generateType(schema);
+                        }
+                    });
+                })
             }
+
+            for (const [packageName, packageResources] of Object.entries(groupedResources)) {
+                this.dir(snakeCase(packageName), () => {
+                    this.file('__init__.py', () => {
+                        const names = removeConstraints(packageResources).map(schema => schema.name)
+
+                        for (let schemaName of names) {
+                            this.line(`from .${snakeCase(schemaName.name)} import ${makeClassName(schemaName)}`)
+                        }
+                    });
+
+                    for (let schema of removeConstraints(packageResources)) {
+                        this.file(snakeCase(schema.name.name) + '.py', () => {
+                            this.default_imports();
+                            this.line();
+
+                            this.line('from', '.base', 'import', '*');
+                            this.generateDependenciesImports(schema);
+                            this.line();
+
+                            this.generateNestedTypes(schema);
+
+                            this.line('# Resource Type');
+                            this.line();
+                            this.generateType(schema);
+                        });
+                    }
+                })
+            }
+
         });
     }
 }
