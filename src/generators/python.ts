@@ -3,7 +3,7 @@ import { TypeRef, TypeSchema } from '@fscg/typeschema';
 import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '@fscg/utils';
 
 // Naming conventions
-// directory naming: kebab-case
+// directory naming: snake_case
 // file naming: snake_case
 // function naming: snake_case
 // class naming: PascalCase
@@ -194,10 +194,6 @@ export class PythonGenerator extends Generator {
         this.curlyBlock(['class BaseModel_(BaseModel)'], async () => {
             this.line('pass');
         })
-    }
-
-    generateReExport() {
-
     }
 
     generate() {

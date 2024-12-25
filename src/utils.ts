@@ -45,16 +45,6 @@ const buildDependencyGraph = (schemas: TypeSchema[]): Record<string, string[]> =
         if (base && nameToMap[base]) {
             graph[name].push(base);
         }
-        // Doesn't make sense to check fields due to cycle dependencies
-        // if (schema.fields) {
-        //     for (const [_fieldName, field] of Object.entries(schema.fields)) {
-        //         const fieldType = field.type.name;
-        //         if (nameToMap[fieldType]) {
-        //             console.log(name, " <- ", fieldType)
-        //             graph[name].push(fieldType);
-        //         }
-        //     }
-        // }
     }
     return graph;
 };
