@@ -182,10 +182,13 @@ export class PythonGenerator extends Generator {
 
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.allDependencies) {
-            for (const deps of schema.allDependencies) {
-                if (deps.type === 'resource') {
-                    this.line('from', `.${snakeCase(deps.name)}`, 'import', '*');
-                }
+            const complexTypesDeps = schema.allDependencies.filter(deps => deps.type === 'complex-type')
+            const resourceDeps = schema.allDependencies.filter(deps => deps.type === 'resource')
+
+            this.line('from', `.base`, 'import', `${complexTypesDeps.map(deps => deps.name).join(', ')}`);
+
+            for (const deps of resourceDeps) {
+                this.line('from', `.${snakeCase(deps.name)}`, 'import', `${pascalCase(deps.name)}`);
             }
         }
     }
@@ -205,6 +208,7 @@ export class PythonGenerator extends Generator {
     generate() {
         this.dir('.', async () => {
             this.file('__init__.py', () => { });
+
             const groupedComplexTypes = groupedByPackage(this.loader.complexTypes())
             const groupedResources = groupedByPackage(this.loader.resources())
 
@@ -244,7 +248,6 @@ export class PythonGenerator extends Generator {
                             this.default_imports();
                             this.line();
 
-                            this.line('from', '.base', 'import', '*');
                             this.generateDependenciesImports(schema);
                             this.line();
 
