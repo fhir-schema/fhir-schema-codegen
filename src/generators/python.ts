@@ -205,45 +205,36 @@ export class PythonGenerator extends Generator {
         this.line('# Any manual changes made to this file may be overwritten.');
     }
 
-    generate() {
-        this.dir('.', async () => {
-            this.file('__init__.py', () => { });
+    generateBasePy(packageComplexTypes: TypeSchema[]) {
+        this.file('base.py', () => {
+            this.generateDisclaimer();
+            this.line();
+            this.default_imports();
+            this.line();
 
-            const groupedComplexTypes = groupedByPackage(this.loader.complexTypes())
-            const groupedResources = groupedByPackage(this.loader.resources())
+            this.generateBaseModel();
 
-            for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
-                this.dir(snakeCase(packageName), () => {
-                    this.file('base.py', () => {
-                        this.generateDisclaimer();
-                        this.line();
-                        this.default_imports();
-                        this.line();
-
-                        this.generateBaseModel()
-
-                        for (let schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
-                            this.generateNestedTypes(schema);
-                            this.line();
-                            this.generateType(schema);
-                        }
-                    });
-                })
+            for (let schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
+                this.generateNestedTypes(schema);
+                this.line();
+                this.generateType(schema);
             }
+        });
+    }
 
-            for (const [packageName, packageResources] of Object.entries(groupedResources)) {
-                this.dir(snakeCase(packageName), () => {
-                    this.file('__init__.py', () => {
-                        const names = removeConstraints(packageResources).map(schema => schema.name)
+    generateResourcePackageInit(packageResources: TypeSchema[]) {
+        this.file('__init__.py', () => {
+            const names = removeConstraints(packageResources).map((schema) => schema.name);
 
-                        for (let schemaName of names) {
-                            this.line(`from .${snakeCase(schemaName.name)} import ${makeClassName(schemaName)}`)
-                        }
-                    });
+            for (let schemaName of names) {
+                this.line(`from .${snakeCase(schemaName.name)} import ${makeClassName(schemaName)}`);
+            }
+        });
+    }
 
-                    for (let schema of removeConstraints(packageResources)) {
-                        this.file(snakeCase(schema.name.name) + '.py', () => {
-                            this.generateDisclaimer();
+    generateResourceModule(schema: TypeSchema) {
+        this.file(snakeCase(schema.name.name) + '.py', () => {
+            this.generateDisclaimer();
                             this.line();
                             this.default_imports();
                             this.line();
@@ -255,12 +246,30 @@ export class PythonGenerator extends Generator {
 
                             this.line('# Resource Type');
                             this.line();
-                            this.generateType(schema);
-                        });
-                    }
-                })
+            this.generateType(schema);
+        });
+    }
+
+    generate() {
+        this.dir('.', async () => {
+            this.file('__init__.py', () => {});
+
+            const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
+            for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
+                this.dir(snakeCase(packageName), () => {
+                    this.generateBasePy(packageComplexTypes);
+                });
             }
 
+            const groupedResources = groupedByPackage(this.loader.resources());
+            for (const [packageName, packageResources] of Object.entries(groupedResources)) {
+                this.dir(snakeCase(packageName), () => {
+                    this.generateResourcePackageInit(packageResources);
+                    for (let schema of removeConstraints(packageResources)) {
+                        this.generateResourceModule(schema);
+                    }
+                });
+            }
         });
     }
 }
