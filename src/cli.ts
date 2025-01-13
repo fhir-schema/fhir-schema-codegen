@@ -11,7 +11,7 @@ import fs from 'fs';
 const generators = {
   typescript: TypeScriptGenerator,
   csharp: CSharpGenerator,
-  python: PythonGenerator
+  'python-fhir-py': PythonGenerator
 }
 
 const program = new Command();
