@@ -252,8 +252,6 @@ export class PythonGenerator extends Generator {
 
     generate() {
         this.dir('.', async () => {
-            this.file('__init__.py', () => {});
-
             const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
             for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
                 this.dir(snakeCase(packageName), () => {
