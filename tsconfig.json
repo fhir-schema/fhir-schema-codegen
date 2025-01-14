@@ -8,8 +8,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@fscg/*": ["*"]
+    },
     "rootDir": "./src"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
-} 
+}

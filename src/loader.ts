@@ -69,7 +69,7 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
         parent = root.name;
         type = 'nested';
 
-        let pkgname = root.meta?.package?.name || '';
+        let pkgname = root.meta?.package?.url || '';
         let nestedschema = new TypeSchema({
             kind: 'nested',
             name: {
@@ -99,14 +99,14 @@ function convertField( dest: TypeSchema, root: FHIRSchema, typeschema: TypeSchem
     } else if(field.elementReference) {
         type = 'nested'
         const path = [...field.elementReference.slice(1)].filter(part => part !== 'elements');
+        parent = root.name
         typename = typeschema.name.name + path.map(capCase).join('');
-        // console.log('elementReference', typename);
     } else {
         // console.log('Unknown field type: ' + JSON.stringify(field))
         typename = 'unknown';
         type = 'unknown';
     }
-    let pkgname = root.meta?.package?.name || '';
+    let pkgname = root.meta?.package?.url || '';
     let typeref: TypeRef = {
         name: typename,
         package: pkgname,
@@ -185,10 +185,11 @@ export function convert(schema: FHIRSchema): TypeSchema {
 
     assert(kind !== 'unknown', 'Unknown schema kind: ' + schema.kind + '/' + schema.derivation + ' ' + JSON.stringify(schema));
 
-    let pkgname = schema.meta?.package?.name || '';
+    let pkgname = schema.meta?.package?.url || '';
     let res: TypeSchema = new TypeSchema({
         kind: kind,
-        name: { name: schema.name, package: pkgname }
+        name: { name: schema.name, package: pkgname},
+        derivation: schema.derivation,
     });
 
     if (schema.base) {

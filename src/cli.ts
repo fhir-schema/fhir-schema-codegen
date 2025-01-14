@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { TypeScriptGenerator } from './generators/typescript';
 import { CSharpGenerator } from './generators/csharp';
+import { PythonGenerator } from './generators/python';
+import { TypeScriptGenerator } from './generators/typescript';
 import { SchemaLoader } from './loader';
 import path from 'path';
 import fs from 'fs';
 
-
 const generators = {
   typescript: TypeScriptGenerator,
-  csharp: CSharpGenerator
+  csharp: CSharpGenerator,
+  'python-fhir-py': PythonGenerator
 }
 
 const program = new Command();
-
 program
   .name('fhirschema-codegen')
   .description('Generate code from FHIR Schema')
@@ -49,41 +49,27 @@ program.command('generate')
   .requiredOption('-p, --package <package>', 'FHIR package name')
   .option('-c, --generateClasses <boolean>', 'Generate classes instead of interfaces (typescript only)', 'false')
   .action(async (options) => {
-    console.log(options);
     const outputDir = path.resolve(process.cwd(), options.output);
     
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    let generator;
-    switch (options.generator) {
-      case "typescript":
-        generator = new generators.typescript({
-          outputDir,
-          loaderOptions: {
-            packages: options.package.split(",").map((pkg: string) => pkg.trim()),
-          },
-          generateClasses: options.generateClasses,
-        });
-        await generator.init();
-        await generator.generate();
-        break;
-      case "csharp":
-        generator = new generators.csharp({
-          outputDir,
-          loaderOptions: {
-            packages: options.package.split(",").map((pkg: string) => pkg.trim()),
-          },
-          generateClasses: options.generateClasses,
-        });
-        await generator.init();
-        await generator.generate();
-        break;
-      default:
-        console.error(`Unknown generator: ${options.generator}`);
-        process.exit(1);
+    if (!(options.generator in generators)) {
+      console.error(`Unknown generator: ${options.generator}`);
+      process.exit(1);
     }
+
+    const generator = new generators[options.generator as keyof typeof generators]({
+      outputDir,
+      loaderOptions: {
+        packages: options.package.split(",").map((pkg: string) => pkg.trim()),
+      },
+      ...options
+    });
+
+    await generator.init()
+    generator.generate();
   });
 
 program.parse();
