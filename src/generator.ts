@@ -6,17 +6,18 @@ export interface GeneratorOptions {
     outputDir: string;
     loaderOptions?: LoaderOptions;
     tabSize?: number;
+    staticDir?: string;
 }
 
 export class Generator {
-
-    private opts: GeneratorOptions;
     private fileDescriptor: number | null = null;
     private currentDir: string | null = null;
+    private opts: GeneratorOptions;
+    protected staticDir?: string;
     filePath?: string;
     identLevel = 0;
     loader: SchemaLoader;
-
+    
     constructor(opts: GeneratorOptions) {
         this.opts = opts;
         this.currentDir = opts.outputDir || null;
@@ -24,8 +25,8 @@ export class Generator {
     }
 
     clear() {
-        if(this.opts.outputDir) {
-            console.log("rm", this.opts.outputDir);
+        if (this.opts.outputDir) {
+            console.log('rm', this.opts.outputDir);
             return fs.rmSync(this.opts.outputDir, { recursive: true, force: true });
         }
     }
@@ -38,14 +39,13 @@ export class Generator {
         await this.loader.load();
     }
 
-    generate() {
-    }
+    generate() {}
 
     dir(path: string, gencontent: () => void) {
         this.currentDir = Path.join(this.opts.outputDir || '', path);
         if (!fs.existsSync(this.currentDir)) {
             fs.mkdirSync(this.currentDir, { recursive: true });
-            console.log("mkdir", this.currentDir);
+            console.log('mkdir', this.currentDir);
         }
         gencontent();
     }
@@ -54,9 +54,9 @@ export class Generator {
         this.filePath = Path.join(this.currentDir || '', path);
         if (!fs.existsSync(Path.dirname(this.filePath))) {
             fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
-            console.log("mkdir", Path.dirname(this.filePath));
+            console.log('mkdir', Path.dirname(this.filePath));
         }
-        console.log("file", this.filePath);
+        console.log('file', this.filePath);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
 
         gencontent();
@@ -72,7 +72,7 @@ export class Generator {
 
     ensureCurrentFile() {
         if (!this.fileDescriptor) {
-            throw new Error("No current file");
+            throw new Error('No current file');
         }
     }
 
@@ -118,7 +118,11 @@ export class Generator {
         this.identLevel--;
     }
 
-    token(...tokens: string[]) {
+    token(...tokens: string[]) {}
 
+    copyStaticFiles() {
+        if (this.staticDir) {
+            fs.cpSync(this.staticDir, this.opts.outputDir, { recursive: true });
+        }
     }
 }
