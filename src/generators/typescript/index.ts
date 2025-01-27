@@ -1,7 +1,7 @@
 import path from 'path';
 
 import { Generator, GeneratorOptions } from '@fscg/generator';
-import { TypeSchema } from '@fscg/typeschema';
+import { ClassField, TypeSchema } from '@fscg/typeschema';
 import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '@fscg/utils';
 
 // Naming conventions
@@ -10,9 +10,7 @@ import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '@fsc
 // function naming: camelCase
 // class naming: PascalCase
 
-export interface TypeScriptGeneratorOptions extends GeneratorOptions {
-    generateClasses?: boolean;
-}
+export interface TypeScriptGeneratorOptions extends GeneratorOptions {}
 
 const typeMap: Record<string, string> = {
     boolean: 'boolean',
@@ -116,22 +114,19 @@ const keywords = new Set([
 
 export class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
-        super(opts);
+        const defaultTabSize = opts.tabSize ?? 4;
+        super({ tabSize: defaultTabSize, ...opts });
+
         this.staticDir = path.resolve(__dirname, 'static');
     }
 
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.allDependencies) {
-            const complexTypesDeps = schema.allDependencies.filter((deps) => deps.type === 'complex-type');
-            const resourceDeps = schema.allDependencies.filter((deps) => deps.type === 'resource');
+            const deps = schema.allDependencies
+                .filter((dep) => dep.type === 'complex-type' || dep.type === 'resource')
+                .sort((a, b) => a.name.localeCompare(b.name));
 
-            for (const dep of complexTypesDeps) {
-                this.lineSM(`import { ${dep.name} } from './${dep.name}'`);
-            }
-
-            this.line()
-
-            for (const dep of resourceDeps) {
+            for (const dep of deps) {
                 this.lineSM(`import { ${dep.name} } from './${dep.name}'`);
             }
         }
@@ -145,7 +140,7 @@ export class TypeScriptGenerator extends Generator {
 
     generateNestedTypes(schema: TypeSchema) {
         if (schema.nestedTypes) {
-            this.line('// Nested Types');
+            // this.line('// Nested Types');
             this.line();
             for (let subtype of schema.nestedTypes) {
                 this.generateType(subtype);
@@ -154,24 +149,32 @@ export class TypeScriptGenerator extends Generator {
     }
 
     generateType(schema: TypeSchema) {
-        let base = schema.base ? 'extends ' + schema.base.name : '';
-        this.curlyBlock(['export', 'interface', schema.name.name, base], () => {
+        let base = schema.base ? '= ' + schema.base.name + ' &' : '';
+        this.curlyBlock(['export', 'type', schema.name.name, base], () => {
             if (schema.fields) {
-                for (const [fieldName, field] of Object.entries(schema.fields).sort((a, b) =>
-                    a[0].localeCompare(b[0])
-                )) {
+                const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
+
+                // adding resourceType field
+                if (schema.kind === 'resource') {
+                    this.lineSM(`resourceType: '${schema.name.name}'`);
+                }
+
+                for (const [fieldName, field] of fields) {
                     let tp = field.type.name;
                     let type = tp;
                     let fieldSymbol = fieldName;
-                    if (!field.required) {
-                        fieldSymbol += '?';
-                    }
+                    let optionalSymbol = field.required ? '' : '?';
+                    
                     if (field.type.type == 'primitive-type') {
                         type = typeMap[tp] || 'string';
                     } else {
                         type = field.type.name;
                     }
-                    this.lineSM(fieldSymbol, ':', type + (field.array ? '[]' : ''));
+                    this.lineSM(fieldSymbol + optionalSymbol + ':', type + (field.array ? '[]' : ''));
+
+                    if ((schema.kind === 'resource' || schema.kind === 'complex-type') && field.type.type == 'primitive-type') {
+                        this.lineSM('_' + fieldSymbol + '?' +':', 'Element');
+                    }
                 }
             }
         });
@@ -180,16 +183,15 @@ export class TypeScriptGenerator extends Generator {
 
     generateResourceModule(schema: TypeSchema) {
         this.file(pascalCase(schema.name.name) + '.ts', () => {
-            this.generateDisclaimer();
-            this.line();
+            // this.generateDisclaimer();
+            // this.line();
 
             this.generateDependenciesImports(schema);
             this.line();
 
             this.generateNestedTypes(schema);
 
-            this.line('// Resource Type');
-            this.line();
+            // this.line('// Resource Type');
             this.generateType(schema);
         });
     }
