@@ -287,7 +287,7 @@ export class SchemaLoader {
     async loadPackage(pkg: string) {
         return read_ndjson_gz(this.packageURL(pkg), (resource) => {
             let rt = resource.resourceType;
-            console.log('*', rt);
+            // console.log('*', rt);
             this.canonicalResources[rt] ||= []
             this.canonicalResources[rt].push(resource);
         });
