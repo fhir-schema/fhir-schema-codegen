@@ -1,5 +1,5 @@
-import { Generator, GeneratorOptions } from "../generator";
-import { TypeRef, TypeSchema } from "../typeschema";
+import { Generator, GeneratorOptions } from "../../generator";
+import { TypeRef, TypeSchema } from "../../typeschema";
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;
@@ -124,3 +124,5 @@ export class CSharpGenerator extends Generator {
         })
     }
 }   
+
+export const createGenerator = (options: CSharpScriptGeneratorOptions) => new CSharpGenerator(options);

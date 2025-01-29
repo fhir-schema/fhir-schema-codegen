@@ -1,18 +1,22 @@
 import * as fs from 'fs';
 import * as Path from 'path';
 import { SchemaLoader, type LoaderOptions } from './loader';
+import { ClassField } from './typeschema';
 
 export interface GeneratorOptions {
     outputDir: string;
+    staticDir?: string;
     loaderOptions?: LoaderOptions;
     tabSize?: number;
+
+    typeMap?: Record<string, string>;
+    keywords?: Set<string>;
 }
 
 export class Generator {
-
-    private opts: GeneratorOptions;
     private fileDescriptor: number | null = null;
     private currentDir: string | null = null;
+    private opts: GeneratorOptions;
     filePath?: string;
     identLevel = 0;
     loader: SchemaLoader;
@@ -24,8 +28,8 @@ export class Generator {
     }
 
     clear() {
-        if(this.opts.outputDir) {
-            console.log("rm", this.opts.outputDir);
+        if (this.opts.outputDir) {
+            console.log('rm', this.opts.outputDir);
             return fs.rmSync(this.opts.outputDir, { recursive: true, force: true });
         }
     }
@@ -38,14 +42,13 @@ export class Generator {
         await this.loader.load();
     }
 
-    generate() {
-    }
+    generate() {}
 
     dir(path: string, gencontent: () => void) {
         this.currentDir = Path.join(this.opts.outputDir || '', path);
         if (!fs.existsSync(this.currentDir)) {
             fs.mkdirSync(this.currentDir, { recursive: true });
-            console.log("mkdir", this.currentDir);
+            console.log('mkdir', this.currentDir);
         }
         gencontent();
     }
@@ -54,9 +57,9 @@ export class Generator {
         this.filePath = Path.join(this.currentDir || '', path);
         if (!fs.existsSync(Path.dirname(this.filePath))) {
             fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
-            console.log("mkdir", Path.dirname(this.filePath));
+            console.log('mkdir', Path.dirname(this.filePath));
         }
-        console.log("file", this.filePath);
+        console.log('file', this.filePath);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
 
         gencontent();
@@ -72,7 +75,7 @@ export class Generator {
 
     ensureCurrentFile() {
         if (!this.fileDescriptor) {
-            throw new Error("No current file");
+            throw new Error('No current file');
         }
     }
 
@@ -82,7 +85,7 @@ export class Generator {
     }
 
     writeIdent() {
-        this.write(' '.repeat(this.identLevel * (this.opts.tabSize || 2)));
+        this.write(' '.repeat(this.identLevel * (this.opts.tabSize ?? 4)));
     }
 
     line(...tokens: string[]) {
@@ -118,7 +121,30 @@ export class Generator {
         this.identLevel--;
     }
 
-    token(...tokens: string[]) {
+    token(...tokens: string[]) {}
 
+    getFieldName(name: string) {
+        const keywords = this.opts.keywords ?? new Set();
+        if (keywords.has(name)) {
+            return name + '_';
+        }
+        return name;
+    }
+
+    getFieldType(field: ClassField) {
+        if (field.type.type === 'primitive-type') {
+            const typeMap = this.opts.typeMap ?? {};
+            return typeMap[field.type.name] ?? 'string';
+        }
+
+        return field.type.name;
+    }
+
+    copyStaticFiles() {
+        if (!this.opts.staticDir) {
+            throw new Error('staticDir must be set in subclass.');
+        }
+
+        fs.cpSync(Path.resolve(this.opts.staticDir), this.opts.outputDir, { recursive: true });
     }
 }
