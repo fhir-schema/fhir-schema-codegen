@@ -200,17 +200,10 @@ export class TypeScriptGenerator extends Generator {
         this.copyStaticFiles();
 
         this.dir('types', async () => {
-            const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
-            for (const [packageName, packageResources] of Object.entries(groupedComplexTypes)) {
-                this.dir(path.join('types', kebabCase(packageName)), () => {
-                    for (let schema of removeConstraints(packageResources)) {
-                        this.generateResourceModule(schema);
-                    }
-                });
-            }
+            const typesToGenerate = [...this.loader.complexTypes(), ...this.loader.resources()];
 
-            const groupedResources = groupedByPackage(this.loader.resources());
-            for (const [packageName, packageResources] of Object.entries(groupedResources)) {
+            const groupedComplexTypes = groupedByPackage(typesToGenerate);
+            for (const [packageName, packageResources] of Object.entries(groupedComplexTypes)) {
                 this.dir(path.join('types', kebabCase(packageName)), () => {
                     for (let schema of removeConstraints(packageResources)) {
                         this.generateResourceModule(schema);
