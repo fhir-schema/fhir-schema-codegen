@@ -9,7 +9,6 @@ class TestGenerator extends Generator {
             version: "0.0.1"
         });
 
-
         this.dir("src", async () => {
             this.file("User.ts", () => {
                 this.line('import * as fs from "fs";')
@@ -50,8 +49,8 @@ describe('Generator', () => {
                 'import * as fs from "fs";',
                 '',
                 'class User {',
-                '  name : string;',
-                '  age : string;',
+                '    name : string;',
+                '    age : string;',
                 '}'
 
             ]);

@@ -1,6 +1,6 @@
-import { Generator, GeneratorOptions } from '@fscg/generator';
-import { TypeRef, TypeSchema } from '@fscg/typeschema';
-import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '@fscg/utils';
+import { Generator, GeneratorOptions } from '../../generator';
+import { TypeRef, TypeSchema } from '../../typeschema';
+import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '../../utils';
 
 // Naming conventions
 // directory naming: snake_case
@@ -8,7 +8,7 @@ import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByP
 // function naming: snake_case
 // class naming: PascalCase
 
-export interface PythonGeneratorOptions extends GeneratorOptions {}
+export type PythonGeneratorOptions = GeneratorOptions;
 
 const typeMap: Record<string, string> = {
     boolean: 'bool',
@@ -103,7 +103,7 @@ const makeClassName = (fhirType: TypeRef): string => {
 
 export class PythonGenerator extends Generator {
     constructor(opts: PythonGeneratorOptions) {
-        super({ ...opts, tabSize: 4 });
+        super(opts);
     }
 
     toLangType(fhirType: TypeRef) {
@@ -270,3 +270,6 @@ export class PythonGenerator extends Generator {
         });
     }
 }
+
+
+export const createGenerator = (options: PythonGeneratorOptions) => new PythonGenerator(options);

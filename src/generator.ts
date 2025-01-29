@@ -1,23 +1,26 @@
 import * as fs from 'fs';
 import * as Path from 'path';
 import { SchemaLoader, type LoaderOptions } from './loader';
+import { ClassField } from './typeschema';
 
 export interface GeneratorOptions {
     outputDir: string;
+    staticDir?: string;
     loaderOptions?: LoaderOptions;
     tabSize?: number;
-    staticDir?: string;
+
+    typeMap?: Record<string, string>;
+    keywords?: Set<string>;
 }
 
 export class Generator {
     private fileDescriptor: number | null = null;
     private currentDir: string | null = null;
     private opts: GeneratorOptions;
-    protected staticDir?: string;
     filePath?: string;
     identLevel = 0;
     loader: SchemaLoader;
-    
+
     constructor(opts: GeneratorOptions) {
         this.opts = opts;
         this.currentDir = opts.outputDir || null;
@@ -82,7 +85,7 @@ export class Generator {
     }
 
     writeIdent() {
-        this.write(' '.repeat(this.identLevel * (this.opts.tabSize || 2)));
+        this.write(' '.repeat(this.identLevel * (this.opts.tabSize ?? 4)));
     }
 
     line(...tokens: string[]) {
@@ -120,9 +123,28 @@ export class Generator {
 
     token(...tokens: string[]) {}
 
-    copyStaticFiles() {
-        if (this.staticDir) {
-            fs.cpSync(this.staticDir, this.opts.outputDir, { recursive: true });
+    getFieldName(name: string) {
+        const keywords = this.opts.keywords ?? new Set();
+        if (keywords.has(name)) {
+            return name + '_';
         }
+        return name;
+    }
+
+    getFieldType(field: ClassField) {
+        if (field.type.type === 'primitive-type') {
+            const typeMap = this.opts.typeMap ?? {};
+            return typeMap[field.type.name] ?? 'string';
+        }
+
+        return field.type.name;
+    }
+
+    copyStaticFiles() {
+        if (!this.opts.staticDir) {
+            throw new Error('staticDir must be set in subclass.');
+        }
+
+        fs.cpSync(Path.resolve(this.opts.staticDir), this.opts.outputDir, { recursive: true });
     }
 }

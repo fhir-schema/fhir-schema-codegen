@@ -250,9 +250,9 @@ export class SchemaLoader {
     async packageLookup(text:string): Promise<void> {
         console.log('Looking up packages:', text.replace(' ', '%'));
         return read_ndjson_gz('http://get-ig.org/Package/$lookup?name=' + text.replace(' ', '%20'), (pkg) => {
-            console.log('\x1b[1m* ' + pkg.name + '\x1b[0m');
+            // console.log('\x1b[1m* ' + pkg.name + '\x1b[0m');
             for (let version of (pkg.versions || []).reverse()) {
-                console.log('  -', pkg.name + ':' + version);
+                // console.log('  -', pkg.name + ':' + version);
             }
             return pkg;
         });

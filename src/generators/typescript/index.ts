@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { Generator, GeneratorOptions } from '@fscg/generator';
-import { ClassField, TypeSchema } from '@fscg/typeschema';
-import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '@fscg/utils';
+import { Generator, GeneratorOptions } from '../../generator';
+import { ClassField, TypeSchema } from '../../typeschema';
+import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -10,9 +10,11 @@ import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '@fsc
 // function naming: camelCase
 // class naming: PascalCase
 
-export interface TypeScriptGeneratorOptions extends GeneratorOptions {}
+export interface TypeScriptGeneratorOptions extends GeneratorOptions {
+    // tabSize: 2
+}
 
-const typeMap: Record<string, string> = {
+const typeMap = {
     boolean: 'boolean',
     instant: 'string',
     time: 'string',
@@ -39,85 +41,28 @@ const typeMap: Record<string, string> = {
     xhtml: 'string',
 };
 
+// prettier-ignore
 const keywords = new Set([
-    'abstract',
-    'any',
-    'as',
-    'async',
-    'await',
-    'boolean',
-    'bigint',
-    'break',
-    'case',
-    'catch',
-    'class',
-    'const',
-    'constructor',
-    'continue',
-    'debugger',
-    'declare',
-    'default',
-    'delete',
-    'do',
-    'else',
-    'enum',
-    'export',
-    'extends',
-    'extern',
-    'false',
-    'finally',
-    'for',
-    'function',
-    'from',
-    'get',
-    'goto',
-    'if',
-    'implements',
-    'import',
-    'in',
-    'infer',
-    'instanceof',
-    'interface',
-    'keyof',
-    'let',
-    'module',
-    'namespace',
-    'never',
-    'new',
-    'null',
-    'number',
-    'object',
-    'of',
-    'override',
-    'private',
-    'protected',
-    'public',
-    'readonly',
-    'return',
-    'satisfies',
-    'set',
-    'static',
-    'string',
-    'super',
-    'switch',
-    'this',
-    'throw',
-    'true',
-    'try',
-    'type',
-    'typeof',
-    'unknown',
-    'var',
-    'void',
-    'while',
+    'abstract', 'any', 'as', 'async', 'await', 'boolean', 'bigint', 'break', 
+    'case', 'catch', 'class', 'const', 'constructor', 'continue', 'debugger', 
+    'declare', 'default', 'delete', 'do', 'else', 'enum', 'export', 'extends', 
+    'extern', 'false', 'finally', 'for', 'function', 'from', 'get', 'goto', 'if', 
+    'implements', 'import', 'in', 'infer', 'instanceof', 'interface', 'keyof', 
+    'let', 'module', 'namespace', 'never', 'new', 'null', 'number', 'object', 
+    'of', 'override', 'private', 'protected', 'public', 'readonly', 'return', 
+    'satisfies', 'set', 'static', 'string', 'super', 'switch', 'this', 'throw', 
+    'true', 'try', 'type', 'typeof', 'unknown', 'var', 'void', 'while',
 ]);
+
 
 export class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
-        const defaultTabSize = opts.tabSize ?? 4;
-        super({ tabSize: defaultTabSize, ...opts });
-
-        this.staticDir = path.resolve(__dirname, 'static');
+        super({
+            ...opts,
+            typeMap,
+            keywords,
+            staticDir: path.resolve(__dirname, 'static'),
+        });
     }
 
     generateDependenciesImports(schema: TypeSchema) {
@@ -140,7 +85,7 @@ export class TypeScriptGenerator extends Generator {
 
     generateNestedTypes(schema: TypeSchema) {
         if (schema.nestedTypes) {
-            // this.line('// Nested Types');
+            this.line('// Nested Types');
             this.line();
             for (let subtype of schema.nestedTypes) {
                 this.generateType(subtype);
@@ -148,50 +93,59 @@ export class TypeScriptGenerator extends Generator {
         }
     }
 
+    addFieldExtension(fieldName: string, field: ClassField): void {
+        if (field.type.type === 'primitive-type') {
+            this.lineSM(`_${fieldName}?: Element`);
+        }
+    }
+
+    addResourceTypeField(schema: TypeSchema): void {
+        this.lineSM(`resourceType: '${schema.name.name}'`);
+    }
+
     generateType(schema: TypeSchema) {
-        let base = schema.base ? '= ' + schema.base.name + ' &' : '';
+        let base = schema.base ? `= ${schema.base.name} &` : '';
+
         this.curlyBlock(['export', 'type', schema.name.name, base], () => {
-            if (schema.fields) {
-                const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
+            if (!schema.fields) {
+                return;
+            }
 
-                // adding resourceType field
-                if (schema.kind === 'resource') {
-                    this.lineSM(`resourceType: '${schema.name.name}'`);
-                }
+            // we have to provide utility field name called resourceType
+            if (schema.kind === 'resource') {
+                this.addResourceTypeField(schema);
+            }
 
-                for (const [fieldName, field] of fields) {
-                    let tp = field.type.name;
-                    let type = tp;
-                    let fieldSymbol = fieldName;
-                    let optionalSymbol = field.required ? '' : '?';
-                    
-                    if (field.type.type == 'primitive-type') {
-                        type = typeMap[tp] || 'string';
-                    } else {
-                        type = field.type.name;
-                    }
-                    this.lineSM(fieldSymbol + optionalSymbol + ':', type + (field.array ? '[]' : ''));
+            const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
 
-                    if ((schema.kind === 'resource' || schema.kind === 'complex-type') && field.type.type == 'primitive-type') {
-                        this.lineSM('_' + fieldSymbol + '?' +':', 'Element');
-                    }
+            for (const [fieldName, field] of fields) {
+                const type = this.getFieldType(field);
+                const fieldNameFixed = this.getFieldName(fieldName);
+                const optionalSymbol = field.required ? '' : '?';
+                const arraySymbol = field.array ? '[]' : '';
+
+                this.lineSM(`${fieldNameFixed}${optionalSymbol}:`, `${type}${arraySymbol}`);
+
+                if (schema.kind === 'resource' || schema.kind === 'complex-type') {
+                    this.addFieldExtension(fieldName, field);
                 }
             }
         });
+
         this.line();
     }
 
     generateResourceModule(schema: TypeSchema) {
         this.file(pascalCase(schema.name.name) + '.ts', () => {
-            // this.generateDisclaimer();
-            // this.line();
+            this.generateDisclaimer();
+            this.line();
 
             this.generateDependenciesImports(schema);
             this.line();
 
             this.generateNestedTypes(schema);
 
-            // this.line('// Resource Type');
+            this.line('// Resource Type');
             this.generateType(schema);
         });
     }
@@ -201,8 +155,8 @@ export class TypeScriptGenerator extends Generator {
 
         this.dir('types', async () => {
             const typesToGenerate = [...this.loader.complexTypes(), ...this.loader.resources()];
-
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
+
             for (const [packageName, packageResources] of Object.entries(groupedComplexTypes)) {
                 this.dir(path.join('types', kebabCase(packageName)), () => {
                     for (let schema of removeConstraints(packageResources)) {

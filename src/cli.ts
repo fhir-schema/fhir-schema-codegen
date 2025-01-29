@@ -2,17 +2,8 @@
 import path from 'path';
 import fs from 'fs';
 import { Command } from 'commander';
-
-import { CSharpGenerator } from './generators/csharp';
-import { PythonGenerator } from './generators/python';
-import { TypeScriptGenerator } from './generators/typescript';
 import { SchemaLoader } from './loader';
 
-const generators = {
-  typescript: TypeScriptGenerator,
-  csharp: CSharpGenerator,
-  'python-fhir-py': PythonGenerator,
-};
 
 const program = new Command();
 program.name('fhirschema-codegen').description('Generate code from FHIR Schema').version('0.1.0');
@@ -45,7 +36,7 @@ program
 program
   .command('generate')
   .description('Generate code from FHIR Schema')
-  .requiredOption('-g, --generator <type>', 'Generator type (' + Object.keys(generators).join(', ') + ')')
+  .requiredOption('-g, --generator <type>', 'Generator package')
   .requiredOption('-o, --output <file>', 'Output directory')
   .requiredOption('-p, --package <package>', 'FHIR package name')
   .option('-c, --generateClasses <boolean>', 'Generate classes instead of interfaces (typescript only)', 'false')
