@@ -107,6 +107,14 @@ export class Generator {
         this.write('}\n');
     }
 
+    squareBlock(tokens: string[], gencontent: () => void) {
+        this.line(tokens.join(' ') + '[');
+        this.ident();
+        gencontent()
+        this.deident();
+        this.line(`]`);
+    }
+
     curlBrackets(gencontent: () => void) {
         this.write('{');
         gencontent();
