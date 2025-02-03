@@ -54,7 +54,6 @@ const keywords = new Set([
     'true', 'try', 'type', 'typeof', 'unknown', 'var', 'void', 'while',
 ]);
 
-
 export class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
@@ -150,16 +149,37 @@ export class TypeScriptGenerator extends Generator {
         });
     }
 
+    generateIndexFile(schemas: TypeSchema[]) {
+        this.file('index.ts', () => {
+            const names = schemas.map((schema) => schema.name.name);
+
+            names.forEach((n) => this.lineSM(`import { ${n} } from './${n}'`));
+            this.lineSM(`export { ${names.join(', ')} }`);
+
+            this.curlyBlock(['export type ResourceTypeMap = '], () => {
+                this.lineSM('User: Record<string, any>');
+                names.forEach((name) => this.lineSM(`${name}: ${name}`));
+            });
+            this.lineSM('export type ResourceType = keyof ResourceTypeMap');
+
+            this.squareBlock(['export const resourceList: readonly ResourceType[] = '], () => {
+                names.forEach((n) => this.line(`'${n}', `));
+            });
+        });
+    }
+
     generate() {
         this.copyStaticFiles();
 
         this.dir('types', async () => {
-            const typesToGenerate = [...this.loader.complexTypes(), ...this.loader.resources()];
+            const typesToGenerate = removeConstraints([...this.loader.complexTypes(), ...this.loader.resources()]);
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
 
-            for (const [packageName, packageResources] of Object.entries(groupedComplexTypes)) {
+            for (const [packageName, packageSchemas] of Object.entries(groupedComplexTypes)) {
                 this.dir(path.join('types', kebabCase(packageName)), () => {
-                    for (let schema of removeConstraints(packageResources)) {
+                    this.generateIndexFile(packageSchemas);
+
+                    for (const schema of packageSchemas) {
                         this.generateResourceModule(schema);
                     }
                 });
