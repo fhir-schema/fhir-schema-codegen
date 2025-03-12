@@ -98,8 +98,8 @@ export class Generator {
         this.write(tokens.join(' ') + ';\n');
     }
 
-    curlyBlock(tokens: string[], gencontent: () => void) {
-        this.write(tokens.join(' '));
+    curlyBlock(tokens: Array<string | undefined>, gencontent: () => void) {
+        this.write(tokens.filter(Boolean).join(' '));
         this.write(' {\n');
         this.ident();
         gencontent();
@@ -110,7 +110,7 @@ export class Generator {
     squareBlock(tokens: string[], gencontent: () => void) {
         this.line(tokens.join(' ') + '[');
         this.ident();
-        gencontent()
+        gencontent();
         this.deident();
         this.line(`]`);
     }
@@ -140,7 +140,7 @@ export class Generator {
     }
 
     getFieldType(field: ClassField) {
-        if (field.type.type === 'primitive-type') {
+        if (field.type.kind === 'primitive-type') {
             const typeMap = this.opts.typeMap ?? {};
             return typeMap[field.type.name] ?? 'string';
         }

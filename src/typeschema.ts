@@ -1,12 +1,28 @@
-export type TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'choice' | 'unknown';
+export type TypeRefType =
+    | 'resource'
+    | 'profile'
+    | 'logical'
+    | 'complex-type'
+    | 'primitive-type'
+    | 'nested'
+    | 'valueset'
+    | 'choice'
+    | 'unknown';
 
 export type DerivationType = 'constraint' | 'specialization';
+
+export interface NestedSchema {
+    path: string[];
+    schema: ITypeSchema;
+}
+
+export interface ReferenceToNestedSchema {}
 
 export interface TypeRef {
     name: string;
     package: string;
-    parent?: string;
-    type?: TypeRefType;
+    base?: string;
+    kind?: TypeRefType;
     url?: string;
 }
 
@@ -28,23 +44,22 @@ export interface ChoiceField {
 }
 
 export interface ITypeSchema {
-    kind: TypeRefType;
-    name: TypeRef;
+    type: TypeRef;
     base?: TypeRef;
-    fields?:  { [key: string]: ClassField };
+    path?: string[];
+    fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
-    allDependencies?: TypeRef[];
+    dependencies?: TypeRef[];
     nestedTypes?: ITypeSchema[];
     derivation?: DerivationType;
 }
 
-export class TypeSchema  {
+export class TypeSchema {
     private depsIdx: { [key: string]: boolean };
-
-    kind: TypeRefType;
-    name: TypeRef;
+    type: TypeRef;
     base?: TypeRef;
-    allDependencies?: TypeRef[];
+    path?: string[];
+    dependencies?: TypeRef[];
     nestedTypes?: TypeSchema[];
     fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
@@ -52,17 +67,17 @@ export class TypeSchema  {
 
     constructor(schema: ITypeSchema) {
         this.depsIdx = {};
-        this.kind = schema.kind;
-        this.name = schema.name;
+        this.type = schema.type;
         this.base = schema.base;
+        this.path = schema.path;
         this.derivation = schema.derivation;
     }
 
     ensureDep(typeref: TypeRef) {
-        let typekey = typeref.package + "/" + typeref.name;
-        if(!this.depsIdx[typekey]) {
-            this.allDependencies = this.allDependencies || [];
-            this.allDependencies.push(typeref);
+        let typekey = typeref.package + '/' + typeref.name;
+        if (!this.depsIdx[typekey]) {
+            this.dependencies = this.dependencies || [];
+            this.dependencies.push(typeref);
             this.depsIdx[typekey] = true;
         }
     }

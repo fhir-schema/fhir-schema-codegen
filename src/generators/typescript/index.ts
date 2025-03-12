@@ -10,7 +10,7 @@ import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../.
 // function naming: camelCase
 // class naming: PascalCase
 
-export interface TypeScriptGeneratorOptions extends GeneratorOptions {
+interface TypeScriptGeneratorOptions extends GeneratorOptions {
     // tabSize: 2
 }
 
@@ -54,7 +54,30 @@ const keywords = new Set([
     'true', 'try', 'type', 'typeof', 'unknown', 'var', 'void', 'while',
 ]);
 
-export class TypeScriptGenerator extends Generator {
+const canonicalToName = (canonical: string | undefined) => {
+    if (!canonical) return undefined;
+    return canonical.split('/').pop();
+};
+
+function uppercaseFirstLetter(str: string): string {
+    if (!str || str.length === 0) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function uppercaseFirstLetterOfEach(strings: string[]): string[] {
+    return strings.map((str) => uppercaseFirstLetter(str));
+}
+
+const deriveTheSchemaName = (schema: TypeSchema) => {
+    if (schema.type.base === 'http://hl7.org/fhir/StructureDefinition/BackboneElement') {
+        const [canonical, ...path] = schema?.path || [];
+        return [canonicalToName(canonical), ...uppercaseFirstLetterOfEach(path)].join('');
+    }
+
+    return schema.type.name;
+};
+
+class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
             ...opts,
@@ -65,9 +88,9 @@ export class TypeScriptGenerator extends Generator {
     }
 
     generateDependenciesImports(schema: TypeSchema) {
-        if (schema.allDependencies) {
-            const deps = schema.allDependencies
-                .filter((dep) => dep.type === 'complex-type' || dep.type === 'resource')
+        if (schema.dependencies) {
+            const deps = schema.dependencies
+                .filter((dep) => dep.kind === 'complex-type' || dep.kind === 'resource')
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             for (const dep of deps) {
@@ -93,31 +116,37 @@ export class TypeScriptGenerator extends Generator {
     }
 
     addFieldExtension(fieldName: string, field: ClassField): void {
-        if (field.type.type === 'primitive-type') {
+        if (field.type.kind === 'primitive-type') {
             this.lineSM(`_${fieldName}?: Element`);
         }
     }
 
     addResourceTypeField(schema: TypeSchema): void {
-        this.lineSM(`resourceType: '${schema.name.name}'`);
+        this.lineSM(`resourceType: '${schema.type.name}'`);
     }
 
     generateType(schema: TypeSchema) {
-        let base = schema.base ? `= ${schema.base.name} &` : '';
+        const name = deriveTheSchemaName(schema);
+        const parent = canonicalToName(schema.type.base);
+        const extendsClause = parent && `extends ${parent}`;
 
-        this.curlyBlock(['export', 'type', schema.name.name, base], () => {
+        this.curlyBlock(['export', 'interface', name, extendsClause], () => {
             if (!schema.fields) {
                 return;
             }
 
             // we have to provide utility field name called resourceType
-            if (schema.kind === 'resource') {
-                this.addResourceTypeField(schema);
+            if (schema.type.kind === 'resource') {
+                // this.addResourceTypeField(schema);
             }
 
             const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
 
             for (const [fieldName, field] of fields) {
+                if ('elementReference' in field) continue; // recursive type
+                if ('choices' in field) continue; // polymorphic type
+                if ('path' in field) continue; // backbone element type
+
                 const type = this.getFieldType(field);
                 const fieldNameFixed = this.getFieldName(fieldName);
                 const optionalSymbol = field.required ? '' : '?';
@@ -125,7 +154,7 @@ export class TypeScriptGenerator extends Generator {
 
                 this.lineSM(`${fieldNameFixed}${optionalSymbol}:`, `${type}${arraySymbol}`);
 
-                if (schema.kind === 'resource' || schema.kind === 'complex-type') {
+                if (schema.type.kind === 'resource' || schema.type.kind === 'complex-type') {
                     this.addFieldExtension(fieldName, field);
                 }
             }
@@ -135,7 +164,7 @@ export class TypeScriptGenerator extends Generator {
     }
 
     generateResourceModule(schema: TypeSchema) {
-        this.file(pascalCase(schema.name.name) + '.ts', () => {
+        this.file(pascalCase(schema.type.name) + '.ts', () => {
             this.generateDisclaimer();
             this.line();
 
@@ -151,7 +180,7 @@ export class TypeScriptGenerator extends Generator {
 
     generateIndexFile(schemas: TypeSchema[]) {
         this.file('index.ts', () => {
-            const names = schemas.map((schema) => schema.name.name);
+            const names = schemas.map((schema) => schema.type.name);
 
             names.forEach((n) => this.lineSM(`import { ${n} } from './${n}'`));
             this.lineSM(`export { ${names.join(', ')} }`);
@@ -188,4 +217,9 @@ export class TypeScriptGenerator extends Generator {
     }
 }
 
-export const createGenerator = (options: TypeScriptGeneratorOptions) => new TypeScriptGenerator(options);
+export { TypeScriptGenerator };
+export { type TypeScriptGeneratorOptions };
+
+export function createGenerator(options: TypeScriptGeneratorOptions) {
+    return new TypeScriptGenerator(options);
+}

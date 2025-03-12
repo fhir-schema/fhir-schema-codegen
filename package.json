@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/cli.js",
-    "start:dev": "tsx watch src/cli.ts",
+    "start:dev": "tsx watch src/cli.ts generate --generator ./generators/typescript/index --output ./here",
     "dev": "tsc -w",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -35,8 +35,10 @@
   ],
   "description": "",
   "devDependencies": {
+    "@type-challenges/utils": "^0.1.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.8.7",
+    "@types/node-fetch": "^2.6.12",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
     "tsx": "^4.19.2",

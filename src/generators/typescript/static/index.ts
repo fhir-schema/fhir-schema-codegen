@@ -11,8 +11,10 @@ import { TaskDefinitionsMap, WorkflowDefinitionsMap, ResourceTypeMap, SearchPara
 
 export { HTTPError };
 
+const isBrowser = () => typeof window !== 'undefined';
+
 export function decode(str: string): string {
-    if (typeof window == 'undefined') {
+    if (!isBrowser()) {
         return Buffer.from(str, 'base64').toString();
     } else {
         return atob(str);
@@ -20,7 +22,7 @@ export function decode(str: string): string {
 }
 
 export function encode(str: string): string {
-    if (typeof window == 'undefined') {
+    if (!isBrowser()) {
         return Buffer.from(str).toString('base64');
     } else {
         return btoa(str);
