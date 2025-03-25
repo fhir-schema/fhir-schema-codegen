@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as Path from 'path';
 import { SchemaLoader, type LoaderOptions } from './loader';
-import { ClassField } from './typeschema';
+import { ClassField, INestedTypeSchema, TypeRef, TypeSchema } from './typeschema';
 
 export interface GeneratorOptions {
     outputDir: string;
@@ -132,20 +132,28 @@ export class Generator {
     token(...tokens: string[]) {}
 
     getFieldName(name: string) {
-        const keywords = this.opts.keywords ?? new Set();
-        if (keywords.has(name)) {
-            return name + '_';
-        }
+        // const keywords = this.opts.keywords ?? new Set();
+        // if (keywords.has(name)) {
+        //     return name + '_';
+        // }
         return name;
     }
 
     getFieldType(field: ClassField) {
+        if (field.enum) {
+            return field.enum.map((e) => `'${e}'`).join(' | ');
+        }
+
+        if (field.type.kind === 'nested') {
+            return this.deriveNestedSchemaName(field.type.url);
+        }
+
         if (field.type.kind === 'primitive-type') {
             const typeMap = this.opts.typeMap ?? {};
             return typeMap[field.type.name] ?? 'string';
         }
 
-        return field.type.name;
+        return this.uppercaseFirstLetter(field.type.name);
     }
 
     copyStaticFiles() {
@@ -154,5 +162,36 @@ export class Generator {
         }
 
         fs.cpSync(Path.resolve(this.opts.staticDir), this.opts.outputDir, { recursive: true });
+    }
+
+    canonicalToName(canonical: string | undefined) {
+        if (!canonical) return undefined;
+        return canonical.split('/').pop();
+    }
+
+    uppercaseFirstLetter(str: string): string {
+        if (!str || str.length === 0) return str;
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    uppercaseFirstLetterOfEach(strings: string[]): string[] {
+        return strings.map((str) => this.uppercaseFirstLetter(str));
+    }
+
+    deriveNestedSchemaName(url: string) {
+        const name = this.canonicalToName(url);
+
+        if (name) {
+            const [, path] = name.split('#');
+            return this.uppercaseFirstLetterOfEach(path.split('.')).join('');
+        }
+    }
+
+    deriveTheSchemaName(schema: TypeSchema | INestedTypeSchema) {
+        if (schema instanceof TypeSchema) {
+            return schema.identifier.name;
+        }
+
+        return this.deriveNestedSchemaName(schema.identifier.url);
     }
 }

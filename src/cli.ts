@@ -63,11 +63,7 @@ program
             process.exit(1);
         }
 
-        const generator = createGenerator({
-            outputDir,
-            loaderOptions: { files: ['/Users/gena.razmakhnin/Documents/typeschema/output/type-schema.ndjson'] },
-            ...options,
-        });
+        const generator = createGenerator({ outputDir, ...options });
 
         await generator.init();
         generator.generate();

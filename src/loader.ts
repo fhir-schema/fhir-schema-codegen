@@ -50,177 +50,6 @@ export async function read_ndjson_gz(url: string, process: (line: any) => any): 
     });
 }
 
-function isUpcased(str: string): boolean {
-    return (str && str[0] === str[0].toUpperCase()) || false;
-}
-
-function convertField(
-    dest: TypeSchema,
-    root: FHIRSchema,
-    typeschema: TypeSchema,
-    path: string[],
-    fieldName: string,
-    field: FHIRSchemaElement,
-    node: FHIRSchemaBase
-): void {
-    if (field.choices) {
-        dest.choices ||= {};
-        dest.choices[fieldName] = {
-            choices: field.choices,
-        };
-        return;
-    }
-    let typename;
-    let parent = null;
-    let type: TypeRefType | undefined = undefined;
-    if (field.elements) {
-        typename = path.join('');
-        parent = root.name;
-        type = 'nested';
-
-        let pkgname = root.meta?.package?.url || '';
-        let nestedschema = new TypeSchema({
-            type: {
-                kind: 'nested',
-                name: typename,
-                package: pkgname,
-                base: root.name,
-            },
-            base: {
-                name: 'BackboneElement',
-                package: pkgname,
-            },
-        });
-        typeschema.ensureDep({ name: 'BackboneElement', package: pkgname, kind: 'complex-type' });
-        addFields(nestedschema, root, typeschema, [...path], field);
-        typeschema.nestedTypes ||= [];
-        typeschema.nestedTypes.push(nestedschema);
-    } else if (field.choices) {
-        typename = 'choice';
-        type = 'choice';
-    } else if (field.type) {
-        typename = field.type;
-        if (isUpcased(typename)) {
-            type = 'complex-type';
-        } else {
-            type = 'primitive-type';
-        }
-    } else if (field.elementReference) {
-        type = 'nested';
-        const path = [...field.elementReference.slice(1)].filter((part) => part !== 'elements');
-        parent = root.name;
-        typename = typeschema.type.name + path.map(capCase).join('');
-    } else {
-        // console.log('Unknown field type: ' + JSON.stringify(field))
-        typename = 'unknown';
-        type = 'unknown';
-    }
-    let pkgname = root.meta?.package?.url || '';
-    let typeref: TypeRef = {
-        name: typename,
-        package: pkgname,
-        kind: type,
-    };
-    let typekey = typeref.package + '/' + typeref.name;
-
-    typeschema.ensureDep(typeref);
-
-    if (parent) {
-        typeref.base = parent;
-    }
-
-    let result: ClassField = { type: typeref };
-
-    if (field.array) {
-        result.array = true;
-    }
-
-    if (field.choiceOf) {
-        result.choiceOf = field.choiceOf;
-    }
-
-    if (node.required && node.required.some((req) => req === fieldName)) {
-        result.required = true;
-    }
-
-    if (field.binding) {
-        let binding = field.binding;
-        let vsref: TypeRef = {
-            name: extractBase(binding.valueSet),
-            package: pkgname,
-            url: binding.valueSet,
-            kind: 'valueset',
-        };
-        result.binding = {
-            valueSet: vsref,
-            strength: field.binding.strength,
-        };
-        typeschema.ensureDep(vsref);
-    }
-
-    dest.fields ||= {};
-    dest.fields[fieldName] = result;
-}
-
-function addFields(
-    dest: TypeSchema,
-    root: FHIRSchema,
-    typeschema: TypeSchema,
-    path: string[],
-    node: FHIRSchemaBase
-): void {
-    Object.entries(node.elements || {}).forEach(([key, field]) => {
-        let newPath = [...path, capCase(key)];
-        convertField(dest, root, typeschema, newPath, key, field, node);
-    });
-}
-
-function capCase(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function extractBase(url: string): string {
-    return url.split('/').pop()!;
-}
-
-export function convert(schema: FHIRSchema): TypeSchema {
-    let kind: TypeRefType = 'unknown';
-    if (schema.kind === 'resource' && schema.derivation === 'constraint') {
-        kind = 'profile';
-    } else if (schema.kind === 'resource') {
-        kind = 'resource';
-    } else if (schema.kind === 'complex-type') {
-        kind = 'complex-type';
-    } else if (schema.kind === 'primitive-type') {
-        kind = 'primitive-type';
-    } else if (schema.kind === 'logical') {
-        kind = 'logical';
-    }
-
-    assert(
-        kind !== 'unknown',
-        'Unknown schema kind: ' + schema.kind + '/' + schema.derivation + ' ' + JSON.stringify(schema)
-    );
-
-    let pkgname = schema.meta?.package?.url || '';
-    let res: TypeSchema = new TypeSchema({
-        type: { name: schema.name, package: pkgname, kind: kind },
-        derivation: schema.derivation,
-    });
-
-    if (schema.base) {
-        let ref = { name: extractBase(schema.base), package: pkgname };
-        res.base = ref;
-        res.ensureDep({ name: ref.name, package: ref.package, kind: 'resource' });
-    }
-
-    if (schema.elements) {
-        addFields(res, schema, res, [schema.name], schema);
-    }
-
-    return res;
-}
-
 export interface LoaderOptions {
     urls?: string[];
     files?: string[];
@@ -348,35 +177,23 @@ export class SchemaLoader {
     }
 
     resources(): TypeSchema[] {
-        return (
-            this.canonicalResources['package']
-                // .map((res: FHIRSchema) => convert(res))
-                .filter((res: TypeSchema) => res.type.kind === 'resource')
-        );
+        return this.canonicalResources['package']
+            .filter((res: TypeSchema) => res.identifier.kind === 'resource')
+            .map((item: TypeSchema) => new TypeSchema(item));
     }
 
     profiles(): TypeSchema[] {
-        return (
-            this.canonicalResources['package']
-                // .map((res: FHIRSchema) => convert(res))
-                .filter((res: TypeSchema) => res.type.kind === 'profile')
-        );
+        return this.canonicalResources['package'].filter((res: TypeSchema) => res.identifier.kind === 'constraint');
     }
 
     primitives(): TypeSchema[] {
-        return (
-            this.canonicalResources['package']
-                // .map((res: FHIRSchema) => convert(res))
-                .filter((res: TypeSchema) => res.type.kind === 'primitive-type')
-        );
+        return this.canonicalResources['package'].filter((res: TypeSchema) => res.identifier.kind === 'primitive-type');
     }
 
     complexTypes(): TypeSchema[] {
-        return (
-            this.canonicalResources['package']
-                // .map((res: FHIRSchema) => convert(res))
-                .filter((res: TypeSchema) => res.type.kind === 'complex-type' && res.base?.name !== 'Extension')
-        );
+        return this.canonicalResources['package']
+            .filter(({ identifier }: TypeSchema) => identifier.kind === 'complex-type')
+            .map((item: TypeSchema) => new TypeSchema(item));
     }
 
     extensions(): TypeSchema[] {

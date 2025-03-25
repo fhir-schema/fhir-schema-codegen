@@ -1,7 +1,7 @@
 import path from 'path';
 
 import { Generator, GeneratorOptions } from '../../generator';
-import { ClassField, TypeSchema } from '../../typeschema';
+import { ClassField, TypeSchema, INestedTypeSchema } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
 
 // Naming conventions
@@ -54,29 +54,6 @@ const keywords = new Set([
     'true', 'try', 'type', 'typeof', 'unknown', 'var', 'void', 'while',
 ]);
 
-const canonicalToName = (canonical: string | undefined) => {
-    if (!canonical) return undefined;
-    return canonical.split('/').pop();
-};
-
-function uppercaseFirstLetter(str: string): string {
-    if (!str || str.length === 0) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function uppercaseFirstLetterOfEach(strings: string[]): string[] {
-    return strings.map((str) => uppercaseFirstLetter(str));
-}
-
-const deriveTheSchemaName = (schema: TypeSchema) => {
-    if (schema.type.base === 'http://hl7.org/fhir/StructureDefinition/BackboneElement') {
-        const [canonical, ...path] = schema?.path || [];
-        return [canonicalToName(canonical), ...uppercaseFirstLetterOfEach(path)].join('');
-    }
-
-    return schema.type.name;
-};
-
 class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
@@ -90,11 +67,11 @@ class TypeScriptGenerator extends Generator {
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
             const deps = schema.dependencies
-                .filter((dep) => dep.kind === 'complex-type' || dep.kind === 'resource')
+                .filter((dep) => ['complex-type', 'resource'].includes(dep.kind))
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             for (const dep of deps) {
-                this.lineSM(`import { ${dep.name} } from './${dep.name}'`);
+                this.lineSM(`import { ${this.uppercaseFirstLetter(dep.name)} } from './${dep.name}'`);
             }
         }
     }
@@ -106,10 +83,9 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateNestedTypes(schema: TypeSchema) {
-        if (schema.nestedTypes) {
-            this.line('// Nested Types');
+        if (schema.nested) {
             this.line();
-            for (let subtype of schema.nestedTypes) {
+            for (let subtype of schema.nested) {
                 this.generateType(subtype);
             }
         }
@@ -122,12 +98,12 @@ class TypeScriptGenerator extends Generator {
     }
 
     addResourceTypeField(schema: TypeSchema): void {
-        this.lineSM(`resourceType: '${schema.type.name}'`);
+        this.lineSM(`resourceType: '${schema.identifier.name}'`);
     }
 
-    generateType(schema: TypeSchema) {
-        const name = deriveTheSchemaName(schema);
-        const parent = canonicalToName(schema.type.base);
+    generateType(schema: TypeSchema | INestedTypeSchema) {
+        const name = this.deriveTheSchemaName(schema);
+        const parent = this.canonicalToName(schema.base?.url);
         const extendsClause = parent && `extends ${parent}`;
 
         this.curlyBlock(['export', 'interface', name, extendsClause], () => {
@@ -136,16 +112,14 @@ class TypeScriptGenerator extends Generator {
             }
 
             // we have to provide utility field name called resourceType
-            if (schema.type.kind === 'resource') {
+            if (schema.identifier.kind === 'resource') {
                 // this.addResourceTypeField(schema);
             }
 
             const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
 
             for (const [fieldName, field] of fields) {
-                if ('elementReference' in field) continue; // recursive type
-                if ('choices' in field) continue; // polymorphic type
-                if ('path' in field) continue; // backbone element type
+                if ('choices' in field) continue;
 
                 const type = this.getFieldType(field);
                 const fieldNameFixed = this.getFieldName(fieldName);
@@ -154,7 +128,7 @@ class TypeScriptGenerator extends Generator {
 
                 this.lineSM(`${fieldNameFixed}${optionalSymbol}:`, `${type}${arraySymbol}`);
 
-                if (schema.type.kind === 'resource' || schema.type.kind === 'complex-type') {
+                if (['resource', 'complex-type'].includes(schema.identifier.kind)) {
                     this.addFieldExtension(fieldName, field);
                 }
             }
@@ -164,7 +138,7 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateResourceModule(schema: TypeSchema) {
-        this.file(pascalCase(schema.type.name) + '.ts', () => {
+        this.file(pascalCase(schema.identifier.name) + '.ts', () => {
             this.generateDisclaimer();
             this.line();
 
@@ -172,15 +146,13 @@ class TypeScriptGenerator extends Generator {
             this.line();
 
             this.generateNestedTypes(schema);
-
-            this.line('// Resource Type');
             this.generateType(schema);
         });
     }
 
     generateIndexFile(schemas: TypeSchema[]) {
         this.file('index.ts', () => {
-            const names = schemas.map((schema) => schema.type.name);
+            const names = schemas.map((schema) => schema.identifier.name);
 
             names.forEach((n) => this.lineSM(`import { ${n} } from './${n}'`));
             this.lineSM(`export { ${names.join(', ')} }`);

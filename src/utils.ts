@@ -32,12 +32,12 @@ export const kebabCase = (s: string) => {
 const buildDependencyGraph = (schemas: TypeSchema[]): Record<string, string[]> => {
     const nameToMap: Record<string, TypeSchema> = {};
     for (const schema of schemas) {
-        nameToMap[schema.type.name] = schema;
+        nameToMap[schema.identifier.name] = schema;
     }
 
     const graph: Record<string, string[]> = {};
     for (const schema of schemas) {
-        const name = schema.type.name;
+        const name = schema.identifier.name;
         const base = schema.base?.name;
         if (!graph[name]) {
             graph[name] = [];
@@ -79,12 +79,14 @@ const topologicalSort = (graph: Record<string, string[]>): string[] => {
 export const sortSchemasByDeps = (schemas: TypeSchema[]): TypeSchema[] => {
     const graph = buildDependencyGraph(schemas);
     const sorted = topologicalSort(graph);
-    return sorted.map((name) => schemas.find((schema) => schema.type.name === name)).filter(Boolean) as TypeSchema[];
+    return sorted
+        .map((name) => schemas.find((schema) => schema.identifier.name === name))
+        .filter(Boolean) as TypeSchema[];
 };
 
 export const removeConstraints = (shemas: TypeSchema[]): TypeSchema[] => {
     return shemas.filter((schema) => {
-        return schema.derivation !== 'constraint';
+        return schema.identifier.kind !== 'constraint';
     });
 };
 
@@ -92,10 +94,10 @@ export const groupedByPackage = (schemas: TypeSchema[]): Record<string, TypeSche
     let result: Record<string, TypeSchema[]> = {};
 
     for (const schema of schemas) {
-        if (!result[schema.type.package]) {
-            result[schema.type.package] = [];
+        if (!result[schema.identifier.package]) {
+            result[schema.identifier.package] = [];
         }
-        result[schema.type.package].push(schema);
+        result[schema.identifier.package].push(schema);
     }
 
     return result;

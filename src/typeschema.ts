@@ -1,41 +1,33 @@
 export type TypeRefType =
     | 'resource'
-    | 'profile'
+    | 'nested'
+    | 'constraint'
     | 'logical'
     | 'complex-type'
     | 'primitive-type'
-    | 'nested'
     | 'valueset'
     | 'choice'
     | 'unknown';
 
-export type DerivationType = 'constraint' | 'specialization';
-
-export interface NestedSchema {
-    path: string[];
-    schema: ITypeSchema;
-}
-
-export interface ReferenceToNestedSchema {}
-
 export interface TypeRef {
     name: string;
     package: string;
-    base?: string;
-    kind?: TypeRefType;
-    url?: string;
+    kind: TypeRefType;
+    version: string;
+    url: string;
 }
 
 export interface ClassField {
-    required?: boolean;
+    required: boolean;
+    array: boolean;
     type: TypeRef;
-    array?: boolean;
+    enum?: string[];
     choiceOf?: string;
     choices?: string[];
-    binding?: {
-        valueSet?: TypeRef;
-        strength?: 'required' | 'extensible' | 'preferred' | 'example';
-    };
+    // binding?: {
+    //     valueSet?: TypeRef;
+    //     strength?: 'required' | 'extensible' | 'preferred' | 'example';
+    // };
 }
 
 export interface ChoiceField {
@@ -44,33 +36,37 @@ export interface ChoiceField {
 }
 
 export interface ITypeSchema {
-    type: TypeRef;
+    identifier: TypeRef;
     base?: TypeRef;
-    path?: string[];
     fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
     dependencies?: TypeRef[];
-    nestedTypes?: ITypeSchema[];
-    derivation?: DerivationType;
+    nested?: INestedTypeSchema[];
+}
+
+export interface INestedTypeSchema {
+    fields: { [key: string]: ClassField };
+    identifier: TypeRef;
+    base: TypeRef;
 }
 
 export class TypeSchema {
     private depsIdx: { [key: string]: boolean };
-    type: TypeRef;
+    identifier: TypeRef;
     base?: TypeRef;
-    path?: string[];
     dependencies?: TypeRef[];
-    nestedTypes?: TypeSchema[];
+    nested?: INestedTypeSchema[];
     fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
-    derivation?: DerivationType;
 
     constructor(schema: ITypeSchema) {
         this.depsIdx = {};
-        this.type = schema.type;
         this.base = schema.base;
-        this.path = schema.path;
-        this.derivation = schema.derivation;
+        this.identifier = schema.identifier;
+        this.dependencies = schema.dependencies;
+        this.nested = schema.nested;
+        this.fields = schema.fields;
+        this.choices = schema.choices;
     }
 
     ensureDep(typeref: TypeRef) {
