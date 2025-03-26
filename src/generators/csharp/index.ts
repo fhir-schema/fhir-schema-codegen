@@ -64,9 +64,8 @@ export class CSharpGenerator extends Generator {
         let base = schema.base ? ': ' + schema.base.name : '';
         this.curlyBlock(['public', 'class', schema.identifier.name, base], () => {
             if (schema.fields) {
-                for (const [fieldName, field] of Object.entries(schema.fields).sort((a, b) =>
-                    a[0].localeCompare(b[0])
-                )) {
+                for (const [fieldName, field] of Object.entries(schema.fields)) {
+                    if ('choices' in field) continue;
                     // questionable
                     const baseNamespacePrefix = field.type.kind == 'complex-type' ? 'Base.' : '';
 
