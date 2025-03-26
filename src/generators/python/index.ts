@@ -1,5 +1,5 @@
 import { Generator, GeneratorOptions } from '../../generator';
-import { TypeRef, TypeSchema } from '../../typeschema';
+import { INestedTypeSchema, TypeRef, TypeSchema } from '../../typeschema';
 import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '../../utils';
 
 // Naming conventions
@@ -92,15 +92,6 @@ const fixReservedWords = (name: string) => {
     return name;
 };
 
-const makeClassName = (fhirType: TypeRef): string => {
-    const name = fhirType.name;
-    const parent = fhirType.parent;
-    if (parent) {
-        return pascalCase(parent) + '_' + pascalCase(name.substring(parent.length));
-    }
-    return fixReservedWords(pascalCase(name));
-};
-
 export class PythonGenerator extends Generator {
     constructor(opts: PythonGeneratorOptions) {
         super(opts);
@@ -110,7 +101,7 @@ export class PythonGenerator extends Generator {
         if (typeMap[fhirType.name]) {
             return typeMap[fhirType.name];
         }
-        return makeClassName(fhirType);
+        return this.getFieldName(fhirType.name);
     }
 
     curlyBlock(tokens: string[], gencontent: () => void) {
@@ -130,9 +121,12 @@ export class PythonGenerator extends Generator {
         return 'List[' + s + ']';
     }
 
-    generateType(schema: TypeSchema) {
-        const className = makeClassName(schema.name);
-        const superClasses = [...(schema.base ? [schema.base.name] : []), ...injectSuperClasses(schema.name.name)];
+    generateType(schema: TypeSchema | INestedTypeSchema) {
+        const className = this.deriveTheSchemaName(schema);
+        const superClasses = [
+            ...(schema.base ? [schema.base.name] : []),
+            ...injectSuperClasses(schema.identifier.name),
+        ];
         const classDefinition = `class ${className}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
@@ -170,19 +164,19 @@ export class PythonGenerator extends Generator {
     }
 
     generateNestedTypes(schema: TypeSchema) {
-        if (schema.nestedTypes) {
+        if (schema.nested) {
             this.line('# Nested Types');
             this.line();
-            for (let subtype of schema.nestedTypes) {
+            for (let subtype of schema.nested) {
                 this.generateType(subtype);
             }
         }
     }
 
     generateDependenciesImports(schema: TypeSchema) {
-        if (schema.allDependencies) {
-            const complexTypesDeps = schema.allDependencies.filter((deps) => deps.type === 'complex-type');
-            const resourceDeps = schema.allDependencies.filter((deps) => deps.type === 'resource');
+        if (schema.dependencies) {
+            const complexTypesDeps = schema.dependencies.filter((deps) => deps.kind === 'complex-type');
+            const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
 
             this.line('from', `.base`, 'import', `${complexTypesDeps.map((deps) => deps.name).join(', ')}`);
 
@@ -217,10 +211,12 @@ export class PythonGenerator extends Generator {
 
     generateResourcePackageInit(packageResources: TypeSchema[]) {
         this.file('__init__.py', () => {
-            const names = removeConstraints(packageResources).map((schema) => schema.name);
+            const names = removeConstraints(packageResources);
 
             for (let schemaName of names) {
-                this.line(`from .${snakeCase(schemaName.name)} import ${makeClassName(schemaName)}`);
+                this.line(
+                    `from .${snakeCase(schemaName.identifier.name)} import ${this.deriveTheSchemaName(schemaName)}`
+                );
             }
         });
     }
@@ -232,7 +228,7 @@ export class PythonGenerator extends Generator {
     }
 
     generateResourceModule(schema: TypeSchema) {
-        this.file(snakeCase(schema.name.name) + '.py', () => {
+        this.file(snakeCase(schema.identifier.name) + '.py', () => {
             this.generateDisclaimer();
             this.line();
             this.defaultImports();
@@ -270,6 +266,5 @@ export class PythonGenerator extends Generator {
         });
     }
 }
-
 
 export const createGenerator = (options: PythonGeneratorOptions) => new PythonGenerator(options);

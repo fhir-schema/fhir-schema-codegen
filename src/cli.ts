@@ -15,33 +15,13 @@ program
     });
 
 program
-    .command('packages')
-    .description('Display help information')
-    .argument('[criteria...]', 'Search criteria like hl7 fhir')
-    .action(async (criteria: string[]) => {
-        let loader = new SchemaLoader();
-        await loader.packageLookup(criteria.join(' '));
-    });
-
-program
-    .command('package-summary')
-    .description('list all resources in a package')
-    .requiredOption('-p, --package <package>', 'FHIR package name')
-    .action(async (options: { package: string }) => {
-        let loader = new SchemaLoader();
-        await loader.packageSummary(options.package);
-    });
-
-program
     .command('generate')
     .description('Generate code from FHIR Schema')
     .requiredOption('-g, --generator <type>', 'Generator package')
     .requiredOption('-o, --output <file>', 'Output directory')
-    .option('-c, --generateClasses <boolean>', 'Generate classes instead of interfaces (typescript only)', 'false')
-    .action(async (options: { generator: string; output: string; package: string; generateClasses: boolean }) => {
+    .requiredOption('-f, --files <files...>', 'TypeSchema source *.ngjson files')
+    .action(async (options: { files: string[]; generator: string; output: string }) => {
         const outputDir = path.resolve(process.cwd(), options.output);
-
-        console.log(outputDir);
 
         if (!fs.existsSync(outputDir)) {
             fs.mkdirSync(outputDir, { recursive: true });
@@ -49,10 +29,8 @@ program
 
         let createGenerator;
 
-        console.log(options.generator);
-
         try {
-            const generatorPath = path.resolve(__dirname, options.generator + '.js');
+            const generatorPath = path.resolve(__dirname, 'generators', options.generator, 'index.js');
             const generatorPlugin = await import(generatorPath);
             if (!generatorPlugin.createGenerator) {
                 throw new Error(`Generator plugin ${options.generator} does not export createGenerator function`);

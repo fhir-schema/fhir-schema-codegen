@@ -24,7 +24,7 @@ export class Generator {
     constructor(opts: GeneratorOptions) {
         this.opts = opts;
         this.currentDir = opts.outputDir || null;
-        this.loader = new SchemaLoader(opts.loaderOptions);
+        this.loader = new SchemaLoader({ ...opts.loaderOptions, ...opts });
     }
 
     clear() {
