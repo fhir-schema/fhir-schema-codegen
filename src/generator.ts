@@ -139,7 +139,7 @@ export class Generator {
         return name;
     }
 
-    getFieldType(field: ClassField) {
+    getFieldType(field: ClassField): string {
         if (field.enum) {
             return field.enum.map((e) => `'${e}'`).join(' | ');
         }
@@ -185,6 +185,8 @@ export class Generator {
             const [, path] = name.split('#');
             return this.uppercaseFirstLetterOfEach(path.split('.')).join('');
         }
+
+        return '';
     }
 
     deriveTheSchemaName(schema: TypeSchema | INestedTypeSchema) {

@@ -39,7 +39,7 @@ const typeMap: Record<string, string> = {
 
 const injectSuperClasses = (name: string) => {
     if (name === 'Resource' || name === 'Element') {
-        return ['BaseModel_'];
+        return ['BaseModel'];
     }
 
     return [];
@@ -118,7 +118,7 @@ export class PythonGenerator extends Generator {
     }
 
     wrapList(s: string) {
-        return 'List[' + s + ']';
+        return 'L[' + s + ']';
     }
 
     generateType(schema: TypeSchema | INestedTypeSchema) {
@@ -136,11 +136,23 @@ export class PythonGenerator extends Generator {
             }
 
             let fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
-            this.line(`resourceType: Literal['${className}'] = '${className}'`);
+            // this.line(`resourceType: Literal['${className}'] = '${className}'`);
 
             for (const [fieldName, field] of fields) {
-                let fieldType = this.toLangType(field.type);
+                if ('choices' in field) continue;
+
+                let fieldType = this.getFieldType(field);
                 let defaultValue = '';
+
+                if (field.type.kind === 'nested') {
+                    fieldType = this.deriveNestedSchemaName(field.type.url);
+                }
+
+                if (field.type.kind === 'primitive-type') {
+                    fieldType = typeMap[field.type.name] ?? 'str';
+                }
+
+                // return this.uppercaseFirstLetter(field.type.name);
 
                 if (field.array) {
                     fieldType = this.wrapList(fieldType);
@@ -160,12 +172,11 @@ export class PythonGenerator extends Generator {
     defaultImports() {
         this.line('from __future__ import annotations');
         this.line('from', 'pydantic', 'import', '*');
-        this.line('from', 'typing', 'import', ['Optional', 'List', 'Literal'].join(', '));
+        this.line('from', 'typing', 'import', ['Optional', 'List as L', 'Literal'].join(', '));
     }
 
     generateNestedTypes(schema: TypeSchema) {
         if (schema.nested) {
-            this.line('# Nested Types');
             this.line();
             for (let subtype of schema.nested) {
                 this.generateType(subtype);
@@ -186,11 +197,11 @@ export class PythonGenerator extends Generator {
         }
     }
 
-    generateBaseModel() {
-        this.curlyBlock(['class BaseModel_(BaseModel)'], async () => {
-            this.line('pass');
-        });
-    }
+    // generateBaseModel() {
+    //     this.curlyBlock(['class BaseModel_(BaseModel)'], async () => {
+    //         this.line('pass');
+    //     });
+    // }
 
     generateBasePy(packageComplexTypes: TypeSchema[]) {
         this.file('base.py', () => {
@@ -199,7 +210,7 @@ export class PythonGenerator extends Generator {
             this.defaultImports();
             this.line();
 
-            this.generateBaseModel();
+            // this.generateBaseModel();
 
             for (let schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
                 this.generateNestedTypes(schema);
@@ -239,7 +250,6 @@ export class PythonGenerator extends Generator {
 
             this.generateNestedTypes(schema);
 
-            this.line('# Resource Type');
             this.line();
             this.generateType(schema);
         });
