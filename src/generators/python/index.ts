@@ -1,3 +1,4 @@
+import path from 'path';
 import { Generator, GeneratorOptions } from '../../generator';
 import { INestedTypeSchema, TypeRef, TypeSchema } from '../../typeschema';
 import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '../../utils';
@@ -94,7 +95,11 @@ const fixReservedWords = (name: string) => {
 
 export class PythonGenerator extends Generator {
     constructor(opts: PythonGeneratorOptions) {
-        super(opts);
+        super({
+            ...opts,
+            typeMap,
+            staticDir: path.resolve(__dirname, 'static'),
+        });
     }
 
     toLangType(fhirType: TypeRef) {
@@ -122,12 +127,19 @@ export class PythonGenerator extends Generator {
     }
 
     generateType(schema: TypeSchema | INestedTypeSchema) {
-        const className = this.deriveTheSchemaName(schema);
+        let name = '';
+
+        if (schema instanceof TypeSchema) {
+            name = schema.identifier.name;
+        } else {
+            name = this.deriveNestedSchemaName(schema.identifier.url, true);
+        }
+
         const superClasses = [
             ...(schema.base ? [schema.base.name] : []),
             ...injectSuperClasses(schema.identifier.name),
         ];
-        const classDefinition = `class ${className}(${superClasses.join(', ')})`;
+        const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
             if (!schema.fields) {
@@ -145,7 +157,7 @@ export class PythonGenerator extends Generator {
                 let defaultValue = '';
 
                 if (field.type.kind === 'nested') {
-                    fieldType = this.deriveNestedSchemaName(field.type.url);
+                    fieldType = this.deriveNestedSchemaName(field.type.url, true);
                 }
 
                 if (field.type.kind === 'primitive-type') {
@@ -189,7 +201,7 @@ export class PythonGenerator extends Generator {
             const complexTypesDeps = schema.dependencies.filter((deps) => deps.kind === 'complex-type');
             const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
 
-            this.line('from', `.base`, 'import', `${complexTypesDeps.map((deps) => deps.name).join(', ')}`);
+            this.line('from', `.base`, 'import', '*');
 
             for (const deps of resourceDeps) {
                 this.line('from', `.${snakeCase(deps.name)}`, 'import', `${pascalCase(deps.name)}`);
@@ -225,9 +237,7 @@ export class PythonGenerator extends Generator {
             const names = removeConstraints(packageResources);
 
             for (let schemaName of names) {
-                this.line(
-                    `from .${snakeCase(schemaName.identifier.name)} import ${this.deriveTheSchemaName(schemaName)}`
-                );
+                this.line(`from .${snakeCase(schemaName.identifier.name)} import ${schemaName.identifier.name}`);
             }
         });
     }
@@ -274,6 +284,8 @@ export class PythonGenerator extends Generator {
                 });
             }
         });
+
+        this.copyStaticFiles();
     }
 }
 

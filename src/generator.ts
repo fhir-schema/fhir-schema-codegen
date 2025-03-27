@@ -178,22 +178,20 @@ export class Generator {
         return strings.map((str) => this.uppercaseFirstLetter(str));
     }
 
-    deriveNestedSchemaName(url: string) {
-        const name = this.canonicalToName(url);
+    deriveNestedSchemaName(url: string, includeResourceName = false) {
+        const path = this.canonicalToName(url);
 
-        if (name) {
-            const [, path] = name.split('#');
-            return this.uppercaseFirstLetterOfEach(path.split('.')).join('');
+        if (path) {
+            const [resourceName, rest] = path.split('#');
+            const name = this.uppercaseFirstLetterOfEach(rest.split('.')).join('');
+
+            if (includeResourceName) {
+                return [resourceName, name].join('');
+            }
+
+            return name;
         }
 
         return '';
-    }
-
-    deriveTheSchemaName(schema: TypeSchema | INestedTypeSchema) {
-        if (schema instanceof TypeSchema) {
-            return schema.identifier.name;
-        }
-
-        return this.deriveNestedSchemaName(schema.identifier.url);
     }
 }

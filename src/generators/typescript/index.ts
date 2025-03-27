@@ -102,7 +102,14 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateType(schema: TypeSchema | INestedTypeSchema) {
-        const name = this.deriveTheSchemaName(schema);
+        let name = '';
+
+        if (schema instanceof TypeSchema) {
+            name = schema.identifier.name;
+        } else {
+            name = this.deriveNestedSchemaName(schema.identifier.url, true);
+        }
+
         const parent = this.canonicalToName(schema.base?.url);
         const extendsClause = parent && `extends ${parent}`;
 
@@ -170,8 +177,6 @@ class TypeScriptGenerator extends Generator {
     }
 
     generate() {
-        this.copyStaticFiles();
-
         this.dir('types', async () => {
             const typesToGenerate = removeConstraints([...this.loader.complexTypes(), ...this.loader.resources()]);
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
@@ -186,6 +191,8 @@ class TypeScriptGenerator extends Generator {
                 });
             }
         });
+
+        this.copyStaticFiles();
     }
 }
 

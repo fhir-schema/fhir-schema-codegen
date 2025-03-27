@@ -19,7 +19,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/cli.js",
-    "start:dev": "tsx watch src/cli.ts generate --generator csharp --output ./here --files /Users/gena.razmakhnin/Documents/typeschema/output/hl7.fhir.r4.core@4.0.1.ndjson",
+    "start:dev": "tsx watch src/cli.ts generate --generator csharp --output /Users/gena.razmakhnin/Documents/csharp-test/MyConsoleApp/aidbox --files /Users/gena.razmakhnin/Documents/typeschema/output/hl7.fhir.r4.core@4.0.1.ndjson",
+    "start:dev:python": "tsx watch src/cli.ts generate --generator python --output /Users/gena.razmakhnin/Documents/csharp-test/python-example/aidbox --files /Users/gena.razmakhnin/Documents/typeschema/output/hl7.fhir.r4.core@4.0.1.ndjson",
     "dev": "tsc -w",
     "test": "jest",
     "test:watch": "jest --watch",
