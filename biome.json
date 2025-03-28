@@ -1,0 +1,94 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"files": {
+		"includes": ["**", "!**/public/config.js", "!**/generators/**/static/**"]
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedAttributes": "on"
+			}
+		}
+	},
+	"css": {
+		"formatter": {
+			"enabled": true,
+			"indentWidth": 2
+		},
+		"linter": {
+			"enabled": true
+		},
+		"parser": {
+			"allowWrongLineComments": true
+		}
+	},
+	"formatter": {
+		"useEditorconfig": true,
+		"enabled": true,
+		"lineEnding": "lf",
+		"lineWidth": 100,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"attributePosition": "multiline",
+		"formatWithErrors": false
+	},
+	"javascript": {
+		"formatter": {
+			"bracketSpacing": true,
+			"jsxQuoteStyle": "double",
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"style": {
+				"noDefaultExport": "error",
+				"useImportType": "error",
+				"useLiteralEnumMembers": "error",
+				"noCommaOperator": "error",
+				"useNodejsImportProtocol": "error",
+				"useAsConstAssertion": "error",
+				"useNumericLiterals": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useConst": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"useExponentiationOperator": "error",
+				"useTemplate": "error",
+				"noParameterAssign": "error",
+				"noNonNullAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"noArguments": "error",
+				"useExportType": "error",
+				"noUselessElse": "error",
+				"useShorthandFunctionType": "error"
+			},
+			"a11y": {
+				"useKeyWithClickEvents": "warn",
+				"noSvgWithoutTitle": "off"
+			},
+			"correctness": {
+				"noUnusedImports": "error"
+			},
+			"complexity": {
+				"noBannedTypes": "warn",
+				"noForEach": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noConsole": {
+					"level": "error",
+					"options": {
+						"allow": ["info", "error"]
+					}
+				},
+				"noImplicitAnyLet": "warn"
+			}
+		}
+	}
+}

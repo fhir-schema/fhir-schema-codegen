@@ -1,7 +1,3 @@
-import { TypeScriptGenerator } from '../../src/generators/typescript';
-import * as path from 'path';
-jest.setTimeout(5000);
-
 describe('TypeScript Generator', () => {
     test('should generate class with imports', async () => {
         // let gen = new TypeScriptGenerator({
@@ -14,7 +10,7 @@ describe('TypeScript Generator', () => {
         // await gen.init();
         // gen.generate();
 
-        // expect(gen.readFile('src/Resource.ts').trim().split("\n").filter(line => line.trim() != '')    ).toEqual([    
+        // expect(gen.readFile('src/Resource.ts').trim().split("\n").filter(line => line.trim() != '')    ).toEqual([
         //     'import { Meta } from "./types.ts";',
         //     'export interface Resource  {',
         //     '  id? : string;',
@@ -25,4 +21,6 @@ describe('TypeScript Generator', () => {
         // ])
 
     });
-}); 
+}, {
+    timeout: 5000
+});
