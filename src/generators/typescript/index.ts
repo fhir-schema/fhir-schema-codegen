@@ -128,7 +128,16 @@ class TypeScriptGenerator extends Generator {
             for (const [fieldName, field] of fields) {
                 if ('choices' in field) continue;
 
-                const type = this.getFieldType(field);
+                let type = this.getFieldType(field);
+
+                if (field.type.kind === 'nested') {
+                    type = this.deriveNestedSchemaName(field.type.url, true);
+                }
+
+                if (field.type.kind === 'primitive-type') {
+                    type = typeMap[field.type.name as keyof typeof typeMap] ?? 'string';
+                }
+
                 const fieldNameFixed = this.getFieldName(fieldName);
                 const optionalSymbol = field.required ? '' : '?';
                 const arraySymbol = field.array ? '[]' : '';
