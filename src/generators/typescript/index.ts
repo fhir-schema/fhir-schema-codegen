@@ -1,7 +1,7 @@
 import path from 'path';
 
 import { Generator, GeneratorOptions } from '../../generator';
-import { ClassField, TypeSchema, INestedTypeSchema } from '../../typeschema';
+import { ClassField, INestedTypeSchema, TypeSchema } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
 
 // Naming conventions
@@ -43,14 +43,14 @@ const typeMap = {
 
 // prettier-ignore
 const keywords = new Set([
-    'abstract', 'any', 'as', 'async', 'await', 'boolean', 'bigint', 'break', 
-    'case', 'catch', 'class', 'const', 'constructor', 'continue', 'debugger', 
-    'declare', 'default', 'delete', 'do', 'else', 'enum', 'export', 'extends', 
-    'extern', 'false', 'finally', 'for', 'function', 'from', 'get', 'goto', 'if', 
-    'implements', 'import', 'in', 'infer', 'instanceof', 'interface', 'keyof', 
-    'let', 'module', 'namespace', 'never', 'new', 'null', 'number', 'object', 
-    'of', 'override', 'private', 'protected', 'public', 'readonly', 'return', 
-    'satisfies', 'set', 'static', 'string', 'super', 'switch', 'this', 'throw', 
+    'abstract', 'any', 'as', 'async', 'await', 'boolean', 'bigint', 'break',
+    'case', 'catch', 'class', 'const', 'constructor', 'continue', 'debugger',
+    'declare', 'default', 'delete', 'do', 'else', 'enum', 'export', 'extends',
+    'extern', 'false', 'finally', 'for', 'function', 'from', 'get', 'goto', 'if',
+    'implements', 'import', 'in', 'infer', 'instanceof', 'interface', 'keyof',
+    'let', 'module', 'namespace', 'never', 'new', 'null', 'number', 'object',
+    'of', 'override', 'private', 'protected', 'public', 'readonly', 'return',
+    'satisfies', 'set', 'static', 'string', 'super', 'switch', 'this', 'throw',
     'true', 'try', 'type', 'typeof', 'unknown', 'var', 'void', 'while',
 ]);
 
@@ -103,11 +103,18 @@ class TypeScriptGenerator extends Generator {
 
     generateType(schema: TypeSchema | INestedTypeSchema) {
         let name = '';
-
+        let parentForFields = ''
         if (schema instanceof TypeSchema) {
-            name = schema.identifier.name;
+            parentForFields = schema.identifier.name;
+            if (schema.identifier.name === 'Reference') {
+                name = 'Reference<T extends string = string>';
+            } else {
+                name = schema.identifier.name;
+            }
+
         } else {
             name = this.deriveNestedSchemaName(schema.identifier.url, true);
+            parentForFields = name
         }
 
         const parent = this.canonicalToName(schema.base?.url);
@@ -128,7 +135,13 @@ class TypeScriptGenerator extends Generator {
             for (const [fieldName, field] of fields) {
                 if ('choices' in field) continue;
 
-                const type = this.getFieldType(field);
+                let type = this.getFieldType(field);
+
+                if (parentForFields ===  'Reference' && fieldName === 'reference'){
+                    type  = "`${T}/${string}`";
+                }
+
+
                 const fieldNameFixed = this.getFieldName(fieldName);
                 const optionalSymbol = field.required ? '' : '?';
                 const arraySymbol = field.array ? '[]' : '';

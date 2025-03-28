@@ -24,6 +24,7 @@ export interface ClassField {
     enum?: string[];
     choiceOf?: string;
     choices?: string[];
+    reference?: TypeRef[];
     // binding?: {
     //     valueSet?: TypeRef;
     //     strength?: 'required' | 'extensible' | 'preferred' | 'example';
