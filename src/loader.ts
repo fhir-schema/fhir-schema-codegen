@@ -1,11 +1,11 @@
 import fs from 'node:fs/promises';
+import { TypeSchema } from './typeschema';
+
+export type { ITypeSchema } from './typeschema';
+
 import { createInterface } from 'node:readline';
 import { Readable } from 'node:stream';
 import type { ReadableStream } from 'node:stream/web';
-import { TypeSchema } from './typeschema';
-
-export type { FHIRSchema } from './fhirschema';
-export type { ITypeSchema } from './typeschema';
 
 export async function read_ndjson_gz(url: string, process: (line: any) => any): Promise<void> {
   const result: any[] = [];
