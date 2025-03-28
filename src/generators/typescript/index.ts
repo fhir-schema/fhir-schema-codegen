@@ -195,14 +195,67 @@ class TypeScriptGenerator extends Generator {
         const fieldNameFixed = this.getFieldName(fieldName);
         const optionalSymbol = field.required ? '' : '?';
         const arraySymbol = field.array ? '[]' : '';
+                let type = field.type.name;
 
-        let type = this.getFieldType(field);
 
         if (field.type.kind === 'nested') {
           type = this.deriveNestedSchemaName(field.type.url, true);
         }
+                if (field.type.kind === 'primitive-type') {
+                    type = typeMap[field.type.name as keyof typeof typeMap] ?? 'string';
+                }
 
-        if (field.type.kind === 'primitive-type') {
+                if (schema.identifier.name === 'Reference' && fieldNameFixed === 'reference') {
+                    type = '`${T}/${string}`';
+                }
+
+                if (field.reference?.length) {
+                    const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
+                    type = `Reference<${references}>`;
+                }
+
+                if (field.enum) {
+                    type = field.enum.map((e) => `'${e}'`).join(' | ');
+                }
+
+                this.lineSM(`${fieldNameFixed}${optionalSymbol}:`, `${type}${arraySymbol}`);
+
+                if (['resource', 'complex-type'].includes(schema.identifier.kind)) {
+                    this.addFieldExtension(fieldName, field);
+                }
+            }
+        });
+
+        this.line();
+    }
+
+    generateResourceModule(schema: TypeSchema) {
+        this.file(pascalCase(schema.identifier.name) + '.ts', () => {
+            this.generateDisclaimer();
+            this.line();
+
+            this.generateDependenciesImports(schema);
+            this.line();
+
+            this.generateNestedTypes(schema);
+            this.generateType(schema);
+        });
+    }
+
+    generateIndexFile(schemas: TypeSchema[]) {
+        this.file('index.ts', () => {
+            const names = schemas.map((schema) => schema.identifier.name);
+
+            names.forEach((n) => this.lineSM(`import { ${n} } from './${n}'`));
+            this.lineSM(`export { ${names.join(', ')} }`);
+
+            this.curlyBlock(['export type ResourceTypeMap = '], () => {
+                this.lineSM('User: Record<string, any>');
+                names.forEach((name) => this.lineSM(`${name}: ${name}`));
+            });
+            this.lineSM('export type ResourceType = keyof ResourceTypeMap');
+
+          if (field.type.kind === 'primitive-type') {
           type = typeMap[field.type.name as keyof typeof typeMap] ?? 'string';
         }
 

@@ -147,6 +147,7 @@ export class PythonGenerator extends Generator {
     ];
     const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
+
     this.curlyBlock([classDefinition], () => {
       if (!schema.fields) {
         this.line('pass');

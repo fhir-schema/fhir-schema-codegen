@@ -140,6 +140,7 @@ export class CSharpGenerator extends Generator {
           if (schema.dependencies) {
             if (schema.dependencies.filter((d) => d.kind === 'complex-type').length) {
               // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
+
             }
 
             if (schema.dependencies.filter((d) => d.kind === 'resource').length) {
