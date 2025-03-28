@@ -71,7 +71,7 @@ export class TypeSchema {
     }
 
     ensureDep(typeref: TypeRef) {
-        let typekey = typeref.package + '/' + typeref.name;
+        const typekey = `${typeref.package}/${typeref.name}`;
         if (!this.depsIdx[typekey]) {
             this.dependencies = this.dependencies || [];
             this.dependencies.push(typeref);

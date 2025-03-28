@@ -1,4 +1,4 @@
-import { TypeSchema } from './typeschema';
+import type { TypeSchema } from './typeschema';
 
 export const words = (s: string) => {
     return s.split(/(?<=[a-z])(?=[A-Z])|[-_.\s]/).filter(Boolean);
@@ -91,7 +91,7 @@ export const removeConstraints = (shemas: TypeSchema[]): TypeSchema[] => {
 };
 
 export const groupedByPackage = (schemas: TypeSchema[]): Record<string, TypeSchema[]> => {
-    let result: Record<string, TypeSchema[]> = {};
+    const result: Record<string, TypeSchema[]> = {};
 
     for (const schema of schemas) {
         if (!result[schema.identifier.package]) {

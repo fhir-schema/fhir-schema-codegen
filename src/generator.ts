@@ -1,7 +1,7 @@
-import * as fs from 'fs';
-import * as Path from 'path';
-import { SchemaLoader, type LoaderOptions } from './loader';
-import { ClassField, INestedTypeSchema, TypeRef, TypeSchema } from './typeschema';
+import * as fs from 'node:fs';
+import * as Path from 'node:path';
+import { type LoaderOptions, SchemaLoader } from './loader';
+import type { ClassField } from './typeschema';
 
 export interface GeneratorOptions {
     outputDir: string;
@@ -29,7 +29,6 @@ export class Generator {
 
     clear() {
         if (this.opts.outputDir) {
-            console.log('rm', this.opts.outputDir);
             return fs.rmSync(this.opts.outputDir, { recursive: true, force: true });
         }
     }
@@ -50,7 +49,6 @@ export class Generator {
         this.currentDir = Path.join(this.opts.outputDir || '', path);
         if (!fs.existsSync(this.currentDir)) {
             fs.mkdirSync(this.currentDir, { recursive: true });
-            console.log('mkdir', this.currentDir);
         }
         gencontent();
     }
@@ -59,7 +57,6 @@ export class Generator {
         this.filePath = Path.join(this.currentDir || '', path);
         if (!fs.existsSync(Path.dirname(this.filePath))) {
             fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
-            console.log('mkdir', Path.dirname(this.filePath));
         }
         // console.log('file', this.filePath);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
@@ -92,12 +89,12 @@ export class Generator {
 
     line(...tokens: string[]) {
         this.writeIdent();
-        this.write(tokens.join(' ') + '\n');
+        this.write(`${tokens.join(' ')}\n`);
     }
 
     lineSM(...tokens: string[]) {
         this.writeIdent();
-        this.write(tokens.join(' ') + ';\n');
+        this.write(`${tokens.join(' ')};\n`);
     }
 
     curlyBlock(tokens: Array<string | undefined>, gencontent: () => void) {
@@ -110,11 +107,11 @@ export class Generator {
     }
 
     squareBlock(tokens: string[], gencontent: () => void) {
-        this.line(tokens.join(' ') + '[');
+        this.line(`${tokens.join(' ')}[`);
         this.ident();
         gencontent();
         this.deident();
-        this.line(`]`);
+        this.line(']');
     }
 
     curlBrackets(gencontent: () => void) {

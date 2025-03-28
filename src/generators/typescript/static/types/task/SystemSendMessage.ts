@@ -1,13 +1,13 @@
 export type SystemSendMessageParams = {
-    phone: string;
-    message: string;
+  phone: string;
+  message: string;
 };
 
 export type SystemSendMessageResult = {
-    status: string;
+  status: string;
 };
 
 export type SystemSendMessage = {
-    params?: SystemSendMessageParams;
-    result?: SystemSendMessageResult;
+  params?: SystemSendMessageParams;
+  result?: SystemSendMessageResult;
 };

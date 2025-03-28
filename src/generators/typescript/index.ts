@@ -1,7 +1,7 @@
-import path from 'path';
+import path from 'node:path';
 
-import { Generator, GeneratorOptions } from '../../generator';
-import { ClassField, INestedTypeSchema, TypeSchema } from '../../typeschema';
+import { Generator, type GeneratorOptions } from '../../generator';
+import { type ClassField, type INestedTypeSchema, TypeSchema } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
 
 // Naming conventions
@@ -43,15 +43,76 @@ const typeMap = {
 
 // prettier-ignore
 const keywords = new Set([
-    'abstract', 'any', 'as', 'async', 'await', 'boolean', 'bigint', 'break',
-    'case', 'catch', 'class', 'const', 'constructor', 'continue', 'debugger',
-    'declare', 'default', 'delete', 'do', 'else', 'enum', 'export', 'extends',
-    'extern', 'false', 'finally', 'for', 'function', 'from', 'get', 'goto', 'if',
-    'implements', 'import', 'in', 'infer', 'instanceof', 'interface', 'keyof',
-    'let', 'module', 'namespace', 'never', 'new', 'null', 'number', 'object',
-    'of', 'override', 'private', 'protected', 'public', 'readonly', 'return',
-    'satisfies', 'set', 'static', 'string', 'super', 'switch', 'this', 'throw',
-    'true', 'try', 'type', 'typeof', 'unknown', 'var', 'void', 'while',
+    'abstract',
+    'any',
+    'as',
+    'async',
+    'await',
+    'boolean',
+    'bigint',
+    'break',
+    'case',
+    'catch',
+    'class',
+    'const',
+    'constructor',
+    'continue',
+    'debugger',
+    'declare',
+    'default',
+    'delete',
+    'do',
+    'else',
+    'enum',
+    'export',
+    'extends',
+    'extern',
+    'false',
+    'finally',
+    'for',
+    'function',
+    'from',
+    'get',
+    'goto',
+    'if',
+    'implements',
+    'import',
+    'in',
+    'infer',
+    'instanceof',
+    'interface',
+    'keyof',
+    'let',
+    'module',
+    'namespace',
+    'never',
+    'new',
+    'null',
+    'number',
+    'object',
+    'of',
+    'override',
+    'private',
+    'protected',
+    'public',
+    'readonly',
+    'return',
+    'satisfies',
+    'set',
+    'static',
+    'string',
+    'super',
+    'switch',
+    'this',
+    'throw',
+    'true',
+    'try',
+    'type',
+    'typeof',
+    'unknown',
+    'var',
+    'void',
+    'while',
 ]);
 
 class TypeScriptGenerator extends Generator {
@@ -71,7 +132,9 @@ class TypeScriptGenerator extends Generator {
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             for (const dep of deps) {
-                this.lineSM(`import { ${this.uppercaseFirstLetter(dep.name)} } from './${dep.name}'`);
+                this.lineSM(
+                    `import { ${this.uppercaseFirstLetter(dep.name)} } from './${dep.name}'`,
+                );
             }
         }
     }
@@ -85,7 +148,7 @@ class TypeScriptGenerator extends Generator {
     generateNestedTypes(schema: TypeSchema) {
         if (schema.nested) {
             this.line();
-            for (let subtype of schema.nested) {
+            for (const subtype of schema.nested) {
                 this.generateType(subtype);
             }
         }
@@ -170,7 +233,7 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateResourceModule(schema: TypeSchema) {
-        this.file(pascalCase(schema.identifier.name) + '.ts', () => {
+        this.file(`${pascalCase(schema.identifier.name)}.ts`, () => {
             this.generateDisclaimer();
             this.line();
 
@@ -203,7 +266,10 @@ class TypeScriptGenerator extends Generator {
 
     generate() {
         this.dir('types', async () => {
-            const typesToGenerate = removeConstraints([...this.loader.complexTypes(), ...this.loader.resources()]);
+            const typesToGenerate = removeConstraints([
+                ...this.loader.complexTypes(),
+                ...this.loader.resources(),
+            ]);
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
 
             for (const [packageName, packageSchemas] of Object.entries(groupedComplexTypes)) {
@@ -222,7 +288,7 @@ class TypeScriptGenerator extends Generator {
 }
 
 export { TypeScriptGenerator };
-export { type TypeScriptGeneratorOptions };
+export type { TypeScriptGeneratorOptions };
 
 export function createGenerator(options: TypeScriptGeneratorOptions) {
     return new TypeScriptGenerator(options);

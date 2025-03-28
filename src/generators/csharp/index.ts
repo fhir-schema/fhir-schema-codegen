@@ -1,6 +1,6 @@
-import { Generator, GeneratorOptions } from '../../generator';
-import { INestedTypeSchema, TypeRef, TypeSchema } from '../../typeschema';
-import path from 'path';
+import path from 'node:path';
+import { Generator, type GeneratorOptions } from '../../generator';
+import { type INestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;
@@ -48,7 +48,7 @@ export class CSharpGenerator extends Generator {
 
     lineSM(...tokens: string[]) {
         this.writeIdent();
-        this.write(tokens.filter(Boolean).join(' ') + '\n');
+        this.write(`${tokens.filter(Boolean).join(' ')}\n`);
     }
 
     curlyBlock(tokens: string[], gencontent: () => void) {
@@ -79,10 +79,10 @@ export class CSharpGenerator extends Generator {
         }
 
         if (name === 'Reference' || name === 'Expression') {
-            name = 'Resource' + name;
+            name = `Resource${name}`;
         }
 
-        let base = schema.base ? ': ' + schema.base.name : '';
+        const base = schema.base ? `: ${schema.base.name}` : '';
         this.curlyBlock(['public', 'class', this.uppercaseFirstLetter(name), base], () => {
             if (schema.fields) {
                 for (const [fieldName, field] of Object.entries(schema.fields)) {
@@ -106,7 +106,7 @@ export class CSharpGenerator extends Generator {
                     }
 
                     if (t === 'Reference' || t === 'Expression') {
-                        t = 'Resource' + t;
+                        t = `Resource${t}`;
                     }
 
                     // if (field.enum) {
@@ -121,7 +121,7 @@ export class CSharpGenerator extends Generator {
 
             if ('nested' in schema && schema.nested) {
                 this.line();
-                for (let subtype of schema.nested) {
+                for (const subtype of schema.nested) {
                     this.generateType(subtype);
                 }
             }
@@ -134,19 +134,19 @@ export class CSharpGenerator extends Generator {
             this.file('base.cs', () => {
                 this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
 
-                for (let schema of this.loader.complexTypes()) {
+                for (const schema of this.loader.complexTypes()) {
                     this.generateType(schema);
                 }
             });
 
-            for (let schema of this.loader.resources()) {
-                this.file(schema.identifier.name + '.cs', () => {
+            for (const schema of this.loader.resources()) {
+                this.file(`${schema.identifier.name}.cs`, () => {
                     if (schema.dependencies) {
-                        if (schema.dependencies.filter((d) => d.kind == 'complex-type').length) {
+                        if (schema.dependencies.filter((d) => d.kind === 'complex-type').length) {
                             // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
                         }
 
-                        if (schema.dependencies.filter((d) => d.kind == 'resource').length) {
+                        if (schema.dependencies.filter((d) => d.kind === 'resource').length) {
                             // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
                         }
                     }
@@ -168,9 +168,9 @@ export class CSharpGenerator extends Generator {
                 this.lineSM('{');
                 this.lineSM('    public static readonly Dictionary<Type, string> Map = new()');
                 this.lineSM('    {');
-                for (let schema of this.loader.resources()) {
+                for (const schema of this.loader.resources()) {
                     this.lineSM(
-                        `        { typeof(FHIR.R4.Core.${schema.identifier.name}), "${schema.identifier.name}" },`
+                        `        { typeof(FHIR.R4.Core.${schema.identifier.name}), "${schema.identifier.name}" },`,
                     );
                 }
                 this.lineSM('    };');
@@ -182,4 +182,5 @@ export class CSharpGenerator extends Generator {
     }
 }
 
-export const createGenerator = (options: CSharpScriptGeneratorOptions) => new CSharpGenerator(options);
+export const createGenerator = (options: CSharpScriptGeneratorOptions) =>
+    new CSharpGenerator(options);

@@ -1,7 +1,13 @@
-import path from 'path';
-import { Generator, GeneratorOptions } from '../../generator';
-import { INestedTypeSchema, TypeRef, TypeSchema } from '../../typeschema';
-import { pascalCase, snakeCase, sortSchemasByDeps, removeConstraints, groupedByPackage } from '../../utils';
+import path from 'node:path';
+import { Generator, type GeneratorOptions } from '../../generator';
+import { type INestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import {
+    groupedByPackage,
+    pascalCase,
+    removeConstraints,
+    snakeCase,
+    sortSchemasByDeps,
+} from '../../utils';
 
 // Naming conventions
 // directory naming: snake_case
@@ -88,7 +94,7 @@ const pythonKeywords = new Set([
 
 const fixReservedWords = (name: string) => {
     if (pythonKeywords.has(name)) {
-        return name + '_';
+        return `${name}_`;
     }
     return name;
 };
@@ -119,15 +125,15 @@ export class PythonGenerator extends Generator {
     }
 
     wrapOptional(s: string) {
-        return 'Optional[' + s + ']';
+        return `Optional[${s}]`;
     }
 
     wrapList(s: string) {
-        return 'L[' + s + ']';
+        return `L[${s}]`;
     }
 
     wrapLiteral(s: string) {
-        return 'Literal[' + s + ']';
+        return `Literal[${s}]`;
     }
 
     generateType(schema: TypeSchema | INestedTypeSchema) {
@@ -151,7 +157,7 @@ export class PythonGenerator extends Generator {
                 return;
             }
 
-            let fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
+            const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
             // this.line(`resourceType: Literal['${className}'] = '${className}'`);
 
             for (const [fieldName, field] of fields) {
@@ -198,7 +204,7 @@ export class PythonGenerator extends Generator {
     generateNestedTypes(schema: TypeSchema) {
         if (schema.nested) {
             this.line();
-            for (let subtype of schema.nested) {
+            for (const subtype of schema.nested) {
                 this.generateType(subtype);
             }
         }
@@ -206,10 +212,12 @@ export class PythonGenerator extends Generator {
 
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
-            const complexTypesDeps = schema.dependencies.filter((deps) => deps.kind === 'complex-type');
+            const complexTypesDeps = schema.dependencies.filter(
+                (deps) => deps.kind === 'complex-type',
+            );
             const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
 
-            this.line('from', `.base`, 'import', '*');
+            this.line('from', '.base', 'import', '*');
 
             for (const deps of resourceDeps) {
                 this.line('from', `.${snakeCase(deps.name)}`, 'import', `${pascalCase(deps.name)}`);
@@ -232,7 +240,7 @@ export class PythonGenerator extends Generator {
 
             // this.generateBaseModel();
 
-            for (let schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
+            for (const schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
                 this.generateNestedTypes(schema);
                 this.line();
                 this.generateType(schema);
@@ -244,8 +252,10 @@ export class PythonGenerator extends Generator {
         this.file('__init__.py', () => {
             const names = removeConstraints(packageResources);
 
-            for (let schemaName of names) {
-                this.line(`from .${snakeCase(schemaName.identifier.name)} import ${schemaName.identifier.name}`);
+            for (const schemaName of names) {
+                this.line(
+                    `from .${snakeCase(schemaName.identifier.name)} import ${schemaName.identifier.name}`,
+                );
             }
         });
     }
@@ -257,7 +267,7 @@ export class PythonGenerator extends Generator {
     }
 
     generateResourceModule(schema: TypeSchema) {
-        this.file(snakeCase(schema.identifier.name) + '.py', () => {
+        this.file(`${snakeCase(schema.identifier.name)}.py`, () => {
             this.generateDisclaimer();
             this.line();
             this.defaultImports();
@@ -286,7 +296,7 @@ export class PythonGenerator extends Generator {
             for (const [packageName, packageResources] of Object.entries(groupedResources)) {
                 this.dir(snakeCase(packageName), () => {
                     this.generateResourcePackageInit(packageResources);
-                    for (let schema of removeConstraints(packageResources)) {
+                    for (const schema of removeConstraints(packageResources)) {
                         this.generateResourceModule(schema);
                     }
                 });
