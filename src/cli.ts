@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import path from 'path';
-import fs from 'fs';
+import fs, { existsSync } from 'fs';
 import { Command, Option } from 'commander';
 import * as process from 'node:process';
 
@@ -20,6 +20,17 @@ program
     .addOption(new Option('-g, --generator <name>').choices(['typescript', 'csharp', 'python']).makeOptionMandatory(true))
     .requiredOption('-o, --output <file>', 'Output directory')
     .requiredOption('-f, --files <files...>', 'TypeSchema source *.ngjson files')
+    .hook("preAction", (args) => {
+        const files = args.opts().files;
+        for (const file of files) {
+            const filePath = path.resolve(file)
+            if (!existsSync(filePath)){
+                console.error(`Input file by path doesn't exist - '${filePath}'`);
+                console.error("Exit...")
+                process.exit(1)
+            }
+        }
+    })
     .action(async (options: { files: string[]; generator: string; output: string }) => {
         const outputDir = path.resolve(process.cwd(), options.output);
 
