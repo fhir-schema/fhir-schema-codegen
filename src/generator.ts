@@ -42,7 +42,9 @@ export class Generator {
         await this.loader.load();
     }
 
-    generate() {}
+    generate() {
+        throw Error("Implement this method in target generator type")
+    }
 
     dir(path: string, gencontent: () => void) {
         this.currentDir = Path.join(this.opts.outputDir || '', path);
@@ -59,7 +61,7 @@ export class Generator {
             fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
             console.log('mkdir', Path.dirname(this.filePath));
         }
-        console.log('file', this.filePath);
+        // console.log('file', this.filePath);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
 
         gencontent();
