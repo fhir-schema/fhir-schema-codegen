@@ -43,7 +43,7 @@ export class Generator {
     }
 
     generate() {
-        throw Error("Implement this method in target generator type")
+        throw Error('Implement this method in target generator type');
     }
 
     dir(path: string, gencontent: () => void) {
@@ -155,11 +155,11 @@ export class Generator {
             const typeMap = this.opts.typeMap ?? {};
             return typeMap[field.type.name] ?? 'string';
         }
-        if (field.reference?.length){
+
+        if (field.reference?.length) {
             const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
             return `Reference<${references}>`;
         }
-
 
         return this.uppercaseFirstLetter(field.type.name);
     }

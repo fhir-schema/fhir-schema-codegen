@@ -17,17 +17,19 @@ program
 program
     .command('generate')
     .description('Generate code from FHIR Schema')
-    .addOption(new Option('-g, --generator <name>').choices(['typescript', 'csharp', 'python']).makeOptionMandatory(true))
+    .addOption(
+        new Option('-g, --generator <name>').choices(['typescript', 'csharp', 'python']).makeOptionMandatory(true)
+    )
     .requiredOption('-o, --output <file>', 'Output directory')
     .requiredOption('-f, --files <files...>', 'TypeSchema source *.ngjson files')
-    .hook("preAction", (args) => {
+    .hook('preAction', (args) => {
         const files = args.opts().files;
         for (const file of files) {
-            const filePath = path.resolve(file)
-            if (!existsSync(filePath)){
+            const filePath = path.resolve(file);
+            if (!existsSync(filePath)) {
                 console.error(`Input file by path doesn't exist - '${filePath}'`);
-                console.error("Exit...")
-                process.exit(1)
+                console.error('Exit...');
+                process.exit(1);
             }
         }
     })
