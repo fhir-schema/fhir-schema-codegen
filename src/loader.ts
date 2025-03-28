@@ -8,131 +8,132 @@ import { Readable } from 'node:stream';
 import type { ReadableStream } from 'node:stream/web';
 
 export async function read_ndjson_gz(url: string, process: (line: any) => any): Promise<void> {
-  const result: any[] = [];
-  return new Promise((resolve, reject) => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const webStream = response.body as ReadableStream;
-        const stream = Readable.fromWeb(webStream);
+    const result: any[] = [];
+    return new Promise((resolve, reject) => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url);
+                const webStream = response.body as ReadableStream;
+                const stream = Readable.fromWeb(webStream);
 
-        const rl = createInterface({
-          input: stream,
-          crlfDelay: Number.POSITIVE_INFINITY,
-        });
+                const rl = createInterface({
+                    input: stream,
+                    crlfDelay: Number.POSITIVE_INFINITY,
+                });
 
-        rl.on('line', (line) => {
-          const json = JSON.parse(line);
-          const res = process(json);
-          if (res) {
-            result.push(res);
-          }
-        });
+                rl.on('line', (line) => {
+                    const json = JSON.parse(line);
+                    const res = process(json);
+                    if (res) {
+                        result.push(res);
+                    }
+                });
 
-        rl.on('error', (e) => {
-          console.error('Error reading line:', e);
-          reject(e);
-        });
+                rl.on('error', (e) => {
+                    console.error('Error reading line:', e);
+                    reject(e);
+                });
 
-        rl.on('close', () => {
-          resolve();
-        });
-      } catch (err) {
-        reject(err);
-      }
-    };
+                rl.on('close', () => {
+                    resolve();
+                });
+            } catch (err) {
+                reject(err);
+            }
+        };
 
-    fetchData();
-  });
+        fetchData();
+    });
 }
 
 export interface LoaderOptions {
-  files?: string[];
-  dirs?: string[];
-  packages?: string[];
+    files?: string[];
+    dirs?: string[];
+    packages?: string[];
 }
 
 export class SchemaLoader {
-  private opts: LoaderOptions;
-  private canonicalResources: { [key: string]: any } = {};
+    private opts: LoaderOptions;
+    private canonicalResources: { [key: string]: any } = {};
 
-  constructor(opts: LoaderOptions = { files: [], dirs: [] }) {
-    this.opts = opts;
-  }
-
-  packageURL(pkgname: string): string {
-    return `http://get-ig.org/FHIRSchema?package=${pkgname}`;
-  }
-
-  async load() {
-    if (this.opts.files) {
-      for (const file of this.opts.files) {
-        await this.loadFromFile(file);
-      }
+    constructor(opts: LoaderOptions = { files: [], dirs: [] }) {
+        this.opts = opts;
     }
-    if (this.opts.dirs) {
-      for (const dir of this.opts.dirs) {
-        await this.loadFromDirectory(dir);
-      }
+
+    packageURL(pkgname: string): string {
+        return `http://get-ig.org/FHIRSchema?package=${pkgname}`;
     }
-  }
 
-  loadNDJSONContent(text: string) {
-    const lines = text.split('\n').filter((line) => line.trim().length > 0);
-    for (const line of lines) {
-      const resource = JSON.parse(line);
-      const rt = resource.resourceType || (resource['package-meta'] && 'FHIRSchema') || 'package';
-      this.canonicalResources[rt] ||= [];
-      this.canonicalResources[rt].push(resource);
+    async load() {
+        if (this.opts.files) {
+            for (const file of this.opts.files) {
+                await this.loadFromFile(file);
+            }
+        }
+        if (this.opts.dirs) {
+            for (const dir of this.opts.dirs) {
+                await this.loadFromDirectory(dir);
+            }
+        }
     }
-  }
 
-  async loadFromFile(path: string) {
-    let text: string;
-    if (path.endsWith('.gz')) {
-      const buffer = await fs.readFile(path);
-      const decompressed = await new Response(
-        new Blob([buffer]).stream().pipeThrough(new DecompressionStream('gzip')),
-      ).text();
-      text = decompressed;
-    } else {
-      text = await fs.readFile(path, 'utf-8');
+    loadNDJSONContent(text: string) {
+        const lines = text.split('\n').filter((line) => line.trim().length > 0);
+        for (const line of lines) {
+            const resource = JSON.parse(line);
+            const rt =
+                resource.resourceType || (resource['package-meta'] && 'FHIRSchema') || 'package';
+            this.canonicalResources[rt] ||= [];
+            this.canonicalResources[rt].push(resource);
+        }
     }
-    this.loadNDJSONContent(text);
-    return true;
-  }
 
-  async loadFromDirectory(path: string) {}
+    async loadFromFile(path: string) {
+        let text: string;
+        if (path.endsWith('.gz')) {
+            const buffer = await fs.readFile(path);
+            const decompressed = await new Response(
+                new Blob([buffer]).stream().pipeThrough(new DecompressionStream('gzip')),
+            ).text();
+            text = decompressed;
+        } else {
+            text = await fs.readFile(path, 'utf-8');
+        }
+        this.loadNDJSONContent(text);
+        return true;
+    }
 
-  resources(): TypeSchema[] {
-    return this.canonicalResources.package
-      .filter((res: TypeSchema) => res.identifier.kind === 'resource')
-      .map((item: TypeSchema) => new TypeSchema(item));
-  }
+    async loadFromDirectory(path: string) {}
 
-  profiles(): TypeSchema[] {
-    return this.canonicalResources.package.filter(
-      (res: TypeSchema) => res.identifier.kind === 'constraint',
-    );
-  }
+    resources(): TypeSchema[] {
+        return this.canonicalResources.package
+            .filter((res: TypeSchema) => res.identifier.kind === 'resource')
+            .map((item: TypeSchema) => new TypeSchema(item));
+    }
 
-  primitives(): TypeSchema[] {
-    return this.canonicalResources.package.filter(
-      (res: TypeSchema) => res.identifier.kind === 'primitive-type',
-    );
-  }
+    profiles(): TypeSchema[] {
+        return this.canonicalResources.package.filter(
+            (res: TypeSchema) => res.identifier.kind === 'constraint',
+        );
+    }
 
-  complexTypes(): TypeSchema[] {
-    return this.canonicalResources.package
-      .filter(({ identifier }: TypeSchema) => identifier.kind === 'complex-type')
-      .map((item: TypeSchema) => new TypeSchema(item));
-  }
+    primitives(): TypeSchema[] {
+        return this.canonicalResources.package.filter(
+            (res: TypeSchema) => res.identifier.kind === 'primitive-type',
+        );
+    }
 
-  extensions(): TypeSchema[] {
-    return [];
-  }
+    complexTypes(): TypeSchema[] {
+        return this.canonicalResources.package
+            .filter(({ identifier }: TypeSchema) => identifier.kind === 'complex-type')
+            .map((item: TypeSchema) => new TypeSchema(item));
+    }
 
-  valueSets(): TypeSchema[] {
-    return [];
-  }
+    extensions(): TypeSchema[] {
+        return [];
+    }
+
+    valueSets(): TypeSchema[] {
+        return [];
+    }
 }

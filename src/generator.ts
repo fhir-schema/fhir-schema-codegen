@@ -4,199 +4,199 @@ import { type LoaderOptions, SchemaLoader } from './loader';
 import type { ClassField } from './typeschema';
 
 export interface GeneratorOptions {
-  outputDir: string;
-  staticDir?: string;
-  loaderOptions?: LoaderOptions;
-  tabSize?: number;
+    outputDir: string;
+    staticDir?: string;
+    loaderOptions?: LoaderOptions;
+    tabSize?: number;
 
-  typeMap?: Record<string, string>;
-  keywords?: Set<string>;
+    typeMap?: Record<string, string>;
+    keywords?: Set<string>;
 }
 
 export class Generator {
-  private fileDescriptor: number | null = null;
-  private currentDir: string | null = null;
-  private opts: GeneratorOptions;
-  filePath?: string;
-  identLevel = 0;
-  loader: SchemaLoader;
+    private fileDescriptor: number | null = null;
+    private currentDir: string | null = null;
+    private opts: GeneratorOptions;
+    filePath?: string;
+    identLevel = 0;
+    loader: SchemaLoader;
 
-  constructor(opts: GeneratorOptions) {
-    this.opts = opts;
-    this.currentDir = opts.outputDir || null;
-    this.loader = new SchemaLoader({ ...opts.loaderOptions, ...opts });
-  }
-
-  clear() {
-    if (this.opts.outputDir) {
-      return fs.rmSync(this.opts.outputDir, { recursive: true, force: true });
-    }
-  }
-
-  readFile(path: string): string {
-    return fs.readFileSync(Path.join(this.opts.outputDir || '', path), 'utf-8');
-  }
-
-  async init() {
-    await this.loader.load();
-  }
-
-  generate() {
-    throw Error('Implement this method in target generator type');
-  }
-
-  dir(path: string, gencontent: () => void) {
-    this.currentDir = Path.join(this.opts.outputDir || '', path);
-    if (!fs.existsSync(this.currentDir)) {
-      fs.mkdirSync(this.currentDir, { recursive: true });
-    }
-    gencontent();
-  }
-
-  file(path: string, gencontent: () => void) {
-    this.filePath = Path.join(this.currentDir || '', path);
-    if (!fs.existsSync(Path.dirname(this.filePath))) {
-      fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
-    }
-    // console.log('file', this.filePath);
-    this.fileDescriptor = fs.openSync(this.filePath, 'w');
-
-    gencontent();
-
-    fs.closeSync(this.fileDescriptor);
-  }
-
-  jsonFile(path: string, content: any) {
-    this.file(path, () => {
-      this.write(JSON.stringify(content, null, 2));
-    });
-  }
-
-  ensureCurrentFile() {
-    if (!this.fileDescriptor) {
-      throw new Error('No current file');
-    }
-  }
-
-  write(str: string) {
-    this.ensureCurrentFile();
-    fs.writeSync(this.fileDescriptor as number, str);
-  }
-
-  writeIdent() {
-    this.write(' '.repeat(this.identLevel * (this.opts.tabSize ?? 4)));
-  }
-
-  line(...tokens: string[]) {
-    this.writeIdent();
-    this.write(`${tokens.join(' ')}\n`);
-  }
-
-  lineSM(...tokens: string[]) {
-    this.writeIdent();
-    this.write(`${tokens.join(' ')};\n`);
-  }
-
-  curlyBlock(tokens: Array<string | undefined>, gencontent: () => void) {
-    this.write(tokens.filter(Boolean).join(' '));
-    this.write(' {\n');
-    this.ident();
-    gencontent();
-    this.deident();
-    this.write('}\n');
-  }
-
-  squareBlock(tokens: string[], gencontent: () => void) {
-    this.line(`${tokens.join(' ')}[`);
-    this.ident();
-    gencontent();
-    this.deident();
-    this.line(']');
-  }
-
-  curlBrackets(gencontent: () => void) {
-    this.write('{');
-    gencontent();
-    this.write('}');
-  }
-
-  ident() {
-    this.identLevel++;
-  }
-
-  deident() {
-    this.identLevel--;
-  }
-
-  token(...tokens: string[]) {}
-
-  getFieldName(name: string) {
-    // const keywords = this.opts.keywords ?? new Set();
-    // if (keywords.has(name)) {
-    //     return name + '_';
-    // }
-
-    return name;
-  }
-
-  getFieldType(field: ClassField): string {
-    if (field.enum) {
-      return field.enum.map((e) => `'${e}'`).join(' | ');
+    constructor(opts: GeneratorOptions) {
+        this.opts = opts;
+        this.currentDir = opts.outputDir || null;
+        this.loader = new SchemaLoader({ ...opts.loaderOptions, ...opts });
     }
 
-    if (field.type.kind === 'nested') {
-      return this.deriveNestedSchemaName(field.type.url);
+    clear() {
+        if (this.opts.outputDir) {
+            return fs.rmSync(this.opts.outputDir, { recursive: true, force: true });
+        }
     }
 
-    if (field.type.kind === 'primitive-type') {
-      const typeMap = this.opts.typeMap ?? {};
-      return typeMap[field.type.name] ?? 'string';
+    readFile(path: string): string {
+        return fs.readFileSync(Path.join(this.opts.outputDir || '', path), 'utf-8');
     }
 
-    if (field.reference?.length) {
-      const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
-      return `Reference<${references}>`;
+    async init() {
+        await this.loader.load();
     }
 
-    return this.uppercaseFirstLetter(field.type.name);
-  }
-
-  copyStaticFiles() {
-    if (!this.opts.staticDir) {
-      throw new Error('staticDir must be set in subclass.');
+    generate() {
+        throw Error('Implement this method in target generator type');
     }
 
-    fs.cpSync(Path.resolve(this.opts.staticDir), this.opts.outputDir, { recursive: true });
-  }
-
-  canonicalToName(canonical: string | undefined) {
-    if (!canonical) return undefined;
-    return canonical.split('/').pop();
-  }
-
-  uppercaseFirstLetter(str: string): string {
-    if (!str || str.length === 0) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  uppercaseFirstLetterOfEach(strings: string[]): string[] {
-    return strings.map((str) => this.uppercaseFirstLetter(str));
-  }
-
-  deriveNestedSchemaName(url: string, includeResourceName = false) {
-    const path = this.canonicalToName(url);
-
-    if (path) {
-      const [resourceName, rest] = path.split('#');
-      const name = this.uppercaseFirstLetterOfEach(rest.split('.')).join('');
-
-      if (includeResourceName) {
-        return [resourceName, name].join('');
-      }
-
-      return name;
+    dir(path: string, gencontent: () => void) {
+        this.currentDir = Path.join(this.opts.outputDir || '', path);
+        if (!fs.existsSync(this.currentDir)) {
+            fs.mkdirSync(this.currentDir, { recursive: true });
+        }
+        gencontent();
     }
 
-    return '';
-  }
+    file(path: string, gencontent: () => void) {
+        this.filePath = Path.join(this.currentDir || '', path);
+        if (!fs.existsSync(Path.dirname(this.filePath))) {
+            fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
+        }
+        // console.log('file', this.filePath);
+        this.fileDescriptor = fs.openSync(this.filePath, 'w');
+
+        gencontent();
+
+        fs.closeSync(this.fileDescriptor);
+    }
+
+    jsonFile(path: string, content: any) {
+        this.file(path, () => {
+            this.write(JSON.stringify(content, null, 2));
+        });
+    }
+
+    ensureCurrentFile() {
+        if (!this.fileDescriptor) {
+            throw new Error('No current file');
+        }
+    }
+
+    write(str: string) {
+        this.ensureCurrentFile();
+        fs.writeSync(this.fileDescriptor as number, str);
+    }
+
+    writeIdent() {
+        this.write(' '.repeat(this.identLevel * (this.opts.tabSize ?? 4)));
+    }
+
+    line(...tokens: string[]) {
+        this.writeIdent();
+        this.write(`${tokens.join(' ')}\n`);
+    }
+
+    lineSM(...tokens: string[]) {
+        this.writeIdent();
+        this.write(`${tokens.join(' ')};\n`);
+    }
+
+    curlyBlock(tokens: Array<string | undefined>, gencontent: () => void) {
+        this.write(tokens.filter(Boolean).join(' '));
+        this.write(' {\n');
+        this.ident();
+        gencontent();
+        this.deident();
+        this.write('}\n');
+    }
+
+    squareBlock(tokens: string[], gencontent: () => void) {
+        this.line(`${tokens.join(' ')}[`);
+        this.ident();
+        gencontent();
+        this.deident();
+        this.line(']');
+    }
+
+    curlBrackets(gencontent: () => void) {
+        this.write('{');
+        gencontent();
+        this.write('}');
+    }
+
+    ident() {
+        this.identLevel++;
+    }
+
+    deident() {
+        this.identLevel--;
+    }
+
+    token(...tokens: string[]) {}
+
+    getFieldName(name: string) {
+        // const keywords = this.opts.keywords ?? new Set();
+        // if (keywords.has(name)) {
+        //     return name + '_';
+        // }
+
+        return name;
+    }
+
+    getFieldType(field: ClassField): string {
+        if (field.enum) {
+            return field.enum.map((e) => `'${e}'`).join(' | ');
+        }
+
+        if (field.type.kind === 'nested') {
+            return this.deriveNestedSchemaName(field.type.url);
+        }
+
+        if (field.type.kind === 'primitive-type') {
+            const typeMap = this.opts.typeMap ?? {};
+            return typeMap[field.type.name] ?? 'string';
+        }
+
+        if (field.reference?.length) {
+            const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
+            return `Reference<${references}>`;
+        }
+
+        return this.uppercaseFirstLetter(field.type.name);
+    }
+
+    copyStaticFiles() {
+        if (!this.opts.staticDir) {
+            throw new Error('staticDir must be set in subclass.');
+        }
+
+        fs.cpSync(Path.resolve(this.opts.staticDir), this.opts.outputDir, { recursive: true });
+    }
+
+    canonicalToName(canonical: string | undefined) {
+        if (!canonical) return undefined;
+        return canonical.split('/').pop();
+    }
+
+    uppercaseFirstLetter(str: string): string {
+        if (!str || str.length === 0) return str;
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    uppercaseFirstLetterOfEach(strings: string[]): string[] {
+        return strings.map((str) => this.uppercaseFirstLetter(str));
+    }
+
+    deriveNestedSchemaName(url: string, includeResourceName = false) {
+        const path = this.canonicalToName(url);
+
+        if (path) {
+            const [resourceName, rest] = path.split('#');
+            const name = this.uppercaseFirstLetterOfEach(rest.split('.')).join('');
+
+            if (includeResourceName) {
+                return [resourceName, name].join('');
+            }
+
+            return name;
+        }
+
+        return '';
+    }
 }
