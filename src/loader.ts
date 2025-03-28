@@ -1,13 +1,9 @@
-import { assert } from 'console';
-import type { FHIRSchema, FHIRSchemaBase, FHIRSchemaElement } from './fhirschema';
-import type { ClassField, TypeRef } from './typeschema';
-import { TypeRefType, TypeSchema } from './typeschema';
+import { TypeSchema } from './typeschema';
 import fs from 'fs/promises';
 
-export { type FHIRSchema } from './fhirschema';
 export { type ITypeSchema } from './typeschema';
 
-import { Readable, ReadableOptions } from 'stream';
+import { Readable } from 'stream';
 import { createInterface } from 'readline';
 import { ReadableStream } from 'stream/web';
 
