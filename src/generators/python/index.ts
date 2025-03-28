@@ -132,6 +132,10 @@ export class PythonGenerator extends Generator {
     return `L[${s}]`;
   }
 
+  wrapLiteral(s: string) {
+    return `Literal[${s}]`;
+  }
+
   generateType(schema: TypeSchema | INestedTypeSchema) {
     let name = '';
 
@@ -147,7 +151,6 @@ export class PythonGenerator extends Generator {
     ];
     const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
-
     this.curlyBlock([classDefinition], () => {
       if (!schema.fields) {
         this.line('pass');
@@ -160,7 +163,7 @@ export class PythonGenerator extends Generator {
       for (const [fieldName, field] of fields) {
         if ('choices' in field) continue;
 
-        let fieldType = this.getFieldType(field);
+        let fieldType = field.type.name;
         let defaultValue = '';
 
         if (field.type.kind === 'nested') {
@@ -169,6 +172,10 @@ export class PythonGenerator extends Generator {
 
         if (field.type.kind === 'primitive-type') {
           fieldType = typeMap[field.type.name] ?? 'str';
+        }
+
+        if (field.enum) {
+          fieldType = this.wrapLiteral(field.enum.map((e) => `"${e}"`).join(', '));
         }
 
         // return this.uppercaseFirstLetter(field.type.name);

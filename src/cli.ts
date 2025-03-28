@@ -3,7 +3,7 @@ import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import * as process from 'node:process';
 import { Command, Option } from 'commander';
-import pc from 'picocolors'
+import pc from 'picocolors';
 
 const program = new Command();
 program.name('fhirschema-codegen').description('Generate code from FHIR Schema').version('0.1.0');
@@ -50,9 +50,9 @@ program
       const generatorPath = path.resolve(__dirname, 'generators', options.generator, 'index.js');
       const generatorPlugin = await import(generatorPath);
       if (!generatorPlugin.createGenerator) {
-        console.error(pc.red(
-          `Generator plugin ${options.generator} does not export createGenerator function`,
-        ));
+        console.error(
+          pc.red(`Generator plugin ${options.generator} does not export createGenerator function`),
+        );
         process.exit(1);
       }
       createGenerator = generatorPlugin.createGenerator;
@@ -62,12 +62,11 @@ program
     }
 
     const generator = createGenerator({ outputDir, ...options });
-    console.info(pc.bgCyan(`Start generate for ${options.generator}...`))
+    console.info(pc.bgCyan(`Start generate for ${options.generator}...`));
     console.info();
     await generator.init();
     generator.generate();
-    console.info(pc.bgGreen(`Successfully generated to  ${options.output}...`))
-
+    console.info(pc.bgGreen(`Successfully generated to  ${options.output}...`));
   });
 
 program.parse();
