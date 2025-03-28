@@ -135,7 +135,7 @@ class TypeScriptGenerator extends Generator {
                 const optionalSymbol = field.required ? '' : '?';
                 const arraySymbol = field.array ? '[]' : '';
 
-                let type = this.getFieldType(field);
+                let type = field.type.name;
 
                 if (field.type.kind === 'nested') {
                     type = this.deriveNestedSchemaName(field.type.url, true);
@@ -147,6 +147,15 @@ class TypeScriptGenerator extends Generator {
 
                 if (schema.identifier.name === 'Reference' && fieldNameFixed === 'reference') {
                     type = '`${T}/${string}`';
+                }
+
+                if (field.reference?.length) {
+                    const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
+                    type = `Reference<${references}>`;
+                }
+
+                if (field.enum) {
+                    type = field.enum.map((e) => `'${e}'`).join(' | ');
                 }
 
                 this.lineSM(`${fieldNameFixed}${optionalSymbol}:`, `${type}${arraySymbol}`);

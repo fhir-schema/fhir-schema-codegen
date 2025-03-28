@@ -95,7 +95,7 @@ export class CSharpGenerator extends Generator {
                     const arraySpecifier = field.array ? '[]' : '';
                     const accessors = '{ get; set; }';
 
-                    let t = this.getFieldType(field);
+                    let t = field.type.name;
 
                     if (field.type.kind === 'nested') {
                         t = this.deriveNestedSchemaName(field.type.url, true);
@@ -108,6 +108,10 @@ export class CSharpGenerator extends Generator {
                     if (t === 'Reference' || t === 'Expression') {
                         t = 'Resource' + t;
                     }
+
+                    // if (field.enum) {
+                    //     t = field.enum.map((e) => `'${e}'`).join(' | ');
+                    // }
 
                     const fieldType = baseNamespacePrefix + t + arraySpecifier + nullable;
                     const fieldSymbol = this.pascalCase(fieldName);
