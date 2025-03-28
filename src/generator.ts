@@ -138,6 +138,7 @@ export class Generator {
         // if (keywords.has(name)) {
         //     return name + '_';
         // }
+
         return name;
     }
 
@@ -154,6 +155,11 @@ export class Generator {
             const typeMap = this.opts.typeMap ?? {};
             return typeMap[field.type.name] ?? 'string';
         }
+        if (field.reference?.length){
+            const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
+            return `Reference<${references}>`;
+        }
+
 
         return this.uppercaseFirstLetter(field.type.name);
     }
