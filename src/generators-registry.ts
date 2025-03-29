@@ -138,8 +138,7 @@ export class GeneratorsRegistry {
                         continue;
                     }
 
-                    const generatorPath = path.join(basePath, entry.name);
-                    const packageJsonPath = path.join(generatorPath, 'package.json');
+                    const packageJsonPath = path.join(basePath, 'package.json');
 
                     if (!existsSync(packageJsonPath)) {
                         continue;
@@ -163,12 +162,12 @@ export class GeneratorsRegistry {
                                 continue;
                             }
 
-                            this.generators.set(entry.name, {
-                                name: entry.name,
+                            this.generators.set(basePath, {
+                                name: path.basename(basePath),
                                 displayName: packageJson.displayName || packageJson.name,
                                 description: packageJson.description,
                                 isBuiltIn: false,
-                                path: generatorPath,
+                                path: basePath,
                             });
                         }
                     } catch (error) {
@@ -208,7 +207,11 @@ export class GeneratorsRegistry {
      * @param name - Name of the generator
      * @returns Generator information or undefined if not found
      */
-    get(name: string): GeneratorInfo | undefined {
+    get(name: string, customGeneratorPath?: string): GeneratorInfo | undefined {
+        if (customGeneratorPath) {
+            return this.generators.get(customGeneratorPath);
+        }
+
         return this.generators.get(name);
     }
 
@@ -243,7 +246,7 @@ export class GeneratorsRegistry {
             if (generatorInfo.isBuiltIn) {
                 // Built-in generator
                 const extension = process.argv?.[1].endsWith('ts') ? 'ts' : 'js';
-                modulePath = path.resolve(__dirname, 'generators', name,  `index.${extension}`);
+                modulePath = path.resolve(__dirname, 'generators', name, `index.${extension}`);
             } else if (generatorInfo.path) {
                 // Custom generator
                 const packageJson = JSON.parse(

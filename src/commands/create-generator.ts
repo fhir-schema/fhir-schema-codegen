@@ -18,7 +18,7 @@ export class CreateGeneratorCommand extends BaseCommand {
             .command('create-generator')
             .description('Create a new custom generator template')
             .requiredOption('-n, --name <name>', 'Name of the new generator')
-            .option('-o, --output <directory>', 'Output directory', './fhirschema-generators')
+            .requiredOption('-o, --output <directory>', 'Output directory')
             .action(async (options) => {
                 try {
                     const name = options.name;

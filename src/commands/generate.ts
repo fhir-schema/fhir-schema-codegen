@@ -1,4 +1,4 @@
-import type { Command as Commander } from 'commander';
+import { type Command as Commander, Option } from 'commander';
 import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
@@ -14,16 +14,16 @@ export class GenerateCommand extends BaseCommand {
      * @param program - The commander program instance
      */
     register(program: Commander): void {
+        const option = new Option('-g, --generator <name>', 'Generator to use').conflicts(
+            'custom-generator',
+        );
         program
             .command('generate')
             .description('Generate code from FHIR Schema')
-            .requiredOption('-g, --generator <name>', 'Generator to use')
+            .addOption(option)
             .requiredOption('-o, --output <directory>', 'Output directory')
             .requiredOption('-f, --files <files...>', 'TypeSchema source *.ngjson files')
-            .option(
-                '--custom-generator-path <path>',
-                'Additional path to look for custom generators',
-            )
+            .option('--custom-generator <path>', 'Additional path to look for custom generators')
             .hook('preAction', async (thisCommand: Commander) => {
                 try {
                     const options = thisCommand.opts();
@@ -32,13 +32,16 @@ export class GenerateCommand extends BaseCommand {
                     await generatorsRegistry.initialize();
 
                     // Add custom generator path if provided
-                    if (options.customGeneratorPath) {
-                        generatorsRegistry.addCustomGeneratorPath(options.customGeneratorPath);
+                    if (options.customGenerator) {
+                        generatorsRegistry.addCustomGeneratorPath(options.customGenerator);
                         await generatorsRegistry.discoverCustomGenerators();
                     }
 
                     // Validate generator name
-                    const generator = generatorsRegistry.get(options.generator);
+                    const generator = generatorsRegistry.get(
+                        options.generator,
+                        options.customGenerator,
+                    );
                     if (!generator) {
                         const availableGenerators = generatorsRegistry.getGeneratorNames();
                         logger.error(`Unknown generator: ${options.generator}`);
@@ -69,14 +72,17 @@ export class GenerateCommand extends BaseCommand {
                     }
 
                     logger.infoHighlight(
-                        `Starting code generation with ${options.generator} generator...`,
+                        `Starting code generation with ${options.generator ?? options.customGenerator} generator...`,
                     );
 
                     // Create and use the generator
-                    const generator = await generatorsRegistry.createGenerator(options.generator, {
-                        outputDir,
-                        files: options.files,
-                    });
+                    const generator = await generatorsRegistry.createGenerator(
+                        options.generator ?? options.customGenerator,
+                        {
+                            outputDir,
+                            files: options.files,
+                        },
+                    );
 
                     await generator.init();
                     generator.generate();
