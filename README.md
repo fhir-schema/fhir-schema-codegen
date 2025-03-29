@@ -213,7 +213,7 @@ export class TypeScriptGenerator extends Generator {
     }
     generateType(schema: TypeSchema) {
         let base = schema.base ? 'extends ' + schema.base.name : '';
-        this.curlyBlock(['export', 'interface', schema.name.name, base], () => {
+        this.curlyBlock(['export', 'interface', schema.identifier.name, base], () => {
             if (schema.fields) {
                 for (const [fieldName, field] of Object.entries(schema.fields)) {
                     let tp = field.type.name;
@@ -242,7 +242,7 @@ export class TypeScriptGenerator extends Generator {
             });
 
             for (let schema of this.loader.resources()) {
-                this.file(schema.name.name + ".ts", () => {
+                this.file(schema.identifier.name + ".ts", () => {
                     if (schema.allDependencies) {
                         for (let dep of schema.allDependencies.filter(d => d.type == 'complex-type')) {
                             this.lineSM('import', '{', dep.name, '}', 'from', '"./types.ts"');

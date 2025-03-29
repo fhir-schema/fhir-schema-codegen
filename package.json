@@ -4,7 +4,7 @@
     "author": "niquola",
     "license": "ISC",
     "main": "dist/cli.js",
-    "types": "dist/cli.d.ts",
+    "types": "dist/index.d.ts",
     "engines": {
         "node": ">=20.0.0"
     },
@@ -25,6 +25,9 @@
     },
     "bugs": {
         "url": "https://github.com/fhir-schema/fhir-schema-codegen/issues"
+    },
+    "exports": {
+        ".": "./dist/index.js"
     },
     "scripts": {
         "build": "tsc && npm run copy-static",

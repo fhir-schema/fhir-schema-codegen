@@ -126,9 +126,8 @@ This will show both built-in generators and any custom generators found in the d
 Custom generators must implement the `Generator` interface by extending the base `Generator` class. The main method to implement is `generate()`, which is responsible for generating the code.
 
 ```typescript
-import { Generator, GeneratorOptions } from '@fhirschema/codegen/generator';
-import { TypeSchema } from '@fhirschema/codegen/typeschema';
-import path from 'path';
+import { Generator, GeneratorOptions, TypeSchema } from '@fhirschema/codegen;
+import path from 'node:path';
 
 export interface MyGeneratorOptions extends GeneratorOptions {
     // Add custom options here
@@ -157,7 +156,7 @@ export class MyGenerator extends Generator {
     
     generateType(schema: TypeSchema) {
         // Implement type generation logic
-        this.line(`// Generated type for ${schema.name.name}`);
+        this.line(`// Generated type for ${schema.identifier.name}`);
     }
 }
 

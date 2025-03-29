@@ -5,6 +5,8 @@ import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
 import { BaseCommand } from './command';
 
+const { version } = require('./../../package.json');
+
 /**
  * Command to create a new custom generator template
  */
@@ -22,7 +24,7 @@ export class CreateGeneratorCommand extends BaseCommand {
             .action(async (options) => {
                 try {
                     const name = options.name;
-                    const outputDir = path.resolve(process.cwd(), options.output, name);
+                    const outputDir = path.resolve(process.cwd(), options.output);
 
                     // Initialize the registry to check for name conflicts
                     await generatorsRegistry.initialize();
@@ -68,9 +70,10 @@ export class CreateGeneratorCommand extends BaseCommand {
                         license: 'ISC',
                         devDependencies: {
                             typescript: '^5.6.3',
+                            '@types/node': '^22.8.7',
                         },
                         dependencies: {
-                            '@fhirschema/codegen': '^0.0.4',
+                            '@fhirschema/codegen': `^${version}`,
                         },
                     };
 
@@ -113,16 +116,15 @@ npm run build
 ## Usage
 
 \`\`\`bash
-fscg generate -g ${name} -o ./output -f ./path-to-schema-files.ndjson --custom-generator-path ./fhirschema-generators
+fscg generate -o ./output -f ./path-to-schema-files.ndjson --custom-generator ./path-to-generator
 \`\`\`
 `;
 
                     fs.writeFileSync(path.join(outputDir, 'README.md'), readme);
 
                     // Create generator template
-                    const generatorTemplate = `import { Generator, GeneratorOptions } from '@fhirschema/codegen/dist/generator';
-import { TypeSchema } from '@fhirschema/codegen/dist/typeschema';
-import path from 'path';
+                    const generatorTemplate = `import { Generator, type GeneratorOptions, TypeSchema } from '@fhirschema/codegen';
+import path from 'node:path';
 
 export interface ${name.charAt(0).toUpperCase() + name.slice(1)}GeneratorOptions extends GeneratorOptions {
     // Add custom options here
@@ -138,7 +140,7 @@ export class ${name.charAt(0).toUpperCase() + name.slice(1)}Generator extends Ge
 
     generateType(schema: TypeSchema) {
         // Implement type generation logic
-        this.line(\`// Generated type for \${schema.name.name}\`);
+        this.line(\`// Generated type for \${schema.identifier.name}\`);
         // Add your implementation here
     }
 
@@ -175,7 +177,7 @@ export function createGenerator(options: GeneratorOptions): Generator {
                     logger.infoHighlight('2. npm install');
                     logger.infoHighlight('3. npm run build');
                     logger.infoHighlight(
-                        `4. Use your generator: fscg generate -g ${name} -o ./output -f ./schema.ndjson --custom-generator-path ${options.output}`,
+                        `4. Use your generator: fscg generate -o ./output -f ./schema.ndjson --custom-generator ${options.output}`,
                     );
                 } catch (error) {
                     this.handleError(error);
