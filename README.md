@@ -1,37 +1,185 @@
 # FHIR Schema Codegen
 
-[![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)   
-
+[![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
-
-
 Library to generate SDK from FHIR Schema.
-This is a very early stage of the library. 
+This is a very early stage of the library.
 But it will progress quickly. Join the community - [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema)
+
+## Installation
+
+```bash
+# Install globally
+npm install -g @fhirschema/codegen
+
+# Or use with npx
+npx @fhirschema/codegen [command] [options]
+```
 
 ## Usage
 
-TBD
+The FHIR Schema Codegen provides several commands to work with FHIR schemas and generate code:
 
 ```bash
-npm install -g @fhirschema/codegen
-
-# List packages and find pakage coordinate <package>:<version>
+# List packages and find package coordinate <package>:<version>
 fscg packages hl7.fhir.r4 | less
 
 # Generate code
 fscg generate -g typescript -o /tmp/fhir.r4 -p hl7.fhir.r4.core:4.0.1
 
 # List all resources in a package
-fscg package-summary -p  hl7.fhir.us.core:5.0.1 | less
+fscg package-summary -p hl7.fhir.us.core:5.0.1 | less
 
-# TODO: inspect fhir schema (type schemas as well)
+# Dump FHIR schema to a directory
 fscg package dump --output=tmp hl7.fhir.r4.core:4.0.1
 
-``` 
+# List all available generators
+fscg generators
 
+# Create a custom generator template
+fscg create-generator -n java -o ./my-generators
+```
+
+### Command Reference
+
+#### `generate`
+
+Generates code from FHIR Schema:
+
+```bash
+fscg generate -g <generator> -o <output-dir> -f <filepath...>
+```
+
+Options:
+
+- `-g, --generator <generator>` - Generator to use (typescript, csharp, python)
+- `-o, --output <directory>` - Output directory
+- `-f, --files <files...>` - TypeSchema source *.ndjson files
+- `--custom-generator-path <path>` - Additional path to look for custom generators
+
+Example:
+
+```bash
+fscg generate -g typescript -o ./generated-sdk -f ./data/hl7.fhir.r4.core.ndjson
+```
+
+#### `generators`
+
+Lists available generators:
+
+```bash
+fscg generators
+```
+
+#### `create-generator`
+
+Creates a new custom generator template:
+
+```bash
+fscg create-generator -n <name> -o <output-directory>
+```
+
+Options:
+
+- `-n, --name <name>` - Name of the new generator (must be lowercase letters, numbers, and hyphens; cannot conflict with built-in generators)
+- `-o, --output <directory>` - Output directory (default: ./fhirschema-generators)
+
+Example:
+
+```bash
+fscg create-generator -n java -o ./my-generators
+```
+
+> **Note:** Generator names must follow specific requirements. They cannot conflict with built-in generators (typescript, csharp, python), must use only lowercase letters, numbers, and hyphens, and cannot use reserved words. See the [Generators Registry documentation](docs/generators-registry.md) for details.
+
+#### `packages`
+
+Lists available packages:
+
+```bash
+fscg packages [search-term]
+```
+
+#### `package-summary`
+
+Shows summary information about a package:
+
+```bash
+fscg package-summary -p <package>:<version>
+```
+
+#### `package dump`
+
+Dumps a package to a directory:
+
+```bash
+fscg package dump --output=<directory> <package>:<version>
+```
+
+## Supported Generators
+
+Currently, the following generators are supported:
+
+### TypeScript
+
+Generates TypeScript interfaces for FHIR resources.
+
+Example usage:
+
+```bash
+fscg generate -g typescript -o ./ts-sdk -f ./data/hl7.fhir.r4.core.ndjson
+```
+
+### C #
+
+Generates C# classes for FHIR resources.
+
+Example usage:
+
+```bash
+fscg generate -g csharp -o ./csharp-sdk -f ./data/hl7.fhir.r4.core.ndjson
+```
+
+### Python
+
+Generates Python classes for FHIR resources.
+
+Example usage:
+
+```bash
+fscg generate -g python -o ./python-sdk -f ./data/hl7.fhir.r4.core.ndjson
+```
+
+### Custom Generators
+
+You can create and use custom generators to support additional languages or specialized formats.
+
+For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
+
+## Working with Generated Code
+
+### TypeScript Example
+
+```typescript
+// Import generated models
+import { Patient } from './generated-sdk/Patient';
+
+// Create a new patient
+const patient: Patient = {
+  resourceType: 'Patient',
+  id: '123',
+  name: [
+    {
+      family: 'Smith',
+      given: ['John']
+    }
+  ],
+  gender: 'male',
+  birthDate: '1970-01-01'
+};
+```
 
 ## How it works
 
@@ -177,12 +325,50 @@ export interface Patient extends DomainResource {
   photo? : Attachment[];
   telecom? : ContactPoint[];
 }
-
-
 ```
 
+## Contributing
 
-## TODO
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-* [ ] CLI
-* [ ] Documentation
+### Development Setup
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/fhir-schema/fhir-schema-codegen.git
+   cd fhir-schema-codegen
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Build the project
+
+   ```bash
+   npm run build
+   ```
+
+4. Run tests
+
+   ```bash
+   npm test
+   ```
+
+### Creating a New Generator
+
+To create a new generator for a language:
+
+1. Create a new directory in `src/generators/` for your language
+2. Create an `index.ts` file that exports a `createGenerator` function
+3. Implement your generator by extending the base `Generator` class
+4. Add your generator to the choices in the CLI in `src/cli.ts`
+
+Alternatively, you can use the `create-generator` command to create a custom generator outside the main codebase.
+
+## License
+
+ISC

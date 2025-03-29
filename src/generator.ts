@@ -3,14 +3,23 @@ import * as Path from 'node:path';
 import { type LoaderOptions, SchemaLoader } from './loader';
 import type { ClassField } from './typeschema';
 
+/**
+ * Options interface for Generator class.
+ * Defines common configuration options for all generators.
+ */
 export interface GeneratorOptions {
+    /** Path to the output directory where generated files will be saved */
     outputDir: string;
+    /** Array of TypeSchema source files */
+    files?: string[];
+    /** Optional path to directory containing static files to be copied */
     staticDir?: string;
+    /** Map of FHIR primitive types to target language types */
+    typeMap?: Record<string, string>;
+    /** Set of reserved keywords in the target language */
+    keywords?: Set<string>;
     loaderOptions?: LoaderOptions;
     tabSize?: number;
-
-    typeMap?: Record<string, string>;
-    keywords?: Set<string>;
 }
 
 export class Generator {

@@ -1,79 +1,60 @@
 #!/usr/bin/env node
-import fs, { existsSync } from 'node:fs';
-import path from 'node:path';
-import * as process from 'node:process';
-import { Command, Option } from 'commander';
-import pc from 'picocolors';
+import { Command } from 'commander';
+import {
+    CreateGeneratorCommand,
+    GenerateCommand,
+    GeneratorsListCommand,
+    HelpCommand,
+} from './commands';
+import { generatorsRegistry } from './generators-registry';
+import { LogLevel, logger } from './logger';
 
+// Create the commander program
 const program = new Command();
 program.name('fhirschema-codegen').description('Generate code from FHIR Schema').version('0.1.0');
 
+// Add global options
 program
-    .command('help')
-    .description('Display help information')
-    .action(() => {
-        program.help();
-    });
+  .option('--debug', 'Enable debug output')
+  .option('--quiet', 'Suppress all output except errors')
+  .hook('preAction', (thisCommand: Command) => {
+    const options = thisCommand.opts();
+    if (options.debug) {
+      logger.setLevel(LogLevel.DEBUG);
+    } else if (options.quiet) {
+      logger.setLevel(LogLevel.ERROR);
+    }
+  });
 
-program
-    .command('generate')
-    .description('Generate code from FHIR Schema')
-    .addOption(
-        new Option('-g, --generator <name>')
-            .choices(['typescript', 'csharp', 'python'])
-            .makeOptionMandatory(true),
-    )
-    .requiredOption('-o, --output <file>', 'Output directory')
-    .requiredOption('-f, --files <files...>', 'TypeSchema source *.ngjson files')
-    .hook('preAction', (args) => {
-        const files = args.opts().files;
-        for (const file of files) {
-            const filePath = path.resolve(file);
-            if (!existsSync(filePath)) {
-                console.error(pc.red(`Input file by path doesn't exist - '${filePath}'`));
-                console.error(pc.red('Exit...'));
-                process.exit(1);
-            }
-        }
-    })
-    .action(async (options: { files: string[]; generator: string; output: string }) => {
-        const outputDir = path.resolve(process.cwd(), options.output);
+// Register commands
+const commands = [
+  new HelpCommand(),
+  new GeneratorsListCommand(),
+  new GenerateCommand(),
+  new CreateGeneratorCommand(),
+];
 
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, { recursive: true });
-        }
+// Register each command with the program
+commands.forEach((command) => command.register(program));
 
-        // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-        let createGenerator;
+// Main execution
+(async () => {
+  try {
+    // Initialize the registry before parsing
+    await generatorsRegistry.initialize();
+    program.parse(process.argv);
+  } catch (error) {
+    handleError(error);
+  }
+})();
 
-        try {
-            const generatorPath = path.resolve(
-                __dirname,
-                'generators',
-                options.generator,
-                'index.js',
-            );
-            const generatorPlugin = await import(generatorPath);
-            if (!generatorPlugin.createGenerator) {
-                console.error(
-                    pc.red(
-                        `Generator plugin ${options.generator} does not export createGenerator function`,
-                    ),
-                );
-                process.exit(1);
-            }
-            createGenerator = generatorPlugin.createGenerator;
-        } catch (error) {
-            console.error(pc.red(`Error loading generator plugin: ${options.generator}`), error);
-            process.exit(1);
-        }
-
-        const generator = createGenerator({ outputDir, ...options });
-        console.info(pc.bgCyan(`Start generate for ${options.generator}...`));
-        console.info();
-        await generator.init();
-        generator.generate();
-        console.info(pc.bgGreen(`Successfully generated to  ${options.output}...`));
-    });
-
-program.parse();
+/**
+ * Handles errors in a consistent way
+ * @param error - Error object
+ */
+function handleError(error: unknown): never {
+  logger.error(
+    `Error: ${error instanceof Error ? error.message : String(error)}`,
+  );
+  process.exit(1);
+}
