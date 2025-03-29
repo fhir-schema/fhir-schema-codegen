@@ -58,7 +58,7 @@ export class CreateGeneratorCommand extends BaseCommand {
                         version: '0.1.0',
                         description: `FHIR Schema code generator for ${name}`,
                         displayName: name.charAt(0).toUpperCase() + name.slice(1),
-                        main: 'src/index.js',
+                        main: 'dist/index.js',
                         keywords: ['fhirschema-generator'],
                         scripts: {
                             build: 'tsc',

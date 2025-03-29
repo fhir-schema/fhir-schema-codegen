@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import * as process from 'node:process';
 import type { Generator, GeneratorOptions } from './generator';
 
 /**
@@ -241,7 +242,8 @@ export class GeneratorsRegistry {
 
             if (generatorInfo.isBuiltIn) {
                 // Built-in generator
-                modulePath = path.resolve(__dirname, 'generators', name, 'index.js');
+                const extension = process.argv?.[1].endsWith('ts') ? 'ts' : 'js';
+                modulePath = path.resolve(__dirname, 'generators', name,  `index.${extension}`);
             } else if (generatorInfo.path) {
                 // Custom generator
                 const packageJson = JSON.parse(
