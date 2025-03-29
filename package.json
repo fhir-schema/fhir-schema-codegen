@@ -4,10 +4,16 @@
   "author": "niquola",
   "license": "ISC",
   "main": "dist/cli.js",
+  "types": "dist/cli.d.ts",
   "bin": {
     "fscg": "./dist/cli.js",
     "fhirschema-codegen": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "source": "src/cli.ts",
   "repository": {
     "type": "git",
@@ -41,7 +47,7 @@
     "typescript",
     "javascript"
   ],
-  "description": "",
+  "description": "Code generator for FHIR Schema",
   "devDependencies": {
     "@type-challenges/utils": "^0.1.1",
     "@types/node": "^22.8.7",

@@ -1,8 +1,6 @@
-import fs from 'node:fs';
-import { existsSync } from 'node:fs';
-import path from 'node:path';
 import type { Command as Commander } from 'commander';
-import { Option } from 'commander';
+import fs, { existsSync } from 'node:fs';
+import path from 'node:path';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
 import { BaseCommand } from './command';
@@ -19,16 +17,14 @@ export class GenerateCommand extends BaseCommand {
         program
             .command('generate')
             .description('Generate code from FHIR Schema')
-            .addOption(
-                new Option('-g, --generator <name>', 'Generator to use').makeOptionMandatory(true),
-            )
+            .requiredOption('-g, --generator <name>', 'Generator to use')
             .requiredOption('-o, --output <directory>', 'Output directory')
             .requiredOption('-f, --files <files...>', 'TypeSchema source *.ngjson files')
             .option(
                 '--custom-generator-path <path>',
                 'Additional path to look for custom generators',
             )
-            .hook('preAction', async (thisCommand) => {
+            .hook('preAction', async (thisCommand: Commander) => {
                 try {
                     const options = thisCommand.opts();
 
