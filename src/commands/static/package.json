@@ -1,0 +1,20 @@
+{
+    "name": "fhirschema-generator",
+    "version": "0.1.0",
+    "description": "FHIR Schema code generator",
+    "main": "dist/index.js",
+    "keywords": [
+        "fhirschema-generator"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^5.6.3",
+        "@types/node": "^22.8.7"
+    },
+    "dependencies": {}
+}

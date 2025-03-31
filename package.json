@@ -31,7 +31,7 @@
     },
     "scripts": {
         "build": "tsc && npm run copy-static",
-        "copy-static": "copyfiles -u 2 \"src/generators/*/static/**/*\" dist/generators",
+        "copy-static": "copyfiles -u 2 \"src/generators/*/static/**/*\" dist/generators && copyfiles -u 2 \"src/commands/static/**/*\" dist/commands",
         "start": "node dist/cli.js",
         "dev": "tsc -w",
         "test": "vitest run",

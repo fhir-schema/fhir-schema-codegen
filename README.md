@@ -23,17 +23,8 @@ npx @fhirschema/codegen [command] [options]
 The FHIR Schema Codegen provides several commands to work with FHIR schemas and generate code:
 
 ```bash
-# List packages and find package coordinate <package>:<version>
-fscg packages hl7.fhir.r4 | less
-
 # Generate code
-fscg generate -g typescript -o /tmp/fhir.r4 -p hl7.fhir.r4.core:4.0.1
-
-# List all resources in a package
-fscg package-summary -p hl7.fhir.us.core:5.0.1 | less
-
-# Dump FHIR schema to a directory
-fscg package dump --output=tmp hl7.fhir.r4.core:4.0.1
+fscg generate -g typescript -o /tmp/fhir.r4 -f ./hl7.fhir.r4.core@4.0.1.ndjson
 
 # List all available generators
 fscg generators
@@ -83,13 +74,12 @@ fscg create-generator -n <name> -o <output-directory>
 
 Options:
 
-- `-n, --name <name>` - Name of the new generator (must be lowercase letters, numbers, and hyphens; cannot conflict with built-in generators)
 - `-o, --output <directory>` - Output directory (default: ./fhirschema-generators)
 
 Example:
 
 ```bash
-fscg create-generator -n java -o ./my-generators
+fscg create-generator -o ./my-generators
 ```
 
 > **Note:** Generator names must follow specific requirements. They cannot conflict with built-in generators (typescript, csharp, python), must use only lowercase letters, numbers, and hyphens, and cannot use reserved words. See the [Generators Registry documentation](docs/generators-registry.md) for details.

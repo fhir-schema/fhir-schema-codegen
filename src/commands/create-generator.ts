@@ -1,6 +1,6 @@
+import type { Command as Commander } from 'commander';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Command as Commander } from 'commander';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
 import { BaseCommand } from './command';
@@ -19,156 +19,47 @@ export class CreateGeneratorCommand extends BaseCommand {
         program
             .command('create-generator')
             .description('Create a new custom generator template')
-            .requiredOption('-n, --name <name>', 'Name of the new generator')
             .requiredOption('-o, --output <directory>', 'Output directory')
             .action(async (options) => {
                 try {
-                    const name = options.name;
+                    
                     const outputDir = path.resolve(process.cwd(), options.output);
-
-                    // Initialize the registry to check for name conflicts
                     await generatorsRegistry.initialize();
 
-                    // Validate the generator name
-                    const validation = generatorsRegistry.validateGeneratorName(name);
-                    if (!validation.isValid) {
-                        logger.error(validation.error || 'Invalid generator name');
-                        if (generatorsRegistry.isBuiltInGeneratorName(name)) {
-                            logger.warn('Choose a different name for your custom generator.');
-                            const builtInGenerators = generatorsRegistry
-                                .getAll()
-                                .filter((g) => g.isBuiltIn)
-                                .map((g) => g.name);
-                            logger.warn(`Built-in generators: ${builtInGenerators.join(', ')}`);
-                        }
-                        process.exit(1);
-                    }
-
-                    // Check if the directory already exists
                     if (fs.existsSync(outputDir)) {
                         logger.error(`Directory already exists: ${outputDir}`);
                         process.exit(1);
                     }
 
-                    // Create directory structure
                     fs.mkdirSync(outputDir, { recursive: true });
                     fs.mkdirSync(path.join(outputDir, 'src'));
 
-                    // Create package.json
-                    const packageJson = {
-                        name: `fhirschema-generator-${name}`,
-                        version: '0.1.0',
-                        description: `FHIR Schema code generator for ${name}`,
-                        displayName: name.charAt(0).toUpperCase() + name.slice(1),
-                        main: 'dist/index.js',
-                        keywords: ['fhirschema-generator'],
-                        scripts: {
-                            build: 'tsc',
-                            test: 'echo "Error: no test specified" && exit 1',
-                        },
-                        author: '',
-                        license: 'ISC',
-                        devDependencies: {
-                            typescript: '^5.6.3',
-                            '@types/node': '^22.8.7',
-                        },
-                        dependencies: {
-                            '@fhirschema/codegen': `^${version}`,
-                        },
+                    const packageJsonPath = path.join(__dirname, 'static', 'package.json');
+                    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+                    
+                    packageJson.dependencies = { 
+                        "@fhirschema/codegen": `^${version}` 
                     };
-
+                    
                     fs.writeFileSync(
                         path.join(outputDir, 'package.json'),
-                        JSON.stringify(packageJson, null, 2),
+                        JSON.stringify(packageJson, null, 2)
                     );
 
-                    // Create tsconfig.json
-                    const tsConfig = {
-                        compilerOptions: {
-                            target: 'es2020',
-                            module: 'commonjs',
-                            outDir: './dist',
-                            esModuleInterop: true,
-                            strict: true,
-                            declaration: true,
-                        },
-                        include: ['src/**/*.ts'],
-                        exclude: ['node_modules'],
-                    };
-
-                    fs.writeFileSync(
-                        path.join(outputDir, 'tsconfig.json'),
-                        JSON.stringify(tsConfig, null, 2),
+                    fs.copyFileSync(
+                        path.join(__dirname, 'static', 'tsconfig.json'),
+                        path.join(outputDir, 'tsconfig.json')
                     );
 
-                    // Create README.md
-                    const readme = `# FHIR Schema Generator: ${name}
+                    fs.copyFileSync(
+                        path.join(__dirname, 'static', 'readme.md'),
+                        path.join(outputDir, 'README.md')
+                    );
 
-A custom FHIR Schema code generator for ${name}.
-
-## Installation
-
-\`\`\`bash
-npm install
-npm run build
-\`\`\`
-
-## Usage
-
-\`\`\`bash
-fscg generate -o ./output -f ./path-to-schema-files.ndjson --custom-generator ./path-to-generator
-\`\`\`
-`;
-
-                    fs.writeFileSync(path.join(outputDir, 'README.md'), readme);
-
-                    // Create generator template
-                    const generatorTemplate = `import { Generator, type GeneratorOptions, TypeSchema } from '@fhirschema/codegen';
-import path from 'node:path';
-
-export interface ${name.charAt(0).toUpperCase() + name.slice(1)}GeneratorOptions extends GeneratorOptions {
-    // Add custom options here
-}
-
-export class ${name.charAt(0).toUpperCase() + name.slice(1)}Generator extends Generator {
-    constructor(opts: ${name.charAt(0).toUpperCase() + name.slice(1)}GeneratorOptions) {
-        super({
-            ...opts,
-            staticDir: path.resolve(__dirname, '../static'),
-        });
-    }
-
-    generateType(schema: TypeSchema) {
-        // Implement type generation logic
-        this.line(\`// Generated type for \${schema.identifier.name}\`);
-        // Add your implementation here
-    }
-
-    generate() {
-        // Implement generation logic
-        this.dir('src', async () => {
-            this.file('types.txt', () => {
-                this.line(\`// ${name.toUpperCase()} Generator\`);
-                this.line(\`// Generated on \${new Date().toISOString()}\`);
-                this.line('');
-                
-                for (const schema of this.loader.complexTypes()) {
-                    this.generateType(schema);
-                }
-            });
-        });
-    }
-}
-
-export function createGenerator(options: GeneratorOptions): Generator {
-    return new ${name.charAt(0).toUpperCase() + name.slice(1)}Generator(options);
-}
-`;
-
-                    fs.writeFileSync(path.join(outputDir, 'src', 'index.ts'), generatorTemplate);
-
-                    // Create static directory
-                    fs.mkdirSync(path.join(outputDir, 'static'));
+                    fs.copyFileSync(
+                        path.join(__dirname, 'static', 'index.ts'),
+                        path.join(outputDir, 'src', 'index.ts')
+                    );
 
                     logger.success(`Custom generator template created at ${outputDir}`);
                     logger.info('');
@@ -177,7 +68,7 @@ export function createGenerator(options: GeneratorOptions): Generator {
                     logger.infoHighlight('2. npm install');
                     logger.infoHighlight('3. npm run build');
                     logger.infoHighlight(
-                        `4. Use your generator: fscg generate -o ./output -f ./schema.ndjson --custom-generator ${options.output}`,
+                        `4. Use your generator: fscg generate -o ./output -f ./<type-schema>.ndjson --custom-generator ${options.output}`,
                     );
                 } catch (error) {
                     this.handleError(error);
