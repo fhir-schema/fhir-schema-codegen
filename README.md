@@ -30,7 +30,7 @@ fscg generate -g typescript -o /tmp/fhir.r4 -f ./hl7.fhir.r4.core@4.0.1.ndjson
 fscg generators
 
 # Create a custom generator template
-fscg create-generator -n java -o ./my-generators
+fscg create-generator -o ./my-generators
 ```
 
 ### Command Reference
@@ -69,7 +69,7 @@ fscg generators
 Creates a new custom generator template:
 
 ```bash
-fscg create-generator -n <name> -o <output-directory>
+fscg create-generator -o <output-directory>
 ```
 
 Options:
@@ -182,11 +182,11 @@ Generator may define additional options and use conditional generation logic.
 ### TypeScript Example
 
 ```ts
-import { Generator, GeneratorOptions } from "../generator";
-import { TypeSchema } from "../typeschema";
+import { Generator, type GeneratorOptions, NestedTypeSchema, TypeSchema } from '@fhirschema/codegen';
+import path from 'node:path';
 
-export interface TypeScriptGeneratorOptions extends GeneratorOptions {
-    generateClasses?: boolean;
+export interface CustomGeneratorOptions extends GeneratorOptions {
+    // Add custom options here
 }
 
 const typeMap :  Record<string, string> = {
@@ -197,22 +197,27 @@ const typeMap :  Record<string, string> = {
     'number': 'number'
 }
 
-export class TypeScriptGenerator extends Generator {
-    constructor(opts: TypeScriptGeneratorOptions) {
-        super(opts);
+export class CustomGenerator extends Generator {
+    constructor(opts: CustomGeneratorOptions) {
+        super({
+            ...opts,
+            staticDir: path.resolve(__dirname, '../static'),
+        });
     }
-    generateType(schema: TypeSchema) {
+
+    generateType(schema: TypeSchema | NestedTypeSchema) {
         let base = schema.base ? 'extends ' + schema.base.name : '';
         this.curlyBlock(['export', 'interface', schema.identifier.name, base], () => {
             if (schema.fields) {
                 for (const [fieldName, field] of Object.entries(schema.fields)) {
+                    if ('choices' in field) continue;
                     let tp = field.type.name;
                     let type = tp;
                     let fieldSymbol = fieldName;
                     if (!field.required) {
                         fieldSymbol += '?';
                     }
-                    if (field.type.type == 'primitive-type') {
+                    if (field.type.kind == 'primitive-type') {
                         type = typeMap[tp] || 'string'
                     } else {
                         type = field.type.name;
@@ -223,6 +228,7 @@ export class TypeScriptGenerator extends Generator {
         });
         this.line();
     }
+
     generate() {
         this.dir('src', async () => {
             this.file('types.ts', () => {
@@ -233,23 +239,24 @@ export class TypeScriptGenerator extends Generator {
 
             for (let schema of this.loader.resources()) {
                 this.file(schema.identifier.name + ".ts", () => {
-                    if (schema.allDependencies) {
-                        for (let dep of schema.allDependencies.filter(d => d.type == 'complex-type')) {
+                    if (schema.dependencies) {
+                        for (let dep of schema.dependencies.filter(d => d.kind == 'complex-type')) {
                             this.lineSM('import', '{', dep.name, '}', 'from', '"./types.ts"');
                         }
 
-                        for (let dep of schema.allDependencies.filter(d => d.type == 'resource')) {
+                        for (let dep of schema.dependencies.filter(d => d.kind == 'resource')) {
                             this.lineSM('import', '{', dep.name, '}', 'from', '"./' + dep.name + '.ts"');
                         }
                     }
 
                     this.line();
 
-                    if (schema.nestedTypes) {
-                        for (let subtype of schema.nestedTypes) {
+                    if (schema.nested) {
+                        for (let subtype of schema.nested) {
                             this.generateType(subtype);
                         }
                     }
+
                     this.line();
 
                     this.generateType(schema);
@@ -257,7 +264,11 @@ export class TypeScriptGenerator extends Generator {
             }
         })
     }
-}   
+}
+
+export function createGenerator(options: GeneratorOptions): Generator {
+    return new CustomGenerator(options);
+}
 ```
 
 This will produce something like this:
