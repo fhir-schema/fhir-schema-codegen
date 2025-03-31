@@ -84,30 +84,6 @@ fscg create-generator -o ./my-generators
 
 > **Note:** Generator names must follow specific requirements. They cannot conflict with built-in generators (typescript, csharp, python), must use only lowercase letters, numbers, and hyphens, and cannot use reserved words. See the [Generators Registry documentation](docs/generators-registry.md) for details.
 
-#### `packages`
-
-Lists available packages:
-
-```bash
-fscg packages [search-term]
-```
-
-#### `package-summary`
-
-Shows summary information about a package:
-
-```bash
-fscg package-summary -p <package>:<version>
-```
-
-#### `package dump`
-
-Dumps a package to a directory:
-
-```bash
-fscg package dump --output=<directory> <package>:<version>
-```
-
 ## Supported Generators
 
 Currently, the following generators are supported:
@@ -122,7 +98,7 @@ Example usage:
 fscg generate -g typescript -o ./ts-sdk -f ./data/hl7.fhir.r4.core.ndjson
 ```
 
-### C #
+### C\#
 
 Generates C# classes for FHIR resources.
 
