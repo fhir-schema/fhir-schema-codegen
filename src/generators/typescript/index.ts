@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 import { Generator, type GeneratorOptions } from '../../generator';
-import { type ClassField, type INestedTypeSchema, TypeSchema } from '../../typeschema';
+import { type ClassField, TypeSchema } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
 
 // Naming conventions
@@ -164,7 +164,7 @@ class TypeScriptGenerator extends Generator {
         this.lineSM(`resourceType: '${schema.identifier.name}'`);
     }
 
-    generateType(schema: TypeSchema | INestedTypeSchema) {
+    generateType(schema: TypeSchema | NestedTypeSchema) {
         let name = '';
         if (schema instanceof TypeSchema) {
             if (schema.identifier.name === 'Reference') {

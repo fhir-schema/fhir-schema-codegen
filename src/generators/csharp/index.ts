@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { Generator, type GeneratorOptions } from '../../generator';
-import { type INestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { type TypeRef, TypeSchema } from '../../typeschema';
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;
@@ -69,7 +69,7 @@ export class CSharpGenerator extends Generator {
         return [s[0].toUpperCase(), ...s.slice(1)].join('');
     }
 
-    generateType(schema: TypeSchema | INestedTypeSchema) {
+    generateType(schema: TypeSchema | NestedTypeSchema) {
         let name = '';
 
         if (schema instanceof TypeSchema) {

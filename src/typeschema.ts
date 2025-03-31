@@ -42,10 +42,10 @@ export interface ITypeSchema {
     fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
     dependencies?: TypeRef[];
-    nested?: INestedTypeSchema[];
+    nested?: NestedTypeSchema[];
 }
 
-export interface INestedTypeSchema {
+export interface NestedTypeSchema {
     fields: { [key: string]: ClassField };
     identifier: TypeRef;
     base: TypeRef;
@@ -56,7 +56,7 @@ export class TypeSchema {
     identifier: TypeRef;
     base?: TypeRef;
     dependencies?: TypeRef[];
-    nested?: INestedTypeSchema[];
+    nested?: NestedTypeSchema[];
     fields?: { [key: string]: ClassField };
     choices?: { [key: string]: ChoiceField };
 

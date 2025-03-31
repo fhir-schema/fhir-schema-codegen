@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { Generator, type GeneratorOptions } from '../../generator';
-import { type INestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
     pascalCase,
@@ -136,7 +136,7 @@ export class PythonGenerator extends Generator {
         return `Literal[${s}]`;
     }
 
-    generateType(schema: TypeSchema | INestedTypeSchema) {
+    generateType(schema: TypeSchema | NestedTypeSchema) {
         let name = '';
 
         if (schema instanceof TypeSchema) {
