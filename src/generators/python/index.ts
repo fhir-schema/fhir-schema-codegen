@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { Generator, type GeneratorOptions } from '../../generator';
-import { type TypeRef, TypeSchema } from '../../typeschema';
+import { NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
     pascalCase,

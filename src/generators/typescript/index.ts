@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 import { Generator, type GeneratorOptions } from '../../generator';
-import { type ClassField, TypeSchema } from '../../typeschema';
+import { type ClassField, NestedTypeSchema, TypeSchema } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
 
 // Naming conventions
