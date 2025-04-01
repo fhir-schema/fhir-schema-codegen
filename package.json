@@ -31,16 +31,16 @@
         ".": {
             "import": {
                 "types": "./dist/index.d.ts",
-                "default": "./dist/fhirschema-codegen.js"
+                "default": "./dist/codegen.js"
             },
             "require": {
                 "types": "./dist/index.d.cts",
-                "default": "./dist/fhirschema-codegen.cjs"
+                "default": "./dist/codegen.cjs"
             }
         }
     },
     "scripts": {
-        "build": "vite build && npm run copy-static",
+        "build": "node build.mjs",
         "copy-static": "copyfiles -u 2 \"src/generators/*/static/**/*\" dist/generators && copyfiles -u 2 \"src/commands/static/**/*\" dist/commands",
         "start": "node dist/cli.js",
         "dev": "tsc -w",
