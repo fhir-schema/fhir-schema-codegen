@@ -1,7 +1,7 @@
 import {
+  httpClient as http,
   HTTPError,
   type HttpClientInstance,
-  httpClient as http,
   type Input,
   type NormalizedOptions,
   type Options,
@@ -586,7 +586,7 @@ export class Client<T extends BasicAuthorization | ResourceOwnerAuthorization> {
       throwHttpErrors: true,
       hooks: {
         beforeRequest: [
-          async (request) => {
+          async (request: Request) => {
             if (isBasic(config.auth)) {
               const { username, password } = config.auth.credentials;
               request.headers.set('Authorization', `Basic ${encode(`${username}:${password}`)}`);
@@ -596,6 +596,8 @@ export class Client<T extends BasicAuthorization | ResourceOwnerAuthorization> {
               const token = config.auth.storage.get();
               if (token) request.headers.set('Authorization', `Bearer ${token}`);
             }
+            
+            return request;
           },
         ],
       },

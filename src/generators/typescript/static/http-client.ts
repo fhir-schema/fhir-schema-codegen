@@ -1012,6 +1012,11 @@ export class HttpClient {
           }
 
           async function read() {
+            if (!reader) {
+              controller.close();
+              return;
+            }
+
             const { done, value } = await reader.read();
             if (done) {
               controller.close();
