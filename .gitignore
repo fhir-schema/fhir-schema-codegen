@@ -4,11 +4,15 @@ coverage/
 package-lock.json
 data/
 tmp/
+bin/
+.fhir-packages
 .DS_Store
 .idea
 .vscode
 .env
 output
+
+*.jar
 
 example/csharp/net8.0
 example/csharp/obj

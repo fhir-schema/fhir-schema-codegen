@@ -37,7 +37,7 @@ var auth = new Auth
     Credentials = new AuthCredentials
     {
         Username = "root",
-        Password = "12345"
+        Password = "secret"
     }
 };
 
@@ -80,7 +80,7 @@ example/csharp/
 │   ├── Client.cs
 │   ├── Config.cs
 │   └── hl7_fhir_r4_core/
-│       ├── base.py
+│       ├── base.cs
 │       ├── Patient.cs
 │       └── ... (other FHIR resources)
 ├── Program.cs

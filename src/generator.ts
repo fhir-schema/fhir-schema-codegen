@@ -12,6 +12,8 @@ export interface GeneratorOptions {
     outputDir: string;
     /** Array of TypeSchema source files */
     files?: string[];
+    /** Array of TypeSchema JSON */
+    jsonDocuments?: string;
     /** Optional path to directory containing static files to be copied */
     staticDir?: string;
     /** Map of FHIR primitive types to target language types */

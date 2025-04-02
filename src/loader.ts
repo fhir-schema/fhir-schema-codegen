@@ -50,6 +50,7 @@ export interface LoaderOptions {
     files?: string[];
     dirs?: string[];
     packages?: string[];
+    jsonDocuments?: string;
 }
 
 export class SchemaLoader {
@@ -70,6 +71,11 @@ export class SchemaLoader {
                 await this.loadFromFile(file);
             }
         }
+
+        if (this.opts.jsonDocuments) {
+            this.loadNDJSONContent(this.opts.jsonDocuments);
+        }
+
         if (this.opts.dirs) {
             for (const dir of this.opts.dirs) {
                 await this.loadFromDirectory(dir);
