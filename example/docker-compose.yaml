@@ -1,0 +1,33 @@
+volumes:
+  pgdata:
+    name: pgdata
+services:
+  aidbox-db:
+    image: healthsamurai/aidboxdb:16.1
+    pull_policy: always
+    ports:
+      - "5438:5432"
+    volumes:
+      - "pgdata:/data:delegated"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: aidbox
+
+  aidbox:
+    image: healthsamurai/aidboxone:edge
+    pull_policy: always
+    depends_on: [ "aidbox-db" ]
+    ports:
+      - "8888:8888"
+    environment:
+      PGPORT: 5432
+      PGHOST: aidbox-db
+      PGHOSTPORT: 5438
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: aidbox
+      AIDBOX_BASE_URL: http://localhost:8888
+      AIDBOX_PORT: 8888
+    env_file:
+      - .env

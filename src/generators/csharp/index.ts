@@ -130,7 +130,7 @@ export class CSharpGenerator extends Generator {
     }
 
     generate() {
-        this.dir('resource', async () => {
+        this.dir('hl7_fhir_r4_core', async () => {
             this.file('base.cs', () => {
                 this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
 
@@ -163,7 +163,7 @@ export class CSharpGenerator extends Generator {
         this.dir('', async () => {
             this.file('ResourceDictionary.cs', () => {
                 this.lineSM('using Aidbox.FHIR.R4.Core;');
-                this.lineSM('namespace Aidbox.Config;');
+                this.lineSM('namespace Aidbox;');
                 this.lineSM('public static class ResourceDictionary');
                 this.lineSM('{');
                 this.lineSM('    public static readonly Dictionary<Type, string> Map = new()');

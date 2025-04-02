@@ -6,4 +6,12 @@ data/
 tmp/
 .DS_Store
 .idea
+.vscode
 output
+
+example/csharp/net8.0
+example/csharp/obj
+example/csharp/bin
+*.sln
+
+__pycache__
