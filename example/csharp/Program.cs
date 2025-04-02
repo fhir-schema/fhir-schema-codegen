@@ -18,7 +18,7 @@ var patient = new Patient
 {
     Identifier = [new Identifier { System = "http://hl7.org/fhir/us/CodeSystem/identity", Value = "0000-0000" }],
     Name = [new HumanName { Given = ["John"], Family = "Doe" }],
-    Gender = "male3",
+    Gender = "male",
     BirthDate = "1990-01-01",
 };
 

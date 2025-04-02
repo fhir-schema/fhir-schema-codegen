@@ -12,7 +12,7 @@ client = Client(
 )
 
 patient = Patient(
-    name=[Identifier(system="http://org.io/id", value="0000-0000")],
+    identifier=[Identifier(system="http://org.io/id", value="0000-0000")],
     name=[HumanName(given=["John"], family="Doe")],
     gender="male",
     birth_date="1990-01-01",
