@@ -7,6 +7,7 @@ tmp/
 .DS_Store
 .idea
 .vscode
+.env
 output
 
 example/csharp/net8.0

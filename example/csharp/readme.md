@@ -15,7 +15,7 @@ Before running the code, you need to start the Aidbox server using Docker Compos
 1. Navigate to the root directory of the project
 2. Start Aidbox:
 ```bash
-docker-compose up -d
+cd ../. && docker compose up -d
 ```
 
 3. On first start:
