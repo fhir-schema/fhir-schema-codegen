@@ -25,6 +25,10 @@ const BINARIES: Record<string, BinaryInfo> = {
     'linux': {
         url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.2/type-schema-linux',
         name: 'type-schema'
+    },
+    'win32': {
+        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.2/type-schema-windows.exe',
+        name: 'type-schema.exe'
     }
 };
 
