@@ -28,7 +28,7 @@ Users can create their own custom generators to support additional languages or 
 - `./fhirschema-generators/` - Local installation in the current directory
 - `./.fhirschema/generators/` - Hidden local installation in the current directory
 
-You can also specify additional directories using the `--custom-generator-path` option when running the `generate` command.
+You can also specify additional directories using the `--custom-generator` option when running the `generate` command.
 
 ## Creating a Custom Generator
 
@@ -105,10 +105,10 @@ A custom generator's package.json must include:
 To use a custom generator, you need to:
 
 1. Build the generator (if written in TypeScript)
-2. Run the FHIR Schema Codegen tool with the `--custom-generator-path` option:
+2. Run the FHIR Schema Codegen tool with the `--custom-generator` option:
 
 ```bash
-fscg generate -g my-generator -o ./output -f ./schema.ndjson --custom-generator-path ./my-generators
+fscg generate -g my-generator -o ./output -f ./schema.ndjson --custom-generator ./my-generators
 ```
 
 ## Listing Available Generators

@@ -121,8 +121,14 @@ python main.py
 If you need to regenerate the SDK with updated FHIR definitions:
 
 1. Update the FHIR definitions in the source
-2. Run the generation command:
+2. Build the generator
+3. Run the generation command:
 
 ```bash
+cd fhir-schema-codegen
 
+npm run build
+
+node dist/cli.js generate --generator python --output ./example/python/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```
+

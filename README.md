@@ -45,7 +45,7 @@ Options:
 - `-o, --output <directory>` - Output directory
 - `-p, --packages <packages...>` - Available published FHIR IGs 
 - `-f, --files <files...>` - TypeSchema source *.ndjson files
-- `--custom-generator-path <path>` - Path to your custom generator template
+- `--custom-generator <path>` - Path to your custom generator template
 
 Example:
 

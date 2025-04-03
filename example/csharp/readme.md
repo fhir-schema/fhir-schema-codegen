@@ -117,17 +117,13 @@ dotnet run
 If you need to regenerate the SDK with updated FHIR definitions:
 
 1. Update the FHIR definitions in the source
-2. Run the generation command:
+2. Build the generator
+3. Run the generation command:
 
 ```bash
-fhirschema-codegen generate -g csharp -o ./aidbox -f *.ndjson
-```
+cd fhir-schema-codegen
 
-Or create your own language specific template with:
+npm run build
 
-```bash
-fhirschema-codegen create-generator -o ./csharp-template
-fhirschema-codegen generate --custom-generator ./csharp-template
+node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```
-<!-- --custom-generator ./csharp-template hide build inside the template project -->
-<!-- --custom-generator ./csharp-template show here the ability to use other fhir versions -->
