@@ -1,11 +1,10 @@
-# FHIR Schema Codegen
+# fhir-schema codegen
 
 [![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
-Library to generate SDK from FHIR Schema.
-This is a very early stage of the library.
+Library to generate language specific models out of structure-definition, fhir-schema or type-schema. This is a very early stage of the library.
 But it will progress quickly. Join the community - [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema)
 
 ## Installation
@@ -20,45 +19,45 @@ npx @fhirschema/codegen [command] [options]
 
 ## Usage
 
-The FHIR Schema Codegen provides several commands to work with FHIR schemas and generate code:
+The fhir-schema codegen provides several commands to work with FHIR definitions and generate code:
 
 ```bash
 # Generate code
-fscg generate -g typescript -o /tmp/fhir.r4 -f ./hl7.fhir.r4.core@4.0.1.ndjson
+fscg generate -g typescript -o /fhir.r4.sdk -p hl7.fhir.r4.core@4.0.1
 
-# List all available generators
+# List all available (built in) generators
 fscg generators
-
-# Create a custom generator template
-fscg create-generator -o ./my-generators
 ```
 
 ### Command Reference
 
 #### `generate`
 
-Generates code from FHIR Schema:
+Generates code from core FHIR Implementation Guide:
 
 ```bash
-fscg generate -g <generator> -o <output-dir> -f <filepath...>
+fscg generate -g <generator> -o <output-dir> -p <fhir.package@version>
 ```
 
 Options:
 
 - `-g, --generator <generator>` - Generator to use (typescript, csharp, python)
 - `-o, --output <directory>` - Output directory
+- `-p, --packages <packages...>` - Available published FHIR IGs 
 - `-f, --files <files...>` - TypeSchema source *.ndjson files
-- `--custom-generator-path <path>` - Additional path to look for custom generators
+- `--custom-generator-path <path>` - Path to your custom generator template
 
 Example:
 
 ```bash
-fscg generate -g typescript -o ./generated-sdk -f ./data/hl7.fhir.r4.core.ndjson
+fscg generate -g typescript -o ./generated-sdk -p hl7.fhir.r4.core@4.0.1
 ```
+
+# Create a custom generator template
 
 #### `generators`
 
-Lists available generators:
+Lists of the available generators:
 
 ```bash
 fscg generators
@@ -79,10 +78,10 @@ Options:
 Example:
 
 ```bash
-fscg create-generator -o ./my-generators
+fscg create-generator -o ./my-generator
 ```
 
-> **Note:** Generator names must follow specific requirements. They cannot conflict with built-in generators (typescript, csharp, python), must use only lowercase letters, numbers, and hyphens, and cannot use reserved words. See the [Generators Registry documentation](docs/generators-registry.md) for details.
+<!-- > **Note:** Generator names must follow specific requirements. They cannot conflict with built-in generators (typescript, csharp, python), must use only lowercase letters, numbers, and hyphens, and cannot use reserved words. See the [Generators Registry documentation](docs/generators-registry.md) for details.-->
 
 ## Supported Generators
 
@@ -95,7 +94,7 @@ Generates TypeScript interfaces for FHIR resources.
 Example usage:
 
 ```bash
-fscg generate -g typescript -o ./ts-sdk -f ./data/hl7.fhir.r4.core.ndjson
+fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
 ### C\#
@@ -105,7 +104,7 @@ Generates C# classes for FHIR resources.
 Example usage:
 
 ```bash
-fscg generate -g csharp -o ./csharp-sdk -f ./data/hl7.fhir.r4.core.ndjson
+fscg generate -g csharp -o ./csharp-sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
 ### Python
@@ -115,7 +114,7 @@ Generates Python classes for FHIR resources.
 Example usage:
 
 ```bash
-fscg generate -g python -o ./python-sdk -f ./data/hl7.fhir.r4.core.ndjson
+fscg generate -g python -o ./python-sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
 ### Custom Generators
@@ -149,8 +148,8 @@ const patient: Patient = {
 
 ## How it works
 
-1. Loader loads FHIR Schemas and Canonicals (from urls, files, directories, npm package - TBD)
-2. Transform [FHIR Schema](src/fhirschema.ts) to [Type Schema](src/typeschema.ts)
+1. Loader loads source package and canonicals (from urls, files, directories, npm package - TBD)
+2. Transform it to [Type Schema](src/typeschema.ts)
 3. Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on Type Schema (see [typescript.ts](src/generators/typescript.ts))
 Generator may define additional options and use conditional generation logic.
 4. Generator should be registered in CLI utility to be available in CLI.
