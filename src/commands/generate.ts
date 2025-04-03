@@ -3,7 +3,7 @@ import { mkdir } from 'fs';
 import { exec, spawn } from 'node:child_process';
 import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
-import { platform } from 'os';
+import { arch, platform } from 'os';
 import { join } from 'path';
 import { promisify } from 'util';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
@@ -18,16 +18,24 @@ interface BinaryInfo {
 }
 
 const BINARIES: Record<string, BinaryInfo> = {
-    'darwin': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.2/type-schema-macos',
+    'darwin-arm64': {
+        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-macos-arm64',
         name: 'type-schema'
     },
-    'linux': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.2/type-schema-linux',
+    'darwin-x64': {
+        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-macos',
+        name: 'type-schema'
+    },
+    'linux-arm64': {
+        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-linux-arm64',
+        name: 'type-schema'
+    },
+    'linux-x64': {
+        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-linux',
         name: 'type-schema'
     },
     'win32': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.2/type-schema-windows.exe',
+        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-windows.exe',
         name: 'type-schema.exe'
     }
 };
@@ -53,13 +61,16 @@ async function downloadBinary(url: string, destination: string): Promise<void> {
 
 async function ensureBinaryExists(): Promise<string> {
     const os = platform();
-    const binaryInfo = BINARIES[os];
+    const architecture = arch();
+    const platformKey = `${os}-${architecture}`;
+    
+    const binaryInfo = BINARIES[platformKey];
     
     if (!binaryInfo) {
-        throw new Error(`Unsupported platform: ${os}`);
+        throw new Error(`Unsupported platform: ${platformKey}`);
     }
 
-    const binDir = join(process.cwd(), 'bin');
+    const binDir = join(__dirname, '..', '..', 'bin');
     const binaryPath = join(binDir, binaryInfo.name);
 
     if (!existsSync(binDir)) {
@@ -67,7 +78,7 @@ async function ensureBinaryExists(): Promise<string> {
     }
 
     if (!existsSync(binaryPath)) {
-        console.log(`Downloading binary for ${os}...`);
+        console.log(`Downloading the type-schema binary for ${platformKey}...`);
         await downloadBinary(binaryInfo.url, binaryPath);
         
         if (os !== 'win32') {
