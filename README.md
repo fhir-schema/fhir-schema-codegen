@@ -4,14 +4,13 @@
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
-Library that generates language-specific models from FHIR structure definitions using type-schema ([Github](https://github.com/fhir-clj/type-schema)).
-
+Library that generates language-specific models from FHIR StructureDefinition using type-schema ([Github](https://github.com/fhir-clj/type-schema)), enabling developers to work with strongly-typed FHIR resources in their preferred programming language.
 
 ## How does it work?
 
 fhir-schema-codegen uses a two-step process:
 
-1. **Type-Schema Transformation**: Converts FHIR structure definitions into type-schema format, which provides a flat and denormalized representation of FHIR resources for easier data access.
+1. **Type-Schema Transformation**: Converts FHIR StructureDefinition into type-schema format, which provides a flat and denormalized representation for easier data access.
 
 2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.).
 
@@ -101,9 +100,7 @@ The library supports multiple language generators, each providing type-safe FHIR
 
 ### TypeScript Generator
 
-The TypeScript generator creates a fully typed SDK with interfaces for all FHIR resources. It includes:
-
-Example implementation in [./example/typescript/](example/typescript/):
+The TypeScript generator creates a fully typed SDK with interfaces for all FHIR resources. Example implementation in [./example/typescript/](example/typescript/):
 ```typescript
 import { Patient } from './aidbox/types/hl7-fhir-r4-core';
 
@@ -122,9 +119,7 @@ fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1
 
 ### C# Generator
 
-The C# generator produces strongly-typed C# classes for FHIR resources with:
-
-Example implementation in [./example/csharp/](example/csharp/):
+The C# generator produces strongly-typed C# classes for FHIR resources. Example implementation in [./example/csharp/](example/csharp/):
 ```csharp
 using Aidbox.FHIR.R4.Core;
 
@@ -144,9 +139,7 @@ fscg generate -g csharp -o ./csharp-sdk -p hl7.fhir.r4.core@4.0.1
 
 ### Python Generator
 
-The Python generator creates Python classes with:
-
-Example implementation in [./example/python/](example/python/):
+The Python generator creates Python classes. Example implementation in [./example/python/](example/python/):
 ```python
 from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
 from aidbox.hl7_fhir_r4_core import Patient
