@@ -4,7 +4,7 @@
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
-Library that generates language-specific models from FHIR structure definitions using [type-schema](https://github.com/fhir-clj/type-schema).
+Library that generates language-specific models from FHIR structure definitions using type-schema ([Github](https://github.com/fhir-clj/type-schema)).
 
 
 ## How does it work?
@@ -13,7 +13,7 @@ fhir-schema-codegen uses a two-step process:
 
 1. **Type-Schema Transformation**: Converts FHIR structure definitions into type-schema format, which provides a flat and denormalized representation of FHIR resources for easier data access.
 
-2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.). Generator inherits from base [Generator](src/generator.ts) class and implements `generate()` method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
+2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.).
 
 Supports **custom template-based generators** allowing you to add new language support, customize the output format of available generators, and implement language-specific features.
 
@@ -172,7 +172,9 @@ You can create custom generators to support additional languages or specialized 
 - Customize the output format
 - Add language-specific features
 
-For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
+ Generator inherits from base [Generator](src/generator.ts) class and implements `generate()` method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
+
+>For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
 
 ### TypeScript Example
 
