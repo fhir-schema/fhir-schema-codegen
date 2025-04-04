@@ -13,9 +13,9 @@ fhir-schema-codegen uses a two-step process:
 
 1. **Type-Schema Transformation**: Converts FHIR structure definitions into type-schema format, which provides a flat and denormalized representation of FHIR resources for easier data access.
 
-2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.). Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
+2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.). Generator inherits from base [Generator](src/generator.ts) class and implements `generate()` method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
 
-Supports custom template-based generators allowing you to add new language support, customize the output format of available generators, and implement language-specific features.
+Supports **custom template-based generators** allowing you to add new language support, customize the output format of available generators, and implement language-specific features.
 
 >Join our community at [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema) to learn more and contribute!
 
@@ -97,7 +97,7 @@ fscg create-generator -o ./my-generator
 
 ## Supported Generators
 
-The fhir-schema codegen supports multiple language generators, each providing type-safe FHIR resource handling. Below are the currently supported generators with examples and implementation details:
+The library supports multiple language generators, each providing type-safe FHIR resource handling. Below are the currently supported generators with examples and implementation details:
 
 ### TypeScript Generator
 
@@ -219,14 +219,12 @@ export class CustomGenerator extends Generator {
             if (schema.fields) {
                 for (const [fieldName, field] of Object.entries(schema.fields)) {
                     if ('choices' in field) continue;
-                    let tp = field.type.name;
-                    let type = tp;
                     let fieldSymbol = fieldName;
                     if (!field.required) {
                         fieldSymbol += '?';
                     }
                     if (field.type.kind == 'primitive-type') {
-                        type = typeMap[tp] || 'string'
+                        type = typeMap[field.type.name] || 'string'
                     } else {
                         type = field.type.name;
                     }
@@ -377,19 +375,3 @@ To create a new generator for a language:
 4. Add your generator to the choices in the CLI in `src/cli.ts`
 
 Alternatively, you can use the `create-generator` command to create a custom generator outside the main codebase.
-
-### Regenerating the SDK
-
-If you need to regenerate the SDK with updated FHIR definitions:
-
-1. Update the FHIR definitions in the source
-2. Build the generator
-3. Run the generation command:
-
-```bash
-cd fhir-schema-codegen
-
-npm run build
-
-node dist/cli.js generate --generator typescript --output ./example/typescript/aidbox  --packages hl7.fhir.r4.core@4.0.1
-```
