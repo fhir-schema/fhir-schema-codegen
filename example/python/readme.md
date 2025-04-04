@@ -1,32 +1,26 @@
 # Aidbox Python SDK
 
-This is a generated Python SDK for the Aidbox FHIR server. The SDK provides a type-safe way to interact with FHIR resources.
+A type-safe Python SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides Pydantic models for all FHIR resources and an async client for server communication.
 
-## Installation
+## Quick Start
 
+1. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Setting Up Aidbox
-
-Before running the code, you need to start the Aidbox server using Docker Compose:
-
-1. Navigate to the root directory of the project
-2. Start Aidbox:
+2. Start Aidbox server:
 ```bash
 cd ../. && docker compose up -d
 ```
 
-3. On first start:
-   - Open http://localhost:8888 in your browser
-   - Follow the instructions to get a license
-
-4. Wait for Aidbox to initialize (this may take a few minutes)
+3. Get license (first run only):
+   - Open http://localhost:8888
+   - Follow setup instructions
 
 ## Usage
 
-### Basic Setup
+### Client Configuration
 
 ```python
 from aidbox.client import Client
@@ -40,12 +34,14 @@ client = Client(
 
 ### Working with FHIR Resources
 
+The SDK provides Pydantic models for all FHIR resources. Here's an example of creating a Patient:
+
 ```python
 from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
 from aidbox.hl7_fhir_r4_core import Patient
 
 patient = Patient(
-    name=[Identifier(system="http://org.io/id", value="0000-0000")],
+    identifier=[Identifier(system="http://org.io/id", value="0000-0000")],
     name=[HumanName(given=["John"], family="Doe")],
     gender="male",
     birth_date="1990-01-01",
@@ -66,12 +62,15 @@ This SDK was automatically generated using the FHIR Schema Codegen tool. The gen
 1. Reads FHIR R4 resource definitions
 2. Generates Python classes for each FHIR resource
 3. Creates a type-safe client for interacting with the Aidbox server
-4. Includes proper type hints and documentation
 
 ### Generation Process
 
 ```bash
+cd fhir-schema-codegen
 
+npm run build
+
+node dist/cli.js generate --generator python --output ./example/python/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```
 
 This will:
@@ -98,11 +97,9 @@ example/python/
 
 ## Development
 
-### Prerequisites
-
+### Requirements
 - Python 3.7+
-- pip
-- Node.js (for generation)
+- Pydantic 2.0+
 
 ### Local Development
 
@@ -115,20 +112,3 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
-
-### Regenerating the SDK
-
-If you need to regenerate the SDK with updated FHIR definitions:
-
-1. Update the FHIR definitions in the source
-2. Build the generator
-3. Run the generation command:
-
-```bash
-cd fhir-schema-codegen
-
-npm run build
-
-node dist/cli.js generate --generator python --output ./example/python/aidbox  --packages hl7.fhir.r4.core@4.0.1
-```
-

@@ -1,66 +1,75 @@
 # Aidbox TypeScript SDK
 
-This is a generated TypeScript SDK for the Aidbox FHIR server. The SDK provides a type-safe way to interact with FHIR resources.
+A type-safe SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides complete type definitions for all FHIR resources and a simple client for server communication.
 
-## Installation
+## Quick Start
 
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-## Setting Up Aidbox
-
-Before running the code, you need to start the Aidbox server using Docker Compose:
-
-1. Navigate to the root directory of the project
-2. Start Aidbox:
+2. Start Aidbox server:
 ```bash
 cd ../. && docker compose up -d
 ```
 
-3. On first start:
-   - Open http://localhost:8888 in your browser
-   - Follow the instructions to get a license
-
-4. Wait for Aidbox to initialize (this may take a few minutes)
+3. Get license (first run only):
+   - Open http://localhost:8888
+   - Follow setup instructions
 
 ## Usage
 
-### Basic Setup
+### Client Configuration
 
 ```typescript
 import { Client } from './aidbox';
 
- const client = new Client('http://localhost:8888', {
-    auth: {
-      method: 'basic',
-      credentials: {
-        username: 'root',
-        password: 'secret',
-      },
+const client = new Client('http://localhost:8888', {
+  auth: {
+    method: 'basic',
+    credentials: {
+      username: 'root',
+      password: 'secret',
     },
-  });
+  },
+});
 ```
 
 ### Working with FHIR Resources
+
+The SDK provides full type safety for all FHIR resources. Here's an example of creating a Patient:
 
 ```typescript
 import { Patient } from './aidbox/types/hl7-fhir-r4-core';
 
 const patient: Patient = {
-    identifier: [{ system: 'http://org.io/id', value: '0000-0000' }],
-    name: [{ given: ['John'], family: 'Doe' }],
-    gender: 'male',
-    birthDate: '1990-01-01',
-  };
+  identifier: [{ system: 'http://org.io/id', value: '0000-0000' }],
+  name: [{ given: ['John'], family: 'Doe' }],
+  gender: 'male',
+  birthDate: '1990-01-01',
+};
 
   const response = await client.resource.create('Patient', patient);
 
   console.log(response);
 ```
+## How This SDK Was Generated
+
+This SDK was automatically generated using the FHIR Schema Codegen tool. The generation process:
+
+1. Reads FHIR R4 resource definitions
+2. Generates TypeScript interfaces for each FHIR resource
+3. Creates a type-safe client for interacting with the Aidbox server
+
+### Generation Process
 
 ```bash
+cd fhir-schema-codegen
 
+npm run build
+
+node dist/cli.js generate --generator typescript --output ./example/typescript/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```
 
 This will:
@@ -110,20 +119,4 @@ npm run start
 3. Run the example:
 ```bash
 npm run build
-```
-
-### Regenerating the SDK
-
-If you need to regenerate the SDK with updated FHIR definitions:
-
-1. Update the FHIR definitions in the source
-2. Build the generator
-3. Run the generation command:
-
-```bash
-cd fhir-schema-codegen
-
-npm run build
-
-node dist/cli.js generate --generator typescript --output ./example/typescript/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```

@@ -1,32 +1,26 @@
 # Aidbox C# SDK
 
-This is a generated C# SDK for the Aidbox FHIR server. The SDK provides a type-safe way to interact with FHIR resources.
+A type-safe C# SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides strongly-typed classes for all FHIR resources and a synchronous client for server communication.
 
-## Installation
+## Quick Start
 
+1. Install dependencies:
 ```bash
 dotnet restore
 ```
 
-## Setting Up Aidbox
-
-Before running the code, you need to start the Aidbox server using Docker Compose:
-
-1. Navigate to the root directory of the project
-2. Start Aidbox:
+2. Start Aidbox server:
 ```bash
 cd ../. && docker compose up -d
 ```
 
-3. On first start:
-   - Open http://localhost:8888 in your browser
-   - Follow the instructions to get a license
-
-4. Wait for Aidbox to initialize (this may take a few minutes)
+3. Get license (first run only):
+   - Open http://localhost:8888
+   - Follow setup instructions
 
 ## Usage
 
-### Basic Setup
+### Client Configuration
 
 ```csharp
 using Aidbox;
@@ -45,6 +39,8 @@ var client = new Client("https://localhost:8888", auth);
 ```
 
 ### Working with FHIR Resources
+
+The SDK provides strongly-typed classes for all FHIR resources. Here's an example of creating a Patient:
 
 ```csharp
 using Aidbox.FHIR.R4.Core;
@@ -70,7 +66,18 @@ This SDK was automatically generated using the FHIR Schema Codegen tool. The gen
 
 ### Generation Process
 
+```bash
+cd fhir-schema-codegen
 
+npm run build
+
+node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox  --packages hl7.fhir.r4.core@4.0.1
+```
+
+This will:
+1. Generate C# classes in the `aidbox/models` directory
+2. Create the client implementation in `aidbox/Client.cs`
+3. Set up the package structure with proper imports
 
 ### Project Structure
 
@@ -90,7 +97,9 @@ example/csharp/
 
 ## Development
 
-### Prerequisites
+### Requirements
+- .NET 7.0+
+- Visual Studio 2022 or JetBrains Rider
 
 - .NET 7.0 or later
 - Node.js (for generation)
@@ -110,20 +119,4 @@ dotnet build
 3. Run the example:
 ```bash
 dotnet run
-```
-
-### Regenerating the SDK
-
-If you need to regenerate the SDK with updated FHIR definitions:
-
-1. Update the FHIR definitions in the source
-2. Build the generator
-3. Run the generation command:
-
-```bash
-cd fhir-schema-codegen
-
-npm run build
-
-node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```
