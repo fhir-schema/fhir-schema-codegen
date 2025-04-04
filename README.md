@@ -191,21 +191,6 @@ You can create custom generators to support additional languages or specialized 
 
 For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
 
-## Working with Generated Code
-
-### TypeScript Example
-
-```typescript
-import { Patient } from './aidbox/types/hl7-fhir-r4-core';
-
-const patient: Patient = {
-    identifier: [{ system: 'http://org.io/id', value: '0000-0000' }],
-    name: [{ given: ['John'], family: 'Doe' }],
-    gender: 'male',
-    birthDate: '1990-01-01',
-};
-```
-
 ## How it works
 
 1. Loader loads source package and canonicals (from urls, files, directories, npm package - TBD)
