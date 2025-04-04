@@ -13,7 +13,7 @@ fhir-schema-codegen uses a two-step process:
 
 1. **Type-Schema Transformation**: Converts FHIR structure definitions into type-schema format, which provides a flat and denormalized representation of FHIR resources for easier data access.
 
-2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.).
+2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.). Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
 
 Supports custom template-based generators allowing you to add new language support, customize the output format of available generators, and implement language-specific features.
 
@@ -186,14 +186,6 @@ You can create custom generators to support additional languages or specialized 
 - Add language-specific features
 
 For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
-
-## How it works
-
-1. Loader loads source package and canonicals (file or fhir package)
-2. Transform it to [type-schema](https://github.com/fhir-clj/type-schema)
-3. Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on type-schema (see [typescript.ts](https://github.com/fhir-clj/type-schema))
-Generator may define additional options and use conditional generation logic.
-4. Generator should be registered in CLI utility to be available in CLI.
 
 ### TypeScript Example
 
