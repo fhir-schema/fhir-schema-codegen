@@ -65,7 +65,7 @@ Example:
 fscg generate -g typescript -o ./fhir.r4.sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
-# Create a custom generator template
+## Create a custom generator template
 
 #### `generators`
 
@@ -103,10 +103,6 @@ The library supports multiple language generators, each providing type-safe FHIR
 
 The TypeScript generator creates a fully typed SDK with interfaces for all FHIR resources. It includes:
 
-- Type definitions for all FHIR resources and data types
-- Type-safe client implementation for FHIR operations
-- Proper TypeScript module structure with exports
-
 Example implementation in [./example/typescript/](example/typescript/):
 ```typescript
 import { Patient } from './aidbox/types/hl7-fhir-r4-core';
@@ -127,10 +123,6 @@ fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1
 ### C# Generator
 
 The C# generator produces strongly-typed C# classes for FHIR resources with:
-
-- C# classes for all FHIR resources and data types
-- Proper namespace organization
-- Serialization attributes for JSON handling
 
 Example implementation in [./example/csharp/](example/csharp/):
 ```csharp
@@ -153,11 +145,6 @@ fscg generate -g csharp -o ./csharp-sdk -p hl7.fhir.r4.core@4.0.1
 ### Python Generator
 
 The Python generator creates Python classes with:
-
-- Python classes for FHIR resources and data types
-- Type hints for better IDE support
-- JSON serialization/deserialization support
-- Structured authentication handling
 
 Example implementation in [./example/python/](example/python/):
 ```python
