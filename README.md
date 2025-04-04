@@ -97,30 +97,14 @@ The TypeScript generator creates a fully typed SDK with interfaces for all FHIR 
 
 Example implementation in [./example/typescript/](example/typescript/):
 ```typescript
-import { Client } from './aidbox';
 import { Patient } from './aidbox/types/hl7-fhir-r4-core';
 
-// Initialize client
-const client = new Client('http://localhost:8888', {
-  auth: {
-    method: 'basic',
-    credentials: {
-      username: 'root',
-      password: 'secret',
-    },
-  },
-});
-
-// Create a type-safe patient
 const patient: Patient = {
   identifier: [{ system: 'http://org.io/id', value: '0000-0000' }],
   name: [{ given: ['John'], family: 'Doe' }],
   gender: 'male',
   birthDate: '1990-01-01',
 };
-
-// Use the client to create the patient
-const response = await client.resource.create('Patient', patient);
 ```
 
 Generate TypeScript SDK:
@@ -193,9 +177,9 @@ For more information on creating and using custom generators, see the [Generator
 
 ## How it works
 
-1. Loader loads source package and canonicals (from urls, files, directories, npm package - TBD)
-2. Transform it to [Type Schema](src/typeschema.ts)
-3. Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on Type Schema (see [typescript.ts](src/generators/typescript.ts))
+1. Loader loads source package and canonicals (file or fhir package)
+2. Transform it to [type-schema](https://github.com/fhir-clj/type-schema)
+3. Generator inherits from base [Generator](src/generator.ts) class and implements generate() method to produce target language code based on type-schema (see [typescript.ts](https://github.com/fhir-clj/type-schema))
 Generator may define additional options and use conditional generation logic.
 4. Generator should be registered in CLI utility to be available in CLI.
 
@@ -403,9 +387,5 @@ cd fhir-schema-codegen
 
 npm run build
 
-node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox  --packages hl7.fhir.r4.core@4.0.1
+node dist/cli.js generate --generator typescript --output ./example/typescript/aidbox  --packages hl7.fhir.r4.core@4.0.1
 ```
-
-## License
-
-ISC
