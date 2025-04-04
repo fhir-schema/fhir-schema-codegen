@@ -4,22 +4,20 @@
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
-Library that generates language-specific models from FHIR structure definitions using [type-schema](https://github.com/fhir-clj/type-schema) (flattened, denormalized structures for easier access).
+Library that generates language-specific models from FHIR structure definitions using [type-schema](https://github.com/fhir-clj/type-schema).
+
 
 ## How does it work?
 
 fhir-schema-codegen uses a two-step process:
 
-1. **Type Schema Transformation**: Converts FHIR structure definitions into [type-schema](https://github.com/fhir-clj/type-schema) format, which provides a flat and denormalized representation of FHIR resources.
+1. **Type-Schema Transformation**: Converts FHIR structure definitions into type-schema format, which provides a flat and denormalized representation of FHIR resources for easier data access.
 
 2. **Template-Based Generation**: Uses generators to transform the type-schema into language-specific models for each supported language (TypeScript, C#, Python, etc.).
 
-Supports custom generators allowing you to:
-   - add new language support
-   - customize the output format of available generators
-   - implement language-specific features
+Supports custom template-based generators allowing you to add new language support, customize the output format of available generators, and implement language-specific features.
 
-> Join our community at [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema) to learn more and contribute!
+>Join our community at [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema) to learn more and contribute!
 
 ## Installation
 
