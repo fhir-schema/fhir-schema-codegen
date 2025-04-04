@@ -1,14 +1,19 @@
 from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
 from aidbox.hl7_fhir_r4_core import Patient
 
-from aidbox.client import Client
+from aidbox.client import Client, Auth, AuthCredentials
 
 import requests
 
 client = Client(
     base_url="http://localhost:8888",
-    username="root",
-    password="secret",
+    auth=Auth(
+        method="basic",
+        credentials=AuthCredentials(
+            username="root",
+            password="secret",
+        ),
+    ),
 )
 
 patient = Patient(

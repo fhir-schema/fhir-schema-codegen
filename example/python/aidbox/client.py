@@ -9,6 +9,16 @@ from aidbox.hl7_fhir_r4_core import Patient, Task  # Import all resource types
 T = TypeVar("T", bound=DomainResource)
 
 
+class AuthCredentials(BaseModel):
+    username: str
+    password: str
+
+
+class Auth(BaseModel):
+    method: str
+    credentials: AuthCredentials
+
+
 def to_camel_case(snake_str: str) -> str:
     """Convert snake_case to camelCase"""
     components = snake_str.split("_")
@@ -29,13 +39,15 @@ class Client:
     def __init__(
         self,
         base_url: str,
-        username: Optional[str] = None,
-        password: Optional[str] = None,
+        auth: Optional[Auth] = None,
     ):
         self.base_url = base_url.rstrip("/")
         self.session = requests.Session()
-        if username and password:
-            self._set_basic_auth(username, password)
+        if auth:
+            if auth.method == "basic":
+                self._set_basic_auth(auth.credentials.username, auth.credentials.password)
+            else:
+                raise ValueError(f"Unsupported auth method: {auth.method}")
 
     def _set_basic_auth(self, username: str, password: str):
         """Set basic authentication headers"""

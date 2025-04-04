@@ -4,7 +4,7 @@
 
 [![Tests](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
 
-Library to generate language specific models out of structure-definition, fhir-schema or type-schema. This is a very early stage of the library.
+Library to generate language specific models out of structure-definition, type-schema or fhir-schema. This is a very early stage of the library.
 But it will progress quickly. Join the community - [FHIR Chat](https://chat.fhir.org/#narrow/channel/391879-FHIR-Schema)
 
 ## Installation
@@ -50,7 +50,7 @@ Options:
 Example:
 
 ```bash
-fscg generate -g typescript -o ./generated-sdk -p hl7.fhir.r4.core@4.0.1
+fscg generate -g typescript -o ./fhir.r4.sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
 # Create a custom generator template
@@ -85,41 +85,109 @@ fscg create-generator -o ./my-generator
 
 ## Supported Generators
 
-Currently, the following generators are supported:
+The fhir-schema codegen supports multiple language generators, each providing type-safe FHIR resource handling. Below are the currently supported generators with examples and implementation details:
 
-### TypeScript
+### TypeScript Generator
 
-Generates TypeScript interfaces for FHIR resources.
+The TypeScript generator creates a fully typed SDK with interfaces for all FHIR resources. It includes:
 
-Example usage:
+- Type definitions for all FHIR resources and data types
+- Type-safe client implementation for FHIR operations
+- Proper TypeScript module structure with exports
 
+Example implementation in [./example/typescript/](example/typescript/):
+```typescript
+import { Client } from './aidbox';
+import { Patient } from './aidbox/types/hl7-fhir-r4-core';
+
+// Initialize client
+const client = new Client('http://localhost:8888', {
+  auth: {
+    method: 'basic',
+    credentials: {
+      username: 'root',
+      password: 'secret',
+    },
+  },
+});
+
+// Create a type-safe patient
+const patient: Patient = {
+  identifier: [{ system: 'http://org.io/id', value: '0000-0000' }],
+  name: [{ given: ['John'], family: 'Doe' }],
+  gender: 'male',
+  birthDate: '1990-01-01',
+};
+
+// Use the client to create the patient
+const response = await client.resource.create('Patient', patient);
+```
+
+Generate TypeScript SDK:
 ```bash
 fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
-### C\#
+### C# Generator
 
-Generates C# classes for FHIR resources.
+The C# generator produces strongly-typed C# classes for FHIR resources with:
 
-Example usage:
+- C# classes for all FHIR resources and data types
+- Proper namespace organization
+- Serialization attributes for JSON handling
 
+Example implementation in [./example/csharp/](example/csharp/):
+```csharp
+using Aidbox.FHIR.R4.Core;
+
+var patient = new Patient
+{
+    Identifier = [new Identifier { System = "http://hl7.org/fhir/us/CodeSystem/identity", Value = "0000-0000" }],
+    Name = [new HumanName { Given = ["John"], Family = "Doe" }],
+    Gender = "male",
+    BirthDate = "1990-01-01",
+};
+```
+
+Generate C# SDK:
 ```bash
 fscg generate -g csharp -o ./csharp-sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
-### Python
+### Python Generator
 
-Generates Python classes for FHIR resources.
+The Python generator creates Python classes with:
 
-Example usage:
+- Python classes for FHIR resources and data types
+- Type hints for better IDE support
+- JSON serialization/deserialization support
+- Structured authentication handling
 
+Example implementation in [./example/python/](example/python/):
+```python
+from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
+from aidbox.hl7_fhir_r4_core import Patient
+
+patient = Patient(
+    identifier=[Identifier(system="http://org.io/id", value="0000-0000")],
+    name=[HumanName(given=["John"], family="Doe")],
+    gender="male",
+    birth_date="1990-01-01",
+)
+```
+
+Generate Python SDK:
 ```bash
 fscg generate -g python -o ./python-sdk -p hl7.fhir.r4.core@4.0.1
 ```
 
 ### Custom Generators
 
-You can create and use custom generators to support additional languages or specialized formats.
+You can create custom generators to support additional languages or specialized formats. The generator system is extensible and allows you to:
+
+- Create generators for new languages
+- Customize the output format
+- Add language-specific features
 
 For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
 
@@ -128,21 +196,13 @@ For more information on creating and using custom generators, see the [Generator
 ### TypeScript Example
 
 ```typescript
-// Import generated models
-import { Patient } from './generated-sdk/Patient';
+import { Patient } from './aidbox/types/hl7-fhir-r4-core';
 
-// Create a new patient
 const patient: Patient = {
-  resourceType: 'Patient',
-  id: '123',
-  name: [
-    {
-      family: 'Smith',
-      given: ['John']
-    }
-  ],
-  gender: 'male',
-  birthDate: '1970-01-01'
+    identifier: [{ system: 'http://org.io/id', value: '0000-0000' }],
+    name: [{ given: ['John'], family: 'Doe' }],
+    gender: 'male',
+    birthDate: '1990-01-01',
 };
 ```
 
@@ -344,6 +404,22 @@ To create a new generator for a language:
 4. Add your generator to the choices in the CLI in `src/cli.ts`
 
 Alternatively, you can use the `create-generator` command to create a custom generator outside the main codebase.
+
+### Regenerating the SDK
+
+If you need to regenerate the SDK with updated FHIR definitions:
+
+1. Update the FHIR definitions in the source
+2. Build the generator
+3. Run the generation command:
+
+```bash
+cd fhir-schema-codegen
+
+npm run build
+
+node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox  --packages hl7.fhir.r4.core@4.0.1
+```
 
 ## License
 
