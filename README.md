@@ -34,7 +34,7 @@ The fhir-schema codegen provides several commands to work with FHIR definitions 
 
 ```bash
 # Generate code
-fscg generate -g typescript -o /fhir.r4.sdk -p hl7.fhir.r4.core@4.0.1
+fscg generate -g typescript -o ./fhir.r4.sdk -p hl7.fhir.r4.core@4.0.1
 
 # List all available (built in) generators
 fscg generators
