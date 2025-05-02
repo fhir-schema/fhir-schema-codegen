@@ -33,7 +33,7 @@
         "build": "tsc && npm run copy-static",
         "copy-static": "copyfiles -u 2 \"src/generators/*/static/**/*\" dist/generators && copyfiles -u 2 \"src/commands/static/**/*\" dist/commands",
         "start": "node dist/cli.js",
-        "dev": "ts-node src/cli.ts generate --generator typescript --output ./test  --packages hl7.fhir.r4.core@4.0.1",
+        "dev": "ts-node src/cli.ts generate --generator typescript --output ./output --packages hl7.fhir.r4.core@4.0.1",
         "test": "vitest run",
         "test:watch": "vitest --watch",
         "test:coverage": "vitest run --coverage",
