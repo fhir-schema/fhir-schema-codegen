@@ -7,12 +7,12 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
+export const TYPE_SCHEMA_VERSION = '0.0.5';
+
 interface BinaryInfo {
     url: string;
     name: string;
 }
-
-const TYPE_SCHEMA_VERSION = '0.0.5';
 
 function getBinaries(version: string): Record<string, BinaryInfo> {
     return {
@@ -58,12 +58,12 @@ async function downloadBinary(url: string, destination: string): Promise<void> {
     }
 }
 
-export async function ensureBinaryExists(): Promise<string> {
+export async function ensureBinaryExists(version: string): Promise<string> {
     const os = platform();
     const architecture = arch();
     const platformKey = `${os}-${architecture}`;
 
-    const binaryInfo = getBinaries(TYPE_SCHEMA_VERSION)[platformKey];
+    const binaryInfo = getBinaries(version)[platformKey];
 
     if (!binaryInfo) {
         throw new Error(`Unsupported platform: ${platformKey}`);

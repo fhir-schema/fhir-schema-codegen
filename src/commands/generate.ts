@@ -4,8 +4,9 @@ import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
-import { ensureBinaryExists } from '../utils/type-schema-utils';
+import { ensureBinaryExists,TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
 import { BaseCommand } from './command';
+
 /**
  * Command to generate code from FHIR schema
  */
@@ -98,7 +99,7 @@ export class GenerateCommand extends BaseCommand {
                         logger.info('Processing packages with type-schema...');
 
                         try {
-                            const binaryPath = await ensureBinaryExists();
+                            const binaryPath = await ensureBinaryExists(TYPE_SCHEMA_VERSION);
 
                             const process = spawn(binaryPath, options.packages, {
                                 stdio: 'pipe',
