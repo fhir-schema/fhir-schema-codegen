@@ -4,6 +4,7 @@ import { mkdir } from 'fs';
 import { arch, platform } from 'os';
 import { join } from 'path';
 import { promisify } from 'util';
+import { spawn } from 'node:child_process';
 
 const execAsync = promisify(exec);
 
@@ -58,6 +59,48 @@ async function downloadBinary(url: string, destination: string): Promise<void> {
         console.error('Download failed:', error);
         throw error;
     }
+}
+
+export async function executeTypeSchema(
+    packages: string[],
+    version: string = TYPE_SCHEMA_VERSION,
+): Promise<string> {
+    const binaryPath = await ensureBinaryExists(version);
+
+    const process = spawn(binaryPath, packages, {
+        stdio: 'pipe',
+        shell: false,
+    });
+
+    let stdout = '';
+    let stderr = '';
+
+    process.stdout.on('data', (data) => {
+        stdout += data.toString();
+    });
+
+    process.stderr.on('data', (data) => {
+        stderr += data.toString();
+    });
+
+    return new Promise((resolve, reject) => {
+        process.on('close', (code) => {
+            if (code === 0) {
+                resolve(stdout);
+            } else {
+                reject(
+                    new Error(
+                        `Process exited with code ${code}
+${stderr}`,
+                    ),
+                );
+            }
+        });
+
+        process.on('error', (error) => {
+            reject(error);
+        });
+    });
 }
 
 export async function ensureBinaryExists(version: string): Promise<string> {

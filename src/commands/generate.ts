@@ -1,10 +1,9 @@
 import { type Command as Commander, Option } from 'commander';
-import { spawn } from 'node:child_process';
 import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
-import { ensureBinaryExists, TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
+import { executeTypeSchema, TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
 import { BaseCommand } from './command';
 
 /**
@@ -102,52 +101,17 @@ export class GenerateCommand extends BaseCommand {
                         logger.info('Processing packages with type-schema...');
 
                         try {
-                            const binaryPath = await ensureBinaryExists(TYPE_SCHEMA_VERSION);
-
-                            const process = spawn(binaryPath, options.packages, {
-                                stdio: 'pipe',
-                                shell: false,
-                            });
-
-                            let stdout = '';
-                            let stderr = '';
-
-                            process.stdout.on('data', (data) => {
-                                stdout += data.toString();
-                            });
-
-                            process.stderr.on('data', (data) => {
-                                stderr += data.toString();
-                            });
-
-                            const result = await new Promise((resolve, reject) => {
-                                process.on('close', (code) => {
-                                    if (code === 0) {
-                                        resolve(stdout);
-                                    } else {
-                                        reject(
-                                            new Error(
-                                                `Process exited with code ${code}\n${stderr}`,
-                                            ),
-                                        );
-                                    }
-                                });
-
-                                process.on('error', (error) => {
-                                    reject(error);
-                                });
-                            });
-
-                            if (stderr && stderr.trim()) {
-                                logger.warn(`JAR process stderr: ${stderr}`);
-                            }
+                            const result = await executeTypeSchema(
+                                options.packages,
+                                TYPE_SCHEMA_VERSION,
+                            );
 
                             if (result) {
                                 const generator = await generatorsRegistry.createGenerator(
                                     options.generator ?? options.customGenerator,
                                     {
                                         outputDir,
-                                        jsonDocuments: result.toString(),
+                                        jsonDocuments: result,
                                         typesOnly: options.typesOnly,
                                     },
                                 );
@@ -158,7 +122,7 @@ export class GenerateCommand extends BaseCommand {
                         } catch (error) {
                             console.log(error);
                             throw new Error(
-                                `Failed to process packages with type-schema.jar: ${error instanceof Error ? error.message : String(error)}`,
+                                `Failed to process packages with type-schema: ${error instanceof Error ? error.message : String(error)}`,
                             );
                         }
                     }
