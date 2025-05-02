@@ -17,25 +17,27 @@ interface BinaryInfo {
     name: string;
 }
 
+const TYPE_SCHEMA_VERSION = '0.0.5';
+
 const BINARIES: Record<string, BinaryInfo> = {
     'darwin-arm64': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-macos-arm64',
+        url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-macos-arm64`,
         name: 'type-schema'
     },
     'darwin-x64': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-macos',
+        url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-macos`,
         name: 'type-schema'
     },
     'linux-arm64': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-linux-arm64',
+        url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-linux-arm64`,
         name: 'type-schema'
     },
     'linux-x64': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-linux',
+        url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-linux`,
         name: 'type-schema'
     },
     'win32': {
-        url: 'https://github.com/fhir-clj/type-schema/releases/download/v0.0.5/type-schema-windows.exe',
+        url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-windows.exe`,
         name: 'type-schema.exe'
     }
 };
