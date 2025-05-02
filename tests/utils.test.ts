@@ -1,10 +1,7 @@
 import { words, kebabCase, snakeCase, camelCase, pascalCase } from '../src/utils';
 
-
 describe('String utils', () => {
-
-    afterEach(() => {
-    });
+    afterEach(() => {});
 
     test('words', async () => {
         expect(words('kebab-case')).toEqual(['kebab', 'case']);
@@ -22,7 +19,7 @@ describe('String utils', () => {
         expect(camelCase('PascalCase')).toEqual('pascalCase');
 
         expect(camelCase('Pas_cal-CaSe')).toEqual('pasCalCaSe');
-    })
+    });
 
     test('to keb-case', async () => {
         expect(kebabCase('kebab-case')).toEqual('kebab-case');
@@ -31,7 +28,7 @@ describe('String utils', () => {
         expect(kebabCase('PascalCase')).toEqual('pascal-case');
 
         expect(kebabCase('Pas_cal-CaSe')).toEqual('pas-cal-ca-se');
-    })
+    });
 
     test('to sne_case', async () => {
         expect(snakeCase('kebab-case')).toEqual('kebab_case');
@@ -40,7 +37,7 @@ describe('String utils', () => {
         expect(snakeCase('PascalCase')).toEqual('pascal_case');
 
         expect(snakeCase('Pas_cal-CaSe')).toEqual('pas_cal_ca_se');
-    })
+    });
 
     test('to PaalCase', async () => {
         expect(pascalCase('kebab-case')).toEqual('KebabCase');
@@ -49,7 +46,5 @@ describe('String utils', () => {
         expect(pascalCase('PascalCase')).toEqual('PascalCase');
 
         expect(pascalCase('Pas_cal-CaSe')).toEqual('PasCalCaSe');
-    })
-
-})
-
+    });
+});

@@ -22,38 +22,38 @@ const TYPE_SCHEMA_VERSION = '0.0.5';
 const BINARIES: Record<string, BinaryInfo> = {
     'darwin-arm64': {
         url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-macos-arm64`,
-        name: 'type-schema'
+        name: 'type-schema',
     },
     'darwin-x64': {
         url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-macos`,
-        name: 'type-schema'
+        name: 'type-schema',
     },
     'linux-arm64': {
         url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-linux-arm64`,
-        name: 'type-schema'
+        name: 'type-schema',
     },
     'linux-x64': {
         url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-linux`,
-        name: 'type-schema'
+        name: 'type-schema',
     },
-    'win32': {
+    win32: {
         url: `https://github.com/fhir-clj/type-schema/releases/download/v${TYPE_SCHEMA_VERSION}/type-schema-windows.exe`,
-        name: 'type-schema.exe'
-    }
+        name: 'type-schema.exe',
+    },
 };
 
 async function downloadBinary(url: string, destination: string): Promise<void> {
     try {
         console.log(`Downloading from ${url} to ${destination}...`);
         const response = await fetch(url);
-        
+
         if (!response.ok) {
             throw new Error(`Failed to download: ${response.statusText}`);
         }
-        
+
         const buffer = await response.arrayBuffer();
         await fs.promises.writeFile(destination, Buffer.from(buffer));
-        
+
         console.log('The type-schema binary was downloaded successfully');
     } catch (error) {
         console.error('Download failed:', error);
@@ -65,9 +65,9 @@ async function ensureBinaryExists(): Promise<string> {
     const os = platform();
     const architecture = arch();
     const platformKey = `${os}-${architecture}`;
-    
+
     const binaryInfo = BINARIES[platformKey];
-    
+
     if (!binaryInfo) {
         throw new Error(`Unsupported platform: ${platformKey}`);
     }
@@ -82,7 +82,7 @@ async function ensureBinaryExists(): Promise<string> {
     if (!existsSync(binaryPath)) {
         console.log(`Downloading the type-schema binary for ${platformKey}...`);
         await downloadBinary(binaryInfo.url, binaryPath);
-        
+
         if (os !== 'win32') {
             await execAsync(`chmod +x ${binaryPath}`);
         }
@@ -113,15 +113,20 @@ export class GenerateCommand extends BaseCommand {
      * @param program - The commander program instance
      */
     register(program: Commander): void {
-        const option = new Option('-g, --generator <name>', 'Generator to use')
-            .conflicts('custom-generator');
+        const option = new Option('-g, --generator <name>', 'Generator to use').conflicts(
+            'custom-generator',
+        );
 
-        const filesOption = new Option('-f, --files <files...>', 'TypeSchema source *.ngjson files')
-            .conflicts('packages');
+        const filesOption = new Option(
+            '-f, --files <files...>',
+            'TypeSchema source *.ngjson files',
+        ).conflicts('packages');
 
-        const packageOption = new Option('-p, --packages <names...>', 'Source fhir packages (example: hl7.fhir.r4.core@4.0.1)')
-            .conflicts('files');
-        
+        const packageOption = new Option(
+            '-p, --packages <names...>',
+            'Source fhir packages (example: hl7.fhir.r4.core@4.0.1)',
+        ).conflicts('files');
+
         program
             .command('generate')
             .description('Generate code from FHIR Schema')
@@ -188,15 +193,15 @@ export class GenerateCommand extends BaseCommand {
 
                     if (options.packages) {
                         logger.info('Processing packages with type-schema...');
-                        
+
                         try {
                             const binaryPath = await ensureBinaryExists();
-                            
+
                             const process = spawn(binaryPath, options.packages, {
                                 stdio: 'pipe',
-                                shell: false
+                                shell: false,
                             });
-                            
+
                             let stdout = '';
                             let stderr = '';
 
@@ -213,7 +218,11 @@ export class GenerateCommand extends BaseCommand {
                                     if (code === 0) {
                                         resolve(stdout);
                                     } else {
-                                        reject(new Error(`Process exited with code ${code}\n${stderr}`));
+                                        reject(
+                                            new Error(
+                                                `Process exited with code ${code}\n${stderr}`,
+                                            ),
+                                        );
                                     }
                                 });
 
@@ -221,11 +230,11 @@ export class GenerateCommand extends BaseCommand {
                                     reject(error);
                                 });
                             });
-                            
+
                             if (stderr && stderr.trim()) {
                                 logger.warn(`JAR process stderr: ${stderr}`);
                             }
-                            
+
                             if (result) {
                                 const generator = await generatorsRegistry.createGenerator(
                                     options.generator ?? options.customGenerator,
@@ -239,11 +248,12 @@ export class GenerateCommand extends BaseCommand {
                                 generator.generate();
                             }
                         } catch (error) {
-                            console.log(error)
-                            throw new Error(`Failed to process packages with type-schema.jar: ${error instanceof Error ? error.message : String(error)}`);
+                            console.log(error);
+                            throw new Error(
+                                `Failed to process packages with type-schema.jar: ${error instanceof Error ? error.message : String(error)}`,
+                            );
                         }
                     }
-
 
                     if (options.files) {
                         const generator = await generatorsRegistry.createGenerator(
@@ -257,7 +267,7 @@ export class GenerateCommand extends BaseCommand {
                         await generator.init();
                         generator.generate();
                     }
-                    
+
                     logger.success(`Successfully generated code to ${options.output}`);
                 } catch (error) {
                     this.handleError(error);

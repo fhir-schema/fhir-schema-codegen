@@ -23,7 +23,7 @@ export class CustomGenerator extends Generator {
                 this.line(`// Custom Generator`);
                 this.line(`// Generated on ${new Date().toISOString()}`);
                 this.line('');
-                
+
                 for (const schema of this.loader.complexTypes()) {
                     this.generateType(schema);
                 }

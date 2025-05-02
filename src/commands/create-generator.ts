@@ -22,7 +22,6 @@ export class CreateGeneratorCommand extends BaseCommand {
             .requiredOption('-o, --output <directory>', 'Output directory')
             .action(async (options) => {
                 try {
-                    
                     const outputDir = path.resolve(process.cwd(), options.output);
                     await generatorsRegistry.initialize();
 
@@ -36,29 +35,29 @@ export class CreateGeneratorCommand extends BaseCommand {
 
                     const packageJsonPath = path.join(__dirname, 'static', 'package.json');
                     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-                    
-                    packageJson.dependencies = { 
-                        "@fhirschema/codegen": `^${version}` 
+
+                    packageJson.dependencies = {
+                        '@fhirschema/codegen': `^${version}`,
                     };
-                    
+
                     fs.writeFileSync(
                         path.join(outputDir, 'package.json'),
-                        JSON.stringify(packageJson, null, 2)
+                        JSON.stringify(packageJson, null, 2),
                     );
 
                     fs.copyFileSync(
                         path.join(__dirname, 'static', 'tsconfig.json'),
-                        path.join(outputDir, 'tsconfig.json')
+                        path.join(outputDir, 'tsconfig.json'),
                     );
 
                     fs.copyFileSync(
                         path.join(__dirname, 'static', 'readme.md'),
-                        path.join(outputDir, 'README.md')
+                        path.join(outputDir, 'README.md'),
                     );
 
                     fs.copyFileSync(
                         path.join(__dirname, 'static', 'index.ts'),
-                        path.join(outputDir, 'src', 'index.ts')
+                        path.join(outputDir, 'src', 'index.ts'),
                     );
 
                     logger.success(`Custom generator template created at ${outputDir}`);

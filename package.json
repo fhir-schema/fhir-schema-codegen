@@ -38,7 +38,8 @@
         "test:watch": "vitest --watch",
         "test:coverage": "vitest run --coverage",
         "lint": "biome lint src",
-        "format": "biome format src",
+        "format": "biome format src tests",
+        "format:fix": "biome format --write src tests",
         "check": "biome check src",
         "check:fix": "biome check --fix src"
     },
