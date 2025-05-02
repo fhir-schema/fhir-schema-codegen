@@ -7,7 +7,9 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
-export const TYPE_SCHEMA_VERSION = '0.0.5';
+export const TYPE_SCHEMA_VERSION = '0.0.7';
+// TODO: find better place than current directory
+const BIN_DIR = 'bin';
 
 interface BinaryInfo {
     url: string;
@@ -69,13 +71,12 @@ export async function ensureBinaryExists(version: string): Promise<string> {
         throw new Error(`Unsupported platform: ${platformKey}`);
     }
 
-    const binDir = join(__dirname, '..', '..', '..', 'bin');
-    const binaryPath = join(binDir, binaryInfo.name);
+    const binaryPath = join(BIN_DIR, binaryInfo.name);
 
-    console.log(binaryPath)
+    console.log(binaryPath);
     if (!existsSync(binaryPath)) {
-        if (!existsSync(binDir)) {
-            await promisify(mkdir)(binDir, { recursive: true });
+        if (!existsSync(BIN_DIR)) {
+            await promisify(mkdir)(BIN_DIR, { recursive: true });
         }
         console.log(`Downloading the type-schema binary for ${platformKey}...`);
         await downloadBinary(binaryInfo.url, binaryPath);

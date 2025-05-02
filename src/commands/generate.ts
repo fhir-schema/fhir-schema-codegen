@@ -4,7 +4,7 @@ import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
-import { ensureBinaryExists,TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
+import { ensureBinaryExists, TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
 import { BaseCommand } from './command';
 
 /**
@@ -38,7 +38,10 @@ export class GenerateCommand extends BaseCommand {
             .addOption(packageOption)
             .requiredOption('-o, --output <directory>', 'Output directory')
             .option('--custom-generator <path>', 'Additional path to look for custom generators')
-            .option('--types-only', 'Generate only type definitions directly in the output directory')
+            .option(
+                '--types-only',
+                'Generate only type definitions directly in the output directory',
+            )
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
                 if (!options.files && !options.packages) {

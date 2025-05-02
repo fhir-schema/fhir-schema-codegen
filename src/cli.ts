@@ -11,13 +11,12 @@ import {
 import { generatorsRegistry } from './generators-registry';
 import { LogLevel, logger } from './logger';
 
-
 // Create the commander program
 const program = new Command();
 program
-  .name('fhirschema-codegen')
-  .description('Generate code from FHIR Schema')
-  .version(packageJson.version)
+    .name('fhirschema-codegen')
+    .description('Generate code from FHIR Schema')
+    .version(packageJson.version);
 
 // Add global options
 program

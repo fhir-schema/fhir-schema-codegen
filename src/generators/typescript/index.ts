@@ -268,7 +268,7 @@ class TypeScriptGenerator extends Generator {
     generate() {
         const typesOnly = (this.opts as TypeScriptGeneratorOptions).typesOnly || false;
         const typesPath = typesOnly ? '' : 'types';
-        
+
         const generateTypes = () => {
             const typesToGenerate = removeConstraints([
                 ...this.loader.complexTypes(),
@@ -277,10 +277,10 @@ class TypeScriptGenerator extends Generator {
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
 
             for (const [packageName, packageSchemas] of Object.entries(groupedComplexTypes)) {
-                const packagePath = typesOnly ? 
-                    kebabCase(packageName) : 
-                    path.join('types', kebabCase(packageName));
-                    
+                const packagePath = typesOnly
+                    ? kebabCase(packageName)
+                    : path.join('types', kebabCase(packageName));
+
                 this.dir(packagePath, () => {
                     this.generateIndexFile(packageSchemas);
 
