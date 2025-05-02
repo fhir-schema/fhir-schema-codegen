@@ -12,6 +12,7 @@ import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../.
 
 interface TypeScriptGeneratorOptions extends GeneratorOptions {
     // tabSize: 2
+    typesOnly?: boolean;
 }
 
 const typeMap = {
@@ -265,7 +266,10 @@ class TypeScriptGenerator extends Generator {
     }
 
     generate() {
-        this.dir('types', async () => {
+        const typesOnly = (this.opts as TypeScriptGeneratorOptions).typesOnly || false;
+        const typesPath = typesOnly ? '' : 'types';
+        
+        const generateTypes = () => {
             const typesToGenerate = removeConstraints([
                 ...this.loader.complexTypes(),
                 ...this.loader.resources(),
@@ -273,7 +277,11 @@ class TypeScriptGenerator extends Generator {
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
 
             for (const [packageName, packageSchemas] of Object.entries(groupedComplexTypes)) {
-                this.dir(path.join('types', kebabCase(packageName)), () => {
+                const packagePath = typesOnly ? 
+                    kebabCase(packageName) : 
+                    path.join('types', kebabCase(packageName));
+                    
+                this.dir(packagePath, () => {
                     this.generateIndexFile(packageSchemas);
 
                     for (const schema of packageSchemas) {
@@ -281,9 +289,16 @@ class TypeScriptGenerator extends Generator {
                     }
                 });
             }
-        });
+        };
 
-        this.copyStaticFiles();
+        if (typesOnly) {
+            generateTypes();
+        } else {
+            this.dir('types', async () => {
+                generateTypes();
+            });
+            this.copyStaticFiles();
+        }
     }
 }
 

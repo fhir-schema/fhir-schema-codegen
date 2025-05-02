@@ -135,6 +135,7 @@ export class GenerateCommand extends BaseCommand {
             .addOption(packageOption)
             .requiredOption('-o, --output <directory>', 'Output directory')
             .option('--custom-generator <path>', 'Additional path to look for custom generators')
+            .option('--types-only', 'Generate only type definitions directly in the output directory')
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
                 if (!options.files && !options.packages) {
@@ -241,6 +242,7 @@ export class GenerateCommand extends BaseCommand {
                                     {
                                         outputDir,
                                         jsonDocuments: result.toString(),
+                                        typesOnly: options.typesOnly,
                                     },
                                 );
 
@@ -261,6 +263,7 @@ export class GenerateCommand extends BaseCommand {
                             {
                                 outputDir,
                                 files: options.files,
+                                typesOnly: options.typesOnly,
                             },
                         );
 

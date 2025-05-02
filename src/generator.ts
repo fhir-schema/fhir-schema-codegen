@@ -22,12 +22,14 @@ export interface GeneratorOptions {
     keywords?: Set<string>;
     loaderOptions?: LoaderOptions;
     tabSize?: number;
+    /** Generate only type definitions directly in the output directory */
+    typesOnly?: boolean;
 }
 
 export class Generator {
     private fileDescriptor: number | null = null;
     private currentDir: string | null = null;
-    private opts: GeneratorOptions;
+    protected opts: GeneratorOptions;
     filePath?: string;
     identLevel = 0;
     loader: SchemaLoader;
