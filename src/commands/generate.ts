@@ -3,7 +3,7 @@ import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
-import { executeTypeSchema, TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
+import { executeTypeSchema, TYPE_SCHEMA_VERSION } from '../utils/type-schema';
 import { BaseCommand } from './command';
 
 /**

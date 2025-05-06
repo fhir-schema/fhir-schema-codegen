@@ -1,5 +1,5 @@
-import { Command as Commander, Argument } from 'commander';
-import { ensureBinaryExists, TYPE_SCHEMA_VERSION } from '../utils/type-schema-utils';
+import { type Command as Commander, Argument } from 'commander';
+import { ensureBinaryExists, TYPE_SCHEMA_VERSION } from '../utils/type-schema';
 import { BaseCommand } from './command';
 import { logger } from '../logger';
 

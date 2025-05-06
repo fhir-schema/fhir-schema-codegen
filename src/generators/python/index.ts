@@ -1,13 +1,13 @@
 import path from 'node:path';
 import { Generator, type GeneratorOptions } from '../../generator';
-import { NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
     pascalCase,
     removeConstraints,
     snakeCase,
     sortSchemasByDeps,
-} from '../../utils';
+} from '../../utils/code';
 
 // Naming conventions
 // directory naming: snake_case

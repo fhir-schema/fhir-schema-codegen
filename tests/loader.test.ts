@@ -306,7 +306,7 @@ const patientTypeSchema: cg.ITypeSchema = {
     },
 };
 
-let questionnaireFHIRSchema: cg.FHIRSchema = {
+const questionnaireFHIRSchema: cg.FHIRSchema = {
     url: 'http://hl7.org/fhir/StructureDefinition/Questionnaire',
     name: 'Questionnaire',
     meta: {
@@ -349,7 +349,7 @@ let questionnaireFHIRSchema: cg.FHIRSchema = {
     },
 };
 
-let questionnaireTypeSchema: cg.ITypeSchema = {
+const questionnaireTypeSchema: cg.ITypeSchema = {
     kind: 'resource',
     name: { name: 'Questionnaire', package: 'hl7.fhir.r4.core' },
     base: { name: 'DomainResource', package: 'hl7.fhir.r4.core' },
@@ -438,7 +438,7 @@ let questionnaireTypeSchema: cg.ITypeSchema = {
     },
 };
 
-let observationFHIRSchema: cg.FHIRSchema = {
+const observationFHIRSchema: cg.FHIRSchema = {
     url: 'http://hl7.org/fhir/StructureDefinition/Observation',
     meta: {
         package: {
@@ -473,7 +473,7 @@ let observationFHIRSchema: cg.FHIRSchema = {
     },
 };
 
-let observationTypeSchema: cg.ITypeSchema = {
+const observationTypeSchema: cg.ITypeSchema = {
     kind: 'resource',
     name: { name: 'Observation', package: 'hl7.fhir.r4.core' },
     base: { name: 'DomainResource', package: 'hl7.fhir.r4.core' },
@@ -519,9 +519,9 @@ describe.skip('sch2class', () => {
 
 describe.skip('loader', () => {
     it('...', async () => {
-        let loader = new cg.SchemaLoader();
+        const loader = new cg.SchemaLoader();
         await loader.loadPackage('hl7.fhir.r4.core:4.0.1');
-        let primitives = loader.primitives();
+        const primitives = loader.primitives();
         loader.complexTypes();
         expect(loader.resources().length).toEqual(148);
         loader.resources().forEach((res) => {
@@ -533,7 +533,7 @@ describe.skip('loader', () => {
 
 describe.skip('lookup', () => {
     it('read_ndjson_gz', async () => {
-        let loader = new cg.SchemaLoader();
+        const loader = new cg.SchemaLoader();
         await loader.packageLookup('hl7.fhir');
     });
 });

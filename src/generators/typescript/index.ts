@@ -1,8 +1,8 @@
 import path from 'node:path';
 
 import { Generator, type GeneratorOptions } from '../../generator';
-import { type ClassField, NestedTypeSchema, TypeSchema } from '../../typeschema';
-import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils';
+import { type ClassField, type NestedTypeSchema, TypeSchema } from '../../typeschema';
+import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils/code';
 
 // Naming conventions
 // directory naming: kebab-case

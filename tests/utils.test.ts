@@ -1,4 +1,4 @@
-import { words, kebabCase, snakeCase, camelCase, pascalCase } from '../src/utils/code-utils';
+import { words, kebabCase, snakeCase, camelCase, pascalCase } from '../src/utils/code';
 
 describe('String utils', () => {
     afterEach(() => {});

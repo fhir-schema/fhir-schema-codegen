@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { Generator, type GeneratorOptions } from '../../generator';
-import { NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;

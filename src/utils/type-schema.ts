@@ -1,10 +1,10 @@
 import { exec } from 'node:child_process';
 import fs, { existsSync } from 'node:fs';
-import { mkdir } from 'fs';
-import { arch, platform } from 'os';
+import { mkdir } from 'node:fs';
+import { arch, platform } from 'node:os';
 import { logger } from '../logger';
-import { join } from 'path';
-import { promisify } from 'util';
+import { join } from 'node:path';
+import { promisify } from 'node:util';
 import { spawn } from 'node:child_process';
 
 const execAsync = promisify(exec);
@@ -73,9 +73,9 @@ export async function executeTypeSchema(
     if (!fs.existsSync(outputPath)) {
         fs.mkdirSync(outputPath, { recursive: true });
     }
-    const outputFile = outputPath + '/type-schema.ndjson';
+    const outputFile = `${outputPath}/type-schema.ndjson`;
     const cmd = binaryPath.split(' ').concat(packages).concat([outputFile]);
-    logger.info(`Exec: ${cmd.join(' ')}`);
+    logger.debug(`Exec: ${cmd.join(' ')}`);
 
     const process = spawn(cmd[0], cmd.slice(1), {
         stdio: 'pipe',
@@ -132,7 +132,6 @@ export async function ensureBinaryExists(version: string): Promise<string> {
 
     const binaryPath = join(BIN_DIR, binaryInfo.name);
 
-    console.log(binaryPath);
     if (!existsSync(binaryPath)) {
         if (!existsSync(BIN_DIR)) {
             await promisify(mkdir)(BIN_DIR, { recursive: true });

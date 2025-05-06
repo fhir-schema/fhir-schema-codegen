@@ -1,4 +1,4 @@
-import { Generator, type GeneratorOptions, TypeSchema } from '@fhirschema/codegen';
+import { Generator, type GeneratorOptions, type TypeSchema } from '@fhirschema/codegen';
 import path from 'node:path';
 
 export interface CustomGeneratorOptions extends GeneratorOptions {
@@ -20,7 +20,7 @@ export class CustomGenerator extends Generator {
     generate() {
         this.dir('src', async () => {
             this.file('types.txt', () => {
-                this.line(`// Custom Generator`);
+                this.line('// Custom Generator');
                 this.line(`// Generated on ${new Date().toISOString()}`);
                 this.line('');
 
