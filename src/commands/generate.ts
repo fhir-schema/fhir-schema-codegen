@@ -120,7 +120,9 @@ export class GenerateCommand extends BaseCommand {
                                 generator.generate();
                             }
                         } catch (error) {
-                            console.log(error);
+                            logger.error(
+                                `${error instanceof Error ? error.message : String(error)}`,
+                            );
                             throw new Error(
                                 `Failed to process packages with type-schema: ${error instanceof Error ? error.message : String(error)}`,
                             );

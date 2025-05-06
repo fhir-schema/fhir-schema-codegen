@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import { TypeSchema } from './typeschema';
+import { logger } from './logger';
 
 export type { ITypeSchema } from './typeschema';
 
@@ -30,7 +31,9 @@ export async function read_ndjson_gz(url: string, process: (line: any) => any): 
                 });
 
                 rl.on('error', (e) => {
-                    console.error('Error reading line:', e);
+                    logger.error(
+                        `Error reading line: ${e instanceof Error ? e.message : String(e)}`,
+                    );
                     reject(e);
                 });
 

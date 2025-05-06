@@ -44,7 +44,7 @@ function getBinaries(version: string): Record<string, BinaryInfo> {
 
 async function downloadBinary(url: string, destination: string): Promise<void> {
     try {
-        console.log(`Downloading from ${url} to ${destination}...`);
+        logger.info(`Downloading from ${url} to ${destination}...`);
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -54,9 +54,9 @@ async function downloadBinary(url: string, destination: string): Promise<void> {
         const buffer = await response.arrayBuffer();
         await fs.promises.writeFile(destination, Buffer.from(buffer));
 
-        console.log('The type-schema binary was downloaded successfully');
+        logger.success('The type-schema binary was downloaded successfully');
     } catch (error) {
-        console.error('Download failed:', error);
+        logger.error(`Download failed: ${error instanceof Error ? error.message : String(error)}`);
         throw error;
     }
 }
@@ -136,7 +136,7 @@ export async function ensureBinaryExists(version: string): Promise<string> {
         if (!existsSync(BIN_DIR)) {
             await promisify(mkdir)(BIN_DIR, { recursive: true });
         }
-        console.log(`Downloading the type-schema binary for ${platformKey}...`);
+        logger.info(`Downloading the type-schema binary for ${platformKey}...`);
         await downloadBinary(binaryInfo.url, binaryPath);
     }
 

@@ -1,6 +1,10 @@
 const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
+const { Logger, LogLevel } = require('../src/logger');
+
+// Create a logger instance
+const logger = new Logger(LogLevel.INFO);
 const inputFile = './data/hl7.fhir.r4.core.ndjson';
 const outputDir = './tmp/schemas';
 
@@ -27,11 +31,8 @@ for await (const line of rl) {
                 fs.mkdirSync(foutputDir, { recursive: true });
             }
             const outputFile = path.join(foutputDir, `${name}.json`);
-            console.log(
-                name,
-                schema.kind,
-                schema.resourceType,
-                outputFile
+            logger.info(
+                `${name} ${schema.kind} ${schema.resourceType} ${outputFile}`
             );
             fs.writeFileSync(
                 outputFile,
@@ -39,6 +40,6 @@ for await (const line of rl) {
             );
         }
     } catch (err) {
-        console.error('Error processing line:', err);
+        logger.error(`Error processing line: ${err instanceof Error ? err.message : String(err)}`);
     }
 }

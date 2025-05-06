@@ -1,5 +1,6 @@
 import { Client } from './aidbox';
 import { Patient } from './aidbox/types/hl7-fhir-r4-core';
+import { logger } from '../../src/logger';
 
 async function main() {
   const client = new Client('http://localhost:8888', {
@@ -21,7 +22,7 @@ async function main() {
 
   const response = await client.resource.create('Patient', patient);
 
-  console.log(response);
+  logger.info(JSON.stringify(response, null, 2));
 }
 
-main().catch(console.error);
+main().catch((error) => logger.error(error instanceof Error ? error.message : String(error)));

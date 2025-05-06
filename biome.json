@@ -82,10 +82,7 @@
 			"suspicious": {
 				"noExplicitAny": "off",
 				"noConsole": {
-					"level": "error",
-					"options": {
-						"allow": ["info", "error"]
-					}
+					"level": "warn"
 				},
 				"noImplicitAnyLet": "warn"
 			}

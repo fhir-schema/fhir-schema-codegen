@@ -71,7 +71,7 @@ export class Generator {
         if (!fs.existsSync(Path.dirname(this.filePath))) {
             fs.mkdirSync(Path.dirname(this.filePath), { recursive: true });
         }
-        // console.log('file', this.filePath);
+        // logger.debug(`Creating file: ${this.filePath}`);
         this.fileDescriptor = fs.openSync(this.filePath, 'w');
 
         gencontent();

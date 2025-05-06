@@ -1,6 +1,9 @@
 .PHONY: all format lint lint-fix test
 
-all: format lint-fix test
+all: format lint-fix test build
+
+build:
+	npm run build
 
 format:
 	npm run format:fix

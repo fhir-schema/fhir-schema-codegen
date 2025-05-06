@@ -502,17 +502,17 @@ const observationTypeSchema: cg.ITypeSchema = {
 describe.skip('sch2class', () => {
     it('translate basic staf', () => {
         const result = cg.convert(patientFHIRSchema);
-        // console.log(JSON.stringify(result, null, 2));
+        // logger.debug(JSON.stringify(result, null, 2));
         expect(result).toMatchObject(patientTypeSchema);
     });
     it('translate recursive', () => {
         const result = cg.convert(questionnaireFHIRSchema);
-        // console.log(JSON.stringify(result, null, 2));
+        // logger.debug(JSON.stringify(result, null, 2));
         expect(result).toMatchObject(questionnaireTypeSchema);
     });
     it('translate polymorphic', () => {
         const result = cg.convert(observationFHIRSchema);
-        // console.log(JSON.stringify(result, null, 2));
+        // logger.debug(JSON.stringify(result, null, 2));
         expect(result).toMatchObject(observationTypeSchema);
     });
 });
@@ -525,7 +525,7 @@ describe.skip('loader', () => {
         loader.complexTypes();
         expect(loader.resources().length).toEqual(148);
         loader.resources().forEach((res) => {
-            // console.log(res.name.name);
+            // logger.debug(res.name.name);
         });
         loader.valueSets();
     });
