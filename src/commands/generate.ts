@@ -41,6 +41,10 @@ export class GenerateCommand extends BaseCommand {
                 '--types-only',
                 'Generate only type definitions directly in the output directory',
             )
+            .option(
+                '--type-schema-exec <command>',
+                'Custom command to execute type-schema (e.g. "java --jar type-schema.jar")',
+            )
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
                 if (!options.files && !options.packages) {
@@ -104,6 +108,7 @@ export class GenerateCommand extends BaseCommand {
                             const result = await executeTypeSchema(
                                 options.packages,
                                 TYPE_SCHEMA_VERSION,
+                                options.typeSchemaExec,
                             );
 
                             if (result) {

@@ -64,20 +64,19 @@ async function downloadBinary(url: string, destination: string): Promise<void> {
 export async function executeTypeSchema(
     packages: string[],
     version: string = TYPE_SCHEMA_VERSION,
+    customExecCommand?: string,
 ): Promise<string> {
-    // TODO: pass command such commands via command line arguments
-    // check type-schema version if user not specified it
-    const binaryPath = await ensureBinaryExists(version);
+    const binaryPath = customExecCommand || (await ensureBinaryExists(version));
 
     const typeSchemaVersion = await getTypeSchemaVersion(binaryPath);
     logger.info(`Use type-schema version ${typeSchemaVersion}`);
-    if (typeSchemaVersion !== version) {
+
+    if (!customExecCommand && typeSchemaVersion !== version && typeSchemaVersion !== 'unknown') {
         logger.warn(
             `TypeSchema version is not recommended. Expected ${version}, got ${typeSchemaVersion}. \n\nUse \`fscg install-type-schema\` to install recommended version.`,
         );
     }
 
-    // const binaryPath = "java -jar /Users/samurai/src/fhir-clj/type-schema/target/type-schema.jar";
     const outputPath = './tmp';
     if (!fs.existsSync(outputPath)) {
         fs.mkdirSync(outputPath, { recursive: true });
