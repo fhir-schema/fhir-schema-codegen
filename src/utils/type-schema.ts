@@ -68,6 +68,15 @@ export async function executeTypeSchema(
     // TODO: pass command such commands via command line arguments
     // check type-schema version if user not specified it
     const binaryPath = await ensureBinaryExists(version);
+
+    const typeSchemaVersion = await getTypeSchemaVersion(binaryPath);
+    logger.info(`Use type-schema version ${typeSchemaVersion}`);
+    if (typeSchemaVersion !== version) {
+        logger.warn(
+            `TypeSchema version is not recommended. Expected ${version}, got ${typeSchemaVersion}. \n\nUse \`fscg install-type-schema\` to install recommended version.`,
+        );
+    }
+
     // const binaryPath = "java -jar /Users/samurai/src/fhir-clj/type-schema/target/type-schema.jar";
     const outputPath = './tmp';
     if (!fs.existsSync(outputPath)) {
@@ -119,20 +128,34 @@ ${stderr}`,
     });
 }
 
-export async function ensureBinaryExists(version: string): Promise<string> {
+export async function getTypeSchemaVersion(binaryPath): Promise<string> {
+    try {
+        const { stdout, stderr } = await execAsync(`${binaryPath} --version`);
+        if (stderr) {
+            logger.warn(`Warning while getting type-schema version: ${stderr}`);
+        }
+        return stdout.split(' ')[2].trim();
+    } catch (error) {
+        logger.error(
+            `Failed to get type-schema version: ${error instanceof Error ? error.message : String(error)}`,
+        );
+        throw error;
+    }
+}
+
+export async function ensureBinaryExists(version: string, force = false): Promise<string> {
     const os = platform();
     const architecture = arch();
     const platformKey = `${os}-${architecture}`;
 
     const binaryInfo = getBinaries(version)[platformKey];
-
     if (!binaryInfo) {
         throw new Error(`Unsupported platform: ${platformKey}`);
     }
 
     const binaryPath = join(BIN_DIR, binaryInfo.name);
 
-    if (!existsSync(binaryPath)) {
+    if (!existsSync(binaryPath) || force) {
         if (!existsSync(BIN_DIR)) {
             await promisify(mkdir)(BIN_DIR, { recursive: true });
         }

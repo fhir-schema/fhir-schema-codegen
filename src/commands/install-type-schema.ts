@@ -17,7 +17,7 @@ export class InstallTypeSchemaCommand extends BaseCommand {
             .action(async (version: string) => {
                 try {
                     logger.info(`Installing type-schema binary version ${version}...`);
-                    const binaryPath = await ensureBinaryExists(version);
+                    const binaryPath = await ensureBinaryExists(version, true);
                     logger.info(`Type-schema binary installed successfully at: ${binaryPath}`);
                 } catch (error) {
                     logger.error(
