@@ -1,4 +1,4 @@
-name: Run Tests
+name: CI Checks
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  test:
+  checks:
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,5 +26,14 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Format Check
+      run: make format-check
+
+    - name: Lint
+      run: make lint
+
     - name: Run tests
-      run: npm test
+      run: make test
+      
+    - name: Build
+      run: make build

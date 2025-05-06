@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +20,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify code quality and tests
+        run: |
+          make lint
+          make test
+          make format-check
+
       - name: Build
-        run: npm run build
+        run: make build
         
       - name: Publish to npm
         run: npm publish --access public
