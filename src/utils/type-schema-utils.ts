@@ -2,15 +2,15 @@ import { exec } from 'node:child_process';
 import fs, { existsSync } from 'node:fs';
 import { mkdir } from 'fs';
 import { arch, platform } from 'os';
+import { logger } from '../logger';
 import { join } from 'path';
 import { promisify } from 'util';
 import { spawn } from 'node:child_process';
 
 const execAsync = promisify(exec);
 
-export const TYPE_SCHEMA_VERSION = '0.0.7';
-// TODO: find better place than current directory
-const BIN_DIR = 'bin';
+export const TYPE_SCHEMA_VERSION = '0.0.8';
+const BIN_DIR = 'tmp/bin';
 
 interface BinaryInfo {
     url: string;
@@ -65,13 +65,22 @@ export async function executeTypeSchema(
     packages: string[],
     version: string = TYPE_SCHEMA_VERSION,
 ): Promise<string> {
+    // TODO: pass command such commands via command line arguments
+    // check type-schema version if user not specified it
     const binaryPath = await ensureBinaryExists(version);
+    // const binaryPath = "java -jar /Users/samurai/src/fhir-clj/type-schema/target/type-schema.jar";
+    const outputPath = './tmp';
+    if (!fs.existsSync(outputPath)) {
+        fs.mkdirSync(outputPath, { recursive: true });
+    }
+    const outputFile = outputPath + '/type-schema.ndjson';
+    const cmd = binaryPath.split(' ').concat(packages).concat([outputFile]);
+    logger.info(`Exec: ${cmd.join(' ')}`);
 
-    const process = spawn(binaryPath, packages, {
+    const process = spawn(cmd[0], cmd.slice(1), {
         stdio: 'pipe',
         shell: false,
     });
-
     let stdout = '';
     let stderr = '';
 
@@ -86,7 +95,14 @@ export async function executeTypeSchema(
     return new Promise((resolve, reject) => {
         process.on('close', (code) => {
             if (code === 0) {
-                resolve(stdout);
+                fs.promises
+                    .readFile(outputFile, 'utf8')
+                    .then((fileContent) => {
+                        resolve(fileContent);
+                    })
+                    .catch((err) => {
+                        reject(new Error(`Failed to read temporary output file: ${err.message}`));
+                    });
             } else {
                 reject(
                     new Error(
