@@ -40,6 +40,7 @@
         "test:coverage": "vitest run --coverage",
         "lint": "biome lint src tests",
         "lint:fix": "biome lint --write src tests",
+        "lint:fix:unsafe": "biome lint --write --unsafe src tests",
         "format": "biome format src tests package.json",
         "format:fix": "biome format --write src tests package.json",
         "check": "biome check src",

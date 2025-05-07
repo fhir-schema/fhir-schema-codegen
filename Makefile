@@ -17,6 +17,9 @@ lint:
 lint-fix:
 	npm run lint:fix
 
+lint-fix-unsafe:
+	npm run lint:fix:unsafe
+
 test:
 	npm run test
 
