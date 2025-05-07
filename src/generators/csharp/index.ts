@@ -162,6 +162,7 @@ export class CSharpGenerator extends Generator {
 
         this.dir('', async () => {
             this.file('ResourceDictionary.cs', () => {
+                this.generateDisclaimer();
                 this.lineSM('using Aidbox.FHIR.R4.Core;');
                 this.lineSM('namespace Aidbox;');
                 this.lineSM('public static class ResourceDictionary');
