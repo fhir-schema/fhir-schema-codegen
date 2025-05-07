@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { Generator } from '../src/generator';
+import { Generator } from '../src/generators/generator';
 
 class TestGenerator extends Generator {
     generate() {

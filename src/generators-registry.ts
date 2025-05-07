@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import * as process from 'node:process';
-import type { Generator, GeneratorOptions } from './generator';
+import type { Generator, GeneratorOptions } from './generators/generator';
 
 /**
  * Custom error class for generator-related errors.

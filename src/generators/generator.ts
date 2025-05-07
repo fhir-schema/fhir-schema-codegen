@@ -1,8 +1,8 @@
 import * as fs from 'node:fs';
 import * as Path from 'node:path';
-import { type LoaderOptions, SchemaLoader } from './loader';
-import packageJson from '../package.json';
-import type { ClassField } from './typeschema';
+import { type LoaderOptions, SchemaLoader } from '../loader';
+import packageJson from '../../package.json';
+import type { ClassField } from '../typeschema';
 
 /**
  * Options interface for Generator class.

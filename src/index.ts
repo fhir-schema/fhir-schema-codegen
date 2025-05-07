@@ -1,4 +1,4 @@
-export { Generator, type GeneratorOptions } from './generator';
+export { Generator, type GeneratorOptions } from './generators/generator';
 export { logger } from './logger';
 export { TypeSchema, type NestedTypeSchema } from './typeschema';
 export * as CodegenUtils from './utils/code';
