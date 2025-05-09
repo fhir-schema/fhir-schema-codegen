@@ -45,6 +45,11 @@ export class GenerateCommand extends BaseCommand {
                 '--type-schema-exec <command>',
                 'Custom command to execute type-schema (e.g. "java --jar type-schema.jar")',
             )
+            .option(
+                '--package-root <name>',
+                '[Python only] Root package name for Python package hierarchy (e.g., "fhirsdk" or "aidbox.my_package")',
+                'fhirsdk'
+            )
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
                 if (!options.files && !options.packages) {
@@ -118,6 +123,7 @@ export class GenerateCommand extends BaseCommand {
                                         outputDir,
                                         jsonDocuments: result,
                                         typesOnly: options.typesOnly,
+                                        ...(options.generator === 'python' ? { packageRoot: options.packageRoot } : {}),
                                     },
                                 );
 
@@ -141,6 +147,7 @@ export class GenerateCommand extends BaseCommand {
                                 outputDir,
                                 files: options.files,
                                 typesOnly: options.typesOnly,
+                                ...(options.generator === 'python' ? { packageRoot: options.packageRoot } : {}),
                             },
                         );
 

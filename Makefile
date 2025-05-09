@@ -1,5 +1,7 @@
 .PHONY: all format lint lint-fix test format-check release
 
+SDK_TEST_PATH = example
+
 all: format lint-fix test build
 
 build:
@@ -22,6 +24,10 @@ lint-fix-unsafe:
 
 test:
 	npm run test
+
+test-python-sdk: build
+	docker compose -f example/docker-compose.yaml up --wait
+
 
 release: lint test format-check
 	@VERSION=$$(grep -E '"version": "[^"]+"' package.json | head -1 | sed -E 's/.*"version": "([^"]+)".*/\1/'); \

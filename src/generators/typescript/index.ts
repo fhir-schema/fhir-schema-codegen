@@ -230,7 +230,6 @@ class TypeScriptGenerator extends Generator {
     generateResourceModule(schema: TypeSchema) {
         this.file(`${pascalCase(schema.identifier.name)}.ts`, () => {
             this.generateDisclaimer();
-            this.line();
 
             this.generateDependenciesImports(schema);
             this.line();
