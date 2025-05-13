@@ -90,7 +90,6 @@ class Client:
         url = f"{self.base_url}/{resource_type}/{resource.id}"
         data = json.loads(json.dumps(resource, cls=FHIRJSONEncoder))
         response = self.session.put(url, json=data)
-
         response.raise_for_status()
         data = response.json()
         if not data.get("id"):
@@ -109,7 +108,6 @@ class Client:
         """Search for resources"""
         resource_type = resource_class.__name__
         url = f"{self.base_url}/{resource_type}"
-        print(111, params)
         response = self.session.get(url, params=params)
         response.raise_for_status()
         return response.json()

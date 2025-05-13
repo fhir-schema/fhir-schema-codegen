@@ -25,27 +25,28 @@ lint-fix-unsafe:
 test:
 	npm run test
 
+PYTHON=python3
+PYTHON_SDK_EXAMPLE=./example/python
+
 test-python-sdk: build
 	docker compose -f example/docker-compose.yaml up --wait
 	make test-python-sdk-without-service
 	docker compose -f example/docker-compose.yaml down
 
-PYTHON=python3
-PYTHON_SDK_EXAMPLE=./example/python
-
 test-python-sdk-without-service:
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
-	    --package-root aidbox -o $(PYTHON_SDK_EXAMPLE)
+					--package-root aidbox -o $(PYTHON_SDK_EXAMPLE)
 
-	# Create venv if it doesn't exist, otherwise just install/update requirements
-	if [ ! -d "$(PYTHON_SDK_EXAMPLE)/venv" ]; then \
+	@if [ ! -d "$(PYTHON_SDK_EXAMPLE)/venv" ]; then \
 		cd $(PYTHON_SDK_EXAMPLE) && \
-		$(PYTHON) -m venv venv; \
-		bash -c 'source venv/bin/activate && pip install -r requirements.txt' \
+		$(PYTHON) -m venv venv && \
+		. venv/bin/activate && \
+		pip install -r requirements.txt; \
 	fi
 
 	cd $(PYTHON_SDK_EXAMPLE) && \
-		bash -c 'source venv/bin/activate && python -m pytest test_sdk.py -v'
+		. venv/bin/activate && \
+		python -m pytest test_sdk.py -v
 
 release: lint test format-check
 	@VERSION=$$(grep -E '"version": "[^"]+"' package.json | head -1 | sed -E 's/.*"version": "([^"]+)".*/\1/'); \
