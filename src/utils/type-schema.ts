@@ -82,7 +82,7 @@ export async function executeTypeSchema(
         fs.mkdirSync(outputPath, { recursive: true });
     }
     const outputFile = `${outputPath}/type-schema.ndjson`;
-    const cmd = binaryPath.split(' ').concat(packages).concat(["--output", outputFile]);
+    const cmd = binaryPath.split(' ').concat(packages).concat(['--output', outputFile]);
     logger.debug(`Exec: ${cmd.join(' ')}`);
 
     const process = spawn(cmd[0], cmd.slice(1), {

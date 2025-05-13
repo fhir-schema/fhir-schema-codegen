@@ -164,8 +164,8 @@ export class PythonGenerator extends Generator {
         const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
-            this.line('model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)')
-            this.line()
+            this.line('model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)');
+            this.line();
             if (!schema.fields) {
                 this.line('pass');
                 return;
@@ -199,7 +199,8 @@ export class PythonGenerator extends Generator {
                     fieldType = this.wrapOptional(fieldType);
                     defaultValue = ` = Field(None, alias="${fieldName}", serialization_alias="${fieldName}")`;
                 } else {
-                    defaultValue = ' = Field(alias="${fieldName}", serialization_alias="${fieldName}")';
+                    defaultValue =
+                        ' = Field(alias="${fieldName}", serialization_alias="${fieldName}")';
                 }
 
                 const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
@@ -230,13 +231,18 @@ export class PythonGenerator extends Generator {
             );
             const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
 
-            let packageParts = [this.packageRoot];
+            const packageParts = [this.packageRoot];
             if (schema.identifier.package) packageParts.push(snakeCase(schema.identifier.package));
             const pypackage = packageParts.join('.');
             this.line('from', `${pypackage}.base`, 'import', '*');
 
             for (const deps of resourceDeps) {
-                this.line('from', `${pypackage}.${snakeCase(deps.name)}`, 'import', `${pascalCase(deps.name)}`);
+                this.line(
+                    'from',
+                    `${pypackage}.${snakeCase(deps.name)}`,
+                    'import',
+                    `${pascalCase(deps.name)}`,
+                );
             }
         }
     }
@@ -260,7 +266,9 @@ export class PythonGenerator extends Generator {
             this.generateDisclaimer();
             const names = removeConstraints(packageResources);
             const packageName = names.length > 0 ? names[0].identifier.package : '';
-            const packageParts = packageName ? [this.packageRoot, snakeCase(packageName)] : [this.packageRoot];
+            const packageParts = packageName
+                ? [this.packageRoot, snakeCase(packageName)]
+                : [this.packageRoot];
             const pypackage = packageParts.join('.');
 
             for (const schemaName of names) {
@@ -310,12 +318,9 @@ export class PythonGenerator extends Generator {
         }
 
         // Copy all static files except client.py which needs to be processed
-        fs.readdirSync(Path.resolve(staticDir)).forEach(file => {
+        fs.readdirSync(Path.resolve(staticDir)).forEach((file) => {
             if (file !== 'client.py') {
-                fs.copyFileSync(
-                    Path.resolve(staticDir, file),
-                    Path.resolve(packagePath, file)
-                );
+                fs.copyFileSync(Path.resolve(staticDir, file), Path.resolve(packagePath, file));
             }
         });
 
@@ -324,8 +329,14 @@ export class PythonGenerator extends Generator {
             let clientContent = fs.readFileSync(clientPath, 'utf-8');
 
             // Fix import in Operation part of FHIR SDK
-            clientContent = clientContent.replace(/from aidbox\.hl7_fhir_r4_core/g, `from ${this.packageRoot}.hl7_fhir_r4_core`);
-            clientContent = clientContent.replace(/from aidbox import/g, `from ${this.packageRoot} import`);
+            clientContent = clientContent.replace(
+                /from aidbox\.hl7_fhir_r4_core/g,
+                `from ${this.packageRoot}.hl7_fhir_r4_core`,
+            );
+            clientContent = clientContent.replace(
+                /from aidbox import/g,
+                `from ${this.packageRoot} import`,
+            );
 
             fs.writeFileSync(Path.resolve(packagePath, 'client.py'), clientContent);
         }
@@ -351,7 +362,9 @@ export class PythonGenerator extends Generator {
 
             this.dir(currentPath, () => {
                 const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
-                for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
+                for (const [packageName, packageComplexTypes] of Object.entries(
+                    groupedComplexTypes,
+                )) {
                     this.dir(snakeCase(packageName), () => {
                         this.file('__init__.py', () => {});
                         this.generateBasePy(packageComplexTypes);
@@ -384,13 +397,16 @@ export class PythonGenerator extends Generator {
                 fs.mkdirSync(targetFhirPath, { recursive: true });
             }
 
-            fs.readdirSync(externalFhirPath).forEach(file => {
+            fs.readdirSync(externalFhirPath).forEach((file) => {
                 const sourcePath = path.join(externalFhirPath, file);
                 const targetPath = path.join(targetFhirPath, file);
 
                 if (file.endsWith('.py')) {
                     let content = fs.readFileSync(sourcePath, 'utf-8');
-                    content = content.replace(/from fhirsdk\.hl7_fhir_r4_core/g, `from ${this.packageRoot}.hl7_fhir_r4_core`);
+                    content = content.replace(
+                        /from fhirsdk\.hl7_fhir_r4_core/g,
+                        `from ${this.packageRoot}.hl7_fhir_r4_core`,
+                    );
                     fs.writeFileSync(targetPath, content);
                 } else {
                     fs.copyFileSync(sourcePath, targetPath);

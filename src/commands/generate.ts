@@ -48,7 +48,7 @@ export class GenerateCommand extends BaseCommand {
             .option(
                 '--package-root <name>',
                 '[Python only] Root package name for Python package hierarchy (e.g., "fhirsdk" or "aidbox.my_package")',
-                'fhirsdk'
+                'fhirsdk',
             )
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
@@ -123,7 +123,9 @@ export class GenerateCommand extends BaseCommand {
                                         outputDir,
                                         jsonDocuments: result,
                                         typesOnly: options.typesOnly,
-                                        ...(options.generator === 'python' ? { packageRoot: options.packageRoot } : {}),
+                                        ...(options.generator === 'python'
+                                            ? { packageRoot: options.packageRoot }
+                                            : {}),
                                     },
                                 );
 
@@ -147,7 +149,9 @@ export class GenerateCommand extends BaseCommand {
                                 outputDir,
                                 files: options.files,
                                 typesOnly: options.typesOnly,
-                                ...(options.generator === 'python' ? { packageRoot: options.packageRoot } : {}),
+                                ...(options.generator === 'python'
+                                    ? { packageRoot: options.packageRoot }
+                                    : {}),
                             },
                         );
 
