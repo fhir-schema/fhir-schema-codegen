@@ -44,7 +44,9 @@ class Client:
         self.session = requests.Session()
         if auth:
             if auth.method == "basic":
-                self._set_basic_auth(auth.credentials.username, auth.credentials.password)
+                self._set_basic_auth(
+                    auth.credentials.username, auth.credentials.password
+                )
             else:
                 raise ValueError(f"Unsupported auth method: {auth.method}")
 

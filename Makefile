@@ -1,7 +1,5 @@
 .PHONY: all format lint lint-fix test format-check release
 
-SDK_TEST_PATH = example
-
 all: format lint-fix test build
 
 build:
@@ -52,10 +50,7 @@ test-python-sdk-without-service:
 
 	cd $(PYTHON_SDK_EXAMPLE) && \
 		. venv/bin/activate && \
-		python -m mypy . --exclude venv
-
-	cd $(PYTHON_SDK_EXAMPLE) && \
-		. venv/bin/activate && \
+		python -m mypy . --exclude venv && \
 		python -m pytest test_sdk.py -v
 
 ###########################################################
