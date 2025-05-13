@@ -6,87 +6,97 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class QuestionnaireItemEnableWhen(BackboneElement):
-    answer_boolean: Optional[bool] = None
-    answer_coding: Optional[Coding] = None
-    answer_date: Optional[str] = None
-    answer_date_time: Optional[str] = None
-    answer_decimal: Optional[float] = None
-    answer_integer: Optional[int] = None
-    answer_quantity: Optional[Quantity] = None
-    answer_reference: Optional[Reference] = None
-    answer_string: Optional[str] = None
-    answer_time: Optional[str] = None
-    operator: Optional[Literal["exists", "=", "!=", ">", "<", ">=", "<="]] = None
-    question: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    answer_boolean: Optional[bool] = Field(None, alias="answerBoolean", serialization_alias="answerBoolean")
+    answer_coding: Optional[Coding] = Field(None, alias="answerCoding", serialization_alias="answerCoding")
+    answer_date: Optional[str] = Field(None, alias="answerDate", serialization_alias="answerDate")
+    answer_date_time: Optional[str] = Field(None, alias="answerDateTime", serialization_alias="answerDateTime")
+    answer_decimal: Optional[float] = Field(None, alias="answerDecimal", serialization_alias="answerDecimal")
+    answer_integer: Optional[int] = Field(None, alias="answerInteger", serialization_alias="answerInteger")
+    answer_quantity: Optional[Quantity] = Field(None, alias="answerQuantity", serialization_alias="answerQuantity")
+    answer_reference: Optional[Reference] = Field(None, alias="answerReference", serialization_alias="answerReference")
+    answer_string: Optional[str] = Field(None, alias="answerString", serialization_alias="answerString")
+    answer_time: Optional[str] = Field(None, alias="answerTime", serialization_alias="answerTime")
+    operator: Optional[Literal["exists", "=", "!=", ">", "<", ">=", "<="]] = Field(None, alias="operator", serialization_alias="operator")
+    question: Optional[str] = Field(None, alias="question", serialization_alias="question")
 
 class QuestionnaireItemAnswerOption(BackboneElement):
-    initial_selected: Optional[bool] = None
-    value_coding: Optional[Coding] = None
-    value_date: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_reference: Optional[Reference] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    initial_selected: Optional[bool] = Field(None, alias="initialSelected", serialization_alias="initialSelected")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
 
 class QuestionnaireItemInitial(BackboneElement):
-    value_attachment: Optional[Attachment] = None
-    value_boolean: Optional[bool] = None
-    value_coding: Optional[Coding] = None
-    value_date: Optional[str] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_integer: Optional[int] = None
-    value_quantity: Optional[Quantity] = None
-    value_reference: Optional[Reference] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
-    value_uri: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class QuestionnaireItem(BackboneElement):
-    answer_option: Optional[L[QuestionnaireItemAnswerOption]] = None
-    answer_value_set: Optional[str] = None
-    code: Optional[L[Coding]] = None
-    definition: Optional[str] = None
-    enable_behavior: Optional[Literal["all", "any"]] = None
-    enable_when: Optional[L[QuestionnaireItemEnableWhen]] = None
-    initial: Optional[L[QuestionnaireItemInitial]] = None
-    item: Optional[L[QuestionnaireItem]] = None
-    link_id: Optional[str] = None
-    max_length: Optional[int] = None
-    prefix: Optional[str] = None
-    read_only: Optional[bool] = None
-    repeats: Optional[bool] = None
-    required: Optional[bool] = None
-    text: Optional[str] = None
-    type: Optional[Literal["group", "display", "question"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    answer_option: Optional[L[QuestionnaireItemAnswerOption]] = Field(None, alias="answerOption", serialization_alias="answerOption")
+    answer_value_set: Optional[str] = Field(None, alias="answerValueSet", serialization_alias="answerValueSet")
+    code: Optional[L[Coding]] = Field(None, alias="code", serialization_alias="code")
+    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
+    enable_behavior: Optional[Literal["all", "any"]] = Field(None, alias="enableBehavior", serialization_alias="enableBehavior")
+    enable_when: Optional[L[QuestionnaireItemEnableWhen]] = Field(None, alias="enableWhen", serialization_alias="enableWhen")
+    initial: Optional[L[QuestionnaireItemInitial]] = Field(None, alias="initial", serialization_alias="initial")
+    item: Optional[L[QuestionnaireItem]] = Field(None, alias="item", serialization_alias="item")
+    link_id: Optional[str] = Field(None, alias="linkId", serialization_alias="linkId")
+    max_length: Optional[int] = Field(None, alias="maxLength", serialization_alias="maxLength")
+    prefix: Optional[str] = Field(None, alias="prefix", serialization_alias="prefix")
+    read_only: Optional[bool] = Field(None, alias="readOnly", serialization_alias="readOnly")
+    repeats: Optional[bool] = Field(None, alias="repeats", serialization_alias="repeats")
+    required: Optional[bool] = Field(None, alias="required", serialization_alias="required")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    type: Optional[Literal["group", "display", "question"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Questionnaire(DomainResource):
-    approval_date: Optional[str] = None
-    code: Optional[L[Coding]] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    derived_from: Optional[L[str]] = None
-    description: Optional[str] = None
-    effective_period: Optional[Period] = None
-    experimental: Optional[bool] = None
-    identifier: Optional[L[Identifier]] = None
-    item: Optional[L[QuestionnaireItem]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    last_review_date: Optional[str] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    subject_type: Optional[L[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]]] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    code: Optional[L[Coding]] = Field(None, alias="code", serialization_alias="code")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    derived_from: Optional[L[str]] = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    item: Optional[L[QuestionnaireItem]] = Field(None, alias="item", serialization_alias="item")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject_type: Optional[L[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]]] = Field(None, alias="subjectType", serialization_alias="subjectType")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

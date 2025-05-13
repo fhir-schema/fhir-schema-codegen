@@ -6,72 +6,78 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ObservationReferenceRange(BackboneElement):
-    age: Optional[Range] = None
-    applies_to: Optional[L[CodeableConcept]] = None
-    high: Optional[Quantity] = None
-    low: Optional[Quantity] = None
-    text: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    age: Optional[Range] = Field(None, alias="age", serialization_alias="age")
+    applies_to: Optional[L[CodeableConcept]] = Field(None, alias="appliesTo", serialization_alias="appliesTo")
+    high: Optional[Quantity] = Field(None, alias="high", serialization_alias="high")
+    low: Optional[Quantity] = Field(None, alias="low", serialization_alias="low")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ObservationComponent(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    data_absent_reason: Optional[CodeableConcept] = None
-    interpretation: Optional[L[CodeableConcept]] = None
-    reference_range: Optional[L[ObservationReferenceRange]] = None
-    value_boolean: Optional[bool] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_date_time: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_period: Optional[Period] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
-    value_ratio: Optional[Ratio] = None
-    value_sampled_data: Optional[SampledData] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    data_absent_reason: Optional[CodeableConcept] = Field(None, alias="dataAbsentReason", serialization_alias="dataAbsentReason")
+    interpretation: Optional[L[CodeableConcept]] = Field(None, alias="interpretation", serialization_alias="interpretation")
+    reference_range: Optional[L[ObservationReferenceRange]] = Field(None, alias="referenceRange", serialization_alias="referenceRange")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_period: Optional[Period] = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_ratio: Optional[Ratio] = Field(None, alias="valueRatio", serialization_alias="valueRatio")
+    value_sampled_data: Optional[SampledData] = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
 
 
 class Observation(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    body_site: Optional[CodeableConcept] = None
-    category: Optional[L[CodeableConcept]] = None
-    code: Optional[CodeableConcept] = None
-    component: Optional[L[ObservationComponent]] = None
-    data_absent_reason: Optional[CodeableConcept] = None
-    derived_from: Optional[L[Reference]] = None
-    device: Optional[Reference] = None
-    effective_date_time: Optional[str] = None
-    effective_instant: Optional[str] = None
-    effective_period: Optional[Period] = None
-    effective_timing: Optional[Timing] = None
-    encounter: Optional[Reference] = None
-    focus: Optional[L[Reference]] = None
-    has_member: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    interpretation: Optional[L[CodeableConcept]] = None
-    issued: Optional[str] = None
-    method: Optional[CodeableConcept] = None
-    note: Optional[L[Annotation]] = None
-    part_of: Optional[L[Reference]] = None
-    performer: Optional[L[Reference]] = None
-    reference_range: Optional[L[ObservationReferenceRange]] = None
-    specimen: Optional[Reference] = None
-    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
-    value_boolean: Optional[bool] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_date_time: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_period: Optional[Period] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
-    value_ratio: Optional[Ratio] = None
-    value_sampled_data: Optional[SampledData] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    component: Optional[L[ObservationComponent]] = Field(None, alias="component", serialization_alias="component")
+    data_absent_reason: Optional[CodeableConcept] = Field(None, alias="dataAbsentReason", serialization_alias="dataAbsentReason")
+    derived_from: Optional[L[Reference]] = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
+    device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")
+    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_instant: Optional[str] = Field(None, alias="effectiveInstant", serialization_alias="effectiveInstant")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    effective_timing: Optional[Timing] = Field(None, alias="effectiveTiming", serialization_alias="effectiveTiming")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    focus: Optional[L[Reference]] = Field(None, alias="focus", serialization_alias="focus")
+    has_member: Optional[L[Reference]] = Field(None, alias="hasMember", serialization_alias="hasMember")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    interpretation: Optional[L[CodeableConcept]] = Field(None, alias="interpretation", serialization_alias="interpretation")
+    issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    performer: Optional[L[Reference]] = Field(None, alias="performer", serialization_alias="performer")
+    reference_range: Optional[L[ObservationReferenceRange]] = Field(None, alias="referenceRange", serialization_alias="referenceRange")
+    specimen: Optional[Reference] = Field(None, alias="specimen", serialization_alias="specimen")
+    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_period: Optional[Period] = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_ratio: Optional[Ratio] = Field(None, alias="valueRatio", serialization_alias="valueRatio")
+    value_sampled_data: Optional[SampledData] = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
 

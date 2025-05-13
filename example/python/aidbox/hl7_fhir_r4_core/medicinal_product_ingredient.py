@@ -6,42 +6,52 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength(BackboneElement):
-    country: Optional[L[CodeableConcept]] = None
-    measurement_point: Optional[str] = None
-    strength: Optional[Ratio] = None
-    strength_low_limit: Optional[Ratio] = None
-    substance: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country: Optional[L[CodeableConcept]] = Field(None, alias="country", serialization_alias="country")
+    measurement_point: Optional[str] = Field(None, alias="measurementPoint", serialization_alias="measurementPoint")
+    strength: Optional[Ratio] = Field(None, alias="strength", serialization_alias="strength")
+    strength_low_limit: Optional[Ratio] = Field(None, alias="strengthLowLimit", serialization_alias="strengthLowLimit")
+    substance: Optional[CodeableConcept] = Field(None, alias="substance", serialization_alias="substance")
 
 class MedicinalProductIngredientSpecifiedSubstanceStrength(BackboneElement):
-    concentration: Optional[Ratio] = None
-    concentration_low_limit: Optional[Ratio] = None
-    country: Optional[L[CodeableConcept]] = None
-    measurement_point: Optional[str] = None
-    presentation: Optional[Ratio] = None
-    presentation_low_limit: Optional[Ratio] = None
-    reference_strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    concentration: Optional[Ratio] = Field(None, alias="concentration", serialization_alias="concentration")
+    concentration_low_limit: Optional[Ratio] = Field(None, alias="concentrationLowLimit", serialization_alias="concentrationLowLimit")
+    country: Optional[L[CodeableConcept]] = Field(None, alias="country", serialization_alias="country")
+    measurement_point: Optional[str] = Field(None, alias="measurementPoint", serialization_alias="measurementPoint")
+    presentation: Optional[Ratio] = Field(None, alias="presentation", serialization_alias="presentation")
+    presentation_low_limit: Optional[Ratio] = Field(None, alias="presentationLowLimit", serialization_alias="presentationLowLimit")
+    reference_strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength]] = Field(None, alias="referenceStrength", serialization_alias="referenceStrength")
 
 class MedicinalProductIngredientSpecifiedSubstance(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    confidentiality: Optional[CodeableConcept] = None
-    group: Optional[CodeableConcept] = None
-    strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrength]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    confidentiality: Optional[CodeableConcept] = Field(None, alias="confidentiality", serialization_alias="confidentiality")
+    group: Optional[CodeableConcept] = Field(None, alias="group", serialization_alias="group")
+    strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrength]] = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicinalProductIngredientSubstance(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrength]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrength]] = Field(None, alias="strength", serialization_alias="strength")
 
 
 class MedicinalProductIngredient(DomainResource):
-    allergenic_indicator: Optional[bool] = None
-    identifier: Optional[Identifier] = None
-    manufacturer: Optional[L[Reference]] = None
-    role: Optional[CodeableConcept] = None
-    specified_substance: Optional[L[MedicinalProductIngredientSpecifiedSubstance]] = None
-    substance: Optional[MedicinalProductIngredientSubstance] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    allergenic_indicator: Optional[bool] = Field(None, alias="allergenicIndicator", serialization_alias="allergenicIndicator")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    manufacturer: Optional[L[Reference]] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
+    specified_substance: Optional[L[MedicinalProductIngredientSpecifiedSubstance]] = Field(None, alias="specifiedSubstance", serialization_alias="specifiedSubstance")
+    substance: Optional[MedicinalProductIngredientSubstance] = Field(None, alias="substance", serialization_alias="substance")
 

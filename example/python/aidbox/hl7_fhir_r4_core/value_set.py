@@ -6,84 +6,102 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ValueSetComposeIncludeConceptDesignation(BackboneElement):
-    language: Optional[str] = None
-    use: Optional[Coding] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
+    use: Optional[Coding] = Field(None, alias="use", serialization_alias="use")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ValueSetComposeIncludeConcept(BackboneElement):
-    code: Optional[str] = None
-    designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = None
-    display: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = Field(None, alias="designation", serialization_alias="designation")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
 
 class ValueSetComposeIncludeFilter(BackboneElement):
-    op: Optional[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] = None
-    property: Optional[str] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    op: Optional[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] = Field(None, alias="op", serialization_alias="op")
+    property: Optional[str] = Field(None, alias="property", serialization_alias="property")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ValueSetComposeInclude(BackboneElement):
-    concept: Optional[L[ValueSetComposeIncludeConcept]] = None
-    filter: Optional[L[ValueSetComposeIncludeFilter]] = None
-    system: Optional[str] = None
-    value_set: Optional[L[str]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    concept: Optional[L[ValueSetComposeIncludeConcept]] = Field(None, alias="concept", serialization_alias="concept")
+    filter: Optional[L[ValueSetComposeIncludeFilter]] = Field(None, alias="filter", serialization_alias="filter")
+    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
+    value_set: Optional[L[str]] = Field(None, alias="valueSet", serialization_alias="valueSet")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class ValueSetCompose(BackboneElement):
-    exclude: Optional[L[ValueSetComposeInclude]] = None
-    inactive: Optional[bool] = None
-    include: Optional[L[ValueSetComposeInclude]] = None
-    locked_date: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    exclude: Optional[L[ValueSetComposeInclude]] = Field(None, alias="exclude", serialization_alias="exclude")
+    inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
+    include: Optional[L[ValueSetComposeInclude]] = Field(None, alias="include", serialization_alias="include")
+    locked_date: Optional[str] = Field(None, alias="lockedDate", serialization_alias="lockedDate")
 
 class ValueSetExpansionParameter(BackboneElement):
-    name: Optional[str] = None
-    value_boolean: Optional[bool] = None
-    value_code: Optional[str] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_integer: Optional[int] = None
-    value_string: Optional[str] = None
-    value_uri: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_code: Optional[str] = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class ValueSetExpansionContains(BackboneElement):
-    abstract: Optional[bool] = None
-    code: Optional[str] = None
-    contains: Optional[L[ValueSetExpansionContains]] = None
-    designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = None
-    display: Optional[str] = None
-    inactive: Optional[bool] = None
-    system: Optional[str] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    abstract: Optional[bool] = Field(None, alias="abstract", serialization_alias="abstract")
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    contains: Optional[L[ValueSetExpansionContains]] = Field(None, alias="contains", serialization_alias="contains")
+    designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = Field(None, alias="designation", serialization_alias="designation")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
+    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class ValueSetExpansion(BackboneElement):
-    contains: Optional[L[ValueSetExpansionContains]] = None
-    identifier: Optional[str] = None
-    offset: Optional[int] = None
-    parameter: Optional[L[ValueSetExpansionParameter]] = None
-    timestamp: Optional[str] = None
-    total: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contains: Optional[L[ValueSetExpansionContains]] = Field(None, alias="contains", serialization_alias="contains")
+    identifier: Optional[str] = Field(None, alias="identifier", serialization_alias="identifier")
+    offset: Optional[int] = Field(None, alias="offset", serialization_alias="offset")
+    parameter: Optional[L[ValueSetExpansionParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
+    timestamp: Optional[str] = Field(None, alias="timestamp", serialization_alias="timestamp")
+    total: Optional[int] = Field(None, alias="total", serialization_alias="total")
 
 
 class ValueSet(DomainResource):
-    compose: Optional[ValueSetCompose] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    expansion: Optional[ValueSetExpansion] = None
-    experimental: Optional[bool] = None
-    identifier: Optional[L[Identifier]] = None
-    immutable: Optional[bool] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    compose: Optional[ValueSetCompose] = Field(None, alias="compose", serialization_alias="compose")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    expansion: Optional[ValueSetExpansion] = Field(None, alias="expansion", serialization_alias="expansion")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    immutable: Optional[bool] = Field(None, alias="immutable", serialization_alias="immutable")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

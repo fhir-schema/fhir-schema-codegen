@@ -6,38 +6,44 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class VisionPrescriptionLensSpecificationPrism(BackboneElement):
-    amount: Optional[float] = None
-    base: Optional[Literal["up", "down", "in", "out"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[float] = Field(None, alias="amount", serialization_alias="amount")
+    base: Optional[Literal["up", "down", "in", "out"]] = Field(None, alias="base", serialization_alias="base")
 
 class VisionPrescriptionLensSpecification(BackboneElement):
-    add: Optional[float] = None
-    axis: Optional[int] = None
-    back_curve: Optional[float] = None
-    brand: Optional[str] = None
-    color: Optional[str] = None
-    cylinder: Optional[float] = None
-    diameter: Optional[float] = None
-    duration: Optional[Quantity] = None
-    eye: Optional[Literal["right", "left"]] = None
-    note: Optional[L[Annotation]] = None
-    power: Optional[float] = None
-    prism: Optional[L[VisionPrescriptionLensSpecificationPrism]] = None
-    product: Optional[CodeableConcept] = None
-    sphere: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    add: Optional[float] = Field(None, alias="add", serialization_alias="add")
+    axis: Optional[int] = Field(None, alias="axis", serialization_alias="axis")
+    back_curve: Optional[float] = Field(None, alias="backCurve", serialization_alias="backCurve")
+    brand: Optional[str] = Field(None, alias="brand", serialization_alias="brand")
+    color: Optional[str] = Field(None, alias="color", serialization_alias="color")
+    cylinder: Optional[float] = Field(None, alias="cylinder", serialization_alias="cylinder")
+    diameter: Optional[float] = Field(None, alias="diameter", serialization_alias="diameter")
+    duration: Optional[Quantity] = Field(None, alias="duration", serialization_alias="duration")
+    eye: Optional[Literal["right", "left"]] = Field(None, alias="eye", serialization_alias="eye")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    power: Optional[float] = Field(None, alias="power", serialization_alias="power")
+    prism: Optional[L[VisionPrescriptionLensSpecificationPrism]] = Field(None, alias="prism", serialization_alias="prism")
+    product: Optional[CodeableConcept] = Field(None, alias="product", serialization_alias="product")
+    sphere: Optional[float] = Field(None, alias="sphere", serialization_alias="sphere")
 
 
 class VisionPrescription(DomainResource):
-    created: Optional[str] = None
-    date_written: Optional[str] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    lens_specification: Optional[L[VisionPrescriptionLensSpecification]] = None
-    patient: Optional[Reference] = None
-    prescriber: Optional[Reference] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    date_written: Optional[str] = Field(None, alias="dateWritten", serialization_alias="dateWritten")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    lens_specification: Optional[L[VisionPrescriptionLensSpecification]] = Field(None, alias="lensSpecification", serialization_alias="lensSpecification")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    prescriber: Optional[Reference] = Field(None, alias="prescriber", serialization_alias="prescriber")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

@@ -6,38 +6,42 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RiskAssessmentPrediction(BackboneElement):
-    outcome: Optional[CodeableConcept] = None
-    probability_decimal: Optional[float] = None
-    probability_range: Optional[Range] = None
-    qualitative_risk: Optional[CodeableConcept] = None
-    rationale: Optional[str] = None
-    relative_risk: Optional[float] = None
-    when_period: Optional[Period] = None
-    when_range: Optional[Range] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    outcome: Optional[CodeableConcept] = Field(None, alias="outcome", serialization_alias="outcome")
+    probability_decimal: Optional[float] = Field(None, alias="probabilityDecimal", serialization_alias="probabilityDecimal")
+    probability_range: Optional[Range] = Field(None, alias="probabilityRange", serialization_alias="probabilityRange")
+    qualitative_risk: Optional[CodeableConcept] = Field(None, alias="qualitativeRisk", serialization_alias="qualitativeRisk")
+    rationale: Optional[str] = Field(None, alias="rationale", serialization_alias="rationale")
+    relative_risk: Optional[float] = Field(None, alias="relativeRisk", serialization_alias="relativeRisk")
+    when_period: Optional[Period] = Field(None, alias="whenPeriod", serialization_alias="whenPeriod")
+    when_range: Optional[Range] = Field(None, alias="whenRange", serialization_alias="whenRange")
 
 
 class RiskAssessment(DomainResource):
-    based_on: Optional[Reference] = None
-    basis: Optional[L[Reference]] = None
-    code: Optional[CodeableConcept] = None
-    condition: Optional[Reference] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    method: Optional[CodeableConcept] = None
-    mitigation: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    occurrence_date_time: Optional[str] = None
-    occurrence_period: Optional[Period] = None
-    parent: Optional[Reference] = None
-    performer: Optional[Reference] = None
-    prediction: Optional[L[RiskAssessmentPrediction]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[Reference] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    basis: Optional[L[Reference]] = Field(None, alias="basis", serialization_alias="basis")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    mitigation: Optional[str] = Field(None, alias="mitigation", serialization_alias="mitigation")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    parent: Optional[Reference] = Field(None, alias="parent", serialization_alias="parent")
+    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
+    prediction: Optional[L[RiskAssessmentPrediction]] = Field(None, alias="prediction", serialization_alias="prediction")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

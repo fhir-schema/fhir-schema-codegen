@@ -6,30 +6,36 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AccountCoverage(BackboneElement):
-    coverage: Optional[Reference] = None
-    priority: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
+    priority: Optional[PositiveInt] = Field(None, alias="priority", serialization_alias="priority")
 
 class AccountGuarantor(BackboneElement):
-    on_hold: Optional[bool] = None
-    party: Optional[Reference] = None
-    period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    on_hold: Optional[bool] = Field(None, alias="onHold", serialization_alias="onHold")
+    party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
 
 
 class Account(DomainResource):
-    coverage: Optional[L[AccountCoverage]] = None
-    description: Optional[str] = None
-    guarantor: Optional[L[AccountGuarantor]] = None
-    identifier: Optional[L[Identifier]] = None
-    name: Optional[str] = None
-    owner: Optional[Reference] = None
-    part_of: Optional[Reference] = None
-    service_period: Optional[Period] = None
-    status: Optional[Literal["active", "inactive", "entered-in-error", "on-hold", "unknown"]] = None
-    subject: Optional[L[Reference]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    coverage: Optional[L[AccountCoverage]] = Field(None, alias="coverage", serialization_alias="coverage")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    guarantor: Optional[L[AccountGuarantor]] = Field(None, alias="guarantor", serialization_alias="guarantor")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    owner: Optional[Reference] = Field(None, alias="owner", serialization_alias="owner")
+    part_of: Optional[Reference] = Field(None, alias="partOf", serialization_alias="partOf")
+    service_period: Optional[Period] = Field(None, alias="servicePeriod", serialization_alias="servicePeriod")
+    status: Optional[Literal["active", "inactive", "entered-in-error", "on-hold", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

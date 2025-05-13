@@ -6,44 +6,50 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationAdministrationDosage(BackboneElement):
-    dose: Optional[Quantity] = None
-    method: Optional[CodeableConcept] = None
-    rate_quantity: Optional[Quantity] = None
-    rate_ratio: Optional[Ratio] = None
-    route: Optional[CodeableConcept] = None
-    site: Optional[CodeableConcept] = None
-    text: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    dose: Optional[Quantity] = Field(None, alias="dose", serialization_alias="dose")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    rate_quantity: Optional[Quantity] = Field(None, alias="rateQuantity", serialization_alias="rateQuantity")
+    rate_ratio: Optional[Ratio] = Field(None, alias="rateRatio", serialization_alias="rateRatio")
+    route: Optional[CodeableConcept] = Field(None, alias="route", serialization_alias="route")
+    site: Optional[CodeableConcept] = Field(None, alias="site", serialization_alias="site")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
 
 class MedicationAdministrationPerformer(BackboneElement):
-    actor: Optional[Reference] = None
-    function: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class MedicationAdministration(DomainResource):
-    category: Optional[CodeableConcept] = None
-    context: Optional[Reference] = None
-    device: Optional[L[Reference]] = None
-    dosage: Optional[MedicationAdministrationDosage] = None
-    effective_date_time: Optional[str] = None
-    effective_period: Optional[Period] = None
-    event_history: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates: Optional[L[str]] = None
-    medication_codeable_concept: Optional[CodeableConcept] = None
-    medication_reference: Optional[Reference] = None
-    note: Optional[L[Annotation]] = None
-    part_of: Optional[L[Reference]] = None
-    performer: Optional[L[MedicationAdministrationPerformer]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    request: Optional[Reference] = None
-    status: Optional[Literal["in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"]] = None
-    status_reason: Optional[L[CodeableConcept]] = None
-    subject: Optional[Reference] = None
-    supporting_information: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")
+    device: Optional[L[Reference]] = Field(None, alias="device", serialization_alias="device")
+    dosage: Optional[MedicationAdministrationDosage] = Field(None, alias="dosage", serialization_alias="dosage")
+    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    event_history: Optional[L[Reference]] = Field(None, alias="eventHistory", serialization_alias="eventHistory")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates: Optional[L[str]] = Field(None, alias="instantiates", serialization_alias="instantiates")
+    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    performer: Optional[L[MedicationAdministrationPerformer]] = Field(None, alias="performer", serialization_alias="performer")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
+    status: Optional[Literal["in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[L[CodeableConcept]] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    supporting_information: Optional[L[Reference]] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
 

@@ -6,21 +6,25 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductInteractionInteractant(BackboneElement):
-    item_codeable_concept: Optional[CodeableConcept] = None
-    item_reference: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
 
 
 class MedicinalProductInteraction(DomainResource):
-    description: Optional[str] = None
-    effect: Optional[CodeableConcept] = None
-    incidence: Optional[CodeableConcept] = None
-    interactant: Optional[L[MedicinalProductInteractionInteractant]] = None
-    management: Optional[CodeableConcept] = None
-    subject: Optional[L[Reference]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    effect: Optional[CodeableConcept] = Field(None, alias="effect", serialization_alias="effect")
+    incidence: Optional[CodeableConcept] = Field(None, alias="incidence", serialization_alias="incidence")
+    interactant: Optional[L[MedicinalProductInteractionInteractant]] = Field(None, alias="interactant", serialization_alias="interactant")
+    management: Optional[CodeableConcept] = Field(None, alias="management", serialization_alias="management")
+    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

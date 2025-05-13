@@ -6,17 +6,19 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ResearchSubject(DomainResource):
-    actual_arm: Optional[str] = None
-    assigned_arm: Optional[str] = None
-    consent: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    individual: Optional[Reference] = None
-    period: Optional[Period] = None
-    status: Optional[Literal["candidate", "eligible", "follow-up", "ineligible", "not-registered", "off-study", "on-study", "on-study-intervention", "on-study-observation", "pending-on-study", "potential-candidate", "screening", "withdrawn"]] = None
-    study: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actual_arm: Optional[str] = Field(None, alias="actualArm", serialization_alias="actualArm")
+    assigned_arm: Optional[str] = Field(None, alias="assignedArm", serialization_alias="assignedArm")
+    consent: Optional[Reference] = Field(None, alias="consent", serialization_alias="consent")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    individual: Optional[Reference] = Field(None, alias="individual", serialization_alias="individual")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    status: Optional[Literal["candidate", "eligible", "follow-up", "ineligible", "not-registered", "off-study", "on-study", "on-study-intervention", "on-study-observation", "pending-on-study", "potential-candidate", "screening", "withdrawn"]] = Field(None, alias="status", serialization_alias="status")
+    study: Optional[Reference] = Field(None, alias="study", serialization_alias="study")
 

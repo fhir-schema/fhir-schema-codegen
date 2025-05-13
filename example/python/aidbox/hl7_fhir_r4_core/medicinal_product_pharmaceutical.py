@@ -6,39 +6,49 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductPharmaceuticalCharacteristics(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    status: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
 
 class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod(BackboneElement):
-    supporting_information: Optional[str] = None
-    tissue: Optional[CodeableConcept] = None
-    value: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    supporting_information: Optional[str] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    tissue: Optional[CodeableConcept] = Field(None, alias="tissue", serialization_alias="tissue")
+    value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
 
 class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    withdrawal_period: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    withdrawal_period: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod]] = Field(None, alias="withdrawalPeriod", serialization_alias="withdrawalPeriod")
 
 class MedicinalProductPharmaceuticalRouteOfAdministration(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    first_dose: Optional[Quantity] = None
-    max_dose_per_day: Optional[Quantity] = None
-    max_dose_per_treatment_period: Optional[Ratio] = None
-    max_single_dose: Optional[Quantity] = None
-    max_treatment_period: Optional[Duration] = None
-    target_species: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    first_dose: Optional[Quantity] = Field(None, alias="firstDose", serialization_alias="firstDose")
+    max_dose_per_day: Optional[Quantity] = Field(None, alias="maxDosePerDay", serialization_alias="maxDosePerDay")
+    max_dose_per_treatment_period: Optional[Ratio] = Field(None, alias="maxDosePerTreatmentPeriod", serialization_alias="maxDosePerTreatmentPeriod")
+    max_single_dose: Optional[Quantity] = Field(None, alias="maxSingleDose", serialization_alias="maxSingleDose")
+    max_treatment_period: Optional[Duration] = Field(None, alias="maxTreatmentPeriod", serialization_alias="maxTreatmentPeriod")
+    target_species: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies]] = Field(None, alias="targetSpecies", serialization_alias="targetSpecies")
 
 
 class MedicinalProductPharmaceutical(DomainResource):
-    administrable_dose_form: Optional[CodeableConcept] = None
-    characteristics: Optional[L[MedicinalProductPharmaceuticalCharacteristics]] = None
-    device: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    ingredient: Optional[L[Reference]] = None
-    route_of_administration: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministration]] = None
-    unit_of_presentation: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    administrable_dose_form: Optional[CodeableConcept] = Field(None, alias="administrableDoseForm", serialization_alias="administrableDoseForm")
+    characteristics: Optional[L[MedicinalProductPharmaceuticalCharacteristics]] = Field(None, alias="characteristics", serialization_alias="characteristics")
+    device: Optional[L[Reference]] = Field(None, alias="device", serialization_alias="device")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    ingredient: Optional[L[Reference]] = Field(None, alias="ingredient", serialization_alias="ingredient")
+    route_of_administration: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministration]] = Field(None, alias="routeOfAdministration", serialization_alias="routeOfAdministration")
+    unit_of_presentation: Optional[CodeableConcept] = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
 

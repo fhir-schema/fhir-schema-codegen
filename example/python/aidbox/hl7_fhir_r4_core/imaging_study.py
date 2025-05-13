@@ -6,54 +6,62 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImagingStudySeriesInstance(BackboneElement):
-    number: Optional[int] = None
-    sop_class: Optional[Coding] = None
-    title: Optional[str] = None
-    uid: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    number: Optional[int] = Field(None, alias="number", serialization_alias="number")
+    sop_class: Optional[Coding] = Field(None, alias="sopClass", serialization_alias="sopClass")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    uid: Optional[str] = Field(None, alias="uid", serialization_alias="uid")
 
 class ImagingStudySeriesPerformer(BackboneElement):
-    actor: Optional[Reference] = None
-    function: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 class ImagingStudySeries(BackboneElement):
-    body_site: Optional[Coding] = None
-    description: Optional[str] = None
-    endpoint: Optional[L[Reference]] = None
-    instance: Optional[L[ImagingStudySeriesInstance]] = None
-    laterality: Optional[Coding] = None
-    modality: Optional[Coding] = None
-    number: Optional[int] = None
-    number_of_instances: Optional[int] = None
-    performer: Optional[L[ImagingStudySeriesPerformer]] = None
-    specimen: Optional[L[Reference]] = None
-    started: Optional[str] = None
-    uid: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    body_site: Optional[Coding] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    instance: Optional[L[ImagingStudySeriesInstance]] = Field(None, alias="instance", serialization_alias="instance")
+    laterality: Optional[Coding] = Field(None, alias="laterality", serialization_alias="laterality")
+    modality: Optional[Coding] = Field(None, alias="modality", serialization_alias="modality")
+    number: Optional[int] = Field(None, alias="number", serialization_alias="number")
+    number_of_instances: Optional[int] = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
+    performer: Optional[L[ImagingStudySeriesPerformer]] = Field(None, alias="performer", serialization_alias="performer")
+    specimen: Optional[L[Reference]] = Field(None, alias="specimen", serialization_alias="specimen")
+    started: Optional[str] = Field(None, alias="started", serialization_alias="started")
+    uid: Optional[str] = Field(None, alias="uid", serialization_alias="uid")
 
 
 class ImagingStudy(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    description: Optional[str] = None
-    encounter: Optional[Reference] = None
-    endpoint: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    interpreter: Optional[L[Reference]] = None
-    location: Optional[Reference] = None
-    modality: Optional[L[Coding]] = None
-    note: Optional[L[Annotation]] = None
-    number_of_instances: Optional[int] = None
-    number_of_series: Optional[int] = None
-    procedure_code: Optional[L[CodeableConcept]] = None
-    procedure_reference: Optional[Reference] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    referrer: Optional[Reference] = None
-    series: Optional[L[ImagingStudySeries]] = None
-    started: Optional[str] = None
-    status: Optional[Literal["registered", "available", "cancelled", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    interpreter: Optional[L[Reference]] = Field(None, alias="interpreter", serialization_alias="interpreter")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    modality: Optional[L[Coding]] = Field(None, alias="modality", serialization_alias="modality")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    number_of_instances: Optional[int] = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
+    number_of_series: Optional[int] = Field(None, alias="numberOfSeries", serialization_alias="numberOfSeries")
+    procedure_code: Optional[L[CodeableConcept]] = Field(None, alias="procedureCode", serialization_alias="procedureCode")
+    procedure_reference: Optional[Reference] = Field(None, alias="procedureReference", serialization_alias="procedureReference")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    referrer: Optional[Reference] = Field(None, alias="referrer", serialization_alias="referrer")
+    series: Optional[L[ImagingStudySeries]] = Field(None, alias="series", serialization_alias="series")
+    started: Optional[str] = Field(None, alias="started", serialization_alias="started")
+    status: Optional[Literal["registered", "available", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

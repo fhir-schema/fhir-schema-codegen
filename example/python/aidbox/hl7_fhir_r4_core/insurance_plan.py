@@ -6,72 +6,92 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class InsurancePlanCoverageBenefitLimit(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    value: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
 
 class InsurancePlanCoverageBenefit(BackboneElement):
-    limit: Optional[L[InsurancePlanCoverageBenefitLimit]] = None
-    requirement: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    limit: Optional[L[InsurancePlanCoverageBenefitLimit]] = Field(None, alias="limit", serialization_alias="limit")
+    requirement: Optional[str] = Field(None, alias="requirement", serialization_alias="requirement")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanCoverage(BackboneElement):
-    benefit: Optional[L[InsurancePlanCoverageBenefit]] = None
-    network: Optional[L[Reference]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    benefit: Optional[L[InsurancePlanCoverageBenefit]] = Field(None, alias="benefit", serialization_alias="benefit")
+    network: Optional[L[Reference]] = Field(None, alias="network", serialization_alias="network")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanPlanGeneralCost(BackboneElement):
-    comment: Optional[str] = None
-    cost: Optional[Money] = None
-    group_size: Optional[PositiveInt] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    cost: Optional[Money] = Field(None, alias="cost", serialization_alias="cost")
+    group_size: Optional[PositiveInt] = Field(None, alias="groupSize", serialization_alias="groupSize")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanPlanSpecificCostBenefitCost(BackboneElement):
-    applicability: Optional[CodeableConcept] = None
-    qualifiers: Optional[L[CodeableConcept]] = None
-    type: Optional[CodeableConcept] = None
-    value: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    applicability: Optional[CodeableConcept] = Field(None, alias="applicability", serialization_alias="applicability")
+    qualifiers: Optional[L[CodeableConcept]] = Field(None, alias="qualifiers", serialization_alias="qualifiers")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
 
 class InsurancePlanPlanSpecificCostBenefit(BackboneElement):
-    cost: Optional[L[InsurancePlanPlanSpecificCostBenefitCost]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    cost: Optional[L[InsurancePlanPlanSpecificCostBenefitCost]] = Field(None, alias="cost", serialization_alias="cost")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanPlanSpecificCost(BackboneElement):
-    benefit: Optional[L[InsurancePlanPlanSpecificCostBenefit]] = None
-    category: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    benefit: Optional[L[InsurancePlanPlanSpecificCostBenefit]] = Field(None, alias="benefit", serialization_alias="benefit")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
 
 class InsurancePlanPlan(BackboneElement):
-    coverage_area: Optional[L[Reference]] = None
-    general_cost: Optional[L[InsurancePlanPlanGeneralCost]] = None
-    identifier: Optional[L[Identifier]] = None
-    network: Optional[L[Reference]] = None
-    specific_cost: Optional[L[InsurancePlanPlanSpecificCost]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    coverage_area: Optional[L[Reference]] = Field(None, alias="coverageArea", serialization_alias="coverageArea")
+    general_cost: Optional[L[InsurancePlanPlanGeneralCost]] = Field(None, alias="generalCost", serialization_alias="generalCost")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    network: Optional[L[Reference]] = Field(None, alias="network", serialization_alias="network")
+    specific_cost: Optional[L[InsurancePlanPlanSpecificCost]] = Field(None, alias="specificCost", serialization_alias="specificCost")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanContact(BackboneElement):
-    address: Optional[Address] = None
-    name: Optional[HumanName] = None
-    purpose: Optional[CodeableConcept] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
+    name: Optional[HumanName] = Field(None, alias="name", serialization_alias="name")
+    purpose: Optional[CodeableConcept] = Field(None, alias="purpose", serialization_alias="purpose")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 
 
 class InsurancePlan(DomainResource):
-    administered_by: Optional[Reference] = None
-    alias: Optional[L[str]] = None
-    contact: Optional[L[InsurancePlanContact]] = None
-    coverage: Optional[L[InsurancePlanCoverage]] = None
-    coverage_area: Optional[L[Reference]] = None
-    endpoint: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    name: Optional[str] = None
-    network: Optional[L[Reference]] = None
-    owned_by: Optional[Reference] = None
-    period: Optional[Period] = None
-    plan: Optional[L[InsurancePlanPlan]] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    administered_by: Optional[Reference] = Field(None, alias="administeredBy", serialization_alias="administeredBy")
+    alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
+    contact: Optional[L[InsurancePlanContact]] = Field(None, alias="contact", serialization_alias="contact")
+    coverage: Optional[L[InsurancePlanCoverage]] = Field(None, alias="coverage", serialization_alias="coverage")
+    coverage_area: Optional[L[Reference]] = Field(None, alias="coverageArea", serialization_alias="coverageArea")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    network: Optional[L[Reference]] = Field(None, alias="network", serialization_alias="network")
+    owned_by: Optional[Reference] = Field(None, alias="ownedBy", serialization_alias="ownedBy")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    plan: Optional[L[InsurancePlanPlan]] = Field(None, alias="plan", serialization_alias="plan")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 

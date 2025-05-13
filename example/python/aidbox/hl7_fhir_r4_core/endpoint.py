@@ -6,20 +6,22 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Endpoint(DomainResource):
-    address: Optional[str] = None
-    connection_type: Optional[Coding] = None
-    contact: Optional[L[ContactPoint]] = None
-    header: Optional[L[str]] = None
-    identifier: Optional[L[Identifier]] = None
-    managing_organization: Optional[Reference] = None
-    name: Optional[str] = None
-    payload_mime_type: Optional[L[str]] = None
-    payload_type: Optional[L[CodeableConcept]] = None
-    period: Optional[Period] = None
-    status: Optional[Literal["active", "suspended", "error", "off", "entered-in-error", "test"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    address: Optional[str] = Field(None, alias="address", serialization_alias="address")
+    connection_type: Optional[Coding] = Field(None, alias="connectionType", serialization_alias="connectionType")
+    contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")
+    header: Optional[L[str]] = Field(None, alias="header", serialization_alias="header")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: Optional[Reference] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    payload_mime_type: Optional[L[str]] = Field(None, alias="payloadMimeType", serialization_alias="payloadMimeType")
+    payload_type: Optional[L[CodeableConcept]] = Field(None, alias="payloadType", serialization_alias="payloadType")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    status: Optional[Literal["active", "suspended", "error", "off", "entered-in-error", "test"]] = Field(None, alias="status", serialization_alias="status")
 

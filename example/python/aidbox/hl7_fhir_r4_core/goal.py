@@ -6,39 +6,43 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class GoalTarget(BackboneElement):
-    detail_boolean: Optional[bool] = None
-    detail_codeable_concept: Optional[CodeableConcept] = None
-    detail_integer: Optional[int] = None
-    detail_quantity: Optional[Quantity] = None
-    detail_range: Optional[Range] = None
-    detail_ratio: Optional[Ratio] = None
-    detail_string: Optional[str] = None
-    due_date: Optional[str] = None
-    due_duration: Optional[Duration] = None
-    measure: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    detail_boolean: Optional[bool] = Field(None, alias="detailBoolean", serialization_alias="detailBoolean")
+    detail_codeable_concept: Optional[CodeableConcept] = Field(None, alias="detailCodeableConcept", serialization_alias="detailCodeableConcept")
+    detail_integer: Optional[int] = Field(None, alias="detailInteger", serialization_alias="detailInteger")
+    detail_quantity: Optional[Quantity] = Field(None, alias="detailQuantity", serialization_alias="detailQuantity")
+    detail_range: Optional[Range] = Field(None, alias="detailRange", serialization_alias="detailRange")
+    detail_ratio: Optional[Ratio] = Field(None, alias="detailRatio", serialization_alias="detailRatio")
+    detail_string: Optional[str] = Field(None, alias="detailString", serialization_alias="detailString")
+    due_date: Optional[str] = Field(None, alias="dueDate", serialization_alias="dueDate")
+    due_duration: Optional[Duration] = Field(None, alias="dueDuration", serialization_alias="dueDuration")
+    measure: Optional[CodeableConcept] = Field(None, alias="measure", serialization_alias="measure")
 
 
 class Goal(DomainResource):
-    achievement_status: Optional[CodeableConcept] = None
-    addresses: Optional[L[Reference]] = None
-    category: Optional[L[CodeableConcept]] = None
-    description: Optional[CodeableConcept] = None
-    expressed_by: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    lifecycle_status: Optional[Literal["proposed", "planned", "accepted", "cancelled", "entered-in-error", "rejected"]] = None
-    note: Optional[L[Annotation]] = None
-    outcome_code: Optional[L[CodeableConcept]] = None
-    outcome_reference: Optional[L[Reference]] = None
-    priority: Optional[CodeableConcept] = None
-    start_codeable_concept: Optional[CodeableConcept] = None
-    start_date: Optional[str] = None
-    status_date: Optional[str] = None
-    status_reason: Optional[str] = None
-    subject: Optional[Reference] = None
-    target: Optional[L[GoalTarget]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    achievement_status: Optional[CodeableConcept] = Field(None, alias="achievementStatus", serialization_alias="achievementStatus")
+    addresses: Optional[L[Reference]] = Field(None, alias="addresses", serialization_alias="addresses")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    description: Optional[CodeableConcept] = Field(None, alias="description", serialization_alias="description")
+    expressed_by: Optional[Reference] = Field(None, alias="expressedBy", serialization_alias="expressedBy")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    lifecycle_status: Optional[Literal["proposed", "planned", "accepted", "cancelled", "entered-in-error", "rejected"]] = Field(None, alias="lifecycleStatus", serialization_alias="lifecycleStatus")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    outcome_code: Optional[L[CodeableConcept]] = Field(None, alias="outcomeCode", serialization_alias="outcomeCode")
+    outcome_reference: Optional[L[Reference]] = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
+    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
+    start_codeable_concept: Optional[CodeableConcept] = Field(None, alias="startCodeableConcept", serialization_alias="startCodeableConcept")
+    start_date: Optional[str] = Field(None, alias="startDate", serialization_alias="startDate")
+    status_date: Optional[str] = Field(None, alias="statusDate", serialization_alias="statusDate")
+    status_reason: Optional[str] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    target: Optional[L[GoalTarget]] = Field(None, alias="target", serialization_alias="target")
 

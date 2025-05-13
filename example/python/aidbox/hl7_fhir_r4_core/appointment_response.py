@@ -6,17 +6,19 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AppointmentResponse(DomainResource):
-    actor: Optional[Reference] = None
-    appointment: Optional[Reference] = None
-    comment: Optional[str] = None
-    end: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    participant_status: Optional[Literal["accepted", "declined", "tentative", "needs-action"]] = None
-    participant_type: Optional[L[CodeableConcept]] = None
-    start: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    appointment: Optional[Reference] = Field(None, alias="appointment", serialization_alias="appointment")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    end: Optional[str] = Field(None, alias="end", serialization_alias="end")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    participant_status: Optional[Literal["accepted", "declined", "tentative", "needs-action"]] = Field(None, alias="participantStatus", serialization_alias="participantStatus")
+    participant_type: Optional[L[CodeableConcept]] = Field(None, alias="participantType", serialization_alias="participantType")
+    start: Optional[str] = Field(None, alias="start", serialization_alias="start")
 

@@ -6,79 +6,97 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ExampleScenarioInstanceVersion(BackboneElement):
-    description: Optional[str] = None
-    version_id: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    version_id: Optional[str] = Field(None, alias="versionId", serialization_alias="versionId")
 
 class ExampleScenarioInstanceContainedInstance(BackboneElement):
-    resource_id: Optional[str] = None
-    version_id: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    resource_id: Optional[str] = Field(None, alias="resourceId", serialization_alias="resourceId")
+    version_id: Optional[str] = Field(None, alias="versionId", serialization_alias="versionId")
 
 class ExampleScenarioInstance(BackboneElement):
-    contained_instance: Optional[L[ExampleScenarioInstanceContainedInstance]] = None
-    description: Optional[str] = None
-    name: Optional[str] = None
-    resource_id: Optional[str] = None
-    resource_type: Optional[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = None
-    version: Optional[L[ExampleScenarioInstanceVersion]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contained_instance: Optional[L[ExampleScenarioInstanceContainedInstance]] = Field(None, alias="containedInstance", serialization_alias="containedInstance")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    resource_id: Optional[str] = Field(None, alias="resourceId", serialization_alias="resourceId")
+    resource_type: Optional[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = Field(None, alias="resourceType", serialization_alias="resourceType")
+    version: Optional[L[ExampleScenarioInstanceVersion]] = Field(None, alias="version", serialization_alias="version")
 
 class ExampleScenarioProcessStepOperation(BackboneElement):
-    description: Optional[str] = None
-    initiator: Optional[str] = None
-    initiator_active: Optional[bool] = None
-    name: Optional[str] = None
-    number: Optional[str] = None
-    receiver: Optional[str] = None
-    receiver_active: Optional[bool] = None
-    request: Optional[ExampleScenarioInstanceContainedInstance] = None
-    response: Optional[ExampleScenarioInstanceContainedInstance] = None
-    type: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    initiator: Optional[str] = Field(None, alias="initiator", serialization_alias="initiator")
+    initiator_active: Optional[bool] = Field(None, alias="initiatorActive", serialization_alias="initiatorActive")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    number: Optional[str] = Field(None, alias="number", serialization_alias="number")
+    receiver: Optional[str] = Field(None, alias="receiver", serialization_alias="receiver")
+    receiver_active: Optional[bool] = Field(None, alias="receiverActive", serialization_alias="receiverActive")
+    request: Optional[ExampleScenarioInstanceContainedInstance] = Field(None, alias="request", serialization_alias="request")
+    response: Optional[ExampleScenarioInstanceContainedInstance] = Field(None, alias="response", serialization_alias="response")
+    type: Optional[str] = Field(None, alias="type", serialization_alias="type")
 
 class ExampleScenarioProcessStepAlternative(BackboneElement):
-    description: Optional[str] = None
-    step: Optional[L[ExampleScenarioProcessStep]] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    step: Optional[L[ExampleScenarioProcessStep]] = Field(None, alias="step", serialization_alias="step")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class ExampleScenarioProcessStep(BackboneElement):
-    alternative: Optional[L[ExampleScenarioProcessStepAlternative]] = None
-    operation: Optional[ExampleScenarioProcessStepOperation] = None
-    pause: Optional[bool] = None
-    process: Optional[L[ExampleScenarioProcess]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    alternative: Optional[L[ExampleScenarioProcessStepAlternative]] = Field(None, alias="alternative", serialization_alias="alternative")
+    operation: Optional[ExampleScenarioProcessStepOperation] = Field(None, alias="operation", serialization_alias="operation")
+    pause: Optional[bool] = Field(None, alias="pause", serialization_alias="pause")
+    process: Optional[L[ExampleScenarioProcess]] = Field(None, alias="process", serialization_alias="process")
 
 class ExampleScenarioProcess(BackboneElement):
-    description: Optional[str] = None
-    post_conditions: Optional[str] = None
-    pre_conditions: Optional[str] = None
-    step: Optional[L[ExampleScenarioProcessStep]] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    post_conditions: Optional[str] = Field(None, alias="postConditions", serialization_alias="postConditions")
+    pre_conditions: Optional[str] = Field(None, alias="preConditions", serialization_alias="preConditions")
+    step: Optional[L[ExampleScenarioProcessStep]] = Field(None, alias="step", serialization_alias="step")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class ExampleScenarioActor(BackboneElement):
-    actor_id: Optional[str] = None
-    description: Optional[str] = None
-    name: Optional[str] = None
-    type: Optional[Literal["person", "entity"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor_id: Optional[str] = Field(None, alias="actorId", serialization_alias="actorId")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[Literal["person", "entity"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class ExampleScenario(DomainResource):
-    actor: Optional[L[ExampleScenarioActor]] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    experimental: Optional[bool] = None
-    identifier: Optional[L[Identifier]] = None
-    instance: Optional[L[ExampleScenarioInstance]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    name: Optional[str] = None
-    process: Optional[L[ExampleScenarioProcess]] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
-    workflow: Optional[L[str]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[L[ExampleScenarioActor]] = Field(None, alias="actor", serialization_alias="actor")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instance: Optional[L[ExampleScenarioInstance]] = Field(None, alias="instance", serialization_alias="instance")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    process: Optional[L[ExampleScenarioProcess]] = Field(None, alias="process", serialization_alias="process")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    workflow: Optional[L[str]] = Field(None, alias="workflow", serialization_alias="workflow")
 

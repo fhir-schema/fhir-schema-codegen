@@ -6,32 +6,38 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ProvenanceAgent(BackboneElement):
-    on_behalf_of: Optional[Reference] = None
-    role: Optional[L[CodeableConcept]] = None
-    type: Optional[CodeableConcept] = None
-    who: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    role: Optional[L[CodeableConcept]] = Field(None, alias="role", serialization_alias="role")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
 
 class ProvenanceEntity(BackboneElement):
-    agent: Optional[L[ProvenanceAgent]] = None
-    role: Optional[Literal["derivation"]] = None
-    what: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    agent: Optional[L[ProvenanceAgent]] = Field(None, alias="agent", serialization_alias="agent")
+    role: Optional[Literal["derivation"]] = Field(None, alias="role", serialization_alias="role")
+    what: Optional[Reference] = Field(None, alias="what", serialization_alias="what")
 
 
 class Provenance(DomainResource):
-    activity: Optional[CodeableConcept] = None
-    agent: Optional[L[ProvenanceAgent]] = None
-    entity: Optional[L[ProvenanceEntity]] = None
-    location: Optional[Reference] = None
-    occurred_date_time: Optional[str] = None
-    occurred_period: Optional[Period] = None
-    policy: Optional[L[str]] = None
-    reason: Optional[L[CodeableConcept]] = None
-    recorded: Optional[str] = None
-    signature: Optional[L[Signature]] = None
-    target: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    activity: Optional[CodeableConcept] = Field(None, alias="activity", serialization_alias="activity")
+    agent: Optional[L[ProvenanceAgent]] = Field(None, alias="agent", serialization_alias="agent")
+    entity: Optional[L[ProvenanceEntity]] = Field(None, alias="entity", serialization_alias="entity")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    occurred_date_time: Optional[str] = Field(None, alias="occurredDateTime", serialization_alias="occurredDateTime")
+    occurred_period: Optional[Period] = Field(None, alias="occurredPeriod", serialization_alias="occurredPeriod")
+    policy: Optional[L[str]] = Field(None, alias="policy", serialization_alias="policy")
+    reason: Optional[L[CodeableConcept]] = Field(None, alias="reason", serialization_alias="reason")
+    recorded: Optional[str] = Field(None, alias="recorded", serialization_alias="recorded")
+    signature: Optional[L[Signature]] = Field(None, alias="signature", serialization_alias="signature")
+    target: Optional[L[Reference]] = Field(None, alias="target", serialization_alias="target")
 

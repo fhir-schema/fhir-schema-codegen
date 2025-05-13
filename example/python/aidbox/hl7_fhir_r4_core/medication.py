@@ -6,28 +6,34 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationIngredient(BackboneElement):
-    is_active: Optional[bool] = None
-    item_codeable_concept: Optional[CodeableConcept] = None
-    item_reference: Optional[Reference] = None
-    strength: Optional[Ratio] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    is_active: Optional[bool] = Field(None, alias="isActive", serialization_alias="isActive")
+    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
+    strength: Optional[Ratio] = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicationBatch(BackboneElement):
-    expiration_date: Optional[str] = None
-    lot_number: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    expiration_date: Optional[str] = Field(None, alias="expirationDate", serialization_alias="expirationDate")
+    lot_number: Optional[str] = Field(None, alias="lotNumber", serialization_alias="lotNumber")
 
 
 class Medication(DomainResource):
-    amount: Optional[Ratio] = None
-    batch: Optional[MedicationBatch] = None
-    code: Optional[CodeableConcept] = None
-    form: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    ingredient: Optional[L[MedicationIngredient]] = None
-    manufacturer: Optional[Reference] = None
-    status: Optional[Literal["active", "inactive", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Ratio] = Field(None, alias="amount", serialization_alias="amount")
+    batch: Optional[MedicationBatch] = Field(None, alias="batch", serialization_alias="batch")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    form: Optional[CodeableConcept] = Field(None, alias="form", serialization_alias="form")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    ingredient: Optional[L[MedicationIngredient]] = Field(None, alias="ingredient", serialization_alias="ingredient")
+    manufacturer: Optional[Reference] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    status: Optional[Literal["active", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

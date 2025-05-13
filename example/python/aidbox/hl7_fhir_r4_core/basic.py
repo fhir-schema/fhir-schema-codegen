@@ -6,14 +6,16 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Basic(DomainResource):
-    author: Optional[Reference] = None
-    code: Optional[CodeableConcept] = None
-    created: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

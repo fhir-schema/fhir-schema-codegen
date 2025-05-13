@@ -6,14 +6,16 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductUndesirableEffect(DomainResource):
-    classification: Optional[CodeableConcept] = None
-    frequency_of_occurrence: Optional[CodeableConcept] = None
-    population: Optional[L[Population]] = None
-    subject: Optional[L[Reference]] = None
-    symptom_condition_effect: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    classification: Optional[CodeableConcept] = Field(None, alias="classification", serialization_alias="classification")
+    frequency_of_occurrence: Optional[CodeableConcept] = Field(None, alias="frequencyOfOccurrence", serialization_alias="frequencyOfOccurrence")
+    population: Optional[L[Population]] = Field(None, alias="population", serialization_alias="population")
+    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
+    symptom_condition_effect: Optional[CodeableConcept] = Field(None, alias="symptomConditionEffect", serialization_alias="symptomConditionEffect")
 

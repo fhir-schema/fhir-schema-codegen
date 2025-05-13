@@ -6,43 +6,49 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class QuestionnaireResponseItemAnswer(BackboneElement):
-    item: Optional[L[QuestionnaireResponseItem]] = None
-    value_attachment: Optional[Attachment] = None
-    value_boolean: Optional[bool] = None
-    value_coding: Optional[Coding] = None
-    value_date: Optional[str] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_integer: Optional[int] = None
-    value_quantity: Optional[Quantity] = None
-    value_reference: Optional[Reference] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
-    value_uri: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class QuestionnaireResponseItem(BackboneElement):
-    answer: Optional[L[QuestionnaireResponseItemAnswer]] = None
-    definition: Optional[str] = None
-    item: Optional[L[QuestionnaireResponseItem]] = None
-    link_id: Optional[str] = None
-    text: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    answer: Optional[L[QuestionnaireResponseItemAnswer]] = Field(None, alias="answer", serialization_alias="answer")
+    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
+    item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
+    link_id: Optional[str] = Field(None, alias="linkId", serialization_alias="linkId")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
 
 
 class QuestionnaireResponse(DomainResource):
-    author: Optional[Reference] = None
-    authored: Optional[str] = None
-    based_on: Optional[L[Reference]] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[Identifier] = None
-    item: Optional[L[QuestionnaireResponseItem]] = None
-    part_of: Optional[L[Reference]] = None
-    questionnaire: Optional[str] = None
-    source: Optional[Reference] = None
-    status: Optional[Literal["in-progress", "completed", "amended", "entered-in-error", "stopped"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    authored: Optional[str] = Field(None, alias="authored", serialization_alias="authored")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    questionnaire: Optional[str] = Field(None, alias="questionnaire", serialization_alias="questionnaire")
+    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
+    status: Optional[Literal["in-progress", "completed", "amended", "entered-in-error", "stopped"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

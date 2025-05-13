@@ -6,39 +6,43 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AllergyIntoleranceReaction(BackboneElement):
-    description: Optional[str] = None
-    exposure_route: Optional[CodeableConcept] = None
-    manifestation: Optional[L[CodeableConcept]] = None
-    note: Optional[L[Annotation]] = None
-    onset: Optional[str] = None
-    severity: Optional[Literal["mild", "moderate", "severe"]] = None
-    substance: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    exposure_route: Optional[CodeableConcept] = Field(None, alias="exposureRoute", serialization_alias="exposureRoute")
+    manifestation: Optional[L[CodeableConcept]] = Field(None, alias="manifestation", serialization_alias="manifestation")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    onset: Optional[str] = Field(None, alias="onset", serialization_alias="onset")
+    severity: Optional[Literal["mild", "moderate", "severe"]] = Field(None, alias="severity", serialization_alias="severity")
+    substance: Optional[CodeableConcept] = Field(None, alias="substance", serialization_alias="substance")
 
 
 class AllergyIntolerance(DomainResource):
-    asserter: Optional[Reference] = None
-    category: Optional[L[Literal["food", "medication", "environment", "biologic"]]] = None
-    clinical_status: Optional[CodeableConcept] = None
-    code: Optional[CodeableConcept] = None
-    criticality: Optional[Literal["low", "high", "unable-to-assess"]] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    last_occurrence: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    onset_age: Optional[Age] = None
-    onset_date_time: Optional[str] = None
-    onset_period: Optional[Period] = None
-    onset_range: Optional[Range] = None
-    onset_string: Optional[str] = None
-    patient: Optional[Reference] = None
-    reaction: Optional[L[AllergyIntoleranceReaction]] = None
-    recorded_date: Optional[str] = None
-    recorder: Optional[Reference] = None
-    type: Optional[Literal["allergy", "intolerance"]] = None
-    verification_status: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    asserter: Optional[Reference] = Field(None, alias="asserter", serialization_alias="asserter")
+    category: Optional[L[Literal["food", "medication", "environment", "biologic"]]] = Field(None, alias="category", serialization_alias="category")
+    clinical_status: Optional[CodeableConcept] = Field(None, alias="clinicalStatus", serialization_alias="clinicalStatus")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    criticality: Optional[Literal["low", "high", "unable-to-assess"]] = Field(None, alias="criticality", serialization_alias="criticality")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    last_occurrence: Optional[str] = Field(None, alias="lastOccurrence", serialization_alias="lastOccurrence")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    onset_age: Optional[Age] = Field(None, alias="onsetAge", serialization_alias="onsetAge")
+    onset_date_time: Optional[str] = Field(None, alias="onsetDateTime", serialization_alias="onsetDateTime")
+    onset_period: Optional[Period] = Field(None, alias="onsetPeriod", serialization_alias="onsetPeriod")
+    onset_range: Optional[Range] = Field(None, alias="onsetRange", serialization_alias="onsetRange")
+    onset_string: Optional[str] = Field(None, alias="onsetString", serialization_alias="onsetString")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    reaction: Optional[L[AllergyIntoleranceReaction]] = Field(None, alias="reaction", serialization_alias="reaction")
+    recorded_date: Optional[str] = Field(None, alias="recordedDate", serialization_alias="recordedDate")
+    recorder: Optional[Reference] = Field(None, alias="recorder", serialization_alias="recorder")
+    type: Optional[Literal["allergy", "intolerance"]] = Field(None, alias="type", serialization_alias="type")
+    verification_status: Optional[CodeableConcept] = Field(None, alias="verificationStatus", serialization_alias="verificationStatus")
 

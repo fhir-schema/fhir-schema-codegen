@@ -6,24 +6,28 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceProteinSubunit(BackboneElement):
-    c_terminal_modification: Optional[str] = None
-    c_terminal_modification_id: Optional[Identifier] = None
-    length: Optional[int] = None
-    n_terminal_modification: Optional[str] = None
-    n_terminal_modification_id: Optional[Identifier] = None
-    sequence: Optional[str] = None
-    sequence_attachment: Optional[Attachment] = None
-    subunit: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    c_terminal_modification: Optional[str] = Field(None, alias="cTerminalModification", serialization_alias="cTerminalModification")
+    c_terminal_modification_id: Optional[Identifier] = Field(None, alias="cTerminalModificationId", serialization_alias="cTerminalModificationId")
+    length: Optional[int] = Field(None, alias="length", serialization_alias="length")
+    n_terminal_modification: Optional[str] = Field(None, alias="nTerminalModification", serialization_alias="nTerminalModification")
+    n_terminal_modification_id: Optional[Identifier] = Field(None, alias="nTerminalModificationId", serialization_alias="nTerminalModificationId")
+    sequence: Optional[str] = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence_attachment: Optional[Attachment] = Field(None, alias="sequenceAttachment", serialization_alias="sequenceAttachment")
+    subunit: Optional[int] = Field(None, alias="subunit", serialization_alias="subunit")
 
 
 class SubstanceProtein(DomainResource):
-    disulfide_linkage: Optional[L[str]] = None
-    number_of_subunits: Optional[int] = None
-    sequence_type: Optional[CodeableConcept] = None
-    subunit: Optional[L[SubstanceProteinSubunit]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    disulfide_linkage: Optional[L[str]] = Field(None, alias="disulfideLinkage", serialization_alias="disulfideLinkage")
+    number_of_subunits: Optional[int] = Field(None, alias="numberOfSubunits", serialization_alias="numberOfSubunits")
+    sequence_type: Optional[CodeableConcept] = Field(None, alias="sequenceType", serialization_alias="sequenceType")
+    subunit: Optional[L[SubstanceProteinSubunit]] = Field(None, alias="subunit", serialization_alias="subunit")
 

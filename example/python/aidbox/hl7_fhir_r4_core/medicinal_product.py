@@ -6,62 +6,74 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductManufacturingBusinessOperation(BackboneElement):
-    authorisation_reference_number: Optional[Identifier] = None
-    confidentiality_indicator: Optional[CodeableConcept] = None
-    effective_date: Optional[str] = None
-    manufacturer: Optional[L[Reference]] = None
-    operation_type: Optional[CodeableConcept] = None
-    regulator: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authorisation_reference_number: Optional[Identifier] = Field(None, alias="authorisationReferenceNumber", serialization_alias="authorisationReferenceNumber")
+    confidentiality_indicator: Optional[CodeableConcept] = Field(None, alias="confidentialityIndicator", serialization_alias="confidentialityIndicator")
+    effective_date: Optional[str] = Field(None, alias="effectiveDate", serialization_alias="effectiveDate")
+    manufacturer: Optional[L[Reference]] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    operation_type: Optional[CodeableConcept] = Field(None, alias="operationType", serialization_alias="operationType")
+    regulator: Optional[Reference] = Field(None, alias="regulator", serialization_alias="regulator")
 
 class MedicinalProductNameNamePart(BackboneElement):
-    part: Optional[str] = None
-    type: Optional[Coding] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    part: Optional[str] = Field(None, alias="part", serialization_alias="part")
+    type: Optional[Coding] = Field(None, alias="type", serialization_alias="type")
 
 class MedicinalProductNameCountryLanguage(BackboneElement):
-    country: Optional[CodeableConcept] = None
-    jurisdiction: Optional[CodeableConcept] = None
-    language: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
+    jurisdiction: Optional[CodeableConcept] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
 
 class MedicinalProductName(BackboneElement):
-    country_language: Optional[L[MedicinalProductNameCountryLanguage]] = None
-    name_part: Optional[L[MedicinalProductNameNamePart]] = None
-    product_name: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country_language: Optional[L[MedicinalProductNameCountryLanguage]] = Field(None, alias="countryLanguage", serialization_alias="countryLanguage")
+    name_part: Optional[L[MedicinalProductNameNamePart]] = Field(None, alias="namePart", serialization_alias="namePart")
+    product_name: Optional[str] = Field(None, alias="productName", serialization_alias="productName")
 
 class MedicinalProductSpecialDesignation(BackboneElement):
-    date: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    indication_codeable_concept: Optional[CodeableConcept] = None
-    indication_reference: Optional[Reference] = None
-    intended_use: Optional[CodeableConcept] = None
-    species: Optional[CodeableConcept] = None
-    status: Optional[CodeableConcept] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    indication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="indicationCodeableConcept", serialization_alias="indicationCodeableConcept")
+    indication_reference: Optional[Reference] = Field(None, alias="indicationReference", serialization_alias="indicationReference")
+    intended_use: Optional[CodeableConcept] = Field(None, alias="intendedUse", serialization_alias="intendedUse")
+    species: Optional[CodeableConcept] = Field(None, alias="species", serialization_alias="species")
+    status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class MedicinalProduct(DomainResource):
-    additional_monitoring_indicator: Optional[CodeableConcept] = None
-    attached_document: Optional[L[Reference]] = None
-    clinical_trial: Optional[L[Reference]] = None
-    combined_pharmaceutical_dose_form: Optional[CodeableConcept] = None
-    contact: Optional[L[Reference]] = None
-    cross_reference: Optional[L[Identifier]] = None
-    domain: Optional[Coding] = None
-    identifier: Optional[L[Identifier]] = None
-    legal_status_of_supply: Optional[CodeableConcept] = None
-    manufacturing_business_operation: Optional[L[MedicinalProductManufacturingBusinessOperation]] = None
-    marketing_status: Optional[L[MarketingStatus]] = None
-    master_file: Optional[L[Reference]] = None
-    name: Optional[L[MedicinalProductName]] = None
-    packaged_medicinal_product: Optional[L[Reference]] = None
-    paediatric_use_indicator: Optional[CodeableConcept] = None
-    pharmaceutical_product: Optional[L[Reference]] = None
-    product_classification: Optional[L[CodeableConcept]] = None
-    special_designation: Optional[L[MedicinalProductSpecialDesignation]] = None
-    special_measures: Optional[L[str]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additional_monitoring_indicator: Optional[CodeableConcept] = Field(None, alias="additionalMonitoringIndicator", serialization_alias="additionalMonitoringIndicator")
+    attached_document: Optional[L[Reference]] = Field(None, alias="attachedDocument", serialization_alias="attachedDocument")
+    clinical_trial: Optional[L[Reference]] = Field(None, alias="clinicalTrial", serialization_alias="clinicalTrial")
+    combined_pharmaceutical_dose_form: Optional[CodeableConcept] = Field(None, alias="combinedPharmaceuticalDoseForm", serialization_alias="combinedPharmaceuticalDoseForm")
+    contact: Optional[L[Reference]] = Field(None, alias="contact", serialization_alias="contact")
+    cross_reference: Optional[L[Identifier]] = Field(None, alias="crossReference", serialization_alias="crossReference")
+    domain: Optional[Coding] = Field(None, alias="domain", serialization_alias="domain")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    legal_status_of_supply: Optional[CodeableConcept] = Field(None, alias="legalStatusOfSupply", serialization_alias="legalStatusOfSupply")
+    manufacturing_business_operation: Optional[L[MedicinalProductManufacturingBusinessOperation]] = Field(None, alias="manufacturingBusinessOperation", serialization_alias="manufacturingBusinessOperation")
+    marketing_status: Optional[L[MarketingStatus]] = Field(None, alias="marketingStatus", serialization_alias="marketingStatus")
+    master_file: Optional[L[Reference]] = Field(None, alias="masterFile", serialization_alias="masterFile")
+    name: Optional[L[MedicinalProductName]] = Field(None, alias="name", serialization_alias="name")
+    packaged_medicinal_product: Optional[L[Reference]] = Field(None, alias="packagedMedicinalProduct", serialization_alias="packagedMedicinalProduct")
+    paediatric_use_indicator: Optional[CodeableConcept] = Field(None, alias="paediatricUseIndicator", serialization_alias="paediatricUseIndicator")
+    pharmaceutical_product: Optional[L[Reference]] = Field(None, alias="pharmaceuticalProduct", serialization_alias="pharmaceuticalProduct")
+    product_classification: Optional[L[CodeableConcept]] = Field(None, alias="productClassification", serialization_alias="productClassification")
+    special_designation: Optional[L[MedicinalProductSpecialDesignation]] = Field(None, alias="specialDesignation", serialization_alias="specialDesignation")
+    special_measures: Optional[L[str]] = Field(None, alias="specialMeasures", serialization_alias="specialMeasures")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

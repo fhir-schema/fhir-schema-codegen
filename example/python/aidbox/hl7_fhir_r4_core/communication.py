@@ -6,38 +6,42 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CommunicationPayload(BackboneElement):
-    content_attachment: Optional[Attachment] = None
-    content_reference: Optional[Reference] = None
-    content_string: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    content_attachment: Optional[Attachment] = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
+    content_reference: Optional[Reference] = Field(None, alias="contentReference", serialization_alias="contentReference")
+    content_string: Optional[str] = Field(None, alias="contentString", serialization_alias="contentString")
 
 
 class Communication(DomainResource):
-    about: Optional[L[Reference]] = None
-    based_on: Optional[L[Reference]] = None
-    category: Optional[L[CodeableConcept]] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    in_response_to: Optional[L[Reference]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    medium: Optional[L[CodeableConcept]] = None
-    note: Optional[L[Annotation]] = None
-    part_of: Optional[L[Reference]] = None
-    payload: Optional[L[CommunicationPayload]] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    received: Optional[str] = None
-    recipient: Optional[L[Reference]] = None
-    sender: Optional[Reference] = None
-    sent: Optional[str] = None
-    status: Optional[Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = None
-    status_reason: Optional[CodeableConcept] = None
-    subject: Optional[Reference] = None
-    topic: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    about: Optional[L[Reference]] = Field(None, alias="about", serialization_alias="about")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    in_response_to: Optional[L[Reference]] = Field(None, alias="inResponseTo", serialization_alias="inResponseTo")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    medium: Optional[L[CodeableConcept]] = Field(None, alias="medium", serialization_alias="medium")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    payload: Optional[L[CommunicationPayload]] = Field(None, alias="payload", serialization_alias="payload")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    received: Optional[str] = Field(None, alias="received", serialization_alias="received")
+    recipient: Optional[L[Reference]] = Field(None, alias="recipient", serialization_alias="recipient")
+    sender: Optional[Reference] = Field(None, alias="sender", serialization_alias="sender")
+    sent: Optional[str] = Field(None, alias="sent", serialization_alias="sent")
+    status: Optional[Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    topic: Optional[CodeableConcept] = Field(None, alias="topic", serialization_alias="topic")
 

@@ -6,22 +6,26 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductContraindicationOtherTherapy(BackboneElement):
-    medication_codeable_concept: Optional[CodeableConcept] = None
-    medication_reference: Optional[Reference] = None
-    therapy_relationship_type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    therapy_relationship_type: Optional[CodeableConcept] = Field(None, alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
 
 
 class MedicinalProductContraindication(DomainResource):
-    comorbidity: Optional[L[CodeableConcept]] = None
-    disease: Optional[CodeableConcept] = None
-    disease_status: Optional[CodeableConcept] = None
-    other_therapy: Optional[L[MedicinalProductContraindicationOtherTherapy]] = None
-    population: Optional[L[Population]] = None
-    subject: Optional[L[Reference]] = None
-    therapeutic_indication: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    comorbidity: Optional[L[CodeableConcept]] = Field(None, alias="comorbidity", serialization_alias="comorbidity")
+    disease: Optional[CodeableConcept] = Field(None, alias="disease", serialization_alias="disease")
+    disease_status: Optional[CodeableConcept] = Field(None, alias="diseaseStatus", serialization_alias="diseaseStatus")
+    other_therapy: Optional[L[MedicinalProductContraindicationOtherTherapy]] = Field(None, alias="otherTherapy", serialization_alias="otherTherapy")
+    population: Optional[L[Population]] = Field(None, alias="population", serialization_alias="population")
+    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
+    therapeutic_indication: Optional[L[Reference]] = Field(None, alias="therapeuticIndication", serialization_alias="therapeuticIndication")
 

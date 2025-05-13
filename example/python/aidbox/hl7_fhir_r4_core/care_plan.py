@@ -6,62 +6,68 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CarePlanActivityDetail(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    daily_amount: Optional[Quantity] = None
-    description: Optional[str] = None
-    do_not_perform: Optional[bool] = None
-    goal: Optional[L[Reference]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    kind: Optional[Literal["Appointment", "CommunicationRequest", "DeviceRequest", "MedicationRequest", "NutritionOrder", "Task", "ServiceRequest", "VisionPrescription", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = None
-    location: Optional[Reference] = None
-    performer: Optional[L[Reference]] = None
-    product_codeable_concept: Optional[CodeableConcept] = None
-    product_reference: Optional[Reference] = None
-    quantity: Optional[Quantity] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    scheduled_period: Optional[Period] = None
-    scheduled_string: Optional[str] = None
-    scheduled_timing: Optional[Timing] = None
-    status: Optional[Literal["not-started", "scheduled", "in-progress", "on-hold", "completed", "cancelled", "unknown", "entered-in-error"]] = None
-    status_reason: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    daily_amount: Optional[Quantity] = Field(None, alias="dailyAmount", serialization_alias="dailyAmount")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    do_not_perform: Optional[bool] = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
+    goal: Optional[L[Reference]] = Field(None, alias="goal", serialization_alias="goal")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    kind: Optional[Literal["Appointment", "CommunicationRequest", "DeviceRequest", "MedicationRequest", "NutritionOrder", "Task", "ServiceRequest", "VisionPrescription", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = Field(None, alias="kind", serialization_alias="kind")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    performer: Optional[L[Reference]] = Field(None, alias="performer", serialization_alias="performer")
+    product_codeable_concept: Optional[CodeableConcept] = Field(None, alias="productCodeableConcept", serialization_alias="productCodeableConcept")
+    product_reference: Optional[Reference] = Field(None, alias="productReference", serialization_alias="productReference")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    scheduled_period: Optional[Period] = Field(None, alias="scheduledPeriod", serialization_alias="scheduledPeriod")
+    scheduled_string: Optional[str] = Field(None, alias="scheduledString", serialization_alias="scheduledString")
+    scheduled_timing: Optional[Timing] = Field(None, alias="scheduledTiming", serialization_alias="scheduledTiming")
+    status: Optional[Literal["not-started", "scheduled", "in-progress", "on-hold", "completed", "cancelled", "unknown", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
 
 class CarePlanActivity(BackboneElement):
-    detail: Optional[CarePlanActivityDetail] = None
-    outcome_codeable_concept: Optional[L[CodeableConcept]] = None
-    outcome_reference: Optional[L[Reference]] = None
-    progress: Optional[L[Annotation]] = None
-    reference: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    detail: Optional[CarePlanActivityDetail] = Field(None, alias="detail", serialization_alias="detail")
+    outcome_codeable_concept: Optional[L[CodeableConcept]] = Field(None, alias="outcomeCodeableConcept", serialization_alias="outcomeCodeableConcept")
+    outcome_reference: Optional[L[Reference]] = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
+    progress: Optional[L[Annotation]] = Field(None, alias="progress", serialization_alias="progress")
+    reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
 
 
 class CarePlan(DomainResource):
-    activity: Optional[L[CarePlanActivity]] = None
-    addresses: Optional[L[Reference]] = None
-    author: Optional[Reference] = None
-    based_on: Optional[L[Reference]] = None
-    care_team: Optional[L[Reference]] = None
-    category: Optional[L[CodeableConcept]] = None
-    contributor: Optional[L[Reference]] = None
-    created: Optional[str] = None
-    description: Optional[str] = None
-    encounter: Optional[Reference] = None
-    goal: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    intent: Optional[Literal["proposal", "plan", "order", "option", "proposal", "plan", "directive", "order", "option"]] = None
-    note: Optional[L[Annotation]] = None
-    part_of: Optional[L[Reference]] = None
-    period: Optional[Period] = None
-    replaces: Optional[L[Reference]] = None
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
-    supporting_info: Optional[L[Reference]] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    activity: Optional[L[CarePlanActivity]] = Field(None, alias="activity", serialization_alias="activity")
+    addresses: Optional[L[Reference]] = Field(None, alias="addresses", serialization_alias="addresses")
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    care_team: Optional[L[Reference]] = Field(None, alias="careTeam", serialization_alias="careTeam")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    contributor: Optional[L[Reference]] = Field(None, alias="contributor", serialization_alias="contributor")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    goal: Optional[L[Reference]] = Field(None, alias="goal", serialization_alias="goal")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    intent: Optional[Literal["proposal", "plan", "order", "option", "proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    replaces: Optional[L[Reference]] = Field(None, alias="replaces", serialization_alias="replaces")
+    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    supporting_info: Optional[L[Reference]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 

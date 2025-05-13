@@ -6,17 +6,19 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class BodyStructure(DomainResource):
-    active: Optional[bool] = None
-    description: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    image: Optional[L[Attachment]] = None
-    location: Optional[CodeableConcept] = None
-    location_qualifier: Optional[L[CodeableConcept]] = None
-    morphology: Optional[CodeableConcept] = None
-    patient: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    image: Optional[L[Attachment]] = Field(None, alias="image", serialization_alias="image")
+    location: Optional[CodeableConcept] = Field(None, alias="location", serialization_alias="location")
+    location_qualifier: Optional[L[CodeableConcept]] = Field(None, alias="locationQualifier", serialization_alias="locationQualifier")
+    morphology: Optional[CodeableConcept] = Field(None, alias="morphology", serialization_alias="morphology")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
 

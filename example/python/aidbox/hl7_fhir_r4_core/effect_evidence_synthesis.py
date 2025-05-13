@@ -6,78 +6,92 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EffectEvidenceSynthesisEffectEstimatePrecisionEstimate(BackboneElement):
-    from_: Optional[float] = None
-    level: Optional[float] = None
-    to: Optional[float] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    from_: Optional[float] = Field(None, alias="from", serialization_alias="from")
+    level: Optional[float] = Field(None, alias="level", serialization_alias="level")
+    to: Optional[float] = Field(None, alias="to", serialization_alias="to")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class EffectEvidenceSynthesisEffectEstimate(BackboneElement):
-    description: Optional[str] = None
-    precision_estimate: Optional[L[EffectEvidenceSynthesisEffectEstimatePrecisionEstimate]] = None
-    type: Optional[CodeableConcept] = None
-    unit_of_measure: Optional[CodeableConcept] = None
-    value: Optional[float] = None
-    variant_state: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    precision_estimate: Optional[L[EffectEvidenceSynthesisEffectEstimatePrecisionEstimate]] = Field(None, alias="precisionEstimate", serialization_alias="precisionEstimate")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    unit_of_measure: Optional[CodeableConcept] = Field(None, alias="unitOfMeasure", serialization_alias="unitOfMeasure")
+    value: Optional[float] = Field(None, alias="value", serialization_alias="value")
+    variant_state: Optional[CodeableConcept] = Field(None, alias="variantState", serialization_alias="variantState")
 
 class EffectEvidenceSynthesisSampleSize(BackboneElement):
-    description: Optional[str] = None
-    number_of_participants: Optional[int] = None
-    number_of_studies: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    number_of_participants: Optional[int] = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
+    number_of_studies: Optional[int] = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
 
 class EffectEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
-    note: Optional[L[Annotation]] = None
-    rating: Optional[L[CodeableConcept]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class EffectEvidenceSynthesisCertainty(BackboneElement):
-    certainty_subcomponent: Optional[L[EffectEvidenceSynthesisCertaintyCertaintySubcomponent]] = None
-    note: Optional[L[Annotation]] = None
-    rating: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    certainty_subcomponent: Optional[L[EffectEvidenceSynthesisCertaintyCertaintySubcomponent]] = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
 
 class EffectEvidenceSynthesisResultsByExposure(BackboneElement):
-    description: Optional[str] = None
-    exposure_state: Optional[Literal["exposure", "exposure-alternative"]] = None
-    risk_evidence_synthesis: Optional[Reference] = None
-    variant_state: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    exposure_state: Optional[Literal["exposure", "exposure-alternative"]] = Field(None, alias="exposureState", serialization_alias="exposureState")
+    risk_evidence_synthesis: Optional[Reference] = Field(None, alias="riskEvidenceSynthesis", serialization_alias="riskEvidenceSynthesis")
+    variant_state: Optional[CodeableConcept] = Field(None, alias="variantState", serialization_alias="variantState")
 
 
 class EffectEvidenceSynthesis(DomainResource):
-    approval_date: Optional[str] = None
-    author: Optional[L[ContactDetail]] = None
-    certainty: Optional[L[EffectEvidenceSynthesisCertainty]] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    editor: Optional[L[ContactDetail]] = None
-    effect_estimate: Optional[L[EffectEvidenceSynthesisEffectEstimate]] = None
-    effective_period: Optional[Period] = None
-    endorser: Optional[L[ContactDetail]] = None
-    exposure: Optional[Reference] = None
-    exposure_alternative: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    last_review_date: Optional[str] = None
-    name: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    outcome: Optional[Reference] = None
-    population: Optional[Reference] = None
-    publisher: Optional[str] = None
-    related_artifact: Optional[L[RelatedArtifact]] = None
-    results_by_exposure: Optional[L[EffectEvidenceSynthesisResultsByExposure]] = None
-    reviewer: Optional[L[ContactDetail]] = None
-    sample_size: Optional[EffectEvidenceSynthesisSampleSize] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    study_type: Optional[CodeableConcept] = None
-    synthesis_type: Optional[CodeableConcept] = None
-    title: Optional[str] = None
-    topic: Optional[L[CodeableConcept]] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")
+    certainty: Optional[L[EffectEvidenceSynthesisCertainty]] = Field(None, alias="certainty", serialization_alias="certainty")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    editor: Optional[L[ContactDetail]] = Field(None, alias="editor", serialization_alias="editor")
+    effect_estimate: Optional[L[EffectEvidenceSynthesisEffectEstimate]] = Field(None, alias="effectEstimate", serialization_alias="effectEstimate")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    endorser: Optional[L[ContactDetail]] = Field(None, alias="endorser", serialization_alias="endorser")
+    exposure: Optional[Reference] = Field(None, alias="exposure", serialization_alias="exposure")
+    exposure_alternative: Optional[Reference] = Field(None, alias="exposureAlternative", serialization_alias="exposureAlternative")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    outcome: Optional[Reference] = Field(None, alias="outcome", serialization_alias="outcome")
+    population: Optional[Reference] = Field(None, alias="population", serialization_alias="population")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    results_by_exposure: Optional[L[EffectEvidenceSynthesisResultsByExposure]] = Field(None, alias="resultsByExposure", serialization_alias="resultsByExposure")
+    reviewer: Optional[L[ContactDetail]] = Field(None, alias="reviewer", serialization_alias="reviewer")
+    sample_size: Optional[EffectEvidenceSynthesisSampleSize] = Field(None, alias="sampleSize", serialization_alias="sampleSize")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    study_type: Optional[CodeableConcept] = Field(None, alias="studyType", serialization_alias="studyType")
+    synthesis_type: Optional[CodeableConcept] = Field(None, alias="synthesisType", serialization_alias="synthesisType")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    topic: Optional[L[CodeableConcept]] = Field(None, alias="topic", serialization_alias="topic")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

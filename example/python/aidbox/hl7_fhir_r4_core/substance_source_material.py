@@ -6,58 +6,72 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceSourceMaterialOrganismAuthor(BackboneElement):
-    author_description: Optional[str] = None
-    author_type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author_description: Optional[str] = Field(None, alias="authorDescription", serialization_alias="authorDescription")
+    author_type: Optional[CodeableConcept] = Field(None, alias="authorType", serialization_alias="authorType")
 
 class SubstanceSourceMaterialOrganismHybrid(BackboneElement):
-    hybrid_type: Optional[CodeableConcept] = None
-    maternal_organism_id: Optional[str] = None
-    maternal_organism_name: Optional[str] = None
-    paternal_organism_id: Optional[str] = None
-    paternal_organism_name: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    hybrid_type: Optional[CodeableConcept] = Field(None, alias="hybridType", serialization_alias="hybridType")
+    maternal_organism_id: Optional[str] = Field(None, alias="maternalOrganismId", serialization_alias="maternalOrganismId")
+    maternal_organism_name: Optional[str] = Field(None, alias="maternalOrganismName", serialization_alias="maternalOrganismName")
+    paternal_organism_id: Optional[str] = Field(None, alias="paternalOrganismId", serialization_alias="paternalOrganismId")
+    paternal_organism_name: Optional[str] = Field(None, alias="paternalOrganismName", serialization_alias="paternalOrganismName")
 
 class SubstanceSourceMaterialOrganismOrganismGeneral(BackboneElement):
-    class_: Optional[CodeableConcept] = None
-    kingdom: Optional[CodeableConcept] = None
-    order: Optional[CodeableConcept] = None
-    phylum: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    class_: Optional[CodeableConcept] = Field(None, alias="class", serialization_alias="class")
+    kingdom: Optional[CodeableConcept] = Field(None, alias="kingdom", serialization_alias="kingdom")
+    order: Optional[CodeableConcept] = Field(None, alias="order", serialization_alias="order")
+    phylum: Optional[CodeableConcept] = Field(None, alias="phylum", serialization_alias="phylum")
 
 class SubstanceSourceMaterialOrganism(BackboneElement):
-    author: Optional[L[SubstanceSourceMaterialOrganismAuthor]] = None
-    family: Optional[CodeableConcept] = None
-    genus: Optional[CodeableConcept] = None
-    hybrid: Optional[SubstanceSourceMaterialOrganismHybrid] = None
-    intraspecific_description: Optional[str] = None
-    intraspecific_type: Optional[CodeableConcept] = None
-    organism_general: Optional[SubstanceSourceMaterialOrganismOrganismGeneral] = None
-    species: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[L[SubstanceSourceMaterialOrganismAuthor]] = Field(None, alias="author", serialization_alias="author")
+    family: Optional[CodeableConcept] = Field(None, alias="family", serialization_alias="family")
+    genus: Optional[CodeableConcept] = Field(None, alias="genus", serialization_alias="genus")
+    hybrid: Optional[SubstanceSourceMaterialOrganismHybrid] = Field(None, alias="hybrid", serialization_alias="hybrid")
+    intraspecific_description: Optional[str] = Field(None, alias="intraspecificDescription", serialization_alias="intraspecificDescription")
+    intraspecific_type: Optional[CodeableConcept] = Field(None, alias="intraspecificType", serialization_alias="intraspecificType")
+    organism_general: Optional[SubstanceSourceMaterialOrganismOrganismGeneral] = Field(None, alias="organismGeneral", serialization_alias="organismGeneral")
+    species: Optional[CodeableConcept] = Field(None, alias="species", serialization_alias="species")
 
 class SubstanceSourceMaterialPartDescription(BackboneElement):
-    part: Optional[CodeableConcept] = None
-    part_location: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    part: Optional[CodeableConcept] = Field(None, alias="part", serialization_alias="part")
+    part_location: Optional[CodeableConcept] = Field(None, alias="partLocation", serialization_alias="partLocation")
 
 class SubstanceSourceMaterialFractionDescription(BackboneElement):
-    fraction: Optional[str] = None
-    material_type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    fraction: Optional[str] = Field(None, alias="fraction", serialization_alias="fraction")
+    material_type: Optional[CodeableConcept] = Field(None, alias="materialType", serialization_alias="materialType")
 
 
 class SubstanceSourceMaterial(DomainResource):
-    country_of_origin: Optional[L[CodeableConcept]] = None
-    development_stage: Optional[CodeableConcept] = None
-    fraction_description: Optional[L[SubstanceSourceMaterialFractionDescription]] = None
-    geographical_location: Optional[L[str]] = None
-    organism: Optional[SubstanceSourceMaterialOrganism] = None
-    organism_id: Optional[Identifier] = None
-    organism_name: Optional[str] = None
-    parent_substance_id: Optional[L[Identifier]] = None
-    parent_substance_name: Optional[L[str]] = None
-    part_description: Optional[L[SubstanceSourceMaterialPartDescription]] = None
-    source_material_class: Optional[CodeableConcept] = None
-    source_material_state: Optional[CodeableConcept] = None
-    source_material_type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country_of_origin: Optional[L[CodeableConcept]] = Field(None, alias="countryOfOrigin", serialization_alias="countryOfOrigin")
+    development_stage: Optional[CodeableConcept] = Field(None, alias="developmentStage", serialization_alias="developmentStage")
+    fraction_description: Optional[L[SubstanceSourceMaterialFractionDescription]] = Field(None, alias="fractionDescription", serialization_alias="fractionDescription")
+    geographical_location: Optional[L[str]] = Field(None, alias="geographicalLocation", serialization_alias="geographicalLocation")
+    organism: Optional[SubstanceSourceMaterialOrganism] = Field(None, alias="organism", serialization_alias="organism")
+    organism_id: Optional[Identifier] = Field(None, alias="organismId", serialization_alias="organismId")
+    organism_name: Optional[str] = Field(None, alias="organismName", serialization_alias="organismName")
+    parent_substance_id: Optional[L[Identifier]] = Field(None, alias="parentSubstanceId", serialization_alias="parentSubstanceId")
+    parent_substance_name: Optional[L[str]] = Field(None, alias="parentSubstanceName", serialization_alias="parentSubstanceName")
+    part_description: Optional[L[SubstanceSourceMaterialPartDescription]] = Field(None, alias="partDescription", serialization_alias="partDescription")
+    source_material_class: Optional[CodeableConcept] = Field(None, alias="sourceMaterialClass", serialization_alias="sourceMaterialClass")
+    source_material_state: Optional[CodeableConcept] = Field(None, alias="sourceMaterialState", serialization_alias="sourceMaterialState")
+    source_material_type: Optional[CodeableConcept] = Field(None, alias="sourceMaterialType", serialization_alias="sourceMaterialType")
 

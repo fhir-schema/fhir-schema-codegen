@@ -6,27 +6,31 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CatalogEntryRelatedEntry(BackboneElement):
-    item: Optional[Reference] = None
-    relationtype: Optional[Literal["triggers", "is-replaced-by"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    item: Optional[Reference] = Field(None, alias="item", serialization_alias="item")
+    relationtype: Optional[Literal["triggers", "is-replaced-by"]] = Field(None, alias="relationtype", serialization_alias="relationtype")
 
 
 class CatalogEntry(DomainResource):
-    additional_characteristic: Optional[L[CodeableConcept]] = None
-    additional_classification: Optional[L[CodeableConcept]] = None
-    additional_identifier: Optional[L[Identifier]] = None
-    classification: Optional[L[CodeableConcept]] = None
-    identifier: Optional[L[Identifier]] = None
-    last_updated: Optional[str] = None
-    orderable: Optional[bool] = None
-    referenced_item: Optional[Reference] = None
-    related_entry: Optional[L[CatalogEntryRelatedEntry]] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    type: Optional[CodeableConcept] = None
-    validity_period: Optional[Period] = None
-    valid_to: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additional_characteristic: Optional[L[CodeableConcept]] = Field(None, alias="additionalCharacteristic", serialization_alias="additionalCharacteristic")
+    additional_classification: Optional[L[CodeableConcept]] = Field(None, alias="additionalClassification", serialization_alias="additionalClassification")
+    additional_identifier: Optional[L[Identifier]] = Field(None, alias="additionalIdentifier", serialization_alias="additionalIdentifier")
+    classification: Optional[L[CodeableConcept]] = Field(None, alias="classification", serialization_alias="classification")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    last_updated: Optional[str] = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
+    orderable: Optional[bool] = Field(None, alias="orderable", serialization_alias="orderable")
+    referenced_item: Optional[Reference] = Field(None, alias="referencedItem", serialization_alias="referencedItem")
+    related_entry: Optional[L[CatalogEntryRelatedEntry]] = Field(None, alias="relatedEntry", serialization_alias="relatedEntry")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+    valid_to: Optional[str] = Field(None, alias="validTo", serialization_alias="validTo")
 

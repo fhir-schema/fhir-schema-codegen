@@ -6,71 +6,77 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ActivityDefinitionParticipant(BackboneElement):
-    role: Optional[CodeableConcept] = None
-    type: Optional[Literal["patient", "practitioner", "related-person", "device"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
+    type: Optional[Literal["patient", "practitioner", "related-person", "device"]] = Field(None, alias="type", serialization_alias="type")
 
 class ActivityDefinitionDynamicValue(BackboneElement):
-    expression: Optional[Expression] = None
-    path: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
+    path: Optional[str] = Field(None, alias="path", serialization_alias="path")
 
 
 class ActivityDefinition(DomainResource):
-    approval_date: Optional[str] = None
-    author: Optional[L[ContactDetail]] = None
-    body_site: Optional[L[CodeableConcept]] = None
-    code: Optional[CodeableConcept] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    do_not_perform: Optional[bool] = None
-    dosage: Optional[L[Dosage]] = None
-    dynamic_value: Optional[L[ActivityDefinitionDynamicValue]] = None
-    editor: Optional[L[ContactDetail]] = None
-    effective_period: Optional[Period] = None
-    endorser: Optional[L[ContactDetail]] = None
-    experimental: Optional[bool] = None
-    identifier: Optional[L[Identifier]] = None
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    kind: Optional[Literal["Appointment", "AppointmentResponse", "CarePlan", "Claim", "CommunicationRequest", "Contract", "DeviceRequest", "EnrollmentRequest", "ImmunizationRecommendation", "MedicationRequest", "NutritionOrder", "ServiceRequest", "SupplyRequest", "Task", "VisionPrescription"]] = None
-    last_review_date: Optional[str] = None
-    library: Optional[L[str]] = None
-    location: Optional[Reference] = None
-    name: Optional[str] = None
-    observation_requirement: Optional[L[Reference]] = None
-    observation_result_requirement: Optional[L[Reference]] = None
-    participant: Optional[L[ActivityDefinitionParticipant]] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    product_codeable_concept: Optional[CodeableConcept] = None
-    product_reference: Optional[Reference] = None
-    profile: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    quantity: Optional[Quantity] = None
-    related_artifact: Optional[L[RelatedArtifact]] = None
-    reviewer: Optional[L[ContactDetail]] = None
-    specimen_requirement: Optional[L[Reference]] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    subject_codeable_concept: Optional[CodeableConcept] = None
-    subject_reference: Optional[Reference] = None
-    subtitle: Optional[str] = None
-    timing_age: Optional[Age] = None
-    timing_date_time: Optional[str] = None
-    timing_duration: Optional[Duration] = None
-    timing_period: Optional[Period] = None
-    timing_range: Optional[Range] = None
-    timing_timing: Optional[Timing] = None
-    title: Optional[str] = None
-    topic: Optional[L[CodeableConcept]] = None
-    transform: Optional[str] = None
-    url: Optional[str] = None
-    usage: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")
+    body_site: Optional[L[CodeableConcept]] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    do_not_perform: Optional[bool] = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
+    dosage: Optional[L[Dosage]] = Field(None, alias="dosage", serialization_alias="dosage")
+    dynamic_value: Optional[L[ActivityDefinitionDynamicValue]] = Field(None, alias="dynamicValue", serialization_alias="dynamicValue")
+    editor: Optional[L[ContactDetail]] = Field(None, alias="editor", serialization_alias="editor")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    endorser: Optional[L[ContactDetail]] = Field(None, alias="endorser", serialization_alias="endorser")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    kind: Optional[Literal["Appointment", "AppointmentResponse", "CarePlan", "Claim", "CommunicationRequest", "Contract", "DeviceRequest", "EnrollmentRequest", "ImmunizationRecommendation", "MedicationRequest", "NutritionOrder", "ServiceRequest", "SupplyRequest", "Task", "VisionPrescription"]] = Field(None, alias="kind", serialization_alias="kind")
+    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    library: Optional[L[str]] = Field(None, alias="library", serialization_alias="library")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    observation_requirement: Optional[L[Reference]] = Field(None, alias="observationRequirement", serialization_alias="observationRequirement")
+    observation_result_requirement: Optional[L[Reference]] = Field(None, alias="observationResultRequirement", serialization_alias="observationResultRequirement")
+    participant: Optional[L[ActivityDefinitionParticipant]] = Field(None, alias="participant", serialization_alias="participant")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    product_codeable_concept: Optional[CodeableConcept] = Field(None, alias="productCodeableConcept", serialization_alias="productCodeableConcept")
+    product_reference: Optional[Reference] = Field(None, alias="productReference", serialization_alias="productReference")
+    profile: Optional[str] = Field(None, alias="profile", serialization_alias="profile")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    reviewer: Optional[L[ContactDetail]] = Field(None, alias="reviewer", serialization_alias="reviewer")
+    specimen_requirement: Optional[L[Reference]] = Field(None, alias="specimenRequirement", serialization_alias="specimenRequirement")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject_codeable_concept: Optional[CodeableConcept] = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
+    subject_reference: Optional[Reference] = Field(None, alias="subjectReference", serialization_alias="subjectReference")
+    subtitle: Optional[str] = Field(None, alias="subtitle", serialization_alias="subtitle")
+    timing_age: Optional[Age] = Field(None, alias="timingAge", serialization_alias="timingAge")
+    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_duration: Optional[Duration] = Field(None, alias="timingDuration", serialization_alias="timingDuration")
+    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    timing_range: Optional[Range] = Field(None, alias="timingRange", serialization_alias="timingRange")
+    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    topic: Optional[L[CodeableConcept]] = Field(None, alias="topic", serialization_alias="topic")
+    transform: Optional[str] = Field(None, alias="transform", serialization_alias="transform")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    usage: Optional[str] = Field(None, alias="usage", serialization_alias="usage")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

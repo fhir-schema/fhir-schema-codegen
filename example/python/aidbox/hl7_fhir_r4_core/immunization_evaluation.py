@@ -6,24 +6,26 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImmunizationEvaluation(DomainResource):
-    authority: Optional[Reference] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    dose_number_positive_int: Optional[PositiveInt] = None
-    dose_number_string: Optional[str] = None
-    dose_status: Optional[CodeableConcept] = None
-    dose_status_reason: Optional[L[CodeableConcept]] = None
-    identifier: Optional[L[Identifier]] = None
-    immunization_event: Optional[Reference] = None
-    patient: Optional[Reference] = None
-    series: Optional[str] = None
-    series_doses_positive_int: Optional[PositiveInt] = None
-    series_doses_string: Optional[str] = None
-    status: Optional[Literal["completed", "entered-in-error", "in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"]] = None
-    target_disease: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    dose_number_positive_int: Optional[PositiveInt] = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
+    dose_number_string: Optional[str] = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
+    dose_status: Optional[CodeableConcept] = Field(None, alias="doseStatus", serialization_alias="doseStatus")
+    dose_status_reason: Optional[L[CodeableConcept]] = Field(None, alias="doseStatusReason", serialization_alias="doseStatusReason")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    immunization_event: Optional[Reference] = Field(None, alias="immunizationEvent", serialization_alias="immunizationEvent")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    series: Optional[str] = Field(None, alias="series", serialization_alias="series")
+    series_doses_positive_int: Optional[PositiveInt] = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
+    series_doses_string: Optional[str] = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
+    status: Optional[Literal["completed", "entered-in-error", "in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    target_disease: Optional[CodeableConcept] = Field(None, alias="targetDisease", serialization_alias="targetDisease")
 

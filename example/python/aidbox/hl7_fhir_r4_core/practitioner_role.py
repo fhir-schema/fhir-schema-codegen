@@ -6,34 +6,40 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PractitionerRoleAvailableTime(BackboneElement):
-    all_day: Optional[bool] = None
-    available_end_time: Optional[str] = None
-    available_start_time: Optional[str] = None
-    days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    all_day: Optional[bool] = Field(None, alias="allDay", serialization_alias="allDay")
+    available_end_time: Optional[str] = Field(None, alias="availableEndTime", serialization_alias="availableEndTime")
+    available_start_time: Optional[str] = Field(None, alias="availableStartTime", serialization_alias="availableStartTime")
+    days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = Field(None, alias="daysOfWeek", serialization_alias="daysOfWeek")
 
 class PractitionerRoleNotAvailable(BackboneElement):
-    description: Optional[str] = None
-    during: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    during: Optional[Period] = Field(None, alias="during", serialization_alias="during")
 
 
 class PractitionerRole(DomainResource):
-    active: Optional[bool] = None
-    availability_exceptions: Optional[str] = None
-    available_time: Optional[L[PractitionerRoleAvailableTime]] = None
-    code: Optional[L[CodeableConcept]] = None
-    endpoint: Optional[L[Reference]] = None
-    healthcare_service: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    location: Optional[L[Reference]] = None
-    not_available: Optional[L[PractitionerRoleNotAvailable]] = None
-    organization: Optional[Reference] = None
-    period: Optional[Period] = None
-    practitioner: Optional[Reference] = None
-    specialty: Optional[L[CodeableConcept]] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    availability_exceptions: Optional[str] = Field(None, alias="availabilityExceptions", serialization_alias="availabilityExceptions")
+    available_time: Optional[L[PractitionerRoleAvailableTime]] = Field(None, alias="availableTime", serialization_alias="availableTime")
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    healthcare_service: Optional[L[Reference]] = Field(None, alias="healthcareService", serialization_alias="healthcareService")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Optional[L[Reference]] = Field(None, alias="location", serialization_alias="location")
+    not_available: Optional[L[PractitionerRoleNotAvailable]] = Field(None, alias="notAvailable", serialization_alias="notAvailable")
+    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    practitioner: Optional[Reference] = Field(None, alias="practitioner", serialization_alias="practitioner")
+    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 

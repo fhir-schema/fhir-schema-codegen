@@ -6,94 +6,112 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MolecularSequenceStructureVariantOuter(BackboneElement):
-    end: Optional[int] = None
-    start: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    end: Optional[int] = Field(None, alias="end", serialization_alias="end")
+    start: Optional[int] = Field(None, alias="start", serialization_alias="start")
 
 class MolecularSequenceStructureVariantInner(BackboneElement):
-    end: Optional[int] = None
-    start: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    end: Optional[int] = Field(None, alias="end", serialization_alias="end")
+    start: Optional[int] = Field(None, alias="start", serialization_alias="start")
 
 class MolecularSequenceStructureVariant(BackboneElement):
-    exact: Optional[bool] = None
-    inner: Optional[MolecularSequenceStructureVariantInner] = None
-    length: Optional[int] = None
-    outer: Optional[MolecularSequenceStructureVariantOuter] = None
-    variant_type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    exact: Optional[bool] = Field(None, alias="exact", serialization_alias="exact")
+    inner: Optional[MolecularSequenceStructureVariantInner] = Field(None, alias="inner", serialization_alias="inner")
+    length: Optional[int] = Field(None, alias="length", serialization_alias="length")
+    outer: Optional[MolecularSequenceStructureVariantOuter] = Field(None, alias="outer", serialization_alias="outer")
+    variant_type: Optional[CodeableConcept] = Field(None, alias="variantType", serialization_alias="variantType")
 
 class MolecularSequenceRepository(BackboneElement):
-    dataset_id: Optional[str] = None
-    name: Optional[str] = None
-    readset_id: Optional[str] = None
-    type: Optional[Literal["directlink", "openapi", "login", "oauth", "other"]] = None
-    url: Optional[str] = None
-    variantset_id: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    dataset_id: Optional[str] = Field(None, alias="datasetId", serialization_alias="datasetId")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    readset_id: Optional[str] = Field(None, alias="readsetId", serialization_alias="readsetId")
+    type: Optional[Literal["directlink", "openapi", "login", "oauth", "other"]] = Field(None, alias="type", serialization_alias="type")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    variantset_id: Optional[str] = Field(None, alias="variantsetId", serialization_alias="variantsetId")
 
 class MolecularSequenceVariant(BackboneElement):
-    cigar: Optional[str] = None
-    end: Optional[int] = None
-    observed_allele: Optional[str] = None
-    reference_allele: Optional[str] = None
-    start: Optional[int] = None
-    variant_pointer: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    cigar: Optional[str] = Field(None, alias="cigar", serialization_alias="cigar")
+    end: Optional[int] = Field(None, alias="end", serialization_alias="end")
+    observed_allele: Optional[str] = Field(None, alias="observedAllele", serialization_alias="observedAllele")
+    reference_allele: Optional[str] = Field(None, alias="referenceAllele", serialization_alias="referenceAllele")
+    start: Optional[int] = Field(None, alias="start", serialization_alias="start")
+    variant_pointer: Optional[Reference] = Field(None, alias="variantPointer", serialization_alias="variantPointer")
 
 class MolecularSequenceQualityRoc(BackboneElement):
-    f_measure: Optional[L[float]] = None
-    num_fn: Optional[L[int]] = None
-    num_fp: Optional[L[int]] = None
-    num_tp: Optional[L[int]] = None
-    precision: Optional[L[float]] = None
-    score: Optional[L[int]] = None
-    sensitivity: Optional[L[float]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    f_measure: Optional[L[float]] = Field(None, alias="fMeasure", serialization_alias="fMeasure")
+    num_fn: Optional[L[int]] = Field(None, alias="numFN", serialization_alias="numFN")
+    num_fp: Optional[L[int]] = Field(None, alias="numFP", serialization_alias="numFP")
+    num_tp: Optional[L[int]] = Field(None, alias="numTP", serialization_alias="numTP")
+    precision: Optional[L[float]] = Field(None, alias="precision", serialization_alias="precision")
+    score: Optional[L[int]] = Field(None, alias="score", serialization_alias="score")
+    sensitivity: Optional[L[float]] = Field(None, alias="sensitivity", serialization_alias="sensitivity")
 
 class MolecularSequenceQuality(BackboneElement):
-    end: Optional[int] = None
-    f_score: Optional[float] = None
-    gt_fp: Optional[float] = None
-    method: Optional[CodeableConcept] = None
-    precision: Optional[float] = None
-    query_fp: Optional[float] = None
-    query_tp: Optional[float] = None
-    recall: Optional[float] = None
-    roc: Optional[MolecularSequenceQualityRoc] = None
-    score: Optional[Quantity] = None
-    standard_sequence: Optional[CodeableConcept] = None
-    start: Optional[int] = None
-    truth_fn: Optional[float] = None
-    truth_tp: Optional[float] = None
-    type: Optional[Literal["indel", "snp", "unknown"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    end: Optional[int] = Field(None, alias="end", serialization_alias="end")
+    f_score: Optional[float] = Field(None, alias="fScore", serialization_alias="fScore")
+    gt_fp: Optional[float] = Field(None, alias="gtFP", serialization_alias="gtFP")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    precision: Optional[float] = Field(None, alias="precision", serialization_alias="precision")
+    query_fp: Optional[float] = Field(None, alias="queryFP", serialization_alias="queryFP")
+    query_tp: Optional[float] = Field(None, alias="queryTP", serialization_alias="queryTP")
+    recall: Optional[float] = Field(None, alias="recall", serialization_alias="recall")
+    roc: Optional[MolecularSequenceQualityRoc] = Field(None, alias="roc", serialization_alias="roc")
+    score: Optional[Quantity] = Field(None, alias="score", serialization_alias="score")
+    standard_sequence: Optional[CodeableConcept] = Field(None, alias="standardSequence", serialization_alias="standardSequence")
+    start: Optional[int] = Field(None, alias="start", serialization_alias="start")
+    truth_fn: Optional[float] = Field(None, alias="truthFN", serialization_alias="truthFN")
+    truth_tp: Optional[float] = Field(None, alias="truthTP", serialization_alias="truthTP")
+    type: Optional[Literal["indel", "snp", "unknown"]] = Field(None, alias="type", serialization_alias="type")
 
 class MolecularSequenceReferenceSeq(BackboneElement):
-    chromosome: Optional[CodeableConcept] = None
-    genome_build: Optional[str] = None
-    orientation: Optional[Literal["sense", "antisense"]] = None
-    reference_seq_id: Optional[CodeableConcept] = None
-    reference_seq_pointer: Optional[Reference] = None
-    reference_seq_string: Optional[str] = None
-    strand: Optional[Literal["watson", "crick"]] = None
-    window_end: Optional[int] = None
-    window_start: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    chromosome: Optional[CodeableConcept] = Field(None, alias="chromosome", serialization_alias="chromosome")
+    genome_build: Optional[str] = Field(None, alias="genomeBuild", serialization_alias="genomeBuild")
+    orientation: Optional[Literal["sense", "antisense"]] = Field(None, alias="orientation", serialization_alias="orientation")
+    reference_seq_id: Optional[CodeableConcept] = Field(None, alias="referenceSeqId", serialization_alias="referenceSeqId")
+    reference_seq_pointer: Optional[Reference] = Field(None, alias="referenceSeqPointer", serialization_alias="referenceSeqPointer")
+    reference_seq_string: Optional[str] = Field(None, alias="referenceSeqString", serialization_alias="referenceSeqString")
+    strand: Optional[Literal["watson", "crick"]] = Field(None, alias="strand", serialization_alias="strand")
+    window_end: Optional[int] = Field(None, alias="windowEnd", serialization_alias="windowEnd")
+    window_start: Optional[int] = Field(None, alias="windowStart", serialization_alias="windowStart")
 
 
 class MolecularSequence(DomainResource):
-    coordinate_system: Optional[int] = None
-    device: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    observed_seq: Optional[str] = None
-    patient: Optional[Reference] = None
-    performer: Optional[Reference] = None
-    pointer: Optional[L[Reference]] = None
-    quality: Optional[L[MolecularSequenceQuality]] = None
-    quantity: Optional[Quantity] = None
-    read_coverage: Optional[int] = None
-    reference_seq: Optional[MolecularSequenceReferenceSeq] = None
-    repository: Optional[L[MolecularSequenceRepository]] = None
-    specimen: Optional[Reference] = None
-    structure_variant: Optional[L[MolecularSequenceStructureVariant]] = None
-    type: Optional[Literal["aa", "dna", "rna"]] = None
-    variant: Optional[L[MolecularSequenceVariant]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    coordinate_system: Optional[int] = Field(None, alias="coordinateSystem", serialization_alias="coordinateSystem")
+    device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    observed_seq: Optional[str] = Field(None, alias="observedSeq", serialization_alias="observedSeq")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
+    pointer: Optional[L[Reference]] = Field(None, alias="pointer", serialization_alias="pointer")
+    quality: Optional[L[MolecularSequenceQuality]] = Field(None, alias="quality", serialization_alias="quality")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    read_coverage: Optional[int] = Field(None, alias="readCoverage", serialization_alias="readCoverage")
+    reference_seq: Optional[MolecularSequenceReferenceSeq] = Field(None, alias="referenceSeq", serialization_alias="referenceSeq")
+    repository: Optional[L[MolecularSequenceRepository]] = Field(None, alias="repository", serialization_alias="repository")
+    specimen: Optional[Reference] = Field(None, alias="specimen", serialization_alias="specimen")
+    structure_variant: Optional[L[MolecularSequenceStructureVariant]] = Field(None, alias="structureVariant", serialization_alias="structureVariant")
+    type: Optional[Literal["aa", "dna", "rna"]] = Field(None, alias="type", serialization_alias="type")
+    variant: Optional[L[MolecularSequenceVariant]] = Field(None, alias="variant", serialization_alias="variant")
 

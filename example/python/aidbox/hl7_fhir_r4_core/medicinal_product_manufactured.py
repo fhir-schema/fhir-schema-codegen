@@ -6,16 +6,18 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductManufactured(DomainResource):
-    ingredient: Optional[L[Reference]] = None
-    manufactured_dose_form: Optional[CodeableConcept] = None
-    manufacturer: Optional[L[Reference]] = None
-    other_characteristics: Optional[L[CodeableConcept]] = None
-    physical_characteristics: Optional[ProdCharacteristic] = None
-    quantity: Optional[Quantity] = None
-    unit_of_presentation: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    ingredient: Optional[L[Reference]] = Field(None, alias="ingredient", serialization_alias="ingredient")
+    manufactured_dose_form: Optional[CodeableConcept] = Field(None, alias="manufacturedDoseForm", serialization_alias="manufacturedDoseForm")
+    manufacturer: Optional[L[Reference]] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    other_characteristics: Optional[L[CodeableConcept]] = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
+    physical_characteristics: Optional[ProdCharacteristic] = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    unit_of_presentation: Optional[CodeableConcept] = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
 

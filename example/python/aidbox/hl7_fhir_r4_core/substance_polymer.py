@@ -6,48 +6,62 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstancePolymerMonomerSetStartingMaterial(BackboneElement):
-    amount: Optional[SubstanceAmount] = None
-    is_defining: Optional[bool] = None
-    material: Optional[CodeableConcept] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[SubstanceAmount] = Field(None, alias="amount", serialization_alias="amount")
+    is_defining: Optional[bool] = Field(None, alias="isDefining", serialization_alias="isDefining")
+    material: Optional[CodeableConcept] = Field(None, alias="material", serialization_alias="material")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstancePolymerMonomerSet(BackboneElement):
-    ratio_type: Optional[CodeableConcept] = None
-    starting_material: Optional[L[SubstancePolymerMonomerSetStartingMaterial]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    ratio_type: Optional[CodeableConcept] = Field(None, alias="ratioType", serialization_alias="ratioType")
+    starting_material: Optional[L[SubstancePolymerMonomerSetStartingMaterial]] = Field(None, alias="startingMaterial", serialization_alias="startingMaterial")
 
 class SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation(BackboneElement):
-    amount: Optional[SubstanceAmount] = None
-    degree: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[SubstanceAmount] = Field(None, alias="amount", serialization_alias="amount")
+    degree: Optional[CodeableConcept] = Field(None, alias="degree", serialization_alias="degree")
 
 class SubstancePolymerRepeatRepeatUnitStructuralRepresentation(BackboneElement):
-    attachment: Optional[Attachment] = None
-    representation: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    attachment: Optional[Attachment] = Field(None, alias="attachment", serialization_alias="attachment")
+    representation: Optional[str] = Field(None, alias="representation", serialization_alias="representation")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstancePolymerRepeatRepeatUnit(BackboneElement):
-    amount: Optional[SubstanceAmount] = None
-    degree_of_polymerisation: Optional[L[SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation]] = None
-    orientation_of_polymerisation: Optional[CodeableConcept] = None
-    repeat_unit: Optional[str] = None
-    structural_representation: Optional[L[SubstancePolymerRepeatRepeatUnitStructuralRepresentation]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[SubstanceAmount] = Field(None, alias="amount", serialization_alias="amount")
+    degree_of_polymerisation: Optional[L[SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation]] = Field(None, alias="degreeOfPolymerisation", serialization_alias="degreeOfPolymerisation")
+    orientation_of_polymerisation: Optional[CodeableConcept] = Field(None, alias="orientationOfPolymerisation", serialization_alias="orientationOfPolymerisation")
+    repeat_unit: Optional[str] = Field(None, alias="repeatUnit", serialization_alias="repeatUnit")
+    structural_representation: Optional[L[SubstancePolymerRepeatRepeatUnitStructuralRepresentation]] = Field(None, alias="structuralRepresentation", serialization_alias="structuralRepresentation")
 
 class SubstancePolymerRepeat(BackboneElement):
-    average_molecular_formula: Optional[str] = None
-    number_of_units: Optional[int] = None
-    repeat_unit: Optional[L[SubstancePolymerRepeatRepeatUnit]] = None
-    repeat_unit_amount_type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    average_molecular_formula: Optional[str] = Field(None, alias="averageMolecularFormula", serialization_alias="averageMolecularFormula")
+    number_of_units: Optional[int] = Field(None, alias="numberOfUnits", serialization_alias="numberOfUnits")
+    repeat_unit: Optional[L[SubstancePolymerRepeatRepeatUnit]] = Field(None, alias="repeatUnit", serialization_alias="repeatUnit")
+    repeat_unit_amount_type: Optional[CodeableConcept] = Field(None, alias="repeatUnitAmountType", serialization_alias="repeatUnitAmountType")
 
 
 class SubstancePolymer(DomainResource):
-    class_: Optional[CodeableConcept] = None
-    copolymer_connectivity: Optional[L[CodeableConcept]] = None
-    geometry: Optional[CodeableConcept] = None
-    modification: Optional[L[str]] = None
-    monomer_set: Optional[L[SubstancePolymerMonomerSet]] = None
-    repeat: Optional[L[SubstancePolymerRepeat]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    class_: Optional[CodeableConcept] = Field(None, alias="class", serialization_alias="class")
+    copolymer_connectivity: Optional[L[CodeableConcept]] = Field(None, alias="copolymerConnectivity", serialization_alias="copolymerConnectivity")
+    geometry: Optional[CodeableConcept] = Field(None, alias="geometry", serialization_alias="geometry")
+    modification: Optional[L[str]] = Field(None, alias="modification", serialization_alias="modification")
+    monomer_set: Optional[L[SubstancePolymerMonomerSet]] = Field(None, alias="monomerSet", serialization_alias="monomerSet")
+    repeat: Optional[L[SubstancePolymerRepeat]] = Field(None, alias="repeat", serialization_alias="repeat")
 

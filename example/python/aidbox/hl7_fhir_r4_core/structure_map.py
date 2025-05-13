@@ -6,139 +6,157 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class StructureMapGroupInput(BackboneElement):
-    documentation: Optional[str] = None
-    mode: Optional[Literal["source", "target"]] = None
-    name: Optional[str] = None
-    type: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    mode: Optional[Literal["source", "target"]] = Field(None, alias="mode", serialization_alias="mode")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[str] = Field(None, alias="type", serialization_alias="type")
 
 class StructureMapGroupRuleSource(BackboneElement):
-    check: Optional[str] = None
-    condition: Optional[str] = None
-    context: Optional[str] = None
-    default_value_address: Optional[Address] = None
-    default_value_age: Optional[Age] = None
-    default_value_annotation: Optional[Annotation] = None
-    default_value_attachment: Optional[Attachment] = None
-    default_value_base64binary: Optional[str] = None
-    default_value_boolean: Optional[bool] = None
-    default_value_canonical: Optional[str] = None
-    default_value_code: Optional[str] = None
-    default_value_codeable_concept: Optional[CodeableConcept] = None
-    default_value_coding: Optional[Coding] = None
-    default_value_contact_detail: Optional[ContactDetail] = None
-    default_value_contact_point: Optional[ContactPoint] = None
-    default_value_contributor: Optional[Contributor] = None
-    default_value_count: Optional[Count] = None
-    default_value_data_requirement: Optional[DataRequirement] = None
-    default_value_date: Optional[str] = None
-    default_value_date_time: Optional[str] = None
-    default_value_decimal: Optional[float] = None
-    default_value_distance: Optional[Distance] = None
-    default_value_dosage: Optional[Dosage] = None
-    default_value_duration: Optional[Duration] = None
-    default_value_expression: Optional[Expression] = None
-    default_value_human_name: Optional[HumanName] = None
-    default_value_id: Optional[str] = None
-    default_value_identifier: Optional[Identifier] = None
-    default_value_instant: Optional[str] = None
-    default_value_integer: Optional[int] = None
-    default_value_markdown: Optional[str] = None
-    default_value_meta: Optional[Meta] = None
-    default_value_money: Optional[Money] = None
-    default_value_oid: Optional[str] = None
-    default_value_parameter_definition: Optional[ParameterDefinition] = None
-    default_value_period: Optional[Period] = None
-    default_value_positive_int: Optional[PositiveInt] = None
-    default_value_quantity: Optional[Quantity] = None
-    default_value_range: Optional[Range] = None
-    default_value_ratio: Optional[Ratio] = None
-    default_value_reference: Optional[Reference] = None
-    default_value_related_artifact: Optional[RelatedArtifact] = None
-    default_value_sampled_data: Optional[SampledData] = None
-    default_value_signature: Optional[Signature] = None
-    default_value_string: Optional[str] = None
-    default_value_time: Optional[str] = None
-    default_value_timing: Optional[Timing] = None
-    default_value_trigger_definition: Optional[TriggerDefinition] = None
-    default_value_unsigned_int: Optional[int] = None
-    default_value_uri: Optional[str] = None
-    default_value_url: Optional[str] = None
-    default_value_usage_context: Optional[UsageContext] = None
-    default_value_uuid: Optional[str] = None
-    element: Optional[str] = None
-    list_mode: Optional[Literal["first", "not_first", "last", "not_last", "only_one"]] = None
-    log_message: Optional[str] = None
-    max: Optional[str] = None
-    min: Optional[int] = None
-    type: Optional[str] = None
-    variable: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    check: Optional[str] = Field(None, alias="check", serialization_alias="check")
+    condition: Optional[str] = Field(None, alias="condition", serialization_alias="condition")
+    context: Optional[str] = Field(None, alias="context", serialization_alias="context")
+    default_value_address: Optional[Address] = Field(None, alias="defaultValueAddress", serialization_alias="defaultValueAddress")
+    default_value_age: Optional[Age] = Field(None, alias="defaultValueAge", serialization_alias="defaultValueAge")
+    default_value_annotation: Optional[Annotation] = Field(None, alias="defaultValueAnnotation", serialization_alias="defaultValueAnnotation")
+    default_value_attachment: Optional[Attachment] = Field(None, alias="defaultValueAttachment", serialization_alias="defaultValueAttachment")
+    default_value_base64binary: Optional[str] = Field(None, alias="defaultValueBase64Binary", serialization_alias="defaultValueBase64Binary")
+    default_value_boolean: Optional[bool] = Field(None, alias="defaultValueBoolean", serialization_alias="defaultValueBoolean")
+    default_value_canonical: Optional[str] = Field(None, alias="defaultValueCanonical", serialization_alias="defaultValueCanonical")
+    default_value_code: Optional[str] = Field(None, alias="defaultValueCode", serialization_alias="defaultValueCode")
+    default_value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="defaultValueCodeableConcept", serialization_alias="defaultValueCodeableConcept")
+    default_value_coding: Optional[Coding] = Field(None, alias="defaultValueCoding", serialization_alias="defaultValueCoding")
+    default_value_contact_detail: Optional[ContactDetail] = Field(None, alias="defaultValueContactDetail", serialization_alias="defaultValueContactDetail")
+    default_value_contact_point: Optional[ContactPoint] = Field(None, alias="defaultValueContactPoint", serialization_alias="defaultValueContactPoint")
+    default_value_contributor: Optional[Contributor] = Field(None, alias="defaultValueContributor", serialization_alias="defaultValueContributor")
+    default_value_count: Optional[Count] = Field(None, alias="defaultValueCount", serialization_alias="defaultValueCount")
+    default_value_data_requirement: Optional[DataRequirement] = Field(None, alias="defaultValueDataRequirement", serialization_alias="defaultValueDataRequirement")
+    default_value_date: Optional[str] = Field(None, alias="defaultValueDate", serialization_alias="defaultValueDate")
+    default_value_date_time: Optional[str] = Field(None, alias="defaultValueDateTime", serialization_alias="defaultValueDateTime")
+    default_value_decimal: Optional[float] = Field(None, alias="defaultValueDecimal", serialization_alias="defaultValueDecimal")
+    default_value_distance: Optional[Distance] = Field(None, alias="defaultValueDistance", serialization_alias="defaultValueDistance")
+    default_value_dosage: Optional[Dosage] = Field(None, alias="defaultValueDosage", serialization_alias="defaultValueDosage")
+    default_value_duration: Optional[Duration] = Field(None, alias="defaultValueDuration", serialization_alias="defaultValueDuration")
+    default_value_expression: Optional[Expression] = Field(None, alias="defaultValueExpression", serialization_alias="defaultValueExpression")
+    default_value_human_name: Optional[HumanName] = Field(None, alias="defaultValueHumanName", serialization_alias="defaultValueHumanName")
+    default_value_id: Optional[str] = Field(None, alias="defaultValueId", serialization_alias="defaultValueId")
+    default_value_identifier: Optional[Identifier] = Field(None, alias="defaultValueIdentifier", serialization_alias="defaultValueIdentifier")
+    default_value_instant: Optional[str] = Field(None, alias="defaultValueInstant", serialization_alias="defaultValueInstant")
+    default_value_integer: Optional[int] = Field(None, alias="defaultValueInteger", serialization_alias="defaultValueInteger")
+    default_value_markdown: Optional[str] = Field(None, alias="defaultValueMarkdown", serialization_alias="defaultValueMarkdown")
+    default_value_meta: Optional[Meta] = Field(None, alias="defaultValueMeta", serialization_alias="defaultValueMeta")
+    default_value_money: Optional[Money] = Field(None, alias="defaultValueMoney", serialization_alias="defaultValueMoney")
+    default_value_oid: Optional[str] = Field(None, alias="defaultValueOid", serialization_alias="defaultValueOid")
+    default_value_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="defaultValueParameterDefinition", serialization_alias="defaultValueParameterDefinition")
+    default_value_period: Optional[Period] = Field(None, alias="defaultValuePeriod", serialization_alias="defaultValuePeriod")
+    default_value_positive_int: Optional[PositiveInt] = Field(None, alias="defaultValuePositiveInt", serialization_alias="defaultValuePositiveInt")
+    default_value_quantity: Optional[Quantity] = Field(None, alias="defaultValueQuantity", serialization_alias="defaultValueQuantity")
+    default_value_range: Optional[Range] = Field(None, alias="defaultValueRange", serialization_alias="defaultValueRange")
+    default_value_ratio: Optional[Ratio] = Field(None, alias="defaultValueRatio", serialization_alias="defaultValueRatio")
+    default_value_reference: Optional[Reference] = Field(None, alias="defaultValueReference", serialization_alias="defaultValueReference")
+    default_value_related_artifact: Optional[RelatedArtifact] = Field(None, alias="defaultValueRelatedArtifact", serialization_alias="defaultValueRelatedArtifact")
+    default_value_sampled_data: Optional[SampledData] = Field(None, alias="defaultValueSampledData", serialization_alias="defaultValueSampledData")
+    default_value_signature: Optional[Signature] = Field(None, alias="defaultValueSignature", serialization_alias="defaultValueSignature")
+    default_value_string: Optional[str] = Field(None, alias="defaultValueString", serialization_alias="defaultValueString")
+    default_value_time: Optional[str] = Field(None, alias="defaultValueTime", serialization_alias="defaultValueTime")
+    default_value_timing: Optional[Timing] = Field(None, alias="defaultValueTiming", serialization_alias="defaultValueTiming")
+    default_value_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="defaultValueTriggerDefinition", serialization_alias="defaultValueTriggerDefinition")
+    default_value_unsigned_int: Optional[int] = Field(None, alias="defaultValueUnsignedInt", serialization_alias="defaultValueUnsignedInt")
+    default_value_uri: Optional[str] = Field(None, alias="defaultValueUri", serialization_alias="defaultValueUri")
+    default_value_url: Optional[str] = Field(None, alias="defaultValueUrl", serialization_alias="defaultValueUrl")
+    default_value_usage_context: Optional[UsageContext] = Field(None, alias="defaultValueUsageContext", serialization_alias="defaultValueUsageContext")
+    default_value_uuid: Optional[str] = Field(None, alias="defaultValueUuid", serialization_alias="defaultValueUuid")
+    element: Optional[str] = Field(None, alias="element", serialization_alias="element")
+    list_mode: Optional[Literal["first", "not_first", "last", "not_last", "only_one"]] = Field(None, alias="listMode", serialization_alias="listMode")
+    log_message: Optional[str] = Field(None, alias="logMessage", serialization_alias="logMessage")
+    max: Optional[str] = Field(None, alias="max", serialization_alias="max")
+    min: Optional[int] = Field(None, alias="min", serialization_alias="min")
+    type: Optional[str] = Field(None, alias="type", serialization_alias="type")
+    variable: Optional[str] = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRuleTargetParameter(BackboneElement):
-    value_boolean: Optional[bool] = None
-    value_decimal: Optional[float] = None
-    value_id: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_string: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_id: Optional[str] = Field(None, alias="valueId", serialization_alias="valueId")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class StructureMapGroupRuleTarget(BackboneElement):
-    context: Optional[str] = None
-    context_type: Optional[Literal["type", "variable"]] = None
-    element: Optional[str] = None
-    list_mode: Optional[L[Literal["first", "share", "last", "collate"]]] = None
-    list_rule_id: Optional[str] = None
-    parameter: Optional[L[StructureMapGroupRuleTargetParameter]] = None
-    transform: Optional[Literal["create", "copy", "truncate", "escape", "cast", "append", "translate", "reference", "dateOp", "uuid", "pointer", "evaluate", "cc", "c", "qty", "id", "cp"]] = None
-    variable: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    context: Optional[str] = Field(None, alias="context", serialization_alias="context")
+    context_type: Optional[Literal["type", "variable"]] = Field(None, alias="contextType", serialization_alias="contextType")
+    element: Optional[str] = Field(None, alias="element", serialization_alias="element")
+    list_mode: Optional[L[Literal["first", "share", "last", "collate"]]] = Field(None, alias="listMode", serialization_alias="listMode")
+    list_rule_id: Optional[str] = Field(None, alias="listRuleId", serialization_alias="listRuleId")
+    parameter: Optional[L[StructureMapGroupRuleTargetParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
+    transform: Optional[Literal["create", "copy", "truncate", "escape", "cast", "append", "translate", "reference", "dateOp", "uuid", "pointer", "evaluate", "cc", "c", "qty", "id", "cp"]] = Field(None, alias="transform", serialization_alias="transform")
+    variable: Optional[str] = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRuleDependent(BackboneElement):
-    name: Optional[str] = None
-    variable: Optional[L[str]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    variable: Optional[L[str]] = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRule(BackboneElement):
-    dependent: Optional[L[StructureMapGroupRuleDependent]] = None
-    documentation: Optional[str] = None
-    name: Optional[str] = None
-    rule: Optional[L[StructureMapGroupRule]] = None
-    source: Optional[L[StructureMapGroupRuleSource]] = None
-    target: Optional[L[StructureMapGroupRuleTarget]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    dependent: Optional[L[StructureMapGroupRuleDependent]] = Field(None, alias="dependent", serialization_alias="dependent")
+    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    rule: Optional[L[StructureMapGroupRule]] = Field(None, alias="rule", serialization_alias="rule")
+    source: Optional[L[StructureMapGroupRuleSource]] = Field(None, alias="source", serialization_alias="source")
+    target: Optional[L[StructureMapGroupRuleTarget]] = Field(None, alias="target", serialization_alias="target")
 
 class StructureMapGroup(BackboneElement):
-    documentation: Optional[str] = None
-    extends: Optional[str] = None
-    input: Optional[L[StructureMapGroupInput]] = None
-    name: Optional[str] = None
-    rule: Optional[L[StructureMapGroupRule]] = None
-    type_mode: Optional[Literal["none", "types", "type-and-types"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    extends: Optional[str] = Field(None, alias="extends", serialization_alias="extends")
+    input: Optional[L[StructureMapGroupInput]] = Field(None, alias="input", serialization_alias="input")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    rule: Optional[L[StructureMapGroupRule]] = Field(None, alias="rule", serialization_alias="rule")
+    type_mode: Optional[Literal["none", "types", "type-and-types"]] = Field(None, alias="typeMode", serialization_alias="typeMode")
 
 class StructureMapStructure(BackboneElement):
-    alias: Optional[str] = None
-    documentation: Optional[str] = None
-    mode: Optional[Literal["source", "queried", "target", "produced"]] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    alias: Optional[str] = Field(None, alias="alias", serialization_alias="alias")
+    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    mode: Optional[Literal["source", "queried", "target", "produced"]] = Field(None, alias="mode", serialization_alias="mode")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 
 class StructureMap(DomainResource):
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    experimental: Optional[bool] = None
-    group: Optional[L[StructureMapGroup]] = None
-    identifier: Optional[L[Identifier]] = None
-    import_: Optional[L[str]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    structure: Optional[L[StructureMapStructure]] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    group: Optional[L[StructureMapGroup]] = Field(None, alias="group", serialization_alias="group")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    import_: Optional[L[str]] = Field(None, alias="import", serialization_alias="import")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    structure: Optional[L[StructureMapStructure]] = Field(None, alias="structure", serialization_alias="structure")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

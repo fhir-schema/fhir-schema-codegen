@@ -6,17 +6,21 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class LinkageItem(BackboneElement):
-    resource: Optional[Reference] = None
-    type: Optional[Literal["source", "alternate", "historical"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    resource: Optional[Reference] = Field(None, alias="resource", serialization_alias="resource")
+    type: Optional[Literal["source", "alternate", "historical"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Linkage(DomainResource):
-    active: Optional[bool] = None
-    author: Optional[Reference] = None
-    item: Optional[L[LinkageItem]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    item: Optional[L[LinkageItem]] = Field(None, alias="item", serialization_alias="item")
 

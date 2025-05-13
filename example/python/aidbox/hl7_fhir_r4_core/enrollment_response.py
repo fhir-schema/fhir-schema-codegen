@@ -6,17 +6,19 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EnrollmentResponse(DomainResource):
-    created: Optional[str] = None
-    disposition: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    organization: Optional[Reference] = None
-    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = None
-    request: Optional[Reference] = None
-    request_provider: Optional[Reference] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
+    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = Field(None, alias="outcome", serialization_alias="outcome")
+    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
+    request_provider: Optional[Reference] = Field(None, alias="requestProvider", serialization_alias="requestProvider")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

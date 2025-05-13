@@ -6,43 +6,53 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceReferenceInformationGene(BackboneElement):
-    gene: Optional[CodeableConcept] = None
-    gene_sequence_origin: Optional[CodeableConcept] = None
-    source: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    gene: Optional[CodeableConcept] = Field(None, alias="gene", serialization_alias="gene")
+    gene_sequence_origin: Optional[CodeableConcept] = Field(None, alias="geneSequenceOrigin", serialization_alias="geneSequenceOrigin")
+    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
 
 class SubstanceReferenceInformationGeneElement(BackboneElement):
-    element: Optional[Identifier] = None
-    source: Optional[L[Reference]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    element: Optional[Identifier] = Field(None, alias="element", serialization_alias="element")
+    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstanceReferenceInformationClassification(BackboneElement):
-    classification: Optional[CodeableConcept] = None
-    domain: Optional[CodeableConcept] = None
-    source: Optional[L[Reference]] = None
-    subtype: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    classification: Optional[CodeableConcept] = Field(None, alias="classification", serialization_alias="classification")
+    domain: Optional[CodeableConcept] = Field(None, alias="domain", serialization_alias="domain")
+    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
+    subtype: Optional[L[CodeableConcept]] = Field(None, alias="subtype", serialization_alias="subtype")
 
 class SubstanceReferenceInformationTarget(BackboneElement):
-    amount_quantity: Optional[Quantity] = None
-    amount_range: Optional[Range] = None
-    amount_string: Optional[str] = None
-    amount_type: Optional[CodeableConcept] = None
-    interaction: Optional[CodeableConcept] = None
-    organism: Optional[CodeableConcept] = None
-    organism_type: Optional[CodeableConcept] = None
-    source: Optional[L[Reference]] = None
-    target: Optional[Identifier] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
+    amount_range: Optional[Range] = Field(None, alias="amountRange", serialization_alias="amountRange")
+    amount_string: Optional[str] = Field(None, alias="amountString", serialization_alias="amountString")
+    amount_type: Optional[CodeableConcept] = Field(None, alias="amountType", serialization_alias="amountType")
+    interaction: Optional[CodeableConcept] = Field(None, alias="interaction", serialization_alias="interaction")
+    organism: Optional[CodeableConcept] = Field(None, alias="organism", serialization_alias="organism")
+    organism_type: Optional[CodeableConcept] = Field(None, alias="organismType", serialization_alias="organismType")
+    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
+    target: Optional[Identifier] = Field(None, alias="target", serialization_alias="target")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class SubstanceReferenceInformation(DomainResource):
-    classification: Optional[L[SubstanceReferenceInformationClassification]] = None
-    comment: Optional[str] = None
-    gene: Optional[L[SubstanceReferenceInformationGene]] = None
-    gene_element: Optional[L[SubstanceReferenceInformationGeneElement]] = None
-    target: Optional[L[SubstanceReferenceInformationTarget]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    classification: Optional[L[SubstanceReferenceInformationClassification]] = Field(None, alias="classification", serialization_alias="classification")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    gene: Optional[L[SubstanceReferenceInformationGene]] = Field(None, alias="gene", serialization_alias="gene")
+    gene_element: Optional[L[SubstanceReferenceInformationGeneElement]] = Field(None, alias="geneElement", serialization_alias="geneElement")
+    target: Optional[L[SubstanceReferenceInformationTarget]] = Field(None, alias="target", serialization_alias="target")
 

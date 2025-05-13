@@ -6,12 +6,14 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .resource import Resource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class Binary(Resource):
-    content_type: Optional[str] = None
-    data: Optional[str] = None
-    security_context: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    content_type: Optional[str] = Field(None, alias="contentType", serialization_alias="contentType")
+    data: Optional[str] = Field(None, alias="data", serialization_alias="data")
+    security_context: Optional[Reference] = Field(None, alias="securityContext", serialization_alias="securityContext")
 

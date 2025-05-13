@@ -6,26 +6,30 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RelatedPersonCommunication(BackboneElement):
-    language: Optional[CodeableConcept] = None
-    preferred: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
+    preferred: Optional[bool] = Field(None, alias="preferred", serialization_alias="preferred")
 
 
 class RelatedPerson(DomainResource):
-    active: Optional[bool] = None
-    address: Optional[L[Address]] = None
-    birth_date: Optional[str] = None
-    communication: Optional[L[RelatedPersonCommunication]] = None
-    gender: Optional[Literal["male", "female", "other", "unknown"]] = None
-    identifier: Optional[L[Identifier]] = None
-    name: Optional[L[HumanName]] = None
-    patient: Optional[Reference] = None
-    period: Optional[Period] = None
-    photo: Optional[L[Attachment]] = None
-    relationship: Optional[L[CodeableConcept]] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")
+    birth_date: Optional[str] = Field(None, alias="birthDate", serialization_alias="birthDate")
+    communication: Optional[L[RelatedPersonCommunication]] = Field(None, alias="communication", serialization_alias="communication")
+    gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    name: Optional[L[HumanName]] = Field(None, alias="name", serialization_alias="name")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    photo: Optional[L[Attachment]] = Field(None, alias="photo", serialization_alias="photo")
+    relationship: Optional[L[CodeableConcept]] = Field(None, alias="relationship", serialization_alias="relationship")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 

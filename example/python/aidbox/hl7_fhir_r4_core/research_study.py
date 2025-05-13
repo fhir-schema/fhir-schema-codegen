@@ -6,43 +6,49 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ResearchStudyArm(BackboneElement):
-    description: Optional[str] = None
-    name: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ResearchStudyObjective(BackboneElement):
-    name: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class ResearchStudy(DomainResource):
-    arm: Optional[L[ResearchStudyArm]] = None
-    category: Optional[L[CodeableConcept]] = None
-    condition: Optional[L[CodeableConcept]] = None
-    contact: Optional[L[ContactDetail]] = None
-    description: Optional[str] = None
-    enrollment: Optional[L[Reference]] = None
-    focus: Optional[L[CodeableConcept]] = None
-    identifier: Optional[L[Identifier]] = None
-    keyword: Optional[L[CodeableConcept]] = None
-    location: Optional[L[CodeableConcept]] = None
-    note: Optional[L[Annotation]] = None
-    objective: Optional[L[ResearchStudyObjective]] = None
-    part_of: Optional[L[Reference]] = None
-    period: Optional[Period] = None
-    phase: Optional[CodeableConcept] = None
-    primary_purpose_type: Optional[CodeableConcept] = None
-    principal_investigator: Optional[Reference] = None
-    protocol: Optional[L[Reference]] = None
-    reason_stopped: Optional[CodeableConcept] = None
-    related_artifact: Optional[L[RelatedArtifact]] = None
-    site: Optional[L[Reference]] = None
-    sponsor: Optional[Reference] = None
-    status: Optional[Literal["active", "administratively-completed", "approved", "closed-to-accrual", "closed-to-accrual-and-intervention", "completed", "disapproved", "in-review", "temporarily-closed-to-accrual", "temporarily-closed-to-accrual-and-intervention", "withdrawn"]] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    arm: Optional[L[ResearchStudyArm]] = Field(None, alias="arm", serialization_alias="arm")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    condition: Optional[L[CodeableConcept]] = Field(None, alias="condition", serialization_alias="condition")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    enrollment: Optional[L[Reference]] = Field(None, alias="enrollment", serialization_alias="enrollment")
+    focus: Optional[L[CodeableConcept]] = Field(None, alias="focus", serialization_alias="focus")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    keyword: Optional[L[CodeableConcept]] = Field(None, alias="keyword", serialization_alias="keyword")
+    location: Optional[L[CodeableConcept]] = Field(None, alias="location", serialization_alias="location")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    objective: Optional[L[ResearchStudyObjective]] = Field(None, alias="objective", serialization_alias="objective")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    phase: Optional[CodeableConcept] = Field(None, alias="phase", serialization_alias="phase")
+    primary_purpose_type: Optional[CodeableConcept] = Field(None, alias="primaryPurposeType", serialization_alias="primaryPurposeType")
+    principal_investigator: Optional[Reference] = Field(None, alias="principalInvestigator", serialization_alias="principalInvestigator")
+    protocol: Optional[L[Reference]] = Field(None, alias="protocol", serialization_alias="protocol")
+    reason_stopped: Optional[CodeableConcept] = Field(None, alias="reasonStopped", serialization_alias="reasonStopped")
+    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    site: Optional[L[Reference]] = Field(None, alias="site", serialization_alias="site")
+    sponsor: Optional[Reference] = Field(None, alias="sponsor", serialization_alias="sponsor")
+    status: Optional[Literal["active", "administratively-completed", "approved", "closed-to-accrual", "closed-to-accrual-and-intervention", "completed", "disapproved", "in-review", "temporarily-closed-to-accrual", "temporarily-closed-to-accrual-and-intervention", "withdrawn"]] = Field(None, alias="status", serialization_alias="status")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 

@@ -6,47 +6,49 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ServiceRequest(DomainResource):
-    as_needed_boolean: Optional[bool] = None
-    as_needed_codeable_concept: Optional[CodeableConcept] = None
-    authored_on: Optional[str] = None
-    based_on: Optional[L[Reference]] = None
-    body_site: Optional[L[CodeableConcept]] = None
-    category: Optional[L[CodeableConcept]] = None
-    code: Optional[CodeableConcept] = None
-    do_not_perform: Optional[bool] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    insurance: Optional[L[Reference]] = None
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = None
-    location_code: Optional[L[CodeableConcept]] = None
-    location_reference: Optional[L[Reference]] = None
-    note: Optional[L[Annotation]] = None
-    occurrence_date_time: Optional[str] = None
-    occurrence_period: Optional[Period] = None
-    occurrence_timing: Optional[Timing] = None
-    order_detail: Optional[L[CodeableConcept]] = None
-    patient_instruction: Optional[str] = None
-    performer: Optional[L[Reference]] = None
-    performer_type: Optional[CodeableConcept] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    quantity_quantity: Optional[Quantity] = None
-    quantity_range: Optional[Range] = None
-    quantity_ratio: Optional[Ratio] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    relevant_history: Optional[L[Reference]] = None
-    replaces: Optional[L[Reference]] = None
-    requester: Optional[Reference] = None
-    requisition: Optional[Identifier] = None
-    specimen: Optional[L[Reference]] = None
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
-    supporting_info: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    as_needed_boolean: Optional[bool] = Field(None, alias="asNeededBoolean", serialization_alias="asNeededBoolean")
+    as_needed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="asNeededCodeableConcept", serialization_alias="asNeededCodeableConcept")
+    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: Optional[L[CodeableConcept]] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    do_not_perform: Optional[bool] = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    insurance: Optional[L[Reference]] = Field(None, alias="insurance", serialization_alias="insurance")
+    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    location_code: Optional[L[CodeableConcept]] = Field(None, alias="locationCode", serialization_alias="locationCode")
+    location_reference: Optional[L[Reference]] = Field(None, alias="locationReference", serialization_alias="locationReference")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    occurrence_timing: Optional[Timing] = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
+    order_detail: Optional[L[CodeableConcept]] = Field(None, alias="orderDetail", serialization_alias="orderDetail")
+    patient_instruction: Optional[str] = Field(None, alias="patientInstruction", serialization_alias="patientInstruction")
+    performer: Optional[L[Reference]] = Field(None, alias="performer", serialization_alias="performer")
+    performer_type: Optional[CodeableConcept] = Field(None, alias="performerType", serialization_alias="performerType")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    quantity_quantity: Optional[Quantity] = Field(None, alias="quantityQuantity", serialization_alias="quantityQuantity")
+    quantity_range: Optional[Range] = Field(None, alias="quantityRange", serialization_alias="quantityRange")
+    quantity_ratio: Optional[Ratio] = Field(None, alias="quantityRatio", serialization_alias="quantityRatio")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    relevant_history: Optional[L[Reference]] = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
+    replaces: Optional[L[Reference]] = Field(None, alias="replaces", serialization_alias="replaces")
+    requester: Optional[Reference] = Field(None, alias="requester", serialization_alias="requester")
+    requisition: Optional[Identifier] = Field(None, alias="requisition", serialization_alias="requisition")
+    specimen: Optional[L[Reference]] = Field(None, alias="specimen", serialization_alias="specimen")
+    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    supporting_info: Optional[L[Reference]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
 

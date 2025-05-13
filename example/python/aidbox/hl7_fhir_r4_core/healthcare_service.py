@@ -6,48 +6,56 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class HealthcareServiceAvailableTime(BackboneElement):
-    all_day: Optional[bool] = None
-    available_end_time: Optional[str] = None
-    available_start_time: Optional[str] = None
-    days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    all_day: Optional[bool] = Field(None, alias="allDay", serialization_alias="allDay")
+    available_end_time: Optional[str] = Field(None, alias="availableEndTime", serialization_alias="availableEndTime")
+    available_start_time: Optional[str] = Field(None, alias="availableStartTime", serialization_alias="availableStartTime")
+    days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = Field(None, alias="daysOfWeek", serialization_alias="daysOfWeek")
 
 class HealthcareServiceNotAvailable(BackboneElement):
-    description: Optional[str] = None
-    during: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    during: Optional[Period] = Field(None, alias="during", serialization_alias="during")
 
 class HealthcareServiceEligibility(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    comment: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
 
 
 class HealthcareService(DomainResource):
-    active: Optional[bool] = None
-    appointment_required: Optional[bool] = None
-    availability_exceptions: Optional[str] = None
-    available_time: Optional[L[HealthcareServiceAvailableTime]] = None
-    category: Optional[L[CodeableConcept]] = None
-    characteristic: Optional[L[CodeableConcept]] = None
-    comment: Optional[str] = None
-    communication: Optional[L[CodeableConcept]] = None
-    coverage_area: Optional[L[Reference]] = None
-    eligibility: Optional[L[HealthcareServiceEligibility]] = None
-    endpoint: Optional[L[Reference]] = None
-    extra_details: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    location: Optional[L[Reference]] = None
-    name: Optional[str] = None
-    not_available: Optional[L[HealthcareServiceNotAvailable]] = None
-    photo: Optional[Attachment] = None
-    program: Optional[L[CodeableConcept]] = None
-    provided_by: Optional[Reference] = None
-    referral_method: Optional[L[CodeableConcept]] = None
-    service_provision_code: Optional[L[CodeableConcept]] = None
-    specialty: Optional[L[CodeableConcept]] = None
-    telecom: Optional[L[ContactPoint]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    appointment_required: Optional[bool] = Field(None, alias="appointmentRequired", serialization_alias="appointmentRequired")
+    availability_exceptions: Optional[str] = Field(None, alias="availabilityExceptions", serialization_alias="availabilityExceptions")
+    available_time: Optional[L[HealthcareServiceAvailableTime]] = Field(None, alias="availableTime", serialization_alias="availableTime")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    characteristic: Optional[L[CodeableConcept]] = Field(None, alias="characteristic", serialization_alias="characteristic")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    communication: Optional[L[CodeableConcept]] = Field(None, alias="communication", serialization_alias="communication")
+    coverage_area: Optional[L[Reference]] = Field(None, alias="coverageArea", serialization_alias="coverageArea")
+    eligibility: Optional[L[HealthcareServiceEligibility]] = Field(None, alias="eligibility", serialization_alias="eligibility")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    extra_details: Optional[str] = Field(None, alias="extraDetails", serialization_alias="extraDetails")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Optional[L[Reference]] = Field(None, alias="location", serialization_alias="location")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    not_available: Optional[L[HealthcareServiceNotAvailable]] = Field(None, alias="notAvailable", serialization_alias="notAvailable")
+    photo: Optional[Attachment] = Field(None, alias="photo", serialization_alias="photo")
+    program: Optional[L[CodeableConcept]] = Field(None, alias="program", serialization_alias="program")
+    provided_by: Optional[Reference] = Field(None, alias="providedBy", serialization_alias="providedBy")
+    referral_method: Optional[L[CodeableConcept]] = Field(None, alias="referralMethod", serialization_alias="referralMethod")
+    service_provision_code: Optional[L[CodeableConcept]] = Field(None, alias="serviceProvisionCode", serialization_alias="serviceProvisionCode")
+    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 

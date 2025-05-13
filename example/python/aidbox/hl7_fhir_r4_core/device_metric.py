@@ -6,25 +6,29 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceMetricCalibration(BackboneElement):
-    state: Optional[Literal["not-calibrated", "calibration-required", "calibrated", "unspecified"]] = None
-    time: Optional[str] = None
-    type: Optional[Literal["unspecified", "offset", "gain", "two-point"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    state: Optional[Literal["not-calibrated", "calibration-required", "calibrated", "unspecified"]] = Field(None, alias="state", serialization_alias="state")
+    time: Optional[str] = Field(None, alias="time", serialization_alias="time")
+    type: Optional[Literal["unspecified", "offset", "gain", "two-point"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class DeviceMetric(DomainResource):
-    calibration: Optional[L[DeviceMetricCalibration]] = None
-    category: Optional[Literal["measurement", "setting", "calculation", "unspecified"]] = None
-    color: Optional[Literal["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]] = None
-    identifier: Optional[L[Identifier]] = None
-    measurement_period: Optional[Timing] = None
-    operational_status: Optional[Literal["on", "off", "standby", "entered-in-error"]] = None
-    parent: Optional[Reference] = None
-    source: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
-    unit: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    calibration: Optional[L[DeviceMetricCalibration]] = Field(None, alias="calibration", serialization_alias="calibration")
+    category: Optional[Literal["measurement", "setting", "calculation", "unspecified"]] = Field(None, alias="category", serialization_alias="category")
+    color: Optional[Literal["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]] = Field(None, alias="color", serialization_alias="color")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    measurement_period: Optional[Timing] = Field(None, alias="measurementPeriod", serialization_alias="measurementPeriod")
+    operational_status: Optional[Literal["on", "off", "standby", "entered-in-error"]] = Field(None, alias="operationalStatus", serialization_alias="operationalStatus")
+    parent: Optional[Reference] = Field(None, alias="parent", serialization_alias="parent")
+    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 

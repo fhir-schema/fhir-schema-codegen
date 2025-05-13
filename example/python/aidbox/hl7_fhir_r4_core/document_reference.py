@@ -6,43 +6,51 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DocumentReferenceContent(BackboneElement):
-    attachment: Optional[Attachment] = None
-    format: Optional[Coding] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    attachment: Optional[Attachment] = Field(None, alias="attachment", serialization_alias="attachment")
+    format: Optional[Coding] = Field(None, alias="format", serialization_alias="format")
 
 class DocumentReferenceRelatesTo(BackboneElement):
-    code: Optional[Literal["replaces", "transforms", "signs", "appends"]] = None
-    target: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[Literal["replaces", "transforms", "signs", "appends"]] = Field(None, alias="code", serialization_alias="code")
+    target: Optional[Reference] = Field(None, alias="target", serialization_alias="target")
 
 class DocumentReferenceContext(BackboneElement):
-    encounter: Optional[L[Reference]] = None
-    event: Optional[L[CodeableConcept]] = None
-    facility_type: Optional[CodeableConcept] = None
-    period: Optional[Period] = None
-    practice_setting: Optional[CodeableConcept] = None
-    related: Optional[L[Reference]] = None
-    source_patient_info: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    encounter: Optional[L[Reference]] = Field(None, alias="encounter", serialization_alias="encounter")
+    event: Optional[L[CodeableConcept]] = Field(None, alias="event", serialization_alias="event")
+    facility_type: Optional[CodeableConcept] = Field(None, alias="facilityType", serialization_alias="facilityType")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    practice_setting: Optional[CodeableConcept] = Field(None, alias="practiceSetting", serialization_alias="practiceSetting")
+    related: Optional[L[Reference]] = Field(None, alias="related", serialization_alias="related")
+    source_patient_info: Optional[Reference] = Field(None, alias="sourcePatientInfo", serialization_alias="sourcePatientInfo")
 
 
 class DocumentReference(DomainResource):
-    authenticator: Optional[Reference] = None
-    author: Optional[L[Reference]] = None
-    category: Optional[L[CodeableConcept]] = None
-    content: Optional[L[DocumentReferenceContent]] = None
-    context: Optional[DocumentReferenceContext] = None
-    custodian: Optional[Reference] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    doc_status: Optional[Literal["preliminary", "final", "amended", "entered-in-error"]] = None
-    identifier: Optional[L[Identifier]] = None
-    master_identifier: Optional[Identifier] = None
-    relates_to: Optional[L[DocumentReferenceRelatesTo]] = None
-    security_label: Optional[L[CodeableConcept]] = None
-    status: Optional[Literal["current", "superseded", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authenticator: Optional[Reference] = Field(None, alias="authenticator", serialization_alias="authenticator")
+    author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    content: Optional[L[DocumentReferenceContent]] = Field(None, alias="content", serialization_alias="content")
+    context: Optional[DocumentReferenceContext] = Field(None, alias="context", serialization_alias="context")
+    custodian: Optional[Reference] = Field(None, alias="custodian", serialization_alias="custodian")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    doc_status: Optional[Literal["preliminary", "final", "amended", "entered-in-error"]] = Field(None, alias="docStatus", serialization_alias="docStatus")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    master_identifier: Optional[Identifier] = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
+    relates_to: Optional[L[DocumentReferenceRelatesTo]] = Field(None, alias="relatesTo", serialization_alias="relatesTo")
+    security_label: Optional[L[CodeableConcept]] = Field(None, alias="securityLabel", serialization_alias="securityLabel")
+    status: Optional[Literal["current", "superseded", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

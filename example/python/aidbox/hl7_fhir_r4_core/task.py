@@ -6,152 +6,160 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class TaskRestriction(BackboneElement):
-    period: Optional[Period] = None
-    recipient: Optional[L[Reference]] = None
-    repetitions: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    recipient: Optional[L[Reference]] = Field(None, alias="recipient", serialization_alias="recipient")
+    repetitions: Optional[PositiveInt] = Field(None, alias="repetitions", serialization_alias="repetitions")
 
 class TaskOutput(BackboneElement):
-    type: Optional[CodeableConcept] = None
-    value_address: Optional[Address] = None
-    value_age: Optional[Age] = None
-    value_annotation: Optional[Annotation] = None
-    value_attachment: Optional[Attachment] = None
-    value_base64binary: Optional[str] = None
-    value_boolean: Optional[bool] = None
-    value_canonical: Optional[str] = None
-    value_code: Optional[str] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_coding: Optional[Coding] = None
-    value_contact_detail: Optional[ContactDetail] = None
-    value_contact_point: Optional[ContactPoint] = None
-    value_contributor: Optional[Contributor] = None
-    value_count: Optional[Count] = None
-    value_data_requirement: Optional[DataRequirement] = None
-    value_date: Optional[str] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_distance: Optional[Distance] = None
-    value_dosage: Optional[Dosage] = None
-    value_duration: Optional[Duration] = None
-    value_expression: Optional[Expression] = None
-    value_human_name: Optional[HumanName] = None
-    value_id: Optional[str] = None
-    value_identifier: Optional[Identifier] = None
-    value_instant: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_markdown: Optional[str] = None
-    value_meta: Optional[Meta] = None
-    value_money: Optional[Money] = None
-    value_oid: Optional[str] = None
-    value_parameter_definition: Optional[ParameterDefinition] = None
-    value_period: Optional[Period] = None
-    value_positive_int: Optional[PositiveInt] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
-    value_ratio: Optional[Ratio] = None
-    value_reference: Optional[Reference] = None
-    value_related_artifact: Optional[RelatedArtifact] = None
-    value_sampled_data: Optional[SampledData] = None
-    value_signature: Optional[Signature] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
-    value_timing: Optional[Timing] = None
-    value_trigger_definition: Optional[TriggerDefinition] = None
-    value_unsigned_int: Optional[int] = None
-    value_uri: Optional[str] = None
-    value_url: Optional[str] = None
-    value_usage_context: Optional[UsageContext] = None
-    value_uuid: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
+    value_age: Optional[Age] = Field(None, alias="valueAge", serialization_alias="valueAge")
+    value_annotation: Optional[Annotation] = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_base64binary: Optional[str] = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_canonical: Optional[str] = Field(None, alias="valueCanonical", serialization_alias="valueCanonical")
+    value_code: Optional[str] = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_contact_detail: Optional[ContactDetail] = Field(None, alias="valueContactDetail", serialization_alias="valueContactDetail")
+    value_contact_point: Optional[ContactPoint] = Field(None, alias="valueContactPoint", serialization_alias="valueContactPoint")
+    value_contributor: Optional[Contributor] = Field(None, alias="valueContributor", serialization_alias="valueContributor")
+    value_count: Optional[Count] = Field(None, alias="valueCount", serialization_alias="valueCount")
+    value_data_requirement: Optional[DataRequirement] = Field(None, alias="valueDataRequirement", serialization_alias="valueDataRequirement")
+    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_distance: Optional[Distance] = Field(None, alias="valueDistance", serialization_alias="valueDistance")
+    value_dosage: Optional[Dosage] = Field(None, alias="valueDosage", serialization_alias="valueDosage")
+    value_duration: Optional[Duration] = Field(None, alias="valueDuration", serialization_alias="valueDuration")
+    value_expression: Optional[Expression] = Field(None, alias="valueExpression", serialization_alias="valueExpression")
+    value_human_name: Optional[HumanName] = Field(None, alias="valueHumanName", serialization_alias="valueHumanName")
+    value_id: Optional[str] = Field(None, alias="valueId", serialization_alias="valueId")
+    value_identifier: Optional[Identifier] = Field(None, alias="valueIdentifier", serialization_alias="valueIdentifier")
+    value_instant: Optional[str] = Field(None, alias="valueInstant", serialization_alias="valueInstant")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_markdown: Optional[str] = Field(None, alias="valueMarkdown", serialization_alias="valueMarkdown")
+    value_meta: Optional[Meta] = Field(None, alias="valueMeta", serialization_alias="valueMeta")
+    value_money: Optional[Money] = Field(None, alias="valueMoney", serialization_alias="valueMoney")
+    value_oid: Optional[str] = Field(None, alias="valueOid", serialization_alias="valueOid")
+    value_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="valueParameterDefinition", serialization_alias="valueParameterDefinition")
+    value_period: Optional[Period] = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+    value_positive_int: Optional[PositiveInt] = Field(None, alias="valuePositiveInt", serialization_alias="valuePositiveInt")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_ratio: Optional[Ratio] = Field(None, alias="valueRatio", serialization_alias="valueRatio")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_related_artifact: Optional[RelatedArtifact] = Field(None, alias="valueRelatedArtifact", serialization_alias="valueRelatedArtifact")
+    value_sampled_data: Optional[SampledData] = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
+    value_signature: Optional[Signature] = Field(None, alias="valueSignature", serialization_alias="valueSignature")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_timing: Optional[Timing] = Field(None, alias="valueTiming", serialization_alias="valueTiming")
+    value_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="valueTriggerDefinition", serialization_alias="valueTriggerDefinition")
+    value_unsigned_int: Optional[int] = Field(None, alias="valueUnsignedInt", serialization_alias="valueUnsignedInt")
+    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
+    value_url: Optional[str] = Field(None, alias="valueUrl", serialization_alias="valueUrl")
+    value_usage_context: Optional[UsageContext] = Field(None, alias="valueUsageContext", serialization_alias="valueUsageContext")
+    value_uuid: Optional[str] = Field(None, alias="valueUuid", serialization_alias="valueUuid")
 
 class TaskInput(BackboneElement):
-    type: Optional[CodeableConcept] = None
-    value_address: Optional[Address] = None
-    value_age: Optional[Age] = None
-    value_annotation: Optional[Annotation] = None
-    value_attachment: Optional[Attachment] = None
-    value_base64binary: Optional[str] = None
-    value_boolean: Optional[bool] = None
-    value_canonical: Optional[str] = None
-    value_code: Optional[str] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_coding: Optional[Coding] = None
-    value_contact_detail: Optional[ContactDetail] = None
-    value_contact_point: Optional[ContactPoint] = None
-    value_contributor: Optional[Contributor] = None
-    value_count: Optional[Count] = None
-    value_data_requirement: Optional[DataRequirement] = None
-    value_date: Optional[str] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_distance: Optional[Distance] = None
-    value_dosage: Optional[Dosage] = None
-    value_duration: Optional[Duration] = None
-    value_expression: Optional[Expression] = None
-    value_human_name: Optional[HumanName] = None
-    value_id: Optional[str] = None
-    value_identifier: Optional[Identifier] = None
-    value_instant: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_markdown: Optional[str] = None
-    value_meta: Optional[Meta] = None
-    value_money: Optional[Money] = None
-    value_oid: Optional[str] = None
-    value_parameter_definition: Optional[ParameterDefinition] = None
-    value_period: Optional[Period] = None
-    value_positive_int: Optional[PositiveInt] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
-    value_ratio: Optional[Ratio] = None
-    value_reference: Optional[Reference] = None
-    value_related_artifact: Optional[RelatedArtifact] = None
-    value_sampled_data: Optional[SampledData] = None
-    value_signature: Optional[Signature] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
-    value_timing: Optional[Timing] = None
-    value_trigger_definition: Optional[TriggerDefinition] = None
-    value_unsigned_int: Optional[int] = None
-    value_uri: Optional[str] = None
-    value_url: Optional[str] = None
-    value_usage_context: Optional[UsageContext] = None
-    value_uuid: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
+    value_age: Optional[Age] = Field(None, alias="valueAge", serialization_alias="valueAge")
+    value_annotation: Optional[Annotation] = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_base64binary: Optional[str] = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_canonical: Optional[str] = Field(None, alias="valueCanonical", serialization_alias="valueCanonical")
+    value_code: Optional[str] = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_contact_detail: Optional[ContactDetail] = Field(None, alias="valueContactDetail", serialization_alias="valueContactDetail")
+    value_contact_point: Optional[ContactPoint] = Field(None, alias="valueContactPoint", serialization_alias="valueContactPoint")
+    value_contributor: Optional[Contributor] = Field(None, alias="valueContributor", serialization_alias="valueContributor")
+    value_count: Optional[Count] = Field(None, alias="valueCount", serialization_alias="valueCount")
+    value_data_requirement: Optional[DataRequirement] = Field(None, alias="valueDataRequirement", serialization_alias="valueDataRequirement")
+    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_distance: Optional[Distance] = Field(None, alias="valueDistance", serialization_alias="valueDistance")
+    value_dosage: Optional[Dosage] = Field(None, alias="valueDosage", serialization_alias="valueDosage")
+    value_duration: Optional[Duration] = Field(None, alias="valueDuration", serialization_alias="valueDuration")
+    value_expression: Optional[Expression] = Field(None, alias="valueExpression", serialization_alias="valueExpression")
+    value_human_name: Optional[HumanName] = Field(None, alias="valueHumanName", serialization_alias="valueHumanName")
+    value_id: Optional[str] = Field(None, alias="valueId", serialization_alias="valueId")
+    value_identifier: Optional[Identifier] = Field(None, alias="valueIdentifier", serialization_alias="valueIdentifier")
+    value_instant: Optional[str] = Field(None, alias="valueInstant", serialization_alias="valueInstant")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_markdown: Optional[str] = Field(None, alias="valueMarkdown", serialization_alias="valueMarkdown")
+    value_meta: Optional[Meta] = Field(None, alias="valueMeta", serialization_alias="valueMeta")
+    value_money: Optional[Money] = Field(None, alias="valueMoney", serialization_alias="valueMoney")
+    value_oid: Optional[str] = Field(None, alias="valueOid", serialization_alias="valueOid")
+    value_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="valueParameterDefinition", serialization_alias="valueParameterDefinition")
+    value_period: Optional[Period] = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+    value_positive_int: Optional[PositiveInt] = Field(None, alias="valuePositiveInt", serialization_alias="valuePositiveInt")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_ratio: Optional[Ratio] = Field(None, alias="valueRatio", serialization_alias="valueRatio")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_related_artifact: Optional[RelatedArtifact] = Field(None, alias="valueRelatedArtifact", serialization_alias="valueRelatedArtifact")
+    value_sampled_data: Optional[SampledData] = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
+    value_signature: Optional[Signature] = Field(None, alias="valueSignature", serialization_alias="valueSignature")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_timing: Optional[Timing] = Field(None, alias="valueTiming", serialization_alias="valueTiming")
+    value_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="valueTriggerDefinition", serialization_alias="valueTriggerDefinition")
+    value_unsigned_int: Optional[int] = Field(None, alias="valueUnsignedInt", serialization_alias="valueUnsignedInt")
+    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
+    value_url: Optional[str] = Field(None, alias="valueUrl", serialization_alias="valueUrl")
+    value_usage_context: Optional[UsageContext] = Field(None, alias="valueUsageContext", serialization_alias="valueUsageContext")
+    value_uuid: Optional[str] = Field(None, alias="valueUuid", serialization_alias="valueUuid")
 
 
 class Task(DomainResource):
-    authored_on: Optional[str] = None
-    based_on: Optional[L[Reference]] = None
-    business_status: Optional[CodeableConcept] = None
-    code: Optional[CodeableConcept] = None
-    description: Optional[str] = None
-    encounter: Optional[Reference] = None
-    execution_period: Optional[Period] = None
-    focus: Optional[Reference] = None
-    for_: Optional[Reference] = None
-    group_identifier: Optional[Identifier] = None
-    identifier: Optional[L[Identifier]] = None
-    input: Optional[L[TaskInput]] = None
-    instantiates_canonical: Optional[str] = None
-    instantiates_uri: Optional[str] = None
-    insurance: Optional[L[Reference]] = None
-    intent: Optional[Literal["unknown", "proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option", "proposal", "plan", "directive", "order", "option"]] = None
-    last_modified: Optional[str] = None
-    location: Optional[Reference] = None
-    note: Optional[L[Annotation]] = None
-    output: Optional[L[TaskOutput]] = None
-    owner: Optional[Reference] = None
-    part_of: Optional[L[Reference]] = None
-    performer_type: Optional[L[CodeableConcept]] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    reason_code: Optional[CodeableConcept] = None
-    reason_reference: Optional[Reference] = None
-    relevant_history: Optional[L[Reference]] = None
-    requester: Optional[Reference] = None
-    restriction: Optional[TaskRestriction] = None
-    status: Optional[Literal["draft", "requested", "received", "accepted", "rejected", "ready", "cancelled", "in-progress", "on-hold", "failed", "completed", "entered-in-error"]] = None
-    status_reason: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    business_status: Optional[CodeableConcept] = Field(None, alias="businessStatus", serialization_alias="businessStatus")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    execution_period: Optional[Period] = Field(None, alias="executionPeriod", serialization_alias="executionPeriod")
+    focus: Optional[Reference] = Field(None, alias="focus", serialization_alias="focus")
+    for_: Optional[Reference] = Field(None, alias="for", serialization_alias="for")
+    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    input: Optional[L[TaskInput]] = Field(None, alias="input", serialization_alias="input")
+    instantiates_canonical: Optional[str] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[str] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    insurance: Optional[L[Reference]] = Field(None, alias="insurance", serialization_alias="insurance")
+    intent: Optional[Literal["unknown", "proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option", "proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    last_modified: Optional[str] = Field(None, alias="lastModified", serialization_alias="lastModified")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    output: Optional[L[TaskOutput]] = Field(None, alias="output", serialization_alias="output")
+    owner: Optional[Reference] = Field(None, alias="owner", serialization_alias="owner")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    performer_type: Optional[L[CodeableConcept]] = Field(None, alias="performerType", serialization_alias="performerType")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    reason_code: Optional[CodeableConcept] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[Reference] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    relevant_history: Optional[L[Reference]] = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
+    requester: Optional[Reference] = Field(None, alias="requester", serialization_alias="requester")
+    restriction: Optional[TaskRestriction] = Field(None, alias="restriction", serialization_alias="restriction")
+    status: Optional[Literal["draft", "requested", "received", "accepted", "rejected", "ready", "cancelled", "in-progress", "on-hold", "failed", "completed", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
 

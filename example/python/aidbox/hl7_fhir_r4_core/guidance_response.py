@@ -6,26 +6,28 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class GuidanceResponse(DomainResource):
-    data_requirement: Optional[L[DataRequirement]] = None
-    encounter: Optional[Reference] = None
-    evaluation_message: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    module_canonical: Optional[str] = None
-    module_codeable_concept: Optional[CodeableConcept] = None
-    module_uri: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    occurrence_date_time: Optional[str] = None
-    output_parameters: Optional[Reference] = None
-    performer: Optional[Reference] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    request_identifier: Optional[Identifier] = None
-    result: Optional[Reference] = None
-    status: Optional[Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    data_requirement: Optional[L[DataRequirement]] = Field(None, alias="dataRequirement", serialization_alias="dataRequirement")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    evaluation_message: Optional[L[Reference]] = Field(None, alias="evaluationMessage", serialization_alias="evaluationMessage")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    module_canonical: Optional[str] = Field(None, alias="moduleCanonical", serialization_alias="moduleCanonical")
+    module_codeable_concept: Optional[CodeableConcept] = Field(None, alias="moduleCodeableConcept", serialization_alias="moduleCodeableConcept")
+    module_uri: Optional[str] = Field(None, alias="moduleUri", serialization_alias="moduleUri")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    output_parameters: Optional[Reference] = Field(None, alias="outputParameters", serialization_alias="outputParameters")
+    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    request_identifier: Optional[Identifier] = Field(None, alias="requestIdentifier", serialization_alias="requestIdentifier")
+    result: Optional[Reference] = Field(None, alias="result", serialization_alias="result")
+    status: Optional[Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

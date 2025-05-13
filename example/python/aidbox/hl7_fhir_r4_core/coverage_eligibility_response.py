@@ -6,60 +6,70 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CoverageEligibilityResponseInsuranceItemBenefit(BackboneElement):
-    allowed_money: Optional[Money] = None
-    allowed_string: Optional[str] = None
-    allowed_unsigned_int: Optional[int] = None
-    type: Optional[CodeableConcept] = None
-    used_money: Optional[Money] = None
-    used_string: Optional[str] = None
-    used_unsigned_int: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    allowed_money: Optional[Money] = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
+    allowed_string: Optional[str] = Field(None, alias="allowedString", serialization_alias="allowedString")
+    allowed_unsigned_int: Optional[int] = Field(None, alias="allowedUnsignedInt", serialization_alias="allowedUnsignedInt")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    used_money: Optional[Money] = Field(None, alias="usedMoney", serialization_alias="usedMoney")
+    used_string: Optional[str] = Field(None, alias="usedString", serialization_alias="usedString")
+    used_unsigned_int: Optional[int] = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
 
 class CoverageEligibilityResponseInsuranceItem(BackboneElement):
-    authorization_required: Optional[bool] = None
-    authorization_supporting: Optional[L[CodeableConcept]] = None
-    authorization_url: Optional[str] = None
-    benefit: Optional[L[CoverageEligibilityResponseInsuranceItemBenefit]] = None
-    category: Optional[CodeableConcept] = None
-    description: Optional[str] = None
-    excluded: Optional[bool] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    name: Optional[str] = None
-    network: Optional[CodeableConcept] = None
-    product_or_service: Optional[CodeableConcept] = None
-    provider: Optional[Reference] = None
-    term: Optional[CodeableConcept] = None
-    unit: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authorization_required: Optional[bool] = Field(None, alias="authorizationRequired", serialization_alias="authorizationRequired")
+    authorization_supporting: Optional[L[CodeableConcept]] = Field(None, alias="authorizationSupporting", serialization_alias="authorizationSupporting")
+    authorization_url: Optional[str] = Field(None, alias="authorizationUrl", serialization_alias="authorizationUrl")
+    benefit: Optional[L[CoverageEligibilityResponseInsuranceItemBenefit]] = Field(None, alias="benefit", serialization_alias="benefit")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    excluded: Optional[bool] = Field(None, alias="excluded", serialization_alias="excluded")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    network: Optional[CodeableConcept] = Field(None, alias="network", serialization_alias="network")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    term: Optional[CodeableConcept] = Field(None, alias="term", serialization_alias="term")
+    unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 
 class CoverageEligibilityResponseInsurance(BackboneElement):
-    benefit_period: Optional[Period] = None
-    coverage: Optional[Reference] = None
-    inforce: Optional[bool] = None
-    item: Optional[L[CoverageEligibilityResponseInsuranceItem]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    benefit_period: Optional[Period] = Field(None, alias="benefitPeriod", serialization_alias="benefitPeriod")
+    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
+    inforce: Optional[bool] = Field(None, alias="inforce", serialization_alias="inforce")
+    item: Optional[L[CoverageEligibilityResponseInsuranceItem]] = Field(None, alias="item", serialization_alias="item")
 
 class CoverageEligibilityResponseError(BackboneElement):
-    code: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
 
 
 class CoverageEligibilityResponse(DomainResource):
-    created: Optional[str] = None
-    disposition: Optional[str] = None
-    error: Optional[L[CoverageEligibilityResponseError]] = None
-    form: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    insurance: Optional[L[CoverageEligibilityResponseInsurance]] = None
-    insurer: Optional[Reference] = None
-    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = None
-    patient: Optional[Reference] = None
-    pre_auth_ref: Optional[str] = None
-    purpose: Optional[L[Literal["auth-requirements", "benefits", "discovery", "validation"]]] = None
-    request: Optional[Reference] = None
-    requestor: Optional[Reference] = None
-    serviced_date: Optional[str] = None
-    serviced_period: Optional[Period] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")
+    error: Optional[L[CoverageEligibilityResponseError]] = Field(None, alias="error", serialization_alias="error")
+    form: Optional[CodeableConcept] = Field(None, alias="form", serialization_alias="form")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    insurance: Optional[L[CoverageEligibilityResponseInsurance]] = Field(None, alias="insurance", serialization_alias="insurance")
+    insurer: Optional[Reference] = Field(None, alias="insurer", serialization_alias="insurer")
+    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = Field(None, alias="outcome", serialization_alias="outcome")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    pre_auth_ref: Optional[str] = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
+    purpose: Optional[L[Literal["auth-requirements", "benefits", "discovery", "validation"]]] = Field(None, alias="purpose", serialization_alias="purpose")
+    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
+    requestor: Optional[Reference] = Field(None, alias="requestor", serialization_alias="requestor")
+    serviced_date: Optional[str] = Field(None, alias="servicedDate", serialization_alias="servicedDate")
+    serviced_period: Optional[Period] = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

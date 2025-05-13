@@ -6,13 +6,15 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .resource import Resource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class DomainResource(Resource):
-    contained: Optional[L[Resource]] = None
-    extension: Optional[L[Extension]] = None
-    modifier_extension: Optional[L[Extension]] = None
-    text: Optional[Narrative] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contained: Optional[L[Resource]] = Field(None, alias="contained", serialization_alias="contained")
+    extension: Optional[L[Extension]] = Field(None, alias="extension", serialization_alias="extension")
+    modifier_extension: Optional[L[Extension]] = Field(None, alias="modifierExtension", serialization_alias="modifierExtension")
+    text: Optional[Narrative] = Field(None, alias="text", serialization_alias="text")
 

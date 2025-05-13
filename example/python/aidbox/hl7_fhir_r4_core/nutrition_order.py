@@ -6,67 +6,81 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class NutritionOrderOralDietNutrient(BackboneElement):
-    amount: Optional[Quantity] = None
-    modifier: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Quantity] = Field(None, alias="amount", serialization_alias="amount")
+    modifier: Optional[CodeableConcept] = Field(None, alias="modifier", serialization_alias="modifier")
 
 class NutritionOrderOralDietTexture(BackboneElement):
-    food_type: Optional[CodeableConcept] = None
-    modifier: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    food_type: Optional[CodeableConcept] = Field(None, alias="foodType", serialization_alias="foodType")
+    modifier: Optional[CodeableConcept] = Field(None, alias="modifier", serialization_alias="modifier")
 
 class NutritionOrderOralDiet(BackboneElement):
-    fluid_consistency_type: Optional[L[CodeableConcept]] = None
-    instruction: Optional[str] = None
-    nutrient: Optional[L[NutritionOrderOralDietNutrient]] = None
-    schedule: Optional[L[Timing]] = None
-    texture: Optional[L[NutritionOrderOralDietTexture]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    fluid_consistency_type: Optional[L[CodeableConcept]] = Field(None, alias="fluidConsistencyType", serialization_alias="fluidConsistencyType")
+    instruction: Optional[str] = Field(None, alias="instruction", serialization_alias="instruction")
+    nutrient: Optional[L[NutritionOrderOralDietNutrient]] = Field(None, alias="nutrient", serialization_alias="nutrient")
+    schedule: Optional[L[Timing]] = Field(None, alias="schedule", serialization_alias="schedule")
+    texture: Optional[L[NutritionOrderOralDietTexture]] = Field(None, alias="texture", serialization_alias="texture")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class NutritionOrderEnteralFormulaAdministration(BackboneElement):
-    quantity: Optional[Quantity] = None
-    rate_quantity: Optional[Quantity] = None
-    rate_ratio: Optional[Ratio] = None
-    schedule: Optional[Timing] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    rate_quantity: Optional[Quantity] = Field(None, alias="rateQuantity", serialization_alias="rateQuantity")
+    rate_ratio: Optional[Ratio] = Field(None, alias="rateRatio", serialization_alias="rateRatio")
+    schedule: Optional[Timing] = Field(None, alias="schedule", serialization_alias="schedule")
 
 class NutritionOrderEnteralFormula(BackboneElement):
-    additive_product_name: Optional[str] = None
-    additive_type: Optional[CodeableConcept] = None
-    administration: Optional[L[NutritionOrderEnteralFormulaAdministration]] = None
-    administration_instruction: Optional[str] = None
-    base_formula_product_name: Optional[str] = None
-    base_formula_type: Optional[CodeableConcept] = None
-    caloric_density: Optional[Quantity] = None
-    max_volume_to_deliver: Optional[Quantity] = None
-    routeof_administration: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additive_product_name: Optional[str] = Field(None, alias="additiveProductName", serialization_alias="additiveProductName")
+    additive_type: Optional[CodeableConcept] = Field(None, alias="additiveType", serialization_alias="additiveType")
+    administration: Optional[L[NutritionOrderEnteralFormulaAdministration]] = Field(None, alias="administration", serialization_alias="administration")
+    administration_instruction: Optional[str] = Field(None, alias="administrationInstruction", serialization_alias="administrationInstruction")
+    base_formula_product_name: Optional[str] = Field(None, alias="baseFormulaProductName", serialization_alias="baseFormulaProductName")
+    base_formula_type: Optional[CodeableConcept] = Field(None, alias="baseFormulaType", serialization_alias="baseFormulaType")
+    caloric_density: Optional[Quantity] = Field(None, alias="caloricDensity", serialization_alias="caloricDensity")
+    max_volume_to_deliver: Optional[Quantity] = Field(None, alias="maxVolumeToDeliver", serialization_alias="maxVolumeToDeliver")
+    routeof_administration: Optional[CodeableConcept] = Field(None, alias="routeofAdministration", serialization_alias="routeofAdministration")
 
 class NutritionOrderSupplement(BackboneElement):
-    instruction: Optional[str] = None
-    product_name: Optional[str] = None
-    quantity: Optional[Quantity] = None
-    schedule: Optional[L[Timing]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    instruction: Optional[str] = Field(None, alias="instruction", serialization_alias="instruction")
+    product_name: Optional[str] = Field(None, alias="productName", serialization_alias="productName")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    schedule: Optional[L[Timing]] = Field(None, alias="schedule", serialization_alias="schedule")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class NutritionOrder(DomainResource):
-    allergy_intolerance: Optional[L[Reference]] = None
-    date_time: Optional[str] = None
-    encounter: Optional[Reference] = None
-    enteral_formula: Optional[NutritionOrderEnteralFormula] = None
-    exclude_food_modifier: Optional[L[CodeableConcept]] = None
-    food_preference_modifier: Optional[L[CodeableConcept]] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates: Optional[L[str]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = None
-    note: Optional[L[Annotation]] = None
-    oral_diet: Optional[NutritionOrderOralDiet] = None
-    orderer: Optional[Reference] = None
-    patient: Optional[Reference] = None
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = None
-    supplement: Optional[L[NutritionOrderSupplement]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    allergy_intolerance: Optional[L[Reference]] = Field(None, alias="allergyIntolerance", serialization_alias="allergyIntolerance")
+    date_time: Optional[str] = Field(None, alias="dateTime", serialization_alias="dateTime")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    enteral_formula: Optional[NutritionOrderEnteralFormula] = Field(None, alias="enteralFormula", serialization_alias="enteralFormula")
+    exclude_food_modifier: Optional[L[CodeableConcept]] = Field(None, alias="excludeFoodModifier", serialization_alias="excludeFoodModifier")
+    food_preference_modifier: Optional[L[CodeableConcept]] = Field(None, alias="foodPreferenceModifier", serialization_alias="foodPreferenceModifier")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates: Optional[L[str]] = Field(None, alias="instantiates", serialization_alias="instantiates")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    oral_diet: Optional[NutritionOrderOralDiet] = Field(None, alias="oralDiet", serialization_alias="oralDiet")
+    orderer: Optional[Reference] = Field(None, alias="orderer", serialization_alias="orderer")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    supplement: Optional[L[NutritionOrderSupplement]] = Field(None, alias="supplement", serialization_alias="supplement")
 

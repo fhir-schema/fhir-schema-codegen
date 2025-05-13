@@ -6,17 +6,19 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Flag(DomainResource):
-    author: Optional[Reference] = None
-    category: Optional[L[CodeableConcept]] = None
-    code: Optional[CodeableConcept] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    period: Optional[Period] = None
-    status: Optional[Literal["active", "inactive", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    status: Optional[Literal["active", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

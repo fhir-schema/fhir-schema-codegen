@@ -6,254 +6,296 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ExplanationOfBenefitInsurance(BackboneElement):
-    coverage: Optional[Reference] = None
-    focal: Optional[bool] = None
-    pre_auth_ref: Optional[L[str]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
+    focal: Optional[bool] = Field(None, alias="focal", serialization_alias="focal")
+    pre_auth_ref: Optional[L[str]] = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
 
 class ExplanationOfBenefitBenefitBalanceFinancial(BackboneElement):
-    allowed_money: Optional[Money] = None
-    allowed_string: Optional[str] = None
-    allowed_unsigned_int: Optional[int] = None
-    type: Optional[CodeableConcept] = None
-    used_money: Optional[Money] = None
-    used_unsigned_int: Optional[int] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    allowed_money: Optional[Money] = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
+    allowed_string: Optional[str] = Field(None, alias="allowedString", serialization_alias="allowedString")
+    allowed_unsigned_int: Optional[int] = Field(None, alias="allowedUnsignedInt", serialization_alias="allowedUnsignedInt")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    used_money: Optional[Money] = Field(None, alias="usedMoney", serialization_alias="usedMoney")
+    used_unsigned_int: Optional[int] = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
 
 class ExplanationOfBenefitBenefitBalance(BackboneElement):
-    category: Optional[CodeableConcept] = None
-    description: Optional[str] = None
-    excluded: Optional[bool] = None
-    financial: Optional[L[ExplanationOfBenefitBenefitBalanceFinancial]] = None
-    name: Optional[str] = None
-    network: Optional[CodeableConcept] = None
-    term: Optional[CodeableConcept] = None
-    unit: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    excluded: Optional[bool] = Field(None, alias="excluded", serialization_alias="excluded")
+    financial: Optional[L[ExplanationOfBenefitBenefitBalanceFinancial]] = Field(None, alias="financial", serialization_alias="financial")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    network: Optional[CodeableConcept] = Field(None, alias="network", serialization_alias="network")
+    term: Optional[CodeableConcept] = Field(None, alias="term", serialization_alias="term")
+    unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 
 class ExplanationOfBenefitProcessNote(BackboneElement):
-    language: Optional[CodeableConcept] = None
-    number: Optional[PositiveInt] = None
-    text: Optional[str] = None
-    type: Optional[Literal["display", "print", "printoper"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
+    number: Optional[PositiveInt] = Field(None, alias="number", serialization_alias="number")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    type: Optional[Literal["display", "print", "printoper"]] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitDiagnosis(BackboneElement):
-    diagnosis_codeable_concept: Optional[CodeableConcept] = None
-    diagnosis_reference: Optional[Reference] = None
-    on_admission: Optional[CodeableConcept] = None
-    package_code: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    diagnosis_codeable_concept: Optional[CodeableConcept] = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
+    diagnosis_reference: Optional[Reference] = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
+    on_admission: Optional[CodeableConcept] = Field(None, alias="onAdmission", serialization_alias="onAdmission")
+    package_code: Optional[CodeableConcept] = Field(None, alias="packageCode", serialization_alias="packageCode")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitSupportingInfo(BackboneElement):
-    category: Optional[CodeableConcept] = None
-    code: Optional[CodeableConcept] = None
-    reason: Optional[Coding] = None
-    sequence: Optional[PositiveInt] = None
-    timing_date: Optional[str] = None
-    timing_period: Optional[Period] = None
-    value_attachment: Optional[Attachment] = None
-    value_boolean: Optional[bool] = None
-    value_quantity: Optional[Quantity] = None
-    value_reference: Optional[Reference] = None
-    value_string: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    reason: Optional[Coding] = Field(None, alias="reason", serialization_alias="reason")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    timing_date: Optional[str] = Field(None, alias="timingDate", serialization_alias="timingDate")
+    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class ExplanationOfBenefitPayment(BackboneElement):
-    adjustment: Optional[Money] = None
-    adjustment_reason: Optional[CodeableConcept] = None
-    amount: Optional[Money] = None
-    date: Optional[str] = None
-    identifier: Optional[Identifier] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjustment: Optional[Money] = Field(None, alias="adjustment", serialization_alias="adjustment")
+    adjustment_reason: Optional[CodeableConcept] = Field(None, alias="adjustmentReason", serialization_alias="adjustmentReason")
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitItemAdjudication(BackboneElement):
-    amount: Optional[Money] = None
-    category: Optional[CodeableConcept] = None
-    reason: Optional[CodeableConcept] = None
-    value: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    reason: Optional[CodeableConcept] = Field(None, alias="reason", serialization_alias="reason")
+    value: Optional[float] = Field(None, alias="value", serialization_alias="value")
 
 class ExplanationOfBenefitItemDetailSubDetail(BackboneElement):
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    category: Optional[CodeableConcept] = None
-    factor: Optional[float] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    note_number: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    quantity: Optional[Quantity] = None
-    revenue: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    udi: Optional[L[Reference]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    revenue: Optional[CodeableConcept] = Field(None, alias="revenue", serialization_alias="revenue")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitItemDetail(BackboneElement):
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    category: Optional[CodeableConcept] = None
-    factor: Optional[float] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    note_number: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    quantity: Optional[Quantity] = None
-    revenue: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    sub_detail: Optional[L[ExplanationOfBenefitItemDetailSubDetail]] = None
-    udi: Optional[L[Reference]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    revenue: Optional[CodeableConcept] = Field(None, alias="revenue", serialization_alias="revenue")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    sub_detail: Optional[L[ExplanationOfBenefitItemDetailSubDetail]] = Field(None, alias="subDetail", serialization_alias="subDetail")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitItem(BackboneElement):
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    body_site: Optional[CodeableConcept] = None
-    care_team_sequence: Optional[L[PositiveInt]] = None
-    category: Optional[CodeableConcept] = None
-    detail: Optional[L[ExplanationOfBenefitItemDetail]] = None
-    diagnosis_sequence: Optional[L[PositiveInt]] = None
-    encounter: Optional[L[Reference]] = None
-    factor: Optional[float] = None
-    information_sequence: Optional[L[PositiveInt]] = None
-    location_address: Optional[Address] = None
-    location_codeable_concept: Optional[CodeableConcept] = None
-    location_reference: Optional[Reference] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    note_number: Optional[L[PositiveInt]] = None
-    procedure_sequence: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    quantity: Optional[Quantity] = None
-    revenue: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    serviced_date: Optional[str] = None
-    serviced_period: Optional[Period] = None
-    sub_site: Optional[L[CodeableConcept]] = None
-    udi: Optional[L[Reference]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    care_team_sequence: Optional[L[PositiveInt]] = Field(None, alias="careTeamSequence", serialization_alias="careTeamSequence")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    detail: Optional[L[ExplanationOfBenefitItemDetail]] = Field(None, alias="detail", serialization_alias="detail")
+    diagnosis_sequence: Optional[L[PositiveInt]] = Field(None, alias="diagnosisSequence", serialization_alias="diagnosisSequence")
+    encounter: Optional[L[Reference]] = Field(None, alias="encounter", serialization_alias="encounter")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    information_sequence: Optional[L[PositiveInt]] = Field(None, alias="informationSequence", serialization_alias="informationSequence")
+    location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
+    location_codeable_concept: Optional[CodeableConcept] = Field(None, alias="locationCodeableConcept", serialization_alias="locationCodeableConcept")
+    location_reference: Optional[Reference] = Field(None, alias="locationReference", serialization_alias="locationReference")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    procedure_sequence: Optional[L[PositiveInt]] = Field(None, alias="procedureSequence", serialization_alias="procedureSequence")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    revenue: Optional[CodeableConcept] = Field(None, alias="revenue", serialization_alias="revenue")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    serviced_date: Optional[str] = Field(None, alias="servicedDate", serialization_alias="servicedDate")
+    serviced_period: Optional[Period] = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
+    sub_site: Optional[L[CodeableConcept]] = Field(None, alias="subSite", serialization_alias="subSite")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitProcedure(BackboneElement):
-    date: Optional[str] = None
-    procedure_codeable_concept: Optional[CodeableConcept] = None
-    procedure_reference: Optional[Reference] = None
-    sequence: Optional[PositiveInt] = None
-    type: Optional[L[CodeableConcept]] = None
-    udi: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    procedure_codeable_concept: Optional[CodeableConcept] = Field(None, alias="procedureCodeableConcept", serialization_alias="procedureCodeableConcept")
+    procedure_reference: Optional[Reference] = Field(None, alias="procedureReference", serialization_alias="procedureReference")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
 
 class ExplanationOfBenefitRelated(BackboneElement):
-    claim: Optional[Reference] = None
-    reference: Optional[Identifier] = None
-    relationship: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    claim: Optional[Reference] = Field(None, alias="claim", serialization_alias="claim")
+    reference: Optional[Identifier] = Field(None, alias="reference", serialization_alias="reference")
+    relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class ExplanationOfBenefitTotal(BackboneElement):
-    amount: Optional[Money] = None
-    category: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
 
 class ExplanationOfBenefitAccident(BackboneElement):
-    date: Optional[str] = None
-    location_address: Optional[Address] = None
-    location_reference: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
+    location_reference: Optional[Reference] = Field(None, alias="locationReference", serialization_alias="locationReference")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitPayee(BackboneElement):
-    party: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitAddItemDetailSubDetail(BackboneElement):
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    factor: Optional[float] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    note_number: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    quantity: Optional[Quantity] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitAddItemDetail(BackboneElement):
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    factor: Optional[float] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    note_number: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    quantity: Optional[Quantity] = None
-    sub_detail: Optional[L[ExplanationOfBenefitAddItemDetailSubDetail]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    sub_detail: Optional[L[ExplanationOfBenefitAddItemDetailSubDetail]] = Field(None, alias="subDetail", serialization_alias="subDetail")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitAddItem(BackboneElement):
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    body_site: Optional[CodeableConcept] = None
-    detail: Optional[L[ExplanationOfBenefitAddItemDetail]] = None
-    detail_sequence: Optional[L[PositiveInt]] = None
-    factor: Optional[float] = None
-    item_sequence: Optional[L[PositiveInt]] = None
-    location_address: Optional[Address] = None
-    location_codeable_concept: Optional[CodeableConcept] = None
-    location_reference: Optional[Reference] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    note_number: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    provider: Optional[L[Reference]] = None
-    quantity: Optional[Quantity] = None
-    serviced_date: Optional[str] = None
-    serviced_period: Optional[Period] = None
-    sub_detail_sequence: Optional[L[PositiveInt]] = None
-    sub_site: Optional[L[CodeableConcept]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    detail: Optional[L[ExplanationOfBenefitAddItemDetail]] = Field(None, alias="detail", serialization_alias="detail")
+    detail_sequence: Optional[L[PositiveInt]] = Field(None, alias="detailSequence", serialization_alias="detailSequence")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    item_sequence: Optional[L[PositiveInt]] = Field(None, alias="itemSequence", serialization_alias="itemSequence")
+    location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
+    location_codeable_concept: Optional[CodeableConcept] = Field(None, alias="locationCodeableConcept", serialization_alias="locationCodeableConcept")
+    location_reference: Optional[Reference] = Field(None, alias="locationReference", serialization_alias="locationReference")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    provider: Optional[L[Reference]] = Field(None, alias="provider", serialization_alias="provider")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    serviced_date: Optional[str] = Field(None, alias="servicedDate", serialization_alias="servicedDate")
+    serviced_period: Optional[Period] = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
+    sub_detail_sequence: Optional[L[PositiveInt]] = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
+    sub_site: Optional[L[CodeableConcept]] = Field(None, alias="subSite", serialization_alias="subSite")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitCareTeam(BackboneElement):
-    provider: Optional[Reference] = None
-    qualification: Optional[CodeableConcept] = None
-    responsible: Optional[bool] = None
-    role: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    qualification: Optional[CodeableConcept] = Field(None, alias="qualification", serialization_alias="qualification")
+    responsible: Optional[bool] = Field(None, alias="responsible", serialization_alias="responsible")
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 
 class ExplanationOfBenefit(DomainResource):
-    accident: Optional[ExplanationOfBenefitAccident] = None
-    add_item: Optional[L[ExplanationOfBenefitAddItem]] = None
-    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = None
-    benefit_balance: Optional[L[ExplanationOfBenefitBenefitBalance]] = None
-    benefit_period: Optional[Period] = None
-    billable_period: Optional[Period] = None
-    care_team: Optional[L[ExplanationOfBenefitCareTeam]] = None
-    claim: Optional[Reference] = None
-    claim_response: Optional[Reference] = None
-    created: Optional[str] = None
-    diagnosis: Optional[L[ExplanationOfBenefitDiagnosis]] = None
-    disposition: Optional[str] = None
-    enterer: Optional[Reference] = None
-    facility: Optional[Reference] = None
-    form: Optional[Attachment] = None
-    form_code: Optional[CodeableConcept] = None
-    funds_reserve: Optional[CodeableConcept] = None
-    funds_reserve_requested: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    insurance: Optional[L[ExplanationOfBenefitInsurance]] = None
-    insurer: Optional[Reference] = None
-    item: Optional[L[ExplanationOfBenefitItem]] = None
-    original_prescription: Optional[Reference] = None
-    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = None
-    patient: Optional[Reference] = None
-    payee: Optional[ExplanationOfBenefitPayee] = None
-    payment: Optional[ExplanationOfBenefitPayment] = None
-    pre_auth_ref: Optional[L[str]] = None
-    pre_auth_ref_period: Optional[L[Period]] = None
-    precedence: Optional[PositiveInt] = None
-    prescription: Optional[Reference] = None
-    priority: Optional[CodeableConcept] = None
-    procedure: Optional[L[ExplanationOfBenefitProcedure]] = None
-    process_note: Optional[L[ExplanationOfBenefitProcessNote]] = None
-    provider: Optional[Reference] = None
-    referral: Optional[Reference] = None
-    related: Optional[L[ExplanationOfBenefitRelated]] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
-    sub_type: Optional[CodeableConcept] = None
-    supporting_info: Optional[L[ExplanationOfBenefitSupportingInfo]] = None
-    total: Optional[L[ExplanationOfBenefitTotal]] = None
-    type: Optional[CodeableConcept] = None
-    use: Optional[Literal["claim", "preauthorization", "predetermination"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    accident: Optional[ExplanationOfBenefitAccident] = Field(None, alias="accident", serialization_alias="accident")
+    add_item: Optional[L[ExplanationOfBenefitAddItem]] = Field(None, alias="addItem", serialization_alias="addItem")
+    adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
+    benefit_balance: Optional[L[ExplanationOfBenefitBenefitBalance]] = Field(None, alias="benefitBalance", serialization_alias="benefitBalance")
+    benefit_period: Optional[Period] = Field(None, alias="benefitPeriod", serialization_alias="benefitPeriod")
+    billable_period: Optional[Period] = Field(None, alias="billablePeriod", serialization_alias="billablePeriod")
+    care_team: Optional[L[ExplanationOfBenefitCareTeam]] = Field(None, alias="careTeam", serialization_alias="careTeam")
+    claim: Optional[Reference] = Field(None, alias="claim", serialization_alias="claim")
+    claim_response: Optional[Reference] = Field(None, alias="claimResponse", serialization_alias="claimResponse")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    diagnosis: Optional[L[ExplanationOfBenefitDiagnosis]] = Field(None, alias="diagnosis", serialization_alias="diagnosis")
+    disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")
+    enterer: Optional[Reference] = Field(None, alias="enterer", serialization_alias="enterer")
+    facility: Optional[Reference] = Field(None, alias="facility", serialization_alias="facility")
+    form: Optional[Attachment] = Field(None, alias="form", serialization_alias="form")
+    form_code: Optional[CodeableConcept] = Field(None, alias="formCode", serialization_alias="formCode")
+    funds_reserve: Optional[CodeableConcept] = Field(None, alias="fundsReserve", serialization_alias="fundsReserve")
+    funds_reserve_requested: Optional[CodeableConcept] = Field(None, alias="fundsReserveRequested", serialization_alias="fundsReserveRequested")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    insurance: Optional[L[ExplanationOfBenefitInsurance]] = Field(None, alias="insurance", serialization_alias="insurance")
+    insurer: Optional[Reference] = Field(None, alias="insurer", serialization_alias="insurer")
+    item: Optional[L[ExplanationOfBenefitItem]] = Field(None, alias="item", serialization_alias="item")
+    original_prescription: Optional[Reference] = Field(None, alias="originalPrescription", serialization_alias="originalPrescription")
+    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = Field(None, alias="outcome", serialization_alias="outcome")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    payee: Optional[ExplanationOfBenefitPayee] = Field(None, alias="payee", serialization_alias="payee")
+    payment: Optional[ExplanationOfBenefitPayment] = Field(None, alias="payment", serialization_alias="payment")
+    pre_auth_ref: Optional[L[str]] = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
+    pre_auth_ref_period: Optional[L[Period]] = Field(None, alias="preAuthRefPeriod", serialization_alias="preAuthRefPeriod")
+    precedence: Optional[PositiveInt] = Field(None, alias="precedence", serialization_alias="precedence")
+    prescription: Optional[Reference] = Field(None, alias="prescription", serialization_alias="prescription")
+    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
+    procedure: Optional[L[ExplanationOfBenefitProcedure]] = Field(None, alias="procedure", serialization_alias="procedure")
+    process_note: Optional[L[ExplanationOfBenefitProcessNote]] = Field(None, alias="processNote", serialization_alias="processNote")
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    referral: Optional[Reference] = Field(None, alias="referral", serialization_alias="referral")
+    related: Optional[L[ExplanationOfBenefitRelated]] = Field(None, alias="related", serialization_alias="related")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    sub_type: Optional[CodeableConcept] = Field(None, alias="subType", serialization_alias="subType")
+    supporting_info: Optional[L[ExplanationOfBenefitSupportingInfo]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    total: Optional[L[ExplanationOfBenefitTotal]] = Field(None, alias="total", serialization_alias="total")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    use: Optional[Literal["claim", "preauthorization", "predetermination"]] = Field(None, alias="use", serialization_alias="use")
 

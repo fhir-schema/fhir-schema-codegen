@@ -6,30 +6,34 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class NamingSystemUniqueId(BackboneElement):
-    comment: Optional[str] = None
-    period: Optional[Period] = None
-    preferred: Optional[bool] = None
-    type: Optional[Literal["oid", "uuid", "uri", "other"]] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    preferred: Optional[bool] = Field(None, alias="preferred", serialization_alias="preferred")
+    type: Optional[Literal["oid", "uuid", "uri", "other"]] = Field(None, alias="type", serialization_alias="type")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 
 class NamingSystem(DomainResource):
-    contact: Optional[L[ContactDetail]] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    kind: Optional[Literal["codesystem", "identifier", "root"]] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    responsible: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    type: Optional[CodeableConcept] = None
-    unique_id: Optional[L[NamingSystemUniqueId]] = None
-    usage: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    kind: Optional[Literal["codesystem", "identifier", "root"]] = Field(None, alias="kind", serialization_alias="kind")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    responsible: Optional[str] = Field(None, alias="responsible", serialization_alias="responsible")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    unique_id: Optional[L[NamingSystemUniqueId]] = Field(None, alias="uniqueId", serialization_alias="uniqueId")
+    usage: Optional[str] = Field(None, alias="usage", serialization_alias="usage")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
 

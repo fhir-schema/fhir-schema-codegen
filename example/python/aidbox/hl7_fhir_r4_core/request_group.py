@@ -6,64 +6,72 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RequestGroupActionRelatedAction(BackboneElement):
-    action_id: Optional[str] = None
-    offset_duration: Optional[Duration] = None
-    offset_range: Optional[Range] = None
-    relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action_id: Optional[str] = Field(None, alias="actionId", serialization_alias="actionId")
+    offset_duration: Optional[Duration] = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
+    offset_range: Optional[Range] = Field(None, alias="offsetRange", serialization_alias="offsetRange")
+    relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class RequestGroupActionCondition(BackboneElement):
-    expression: Optional[Expression] = None
-    kind: Optional[Literal["applicability", "start", "stop"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
+    kind: Optional[Literal["applicability", "start", "stop"]] = Field(None, alias="kind", serialization_alias="kind")
 
 class RequestGroupAction(BackboneElement):
-    action: Optional[L[RequestGroupAction]] = None
-    cardinality_behavior: Optional[Literal["single", "multiple"]] = None
-    code: Optional[L[CodeableConcept]] = None
-    condition: Optional[L[RequestGroupActionCondition]] = None
-    description: Optional[str] = None
-    documentation: Optional[L[RelatedArtifact]] = None
-    grouping_behavior: Optional[Literal["visual-group", "logical-group", "sentence-group"]] = None
-    participant: Optional[L[Reference]] = None
-    precheck_behavior: Optional[Literal["yes", "no"]] = None
-    prefix: Optional[str] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    related_action: Optional[L[RequestGroupActionRelatedAction]] = None
-    required_behavior: Optional[Literal["must", "could", "must-unless-documented"]] = None
-    resource: Optional[Reference] = None
-    selection_behavior: Optional[Literal["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"]] = None
-    text_equivalent: Optional[str] = None
-    timing_age: Optional[Age] = None
-    timing_date_time: Optional[str] = None
-    timing_duration: Optional[Duration] = None
-    timing_period: Optional[Period] = None
-    timing_range: Optional[Range] = None
-    timing_timing: Optional[Timing] = None
-    title: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action: Optional[L[RequestGroupAction]] = Field(None, alias="action", serialization_alias="action")
+    cardinality_behavior: Optional[Literal["single", "multiple"]] = Field(None, alias="cardinalityBehavior", serialization_alias="cardinalityBehavior")
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    condition: Optional[L[RequestGroupActionCondition]] = Field(None, alias="condition", serialization_alias="condition")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    documentation: Optional[L[RelatedArtifact]] = Field(None, alias="documentation", serialization_alias="documentation")
+    grouping_behavior: Optional[Literal["visual-group", "logical-group", "sentence-group"]] = Field(None, alias="groupingBehavior", serialization_alias="groupingBehavior")
+    participant: Optional[L[Reference]] = Field(None, alias="participant", serialization_alias="participant")
+    precheck_behavior: Optional[Literal["yes", "no"]] = Field(None, alias="precheckBehavior", serialization_alias="precheckBehavior")
+    prefix: Optional[str] = Field(None, alias="prefix", serialization_alias="prefix")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    related_action: Optional[L[RequestGroupActionRelatedAction]] = Field(None, alias="relatedAction", serialization_alias="relatedAction")
+    required_behavior: Optional[Literal["must", "could", "must-unless-documented"]] = Field(None, alias="requiredBehavior", serialization_alias="requiredBehavior")
+    resource: Optional[Reference] = Field(None, alias="resource", serialization_alias="resource")
+    selection_behavior: Optional[Literal["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"]] = Field(None, alias="selectionBehavior", serialization_alias="selectionBehavior")
+    text_equivalent: Optional[str] = Field(None, alias="textEquivalent", serialization_alias="textEquivalent")
+    timing_age: Optional[Age] = Field(None, alias="timingAge", serialization_alias="timingAge")
+    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_duration: Optional[Duration] = Field(None, alias="timingDuration", serialization_alias="timingDuration")
+    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    timing_range: Optional[Range] = Field(None, alias="timingRange", serialization_alias="timingRange")
+    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class RequestGroup(DomainResource):
-    action: Optional[L[RequestGroupAction]] = None
-    author: Optional[Reference] = None
-    authored_on: Optional[str] = None
-    based_on: Optional[L[Reference]] = None
-    code: Optional[CodeableConcept] = None
-    encounter: Optional[Reference] = None
-    group_identifier: Optional[Identifier] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = None
-    note: Optional[L[Annotation]] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    replaces: Optional[L[Reference]] = None
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action: Optional[L[RequestGroupAction]] = Field(None, alias="action", serialization_alias="action")
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    replaces: Optional[L[Reference]] = Field(None, alias="replaces", serialization_alias="replaces")
+    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

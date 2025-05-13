@@ -6,26 +6,30 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DocumentManifestRelated(BackboneElement):
-    identifier: Optional[Identifier] = None
-    ref: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    ref: Optional[Reference] = Field(None, alias="ref", serialization_alias="ref")
 
 
 class DocumentManifest(DomainResource):
-    author: Optional[L[Reference]] = None
-    content: Optional[L[Reference]] = None
-    created: Optional[str] = None
-    description: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    master_identifier: Optional[Identifier] = None
-    recipient: Optional[L[Reference]] = None
-    related: Optional[L[DocumentManifestRelated]] = None
-    source: Optional[str] = None
-    status: Optional[Literal["current", "superseded", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
+    content: Optional[L[Reference]] = Field(None, alias="content", serialization_alias="content")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    master_identifier: Optional[Identifier] = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
+    recipient: Optional[L[Reference]] = Field(None, alias="recipient", serialization_alias="recipient")
+    related: Optional[L[DocumentManifestRelated]] = Field(None, alias="related", serialization_alias="related")
+    source: Optional[str] = Field(None, alias="source", serialization_alias="source")
+    status: Optional[Literal["current", "superseded", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

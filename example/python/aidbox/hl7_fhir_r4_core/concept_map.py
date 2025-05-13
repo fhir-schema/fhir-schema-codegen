@@ -6,63 +6,75 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ConceptMapGroupElementTargetDependsOn(BackboneElement):
-    display: Optional[str] = None
-    property: Optional[str] = None
-    system: Optional[str] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    property: Optional[str] = Field(None, alias="property", serialization_alias="property")
+    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ConceptMapGroupElementTarget(BackboneElement):
-    code: Optional[str] = None
-    comment: Optional[str] = None
-    depends_on: Optional[L[ConceptMapGroupElementTargetDependsOn]] = None
-    display: Optional[str] = None
-    equivalence: Optional[Literal["relatedto", "unmatched"]] = None
-    product: Optional[L[ConceptMapGroupElementTargetDependsOn]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    depends_on: Optional[L[ConceptMapGroupElementTargetDependsOn]] = Field(None, alias="dependsOn", serialization_alias="dependsOn")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    equivalence: Optional[Literal["relatedto", "unmatched"]] = Field(None, alias="equivalence", serialization_alias="equivalence")
+    product: Optional[L[ConceptMapGroupElementTargetDependsOn]] = Field(None, alias="product", serialization_alias="product")
 
 class ConceptMapGroupElement(BackboneElement):
-    code: Optional[str] = None
-    display: Optional[str] = None
-    target: Optional[L[ConceptMapGroupElementTarget]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    target: Optional[L[ConceptMapGroupElementTarget]] = Field(None, alias="target", serialization_alias="target")
 
 class ConceptMapGroupUnmapped(BackboneElement):
-    code: Optional[str] = None
-    display: Optional[str] = None
-    mode: Optional[Literal["provided", "fixed", "other-map"]] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    mode: Optional[Literal["provided", "fixed", "other-map"]] = Field(None, alias="mode", serialization_alias="mode")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class ConceptMapGroup(BackboneElement):
-    element: Optional[L[ConceptMapGroupElement]] = None
-    source: Optional[str] = None
-    source_version: Optional[str] = None
-    target: Optional[str] = None
-    target_version: Optional[str] = None
-    unmapped: Optional[ConceptMapGroupUnmapped] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    element: Optional[L[ConceptMapGroupElement]] = Field(None, alias="element", serialization_alias="element")
+    source: Optional[str] = Field(None, alias="source", serialization_alias="source")
+    source_version: Optional[str] = Field(None, alias="sourceVersion", serialization_alias="sourceVersion")
+    target: Optional[str] = Field(None, alias="target", serialization_alias="target")
+    target_version: Optional[str] = Field(None, alias="targetVersion", serialization_alias="targetVersion")
+    unmapped: Optional[ConceptMapGroupUnmapped] = Field(None, alias="unmapped", serialization_alias="unmapped")
 
 
 class ConceptMap(DomainResource):
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    experimental: Optional[bool] = None
-    group: Optional[L[ConceptMapGroup]] = None
-    identifier: Optional[Identifier] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    source_canonical: Optional[str] = None
-    source_uri: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    target_canonical: Optional[str] = None
-    target_uri: Optional[str] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    group: Optional[L[ConceptMapGroup]] = Field(None, alias="group", serialization_alias="group")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    source_canonical: Optional[str] = Field(None, alias="sourceCanonical", serialization_alias="sourceCanonical")
+    source_uri: Optional[str] = Field(None, alias="sourceUri", serialization_alias="sourceUri")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    target_canonical: Optional[str] = Field(None, alias="targetCanonical", serialization_alias="targetCanonical")
+    target_uri: Optional[str] = Field(None, alias="targetUri", serialization_alias="targetUri")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

@@ -6,112 +6,128 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PlanDefinitionGoalTarget(BackboneElement):
-    detail_codeable_concept: Optional[CodeableConcept] = None
-    detail_quantity: Optional[Quantity] = None
-    detail_range: Optional[Range] = None
-    due: Optional[Duration] = None
-    measure: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    detail_codeable_concept: Optional[CodeableConcept] = Field(None, alias="detailCodeableConcept", serialization_alias="detailCodeableConcept")
+    detail_quantity: Optional[Quantity] = Field(None, alias="detailQuantity", serialization_alias="detailQuantity")
+    detail_range: Optional[Range] = Field(None, alias="detailRange", serialization_alias="detailRange")
+    due: Optional[Duration] = Field(None, alias="due", serialization_alias="due")
+    measure: Optional[CodeableConcept] = Field(None, alias="measure", serialization_alias="measure")
 
 class PlanDefinitionGoal(BackboneElement):
-    addresses: Optional[L[CodeableConcept]] = None
-    category: Optional[CodeableConcept] = None
-    description: Optional[CodeableConcept] = None
-    documentation: Optional[L[RelatedArtifact]] = None
-    priority: Optional[CodeableConcept] = None
-    start: Optional[CodeableConcept] = None
-    target: Optional[L[PlanDefinitionGoalTarget]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    addresses: Optional[L[CodeableConcept]] = Field(None, alias="addresses", serialization_alias="addresses")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    description: Optional[CodeableConcept] = Field(None, alias="description", serialization_alias="description")
+    documentation: Optional[L[RelatedArtifact]] = Field(None, alias="documentation", serialization_alias="documentation")
+    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
+    start: Optional[CodeableConcept] = Field(None, alias="start", serialization_alias="start")
+    target: Optional[L[PlanDefinitionGoalTarget]] = Field(None, alias="target", serialization_alias="target")
 
 class PlanDefinitionActionRelatedAction(BackboneElement):
-    action_id: Optional[str] = None
-    offset_duration: Optional[Duration] = None
-    offset_range: Optional[Range] = None
-    relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action_id: Optional[str] = Field(None, alias="actionId", serialization_alias="actionId")
+    offset_duration: Optional[Duration] = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
+    offset_range: Optional[Range] = Field(None, alias="offsetRange", serialization_alias="offsetRange")
+    relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class PlanDefinitionActionParticipant(BackboneElement):
-    role: Optional[CodeableConcept] = None
-    type: Optional[Literal["patient", "practitioner", "related-person", "device"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
+    type: Optional[Literal["patient", "practitioner", "related-person", "device"]] = Field(None, alias="type", serialization_alias="type")
 
 class PlanDefinitionActionCondition(BackboneElement):
-    expression: Optional[Expression] = None
-    kind: Optional[Literal["applicability", "start", "stop"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
+    kind: Optional[Literal["applicability", "start", "stop"]] = Field(None, alias="kind", serialization_alias="kind")
 
 class PlanDefinitionActionDynamicValue(BackboneElement):
-    expression: Optional[Expression] = None
-    path: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
+    path: Optional[str] = Field(None, alias="path", serialization_alias="path")
 
 class PlanDefinitionAction(BackboneElement):
-    action: Optional[L[PlanDefinitionAction]] = None
-    cardinality_behavior: Optional[Literal["single", "multiple"]] = None
-    code: Optional[L[CodeableConcept]] = None
-    condition: Optional[L[PlanDefinitionActionCondition]] = None
-    definition_canonical: Optional[str] = None
-    definition_uri: Optional[str] = None
-    description: Optional[str] = None
-    documentation: Optional[L[RelatedArtifact]] = None
-    dynamic_value: Optional[L[PlanDefinitionActionDynamicValue]] = None
-    goal_id: Optional[L[str]] = None
-    grouping_behavior: Optional[Literal["visual-group", "logical-group", "sentence-group"]] = None
-    input: Optional[L[DataRequirement]] = None
-    output: Optional[L[DataRequirement]] = None
-    participant: Optional[L[PlanDefinitionActionParticipant]] = None
-    precheck_behavior: Optional[Literal["yes", "no"]] = None
-    prefix: Optional[str] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    reason: Optional[L[CodeableConcept]] = None
-    related_action: Optional[L[PlanDefinitionActionRelatedAction]] = None
-    required_behavior: Optional[Literal["must", "could", "must-unless-documented"]] = None
-    selection_behavior: Optional[Literal["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"]] = None
-    subject_codeable_concept: Optional[CodeableConcept] = None
-    subject_reference: Optional[Reference] = None
-    text_equivalent: Optional[str] = None
-    timing_age: Optional[Age] = None
-    timing_date_time: Optional[str] = None
-    timing_duration: Optional[Duration] = None
-    timing_period: Optional[Period] = None
-    timing_range: Optional[Range] = None
-    timing_timing: Optional[Timing] = None
-    title: Optional[str] = None
-    transform: Optional[str] = None
-    trigger: Optional[L[TriggerDefinition]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action: Optional[L[PlanDefinitionAction]] = Field(None, alias="action", serialization_alias="action")
+    cardinality_behavior: Optional[Literal["single", "multiple"]] = Field(None, alias="cardinalityBehavior", serialization_alias="cardinalityBehavior")
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    condition: Optional[L[PlanDefinitionActionCondition]] = Field(None, alias="condition", serialization_alias="condition")
+    definition_canonical: Optional[str] = Field(None, alias="definitionCanonical", serialization_alias="definitionCanonical")
+    definition_uri: Optional[str] = Field(None, alias="definitionUri", serialization_alias="definitionUri")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    documentation: Optional[L[RelatedArtifact]] = Field(None, alias="documentation", serialization_alias="documentation")
+    dynamic_value: Optional[L[PlanDefinitionActionDynamicValue]] = Field(None, alias="dynamicValue", serialization_alias="dynamicValue")
+    goal_id: Optional[L[str]] = Field(None, alias="goalId", serialization_alias="goalId")
+    grouping_behavior: Optional[Literal["visual-group", "logical-group", "sentence-group"]] = Field(None, alias="groupingBehavior", serialization_alias="groupingBehavior")
+    input: Optional[L[DataRequirement]] = Field(None, alias="input", serialization_alias="input")
+    output: Optional[L[DataRequirement]] = Field(None, alias="output", serialization_alias="output")
+    participant: Optional[L[PlanDefinitionActionParticipant]] = Field(None, alias="participant", serialization_alias="participant")
+    precheck_behavior: Optional[Literal["yes", "no"]] = Field(None, alias="precheckBehavior", serialization_alias="precheckBehavior")
+    prefix: Optional[str] = Field(None, alias="prefix", serialization_alias="prefix")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    reason: Optional[L[CodeableConcept]] = Field(None, alias="reason", serialization_alias="reason")
+    related_action: Optional[L[PlanDefinitionActionRelatedAction]] = Field(None, alias="relatedAction", serialization_alias="relatedAction")
+    required_behavior: Optional[Literal["must", "could", "must-unless-documented"]] = Field(None, alias="requiredBehavior", serialization_alias="requiredBehavior")
+    selection_behavior: Optional[Literal["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"]] = Field(None, alias="selectionBehavior", serialization_alias="selectionBehavior")
+    subject_codeable_concept: Optional[CodeableConcept] = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
+    subject_reference: Optional[Reference] = Field(None, alias="subjectReference", serialization_alias="subjectReference")
+    text_equivalent: Optional[str] = Field(None, alias="textEquivalent", serialization_alias="textEquivalent")
+    timing_age: Optional[Age] = Field(None, alias="timingAge", serialization_alias="timingAge")
+    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_duration: Optional[Duration] = Field(None, alias="timingDuration", serialization_alias="timingDuration")
+    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    timing_range: Optional[Range] = Field(None, alias="timingRange", serialization_alias="timingRange")
+    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    transform: Optional[str] = Field(None, alias="transform", serialization_alias="transform")
+    trigger: Optional[L[TriggerDefinition]] = Field(None, alias="trigger", serialization_alias="trigger")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class PlanDefinition(DomainResource):
-    action: Optional[L[PlanDefinitionAction]] = None
-    approval_date: Optional[str] = None
-    author: Optional[L[ContactDetail]] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    editor: Optional[L[ContactDetail]] = None
-    effective_period: Optional[Period] = None
-    endorser: Optional[L[ContactDetail]] = None
-    experimental: Optional[bool] = None
-    goal: Optional[L[PlanDefinitionGoal]] = None
-    identifier: Optional[L[Identifier]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    last_review_date: Optional[str] = None
-    library: Optional[L[str]] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    related_artifact: Optional[L[RelatedArtifact]] = None
-    reviewer: Optional[L[ContactDetail]] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    subject_codeable_concept: Optional[CodeableConcept] = None
-    subject_reference: Optional[Reference] = None
-    subtitle: Optional[str] = None
-    title: Optional[str] = None
-    topic: Optional[L[CodeableConcept]] = None
-    type: Optional[CodeableConcept] = None
-    url: Optional[str] = None
-    usage: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action: Optional[L[PlanDefinitionAction]] = Field(None, alias="action", serialization_alias="action")
+    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    editor: Optional[L[ContactDetail]] = Field(None, alias="editor", serialization_alias="editor")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    endorser: Optional[L[ContactDetail]] = Field(None, alias="endorser", serialization_alias="endorser")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    goal: Optional[L[PlanDefinitionGoal]] = Field(None, alias="goal", serialization_alias="goal")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    library: Optional[L[str]] = Field(None, alias="library", serialization_alias="library")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    reviewer: Optional[L[ContactDetail]] = Field(None, alias="reviewer", serialization_alias="reviewer")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject_codeable_concept: Optional[CodeableConcept] = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
+    subject_reference: Optional[Reference] = Field(None, alias="subjectReference", serialization_alias="subjectReference")
+    subtitle: Optional[str] = Field(None, alias="subtitle", serialization_alias="subtitle")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    topic: Optional[L[CodeableConcept]] = Field(None, alias="topic", serialization_alias="topic")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    usage: Optional[str] = Field(None, alias="usage", serialization_alias="usage")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

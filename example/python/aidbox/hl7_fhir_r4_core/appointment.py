@@ -6,39 +6,43 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AppointmentParticipant(BackboneElement):
-    actor: Optional[Reference] = None
-    period: Optional[Period] = None
-    required: Optional[Literal["required", "optional", "information-only"]] = None
-    status: Optional[Literal["accepted", "declined", "tentative", "needs-action"]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    required: Optional[Literal["required", "optional", "information-only"]] = Field(None, alias="required", serialization_alias="required")
+    status: Optional[Literal["accepted", "declined", "tentative", "needs-action"]] = Field(None, alias="status", serialization_alias="status")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Appointment(DomainResource):
-    appointment_type: Optional[CodeableConcept] = None
-    based_on: Optional[L[Reference]] = None
-    cancelation_reason: Optional[CodeableConcept] = None
-    comment: Optional[str] = None
-    created: Optional[str] = None
-    description: Optional[str] = None
-    end: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    minutes_duration: Optional[PositiveInt] = None
-    participant: Optional[L[AppointmentParticipant]] = None
-    patient_instruction: Optional[str] = None
-    priority: Optional[int] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    requested_period: Optional[L[Period]] = None
-    service_category: Optional[L[CodeableConcept]] = None
-    service_type: Optional[L[CodeableConcept]] = None
-    slot: Optional[L[Reference]] = None
-    specialty: Optional[L[CodeableConcept]] = None
-    start: Optional[str] = None
-    status: Optional[Literal["proposed", "pending", "booked", "arrived", "fulfilled", "cancelled", "noshow", "entered-in-error", "checked-in", "waitlist"]] = None
-    supporting_information: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    appointment_type: Optional[CodeableConcept] = Field(None, alias="appointmentType", serialization_alias="appointmentType")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    cancelation_reason: Optional[CodeableConcept] = Field(None, alias="cancelationReason", serialization_alias="cancelationReason")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    end: Optional[str] = Field(None, alias="end", serialization_alias="end")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    minutes_duration: Optional[PositiveInt] = Field(None, alias="minutesDuration", serialization_alias="minutesDuration")
+    participant: Optional[L[AppointmentParticipant]] = Field(None, alias="participant", serialization_alias="participant")
+    patient_instruction: Optional[str] = Field(None, alias="patientInstruction", serialization_alias="patientInstruction")
+    priority: Optional[int] = Field(None, alias="priority", serialization_alias="priority")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    requested_period: Optional[L[Period]] = Field(None, alias="requestedPeriod", serialization_alias="requestedPeriod")
+    service_category: Optional[L[CodeableConcept]] = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
+    service_type: Optional[L[CodeableConcept]] = Field(None, alias="serviceType", serialization_alias="serviceType")
+    slot: Optional[L[Reference]] = Field(None, alias="slot", serialization_alias="slot")
+    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
+    start: Optional[str] = Field(None, alias="start", serialization_alias="start")
+    status: Optional[Literal["proposed", "pending", "booked", "arrived", "fulfilled", "cancelled", "noshow", "entered-in-error", "checked-in", "waitlist"]] = Field(None, alias="status", serialization_alias="status")
+    supporting_information: Optional[L[Reference]] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
 

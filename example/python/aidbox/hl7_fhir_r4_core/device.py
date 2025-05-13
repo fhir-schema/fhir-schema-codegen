@@ -6,62 +6,74 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceDeviceName(BackboneElement):
-    name: Optional[str] = None
-    type: Optional[Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"]] = Field(None, alias="type", serialization_alias="type")
 
 class DeviceProperty(BackboneElement):
-    type: Optional[CodeableConcept] = None
-    value_code: Optional[L[CodeableConcept]] = None
-    value_quantity: Optional[L[Quantity]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value_code: Optional[L[CodeableConcept]] = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_quantity: Optional[L[Quantity]] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class DeviceSpecialization(BackboneElement):
-    system_type: Optional[CodeableConcept] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    system_type: Optional[CodeableConcept] = Field(None, alias="systemType", serialization_alias="systemType")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class DeviceVersion(BackboneElement):
-    component: Optional[Identifier] = None
-    type: Optional[CodeableConcept] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    component: Optional[Identifier] = Field(None, alias="component", serialization_alias="component")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class DeviceUdiCarrier(BackboneElement):
-    carrier_aidc: Optional[str] = None
-    carrier_hrf: Optional[str] = None
-    device_identifier: Optional[str] = None
-    entry_type: Optional[Literal["barcode", "rfid", "manual", "card", "self-reported", "unknown"]] = None
-    issuer: Optional[str] = None
-    jurisdiction: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    carrier_aidc: Optional[str] = Field(None, alias="carrierAIDC", serialization_alias="carrierAIDC")
+    carrier_hrf: Optional[str] = Field(None, alias="carrierHRF", serialization_alias="carrierHRF")
+    device_identifier: Optional[str] = Field(None, alias="deviceIdentifier", serialization_alias="deviceIdentifier")
+    entry_type: Optional[Literal["barcode", "rfid", "manual", "card", "self-reported", "unknown"]] = Field(None, alias="entryType", serialization_alias="entryType")
+    issuer: Optional[str] = Field(None, alias="issuer", serialization_alias="issuer")
+    jurisdiction: Optional[str] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
 
 
 class Device(DomainResource):
-    contact: Optional[L[ContactPoint]] = None
-    definition: Optional[Reference] = None
-    device_name: Optional[L[DeviceDeviceName]] = None
-    distinct_identifier: Optional[str] = None
-    expiration_date: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    location: Optional[Reference] = None
-    lot_number: Optional[str] = None
-    manufacture_date: Optional[str] = None
-    manufacturer: Optional[str] = None
-    model_number: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    owner: Optional[Reference] = None
-    parent: Optional[Reference] = None
-    part_number: Optional[str] = None
-    patient: Optional[Reference] = None
-    property: Optional[L[DeviceProperty]] = None
-    safety: Optional[L[CodeableConcept]] = None
-    serial_number: Optional[str] = None
-    specialization: Optional[L[DeviceSpecialization]] = None
-    status: Optional[Literal["active", "inactive", "entered-in-error", "unknown"]] = None
-    status_reason: Optional[L[CodeableConcept]] = None
-    type: Optional[CodeableConcept] = None
-    udi_carrier: Optional[L[DeviceUdiCarrier]] = None
-    url: Optional[str] = None
-    version: Optional[L[DeviceVersion]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")
+    definition: Optional[Reference] = Field(None, alias="definition", serialization_alias="definition")
+    device_name: Optional[L[DeviceDeviceName]] = Field(None, alias="deviceName", serialization_alias="deviceName")
+    distinct_identifier: Optional[str] = Field(None, alias="distinctIdentifier", serialization_alias="distinctIdentifier")
+    expiration_date: Optional[str] = Field(None, alias="expirationDate", serialization_alias="expirationDate")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    lot_number: Optional[str] = Field(None, alias="lotNumber", serialization_alias="lotNumber")
+    manufacture_date: Optional[str] = Field(None, alias="manufactureDate", serialization_alias="manufactureDate")
+    manufacturer: Optional[str] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    model_number: Optional[str] = Field(None, alias="modelNumber", serialization_alias="modelNumber")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    owner: Optional[Reference] = Field(None, alias="owner", serialization_alias="owner")
+    parent: Optional[Reference] = Field(None, alias="parent", serialization_alias="parent")
+    part_number: Optional[str] = Field(None, alias="partNumber", serialization_alias="partNumber")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    property: Optional[L[DeviceProperty]] = Field(None, alias="property", serialization_alias="property")
+    safety: Optional[L[CodeableConcept]] = Field(None, alias="safety", serialization_alias="safety")
+    serial_number: Optional[str] = Field(None, alias="serialNumber", serialization_alias="serialNumber")
+    specialization: Optional[L[DeviceSpecialization]] = Field(None, alias="specialization", serialization_alias="specialization")
+    status: Optional[Literal["active", "inactive", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[L[CodeableConcept]] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    udi_carrier: Optional[L[DeviceUdiCarrier]] = Field(None, alias="udiCarrier", serialization_alias="udiCarrier")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    version: Optional[L[DeviceVersion]] = Field(None, alias="version", serialization_alias="version")
 

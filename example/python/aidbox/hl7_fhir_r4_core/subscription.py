@@ -6,23 +6,27 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubscriptionChannel(BackboneElement):
-    endpoint: Optional[str] = None
-    header: Optional[L[str]] = None
-    payload: Optional[str] = None
-    type: Optional[Literal["rest-hook", "websocket", "email", "sms", "message"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    endpoint: Optional[str] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    header: Optional[L[str]] = Field(None, alias="header", serialization_alias="header")
+    payload: Optional[str] = Field(None, alias="payload", serialization_alias="payload")
+    type: Optional[Literal["rest-hook", "websocket", "email", "sms", "message"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Subscription(DomainResource):
-    channel: Optional[SubscriptionChannel] = None
-    contact: Optional[L[ContactPoint]] = None
-    criteria: Optional[str] = None
-    end: Optional[str] = None
-    error: Optional[str] = None
-    reason: Optional[str] = None
-    status: Optional[Literal["requested", "active", "error", "off"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    channel: Optional[SubscriptionChannel] = Field(None, alias="channel", serialization_alias="channel")
+    contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")
+    criteria: Optional[str] = Field(None, alias="criteria", serialization_alias="criteria")
+    end: Optional[str] = Field(None, alias="end", serialization_alias="end")
+    error: Optional[str] = Field(None, alias="error", serialization_alias="error")
+    reason: Optional[str] = Field(None, alias="reason", serialization_alias="reason")
+    status: Optional[Literal["requested", "active", "error", "off"]] = Field(None, alias="status", serialization_alias="status")
 

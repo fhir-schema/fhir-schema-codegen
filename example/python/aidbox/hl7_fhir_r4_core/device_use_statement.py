@@ -6,24 +6,26 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceUseStatement(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    body_site: Optional[CodeableConcept] = None
-    derived_from: Optional[L[Reference]] = None
-    device: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    note: Optional[L[Annotation]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    recorded_on: Optional[str] = None
-    source: Optional[Reference] = None
-    status: Optional[Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold"]] = None
-    subject: Optional[Reference] = None
-    timing_date_time: Optional[str] = None
-    timing_period: Optional[Period] = None
-    timing_timing: Optional[Timing] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    derived_from: Optional[L[Reference]] = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
+    device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    recorded_on: Optional[str] = Field(None, alias="recordedOn", serialization_alias="recordedOn")
+    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
+    status: Optional[Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
 

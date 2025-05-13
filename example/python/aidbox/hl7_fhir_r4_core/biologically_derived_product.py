@@ -6,45 +6,55 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class BiologicallyDerivedProductProcessing(BackboneElement):
-    additive: Optional[Reference] = None
-    description: Optional[str] = None
-    procedure: Optional[CodeableConcept] = None
-    time_date_time: Optional[str] = None
-    time_period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additive: Optional[Reference] = Field(None, alias="additive", serialization_alias="additive")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    procedure: Optional[CodeableConcept] = Field(None, alias="procedure", serialization_alias="procedure")
+    time_date_time: Optional[str] = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductStorage(BackboneElement):
-    description: Optional[str] = None
-    duration: Optional[Period] = None
-    scale: Optional[Literal["farenheit", "celsius", "kelvin"]] = None
-    temperature: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    duration: Optional[Period] = Field(None, alias="duration", serialization_alias="duration")
+    scale: Optional[Literal["farenheit", "celsius", "kelvin"]] = Field(None, alias="scale", serialization_alias="scale")
+    temperature: Optional[float] = Field(None, alias="temperature", serialization_alias="temperature")
 
 class BiologicallyDerivedProductManipulation(BackboneElement):
-    description: Optional[str] = None
-    time_date_time: Optional[str] = None
-    time_period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    time_date_time: Optional[str] = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductCollection(BackboneElement):
-    collected_date_time: Optional[str] = None
-    collected_period: Optional[Period] = None
-    collector: Optional[Reference] = None
-    source: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    collected_date_time: Optional[str] = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
+    collected_period: Optional[Period] = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
+    collector: Optional[Reference] = Field(None, alias="collector", serialization_alias="collector")
+    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
 
 
 class BiologicallyDerivedProduct(DomainResource):
-    collection: Optional[BiologicallyDerivedProductCollection] = None
-    identifier: Optional[L[Identifier]] = None
-    manipulation: Optional[BiologicallyDerivedProductManipulation] = None
-    parent: Optional[L[Reference]] = None
-    processing: Optional[L[BiologicallyDerivedProductProcessing]] = None
-    product_category: Optional[Literal["organ", "tissue", "fluid", "cells", "biologicalAgent"]] = None
-    product_code: Optional[CodeableConcept] = None
-    quantity: Optional[int] = None
-    request: Optional[L[Reference]] = None
-    status: Optional[Literal["available", "unavailable"]] = None
-    storage: Optional[L[BiologicallyDerivedProductStorage]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    collection: Optional[BiologicallyDerivedProductCollection] = Field(None, alias="collection", serialization_alias="collection")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    manipulation: Optional[BiologicallyDerivedProductManipulation] = Field(None, alias="manipulation", serialization_alias="manipulation")
+    parent: Optional[L[Reference]] = Field(None, alias="parent", serialization_alias="parent")
+    processing: Optional[L[BiologicallyDerivedProductProcessing]] = Field(None, alias="processing", serialization_alias="processing")
+    product_category: Optional[Literal["organ", "tissue", "fluid", "cells", "biologicalAgent"]] = Field(None, alias="productCategory", serialization_alias="productCategory")
+    product_code: Optional[CodeableConcept] = Field(None, alias="productCode", serialization_alias="productCode")
+    quantity: Optional[int] = Field(None, alias="quantity", serialization_alias="quantity")
+    request: Optional[L[Reference]] = Field(None, alias="request", serialization_alias="request")
+    status: Optional[Literal["available", "unavailable"]] = Field(None, alias="status", serialization_alias="status")
+    storage: Optional[L[BiologicallyDerivedProductStorage]] = Field(None, alias="storage", serialization_alias="storage")
 

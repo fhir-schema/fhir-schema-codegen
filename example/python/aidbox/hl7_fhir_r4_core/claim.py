@@ -6,150 +6,174 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ClaimInsurance(BackboneElement):
-    business_arrangement: Optional[str] = None
-    claim_response: Optional[Reference] = None
-    coverage: Optional[Reference] = None
-    focal: Optional[bool] = None
-    identifier: Optional[Identifier] = None
-    pre_auth_ref: Optional[L[str]] = None
-    sequence: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    business_arrangement: Optional[str] = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
+    claim_response: Optional[Reference] = Field(None, alias="claimResponse", serialization_alias="claimResponse")
+    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
+    focal: Optional[bool] = Field(None, alias="focal", serialization_alias="focal")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    pre_auth_ref: Optional[L[str]] = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 class ClaimDiagnosis(BackboneElement):
-    diagnosis_codeable_concept: Optional[CodeableConcept] = None
-    diagnosis_reference: Optional[Reference] = None
-    on_admission: Optional[CodeableConcept] = None
-    package_code: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    diagnosis_codeable_concept: Optional[CodeableConcept] = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
+    diagnosis_reference: Optional[Reference] = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
+    on_admission: Optional[CodeableConcept] = Field(None, alias="onAdmission", serialization_alias="onAdmission")
+    package_code: Optional[CodeableConcept] = Field(None, alias="packageCode", serialization_alias="packageCode")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimSupportingInfo(BackboneElement):
-    category: Optional[CodeableConcept] = None
-    code: Optional[CodeableConcept] = None
-    reason: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    timing_date: Optional[str] = None
-    timing_period: Optional[Period] = None
-    value_attachment: Optional[Attachment] = None
-    value_boolean: Optional[bool] = None
-    value_quantity: Optional[Quantity] = None
-    value_reference: Optional[Reference] = None
-    value_string: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    reason: Optional[CodeableConcept] = Field(None, alias="reason", serialization_alias="reason")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    timing_date: Optional[str] = Field(None, alias="timingDate", serialization_alias="timingDate")
+    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class ClaimItemDetailSubDetail(BackboneElement):
-    category: Optional[CodeableConcept] = None
-    factor: Optional[float] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    quantity: Optional[Quantity] = None
-    revenue: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    udi: Optional[L[Reference]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    revenue: Optional[CodeableConcept] = Field(None, alias="revenue", serialization_alias="revenue")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimItemDetail(BackboneElement):
-    category: Optional[CodeableConcept] = None
-    factor: Optional[float] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    quantity: Optional[Quantity] = None
-    revenue: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    sub_detail: Optional[L[ClaimItemDetailSubDetail]] = None
-    udi: Optional[L[Reference]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    revenue: Optional[CodeableConcept] = Field(None, alias="revenue", serialization_alias="revenue")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    sub_detail: Optional[L[ClaimItemDetailSubDetail]] = Field(None, alias="subDetail", serialization_alias="subDetail")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimItem(BackboneElement):
-    body_site: Optional[CodeableConcept] = None
-    care_team_sequence: Optional[L[PositiveInt]] = None
-    category: Optional[CodeableConcept] = None
-    detail: Optional[L[ClaimItemDetail]] = None
-    diagnosis_sequence: Optional[L[PositiveInt]] = None
-    encounter: Optional[L[Reference]] = None
-    factor: Optional[float] = None
-    information_sequence: Optional[L[PositiveInt]] = None
-    location_address: Optional[Address] = None
-    location_codeable_concept: Optional[CodeableConcept] = None
-    location_reference: Optional[Reference] = None
-    modifier: Optional[L[CodeableConcept]] = None
-    net: Optional[Money] = None
-    procedure_sequence: Optional[L[PositiveInt]] = None
-    product_or_service: Optional[CodeableConcept] = None
-    program_code: Optional[L[CodeableConcept]] = None
-    quantity: Optional[Quantity] = None
-    revenue: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
-    serviced_date: Optional[str] = None
-    serviced_period: Optional[Period] = None
-    sub_site: Optional[L[CodeableConcept]] = None
-    udi: Optional[L[Reference]] = None
-    unit_price: Optional[Money] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    care_team_sequence: Optional[L[PositiveInt]] = Field(None, alias="careTeamSequence", serialization_alias="careTeamSequence")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    detail: Optional[L[ClaimItemDetail]] = Field(None, alias="detail", serialization_alias="detail")
+    diagnosis_sequence: Optional[L[PositiveInt]] = Field(None, alias="diagnosisSequence", serialization_alias="diagnosisSequence")
+    encounter: Optional[L[Reference]] = Field(None, alias="encounter", serialization_alias="encounter")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    information_sequence: Optional[L[PositiveInt]] = Field(None, alias="informationSequence", serialization_alias="informationSequence")
+    location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
+    location_codeable_concept: Optional[CodeableConcept] = Field(None, alias="locationCodeableConcept", serialization_alias="locationCodeableConcept")
+    location_reference: Optional[Reference] = Field(None, alias="locationReference", serialization_alias="locationReference")
+    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Optional[Money] = Field(None, alias="net", serialization_alias="net")
+    procedure_sequence: Optional[L[PositiveInt]] = Field(None, alias="procedureSequence", serialization_alias="procedureSequence")
+    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
+    program_code: Optional[L[CodeableConcept]] = Field(None, alias="programCode", serialization_alias="programCode")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    revenue: Optional[CodeableConcept] = Field(None, alias="revenue", serialization_alias="revenue")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    serviced_date: Optional[str] = Field(None, alias="servicedDate", serialization_alias="servicedDate")
+    serviced_period: Optional[Period] = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
+    sub_site: Optional[L[CodeableConcept]] = Field(None, alias="subSite", serialization_alias="subSite")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
+    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimProcedure(BackboneElement):
-    date: Optional[str] = None
-    procedure_codeable_concept: Optional[CodeableConcept] = None
-    procedure_reference: Optional[Reference] = None
-    sequence: Optional[PositiveInt] = None
-    type: Optional[L[CodeableConcept]] = None
-    udi: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    procedure_codeable_concept: Optional[CodeableConcept] = Field(None, alias="procedureCodeableConcept", serialization_alias="procedureCodeableConcept")
+    procedure_reference: Optional[Reference] = Field(None, alias="procedureReference", serialization_alias="procedureReference")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
+    udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
 
 class ClaimRelated(BackboneElement):
-    claim: Optional[Reference] = None
-    reference: Optional[Identifier] = None
-    relationship: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    claim: Optional[Reference] = Field(None, alias="claim", serialization_alias="claim")
+    reference: Optional[Identifier] = Field(None, alias="reference", serialization_alias="reference")
+    relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class ClaimAccident(BackboneElement):
-    date: Optional[str] = None
-    location_address: Optional[Address] = None
-    location_reference: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
+    location_reference: Optional[Reference] = Field(None, alias="locationReference", serialization_alias="locationReference")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimPayee(BackboneElement):
-    party: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimCareTeam(BackboneElement):
-    provider: Optional[Reference] = None
-    qualification: Optional[CodeableConcept] = None
-    responsible: Optional[bool] = None
-    role: Optional[CodeableConcept] = None
-    sequence: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    qualification: Optional[CodeableConcept] = Field(None, alias="qualification", serialization_alias="qualification")
+    responsible: Optional[bool] = Field(None, alias="responsible", serialization_alias="responsible")
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 
 class Claim(DomainResource):
-    accident: Optional[ClaimAccident] = None
-    billable_period: Optional[Period] = None
-    care_team: Optional[L[ClaimCareTeam]] = None
-    created: Optional[str] = None
-    diagnosis: Optional[L[ClaimDiagnosis]] = None
-    enterer: Optional[Reference] = None
-    facility: Optional[Reference] = None
-    funds_reserve: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    insurance: Optional[L[ClaimInsurance]] = None
-    insurer: Optional[Reference] = None
-    item: Optional[L[ClaimItem]] = None
-    original_prescription: Optional[Reference] = None
-    patient: Optional[Reference] = None
-    payee: Optional[ClaimPayee] = None
-    prescription: Optional[Reference] = None
-    priority: Optional[CodeableConcept] = None
-    procedure: Optional[L[ClaimProcedure]] = None
-    provider: Optional[Reference] = None
-    referral: Optional[Reference] = None
-    related: Optional[L[ClaimRelated]] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
-    sub_type: Optional[CodeableConcept] = None
-    supporting_info: Optional[L[ClaimSupportingInfo]] = None
-    total: Optional[Money] = None
-    type: Optional[CodeableConcept] = None
-    use: Optional[Literal["claim", "preauthorization", "predetermination"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    accident: Optional[ClaimAccident] = Field(None, alias="accident", serialization_alias="accident")
+    billable_period: Optional[Period] = Field(None, alias="billablePeriod", serialization_alias="billablePeriod")
+    care_team: Optional[L[ClaimCareTeam]] = Field(None, alias="careTeam", serialization_alias="careTeam")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    diagnosis: Optional[L[ClaimDiagnosis]] = Field(None, alias="diagnosis", serialization_alias="diagnosis")
+    enterer: Optional[Reference] = Field(None, alias="enterer", serialization_alias="enterer")
+    facility: Optional[Reference] = Field(None, alias="facility", serialization_alias="facility")
+    funds_reserve: Optional[CodeableConcept] = Field(None, alias="fundsReserve", serialization_alias="fundsReserve")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    insurance: Optional[L[ClaimInsurance]] = Field(None, alias="insurance", serialization_alias="insurance")
+    insurer: Optional[Reference] = Field(None, alias="insurer", serialization_alias="insurer")
+    item: Optional[L[ClaimItem]] = Field(None, alias="item", serialization_alias="item")
+    original_prescription: Optional[Reference] = Field(None, alias="originalPrescription", serialization_alias="originalPrescription")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    payee: Optional[ClaimPayee] = Field(None, alias="payee", serialization_alias="payee")
+    prescription: Optional[Reference] = Field(None, alias="prescription", serialization_alias="prescription")
+    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
+    procedure: Optional[L[ClaimProcedure]] = Field(None, alias="procedure", serialization_alias="procedure")
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    referral: Optional[Reference] = Field(None, alias="referral", serialization_alias="referral")
+    related: Optional[L[ClaimRelated]] = Field(None, alias="related", serialization_alias="related")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    sub_type: Optional[CodeableConcept] = Field(None, alias="subType", serialization_alias="subType")
+    supporting_info: Optional[L[ClaimSupportingInfo]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    total: Optional[Money] = Field(None, alias="total", serialization_alias="total")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    use: Optional[Literal["claim", "preauthorization", "predetermination"]] = Field(None, alias="use", serialization_alias="use")
 

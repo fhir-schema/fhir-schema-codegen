@@ -6,29 +6,33 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ListEntry(BackboneElement):
-    date: Optional[str] = None
-    deleted: Optional[bool] = None
-    flag: Optional[CodeableConcept] = None
-    item: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    deleted: Optional[bool] = Field(None, alias="deleted", serialization_alias="deleted")
+    flag: Optional[CodeableConcept] = Field(None, alias="flag", serialization_alias="flag")
+    item: Optional[Reference] = Field(None, alias="item", serialization_alias="item")
 
 
 class List(DomainResource):
-    code: Optional[CodeableConcept] = None
-    date: Optional[str] = None
-    empty_reason: Optional[CodeableConcept] = None
-    encounter: Optional[Reference] = None
-    entry: Optional[L[ListEntry]] = None
-    identifier: Optional[L[Identifier]] = None
-    mode: Optional[Literal["working", "snapshot", "changes"]] = None
-    note: Optional[L[Annotation]] = None
-    ordered_by: Optional[CodeableConcept] = None
-    source: Optional[Reference] = None
-    status: Optional[Literal["current", "retired", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    empty_reason: Optional[CodeableConcept] = Field(None, alias="emptyReason", serialization_alias="emptyReason")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    entry: Optional[L[ListEntry]] = Field(None, alias="entry", serialization_alias="entry")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    mode: Optional[Literal["working", "snapshot", "changes"]] = Field(None, alias="mode", serialization_alias="mode")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    ordered_by: Optional[CodeableConcept] = Field(None, alias="orderedBy", serialization_alias="orderedBy")
+    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
+    status: Optional[Literal["current", "retired", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 

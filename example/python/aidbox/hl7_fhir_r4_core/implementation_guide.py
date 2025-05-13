@@ -6,93 +6,117 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImplementationGuideDefinitionGrouping(BackboneElement):
-    description: Optional[str] = None
-    name: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
 
 class ImplementationGuideDefinitionResource(BackboneElement):
-    description: Optional[str] = None
-    example_boolean: Optional[bool] = None
-    example_canonical: Optional[str] = None
-    fhir_version: Optional[L[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]]] = None
-    grouping_id: Optional[str] = None
-    name: Optional[str] = None
-    reference: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    example_boolean: Optional[bool] = Field(None, alias="exampleBoolean", serialization_alias="exampleBoolean")
+    example_canonical: Optional[str] = Field(None, alias="exampleCanonical", serialization_alias="exampleCanonical")
+    fhir_version: Optional[L[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]]] = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
+    grouping_id: Optional[str] = Field(None, alias="groupingId", serialization_alias="groupingId")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
 
 class ImplementationGuideDefinitionPage(BackboneElement):
-    generation: Optional[Literal["html", "markdown", "xml", "generated"]] = None
-    name_reference: Optional[Reference] = None
-    name_url: Optional[str] = None
-    page: Optional[L[ImplementationGuideDefinitionPage]] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    generation: Optional[Literal["html", "markdown", "xml", "generated"]] = Field(None, alias="generation", serialization_alias="generation")
+    name_reference: Optional[Reference] = Field(None, alias="nameReference", serialization_alias="nameReference")
+    name_url: Optional[str] = Field(None, alias="nameUrl", serialization_alias="nameUrl")
+    page: Optional[L[ImplementationGuideDefinitionPage]] = Field(None, alias="page", serialization_alias="page")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class ImplementationGuideDefinitionParameter(BackboneElement):
-    code: Optional[Literal["apply", "path-resource", "path-pages", "path-tx-cache", "expansion-parameter", "rule-broken-links", "generate-xml", "generate-json", "generate-turtle", "html-template"]] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[Literal["apply", "path-resource", "path-pages", "path-tx-cache", "expansion-parameter", "rule-broken-links", "generate-xml", "generate-json", "generate-turtle", "html-template"]] = Field(None, alias="code", serialization_alias="code")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ImplementationGuideDefinitionTemplate(BackboneElement):
-    code: Optional[str] = None
-    scope: Optional[str] = None
-    source: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    scope: Optional[str] = Field(None, alias="scope", serialization_alias="scope")
+    source: Optional[str] = Field(None, alias="source", serialization_alias="source")
 
 class ImplementationGuideDefinition(BackboneElement):
-    grouping: Optional[L[ImplementationGuideDefinitionGrouping]] = None
-    page: Optional[ImplementationGuideDefinitionPage] = None
-    parameter: Optional[L[ImplementationGuideDefinitionParameter]] = None
-    resource: Optional[L[ImplementationGuideDefinitionResource]] = None
-    template: Optional[L[ImplementationGuideDefinitionTemplate]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    grouping: Optional[L[ImplementationGuideDefinitionGrouping]] = Field(None, alias="grouping", serialization_alias="grouping")
+    page: Optional[ImplementationGuideDefinitionPage] = Field(None, alias="page", serialization_alias="page")
+    parameter: Optional[L[ImplementationGuideDefinitionParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
+    resource: Optional[L[ImplementationGuideDefinitionResource]] = Field(None, alias="resource", serialization_alias="resource")
+    template: Optional[L[ImplementationGuideDefinitionTemplate]] = Field(None, alias="template", serialization_alias="template")
 
 class ImplementationGuideGlobal(BackboneElement):
-    profile: Optional[str] = None
-    type: Optional[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    profile: Optional[str] = Field(None, alias="profile", serialization_alias="profile")
+    type: Optional[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = Field(None, alias="type", serialization_alias="type")
 
 class ImplementationGuideDependsOn(BackboneElement):
-    package_id: Optional[str] = None
-    uri: Optional[str] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    package_id: Optional[str] = Field(None, alias="packageId", serialization_alias="packageId")
+    uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class ImplementationGuideManifestResource(BackboneElement):
-    example_boolean: Optional[bool] = None
-    example_canonical: Optional[str] = None
-    reference: Optional[Reference] = None
-    relative_path: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    example_boolean: Optional[bool] = Field(None, alias="exampleBoolean", serialization_alias="exampleBoolean")
+    example_canonical: Optional[str] = Field(None, alias="exampleCanonical", serialization_alias="exampleCanonical")
+    reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
+    relative_path: Optional[str] = Field(None, alias="relativePath", serialization_alias="relativePath")
 
 class ImplementationGuideManifestPage(BackboneElement):
-    anchor: Optional[L[str]] = None
-    name: Optional[str] = None
-    title: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    anchor: Optional[L[str]] = Field(None, alias="anchor", serialization_alias="anchor")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class ImplementationGuideManifest(BackboneElement):
-    image: Optional[L[str]] = None
-    other: Optional[L[str]] = None
-    page: Optional[L[ImplementationGuideManifestPage]] = None
-    rendering: Optional[str] = None
-    resource: Optional[L[ImplementationGuideManifestResource]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    image: Optional[L[str]] = Field(None, alias="image", serialization_alias="image")
+    other: Optional[L[str]] = Field(None, alias="other", serialization_alias="other")
+    page: Optional[L[ImplementationGuideManifestPage]] = Field(None, alias="page", serialization_alias="page")
+    rendering: Optional[str] = Field(None, alias="rendering", serialization_alias="rendering")
+    resource: Optional[L[ImplementationGuideManifestResource]] = Field(None, alias="resource", serialization_alias="resource")
 
 
 class ImplementationGuide(DomainResource):
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    definition: Optional[ImplementationGuideDefinition] = None
-    depends_on: Optional[L[ImplementationGuideDependsOn]] = None
-    description: Optional[str] = None
-    experimental: Optional[bool] = None
-    fhir_version: Optional[L[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]]] = None
-    global_: Optional[L[ImplementationGuideGlobal]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    license: Optional[Literal["not-open-source", "0BSD", "AAL", "Abstyles", "Adobe-2006", "Adobe-Glyph", "ADSL", "AFL-1.1", "AFL-1.2", "AFL-2.0", "AFL-2.1", "AFL-3.0", "Afmparse", "AGPL-1.0-only", "AGPL-1.0-or-later", "AGPL-3.0-only", "AGPL-3.0-or-later", "Aladdin", "AMDPLPA", "AML", "AMPAS", "ANTLR-PD", "Apache-1.0", "Apache-1.1", "Apache-2.0", "APAFML", "APL-1.0", "APSL-1.0", "APSL-1.1", "APSL-1.2", "APSL-2.0", "Artistic-1.0-cl8", "Artistic-1.0-Perl", "Artistic-1.0", "Artistic-2.0", "Bahyph", "Barr", "Beerware", "BitTorrent-1.0", "BitTorrent-1.1", "Borceux", "BSD-1-Clause", "BSD-2-Clause-FreeBSD", "BSD-2-Clause-NetBSD", "BSD-2-Clause-Patent", "BSD-2-Clause", "BSD-3-Clause-Attribution", "BSD-3-Clause-Clear", "BSD-3-Clause-LBNL", "BSD-3-Clause-No-Nuclear-License-2014", "BSD-3-Clause-No-Nuclear-License", "BSD-3-Clause-No-Nuclear-Warranty", "BSD-3-Clause", "BSD-4-Clause-UC", "BSD-4-Clause", "BSD-Protection", "BSD-Source-Code", "BSL-1.0", "bzip2-1.0.5", "bzip2-1.0.6", "Caldera", "CATOSL-1.1", "CC-BY-1.0", "CC-BY-2.0", "CC-BY-2.5", "CC-BY-3.0", "CC-BY-4.0", "CC-BY-NC-1.0", "CC-BY-NC-2.0", "CC-BY-NC-2.5", "CC-BY-NC-3.0", "CC-BY-NC-4.0", "CC-BY-NC-ND-1.0", "CC-BY-NC-ND-2.0", "CC-BY-NC-ND-2.5", "CC-BY-NC-ND-3.0", "CC-BY-NC-ND-4.0", "CC-BY-NC-SA-1.0", "CC-BY-NC-SA-2.0", "CC-BY-NC-SA-2.5", "CC-BY-NC-SA-3.0", "CC-BY-NC-SA-4.0", "CC-BY-ND-1.0", "CC-BY-ND-2.0", "CC-BY-ND-2.5", "CC-BY-ND-3.0", "CC-BY-ND-4.0", "CC-BY-SA-1.0", "CC-BY-SA-2.0", "CC-BY-SA-2.5", "CC-BY-SA-3.0", "CC-BY-SA-4.0", "CC0-1.0", "CDDL-1.0", "CDDL-1.1", "CDLA-Permissive-1.0", "CDLA-Sharing-1.0", "CECILL-1.0", "CECILL-1.1", "CECILL-2.0", "CECILL-2.1", "CECILL-B", "CECILL-C", "ClArtistic", "CNRI-Jython", "CNRI-Python-GPL-Compatible", "CNRI-Python", "Condor-1.1", "CPAL-1.0", "CPL-1.0", "CPOL-1.02", "Crossword", "CrystalStacker", "CUA-OPL-1.0", "Cube", "curl", "D-FSL-1.0", "diffmark", "DOC", "Dotseqn", "DSDP", "dvipdfm", "ECL-1.0", "ECL-2.0", "EFL-1.0", "EFL-2.0", "eGenix", "Entessa", "EPL-1.0", "EPL-2.0", "ErlPL-1.1", "EUDatagrid", "EUPL-1.0", "EUPL-1.1", "EUPL-1.2", "Eurosym", "Fair", "Frameworx-1.0", "FreeImage", "FSFAP", "FSFUL", "FSFULLR", "FTL", "GFDL-1.1-only", "GFDL-1.1-or-later", "GFDL-1.2-only", "GFDL-1.2-or-later", "GFDL-1.3-only", "GFDL-1.3-or-later", "Giftware", "GL2PS", "Glide", "Glulxe", "gnuplot", "GPL-1.0-only", "GPL-1.0-or-later", "GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0-only", "GPL-3.0-or-later", "gSOAP-1.3b", "HaskellReport", "HPND", "IBM-pibs", "ICU", "IJG", "ImageMagick", "iMatix", "Imlib2", "Info-ZIP", "Intel-ACPI", "Intel", "Interbase-1.0", "IPA", "IPL-1.0", "ISC", "JasPer-2.0", "JSON", "LAL-1.2", "LAL-1.3", "Latex2e", "Leptonica", "LGPL-2.0-only", "LGPL-2.0-or-later", "LGPL-2.1-only", "LGPL-2.1-or-later", "LGPL-3.0-only", "LGPL-3.0-or-later", "LGPLLR", "Libpng", "libtiff", "LiLiQ-P-1.1", "LiLiQ-R-1.1", "LiLiQ-Rplus-1.1", "Linux-OpenIB", "LPL-1.0", "LPL-1.02", "LPPL-1.0", "LPPL-1.1", "LPPL-1.2", "LPPL-1.3a", "LPPL-1.3c", "MakeIndex", "MirOS", "MIT-0", "MIT-advertising", "MIT-CMU", "MIT-enna", "MIT-feh", "MIT", "MITNFA", "Motosoto", "mpich2", "MPL-1.0", "MPL-1.1", "MPL-2.0-no-copyleft-exception", "MPL-2.0", "MS-PL", "MS-RL", "MTLL", "Multics", "Mup", "NASA-1.3", "Naumen", "NBPL-1.0", "NCSA", "Net-SNMP", "NetCDF", "Newsletr", "NGPL", "NLOD-1.0", "NLPL", "Nokia", "NOSL", "Noweb", "NPL-1.0", "NPL-1.1", "NPOSL-3.0", "NRL", "NTP", "OCCT-PL", "OCLC-2.0", "ODbL-1.0", "OFL-1.0", "OFL-1.1", "OGTSL", "OLDAP-1.1", "OLDAP-1.2", "OLDAP-1.3", "OLDAP-1.4", "OLDAP-2.0.1", "OLDAP-2.0", "OLDAP-2.1", "OLDAP-2.2.1", "OLDAP-2.2.2", "OLDAP-2.2", "OLDAP-2.3", "OLDAP-2.4", "OLDAP-2.5", "OLDAP-2.6", "OLDAP-2.7", "OLDAP-2.8", "OML", "OpenSSL", "OPL-1.0", "OSET-PL-2.1", "OSL-1.0", "OSL-1.1", "OSL-2.0", "OSL-2.1", "OSL-3.0", "PDDL-1.0", "PHP-3.0", "PHP-3.01", "Plexus", "PostgreSQL", "psfrag", "psutils", "Python-2.0", "Qhull", "QPL-1.0", "Rdisc", "RHeCos-1.1", "RPL-1.1", "RPL-1.5", "RPSL-1.0", "RSA-MD", "RSCPL", "Ruby", "SAX-PD", "Saxpath", "SCEA", "Sendmail", "SGI-B-1.0", "SGI-B-1.1", "SGI-B-2.0", "SimPL-2.0", "SISSL-1.2", "SISSL", "Sleepycat", "SMLNJ", "SMPPL", "SNIA", "Spencer-86", "Spencer-94", "Spencer-99", "SPL-1.0", "SugarCRM-1.1.3", "SWL", "TCL", "TCP-wrappers", "TMate", "TORQUE-1.1", "TOSL", "Unicode-DFS-2015", "Unicode-DFS-2016", "Unicode-TOU", "Unlicense", "UPL-1.0", "Vim", "VOSTROM", "VSL-1.0", "W3C-19980720", "W3C-20150513", "W3C", "Watcom-1.0", "Wsuipa", "WTFPL", "X11", "Xerox", "XFree86-1.1", "xinetd", "Xnet", "xpp", "XSkat", "YPL-1.0", "YPL-1.1", "Zed", "Zend-2.0", "Zimbra-1.3", "Zimbra-1.4", "zlib-acknowledgement", "Zlib", "ZPL-1.1", "ZPL-2.0", "ZPL-2.1"]] = None
-    manifest: Optional[ImplementationGuideManifest] = None
-    name: Optional[str] = None
-    package_id: Optional[str] = None
-    publisher: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    definition: Optional[ImplementationGuideDefinition] = Field(None, alias="definition", serialization_alias="definition")
+    depends_on: Optional[L[ImplementationGuideDependsOn]] = Field(None, alias="dependsOn", serialization_alias="dependsOn")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    fhir_version: Optional[L[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]]] = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
+    global_: Optional[L[ImplementationGuideGlobal]] = Field(None, alias="global", serialization_alias="global")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    license: Optional[Literal["not-open-source", "0BSD", "AAL", "Abstyles", "Adobe-2006", "Adobe-Glyph", "ADSL", "AFL-1.1", "AFL-1.2", "AFL-2.0", "AFL-2.1", "AFL-3.0", "Afmparse", "AGPL-1.0-only", "AGPL-1.0-or-later", "AGPL-3.0-only", "AGPL-3.0-or-later", "Aladdin", "AMDPLPA", "AML", "AMPAS", "ANTLR-PD", "Apache-1.0", "Apache-1.1", "Apache-2.0", "APAFML", "APL-1.0", "APSL-1.0", "APSL-1.1", "APSL-1.2", "APSL-2.0", "Artistic-1.0-cl8", "Artistic-1.0-Perl", "Artistic-1.0", "Artistic-2.0", "Bahyph", "Barr", "Beerware", "BitTorrent-1.0", "BitTorrent-1.1", "Borceux", "BSD-1-Clause", "BSD-2-Clause-FreeBSD", "BSD-2-Clause-NetBSD", "BSD-2-Clause-Patent", "BSD-2-Clause", "BSD-3-Clause-Attribution", "BSD-3-Clause-Clear", "BSD-3-Clause-LBNL", "BSD-3-Clause-No-Nuclear-License-2014", "BSD-3-Clause-No-Nuclear-License", "BSD-3-Clause-No-Nuclear-Warranty", "BSD-3-Clause", "BSD-4-Clause-UC", "BSD-4-Clause", "BSD-Protection", "BSD-Source-Code", "BSL-1.0", "bzip2-1.0.5", "bzip2-1.0.6", "Caldera", "CATOSL-1.1", "CC-BY-1.0", "CC-BY-2.0", "CC-BY-2.5", "CC-BY-3.0", "CC-BY-4.0", "CC-BY-NC-1.0", "CC-BY-NC-2.0", "CC-BY-NC-2.5", "CC-BY-NC-3.0", "CC-BY-NC-4.0", "CC-BY-NC-ND-1.0", "CC-BY-NC-ND-2.0", "CC-BY-NC-ND-2.5", "CC-BY-NC-ND-3.0", "CC-BY-NC-ND-4.0", "CC-BY-NC-SA-1.0", "CC-BY-NC-SA-2.0", "CC-BY-NC-SA-2.5", "CC-BY-NC-SA-3.0", "CC-BY-NC-SA-4.0", "CC-BY-ND-1.0", "CC-BY-ND-2.0", "CC-BY-ND-2.5", "CC-BY-ND-3.0", "CC-BY-ND-4.0", "CC-BY-SA-1.0", "CC-BY-SA-2.0", "CC-BY-SA-2.5", "CC-BY-SA-3.0", "CC-BY-SA-4.0", "CC0-1.0", "CDDL-1.0", "CDDL-1.1", "CDLA-Permissive-1.0", "CDLA-Sharing-1.0", "CECILL-1.0", "CECILL-1.1", "CECILL-2.0", "CECILL-2.1", "CECILL-B", "CECILL-C", "ClArtistic", "CNRI-Jython", "CNRI-Python-GPL-Compatible", "CNRI-Python", "Condor-1.1", "CPAL-1.0", "CPL-1.0", "CPOL-1.02", "Crossword", "CrystalStacker", "CUA-OPL-1.0", "Cube", "curl", "D-FSL-1.0", "diffmark", "DOC", "Dotseqn", "DSDP", "dvipdfm", "ECL-1.0", "ECL-2.0", "EFL-1.0", "EFL-2.0", "eGenix", "Entessa", "EPL-1.0", "EPL-2.0", "ErlPL-1.1", "EUDatagrid", "EUPL-1.0", "EUPL-1.1", "EUPL-1.2", "Eurosym", "Fair", "Frameworx-1.0", "FreeImage", "FSFAP", "FSFUL", "FSFULLR", "FTL", "GFDL-1.1-only", "GFDL-1.1-or-later", "GFDL-1.2-only", "GFDL-1.2-or-later", "GFDL-1.3-only", "GFDL-1.3-or-later", "Giftware", "GL2PS", "Glide", "Glulxe", "gnuplot", "GPL-1.0-only", "GPL-1.0-or-later", "GPL-2.0-only", "GPL-2.0-or-later", "GPL-3.0-only", "GPL-3.0-or-later", "gSOAP-1.3b", "HaskellReport", "HPND", "IBM-pibs", "ICU", "IJG", "ImageMagick", "iMatix", "Imlib2", "Info-ZIP", "Intel-ACPI", "Intel", "Interbase-1.0", "IPA", "IPL-1.0", "ISC", "JasPer-2.0", "JSON", "LAL-1.2", "LAL-1.3", "Latex2e", "Leptonica", "LGPL-2.0-only", "LGPL-2.0-or-later", "LGPL-2.1-only", "LGPL-2.1-or-later", "LGPL-3.0-only", "LGPL-3.0-or-later", "LGPLLR", "Libpng", "libtiff", "LiLiQ-P-1.1", "LiLiQ-R-1.1", "LiLiQ-Rplus-1.1", "Linux-OpenIB", "LPL-1.0", "LPL-1.02", "LPPL-1.0", "LPPL-1.1", "LPPL-1.2", "LPPL-1.3a", "LPPL-1.3c", "MakeIndex", "MirOS", "MIT-0", "MIT-advertising", "MIT-CMU", "MIT-enna", "MIT-feh", "MIT", "MITNFA", "Motosoto", "mpich2", "MPL-1.0", "MPL-1.1", "MPL-2.0-no-copyleft-exception", "MPL-2.0", "MS-PL", "MS-RL", "MTLL", "Multics", "Mup", "NASA-1.3", "Naumen", "NBPL-1.0", "NCSA", "Net-SNMP", "NetCDF", "Newsletr", "NGPL", "NLOD-1.0", "NLPL", "Nokia", "NOSL", "Noweb", "NPL-1.0", "NPL-1.1", "NPOSL-3.0", "NRL", "NTP", "OCCT-PL", "OCLC-2.0", "ODbL-1.0", "OFL-1.0", "OFL-1.1", "OGTSL", "OLDAP-1.1", "OLDAP-1.2", "OLDAP-1.3", "OLDAP-1.4", "OLDAP-2.0.1", "OLDAP-2.0", "OLDAP-2.1", "OLDAP-2.2.1", "OLDAP-2.2.2", "OLDAP-2.2", "OLDAP-2.3", "OLDAP-2.4", "OLDAP-2.5", "OLDAP-2.6", "OLDAP-2.7", "OLDAP-2.8", "OML", "OpenSSL", "OPL-1.0", "OSET-PL-2.1", "OSL-1.0", "OSL-1.1", "OSL-2.0", "OSL-2.1", "OSL-3.0", "PDDL-1.0", "PHP-3.0", "PHP-3.01", "Plexus", "PostgreSQL", "psfrag", "psutils", "Python-2.0", "Qhull", "QPL-1.0", "Rdisc", "RHeCos-1.1", "RPL-1.1", "RPL-1.5", "RPSL-1.0", "RSA-MD", "RSCPL", "Ruby", "SAX-PD", "Saxpath", "SCEA", "Sendmail", "SGI-B-1.0", "SGI-B-1.1", "SGI-B-2.0", "SimPL-2.0", "SISSL-1.2", "SISSL", "Sleepycat", "SMLNJ", "SMPPL", "SNIA", "Spencer-86", "Spencer-94", "Spencer-99", "SPL-1.0", "SugarCRM-1.1.3", "SWL", "TCL", "TCP-wrappers", "TMate", "TORQUE-1.1", "TOSL", "Unicode-DFS-2015", "Unicode-DFS-2016", "Unicode-TOU", "Unlicense", "UPL-1.0", "Vim", "VOSTROM", "VSL-1.0", "W3C-19980720", "W3C-20150513", "W3C", "Watcom-1.0", "Wsuipa", "WTFPL", "X11", "Xerox", "XFree86-1.1", "xinetd", "Xnet", "xpp", "XSkat", "YPL-1.0", "YPL-1.1", "Zed", "Zend-2.0", "Zimbra-1.3", "Zimbra-1.4", "zlib-acknowledgement", "Zlib", "ZPL-1.1", "ZPL-2.0", "ZPL-2.1"]] = Field(None, alias="license", serialization_alias="license")
+    manifest: Optional[ImplementationGuideManifest] = Field(None, alias="manifest", serialization_alias="manifest")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    package_id: Optional[str] = Field(None, alias="packageId", serialization_alias="packageId")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

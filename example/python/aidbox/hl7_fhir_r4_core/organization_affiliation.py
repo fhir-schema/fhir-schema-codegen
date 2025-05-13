@@ -6,21 +6,23 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OrganizationAffiliation(DomainResource):
-    active: Optional[bool] = None
-    code: Optional[L[CodeableConcept]] = None
-    endpoint: Optional[L[Reference]] = None
-    healthcare_service: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    location: Optional[L[Reference]] = None
-    network: Optional[L[Reference]] = None
-    organization: Optional[Reference] = None
-    participating_organization: Optional[Reference] = None
-    period: Optional[Period] = None
-    specialty: Optional[L[CodeableConcept]] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    healthcare_service: Optional[L[Reference]] = Field(None, alias="healthcareService", serialization_alias="healthcareService")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Optional[L[Reference]] = Field(None, alias="location", serialization_alias="location")
+    network: Optional[L[Reference]] = Field(None, alias="network", serialization_alias="network")
+    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
+    participating_organization: Optional[Reference] = Field(None, alias="participatingOrganization", serialization_alias="participatingOrganization")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 

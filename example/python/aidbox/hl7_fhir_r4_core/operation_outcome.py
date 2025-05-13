@@ -6,19 +6,23 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OperationOutcomeIssue(BackboneElement):
-    code: Optional[Literal["invalid", "security", "processing", "transient", "informational"]] = None
-    details: Optional[CodeableConcept] = None
-    diagnostics: Optional[str] = None
-    expression: Optional[L[str]] = None
-    location: Optional[L[str]] = None
-    severity: Optional[Literal["fatal", "error", "warning", "information"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[Literal["invalid", "security", "processing", "transient", "informational"]] = Field(None, alias="code", serialization_alias="code")
+    details: Optional[CodeableConcept] = Field(None, alias="details", serialization_alias="details")
+    diagnostics: Optional[str] = Field(None, alias="diagnostics", serialization_alias="diagnostics")
+    expression: Optional[L[str]] = Field(None, alias="expression", serialization_alias="expression")
+    location: Optional[L[str]] = Field(None, alias="location", serialization_alias="location")
+    severity: Optional[Literal["fatal", "error", "warning", "information"]] = Field(None, alias="severity", serialization_alias="severity")
 
 
 class OperationOutcome(DomainResource):
-    issue: Optional[L[OperationOutcomeIssue]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    issue: Optional[L[OperationOutcomeIssue]] = Field(None, alias="issue", serialization_alias="issue")
 

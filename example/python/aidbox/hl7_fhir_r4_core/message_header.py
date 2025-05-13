@@ -6,40 +6,48 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MessageHeaderResponse(BackboneElement):
-    code: Optional[Literal["ok", "transient-error", "fatal-error"]] = None
-    details: Optional[Reference] = None
-    identifier: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[Literal["ok", "transient-error", "fatal-error"]] = Field(None, alias="code", serialization_alias="code")
+    details: Optional[Reference] = Field(None, alias="details", serialization_alias="details")
+    identifier: Optional[str] = Field(None, alias="identifier", serialization_alias="identifier")
 
 class MessageHeaderSource(BackboneElement):
-    contact: Optional[ContactPoint] = None
-    endpoint: Optional[str] = None
-    name: Optional[str] = None
-    software: Optional[str] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[ContactPoint] = Field(None, alias="contact", serialization_alias="contact")
+    endpoint: Optional[str] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    software: Optional[str] = Field(None, alias="software", serialization_alias="software")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class MessageHeaderDestination(BackboneElement):
-    endpoint: Optional[str] = None
-    name: Optional[str] = None
-    receiver: Optional[Reference] = None
-    target: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    endpoint: Optional[str] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    receiver: Optional[Reference] = Field(None, alias="receiver", serialization_alias="receiver")
+    target: Optional[Reference] = Field(None, alias="target", serialization_alias="target")
 
 
 class MessageHeader(DomainResource):
-    author: Optional[Reference] = None
-    definition: Optional[str] = None
-    destination: Optional[L[MessageHeaderDestination]] = None
-    enterer: Optional[Reference] = None
-    event_coding: Optional[Coding] = None
-    event_uri: Optional[str] = None
-    focus: Optional[L[Reference]] = None
-    reason: Optional[CodeableConcept] = None
-    response: Optional[MessageHeaderResponse] = None
-    responsible: Optional[Reference] = None
-    sender: Optional[Reference] = None
-    source: Optional[MessageHeaderSource] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
+    destination: Optional[L[MessageHeaderDestination]] = Field(None, alias="destination", serialization_alias="destination")
+    enterer: Optional[Reference] = Field(None, alias="enterer", serialization_alias="enterer")
+    event_coding: Optional[Coding] = Field(None, alias="eventCoding", serialization_alias="eventCoding")
+    event_uri: Optional[str] = Field(None, alias="eventUri", serialization_alias="eventUri")
+    focus: Optional[L[Reference]] = Field(None, alias="focus", serialization_alias="focus")
+    reason: Optional[CodeableConcept] = Field(None, alias="reason", serialization_alias="reason")
+    response: Optional[MessageHeaderResponse] = Field(None, alias="response", serialization_alias="response")
+    responsible: Optional[Reference] = Field(None, alias="responsible", serialization_alias="responsible")
+    sender: Optional[Reference] = Field(None, alias="sender", serialization_alias="sender")
+    source: Optional[MessageHeaderSource] = Field(None, alias="source", serialization_alias="source")
 

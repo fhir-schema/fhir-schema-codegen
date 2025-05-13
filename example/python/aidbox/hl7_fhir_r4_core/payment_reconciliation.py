@@ -6,41 +6,47 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PaymentReconciliationProcessNote(BackboneElement):
-    text: Optional[str] = None
-    type: Optional[Literal["display", "print", "printoper"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    type: Optional[Literal["display", "print", "printoper"]] = Field(None, alias="type", serialization_alias="type")
 
 class PaymentReconciliationDetail(BackboneElement):
-    amount: Optional[Money] = None
-    date: Optional[str] = None
-    identifier: Optional[Identifier] = None
-    payee: Optional[Reference] = None
-    predecessor: Optional[Identifier] = None
-    request: Optional[Reference] = None
-    response: Optional[Reference] = None
-    responsible: Optional[Reference] = None
-    submitter: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    payee: Optional[Reference] = Field(None, alias="payee", serialization_alias="payee")
+    predecessor: Optional[Identifier] = Field(None, alias="predecessor", serialization_alias="predecessor")
+    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
+    response: Optional[Reference] = Field(None, alias="response", serialization_alias="response")
+    responsible: Optional[Reference] = Field(None, alias="responsible", serialization_alias="responsible")
+    submitter: Optional[Reference] = Field(None, alias="submitter", serialization_alias="submitter")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class PaymentReconciliation(DomainResource):
-    created: Optional[str] = None
-    detail: Optional[L[PaymentReconciliationDetail]] = None
-    disposition: Optional[str] = None
-    form_code: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = None
-    payment_amount: Optional[Money] = None
-    payment_date: Optional[str] = None
-    payment_identifier: Optional[Identifier] = None
-    payment_issuer: Optional[Reference] = None
-    period: Optional[Period] = None
-    process_note: Optional[L[PaymentReconciliationProcessNote]] = None
-    request: Optional[Reference] = None
-    requestor: Optional[Reference] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    detail: Optional[L[PaymentReconciliationDetail]] = Field(None, alias="detail", serialization_alias="detail")
+    disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")
+    form_code: Optional[CodeableConcept] = Field(None, alias="formCode", serialization_alias="formCode")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = Field(None, alias="outcome", serialization_alias="outcome")
+    payment_amount: Optional[Money] = Field(None, alias="paymentAmount", serialization_alias="paymentAmount")
+    payment_date: Optional[str] = Field(None, alias="paymentDate", serialization_alias="paymentDate")
+    payment_identifier: Optional[Identifier] = Field(None, alias="paymentIdentifier", serialization_alias="paymentIdentifier")
+    payment_issuer: Optional[Reference] = Field(None, alias="paymentIssuer", serialization_alias="paymentIssuer")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    process_note: Optional[L[PaymentReconciliationProcessNote]] = Field(None, alias="processNote", serialization_alias="processNote")
+    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
+    requestor: Optional[Reference] = Field(None, alias="requestor", serialization_alias="requestor")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

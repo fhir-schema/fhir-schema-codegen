@@ -6,48 +6,56 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
-    amount: Optional[Money] = None
-    code: Optional[CodeableConcept] = None
-    factor: Optional[float] = None
-    type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = Field(None, alias="type", serialization_alias="type")
 
 class ChargeItemDefinitionPropertyGroup(BackboneElement):
-    applicability: Optional[L[ChargeItemDefinitionApplicability]] = None
-    price_component: Optional[L[ChargeItemDefinitionPropertyGroupPriceComponent]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    applicability: Optional[L[ChargeItemDefinitionApplicability]] = Field(None, alias="applicability", serialization_alias="applicability")
+    price_component: Optional[L[ChargeItemDefinitionPropertyGroupPriceComponent]] = Field(None, alias="priceComponent", serialization_alias="priceComponent")
 
 class ChargeItemDefinitionApplicability(BackboneElement):
-    description: Optional[str] = None
-    expression: Optional[str] = None
-    language: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
+    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
 
 
 class ChargeItemDefinition(DomainResource):
-    applicability: Optional[L[ChargeItemDefinitionApplicability]] = None
-    approval_date: Optional[str] = None
-    code: Optional[CodeableConcept] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    derived_from_uri: Optional[L[str]] = None
-    description: Optional[str] = None
-    effective_period: Optional[Period] = None
-    experimental: Optional[bool] = None
-    identifier: Optional[L[Identifier]] = None
-    instance: Optional[L[Reference]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    last_review_date: Optional[str] = None
-    part_of: Optional[L[str]] = None
-    property_group: Optional[L[ChargeItemDefinitionPropertyGroup]] = None
-    publisher: Optional[str] = None
-    replaces: Optional[L[str]] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    applicability: Optional[L[ChargeItemDefinitionApplicability]] = Field(None, alias="applicability", serialization_alias="applicability")
+    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    derived_from_uri: Optional[L[str]] = Field(None, alias="derivedFromUri", serialization_alias="derivedFromUri")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instance: Optional[L[Reference]] = Field(None, alias="instance", serialization_alias="instance")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    part_of: Optional[L[str]] = Field(None, alias="partOf", serialization_alias="partOf")
+    property_group: Optional[L[ChargeItemDefinitionPropertyGroup]] = Field(None, alias="propertyGroup", serialization_alias="propertyGroup")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    replaces: Optional[L[str]] = Field(None, alias="replaces", serialization_alias="replaces")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

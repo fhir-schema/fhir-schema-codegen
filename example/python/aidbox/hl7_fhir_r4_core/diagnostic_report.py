@@ -6,33 +6,37 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DiagnosticReportMedia(BackboneElement):
-    comment: Optional[str] = None
-    link: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    link: Optional[Reference] = Field(None, alias="link", serialization_alias="link")
 
 
 class DiagnosticReport(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    category: Optional[L[CodeableConcept]] = None
-    code: Optional[CodeableConcept] = None
-    conclusion: Optional[str] = None
-    conclusion_code: Optional[L[CodeableConcept]] = None
-    effective_date_time: Optional[str] = None
-    effective_period: Optional[Period] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    imaging_study: Optional[L[Reference]] = None
-    issued: Optional[str] = None
-    media: Optional[L[DiagnosticReportMedia]] = None
-    performer: Optional[L[Reference]] = None
-    presented_form: Optional[L[Attachment]] = None
-    result: Optional[L[Reference]] = None
-    results_interpreter: Optional[L[Reference]] = None
-    specimen: Optional[L[Reference]] = None
-    status: Optional[Literal["registered", "partial", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    conclusion: Optional[str] = Field(None, alias="conclusion", serialization_alias="conclusion")
+    conclusion_code: Optional[L[CodeableConcept]] = Field(None, alias="conclusionCode", serialization_alias="conclusionCode")
+    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    imaging_study: Optional[L[Reference]] = Field(None, alias="imagingStudy", serialization_alias="imagingStudy")
+    issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")
+    media: Optional[L[DiagnosticReportMedia]] = Field(None, alias="media", serialization_alias="media")
+    performer: Optional[L[Reference]] = Field(None, alias="performer", serialization_alias="performer")
+    presented_form: Optional[L[Attachment]] = Field(None, alias="presentedForm", serialization_alias="presentedForm")
+    result: Optional[L[Reference]] = Field(None, alias="result", serialization_alias="result")
+    results_interpreter: Optional[L[Reference]] = Field(None, alias="resultsInterpreter", serialization_alias="resultsInterpreter")
+    specimen: Optional[L[Reference]] = Field(None, alias="specimen", serialization_alias="specimen")
+    status: Optional[Literal["registered", "partial", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

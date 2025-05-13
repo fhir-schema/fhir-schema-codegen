@@ -6,53 +6,63 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class StructureDefinitionMapping(BackboneElement):
-    comment: Optional[str] = None
-    identity: Optional[str] = None
-    name: Optional[str] = None
-    uri: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    identity: Optional[str] = Field(None, alias="identity", serialization_alias="identity")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 class StructureDefinitionSnapshot(BackboneElement):
-    element: Optional[L[ElementDefinition]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    element: Optional[L[ElementDefinition]] = Field(None, alias="element", serialization_alias="element")
 
 class StructureDefinitionContext(BackboneElement):
-    expression: Optional[str] = None
-    type: Optional[Literal["fhirpath", "element", "extension"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
+    type: Optional[Literal["fhirpath", "element", "extension"]] = Field(None, alias="type", serialization_alias="type")
 
 class StructureDefinitionDifferential(BackboneElement):
-    element: Optional[L[ElementDefinition]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    element: Optional[L[ElementDefinition]] = Field(None, alias="element", serialization_alias="element")
 
 
 class StructureDefinition(DomainResource):
-    abstract: Optional[bool] = None
-    base_definition: Optional[str] = None
-    contact: Optional[L[ContactDetail]] = None
-    context: Optional[L[StructureDefinitionContext]] = None
-    context_invariant: Optional[L[str]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    derivation: Optional[Literal["specialization", "constraint"]] = None
-    description: Optional[str] = None
-    differential: Optional[StructureDefinitionDifferential] = None
-    experimental: Optional[bool] = None
-    fhir_version: Optional[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]] = None
-    identifier: Optional[L[Identifier]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    keyword: Optional[L[Coding]] = None
-    kind: Optional[Literal["primitive-type", "complex-type", "resource", "logical"]] = None
-    mapping: Optional[L[StructureDefinitionMapping]] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    snapshot: Optional[StructureDefinitionSnapshot] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    title: Optional[str] = None
-    type: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    abstract: Optional[bool] = Field(None, alias="abstract", serialization_alias="abstract")
+    base_definition: Optional[str] = Field(None, alias="baseDefinition", serialization_alias="baseDefinition")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    context: Optional[L[StructureDefinitionContext]] = Field(None, alias="context", serialization_alias="context")
+    context_invariant: Optional[L[str]] = Field(None, alias="contextInvariant", serialization_alias="contextInvariant")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    derivation: Optional[Literal["specialization", "constraint"]] = Field(None, alias="derivation", serialization_alias="derivation")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    differential: Optional[StructureDefinitionDifferential] = Field(None, alias="differential", serialization_alias="differential")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    fhir_version: Optional[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]] = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    keyword: Optional[L[Coding]] = Field(None, alias="keyword", serialization_alias="keyword")
+    kind: Optional[Literal["primitive-type", "complex-type", "resource", "logical"]] = Field(None, alias="kind", serialization_alias="kind")
+    mapping: Optional[L[StructureDefinitionMapping]] = Field(None, alias="mapping", serialization_alias="mapping")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    snapshot: Optional[StructureDefinitionSnapshot] = Field(None, alias="snapshot", serialization_alias="snapshot")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    type: Optional[str] = Field(None, alias="type", serialization_alias="type")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 

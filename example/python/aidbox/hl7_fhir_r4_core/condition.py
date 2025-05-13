@@ -6,44 +6,50 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ConditionStage(BackboneElement):
-    assessment: Optional[L[Reference]] = None
-    summary: Optional[CodeableConcept] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    assessment: Optional[L[Reference]] = Field(None, alias="assessment", serialization_alias="assessment")
+    summary: Optional[CodeableConcept] = Field(None, alias="summary", serialization_alias="summary")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ConditionEvidence(BackboneElement):
-    code: Optional[L[CodeableConcept]] = None
-    detail: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
 
 
 class Condition(DomainResource):
-    abatement_age: Optional[Age] = None
-    abatement_date_time: Optional[str] = None
-    abatement_period: Optional[Period] = None
-    abatement_range: Optional[Range] = None
-    abatement_string: Optional[str] = None
-    asserter: Optional[Reference] = None
-    body_site: Optional[L[CodeableConcept]] = None
-    category: Optional[L[CodeableConcept]] = None
-    clinical_status: Optional[CodeableConcept] = None
-    code: Optional[CodeableConcept] = None
-    encounter: Optional[Reference] = None
-    evidence: Optional[L[ConditionEvidence]] = None
-    identifier: Optional[L[Identifier]] = None
-    note: Optional[L[Annotation]] = None
-    onset_age: Optional[Age] = None
-    onset_date_time: Optional[str] = None
-    onset_period: Optional[Period] = None
-    onset_range: Optional[Range] = None
-    onset_string: Optional[str] = None
-    recorded_date: Optional[str] = None
-    recorder: Optional[Reference] = None
-    severity: Optional[CodeableConcept] = None
-    stage: Optional[L[ConditionStage]] = None
-    subject: Optional[Reference] = None
-    verification_status: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    abatement_age: Optional[Age] = Field(None, alias="abatementAge", serialization_alias="abatementAge")
+    abatement_date_time: Optional[str] = Field(None, alias="abatementDateTime", serialization_alias="abatementDateTime")
+    abatement_period: Optional[Period] = Field(None, alias="abatementPeriod", serialization_alias="abatementPeriod")
+    abatement_range: Optional[Range] = Field(None, alias="abatementRange", serialization_alias="abatementRange")
+    abatement_string: Optional[str] = Field(None, alias="abatementString", serialization_alias="abatementString")
+    asserter: Optional[Reference] = Field(None, alias="asserter", serialization_alias="asserter")
+    body_site: Optional[L[CodeableConcept]] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    clinical_status: Optional[CodeableConcept] = Field(None, alias="clinicalStatus", serialization_alias="clinicalStatus")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    evidence: Optional[L[ConditionEvidence]] = Field(None, alias="evidence", serialization_alias="evidence")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    onset_age: Optional[Age] = Field(None, alias="onsetAge", serialization_alias="onsetAge")
+    onset_date_time: Optional[str] = Field(None, alias="onsetDateTime", serialization_alias="onsetDateTime")
+    onset_period: Optional[Period] = Field(None, alias="onsetPeriod", serialization_alias="onsetPeriod")
+    onset_range: Optional[Range] = Field(None, alias="onsetRange", serialization_alias="onsetRange")
+    onset_string: Optional[str] = Field(None, alias="onsetString", serialization_alias="onsetString")
+    recorded_date: Optional[str] = Field(None, alias="recordedDate", serialization_alias="recordedDate")
+    recorder: Optional[Reference] = Field(None, alias="recorder", serialization_alias="recorder")
+    severity: Optional[CodeableConcept] = Field(None, alias="severity", serialization_alias="severity")
+    stage: Optional[L[ConditionStage]] = Field(None, alias="stage", serialization_alias="stage")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    verification_status: Optional[CodeableConcept] = Field(None, alias="verificationStatus", serialization_alias="verificationStatus")
 

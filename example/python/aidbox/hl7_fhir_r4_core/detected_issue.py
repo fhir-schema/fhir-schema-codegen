@@ -6,32 +6,38 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DetectedIssueEvidence(BackboneElement):
-    code: Optional[L[CodeableConcept]] = None
-    detail: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
 
 class DetectedIssueMitigation(BackboneElement):
-    action: Optional[CodeableConcept] = None
-    author: Optional[Reference] = None
-    date: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action: Optional[CodeableConcept] = Field(None, alias="action", serialization_alias="action")
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
 
 
 class DetectedIssue(DomainResource):
-    author: Optional[Reference] = None
-    code: Optional[CodeableConcept] = None
-    detail: Optional[str] = None
-    evidence: Optional[L[DetectedIssueEvidence]] = None
-    identified_date_time: Optional[str] = None
-    identified_period: Optional[Period] = None
-    identifier: Optional[L[Identifier]] = None
-    implicated: Optional[L[Reference]] = None
-    mitigation: Optional[L[DetectedIssueMitigation]] = None
-    patient: Optional[Reference] = None
-    reference: Optional[str] = None
-    severity: Optional[Literal["high", "moderate", "low"]] = None
-    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    detail: Optional[str] = Field(None, alias="detail", serialization_alias="detail")
+    evidence: Optional[L[DetectedIssueEvidence]] = Field(None, alias="evidence", serialization_alias="evidence")
+    identified_date_time: Optional[str] = Field(None, alias="identifiedDateTime", serialization_alias="identifiedDateTime")
+    identified_period: Optional[Period] = Field(None, alias="identifiedPeriod", serialization_alias="identifiedPeriod")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    implicated: Optional[L[Reference]] = Field(None, alias="implicated", serialization_alias="implicated")
+    mitigation: Optional[L[DetectedIssueMitigation]] = Field(None, alias="mitigation", serialization_alias="mitigation")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    reference: Optional[str] = Field(None, alias="reference", serialization_alias="reference")
+    severity: Optional[Literal["high", "moderate", "low"]] = Field(None, alias="severity", serialization_alias="severity")
+    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
 

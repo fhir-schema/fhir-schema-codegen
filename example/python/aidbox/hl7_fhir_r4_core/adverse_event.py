@@ -6,40 +6,46 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AdverseEventSuspectEntityCausality(BackboneElement):
-    assessment: Optional[CodeableConcept] = None
-    author: Optional[Reference] = None
-    method: Optional[CodeableConcept] = None
-    product_relatedness: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    assessment: Optional[CodeableConcept] = Field(None, alias="assessment", serialization_alias="assessment")
+    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    product_relatedness: Optional[str] = Field(None, alias="productRelatedness", serialization_alias="productRelatedness")
 
 class AdverseEventSuspectEntity(BackboneElement):
-    causality: Optional[L[AdverseEventSuspectEntityCausality]] = None
-    instance: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    causality: Optional[L[AdverseEventSuspectEntityCausality]] = Field(None, alias="causality", serialization_alias="causality")
+    instance: Optional[Reference] = Field(None, alias="instance", serialization_alias="instance")
 
 
 class AdverseEvent(DomainResource):
-    actuality: Optional[Literal["actual", "potential"]] = None
-    category: Optional[L[CodeableConcept]] = None
-    contributor: Optional[L[Reference]] = None
-    date: Optional[str] = None
-    detected: Optional[str] = None
-    encounter: Optional[Reference] = None
-    event: Optional[CodeableConcept] = None
-    identifier: Optional[Identifier] = None
-    location: Optional[Reference] = None
-    outcome: Optional[CodeableConcept] = None
-    recorded_date: Optional[str] = None
-    recorder: Optional[Reference] = None
-    reference_document: Optional[L[Reference]] = None
-    resulting_condition: Optional[L[Reference]] = None
-    seriousness: Optional[CodeableConcept] = None
-    severity: Optional[CodeableConcept] = None
-    study: Optional[L[Reference]] = None
-    subject: Optional[Reference] = None
-    subject_medical_history: Optional[L[Reference]] = None
-    suspect_entity: Optional[L[AdverseEventSuspectEntity]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actuality: Optional[Literal["actual", "potential"]] = Field(None, alias="actuality", serialization_alias="actuality")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    contributor: Optional[L[Reference]] = Field(None, alias="contributor", serialization_alias="contributor")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    detected: Optional[str] = Field(None, alias="detected", serialization_alias="detected")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    event: Optional[CodeableConcept] = Field(None, alias="event", serialization_alias="event")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    outcome: Optional[CodeableConcept] = Field(None, alias="outcome", serialization_alias="outcome")
+    recorded_date: Optional[str] = Field(None, alias="recordedDate", serialization_alias="recordedDate")
+    recorder: Optional[Reference] = Field(None, alias="recorder", serialization_alias="recorder")
+    reference_document: Optional[L[Reference]] = Field(None, alias="referenceDocument", serialization_alias="referenceDocument")
+    resulting_condition: Optional[L[Reference]] = Field(None, alias="resultingCondition", serialization_alias="resultingCondition")
+    seriousness: Optional[CodeableConcept] = Field(None, alias="seriousness", serialization_alias="seriousness")
+    severity: Optional[CodeableConcept] = Field(None, alias="severity", serialization_alias="severity")
+    study: Optional[L[Reference]] = Field(None, alias="study", serialization_alias="study")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    subject_medical_history: Optional[L[Reference]] = Field(None, alias="subjectMedicalHistory", serialization_alias="subjectMedicalHistory")
+    suspect_entity: Optional[L[AdverseEventSuspectEntity]] = Field(None, alias="suspectEntity", serialization_alias="suspectEntity")
 

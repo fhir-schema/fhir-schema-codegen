@@ -6,40 +6,46 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductAuthorizationJurisdictionalAuthorization(BackboneElement):
-    country: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    legal_status_of_supply: Optional[CodeableConcept] = None
-    validity_period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    legal_status_of_supply: Optional[CodeableConcept] = Field(None, alias="legalStatusOfSupply", serialization_alias="legalStatusOfSupply")
+    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 
 class MedicinalProductAuthorizationProcedure(BackboneElement):
-    application: Optional[L[MedicinalProductAuthorizationProcedure]] = None
-    date_date_time: Optional[str] = None
-    date_period: Optional[Period] = None
-    identifier: Optional[Identifier] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    application: Optional[L[MedicinalProductAuthorizationProcedure]] = Field(None, alias="application", serialization_alias="application")
+    date_date_time: Optional[str] = Field(None, alias="dateDateTime", serialization_alias="dateDateTime")
+    date_period: Optional[Period] = Field(None, alias="datePeriod", serialization_alias="datePeriod")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class MedicinalProductAuthorization(DomainResource):
-    country: Optional[L[CodeableConcept]] = None
-    data_exclusivity_period: Optional[Period] = None
-    date_of_first_authorization: Optional[str] = None
-    holder: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    international_birth_date: Optional[str] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    jurisdictional_authorization: Optional[L[MedicinalProductAuthorizationJurisdictionalAuthorization]] = None
-    legal_basis: Optional[CodeableConcept] = None
-    procedure: Optional[MedicinalProductAuthorizationProcedure] = None
-    regulator: Optional[Reference] = None
-    restore_date: Optional[str] = None
-    status: Optional[CodeableConcept] = None
-    status_date: Optional[str] = None
-    subject: Optional[Reference] = None
-    validity_period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country: Optional[L[CodeableConcept]] = Field(None, alias="country", serialization_alias="country")
+    data_exclusivity_period: Optional[Period] = Field(None, alias="dataExclusivityPeriod", serialization_alias="dataExclusivityPeriod")
+    date_of_first_authorization: Optional[str] = Field(None, alias="dateOfFirstAuthorization", serialization_alias="dateOfFirstAuthorization")
+    holder: Optional[Reference] = Field(None, alias="holder", serialization_alias="holder")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    international_birth_date: Optional[str] = Field(None, alias="internationalBirthDate", serialization_alias="internationalBirthDate")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    jurisdictional_authorization: Optional[L[MedicinalProductAuthorizationJurisdictionalAuthorization]] = Field(None, alias="jurisdictionalAuthorization", serialization_alias="jurisdictionalAuthorization")
+    legal_basis: Optional[CodeableConcept] = Field(None, alias="legalBasis", serialization_alias="legalBasis")
+    procedure: Optional[MedicinalProductAuthorizationProcedure] = Field(None, alias="procedure", serialization_alias="procedure")
+    regulator: Optional[Reference] = Field(None, alias="regulator", serialization_alias="regulator")
+    restore_date: Optional[str] = Field(None, alias="restoreDate", serialization_alias="restoreDate")
+    status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
+    status_date: Optional[str] = Field(None, alias="statusDate", serialization_alias="statusDate")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 

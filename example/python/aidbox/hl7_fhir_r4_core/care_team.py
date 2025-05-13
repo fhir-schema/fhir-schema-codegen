@@ -6,29 +6,33 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CareTeamParticipant(BackboneElement):
-    member: Optional[Reference] = None
-    on_behalf_of: Optional[Reference] = None
-    period: Optional[Period] = None
-    role: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    member: Optional[Reference] = Field(None, alias="member", serialization_alias="member")
+    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    role: Optional[L[CodeableConcept]] = Field(None, alias="role", serialization_alias="role")
 
 
 class CareTeam(DomainResource):
-    category: Optional[L[CodeableConcept]] = None
-    encounter: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    managing_organization: Optional[L[Reference]] = None
-    name: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    participant: Optional[L[CareTeamParticipant]] = None
-    period: Optional[Period] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    status: Optional[Literal["proposed", "active", "suspended", "inactive", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: Optional[L[Reference]] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    participant: Optional[L[CareTeamParticipant]] = Field(None, alias="participant", serialization_alias="participant")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    status: Optional[Literal["proposed", "active", "suspended", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 

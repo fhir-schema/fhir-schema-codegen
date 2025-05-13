@@ -6,31 +6,37 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EpisodeOfCareDiagnosis(BackboneElement):
-    condition: Optional[Reference] = None
-    rank: Optional[PositiveInt] = None
-    role: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
+    rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class EpisodeOfCareStatusHistory(BackboneElement):
-    period: Optional[Period] = None
-    status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 
 
 class EpisodeOfCare(DomainResource):
-    account: Optional[L[Reference]] = None
-    care_manager: Optional[Reference] = None
-    diagnosis: Optional[L[EpisodeOfCareDiagnosis]] = None
-    identifier: Optional[L[Identifier]] = None
-    managing_organization: Optional[Reference] = None
-    patient: Optional[Reference] = None
-    period: Optional[Period] = None
-    referral_request: Optional[L[Reference]] = None
-    status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = None
-    status_history: Optional[L[EpisodeOfCareStatusHistory]] = None
-    team: Optional[L[Reference]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
+    care_manager: Optional[Reference] = Field(None, alias="careManager", serialization_alias="careManager")
+    diagnosis: Optional[L[EpisodeOfCareDiagnosis]] = Field(None, alias="diagnosis", serialization_alias="diagnosis")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: Optional[Reference] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    referral_request: Optional[L[Reference]] = Field(None, alias="referralRequest", serialization_alias="referralRequest")
+    status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    status_history: Optional[L[EpisodeOfCareStatusHistory]] = Field(None, alias="statusHistory", serialization_alias="statusHistory")
+    team: Optional[L[Reference]] = Field(None, alias="team", serialization_alias="team")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 

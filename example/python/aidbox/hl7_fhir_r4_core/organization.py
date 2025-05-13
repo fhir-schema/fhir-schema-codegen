@@ -6,26 +6,30 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OrganizationContact(BackboneElement):
-    address: Optional[Address] = None
-    name: Optional[HumanName] = None
-    purpose: Optional[CodeableConcept] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
+    name: Optional[HumanName] = Field(None, alias="name", serialization_alias="name")
+    purpose: Optional[CodeableConcept] = Field(None, alias="purpose", serialization_alias="purpose")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 
 
 class Organization(DomainResource):
-    active: Optional[bool] = None
-    address: Optional[L[Address]] = None
-    alias: Optional[L[str]] = None
-    contact: Optional[L[OrganizationContact]] = None
-    endpoint: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    name: Optional[str] = None
-    part_of: Optional[Reference] = None
-    telecom: Optional[L[ContactPoint]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")
+    alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
+    contact: Optional[L[OrganizationContact]] = Field(None, alias="contact", serialization_alias="contact")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    part_of: Optional[Reference] = Field(None, alias="partOf", serialization_alias="partOf")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 

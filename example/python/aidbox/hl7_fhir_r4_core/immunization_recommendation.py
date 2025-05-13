@@ -6,35 +6,41 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImmunizationRecommendationRecommendationDateCriterion(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ImmunizationRecommendationRecommendation(BackboneElement):
-    contraindicated_vaccine_code: Optional[L[CodeableConcept]] = None
-    date_criterion: Optional[L[ImmunizationRecommendationRecommendationDateCriterion]] = None
-    description: Optional[str] = None
-    dose_number_positive_int: Optional[PositiveInt] = None
-    dose_number_string: Optional[str] = None
-    forecast_reason: Optional[L[CodeableConcept]] = None
-    forecast_status: Optional[CodeableConcept] = None
-    series: Optional[str] = None
-    series_doses_positive_int: Optional[PositiveInt] = None
-    series_doses_string: Optional[str] = None
-    supporting_immunization: Optional[L[Reference]] = None
-    supporting_patient_information: Optional[L[Reference]] = None
-    target_disease: Optional[CodeableConcept] = None
-    vaccine_code: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contraindicated_vaccine_code: Optional[L[CodeableConcept]] = Field(None, alias="contraindicatedVaccineCode", serialization_alias="contraindicatedVaccineCode")
+    date_criterion: Optional[L[ImmunizationRecommendationRecommendationDateCriterion]] = Field(None, alias="dateCriterion", serialization_alias="dateCriterion")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    dose_number_positive_int: Optional[PositiveInt] = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
+    dose_number_string: Optional[str] = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
+    forecast_reason: Optional[L[CodeableConcept]] = Field(None, alias="forecastReason", serialization_alias="forecastReason")
+    forecast_status: Optional[CodeableConcept] = Field(None, alias="forecastStatus", serialization_alias="forecastStatus")
+    series: Optional[str] = Field(None, alias="series", serialization_alias="series")
+    series_doses_positive_int: Optional[PositiveInt] = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
+    series_doses_string: Optional[str] = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
+    supporting_immunization: Optional[L[Reference]] = Field(None, alias="supportingImmunization", serialization_alias="supportingImmunization")
+    supporting_patient_information: Optional[L[Reference]] = Field(None, alias="supportingPatientInformation", serialization_alias="supportingPatientInformation")
+    target_disease: Optional[CodeableConcept] = Field(None, alias="targetDisease", serialization_alias="targetDisease")
+    vaccine_code: Optional[L[CodeableConcept]] = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
 
 
 class ImmunizationRecommendation(DomainResource):
-    authority: Optional[Reference] = None
-    date: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    patient: Optional[Reference] = None
-    recommendation: Optional[L[ImmunizationRecommendationRecommendation]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    recommendation: Optional[L[ImmunizationRecommendationRecommendation]] = Field(None, alias="recommendation", serialization_alias="recommendation")
 

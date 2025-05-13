@@ -6,42 +6,50 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class InvoiceParticipant(BackboneElement):
-    actor: Optional[Reference] = None
-    role: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class InvoiceLineItemPriceComponent(BackboneElement):
-    amount: Optional[Money] = None
-    code: Optional[CodeableConcept] = None
-    factor: Optional[float] = None
-    type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = Field(None, alias="type", serialization_alias="type")
 
 class InvoiceLineItem(BackboneElement):
-    charge_item_codeable_concept: Optional[CodeableConcept] = None
-    charge_item_reference: Optional[Reference] = None
-    price_component: Optional[L[InvoiceLineItemPriceComponent]] = None
-    sequence: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    charge_item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="chargeItemCodeableConcept", serialization_alias="chargeItemCodeableConcept")
+    charge_item_reference: Optional[Reference] = Field(None, alias="chargeItemReference", serialization_alias="chargeItemReference")
+    price_component: Optional[L[InvoiceLineItemPriceComponent]] = Field(None, alias="priceComponent", serialization_alias="priceComponent")
+    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 
 class Invoice(DomainResource):
-    account: Optional[Reference] = None
-    cancelled_reason: Optional[str] = None
-    date: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    issuer: Optional[Reference] = None
-    line_item: Optional[L[InvoiceLineItem]] = None
-    note: Optional[L[Annotation]] = None
-    participant: Optional[L[InvoiceParticipant]] = None
-    payment_terms: Optional[str] = None
-    recipient: Optional[Reference] = None
-    status: Optional[Literal["draft", "issued", "balanced", "cancelled", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
-    total_gross: Optional[Money] = None
-    total_net: Optional[Money] = None
-    total_price_component: Optional[L[InvoiceLineItemPriceComponent]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    account: Optional[Reference] = Field(None, alias="account", serialization_alias="account")
+    cancelled_reason: Optional[str] = Field(None, alias="cancelledReason", serialization_alias="cancelledReason")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    issuer: Optional[Reference] = Field(None, alias="issuer", serialization_alias="issuer")
+    line_item: Optional[L[InvoiceLineItem]] = Field(None, alias="lineItem", serialization_alias="lineItem")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    participant: Optional[L[InvoiceParticipant]] = Field(None, alias="participant", serialization_alias="participant")
+    payment_terms: Optional[str] = Field(None, alias="paymentTerms", serialization_alias="paymentTerms")
+    recipient: Optional[Reference] = Field(None, alias="recipient", serialization_alias="recipient")
+    status: Optional[Literal["draft", "issued", "balanced", "cancelled", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    total_gross: Optional[Money] = Field(None, alias="totalGross", serialization_alias="totalGross")
+    total_net: Optional[Money] = Field(None, alias="totalNet", serialization_alias="totalNet")
+    total_price_component: Optional[L[InvoiceLineItemPriceComponent]] = Field(None, alias="totalPriceComponent", serialization_alias="totalPriceComponent")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

@@ -6,46 +6,52 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationDispenseSubstitution(BackboneElement):
-    reason: Optional[L[CodeableConcept]] = None
-    responsible_party: Optional[L[Reference]] = None
-    type: Optional[CodeableConcept] = None
-    was_substituted: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    reason: Optional[L[CodeableConcept]] = Field(None, alias="reason", serialization_alias="reason")
+    responsible_party: Optional[L[Reference]] = Field(None, alias="responsibleParty", serialization_alias="responsibleParty")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    was_substituted: Optional[bool] = Field(None, alias="wasSubstituted", serialization_alias="wasSubstituted")
 
 class MedicationDispensePerformer(BackboneElement):
-    actor: Optional[Reference] = None
-    function: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class MedicationDispense(DomainResource):
-    authorizing_prescription: Optional[L[Reference]] = None
-    category: Optional[CodeableConcept] = None
-    context: Optional[Reference] = None
-    days_supply: Optional[Quantity] = None
-    destination: Optional[Reference] = None
-    detected_issue: Optional[L[Reference]] = None
-    dosage_instruction: Optional[L[Dosage]] = None
-    event_history: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    location: Optional[Reference] = None
-    medication_codeable_concept: Optional[CodeableConcept] = None
-    medication_reference: Optional[Reference] = None
-    note: Optional[L[Annotation]] = None
-    part_of: Optional[L[Reference]] = None
-    performer: Optional[L[MedicationDispensePerformer]] = None
-    quantity: Optional[Quantity] = None
-    receiver: Optional[L[Reference]] = None
-    status: Optional[Literal["preparation", "in-progress", "cancelled", "on-hold", "completed", "entered-in-error", "stopped", "declined", "unknown"]] = None
-    status_reason_codeable_concept: Optional[CodeableConcept] = None
-    status_reason_reference: Optional[Reference] = None
-    subject: Optional[Reference] = None
-    substitution: Optional[MedicationDispenseSubstitution] = None
-    supporting_information: Optional[L[Reference]] = None
-    type: Optional[CodeableConcept] = None
-    when_handed_over: Optional[str] = None
-    when_prepared: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authorizing_prescription: Optional[L[Reference]] = Field(None, alias="authorizingPrescription", serialization_alias="authorizingPrescription")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")
+    days_supply: Optional[Quantity] = Field(None, alias="daysSupply", serialization_alias="daysSupply")
+    destination: Optional[Reference] = Field(None, alias="destination", serialization_alias="destination")
+    detected_issue: Optional[L[Reference]] = Field(None, alias="detectedIssue", serialization_alias="detectedIssue")
+    dosage_instruction: Optional[L[Dosage]] = Field(None, alias="dosageInstruction", serialization_alias="dosageInstruction")
+    event_history: Optional[L[Reference]] = Field(None, alias="eventHistory", serialization_alias="eventHistory")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    performer: Optional[L[MedicationDispensePerformer]] = Field(None, alias="performer", serialization_alias="performer")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    receiver: Optional[L[Reference]] = Field(None, alias="receiver", serialization_alias="receiver")
+    status: Optional[Literal["preparation", "in-progress", "cancelled", "on-hold", "completed", "entered-in-error", "stopped", "declined", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason_codeable_concept: Optional[CodeableConcept] = Field(None, alias="statusReasonCodeableConcept", serialization_alias="statusReasonCodeableConcept")
+    status_reason_reference: Optional[Reference] = Field(None, alias="statusReasonReference", serialization_alias="statusReasonReference")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    substitution: Optional[MedicationDispenseSubstitution] = Field(None, alias="substitution", serialization_alias="substitution")
+    supporting_information: Optional[L[Reference]] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    when_handed_over: Optional[str] = Field(None, alias="whenHandedOver", serialization_alias="whenHandedOver")
+    when_prepared: Optional[str] = Field(None, alias="whenPrepared", serialization_alias="whenPrepared")
 

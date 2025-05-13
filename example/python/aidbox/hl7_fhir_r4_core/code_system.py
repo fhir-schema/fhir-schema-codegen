@@ -6,71 +6,83 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CodeSystemProperty(BackboneElement):
-    code: Optional[str] = None
-    description: Optional[str] = None
-    type: Optional[Literal["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"]] = None
-    uri: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    type: Optional[Literal["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"]] = Field(None, alias="type", serialization_alias="type")
+    uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 class CodeSystemFilter(BackboneElement):
-    code: Optional[str] = None
-    description: Optional[str] = None
-    operator: Optional[L[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]]] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    operator: Optional[L[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]]] = Field(None, alias="operator", serialization_alias="operator")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class CodeSystemConceptDesignation(BackboneElement):
-    language: Optional[str] = None
-    use: Optional[Coding] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
+    use: Optional[Coding] = Field(None, alias="use", serialization_alias="use")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class CodeSystemConceptProperty(BackboneElement):
-    code: Optional[str] = None
-    value_boolean: Optional[bool] = None
-    value_code: Optional[str] = None
-    value_coding: Optional[Coding] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_integer: Optional[int] = None
-    value_string: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_code: Optional[str] = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class CodeSystemConcept(BackboneElement):
-    code: Optional[str] = None
-    concept: Optional[L[CodeSystemConcept]] = None
-    definition: Optional[str] = None
-    designation: Optional[L[CodeSystemConceptDesignation]] = None
-    display: Optional[str] = None
-    property: Optional[L[CodeSystemConceptProperty]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    concept: Optional[L[CodeSystemConcept]] = Field(None, alias="concept", serialization_alias="concept")
+    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
+    designation: Optional[L[CodeSystemConceptDesignation]] = Field(None, alias="designation", serialization_alias="designation")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    property: Optional[L[CodeSystemConceptProperty]] = Field(None, alias="property", serialization_alias="property")
 
 
 class CodeSystem(DomainResource):
-    case_sensitive: Optional[bool] = None
-    compositional: Optional[bool] = None
-    concept: Optional[L[CodeSystemConcept]] = None
-    contact: Optional[L[ContactDetail]] = None
-    content: Optional[Literal["not-present", "example", "fragment", "complete", "supplement"]] = None
-    copyright: Optional[str] = None
-    count: Optional[int] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    experimental: Optional[bool] = None
-    filter: Optional[L[CodeSystemFilter]] = None
-    hierarchy_meaning: Optional[Literal["grouped-by", "is-a", "part-of", "classified-with"]] = None
-    identifier: Optional[L[Identifier]] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    name: Optional[str] = None
-    property: Optional[L[CodeSystemProperty]] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    supplements: Optional[str] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    value_set: Optional[str] = None
-    version: Optional[str] = None
-    version_needed: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    case_sensitive: Optional[bool] = Field(None, alias="caseSensitive", serialization_alias="caseSensitive")
+    compositional: Optional[bool] = Field(None, alias="compositional", serialization_alias="compositional")
+    concept: Optional[L[CodeSystemConcept]] = Field(None, alias="concept", serialization_alias="concept")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    content: Optional[Literal["not-present", "example", "fragment", "complete", "supplement"]] = Field(None, alias="content", serialization_alias="content")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    count: Optional[int] = Field(None, alias="count", serialization_alias="count")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    filter: Optional[L[CodeSystemFilter]] = Field(None, alias="filter", serialization_alias="filter")
+    hierarchy_meaning: Optional[Literal["grouped-by", "is-a", "part-of", "classified-with"]] = Field(None, alias="hierarchyMeaning", serialization_alias="hierarchyMeaning")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    property: Optional[L[CodeSystemProperty]] = Field(None, alias="property", serialization_alias="property")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    supplements: Optional[str] = Field(None, alias="supplements", serialization_alias="supplements")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    value_set: Optional[str] = Field(None, alias="valueSet", serialization_alias="valueSet")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    version_needed: Optional[bool] = Field(None, alias="versionNeeded", serialization_alias="versionNeeded")
 

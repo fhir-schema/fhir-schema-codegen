@@ -6,21 +6,23 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PaymentNotice(DomainResource):
-    amount: Optional[Money] = None
-    created: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    payee: Optional[Reference] = None
-    payment: Optional[Reference] = None
-    payment_date: Optional[str] = None
-    payment_status: Optional[CodeableConcept] = None
-    provider: Optional[Reference] = None
-    recipient: Optional[Reference] = None
-    request: Optional[Reference] = None
-    response: Optional[Reference] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    payee: Optional[Reference] = Field(None, alias="payee", serialization_alias="payee")
+    payment: Optional[Reference] = Field(None, alias="payment", serialization_alias="payment")
+    payment_date: Optional[str] = Field(None, alias="paymentDate", serialization_alias="paymentDate")
+    payment_status: Optional[CodeableConcept] = Field(None, alias="paymentStatus", serialization_alias="paymentStatus")
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    recipient: Optional[Reference] = Field(None, alias="recipient", serialization_alias="recipient")
+    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
+    response: Optional[Reference] = Field(None, alias="response", serialization_alias="response")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

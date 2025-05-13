@@ -6,63 +6,73 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImmunizationProtocolApplied(BackboneElement):
-    authority: Optional[Reference] = None
-    dose_number_positive_int: Optional[PositiveInt] = None
-    dose_number_string: Optional[str] = None
-    series: Optional[str] = None
-    series_doses_positive_int: Optional[PositiveInt] = None
-    series_doses_string: Optional[str] = None
-    target_disease: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
+    dose_number_positive_int: Optional[PositiveInt] = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
+    dose_number_string: Optional[str] = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
+    series: Optional[str] = Field(None, alias="series", serialization_alias="series")
+    series_doses_positive_int: Optional[PositiveInt] = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
+    series_doses_string: Optional[str] = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
+    target_disease: Optional[L[CodeableConcept]] = Field(None, alias="targetDisease", serialization_alias="targetDisease")
 
 class ImmunizationEducation(BackboneElement):
-    document_type: Optional[str] = None
-    presentation_date: Optional[str] = None
-    publication_date: Optional[str] = None
-    reference: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    document_type: Optional[str] = Field(None, alias="documentType", serialization_alias="documentType")
+    presentation_date: Optional[str] = Field(None, alias="presentationDate", serialization_alias="presentationDate")
+    publication_date: Optional[str] = Field(None, alias="publicationDate", serialization_alias="publicationDate")
+    reference: Optional[str] = Field(None, alias="reference", serialization_alias="reference")
 
 class ImmunizationReaction(BackboneElement):
-    date: Optional[str] = None
-    detail: Optional[Reference] = None
-    reported: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    detail: Optional[Reference] = Field(None, alias="detail", serialization_alias="detail")
+    reported: Optional[bool] = Field(None, alias="reported", serialization_alias="reported")
 
 class ImmunizationPerformer(BackboneElement):
-    actor: Optional[Reference] = None
-    function: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
+    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class Immunization(DomainResource):
-    dose_quantity: Optional[Quantity] = None
-    education: Optional[L[ImmunizationEducation]] = None
-    encounter: Optional[Reference] = None
-    expiration_date: Optional[str] = None
-    funding_source: Optional[CodeableConcept] = None
-    identifier: Optional[L[Identifier]] = None
-    is_subpotent: Optional[bool] = None
-    location: Optional[Reference] = None
-    lot_number: Optional[str] = None
-    manufacturer: Optional[Reference] = None
-    note: Optional[L[Annotation]] = None
-    occurrence_date_time: Optional[str] = None
-    occurrence_string: Optional[str] = None
-    patient: Optional[Reference] = None
-    performer: Optional[L[ImmunizationPerformer]] = None
-    primary_source: Optional[bool] = None
-    program_eligibility: Optional[L[CodeableConcept]] = None
-    protocol_applied: Optional[L[ImmunizationProtocolApplied]] = None
-    reaction: Optional[L[ImmunizationReaction]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    recorded: Optional[str] = None
-    report_origin: Optional[CodeableConcept] = None
-    route: Optional[CodeableConcept] = None
-    site: Optional[CodeableConcept] = None
-    status: Optional[Literal["completed", "entered-in-error", "not-done", "preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = None
-    status_reason: Optional[CodeableConcept] = None
-    subpotent_reason: Optional[L[CodeableConcept]] = None
-    vaccine_code: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    dose_quantity: Optional[Quantity] = Field(None, alias="doseQuantity", serialization_alias="doseQuantity")
+    education: Optional[L[ImmunizationEducation]] = Field(None, alias="education", serialization_alias="education")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    expiration_date: Optional[str] = Field(None, alias="expirationDate", serialization_alias="expirationDate")
+    funding_source: Optional[CodeableConcept] = Field(None, alias="fundingSource", serialization_alias="fundingSource")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    is_subpotent: Optional[bool] = Field(None, alias="isSubpotent", serialization_alias="isSubpotent")
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    lot_number: Optional[str] = Field(None, alias="lotNumber", serialization_alias="lotNumber")
+    manufacturer: Optional[Reference] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_string: Optional[str] = Field(None, alias="occurrenceString", serialization_alias="occurrenceString")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    performer: Optional[L[ImmunizationPerformer]] = Field(None, alias="performer", serialization_alias="performer")
+    primary_source: Optional[bool] = Field(None, alias="primarySource", serialization_alias="primarySource")
+    program_eligibility: Optional[L[CodeableConcept]] = Field(None, alias="programEligibility", serialization_alias="programEligibility")
+    protocol_applied: Optional[L[ImmunizationProtocolApplied]] = Field(None, alias="protocolApplied", serialization_alias="protocolApplied")
+    reaction: Optional[L[ImmunizationReaction]] = Field(None, alias="reaction", serialization_alias="reaction")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    recorded: Optional[str] = Field(None, alias="recorded", serialization_alias="recorded")
+    report_origin: Optional[CodeableConcept] = Field(None, alias="reportOrigin", serialization_alias="reportOrigin")
+    route: Optional[CodeableConcept] = Field(None, alias="route", serialization_alias="route")
+    site: Optional[CodeableConcept] = Field(None, alias="site", serialization_alias="site")
+    status: Optional[Literal["completed", "entered-in-error", "not-done", "preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subpotent_reason: Optional[L[CodeableConcept]] = Field(None, alias="subpotentReason", serialization_alias="subpotentReason")
+    vaccine_code: Optional[CodeableConcept] = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
 

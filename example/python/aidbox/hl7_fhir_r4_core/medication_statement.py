@@ -6,28 +6,30 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationStatement(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    category: Optional[CodeableConcept] = None
-    context: Optional[Reference] = None
-    date_asserted: Optional[str] = None
-    derived_from: Optional[L[Reference]] = None
-    dosage: Optional[L[Dosage]] = None
-    effective_date_time: Optional[str] = None
-    effective_period: Optional[Period] = None
-    identifier: Optional[L[Identifier]] = None
-    information_source: Optional[Reference] = None
-    medication_codeable_concept: Optional[CodeableConcept] = None
-    medication_reference: Optional[Reference] = None
-    note: Optional[L[Annotation]] = None
-    part_of: Optional[L[Reference]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    status: Optional[Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold", "unknown", "not-taken"]] = None
-    status_reason: Optional[L[CodeableConcept]] = None
-    subject: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
+    context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")
+    date_asserted: Optional[str] = Field(None, alias="dateAsserted", serialization_alias="dateAsserted")
+    derived_from: Optional[L[Reference]] = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
+    dosage: Optional[L[Dosage]] = Field(None, alias="dosage", serialization_alias="dosage")
+    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    information_source: Optional[Reference] = Field(None, alias="informationSource", serialization_alias="informationSource")
+    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    status: Optional[Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold", "unknown", "not-taken"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[L[CodeableConcept]] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
 

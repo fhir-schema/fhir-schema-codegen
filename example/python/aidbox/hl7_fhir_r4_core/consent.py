@@ -6,54 +6,66 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ConsentProvisionActor(BackboneElement):
-    reference: Optional[Reference] = None
-    role: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
+    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class ConsentProvisionData(BackboneElement):
-    meaning: Optional[Literal["instance", "related", "dependents", "authoredby"]] = None
-    reference: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    meaning: Optional[Literal["instance", "related", "dependents", "authoredby"]] = Field(None, alias="meaning", serialization_alias="meaning")
+    reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
 
 class ConsentProvision(BackboneElement):
-    action: Optional[L[CodeableConcept]] = None
-    actor: Optional[L[ConsentProvisionActor]] = None
-    class_: Optional[L[Coding]] = None
-    code: Optional[L[CodeableConcept]] = None
-    data: Optional[L[ConsentProvisionData]] = None
-    data_period: Optional[Period] = None
-    period: Optional[Period] = None
-    provision: Optional[L[ConsentProvision]] = None
-    purpose: Optional[L[Coding]] = None
-    security_label: Optional[L[Coding]] = None
-    type: Optional[Literal["deny", "permit"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    action: Optional[L[CodeableConcept]] = Field(None, alias="action", serialization_alias="action")
+    actor: Optional[L[ConsentProvisionActor]] = Field(None, alias="actor", serialization_alias="actor")
+    class_: Optional[L[Coding]] = Field(None, alias="class", serialization_alias="class")
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    data: Optional[L[ConsentProvisionData]] = Field(None, alias="data", serialization_alias="data")
+    data_period: Optional[Period] = Field(None, alias="dataPeriod", serialization_alias="dataPeriod")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    provision: Optional[L[ConsentProvision]] = Field(None, alias="provision", serialization_alias="provision")
+    purpose: Optional[L[Coding]] = Field(None, alias="purpose", serialization_alias="purpose")
+    security_label: Optional[L[Coding]] = Field(None, alias="securityLabel", serialization_alias="securityLabel")
+    type: Optional[Literal["deny", "permit"]] = Field(None, alias="type", serialization_alias="type")
 
 class ConsentVerification(BackboneElement):
-    verification_date: Optional[str] = None
-    verified: Optional[bool] = None
-    verified_with: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    verification_date: Optional[str] = Field(None, alias="verificationDate", serialization_alias="verificationDate")
+    verified: Optional[bool] = Field(None, alias="verified", serialization_alias="verified")
+    verified_with: Optional[Reference] = Field(None, alias="verifiedWith", serialization_alias="verifiedWith")
 
 class ConsentPolicy(BackboneElement):
-    authority: Optional[str] = None
-    uri: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authority: Optional[str] = Field(None, alias="authority", serialization_alias="authority")
+    uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 
 class Consent(DomainResource):
-    category: Optional[L[CodeableConcept]] = None
-    date_time: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    organization: Optional[L[Reference]] = None
-    patient: Optional[Reference] = None
-    performer: Optional[L[Reference]] = None
-    policy: Optional[L[ConsentPolicy]] = None
-    policy_rule: Optional[CodeableConcept] = None
-    provision: Optional[ConsentProvision] = None
-    scope: Optional[CodeableConcept] = None
-    source_attachment: Optional[Attachment] = None
-    source_reference: Optional[Reference] = None
-    status: Optional[Literal["draft", "proposed", "active", "rejected", "inactive", "entered-in-error"]] = None
-    verification: Optional[L[ConsentVerification]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    date_time: Optional[str] = Field(None, alias="dateTime", serialization_alias="dateTime")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    organization: Optional[L[Reference]] = Field(None, alias="organization", serialization_alias="organization")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    performer: Optional[L[Reference]] = Field(None, alias="performer", serialization_alias="performer")
+    policy: Optional[L[ConsentPolicy]] = Field(None, alias="policy", serialization_alias="policy")
+    policy_rule: Optional[CodeableConcept] = Field(None, alias="policyRule", serialization_alias="policyRule")
+    provision: Optional[ConsentProvision] = Field(None, alias="provision", serialization_alias="provision")
+    scope: Optional[CodeableConcept] = Field(None, alias="scope", serialization_alias="scope")
+    source_attachment: Optional[Attachment] = Field(None, alias="sourceAttachment", serialization_alias="sourceAttachment")
+    source_reference: Optional[Reference] = Field(None, alias="sourceReference", serialization_alias="sourceReference")
+    status: Optional[Literal["draft", "proposed", "active", "rejected", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    verification: Optional[L[ConsentVerification]] = Field(None, alias="verification", serialization_alias="verification")
 

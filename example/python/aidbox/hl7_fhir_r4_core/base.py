@@ -8,559 +8,641 @@ from typing import Optional, List as L, Literal
 
 
 class Element(BaseModel):
-    extension: Optional[L[Extension]] = None
-    id: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    extension: Optional[L[Extension]] = Field(None, alias="extension", serialization_alias="extension")
+    id: Optional[str] = Field(None, alias="id", serialization_alias="id")
 
 
 class Quantity(Element):
-    code: Optional[str] = None
-    comparator: Optional[Literal["<", "<=", ">=", ">"]] = None
-    system: Optional[str] = None
-    unit: Optional[str] = None
-    value: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    comparator: Optional[Literal["<", "<=", ">=", ">"]] = Field(None, alias="comparator", serialization_alias="comparator")
+    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
+    unit: Optional[str] = Field(None, alias="unit", serialization_alias="unit")
+    value: Optional[float] = Field(None, alias="value", serialization_alias="value")
 
 
 class Age(Quantity):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
     pass
 
 
 class BackboneElement(Element):
-    modifier_extension: Optional[L[Extension]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    modifier_extension: Optional[L[Extension]] = Field(None, alias="modifierExtension", serialization_alias="modifierExtension")
 
 
 class ProductShelfLife(BackboneElement):
-    identifier: Optional[Identifier] = None
-    period: Optional[Quantity] = None
-    special_precautions_for_storage: Optional[L[CodeableConcept]] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    period: Optional[Quantity] = Field(None, alias="period", serialization_alias="period")
+    special_precautions_for_storage: Optional[L[CodeableConcept]] = Field(None, alias="specialPrecautionsForStorage", serialization_alias="specialPrecautionsForStorage")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class Duration(Quantity):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
     pass
 
 
 class Dosage(BackboneElement):
-    additional_instruction: Optional[L[CodeableConcept]] = None
-    as_needed_boolean: Optional[bool] = None
-    as_needed_codeable_concept: Optional[CodeableConcept] = None
-    dose_and_rate: Optional[L[Element]] = None
-    max_dose_per_administration: Optional[Quantity] = None
-    max_dose_per_lifetime: Optional[Quantity] = None
-    max_dose_per_period: Optional[Ratio] = None
-    method: Optional[CodeableConcept] = None
-    patient_instruction: Optional[str] = None
-    route: Optional[CodeableConcept] = None
-    sequence: Optional[int] = None
-    site: Optional[CodeableConcept] = None
-    text: Optional[str] = None
-    timing: Optional[Timing] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additional_instruction: Optional[L[CodeableConcept]] = Field(None, alias="additionalInstruction", serialization_alias="additionalInstruction")
+    as_needed_boolean: Optional[bool] = Field(None, alias="asNeededBoolean", serialization_alias="asNeededBoolean")
+    as_needed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="asNeededCodeableConcept", serialization_alias="asNeededCodeableConcept")
+    dose_and_rate: Optional[L[Element]] = Field(None, alias="doseAndRate", serialization_alias="doseAndRate")
+    max_dose_per_administration: Optional[Quantity] = Field(None, alias="maxDosePerAdministration", serialization_alias="maxDosePerAdministration")
+    max_dose_per_lifetime: Optional[Quantity] = Field(None, alias="maxDosePerLifetime", serialization_alias="maxDosePerLifetime")
+    max_dose_per_period: Optional[Ratio] = Field(None, alias="maxDosePerPeriod", serialization_alias="maxDosePerPeriod")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    patient_instruction: Optional[str] = Field(None, alias="patientInstruction", serialization_alias="patientInstruction")
+    route: Optional[CodeableConcept] = Field(None, alias="route", serialization_alias="route")
+    sequence: Optional[int] = Field(None, alias="sequence", serialization_alias="sequence")
+    site: Optional[CodeableConcept] = Field(None, alias="site", serialization_alias="site")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    timing: Optional[Timing] = Field(None, alias="timing", serialization_alias="timing")
 
 
 class Population(BackboneElement):
-    age_codeable_concept: Optional[CodeableConcept] = None
-    age_range: Optional[Range] = None
-    gender: Optional[CodeableConcept] = None
-    physiological_condition: Optional[CodeableConcept] = None
-    race: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    age_codeable_concept: Optional[CodeableConcept] = Field(None, alias="ageCodeableConcept", serialization_alias="ageCodeableConcept")
+    age_range: Optional[Range] = Field(None, alias="ageRange", serialization_alias="ageRange")
+    gender: Optional[CodeableConcept] = Field(None, alias="gender", serialization_alias="gender")
+    physiological_condition: Optional[CodeableConcept] = Field(None, alias="physiologicalCondition", serialization_alias="physiologicalCondition")
+    race: Optional[CodeableConcept] = Field(None, alias="race", serialization_alias="race")
 
 
 class SampledData(Element):
-    data: Optional[str] = None
-    dimensions: Optional[PositiveInt] = None
-    factor: Optional[float] = None
-    lower_limit: Optional[float] = None
-    origin: Optional[Quantity] = None
-    period: Optional[float] = None
-    upper_limit: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    data: Optional[str] = Field(None, alias="data", serialization_alias="data")
+    dimensions: Optional[PositiveInt] = Field(None, alias="dimensions", serialization_alias="dimensions")
+    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
+    lower_limit: Optional[float] = Field(None, alias="lowerLimit", serialization_alias="lowerLimit")
+    origin: Optional[Quantity] = Field(None, alias="origin", serialization_alias="origin")
+    period: Optional[float] = Field(None, alias="period", serialization_alias="period")
+    upper_limit: Optional[float] = Field(None, alias="upperLimit", serialization_alias="upperLimit")
 
 
 class ProdCharacteristic(BackboneElement):
-    color: Optional[L[str]] = None
-    depth: Optional[Quantity] = None
-    external_diameter: Optional[Quantity] = None
-    height: Optional[Quantity] = None
-    image: Optional[L[Attachment]] = None
-    imprint: Optional[L[str]] = None
-    nominal_volume: Optional[Quantity] = None
-    scoring: Optional[CodeableConcept] = None
-    shape: Optional[str] = None
-    weight: Optional[Quantity] = None
-    width: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    color: Optional[L[str]] = Field(None, alias="color", serialization_alias="color")
+    depth: Optional[Quantity] = Field(None, alias="depth", serialization_alias="depth")
+    external_diameter: Optional[Quantity] = Field(None, alias="externalDiameter", serialization_alias="externalDiameter")
+    height: Optional[Quantity] = Field(None, alias="height", serialization_alias="height")
+    image: Optional[L[Attachment]] = Field(None, alias="image", serialization_alias="image")
+    imprint: Optional[L[str]] = Field(None, alias="imprint", serialization_alias="imprint")
+    nominal_volume: Optional[Quantity] = Field(None, alias="nominalVolume", serialization_alias="nominalVolume")
+    scoring: Optional[CodeableConcept] = Field(None, alias="scoring", serialization_alias="scoring")
+    shape: Optional[str] = Field(None, alias="shape", serialization_alias="shape")
+    weight: Optional[Quantity] = Field(None, alias="weight", serialization_alias="weight")
+    width: Optional[Quantity] = Field(None, alias="width", serialization_alias="width")
 
 
 class Extension(Element):
-    url: Optional[str] = None
-    value_address: Optional[Address] = None
-    value_age: Optional[Age] = None
-    value_annotation: Optional[Annotation] = None
-    value_attachment: Optional[Attachment] = None
-    value_base64binary: Optional[str] = None
-    value_boolean: Optional[bool] = None
-    value_canonical: Optional[str] = None
-    value_code: Optional[str] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_coding: Optional[Coding] = None
-    value_contact_detail: Optional[ContactDetail] = None
-    value_contact_point: Optional[ContactPoint] = None
-    value_contributor: Optional[Contributor] = None
-    value_count: Optional[Count] = None
-    value_data_requirement: Optional[DataRequirement] = None
-    value_date: Optional[str] = None
-    value_date_time: Optional[str] = None
-    value_decimal: Optional[float] = None
-    value_distance: Optional[Distance] = None
-    value_dosage: Optional[Dosage] = None
-    value_duration: Optional[Duration] = None
-    value_expression: Optional[Expression] = None
-    value_human_name: Optional[HumanName] = None
-    value_id: Optional[str] = None
-    value_identifier: Optional[Identifier] = None
-    value_instant: Optional[str] = None
-    value_integer: Optional[int] = None
-    value_markdown: Optional[str] = None
-    value_meta: Optional[Meta] = None
-    value_money: Optional[Money] = None
-    value_oid: Optional[str] = None
-    value_parameter_definition: Optional[ParameterDefinition] = None
-    value_period: Optional[Period] = None
-    value_positive_int: Optional[PositiveInt] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
-    value_ratio: Optional[Ratio] = None
-    value_reference: Optional[Reference] = None
-    value_related_artifact: Optional[RelatedArtifact] = None
-    value_sampled_data: Optional[SampledData] = None
-    value_signature: Optional[Signature] = None
-    value_string: Optional[str] = None
-    value_time: Optional[str] = None
-    value_timing: Optional[Timing] = None
-    value_trigger_definition: Optional[TriggerDefinition] = None
-    value_unsigned_int: Optional[int] = None
-    value_uri: Optional[str] = None
-    value_url: Optional[str] = None
-    value_usage_context: Optional[UsageContext] = None
-    value_uuid: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
+    value_age: Optional[Age] = Field(None, alias="valueAge", serialization_alias="valueAge")
+    value_annotation: Optional[Annotation] = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
+    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_base64binary: Optional[str] = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_canonical: Optional[str] = Field(None, alias="valueCanonical", serialization_alias="valueCanonical")
+    value_code: Optional[str] = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_contact_detail: Optional[ContactDetail] = Field(None, alias="valueContactDetail", serialization_alias="valueContactDetail")
+    value_contact_point: Optional[ContactPoint] = Field(None, alias="valueContactPoint", serialization_alias="valueContactPoint")
+    value_contributor: Optional[Contributor] = Field(None, alias="valueContributor", serialization_alias="valueContributor")
+    value_count: Optional[Count] = Field(None, alias="valueCount", serialization_alias="valueCount")
+    value_data_requirement: Optional[DataRequirement] = Field(None, alias="valueDataRequirement", serialization_alias="valueDataRequirement")
+    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_distance: Optional[Distance] = Field(None, alias="valueDistance", serialization_alias="valueDistance")
+    value_dosage: Optional[Dosage] = Field(None, alias="valueDosage", serialization_alias="valueDosage")
+    value_duration: Optional[Duration] = Field(None, alias="valueDuration", serialization_alias="valueDuration")
+    value_expression: Optional[Expression] = Field(None, alias="valueExpression", serialization_alias="valueExpression")
+    value_human_name: Optional[HumanName] = Field(None, alias="valueHumanName", serialization_alias="valueHumanName")
+    value_id: Optional[str] = Field(None, alias="valueId", serialization_alias="valueId")
+    value_identifier: Optional[Identifier] = Field(None, alias="valueIdentifier", serialization_alias="valueIdentifier")
+    value_instant: Optional[str] = Field(None, alias="valueInstant", serialization_alias="valueInstant")
+    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_markdown: Optional[str] = Field(None, alias="valueMarkdown", serialization_alias="valueMarkdown")
+    value_meta: Optional[Meta] = Field(None, alias="valueMeta", serialization_alias="valueMeta")
+    value_money: Optional[Money] = Field(None, alias="valueMoney", serialization_alias="valueMoney")
+    value_oid: Optional[str] = Field(None, alias="valueOid", serialization_alias="valueOid")
+    value_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="valueParameterDefinition", serialization_alias="valueParameterDefinition")
+    value_period: Optional[Period] = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+    value_positive_int: Optional[PositiveInt] = Field(None, alias="valuePositiveInt", serialization_alias="valuePositiveInt")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_ratio: Optional[Ratio] = Field(None, alias="valueRatio", serialization_alias="valueRatio")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_related_artifact: Optional[RelatedArtifact] = Field(None, alias="valueRelatedArtifact", serialization_alias="valueRelatedArtifact")
+    value_sampled_data: Optional[SampledData] = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
+    value_signature: Optional[Signature] = Field(None, alias="valueSignature", serialization_alias="valueSignature")
+    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_timing: Optional[Timing] = Field(None, alias="valueTiming", serialization_alias="valueTiming")
+    value_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="valueTriggerDefinition", serialization_alias="valueTriggerDefinition")
+    value_unsigned_int: Optional[int] = Field(None, alias="valueUnsignedInt", serialization_alias="valueUnsignedInt")
+    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
+    value_url: Optional[str] = Field(None, alias="valueUrl", serialization_alias="valueUrl")
+    value_usage_context: Optional[UsageContext] = Field(None, alias="valueUsageContext", serialization_alias="valueUsageContext")
+    value_uuid: Optional[str] = Field(None, alias="valueUuid", serialization_alias="valueUuid")
 
 
 class Ratio(Element):
-    denominator: Optional[Quantity] = None
-    numerator: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    denominator: Optional[Quantity] = Field(None, alias="denominator", serialization_alias="denominator")
+    numerator: Optional[Quantity] = Field(None, alias="numerator", serialization_alias="numerator")
 
 
 class Count(Quantity):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
     pass
 
 
 class ParameterDefinition(Element):
-    documentation: Optional[str] = None
-    max: Optional[str] = None
-    min: Optional[int] = None
-    name: Optional[str] = None
-    profile: Optional[str] = None
-    type: Optional[Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"]] = None
-    use: Optional[Literal["in", "out"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    max: Optional[str] = Field(None, alias="max", serialization_alias="max")
+    min: Optional[int] = Field(None, alias="min", serialization_alias="min")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    profile: Optional[str] = Field(None, alias="profile", serialization_alias="profile")
+    type: Optional[Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"]] = Field(None, alias="type", serialization_alias="type")
+    use: Optional[Literal["in", "out"]] = Field(None, alias="use", serialization_alias="use")
 
 
 class ContactDetail(Element):
-    name: Optional[str] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 
 
 class Address(Element):
-    city: Optional[str] = None
-    country: Optional[str] = None
-    district: Optional[str] = None
-    line: Optional[L[str]] = None
-    period: Optional[Period] = None
-    postal_code: Optional[str] = None
-    state: Optional[str] = None
-    text: Optional[str] = None
-    type: Optional[Literal["postal", "physical", "both"]] = None
-    use: Optional[Literal["home", "work", "temp", "old", "billing"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    city: Optional[str] = Field(None, alias="city", serialization_alias="city")
+    country: Optional[str] = Field(None, alias="country", serialization_alias="country")
+    district: Optional[str] = Field(None, alias="district", serialization_alias="district")
+    line: Optional[L[str]] = Field(None, alias="line", serialization_alias="line")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    postal_code: Optional[str] = Field(None, alias="postalCode", serialization_alias="postalCode")
+    state: Optional[str] = Field(None, alias="state", serialization_alias="state")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    type: Optional[Literal["postal", "physical", "both"]] = Field(None, alias="type", serialization_alias="type")
+    use: Optional[Literal["home", "work", "temp", "old", "billing"]] = Field(None, alias="use", serialization_alias="use")
 
 
 class Coding(Element):
-    code: Optional[str] = None
-    display: Optional[str] = None
-    system: Optional[str] = None
-    user_selected: Optional[bool] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
+    user_selected: Optional[bool] = Field(None, alias="userSelected", serialization_alias="userSelected")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 
 class Reference(Element):
-    display: Optional[str] = None
-    identifier: Optional[Identifier] = None
-    reference: Optional[str] = None
-    type: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    reference: Optional[str] = Field(None, alias="reference", serialization_alias="reference")
+    type: Optional[str] = Field(None, alias="type", serialization_alias="type")
 
 
 class ElementDefinition(BackboneElement):
-    alias: Optional[L[str]] = None
-    base: Optional[Element] = None
-    binding: Optional[Element] = None
-    code: Optional[L[Coding]] = None
-    comment: Optional[str] = None
-    condition: Optional[L[str]] = None
-    constraint: Optional[L[Element]] = None
-    content_reference: Optional[str] = None
-    default_value_address: Optional[Address] = None
-    default_value_age: Optional[Age] = None
-    default_value_annotation: Optional[Annotation] = None
-    default_value_attachment: Optional[Attachment] = None
-    default_value_base64binary: Optional[str] = None
-    default_value_boolean: Optional[bool] = None
-    default_value_canonical: Optional[str] = None
-    default_value_code: Optional[str] = None
-    default_value_codeable_concept: Optional[CodeableConcept] = None
-    default_value_coding: Optional[Coding] = None
-    default_value_contact_detail: Optional[ContactDetail] = None
-    default_value_contact_point: Optional[ContactPoint] = None
-    default_value_contributor: Optional[Contributor] = None
-    default_value_count: Optional[Count] = None
-    default_value_data_requirement: Optional[DataRequirement] = None
-    default_value_date: Optional[str] = None
-    default_value_date_time: Optional[str] = None
-    default_value_decimal: Optional[float] = None
-    default_value_distance: Optional[Distance] = None
-    default_value_dosage: Optional[Dosage] = None
-    default_value_duration: Optional[Duration] = None
-    default_value_expression: Optional[Expression] = None
-    default_value_human_name: Optional[HumanName] = None
-    default_value_id: Optional[str] = None
-    default_value_identifier: Optional[Identifier] = None
-    default_value_instant: Optional[str] = None
-    default_value_integer: Optional[int] = None
-    default_value_markdown: Optional[str] = None
-    default_value_meta: Optional[Meta] = None
-    default_value_money: Optional[Money] = None
-    default_value_oid: Optional[str] = None
-    default_value_parameter_definition: Optional[ParameterDefinition] = None
-    default_value_period: Optional[Period] = None
-    default_value_positive_int: Optional[PositiveInt] = None
-    default_value_quantity: Optional[Quantity] = None
-    default_value_range: Optional[Range] = None
-    default_value_ratio: Optional[Ratio] = None
-    default_value_reference: Optional[Reference] = None
-    default_value_related_artifact: Optional[RelatedArtifact] = None
-    default_value_sampled_data: Optional[SampledData] = None
-    default_value_signature: Optional[Signature] = None
-    default_value_string: Optional[str] = None
-    default_value_time: Optional[str] = None
-    default_value_timing: Optional[Timing] = None
-    default_value_trigger_definition: Optional[TriggerDefinition] = None
-    default_value_unsigned_int: Optional[int] = None
-    default_value_uri: Optional[str] = None
-    default_value_url: Optional[str] = None
-    default_value_usage_context: Optional[UsageContext] = None
-    default_value_uuid: Optional[str] = None
-    definition: Optional[str] = None
-    example: Optional[L[Element]] = None
-    fixed_address: Optional[Address] = None
-    fixed_age: Optional[Age] = None
-    fixed_annotation: Optional[Annotation] = None
-    fixed_attachment: Optional[Attachment] = None
-    fixed_base64binary: Optional[str] = None
-    fixed_boolean: Optional[bool] = None
-    fixed_canonical: Optional[str] = None
-    fixed_code: Optional[str] = None
-    fixed_codeable_concept: Optional[CodeableConcept] = None
-    fixed_coding: Optional[Coding] = None
-    fixed_contact_detail: Optional[ContactDetail] = None
-    fixed_contact_point: Optional[ContactPoint] = None
-    fixed_contributor: Optional[Contributor] = None
-    fixed_count: Optional[Count] = None
-    fixed_data_requirement: Optional[DataRequirement] = None
-    fixed_date: Optional[str] = None
-    fixed_date_time: Optional[str] = None
-    fixed_decimal: Optional[float] = None
-    fixed_distance: Optional[Distance] = None
-    fixed_dosage: Optional[Dosage] = None
-    fixed_duration: Optional[Duration] = None
-    fixed_expression: Optional[Expression] = None
-    fixed_human_name: Optional[HumanName] = None
-    fixed_id: Optional[str] = None
-    fixed_identifier: Optional[Identifier] = None
-    fixed_instant: Optional[str] = None
-    fixed_integer: Optional[int] = None
-    fixed_markdown: Optional[str] = None
-    fixed_meta: Optional[Meta] = None
-    fixed_money: Optional[Money] = None
-    fixed_oid: Optional[str] = None
-    fixed_parameter_definition: Optional[ParameterDefinition] = None
-    fixed_period: Optional[Period] = None
-    fixed_positive_int: Optional[PositiveInt] = None
-    fixed_quantity: Optional[Quantity] = None
-    fixed_range: Optional[Range] = None
-    fixed_ratio: Optional[Ratio] = None
-    fixed_reference: Optional[Reference] = None
-    fixed_related_artifact: Optional[RelatedArtifact] = None
-    fixed_sampled_data: Optional[SampledData] = None
-    fixed_signature: Optional[Signature] = None
-    fixed_string: Optional[str] = None
-    fixed_time: Optional[str] = None
-    fixed_timing: Optional[Timing] = None
-    fixed_trigger_definition: Optional[TriggerDefinition] = None
-    fixed_unsigned_int: Optional[int] = None
-    fixed_uri: Optional[str] = None
-    fixed_url: Optional[str] = None
-    fixed_usage_context: Optional[UsageContext] = None
-    fixed_uuid: Optional[str] = None
-    is_modifier: Optional[bool] = None
-    is_modifier_reason: Optional[str] = None
-    is_summary: Optional[bool] = None
-    label: Optional[str] = None
-    mapping: Optional[L[Element]] = None
-    max: Optional[str] = None
-    max_length: Optional[int] = None
-    max_value_date: Optional[str] = None
-    max_value_date_time: Optional[str] = None
-    max_value_decimal: Optional[float] = None
-    max_value_instant: Optional[str] = None
-    max_value_integer: Optional[int] = None
-    max_value_positive_int: Optional[PositiveInt] = None
-    max_value_quantity: Optional[Quantity] = None
-    max_value_time: Optional[str] = None
-    max_value_unsigned_int: Optional[int] = None
-    meaning_when_missing: Optional[str] = None
-    min: Optional[int] = None
-    min_value_date: Optional[str] = None
-    min_value_date_time: Optional[str] = None
-    min_value_decimal: Optional[float] = None
-    min_value_instant: Optional[str] = None
-    min_value_integer: Optional[int] = None
-    min_value_positive_int: Optional[PositiveInt] = None
-    min_value_quantity: Optional[Quantity] = None
-    min_value_time: Optional[str] = None
-    min_value_unsigned_int: Optional[int] = None
-    must_support: Optional[bool] = None
-    order_meaning: Optional[str] = None
-    path: Optional[str] = None
-    pattern_address: Optional[Address] = None
-    pattern_age: Optional[Age] = None
-    pattern_annotation: Optional[Annotation] = None
-    pattern_attachment: Optional[Attachment] = None
-    pattern_base64binary: Optional[str] = None
-    pattern_boolean: Optional[bool] = None
-    pattern_canonical: Optional[str] = None
-    pattern_code: Optional[str] = None
-    pattern_codeable_concept: Optional[CodeableConcept] = None
-    pattern_coding: Optional[Coding] = None
-    pattern_contact_detail: Optional[ContactDetail] = None
-    pattern_contact_point: Optional[ContactPoint] = None
-    pattern_contributor: Optional[Contributor] = None
-    pattern_count: Optional[Count] = None
-    pattern_data_requirement: Optional[DataRequirement] = None
-    pattern_date: Optional[str] = None
-    pattern_date_time: Optional[str] = None
-    pattern_decimal: Optional[float] = None
-    pattern_distance: Optional[Distance] = None
-    pattern_dosage: Optional[Dosage] = None
-    pattern_duration: Optional[Duration] = None
-    pattern_expression: Optional[Expression] = None
-    pattern_human_name: Optional[HumanName] = None
-    pattern_id: Optional[str] = None
-    pattern_identifier: Optional[Identifier] = None
-    pattern_instant: Optional[str] = None
-    pattern_integer: Optional[int] = None
-    pattern_markdown: Optional[str] = None
-    pattern_meta: Optional[Meta] = None
-    pattern_money: Optional[Money] = None
-    pattern_oid: Optional[str] = None
-    pattern_parameter_definition: Optional[ParameterDefinition] = None
-    pattern_period: Optional[Period] = None
-    pattern_positive_int: Optional[PositiveInt] = None
-    pattern_quantity: Optional[Quantity] = None
-    pattern_range: Optional[Range] = None
-    pattern_ratio: Optional[Ratio] = None
-    pattern_reference: Optional[Reference] = None
-    pattern_related_artifact: Optional[RelatedArtifact] = None
-    pattern_sampled_data: Optional[SampledData] = None
-    pattern_signature: Optional[Signature] = None
-    pattern_string: Optional[str] = None
-    pattern_time: Optional[str] = None
-    pattern_timing: Optional[Timing] = None
-    pattern_trigger_definition: Optional[TriggerDefinition] = None
-    pattern_unsigned_int: Optional[int] = None
-    pattern_uri: Optional[str] = None
-    pattern_url: Optional[str] = None
-    pattern_usage_context: Optional[UsageContext] = None
-    pattern_uuid: Optional[str] = None
-    representation: Optional[L[Literal["xmlAttr", "xmlText", "typeAttr", "cdaText", "xhtml"]]] = None
-    requirements: Optional[str] = None
-    short: Optional[str] = None
-    slice_is_constraining: Optional[bool] = None
-    slice_name: Optional[str] = None
-    slicing: Optional[Element] = None
-    type: Optional[L[Element]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
+    base: Optional[Element] = Field(None, alias="base", serialization_alias="base")
+    binding: Optional[Element] = Field(None, alias="binding", serialization_alias="binding")
+    code: Optional[L[Coding]] = Field(None, alias="code", serialization_alias="code")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    condition: Optional[L[str]] = Field(None, alias="condition", serialization_alias="condition")
+    constraint: Optional[L[Element]] = Field(None, alias="constraint", serialization_alias="constraint")
+    content_reference: Optional[str] = Field(None, alias="contentReference", serialization_alias="contentReference")
+    default_value_address: Optional[Address] = Field(None, alias="defaultValueAddress", serialization_alias="defaultValueAddress")
+    default_value_age: Optional[Age] = Field(None, alias="defaultValueAge", serialization_alias="defaultValueAge")
+    default_value_annotation: Optional[Annotation] = Field(None, alias="defaultValueAnnotation", serialization_alias="defaultValueAnnotation")
+    default_value_attachment: Optional[Attachment] = Field(None, alias="defaultValueAttachment", serialization_alias="defaultValueAttachment")
+    default_value_base64binary: Optional[str] = Field(None, alias="defaultValueBase64Binary", serialization_alias="defaultValueBase64Binary")
+    default_value_boolean: Optional[bool] = Field(None, alias="defaultValueBoolean", serialization_alias="defaultValueBoolean")
+    default_value_canonical: Optional[str] = Field(None, alias="defaultValueCanonical", serialization_alias="defaultValueCanonical")
+    default_value_code: Optional[str] = Field(None, alias="defaultValueCode", serialization_alias="defaultValueCode")
+    default_value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="defaultValueCodeableConcept", serialization_alias="defaultValueCodeableConcept")
+    default_value_coding: Optional[Coding] = Field(None, alias="defaultValueCoding", serialization_alias="defaultValueCoding")
+    default_value_contact_detail: Optional[ContactDetail] = Field(None, alias="defaultValueContactDetail", serialization_alias="defaultValueContactDetail")
+    default_value_contact_point: Optional[ContactPoint] = Field(None, alias="defaultValueContactPoint", serialization_alias="defaultValueContactPoint")
+    default_value_contributor: Optional[Contributor] = Field(None, alias="defaultValueContributor", serialization_alias="defaultValueContributor")
+    default_value_count: Optional[Count] = Field(None, alias="defaultValueCount", serialization_alias="defaultValueCount")
+    default_value_data_requirement: Optional[DataRequirement] = Field(None, alias="defaultValueDataRequirement", serialization_alias="defaultValueDataRequirement")
+    default_value_date: Optional[str] = Field(None, alias="defaultValueDate", serialization_alias="defaultValueDate")
+    default_value_date_time: Optional[str] = Field(None, alias="defaultValueDateTime", serialization_alias="defaultValueDateTime")
+    default_value_decimal: Optional[float] = Field(None, alias="defaultValueDecimal", serialization_alias="defaultValueDecimal")
+    default_value_distance: Optional[Distance] = Field(None, alias="defaultValueDistance", serialization_alias="defaultValueDistance")
+    default_value_dosage: Optional[Dosage] = Field(None, alias="defaultValueDosage", serialization_alias="defaultValueDosage")
+    default_value_duration: Optional[Duration] = Field(None, alias="defaultValueDuration", serialization_alias="defaultValueDuration")
+    default_value_expression: Optional[Expression] = Field(None, alias="defaultValueExpression", serialization_alias="defaultValueExpression")
+    default_value_human_name: Optional[HumanName] = Field(None, alias="defaultValueHumanName", serialization_alias="defaultValueHumanName")
+    default_value_id: Optional[str] = Field(None, alias="defaultValueId", serialization_alias="defaultValueId")
+    default_value_identifier: Optional[Identifier] = Field(None, alias="defaultValueIdentifier", serialization_alias="defaultValueIdentifier")
+    default_value_instant: Optional[str] = Field(None, alias="defaultValueInstant", serialization_alias="defaultValueInstant")
+    default_value_integer: Optional[int] = Field(None, alias="defaultValueInteger", serialization_alias="defaultValueInteger")
+    default_value_markdown: Optional[str] = Field(None, alias="defaultValueMarkdown", serialization_alias="defaultValueMarkdown")
+    default_value_meta: Optional[Meta] = Field(None, alias="defaultValueMeta", serialization_alias="defaultValueMeta")
+    default_value_money: Optional[Money] = Field(None, alias="defaultValueMoney", serialization_alias="defaultValueMoney")
+    default_value_oid: Optional[str] = Field(None, alias="defaultValueOid", serialization_alias="defaultValueOid")
+    default_value_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="defaultValueParameterDefinition", serialization_alias="defaultValueParameterDefinition")
+    default_value_period: Optional[Period] = Field(None, alias="defaultValuePeriod", serialization_alias="defaultValuePeriod")
+    default_value_positive_int: Optional[PositiveInt] = Field(None, alias="defaultValuePositiveInt", serialization_alias="defaultValuePositiveInt")
+    default_value_quantity: Optional[Quantity] = Field(None, alias="defaultValueQuantity", serialization_alias="defaultValueQuantity")
+    default_value_range: Optional[Range] = Field(None, alias="defaultValueRange", serialization_alias="defaultValueRange")
+    default_value_ratio: Optional[Ratio] = Field(None, alias="defaultValueRatio", serialization_alias="defaultValueRatio")
+    default_value_reference: Optional[Reference] = Field(None, alias="defaultValueReference", serialization_alias="defaultValueReference")
+    default_value_related_artifact: Optional[RelatedArtifact] = Field(None, alias="defaultValueRelatedArtifact", serialization_alias="defaultValueRelatedArtifact")
+    default_value_sampled_data: Optional[SampledData] = Field(None, alias="defaultValueSampledData", serialization_alias="defaultValueSampledData")
+    default_value_signature: Optional[Signature] = Field(None, alias="defaultValueSignature", serialization_alias="defaultValueSignature")
+    default_value_string: Optional[str] = Field(None, alias="defaultValueString", serialization_alias="defaultValueString")
+    default_value_time: Optional[str] = Field(None, alias="defaultValueTime", serialization_alias="defaultValueTime")
+    default_value_timing: Optional[Timing] = Field(None, alias="defaultValueTiming", serialization_alias="defaultValueTiming")
+    default_value_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="defaultValueTriggerDefinition", serialization_alias="defaultValueTriggerDefinition")
+    default_value_unsigned_int: Optional[int] = Field(None, alias="defaultValueUnsignedInt", serialization_alias="defaultValueUnsignedInt")
+    default_value_uri: Optional[str] = Field(None, alias="defaultValueUri", serialization_alias="defaultValueUri")
+    default_value_url: Optional[str] = Field(None, alias="defaultValueUrl", serialization_alias="defaultValueUrl")
+    default_value_usage_context: Optional[UsageContext] = Field(None, alias="defaultValueUsageContext", serialization_alias="defaultValueUsageContext")
+    default_value_uuid: Optional[str] = Field(None, alias="defaultValueUuid", serialization_alias="defaultValueUuid")
+    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
+    example: Optional[L[Element]] = Field(None, alias="example", serialization_alias="example")
+    fixed_address: Optional[Address] = Field(None, alias="fixedAddress", serialization_alias="fixedAddress")
+    fixed_age: Optional[Age] = Field(None, alias="fixedAge", serialization_alias="fixedAge")
+    fixed_annotation: Optional[Annotation] = Field(None, alias="fixedAnnotation", serialization_alias="fixedAnnotation")
+    fixed_attachment: Optional[Attachment] = Field(None, alias="fixedAttachment", serialization_alias="fixedAttachment")
+    fixed_base64binary: Optional[str] = Field(None, alias="fixedBase64Binary", serialization_alias="fixedBase64Binary")
+    fixed_boolean: Optional[bool] = Field(None, alias="fixedBoolean", serialization_alias="fixedBoolean")
+    fixed_canonical: Optional[str] = Field(None, alias="fixedCanonical", serialization_alias="fixedCanonical")
+    fixed_code: Optional[str] = Field(None, alias="fixedCode", serialization_alias="fixedCode")
+    fixed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="fixedCodeableConcept", serialization_alias="fixedCodeableConcept")
+    fixed_coding: Optional[Coding] = Field(None, alias="fixedCoding", serialization_alias="fixedCoding")
+    fixed_contact_detail: Optional[ContactDetail] = Field(None, alias="fixedContactDetail", serialization_alias="fixedContactDetail")
+    fixed_contact_point: Optional[ContactPoint] = Field(None, alias="fixedContactPoint", serialization_alias="fixedContactPoint")
+    fixed_contributor: Optional[Contributor] = Field(None, alias="fixedContributor", serialization_alias="fixedContributor")
+    fixed_count: Optional[Count] = Field(None, alias="fixedCount", serialization_alias="fixedCount")
+    fixed_data_requirement: Optional[DataRequirement] = Field(None, alias="fixedDataRequirement", serialization_alias="fixedDataRequirement")
+    fixed_date: Optional[str] = Field(None, alias="fixedDate", serialization_alias="fixedDate")
+    fixed_date_time: Optional[str] = Field(None, alias="fixedDateTime", serialization_alias="fixedDateTime")
+    fixed_decimal: Optional[float] = Field(None, alias="fixedDecimal", serialization_alias="fixedDecimal")
+    fixed_distance: Optional[Distance] = Field(None, alias="fixedDistance", serialization_alias="fixedDistance")
+    fixed_dosage: Optional[Dosage] = Field(None, alias="fixedDosage", serialization_alias="fixedDosage")
+    fixed_duration: Optional[Duration] = Field(None, alias="fixedDuration", serialization_alias="fixedDuration")
+    fixed_expression: Optional[Expression] = Field(None, alias="fixedExpression", serialization_alias="fixedExpression")
+    fixed_human_name: Optional[HumanName] = Field(None, alias="fixedHumanName", serialization_alias="fixedHumanName")
+    fixed_id: Optional[str] = Field(None, alias="fixedId", serialization_alias="fixedId")
+    fixed_identifier: Optional[Identifier] = Field(None, alias="fixedIdentifier", serialization_alias="fixedIdentifier")
+    fixed_instant: Optional[str] = Field(None, alias="fixedInstant", serialization_alias="fixedInstant")
+    fixed_integer: Optional[int] = Field(None, alias="fixedInteger", serialization_alias="fixedInteger")
+    fixed_markdown: Optional[str] = Field(None, alias="fixedMarkdown", serialization_alias="fixedMarkdown")
+    fixed_meta: Optional[Meta] = Field(None, alias="fixedMeta", serialization_alias="fixedMeta")
+    fixed_money: Optional[Money] = Field(None, alias="fixedMoney", serialization_alias="fixedMoney")
+    fixed_oid: Optional[str] = Field(None, alias="fixedOid", serialization_alias="fixedOid")
+    fixed_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="fixedParameterDefinition", serialization_alias="fixedParameterDefinition")
+    fixed_period: Optional[Period] = Field(None, alias="fixedPeriod", serialization_alias="fixedPeriod")
+    fixed_positive_int: Optional[PositiveInt] = Field(None, alias="fixedPositiveInt", serialization_alias="fixedPositiveInt")
+    fixed_quantity: Optional[Quantity] = Field(None, alias="fixedQuantity", serialization_alias="fixedQuantity")
+    fixed_range: Optional[Range] = Field(None, alias="fixedRange", serialization_alias="fixedRange")
+    fixed_ratio: Optional[Ratio] = Field(None, alias="fixedRatio", serialization_alias="fixedRatio")
+    fixed_reference: Optional[Reference] = Field(None, alias="fixedReference", serialization_alias="fixedReference")
+    fixed_related_artifact: Optional[RelatedArtifact] = Field(None, alias="fixedRelatedArtifact", serialization_alias="fixedRelatedArtifact")
+    fixed_sampled_data: Optional[SampledData] = Field(None, alias="fixedSampledData", serialization_alias="fixedSampledData")
+    fixed_signature: Optional[Signature] = Field(None, alias="fixedSignature", serialization_alias="fixedSignature")
+    fixed_string: Optional[str] = Field(None, alias="fixedString", serialization_alias="fixedString")
+    fixed_time: Optional[str] = Field(None, alias="fixedTime", serialization_alias="fixedTime")
+    fixed_timing: Optional[Timing] = Field(None, alias="fixedTiming", serialization_alias="fixedTiming")
+    fixed_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="fixedTriggerDefinition", serialization_alias="fixedTriggerDefinition")
+    fixed_unsigned_int: Optional[int] = Field(None, alias="fixedUnsignedInt", serialization_alias="fixedUnsignedInt")
+    fixed_uri: Optional[str] = Field(None, alias="fixedUri", serialization_alias="fixedUri")
+    fixed_url: Optional[str] = Field(None, alias="fixedUrl", serialization_alias="fixedUrl")
+    fixed_usage_context: Optional[UsageContext] = Field(None, alias="fixedUsageContext", serialization_alias="fixedUsageContext")
+    fixed_uuid: Optional[str] = Field(None, alias="fixedUuid", serialization_alias="fixedUuid")
+    is_modifier: Optional[bool] = Field(None, alias="isModifier", serialization_alias="isModifier")
+    is_modifier_reason: Optional[str] = Field(None, alias="isModifierReason", serialization_alias="isModifierReason")
+    is_summary: Optional[bool] = Field(None, alias="isSummary", serialization_alias="isSummary")
+    label: Optional[str] = Field(None, alias="label", serialization_alias="label")
+    mapping: Optional[L[Element]] = Field(None, alias="mapping", serialization_alias="mapping")
+    max: Optional[str] = Field(None, alias="max", serialization_alias="max")
+    max_length: Optional[int] = Field(None, alias="maxLength", serialization_alias="maxLength")
+    max_value_date: Optional[str] = Field(None, alias="maxValueDate", serialization_alias="maxValueDate")
+    max_value_date_time: Optional[str] = Field(None, alias="maxValueDateTime", serialization_alias="maxValueDateTime")
+    max_value_decimal: Optional[float] = Field(None, alias="maxValueDecimal", serialization_alias="maxValueDecimal")
+    max_value_instant: Optional[str] = Field(None, alias="maxValueInstant", serialization_alias="maxValueInstant")
+    max_value_integer: Optional[int] = Field(None, alias="maxValueInteger", serialization_alias="maxValueInteger")
+    max_value_positive_int: Optional[PositiveInt] = Field(None, alias="maxValuePositiveInt", serialization_alias="maxValuePositiveInt")
+    max_value_quantity: Optional[Quantity] = Field(None, alias="maxValueQuantity", serialization_alias="maxValueQuantity")
+    max_value_time: Optional[str] = Field(None, alias="maxValueTime", serialization_alias="maxValueTime")
+    max_value_unsigned_int: Optional[int] = Field(None, alias="maxValueUnsignedInt", serialization_alias="maxValueUnsignedInt")
+    meaning_when_missing: Optional[str] = Field(None, alias="meaningWhenMissing", serialization_alias="meaningWhenMissing")
+    min: Optional[int] = Field(None, alias="min", serialization_alias="min")
+    min_value_date: Optional[str] = Field(None, alias="minValueDate", serialization_alias="minValueDate")
+    min_value_date_time: Optional[str] = Field(None, alias="minValueDateTime", serialization_alias="minValueDateTime")
+    min_value_decimal: Optional[float] = Field(None, alias="minValueDecimal", serialization_alias="minValueDecimal")
+    min_value_instant: Optional[str] = Field(None, alias="minValueInstant", serialization_alias="minValueInstant")
+    min_value_integer: Optional[int] = Field(None, alias="minValueInteger", serialization_alias="minValueInteger")
+    min_value_positive_int: Optional[PositiveInt] = Field(None, alias="minValuePositiveInt", serialization_alias="minValuePositiveInt")
+    min_value_quantity: Optional[Quantity] = Field(None, alias="minValueQuantity", serialization_alias="minValueQuantity")
+    min_value_time: Optional[str] = Field(None, alias="minValueTime", serialization_alias="minValueTime")
+    min_value_unsigned_int: Optional[int] = Field(None, alias="minValueUnsignedInt", serialization_alias="minValueUnsignedInt")
+    must_support: Optional[bool] = Field(None, alias="mustSupport", serialization_alias="mustSupport")
+    order_meaning: Optional[str] = Field(None, alias="orderMeaning", serialization_alias="orderMeaning")
+    path: Optional[str] = Field(None, alias="path", serialization_alias="path")
+    pattern_address: Optional[Address] = Field(None, alias="patternAddress", serialization_alias="patternAddress")
+    pattern_age: Optional[Age] = Field(None, alias="patternAge", serialization_alias="patternAge")
+    pattern_annotation: Optional[Annotation] = Field(None, alias="patternAnnotation", serialization_alias="patternAnnotation")
+    pattern_attachment: Optional[Attachment] = Field(None, alias="patternAttachment", serialization_alias="patternAttachment")
+    pattern_base64binary: Optional[str] = Field(None, alias="patternBase64Binary", serialization_alias="patternBase64Binary")
+    pattern_boolean: Optional[bool] = Field(None, alias="patternBoolean", serialization_alias="patternBoolean")
+    pattern_canonical: Optional[str] = Field(None, alias="patternCanonical", serialization_alias="patternCanonical")
+    pattern_code: Optional[str] = Field(None, alias="patternCode", serialization_alias="patternCode")
+    pattern_codeable_concept: Optional[CodeableConcept] = Field(None, alias="patternCodeableConcept", serialization_alias="patternCodeableConcept")
+    pattern_coding: Optional[Coding] = Field(None, alias="patternCoding", serialization_alias="patternCoding")
+    pattern_contact_detail: Optional[ContactDetail] = Field(None, alias="patternContactDetail", serialization_alias="patternContactDetail")
+    pattern_contact_point: Optional[ContactPoint] = Field(None, alias="patternContactPoint", serialization_alias="patternContactPoint")
+    pattern_contributor: Optional[Contributor] = Field(None, alias="patternContributor", serialization_alias="patternContributor")
+    pattern_count: Optional[Count] = Field(None, alias="patternCount", serialization_alias="patternCount")
+    pattern_data_requirement: Optional[DataRequirement] = Field(None, alias="patternDataRequirement", serialization_alias="patternDataRequirement")
+    pattern_date: Optional[str] = Field(None, alias="patternDate", serialization_alias="patternDate")
+    pattern_date_time: Optional[str] = Field(None, alias="patternDateTime", serialization_alias="patternDateTime")
+    pattern_decimal: Optional[float] = Field(None, alias="patternDecimal", serialization_alias="patternDecimal")
+    pattern_distance: Optional[Distance] = Field(None, alias="patternDistance", serialization_alias="patternDistance")
+    pattern_dosage: Optional[Dosage] = Field(None, alias="patternDosage", serialization_alias="patternDosage")
+    pattern_duration: Optional[Duration] = Field(None, alias="patternDuration", serialization_alias="patternDuration")
+    pattern_expression: Optional[Expression] = Field(None, alias="patternExpression", serialization_alias="patternExpression")
+    pattern_human_name: Optional[HumanName] = Field(None, alias="patternHumanName", serialization_alias="patternHumanName")
+    pattern_id: Optional[str] = Field(None, alias="patternId", serialization_alias="patternId")
+    pattern_identifier: Optional[Identifier] = Field(None, alias="patternIdentifier", serialization_alias="patternIdentifier")
+    pattern_instant: Optional[str] = Field(None, alias="patternInstant", serialization_alias="patternInstant")
+    pattern_integer: Optional[int] = Field(None, alias="patternInteger", serialization_alias="patternInteger")
+    pattern_markdown: Optional[str] = Field(None, alias="patternMarkdown", serialization_alias="patternMarkdown")
+    pattern_meta: Optional[Meta] = Field(None, alias="patternMeta", serialization_alias="patternMeta")
+    pattern_money: Optional[Money] = Field(None, alias="patternMoney", serialization_alias="patternMoney")
+    pattern_oid: Optional[str] = Field(None, alias="patternOid", serialization_alias="patternOid")
+    pattern_parameter_definition: Optional[ParameterDefinition] = Field(None, alias="patternParameterDefinition", serialization_alias="patternParameterDefinition")
+    pattern_period: Optional[Period] = Field(None, alias="patternPeriod", serialization_alias="patternPeriod")
+    pattern_positive_int: Optional[PositiveInt] = Field(None, alias="patternPositiveInt", serialization_alias="patternPositiveInt")
+    pattern_quantity: Optional[Quantity] = Field(None, alias="patternQuantity", serialization_alias="patternQuantity")
+    pattern_range: Optional[Range] = Field(None, alias="patternRange", serialization_alias="patternRange")
+    pattern_ratio: Optional[Ratio] = Field(None, alias="patternRatio", serialization_alias="patternRatio")
+    pattern_reference: Optional[Reference] = Field(None, alias="patternReference", serialization_alias="patternReference")
+    pattern_related_artifact: Optional[RelatedArtifact] = Field(None, alias="patternRelatedArtifact", serialization_alias="patternRelatedArtifact")
+    pattern_sampled_data: Optional[SampledData] = Field(None, alias="patternSampledData", serialization_alias="patternSampledData")
+    pattern_signature: Optional[Signature] = Field(None, alias="patternSignature", serialization_alias="patternSignature")
+    pattern_string: Optional[str] = Field(None, alias="patternString", serialization_alias="patternString")
+    pattern_time: Optional[str] = Field(None, alias="patternTime", serialization_alias="patternTime")
+    pattern_timing: Optional[Timing] = Field(None, alias="patternTiming", serialization_alias="patternTiming")
+    pattern_trigger_definition: Optional[TriggerDefinition] = Field(None, alias="patternTriggerDefinition", serialization_alias="patternTriggerDefinition")
+    pattern_unsigned_int: Optional[int] = Field(None, alias="patternUnsignedInt", serialization_alias="patternUnsignedInt")
+    pattern_uri: Optional[str] = Field(None, alias="patternUri", serialization_alias="patternUri")
+    pattern_url: Optional[str] = Field(None, alias="patternUrl", serialization_alias="patternUrl")
+    pattern_usage_context: Optional[UsageContext] = Field(None, alias="patternUsageContext", serialization_alias="patternUsageContext")
+    pattern_uuid: Optional[str] = Field(None, alias="patternUuid", serialization_alias="patternUuid")
+    representation: Optional[L[Literal["xmlAttr", "xmlText", "typeAttr", "cdaText", "xhtml"]]] = Field(None, alias="representation", serialization_alias="representation")
+    requirements: Optional[str] = Field(None, alias="requirements", serialization_alias="requirements")
+    short: Optional[str] = Field(None, alias="short", serialization_alias="short")
+    slice_is_constraining: Optional[bool] = Field(None, alias="sliceIsConstraining", serialization_alias="sliceIsConstraining")
+    slice_name: Optional[str] = Field(None, alias="sliceName", serialization_alias="sliceName")
+    slicing: Optional[Element] = Field(None, alias="slicing", serialization_alias="slicing")
+    type: Optional[L[Element]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Period(Element):
-    end: Optional[str] = None
-    start: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    end: Optional[str] = Field(None, alias="end", serialization_alias="end")
+    start: Optional[str] = Field(None, alias="start", serialization_alias="start")
 
 
 class HumanName(Element):
-    family: Optional[str] = None
-    given: Optional[L[str]] = None
-    period: Optional[Period] = None
-    prefix: Optional[L[str]] = None
-    suffix: Optional[L[str]] = None
-    text: Optional[str] = None
-    use: Optional[Literal["usual", "official", "temp", "nickname", "anonymous", "old"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    family: Optional[str] = Field(None, alias="family", serialization_alias="family")
+    given: Optional[L[str]] = Field(None, alias="given", serialization_alias="given")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    prefix: Optional[L[str]] = Field(None, alias="prefix", serialization_alias="prefix")
+    suffix: Optional[L[str]] = Field(None, alias="suffix", serialization_alias="suffix")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    use: Optional[Literal["usual", "official", "temp", "nickname", "anonymous", "old"]] = Field(None, alias="use", serialization_alias="use")
 
 
 class RelatedArtifact(Element):
-    citation: Optional[str] = None
-    display: Optional[str] = None
-    document: Optional[Attachment] = None
-    label: Optional[str] = None
-    resource: Optional[str] = None
-    type: Optional[Literal["documentation", "justification", "citation", "predecessor", "successor", "derived-from", "depends-on", "composed-of"]] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    citation: Optional[str] = Field(None, alias="citation", serialization_alias="citation")
+    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    document: Optional[Attachment] = Field(None, alias="document", serialization_alias="document")
+    label: Optional[str] = Field(None, alias="label", serialization_alias="label")
+    resource: Optional[str] = Field(None, alias="resource", serialization_alias="resource")
+    type: Optional[Literal["documentation", "justification", "citation", "predecessor", "successor", "derived-from", "depends-on", "composed-of"]] = Field(None, alias="type", serialization_alias="type")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 
 class Expression(Element):
-    description: Optional[str] = None
-    expression: Optional[str] = None
-    language: Optional[str] = None
-    name: Optional[str] = None
-    reference: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
+    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    reference: Optional[str] = Field(None, alias="reference", serialization_alias="reference")
 
 
 class MarketingStatus(BackboneElement):
-    country: Optional[CodeableConcept] = None
-    date_range: Optional[Period] = None
-    jurisdiction: Optional[CodeableConcept] = None
-    restore_date: Optional[str] = None
-    status: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
+    date_range: Optional[Period] = Field(None, alias="dateRange", serialization_alias="dateRange")
+    jurisdiction: Optional[CodeableConcept] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    restore_date: Optional[str] = Field(None, alias="restoreDate", serialization_alias="restoreDate")
+    status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
 
 
 class Signature(Element):
-    data: Optional[str] = None
-    on_behalf_of: Optional[Reference] = None
-    sig_format: Optional[str] = None
-    target_format: Optional[str] = None
-    type: Optional[L[Coding]] = None
-    when: Optional[str] = None
-    who: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    data: Optional[str] = Field(None, alias="data", serialization_alias="data")
+    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    sig_format: Optional[str] = Field(None, alias="sigFormat", serialization_alias="sigFormat")
+    target_format: Optional[str] = Field(None, alias="targetFormat", serialization_alias="targetFormat")
+    type: Optional[L[Coding]] = Field(None, alias="type", serialization_alias="type")
+    when: Optional[str] = Field(None, alias="when", serialization_alias="when")
+    who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
 
 
 class SubstanceAmount(BackboneElement):
-    amount_quantity: Optional[Quantity] = None
-    amount_range: Optional[Range] = None
-    amount_string: Optional[str] = None
-    amount_text: Optional[str] = None
-    amount_type: Optional[CodeableConcept] = None
-    reference_range: Optional[Element] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
+    amount_range: Optional[Range] = Field(None, alias="amountRange", serialization_alias="amountRange")
+    amount_string: Optional[str] = Field(None, alias="amountString", serialization_alias="amountString")
+    amount_text: Optional[str] = Field(None, alias="amountText", serialization_alias="amountText")
+    amount_type: Optional[CodeableConcept] = Field(None, alias="amountType", serialization_alias="amountType")
+    reference_range: Optional[Element] = Field(None, alias="referenceRange", serialization_alias="referenceRange")
 
 
 class Contributor(Element):
-    contact: Optional[L[ContactDetail]] = None
-    name: Optional[str] = None
-    type: Optional[Literal["author", "editor", "reviewer", "endorser"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[Literal["author", "editor", "reviewer", "endorser"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class UsageContext(Element):
-    code: Optional[Coding] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
-    value_reference: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[Coding] = Field(None, alias="code", serialization_alias="code")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
 
 
 class Meta(Element):
-    last_updated: Optional[str] = None
-    profile: Optional[L[str]] = None
-    security: Optional[L[Coding]] = None
-    source: Optional[str] = None
-    tag: Optional[L[Coding]] = None
-    version_id: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    last_updated: Optional[str] = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
+    profile: Optional[L[str]] = Field(None, alias="profile", serialization_alias="profile")
+    security: Optional[L[Coding]] = Field(None, alias="security", serialization_alias="security")
+    source: Optional[str] = Field(None, alias="source", serialization_alias="source")
+    tag: Optional[L[Coding]] = Field(None, alias="tag", serialization_alias="tag")
+    version_id: Optional[str] = Field(None, alias="versionId", serialization_alias="versionId")
 
 
 class Distance(Quantity):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
     pass
 
 
 class ContactPoint(Element):
-    period: Optional[Period] = None
-    rank: Optional[PositiveInt] = None
-    system: Optional[Literal["phone", "fax", "email", "pager", "url", "sms", "other"]] = None
-    use: Optional[Literal["home", "work", "temp", "old", "mobile"]] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
+    system: Optional[Literal["phone", "fax", "email", "pager", "url", "sms", "other"]] = Field(None, alias="system", serialization_alias="system")
+    use: Optional[Literal["home", "work", "temp", "old", "mobile"]] = Field(None, alias="use", serialization_alias="use")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 
 class Annotation(Element):
-    author_reference: Optional[Reference] = None
-    author_string: Optional[str] = None
-    text: Optional[str] = None
-    time: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    author_reference: Optional[Reference] = Field(None, alias="authorReference", serialization_alias="authorReference")
+    author_string: Optional[str] = Field(None, alias="authorString", serialization_alias="authorString")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    time: Optional[str] = Field(None, alias="time", serialization_alias="time")
 
 
 class Attachment(Element):
-    content_type: Optional[str] = None
-    creation: Optional[str] = None
-    data: Optional[str] = None
-    hash: Optional[str] = None
-    language: Optional[str] = None
-    size: Optional[int] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    content_type: Optional[str] = Field(None, alias="contentType", serialization_alias="contentType")
+    creation: Optional[str] = Field(None, alias="creation", serialization_alias="creation")
+    data: Optional[str] = Field(None, alias="data", serialization_alias="data")
+    hash: Optional[str] = Field(None, alias="hash", serialization_alias="hash")
+    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
+    size: Optional[int] = Field(None, alias="size", serialization_alias="size")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 
 class Narrative(Element):
-    div: Optional[str] = None
-    status: Optional[Literal["generated", "extensions", "additional", "empty"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    div: Optional[str] = Field(None, alias="div", serialization_alias="div")
+    status: Optional[Literal["generated", "extensions", "additional", "empty"]] = Field(None, alias="status", serialization_alias="status")
 
 
 class TriggerDefinition(Element):
-    condition: Optional[Expression] = None
-    data: Optional[L[DataRequirement]] = None
-    name: Optional[str] = None
-    timing_date: Optional[str] = None
-    timing_date_time: Optional[str] = None
-    timing_reference: Optional[Reference] = None
-    timing_timing: Optional[Timing] = None
-    type: Optional[Literal["named-event", "periodic", "data-changed", "data-accessed", "data-access-ended"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    condition: Optional[Expression] = Field(None, alias="condition", serialization_alias="condition")
+    data: Optional[L[DataRequirement]] = Field(None, alias="data", serialization_alias="data")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    timing_date: Optional[str] = Field(None, alias="timingDate", serialization_alias="timingDate")
+    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_reference: Optional[Reference] = Field(None, alias="timingReference", serialization_alias="timingReference")
+    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    type: Optional[Literal["named-event", "periodic", "data-changed", "data-accessed", "data-access-ended"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Range(Element):
-    high: Optional[Quantity] = None
-    low: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    high: Optional[Quantity] = Field(None, alias="high", serialization_alias="high")
+    low: Optional[Quantity] = Field(None, alias="low", serialization_alias="low")
 
 
 class CodeableConcept(Element):
-    coding: Optional[L[Coding]] = None
-    text: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    coding: Optional[L[Coding]] = Field(None, alias="coding", serialization_alias="coding")
+    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
 
 
 class DataRequirement(Element):
-    code_filter: Optional[L[Element]] = None
-    date_filter: Optional[L[Element]] = None
-    limit: Optional[PositiveInt] = None
-    must_support: Optional[L[str]] = None
-    profile: Optional[L[str]] = None
-    sort: Optional[L[Element]] = None
-    subject_codeable_concept: Optional[CodeableConcept] = None
-    subject_reference: Optional[Reference] = None
-    type: Optional[Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code_filter: Optional[L[Element]] = Field(None, alias="codeFilter", serialization_alias="codeFilter")
+    date_filter: Optional[L[Element]] = Field(None, alias="dateFilter", serialization_alias="dateFilter")
+    limit: Optional[PositiveInt] = Field(None, alias="limit", serialization_alias="limit")
+    must_support: Optional[L[str]] = Field(None, alias="mustSupport", serialization_alias="mustSupport")
+    profile: Optional[L[str]] = Field(None, alias="profile", serialization_alias="profile")
+    sort: Optional[L[Element]] = Field(None, alias="sort", serialization_alias="sort")
+    subject_codeable_concept: Optional[CodeableConcept] = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
+    subject_reference: Optional[Reference] = Field(None, alias="subjectReference", serialization_alias="subjectReference")
+    type: Optional[Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Money(Element):
-    currency: Optional[str] = None
-    value: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    currency: Optional[str] = Field(None, alias="currency", serialization_alias="currency")
+    value: Optional[float] = Field(None, alias="value", serialization_alias="value")
 
 
 class Identifier(Element):
-    assigner: Optional[Reference] = None
-    period: Optional[Period] = None
-    system: Optional[str] = None
-    type: Optional[CodeableConcept] = None
-    use: Optional[Literal["usual", "official", "temp", "secondary", "old"]] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    assigner: Optional[Reference] = Field(None, alias="assigner", serialization_alias="assigner")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    use: Optional[Literal["usual", "official", "temp", "secondary", "old"]] = Field(None, alias="use", serialization_alias="use")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 
 class Timing(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    event: Optional[L[str]] = None
-    repeat: Optional[Element] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    event: Optional[L[str]] = Field(None, alias="event", serialization_alias="event")
+    repeat: Optional[Element] = Field(None, alias="repeat", serialization_alias="repeat")
 

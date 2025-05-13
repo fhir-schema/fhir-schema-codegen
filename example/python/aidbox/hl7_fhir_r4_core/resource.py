@@ -6,12 +6,14 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
+from aidbox.hl7_fhir_r4_core.base import *
 
 
 class Resource(BaseModel):
-    id: Optional[str] = None
-    implicit_rules: Optional[str] = None
-    language: Optional[str] = None
-    meta: Optional[Meta] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    id: Optional[str] = Field(None, alias="id", serialization_alias="id")
+    implicit_rules: Optional[str] = Field(None, alias="implicitRules", serialization_alias="implicitRules")
+    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
+    meta: Optional[Meta] = Field(None, alias="meta", serialization_alias="meta")
 

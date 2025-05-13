@@ -6,16 +6,18 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EnrollmentRequest(DomainResource):
-    candidate: Optional[Reference] = None
-    coverage: Optional[Reference] = None
-    created: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    insurer: Optional[Reference] = None
-    provider: Optional[Reference] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    candidate: Optional[Reference] = Field(None, alias="candidate", serialization_alias="candidate")
+    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
+    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    insurer: Optional[Reference] = Field(None, alias="insurer", serialization_alias="insurer")
+    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 

@@ -6,17 +6,19 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Schedule(DomainResource):
-    active: Optional[bool] = None
-    actor: Optional[L[Reference]] = None
-    comment: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    planning_horizon: Optional[Period] = None
-    service_category: Optional[L[CodeableConcept]] = None
-    service_type: Optional[L[CodeableConcept]] = None
-    specialty: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    actor: Optional[L[Reference]] = Field(None, alias="actor", serialization_alias="actor")
+    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    planning_horizon: Optional[Period] = Field(None, alias="planningHorizon", serialization_alias="planningHorizon")
+    service_category: Optional[L[CodeableConcept]] = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
+    service_type: Optional[L[CodeableConcept]] = Field(None, alias="serviceType", serialization_alias="serviceType")
+    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
 

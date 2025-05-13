@@ -6,32 +6,34 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Media(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    body_site: Optional[CodeableConcept] = None
-    content: Optional[Attachment] = None
-    created_date_time: Optional[str] = None
-    created_period: Optional[Period] = None
-    device: Optional[Reference] = None
-    device_name: Optional[str] = None
-    duration: Optional[float] = None
-    encounter: Optional[Reference] = None
-    frames: Optional[PositiveInt] = None
-    height: Optional[PositiveInt] = None
-    identifier: Optional[L[Identifier]] = None
-    issued: Optional[str] = None
-    modality: Optional[CodeableConcept] = None
-    note: Optional[L[Annotation]] = None
-    operator: Optional[Reference] = None
-    part_of: Optional[L[Reference]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    status: Optional[Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
-    view: Optional[CodeableConcept] = None
-    width: Optional[PositiveInt] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    content: Optional[Attachment] = Field(None, alias="content", serialization_alias="content")
+    created_date_time: Optional[str] = Field(None, alias="createdDateTime", serialization_alias="createdDateTime")
+    created_period: Optional[Period] = Field(None, alias="createdPeriod", serialization_alias="createdPeriod")
+    device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")
+    device_name: Optional[str] = Field(None, alias="deviceName", serialization_alias="deviceName")
+    duration: Optional[float] = Field(None, alias="duration", serialization_alias="duration")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    frames: Optional[PositiveInt] = Field(None, alias="frames", serialization_alias="frames")
+    height: Optional[PositiveInt] = Field(None, alias="height", serialization_alias="height")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")
+    modality: Optional[CodeableConcept] = Field(None, alias="modality", serialization_alias="modality")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    operator: Optional[Reference] = Field(None, alias="operator", serialization_alias="operator")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    status: Optional[Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    view: Optional[CodeableConcept] = Field(None, alias="view", serialization_alias="view")
+    width: Optional[PositiveInt] = Field(None, alias="width", serialization_alias="width")
 

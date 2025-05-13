@@ -4,7 +4,6 @@ from typing import Optional, TypeVar, Type, Dict, Any, cast, Union
 import requests
 from pydantic import BaseModel
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
-from aidbox.hl7_fhir_r4_core import Patient, Task  # Import all resource types
 
 T = TypeVar("T", bound=DomainResource)
 
@@ -91,6 +90,7 @@ class Client:
         url = f"{self.base_url}/{resource_type}/{resource.id}"
         data = json.loads(json.dumps(resource, cls=FHIRJSONEncoder))
         response = self.session.put(url, json=data)
+
         response.raise_for_status()
         data = response.json()
         if not data.get("id"):
@@ -109,6 +109,7 @@ class Client:
         """Search for resources"""
         resource_type = resource_class.__name__
         url = f"{self.base_url}/{resource_type}"
+        print(111, params)
         response = self.session.get(url, params=params)
         response.raise_for_status()
         return response.json()

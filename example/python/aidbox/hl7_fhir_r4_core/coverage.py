@@ -6,42 +6,50 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CoverageCostToBeneficiaryException(BackboneElement):
-    period: Optional[Period] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class CoverageCostToBeneficiary(BackboneElement):
-    exception: Optional[L[CoverageCostToBeneficiaryException]] = None
-    type: Optional[CodeableConcept] = None
-    value_money: Optional[Money] = None
-    value_quantity: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    exception: Optional[L[CoverageCostToBeneficiaryException]] = Field(None, alias="exception", serialization_alias="exception")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value_money: Optional[Money] = Field(None, alias="valueMoney", serialization_alias="valueMoney")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class CoverageClass(BackboneElement):
-    name: Optional[str] = None
-    type: Optional[CodeableConcept] = None
-    value: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 
 class Coverage(DomainResource):
-    beneficiary: Optional[Reference] = None
-    class_: Optional[L[CoverageClass]] = None
-    contract: Optional[L[Reference]] = None
-    cost_to_beneficiary: Optional[L[CoverageCostToBeneficiary]] = None
-    dependent: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    network: Optional[str] = None
-    order: Optional[PositiveInt] = None
-    payor: Optional[L[Reference]] = None
-    period: Optional[Period] = None
-    policy_holder: Optional[Reference] = None
-    relationship: Optional[CodeableConcept] = None
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = None
-    subrogation: Optional[bool] = None
-    subscriber: Optional[Reference] = None
-    subscriber_id: Optional[str] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    beneficiary: Optional[Reference] = Field(None, alias="beneficiary", serialization_alias="beneficiary")
+    class_: Optional[L[CoverageClass]] = Field(None, alias="class", serialization_alias="class")
+    contract: Optional[L[Reference]] = Field(None, alias="contract", serialization_alias="contract")
+    cost_to_beneficiary: Optional[L[CoverageCostToBeneficiary]] = Field(None, alias="costToBeneficiary", serialization_alias="costToBeneficiary")
+    dependent: Optional[str] = Field(None, alias="dependent", serialization_alias="dependent")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    network: Optional[str] = Field(None, alias="network", serialization_alias="network")
+    order: Optional[PositiveInt] = Field(None, alias="order", serialization_alias="order")
+    payor: Optional[L[Reference]] = Field(None, alias="payor", serialization_alias="payor")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    policy_holder: Optional[Reference] = Field(None, alias="policyHolder", serialization_alias="policyHolder")
+    relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
+    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subrogation: Optional[bool] = Field(None, alias="subrogation", serialization_alias="subrogation")
+    subscriber: Optional[Reference] = Field(None, alias="subscriber", serialization_alias="subscriber")
+    subscriber_id: Optional[str] = Field(None, alias="subscriberId", serialization_alias="subscriberId")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

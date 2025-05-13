@@ -6,44 +6,48 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceRequestParameter(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    value_boolean: Optional[bool] = None
-    value_codeable_concept: Optional[CodeableConcept] = None
-    value_quantity: Optional[Quantity] = None
-    value_range: Optional[Range] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
 
 
 class DeviceRequest(DomainResource):
-    authored_on: Optional[str] = None
-    based_on: Optional[L[Reference]] = None
-    code_codeable_concept: Optional[CodeableConcept] = None
-    code_reference: Optional[Reference] = None
-    encounter: Optional[Reference] = None
-    group_identifier: Optional[Identifier] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    insurance: Optional[L[Reference]] = None
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = None
-    note: Optional[L[Annotation]] = None
-    occurrence_date_time: Optional[str] = None
-    occurrence_period: Optional[Period] = None
-    occurrence_timing: Optional[Timing] = None
-    parameter: Optional[L[DeviceRequestParameter]] = None
-    performer: Optional[Reference] = None
-    performer_type: Optional[CodeableConcept] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    prior_request: Optional[L[Reference]] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    relevant_history: Optional[L[Reference]] = None
-    requester: Optional[Reference] = None
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = None
-    subject: Optional[Reference] = None
-    supporting_info: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    code_codeable_concept: Optional[CodeableConcept] = Field(None, alias="codeCodeableConcept", serialization_alias="codeCodeableConcept")
+    code_reference: Optional[Reference] = Field(None, alias="codeReference", serialization_alias="codeReference")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    insurance: Optional[L[Reference]] = Field(None, alias="insurance", serialization_alias="insurance")
+    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    occurrence_timing: Optional[Timing] = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
+    parameter: Optional[L[DeviceRequestParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
+    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
+    performer_type: Optional[CodeableConcept] = Field(None, alias="performerType", serialization_alias="performerType")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    prior_request: Optional[L[Reference]] = Field(None, alias="priorRequest", serialization_alias="priorRequest")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    relevant_history: Optional[L[Reference]] = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
+    requester: Optional[Reference] = Field(None, alias="requester", serialization_alias="requester")
+    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    supporting_info: Optional[L[Reference]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
 

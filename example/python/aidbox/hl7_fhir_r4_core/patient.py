@@ -6,45 +6,53 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PatientLink(BackboneElement):
-    other: Optional[Reference] = None
-    type: Optional[Literal["replaced-by", "replaces", "refer", "seealso"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    other: Optional[Reference] = Field(None, alias="other", serialization_alias="other")
+    type: Optional[Literal["replaced-by", "replaces", "refer", "seealso"]] = Field(None, alias="type", serialization_alias="type")
 
 class PatientCommunication(BackboneElement):
-    language: Optional[CodeableConcept] = None
-    preferred: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
+    preferred: Optional[bool] = Field(None, alias="preferred", serialization_alias="preferred")
 
 class PatientContact(BackboneElement):
-    address: Optional[Address] = None
-    gender: Optional[Literal["male", "female", "other", "unknown"]] = None
-    name: Optional[HumanName] = None
-    organization: Optional[Reference] = None
-    period: Optional[Period] = None
-    relationship: Optional[L[CodeableConcept]] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
+    gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
+    name: Optional[HumanName] = Field(None, alias="name", serialization_alias="name")
+    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    relationship: Optional[L[CodeableConcept]] = Field(None, alias="relationship", serialization_alias="relationship")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 
 
 class Patient(DomainResource):
-    active: Optional[bool] = None
-    address: Optional[L[Address]] = None
-    birth_date: Optional[str] = None
-    communication: Optional[L[PatientCommunication]] = None
-    contact: Optional[L[PatientContact]] = None
-    deceased_boolean: Optional[bool] = None
-    deceased_date_time: Optional[str] = None
-    gender: Optional[Literal["male", "female", "other", "unknown"]] = None
-    general_practitioner: Optional[L[Reference]] = None
-    identifier: Optional[L[Identifier]] = None
-    link: Optional[L[PatientLink]] = None
-    managing_organization: Optional[Reference] = None
-    marital_status: Optional[CodeableConcept] = None
-    multiple_birth_boolean: Optional[bool] = None
-    multiple_birth_integer: Optional[int] = None
-    name: Optional[L[HumanName]] = None
-    photo: Optional[L[Attachment]] = None
-    telecom: Optional[L[ContactPoint]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
+    address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")
+    birth_date: Optional[str] = Field(None, alias="birthDate", serialization_alias="birthDate")
+    communication: Optional[L[PatientCommunication]] = Field(None, alias="communication", serialization_alias="communication")
+    contact: Optional[L[PatientContact]] = Field(None, alias="contact", serialization_alias="contact")
+    deceased_boolean: Optional[bool] = Field(None, alias="deceasedBoolean", serialization_alias="deceasedBoolean")
+    deceased_date_time: Optional[str] = Field(None, alias="deceasedDateTime", serialization_alias="deceasedDateTime")
+    gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
+    general_practitioner: Optional[L[Reference]] = Field(None, alias="generalPractitioner", serialization_alias="generalPractitioner")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    link: Optional[L[PatientLink]] = Field(None, alias="link", serialization_alias="link")
+    managing_organization: Optional[Reference] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    marital_status: Optional[CodeableConcept] = Field(None, alias="maritalStatus", serialization_alias="maritalStatus")
+    multiple_birth_boolean: Optional[bool] = Field(None, alias="multipleBirthBoolean", serialization_alias="multipleBirthBoolean")
+    multiple_birth_integer: Optional[int] = Field(None, alias="multipleBirthInteger", serialization_alias="multipleBirthInteger")
+    name: Optional[L[HumanName]] = Field(None, alias="name", serialization_alias="name")
+    photo: Optional[L[Attachment]] = Field(None, alias="photo", serialization_alias="photo")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 

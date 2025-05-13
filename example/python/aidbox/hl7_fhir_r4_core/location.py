@@ -6,38 +6,44 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class LocationHoursOfOperation(BackboneElement):
-    all_day: Optional[bool] = None
-    closing_time: Optional[str] = None
-    days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = None
-    opening_time: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    all_day: Optional[bool] = Field(None, alias="allDay", serialization_alias="allDay")
+    closing_time: Optional[str] = Field(None, alias="closingTime", serialization_alias="closingTime")
+    days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = Field(None, alias="daysOfWeek", serialization_alias="daysOfWeek")
+    opening_time: Optional[str] = Field(None, alias="openingTime", serialization_alias="openingTime")
 
 class LocationPosition(BackboneElement):
-    altitude: Optional[float] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    altitude: Optional[float] = Field(None, alias="altitude", serialization_alias="altitude")
+    latitude: Optional[float] = Field(None, alias="latitude", serialization_alias="latitude")
+    longitude: Optional[float] = Field(None, alias="longitude", serialization_alias="longitude")
 
 
 class Location(DomainResource):
-    address: Optional[Address] = None
-    alias: Optional[L[str]] = None
-    availability_exceptions: Optional[str] = None
-    description: Optional[str] = None
-    endpoint: Optional[L[Reference]] = None
-    hours_of_operation: Optional[L[LocationHoursOfOperation]] = None
-    identifier: Optional[L[Identifier]] = None
-    managing_organization: Optional[Reference] = None
-    mode: Optional[Literal["instance", "kind"]] = None
-    name: Optional[str] = None
-    operational_status: Optional[Coding] = None
-    part_of: Optional[Reference] = None
-    physical_type: Optional[CodeableConcept] = None
-    position: Optional[LocationPosition] = None
-    status: Optional[Literal["active", "suspended", "inactive"]] = None
-    telecom: Optional[L[ContactPoint]] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
+    alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
+    availability_exceptions: Optional[str] = Field(None, alias="availabilityExceptions", serialization_alias="availabilityExceptions")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
+    hours_of_operation: Optional[L[LocationHoursOfOperation]] = Field(None, alias="hoursOfOperation", serialization_alias="hoursOfOperation")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: Optional[Reference] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    mode: Optional[Literal["instance", "kind"]] = Field(None, alias="mode", serialization_alias="mode")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    operational_status: Optional[Coding] = Field(None, alias="operationalStatus", serialization_alias="operationalStatus")
+    part_of: Optional[Reference] = Field(None, alias="partOf", serialization_alias="partOf")
+    physical_type: Optional[CodeableConcept] = Field(None, alias="physicalType", serialization_alias="physicalType")
+    position: Optional[LocationPosition] = Field(None, alias="position", serialization_alias="position")
+    status: Optional[Literal["active", "suspended", "inactive"]] = Field(None, alias="status", serialization_alias="status")
+    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 

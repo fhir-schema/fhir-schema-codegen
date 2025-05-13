@@ -6,50 +6,58 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SpecimenProcessing(BackboneElement):
-    additive: Optional[L[Reference]] = None
-    description: Optional[str] = None
-    procedure: Optional[CodeableConcept] = None
-    time_date_time: Optional[str] = None
-    time_period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additive: Optional[L[Reference]] = Field(None, alias="additive", serialization_alias="additive")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    procedure: Optional[CodeableConcept] = Field(None, alias="procedure", serialization_alias="procedure")
+    time_date_time: Optional[str] = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class SpecimenContainer(BackboneElement):
-    additive_codeable_concept: Optional[CodeableConcept] = None
-    additive_reference: Optional[Reference] = None
-    capacity: Optional[Quantity] = None
-    description: Optional[str] = None
-    identifier: Optional[L[Identifier]] = None
-    specimen_quantity: Optional[Quantity] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    additive_codeable_concept: Optional[CodeableConcept] = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
+    additive_reference: Optional[Reference] = Field(None, alias="additiveReference", serialization_alias="additiveReference")
+    capacity: Optional[Quantity] = Field(None, alias="capacity", serialization_alias="capacity")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    specimen_quantity: Optional[Quantity] = Field(None, alias="specimenQuantity", serialization_alias="specimenQuantity")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SpecimenCollection(BackboneElement):
-    body_site: Optional[CodeableConcept] = None
-    collected_date_time: Optional[str] = None
-    collected_period: Optional[Period] = None
-    collector: Optional[Reference] = None
-    duration: Optional[Duration] = None
-    fasting_status_codeable_concept: Optional[CodeableConcept] = None
-    fasting_status_duration: Optional[Duration] = None
-    method: Optional[CodeableConcept] = None
-    quantity: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
+    collected_date_time: Optional[str] = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
+    collected_period: Optional[Period] = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
+    collector: Optional[Reference] = Field(None, alias="collector", serialization_alias="collector")
+    duration: Optional[Duration] = Field(None, alias="duration", serialization_alias="duration")
+    fasting_status_codeable_concept: Optional[CodeableConcept] = Field(None, alias="fastingStatusCodeableConcept", serialization_alias="fastingStatusCodeableConcept")
+    fasting_status_duration: Optional[Duration] = Field(None, alias="fastingStatusDuration", serialization_alias="fastingStatusDuration")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
 
 
 class Specimen(DomainResource):
-    accession_identifier: Optional[Identifier] = None
-    collection: Optional[SpecimenCollection] = None
-    condition: Optional[L[CodeableConcept]] = None
-    container: Optional[L[SpecimenContainer]] = None
-    identifier: Optional[L[Identifier]] = None
-    note: Optional[L[Annotation]] = None
-    parent: Optional[L[Reference]] = None
-    processing: Optional[L[SpecimenProcessing]] = None
-    received_time: Optional[str] = None
-    request: Optional[L[Reference]] = None
-    status: Optional[Literal["available", "unavailable", "unsatisfactory", "entered-in-error"]] = None
-    subject: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    accession_identifier: Optional[Identifier] = Field(None, alias="accessionIdentifier", serialization_alias="accessionIdentifier")
+    collection: Optional[SpecimenCollection] = Field(None, alias="collection", serialization_alias="collection")
+    condition: Optional[L[CodeableConcept]] = Field(None, alias="condition", serialization_alias="condition")
+    container: Optional[L[SpecimenContainer]] = Field(None, alias="container", serialization_alias="container")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    parent: Optional[L[Reference]] = Field(None, alias="parent", serialization_alias="parent")
+    processing: Optional[L[SpecimenProcessing]] = Field(None, alias="processing", serialization_alias="processing")
+    received_time: Optional[str] = Field(None, alias="receivedTime", serialization_alias="receivedTime")
+    request: Optional[L[Reference]] = Field(None, alias="request", serialization_alias="request")
+    status: Optional[Literal["available", "unavailable", "unsatisfactory", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

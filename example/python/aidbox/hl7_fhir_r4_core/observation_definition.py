@@ -6,39 +6,45 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ObservationDefinitionQuantitativeDetails(BackboneElement):
-    conversion_factor: Optional[float] = None
-    customary_unit: Optional[CodeableConcept] = None
-    decimal_precision: Optional[int] = None
-    unit: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    conversion_factor: Optional[float] = Field(None, alias="conversionFactor", serialization_alias="conversionFactor")
+    customary_unit: Optional[CodeableConcept] = Field(None, alias="customaryUnit", serialization_alias="customaryUnit")
+    decimal_precision: Optional[int] = Field(None, alias="decimalPrecision", serialization_alias="decimalPrecision")
+    unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 
 class ObservationDefinitionQualifiedInterval(BackboneElement):
-    age: Optional[Range] = None
-    applies_to: Optional[L[CodeableConcept]] = None
-    category: Optional[Literal["reference", "critical", "absolute"]] = None
-    condition: Optional[str] = None
-    context: Optional[CodeableConcept] = None
-    gender: Optional[Literal["male", "female", "other", "unknown"]] = None
-    gestational_age: Optional[Range] = None
-    range: Optional[Range] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    age: Optional[Range] = Field(None, alias="age", serialization_alias="age")
+    applies_to: Optional[L[CodeableConcept]] = Field(None, alias="appliesTo", serialization_alias="appliesTo")
+    category: Optional[Literal["reference", "critical", "absolute"]] = Field(None, alias="category", serialization_alias="category")
+    condition: Optional[str] = Field(None, alias="condition", serialization_alias="condition")
+    context: Optional[CodeableConcept] = Field(None, alias="context", serialization_alias="context")
+    gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
+    gestational_age: Optional[Range] = Field(None, alias="gestationalAge", serialization_alias="gestationalAge")
+    range: Optional[Range] = Field(None, alias="range", serialization_alias="range")
 
 
 class ObservationDefinition(DomainResource):
-    abnormal_coded_value_set: Optional[Reference] = None
-    category: Optional[L[CodeableConcept]] = None
-    code: Optional[CodeableConcept] = None
-    critical_coded_value_set: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    method: Optional[CodeableConcept] = None
-    multiple_results_allowed: Optional[bool] = None
-    normal_coded_value_set: Optional[Reference] = None
-    permitted_data_type: Optional[L[Literal["Quantity", "CodeableConcept", "string", "boolean", "integer", "Range", "Ratio", "SampledData", "time", "dateTime", "Period"]]] = None
-    preferred_report_name: Optional[str] = None
-    qualified_interval: Optional[L[ObservationDefinitionQualifiedInterval]] = None
-    quantitative_details: Optional[ObservationDefinitionQuantitativeDetails] = None
-    valid_coded_value_set: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    abnormal_coded_value_set: Optional[Reference] = Field(None, alias="abnormalCodedValueSet", serialization_alias="abnormalCodedValueSet")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    critical_coded_value_set: Optional[Reference] = Field(None, alias="criticalCodedValueSet", serialization_alias="criticalCodedValueSet")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
+    multiple_results_allowed: Optional[bool] = Field(None, alias="multipleResultsAllowed", serialization_alias="multipleResultsAllowed")
+    normal_coded_value_set: Optional[Reference] = Field(None, alias="normalCodedValueSet", serialization_alias="normalCodedValueSet")
+    permitted_data_type: Optional[L[Literal["Quantity", "CodeableConcept", "string", "boolean", "integer", "Range", "Ratio", "SampledData", "time", "dateTime", "Period"]]] = Field(None, alias="permittedDataType", serialization_alias="permittedDataType")
+    preferred_report_name: Optional[str] = Field(None, alias="preferredReportName", serialization_alias="preferredReportName")
+    qualified_interval: Optional[L[ObservationDefinitionQualifiedInterval]] = Field(None, alias="qualifiedInterval", serialization_alias="qualifiedInterval")
+    quantitative_details: Optional[ObservationDefinitionQuantitativeDetails] = Field(None, alias="quantitativeDetails", serialization_alias="quantitativeDetails")
+    valid_coded_value_set: Optional[Reference] = Field(None, alias="validCodedValueSet", serialization_alias="validCodedValueSet")
 

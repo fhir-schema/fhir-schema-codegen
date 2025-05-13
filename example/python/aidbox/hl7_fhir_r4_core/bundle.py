@@ -6,48 +6,60 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .resource import Resource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class BundleLink(BackboneElement):
-    relation: Optional[str] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    relation: Optional[str] = Field(None, alias="relation", serialization_alias="relation")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class BundleEntrySearch(BackboneElement):
-    mode: Optional[Literal["match", "include", "outcome"]] = None
-    score: Optional[float] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    mode: Optional[Literal["match", "include", "outcome"]] = Field(None, alias="mode", serialization_alias="mode")
+    score: Optional[float] = Field(None, alias="score", serialization_alias="score")
 
 class BundleEntryRequest(BackboneElement):
-    if_match: Optional[str] = None
-    if_modified_since: Optional[str] = None
-    if_none_exist: Optional[str] = None
-    if_none_match: Optional[str] = None
-    method: Optional[Literal["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    if_match: Optional[str] = Field(None, alias="ifMatch", serialization_alias="ifMatch")
+    if_modified_since: Optional[str] = Field(None, alias="ifModifiedSince", serialization_alias="ifModifiedSince")
+    if_none_exist: Optional[str] = Field(None, alias="ifNoneExist", serialization_alias="ifNoneExist")
+    if_none_match: Optional[str] = Field(None, alias="ifNoneMatch", serialization_alias="ifNoneMatch")
+    method: Optional[Literal["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]] = Field(None, alias="method", serialization_alias="method")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class BundleEntryResponse(BackboneElement):
-    etag: Optional[str] = None
-    last_modified: Optional[str] = None
-    location: Optional[str] = None
-    outcome: Optional[Resource] = None
-    status: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    etag: Optional[str] = Field(None, alias="etag", serialization_alias="etag")
+    last_modified: Optional[str] = Field(None, alias="lastModified", serialization_alias="lastModified")
+    location: Optional[str] = Field(None, alias="location", serialization_alias="location")
+    outcome: Optional[Resource] = Field(None, alias="outcome", serialization_alias="outcome")
+    status: Optional[str] = Field(None, alias="status", serialization_alias="status")
 
 class BundleEntry(BackboneElement):
-    full_url: Optional[str] = None
-    link: Optional[L[BundleLink]] = None
-    request: Optional[BundleEntryRequest] = None
-    resource: Optional[Resource] = None
-    response: Optional[BundleEntryResponse] = None
-    search: Optional[BundleEntrySearch] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    full_url: Optional[str] = Field(None, alias="fullUrl", serialization_alias="fullUrl")
+    link: Optional[L[BundleLink]] = Field(None, alias="link", serialization_alias="link")
+    request: Optional[BundleEntryRequest] = Field(None, alias="request", serialization_alias="request")
+    resource: Optional[Resource] = Field(None, alias="resource", serialization_alias="resource")
+    response: Optional[BundleEntryResponse] = Field(None, alias="response", serialization_alias="response")
+    search: Optional[BundleEntrySearch] = Field(None, alias="search", serialization_alias="search")
 
 
 class Bundle(Resource):
-    entry: Optional[L[BundleEntry]] = None
-    identifier: Optional[Identifier] = None
-    link: Optional[L[BundleLink]] = None
-    signature: Optional[Signature] = None
-    timestamp: Optional[str] = None
-    total: Optional[int] = None
-    type: Optional[Literal["document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    entry: Optional[L[BundleEntry]] = Field(None, alias="entry", serialization_alias="entry")
+    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
+    link: Optional[L[BundleLink]] = Field(None, alias="link", serialization_alias="link")
+    signature: Optional[Signature] = Field(None, alias="signature", serialization_alias="signature")
+    timestamp: Optional[str] = Field(None, alias="timestamp", serialization_alias="timestamp")
+    total: Optional[int] = Field(None, alias="total", serialization_alias="total")
+    type: Optional[Literal["document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection"]] = Field(None, alias="type", serialization_alias="type")
 

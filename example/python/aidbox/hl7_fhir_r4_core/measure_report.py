@@ -6,51 +6,65 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MeasureReportGroupPopulation(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    count: Optional[int] = None
-    subject_results: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    count: Optional[int] = Field(None, alias="count", serialization_alias="count")
+    subject_results: Optional[Reference] = Field(None, alias="subjectResults", serialization_alias="subjectResults")
 
 class MeasureReportGroupStratifierStratumComponent(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    value: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    value: Optional[CodeableConcept] = Field(None, alias="value", serialization_alias="value")
 
 class MeasureReportGroupStratifierStratumPopulation(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    count: Optional[int] = None
-    subject_results: Optional[Reference] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    count: Optional[int] = Field(None, alias="count", serialization_alias="count")
+    subject_results: Optional[Reference] = Field(None, alias="subjectResults", serialization_alias="subjectResults")
 
 class MeasureReportGroupStratifierStratum(BackboneElement):
-    component: Optional[L[MeasureReportGroupStratifierStratumComponent]] = None
-    measure_score: Optional[Quantity] = None
-    population: Optional[L[MeasureReportGroupStratifierStratumPopulation]] = None
-    value: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    component: Optional[L[MeasureReportGroupStratifierStratumComponent]] = Field(None, alias="component", serialization_alias="component")
+    measure_score: Optional[Quantity] = Field(None, alias="measureScore", serialization_alias="measureScore")
+    population: Optional[L[MeasureReportGroupStratifierStratumPopulation]] = Field(None, alias="population", serialization_alias="population")
+    value: Optional[CodeableConcept] = Field(None, alias="value", serialization_alias="value")
 
 class MeasureReportGroupStratifier(BackboneElement):
-    code: Optional[L[CodeableConcept]] = None
-    stratum: Optional[L[MeasureReportGroupStratifierStratum]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
+    stratum: Optional[L[MeasureReportGroupStratifierStratum]] = Field(None, alias="stratum", serialization_alias="stratum")
 
 class MeasureReportGroup(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    measure_score: Optional[Quantity] = None
-    population: Optional[L[MeasureReportGroupPopulation]] = None
-    stratifier: Optional[L[MeasureReportGroupStratifier]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    measure_score: Optional[Quantity] = Field(None, alias="measureScore", serialization_alias="measureScore")
+    population: Optional[L[MeasureReportGroupPopulation]] = Field(None, alias="population", serialization_alias="population")
+    stratifier: Optional[L[MeasureReportGroupStratifier]] = Field(None, alias="stratifier", serialization_alias="stratifier")
 
 
 class MeasureReport(DomainResource):
-    date: Optional[str] = None
-    evaluated_resource: Optional[L[Reference]] = None
-    group: Optional[L[MeasureReportGroup]] = None
-    identifier: Optional[L[Identifier]] = None
-    improvement_notation: Optional[CodeableConcept] = None
-    measure: Optional[str] = None
-    period: Optional[Period] = None
-    reporter: Optional[Reference] = None
-    status: Optional[Literal["complete", "pending", "error"]] = None
-    subject: Optional[Reference] = None
-    type: Optional[Literal["individual", "subject-list", "summary", "data-collection"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    evaluated_resource: Optional[L[Reference]] = Field(None, alias="evaluatedResource", serialization_alias="evaluatedResource")
+    group: Optional[L[MeasureReportGroup]] = Field(None, alias="group", serialization_alias="group")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    improvement_notation: Optional[CodeableConcept] = Field(None, alias="improvementNotation", serialization_alias="improvementNotation")
+    measure: Optional[str] = Field(None, alias="measure", serialization_alias="measure")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    reporter: Optional[Reference] = Field(None, alias="reporter", serialization_alias="reporter")
+    status: Optional[Literal["complete", "pending", "error"]] = Field(None, alias="status", serialization_alias="status")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[Literal["individual", "subject-list", "summary", "data-collection"]] = Field(None, alias="type", serialization_alias="type")
 

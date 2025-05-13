@@ -6,62 +6,70 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationRequestSubstitution(BackboneElement):
-    allowed_boolean: Optional[bool] = None
-    allowed_codeable_concept: Optional[CodeableConcept] = None
-    reason: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    allowed_boolean: Optional[bool] = Field(None, alias="allowedBoolean", serialization_alias="allowedBoolean")
+    allowed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="allowedCodeableConcept", serialization_alias="allowedCodeableConcept")
+    reason: Optional[CodeableConcept] = Field(None, alias="reason", serialization_alias="reason")
 
 class MedicationRequestDispenseRequestInitialFill(BackboneElement):
-    duration: Optional[Duration] = None
-    quantity: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    duration: Optional[Duration] = Field(None, alias="duration", serialization_alias="duration")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
 
 class MedicationRequestDispenseRequest(BackboneElement):
-    dispense_interval: Optional[Duration] = None
-    expected_supply_duration: Optional[Duration] = None
-    initial_fill: Optional[MedicationRequestDispenseRequestInitialFill] = None
-    number_of_repeats_allowed: Optional[int] = None
-    performer: Optional[Reference] = None
-    quantity: Optional[Quantity] = None
-    validity_period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    dispense_interval: Optional[Duration] = Field(None, alias="dispenseInterval", serialization_alias="dispenseInterval")
+    expected_supply_duration: Optional[Duration] = Field(None, alias="expectedSupplyDuration", serialization_alias="expectedSupplyDuration")
+    initial_fill: Optional[MedicationRequestDispenseRequestInitialFill] = Field(None, alias="initialFill", serialization_alias="initialFill")
+    number_of_repeats_allowed: Optional[int] = Field(None, alias="numberOfRepeatsAllowed", serialization_alias="numberOfRepeatsAllowed")
+    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 
 
 class MedicationRequest(DomainResource):
-    authored_on: Optional[str] = None
-    based_on: Optional[L[Reference]] = None
-    category: Optional[L[CodeableConcept]] = None
-    course_of_therapy_type: Optional[CodeableConcept] = None
-    detected_issue: Optional[L[Reference]] = None
-    dispense_request: Optional[MedicationRequestDispenseRequest] = None
-    do_not_perform: Optional[bool] = None
-    dosage_instruction: Optional[L[Dosage]] = None
-    encounter: Optional[Reference] = None
-    event_history: Optional[L[Reference]] = None
-    group_identifier: Optional[Identifier] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    insurance: Optional[L[Reference]] = None
-    intent: Optional[Literal["proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option"]] = None
-    medication_codeable_concept: Optional[CodeableConcept] = None
-    medication_reference: Optional[Reference] = None
-    note: Optional[L[Annotation]] = None
-    performer: Optional[Reference] = None
-    performer_type: Optional[CodeableConcept] = None
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = None
-    prior_prescription: Optional[Reference] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    recorder: Optional[Reference] = None
-    reported_boolean: Optional[bool] = None
-    reported_reference: Optional[Reference] = None
-    requester: Optional[Reference] = None
-    status: Optional[Literal["active", "on-hold", "cancelled", "completed", "entered-in-error", "stopped", "draft", "unknown"]] = None
-    status_reason: Optional[CodeableConcept] = None
-    subject: Optional[Reference] = None
-    substitution: Optional[MedicationRequestSubstitution] = None
-    supporting_information: Optional[L[Reference]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
+    course_of_therapy_type: Optional[CodeableConcept] = Field(None, alias="courseOfTherapyType", serialization_alias="courseOfTherapyType")
+    detected_issue: Optional[L[Reference]] = Field(None, alias="detectedIssue", serialization_alias="detectedIssue")
+    dispense_request: Optional[MedicationRequestDispenseRequest] = Field(None, alias="dispenseRequest", serialization_alias="dispenseRequest")
+    do_not_perform: Optional[bool] = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
+    dosage_instruction: Optional[L[Dosage]] = Field(None, alias="dosageInstruction", serialization_alias="dosageInstruction")
+    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
+    event_history: Optional[L[Reference]] = Field(None, alias="eventHistory", serialization_alias="eventHistory")
+    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    insurance: Optional[L[Reference]] = Field(None, alias="insurance", serialization_alias="insurance")
+    intent: Optional[Literal["proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
+    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
+    performer_type: Optional[CodeableConcept] = Field(None, alias="performerType", serialization_alias="performerType")
+    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
+    prior_prescription: Optional[Reference] = Field(None, alias="priorPrescription", serialization_alias="priorPrescription")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    recorder: Optional[Reference] = Field(None, alias="recorder", serialization_alias="recorder")
+    reported_boolean: Optional[bool] = Field(None, alias="reportedBoolean", serialization_alias="reportedBoolean")
+    reported_reference: Optional[Reference] = Field(None, alias="reportedReference", serialization_alias="reportedReference")
+    requester: Optional[Reference] = Field(None, alias="requester", serialization_alias="requester")
+    status: Optional[Literal["active", "on-hold", "cancelled", "completed", "entered-in-error", "stopped", "draft", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    substitution: Optional[MedicationRequestSubstitution] = Field(None, alias="substitution", serialization_alias="substitution")
+    supporting_information: Optional[L[Reference]] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
 

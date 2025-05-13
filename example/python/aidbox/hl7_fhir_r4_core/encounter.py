@@ -6,68 +6,82 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EncounterDiagnosis(BackboneElement):
-    condition: Optional[Reference] = None
-    rank: Optional[PositiveInt] = None
-    use: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
+    rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
+    use: Optional[CodeableConcept] = Field(None, alias="use", serialization_alias="use")
 
 class EncounterParticipant(BackboneElement):
-    individual: Optional[Reference] = None
-    period: Optional[Period] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    individual: Optional[Reference] = Field(None, alias="individual", serialization_alias="individual")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class EncounterClassHistory(BackboneElement):
-    class_: Optional[Coding] = None
-    period: Optional[Period] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    class_: Optional[Coding] = Field(None, alias="class", serialization_alias="class")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
 
 class EncounterHospitalization(BackboneElement):
-    admit_source: Optional[CodeableConcept] = None
-    destination: Optional[Reference] = None
-    diet_preference: Optional[L[CodeableConcept]] = None
-    discharge_disposition: Optional[CodeableConcept] = None
-    origin: Optional[Reference] = None
-    pre_admission_identifier: Optional[Identifier] = None
-    re_admission: Optional[CodeableConcept] = None
-    special_arrangement: Optional[L[CodeableConcept]] = None
-    special_courtesy: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    admit_source: Optional[CodeableConcept] = Field(None, alias="admitSource", serialization_alias="admitSource")
+    destination: Optional[Reference] = Field(None, alias="destination", serialization_alias="destination")
+    diet_preference: Optional[L[CodeableConcept]] = Field(None, alias="dietPreference", serialization_alias="dietPreference")
+    discharge_disposition: Optional[CodeableConcept] = Field(None, alias="dischargeDisposition", serialization_alias="dischargeDisposition")
+    origin: Optional[Reference] = Field(None, alias="origin", serialization_alias="origin")
+    pre_admission_identifier: Optional[Identifier] = Field(None, alias="preAdmissionIdentifier", serialization_alias="preAdmissionIdentifier")
+    re_admission: Optional[CodeableConcept] = Field(None, alias="reAdmission", serialization_alias="reAdmission")
+    special_arrangement: Optional[L[CodeableConcept]] = Field(None, alias="specialArrangement", serialization_alias="specialArrangement")
+    special_courtesy: Optional[L[CodeableConcept]] = Field(None, alias="specialCourtesy", serialization_alias="specialCourtesy")
 
 class EncounterLocation(BackboneElement):
-    location: Optional[Reference] = None
-    period: Optional[Period] = None
-    physical_type: Optional[CodeableConcept] = None
-    status: Optional[Literal["planned", "active", "reserved", "completed"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    physical_type: Optional[CodeableConcept] = Field(None, alias="physicalType", serialization_alias="physicalType")
+    status: Optional[Literal["planned", "active", "reserved", "completed"]] = Field(None, alias="status", serialization_alias="status")
 
 class EncounterStatusHistory(BackboneElement):
-    period: Optional[Period] = None
-    status: Optional[Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    status: Optional[Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
 
 
 class Encounter(DomainResource):
-    account: Optional[L[Reference]] = None
-    appointment: Optional[L[Reference]] = None
-    based_on: Optional[L[Reference]] = None
-    class_: Optional[Coding] = None
-    class_history: Optional[L[EncounterClassHistory]] = None
-    diagnosis: Optional[L[EncounterDiagnosis]] = None
-    episode_of_care: Optional[L[Reference]] = None
-    hospitalization: Optional[EncounterHospitalization] = None
-    identifier: Optional[L[Identifier]] = None
-    length: Optional[Duration] = None
-    location: Optional[L[EncounterLocation]] = None
-    participant: Optional[L[EncounterParticipant]] = None
-    part_of: Optional[Reference] = None
-    period: Optional[Period] = None
-    priority: Optional[CodeableConcept] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    service_provider: Optional[Reference] = None
-    service_type: Optional[CodeableConcept] = None
-    status: Optional[Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"]] = None
-    status_history: Optional[L[EncounterStatusHistory]] = None
-    subject: Optional[Reference] = None
-    type: Optional[L[CodeableConcept]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
+    appointment: Optional[L[Reference]] = Field(None, alias="appointment", serialization_alias="appointment")
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    class_: Optional[Coding] = Field(None, alias="class", serialization_alias="class")
+    class_history: Optional[L[EncounterClassHistory]] = Field(None, alias="classHistory", serialization_alias="classHistory")
+    diagnosis: Optional[L[EncounterDiagnosis]] = Field(None, alias="diagnosis", serialization_alias="diagnosis")
+    episode_of_care: Optional[L[Reference]] = Field(None, alias="episodeOfCare", serialization_alias="episodeOfCare")
+    hospitalization: Optional[EncounterHospitalization] = Field(None, alias="hospitalization", serialization_alias="hospitalization")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    length: Optional[Duration] = Field(None, alias="length", serialization_alias="length")
+    location: Optional[L[EncounterLocation]] = Field(None, alias="location", serialization_alias="location")
+    participant: Optional[L[EncounterParticipant]] = Field(None, alias="participant", serialization_alias="participant")
+    part_of: Optional[Reference] = Field(None, alias="partOf", serialization_alias="partOf")
+    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    service_provider: Optional[Reference] = Field(None, alias="serviceProvider", serialization_alias="serviceProvider")
+    service_type: Optional[CodeableConcept] = Field(None, alias="serviceType", serialization_alias="serviceType")
+    status: Optional[Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    status_history: Optional[L[EncounterStatusHistory]] = Field(None, alias="statusHistory", serialization_alias="statusHistory")
+    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 

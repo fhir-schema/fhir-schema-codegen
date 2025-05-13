@@ -6,28 +6,32 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SupplyDeliverySuppliedItem(BackboneElement):
-    item_codeable_concept: Optional[CodeableConcept] = None
-    item_reference: Optional[Reference] = None
-    quantity: Optional[Quantity] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
+    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
 
 
 class SupplyDelivery(DomainResource):
-    based_on: Optional[L[Reference]] = None
-    destination: Optional[Reference] = None
-    identifier: Optional[L[Identifier]] = None
-    occurrence_date_time: Optional[str] = None
-    occurrence_period: Optional[Period] = None
-    occurrence_timing: Optional[Timing] = None
-    part_of: Optional[L[Reference]] = None
-    patient: Optional[Reference] = None
-    receiver: Optional[L[Reference]] = None
-    status: Optional[Literal["in-progress", "completed", "abandoned", "entered-in-error"]] = None
-    supplied_item: Optional[SupplyDeliverySuppliedItem] = None
-    supplier: Optional[Reference] = None
-    type: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
+    destination: Optional[Reference] = Field(None, alias="destination", serialization_alias="destination")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    occurrence_timing: Optional[Timing] = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
+    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    receiver: Optional[L[Reference]] = Field(None, alias="receiver", serialization_alias="receiver")
+    status: Optional[Literal["in-progress", "completed", "abandoned", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    supplied_item: Optional[SupplyDeliverySuppliedItem] = Field(None, alias="suppliedItem", serialization_alias="suppliedItem")
+    supplier: Optional[Reference] = Field(None, alias="supplier", serialization_alias="supplier")
+    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 

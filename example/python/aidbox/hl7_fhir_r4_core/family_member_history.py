@@ -6,46 +6,50 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class FamilyMemberHistoryCondition(BackboneElement):
-    code: Optional[CodeableConcept] = None
-    contributed_to_death: Optional[bool] = None
-    note: Optional[L[Annotation]] = None
-    onset_age: Optional[Age] = None
-    onset_period: Optional[Period] = None
-    onset_range: Optional[Range] = None
-    onset_string: Optional[str] = None
-    outcome: Optional[CodeableConcept] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
+    contributed_to_death: Optional[bool] = Field(None, alias="contributedToDeath", serialization_alias="contributedToDeath")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    onset_age: Optional[Age] = Field(None, alias="onsetAge", serialization_alias="onsetAge")
+    onset_period: Optional[Period] = Field(None, alias="onsetPeriod", serialization_alias="onsetPeriod")
+    onset_range: Optional[Range] = Field(None, alias="onsetRange", serialization_alias="onsetRange")
+    onset_string: Optional[str] = Field(None, alias="onsetString", serialization_alias="onsetString")
+    outcome: Optional[CodeableConcept] = Field(None, alias="outcome", serialization_alias="outcome")
 
 
 class FamilyMemberHistory(DomainResource):
-    age_age: Optional[Age] = None
-    age_range: Optional[Range] = None
-    age_string: Optional[str] = None
-    born_date: Optional[str] = None
-    born_period: Optional[Period] = None
-    born_string: Optional[str] = None
-    condition: Optional[L[FamilyMemberHistoryCondition]] = None
-    data_absent_reason: Optional[CodeableConcept] = None
-    date: Optional[str] = None
-    deceased_age: Optional[Age] = None
-    deceased_boolean: Optional[bool] = None
-    deceased_date: Optional[str] = None
-    deceased_range: Optional[Range] = None
-    deceased_string: Optional[str] = None
-    estimated_age: Optional[bool] = None
-    identifier: Optional[L[Identifier]] = None
-    instantiates_canonical: Optional[L[str]] = None
-    instantiates_uri: Optional[L[str]] = None
-    name: Optional[str] = None
-    note: Optional[L[Annotation]] = None
-    patient: Optional[Reference] = None
-    reason_code: Optional[L[CodeableConcept]] = None
-    reason_reference: Optional[L[Reference]] = None
-    relationship: Optional[CodeableConcept] = None
-    sex: Optional[CodeableConcept] = None
-    status: Optional[Literal["partial", "completed", "entered-in-error", "health-unknown"]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    age_age: Optional[Age] = Field(None, alias="ageAge", serialization_alias="ageAge")
+    age_range: Optional[Range] = Field(None, alias="ageRange", serialization_alias="ageRange")
+    age_string: Optional[str] = Field(None, alias="ageString", serialization_alias="ageString")
+    born_date: Optional[str] = Field(None, alias="bornDate", serialization_alias="bornDate")
+    born_period: Optional[Period] = Field(None, alias="bornPeriod", serialization_alias="bornPeriod")
+    born_string: Optional[str] = Field(None, alias="bornString", serialization_alias="bornString")
+    condition: Optional[L[FamilyMemberHistoryCondition]] = Field(None, alias="condition", serialization_alias="condition")
+    data_absent_reason: Optional[CodeableConcept] = Field(None, alias="dataAbsentReason", serialization_alias="dataAbsentReason")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    deceased_age: Optional[Age] = Field(None, alias="deceasedAge", serialization_alias="deceasedAge")
+    deceased_boolean: Optional[bool] = Field(None, alias="deceasedBoolean", serialization_alias="deceasedBoolean")
+    deceased_date: Optional[str] = Field(None, alias="deceasedDate", serialization_alias="deceasedDate")
+    deceased_range: Optional[Range] = Field(None, alias="deceasedRange", serialization_alias="deceasedRange")
+    deceased_string: Optional[str] = Field(None, alias="deceasedString", serialization_alias="deceasedString")
+    estimated_age: Optional[bool] = Field(None, alias="estimatedAge", serialization_alias="estimatedAge")
+    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
+    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
+    sex: Optional[CodeableConcept] = Field(None, alias="sex", serialization_alias="sex")
+    status: Optional[Literal["partial", "completed", "entered-in-error", "health-unknown"]] = Field(None, alias="status", serialization_alias="status")
 

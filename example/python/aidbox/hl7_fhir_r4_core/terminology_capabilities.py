@@ -6,79 +6,101 @@ from __future__ import annotations
 from pydantic import *
 from typing import Optional, List as L, Literal
 
-from .base import *
-from .domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class TerminologyCapabilitiesExpansionParameter(BackboneElement):
-    documentation: Optional[str] = None
-    name: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
 
 class TerminologyCapabilitiesExpansion(BackboneElement):
-    hierarchical: Optional[bool] = None
-    incomplete: Optional[bool] = None
-    paging: Optional[bool] = None
-    parameter: Optional[L[TerminologyCapabilitiesExpansionParameter]] = None
-    text_filter: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    hierarchical: Optional[bool] = Field(None, alias="hierarchical", serialization_alias="hierarchical")
+    incomplete: Optional[bool] = Field(None, alias="incomplete", serialization_alias="incomplete")
+    paging: Optional[bool] = Field(None, alias="paging", serialization_alias="paging")
+    parameter: Optional[L[TerminologyCapabilitiesExpansionParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
+    text_filter: Optional[str] = Field(None, alias="textFilter", serialization_alias="textFilter")
 
 class TerminologyCapabilitiesValidateCode(BackboneElement):
-    translations: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    translations: Optional[bool] = Field(None, alias="translations", serialization_alias="translations")
 
 class TerminologyCapabilitiesTranslation(BackboneElement):
-    needs_map: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    needs_map: Optional[bool] = Field(None, alias="needsMap", serialization_alias="needsMap")
 
 class TerminologyCapabilitiesCodeSystemVersionFilter(BackboneElement):
-    code: Optional[str] = None
-    op: Optional[L[str]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    op: Optional[L[str]] = Field(None, alias="op", serialization_alias="op")
 
 class TerminologyCapabilitiesCodeSystemVersion(BackboneElement):
-    code: Optional[str] = None
-    compositional: Optional[bool] = None
-    filter: Optional[L[TerminologyCapabilitiesCodeSystemVersionFilter]] = None
-    is_default: Optional[bool] = None
-    language: Optional[L[str]] = None
-    property: Optional[L[str]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
+    compositional: Optional[bool] = Field(None, alias="compositional", serialization_alias="compositional")
+    filter: Optional[L[TerminologyCapabilitiesCodeSystemVersionFilter]] = Field(None, alias="filter", serialization_alias="filter")
+    is_default: Optional[bool] = Field(None, alias="isDefault", serialization_alias="isDefault")
+    language: Optional[L[str]] = Field(None, alias="language", serialization_alias="language")
+    property: Optional[L[str]] = Field(None, alias="property", serialization_alias="property")
 
 class TerminologyCapabilitiesCodeSystem(BackboneElement):
-    subsumption: Optional[bool] = None
-    uri: Optional[str] = None
-    version: Optional[L[TerminologyCapabilitiesCodeSystemVersion]] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    subsumption: Optional[bool] = Field(None, alias="subsumption", serialization_alias="subsumption")
+    uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
+    version: Optional[L[TerminologyCapabilitiesCodeSystemVersion]] = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesSoftware(BackboneElement):
-    name: Optional[str] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesImplementation(BackboneElement):
-    description: Optional[str] = None
-    url: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class TerminologyCapabilitiesClosure(BackboneElement):
-    translation: Optional[bool] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    translation: Optional[bool] = Field(None, alias="translation", serialization_alias="translation")
 
 
 class TerminologyCapabilities(DomainResource):
-    closure: Optional[TerminologyCapabilitiesClosure] = None
-    code_search: Optional[Literal["explicit", "all"]] = None
-    code_system: Optional[L[TerminologyCapabilitiesCodeSystem]] = None
-    contact: Optional[L[ContactDetail]] = None
-    copyright: Optional[str] = None
-    date: Optional[str] = None
-    description: Optional[str] = None
-    expansion: Optional[TerminologyCapabilitiesExpansion] = None
-    experimental: Optional[bool] = None
-    implementation: Optional[TerminologyCapabilitiesImplementation] = None
-    jurisdiction: Optional[L[CodeableConcept]] = None
-    kind: Optional[Literal["instance", "capability", "requirements"]] = None
-    locked_date: Optional[bool] = None
-    name: Optional[str] = None
-    publisher: Optional[str] = None
-    purpose: Optional[str] = None
-    software: Optional[TerminologyCapabilitiesSoftware] = None
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = None
-    title: Optional[str] = None
-    translation: Optional[TerminologyCapabilitiesTranslation] = None
-    url: Optional[str] = None
-    use_context: Optional[L[UsageContext]] = None
-    validate_code: Optional[TerminologyCapabilitiesValidateCode] = None
-    version: Optional[str] = None
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    
+    closure: Optional[TerminologyCapabilitiesClosure] = Field(None, alias="closure", serialization_alias="closure")
+    code_search: Optional[Literal["explicit", "all"]] = Field(None, alias="codeSearch", serialization_alias="codeSearch")
+    code_system: Optional[L[TerminologyCapabilitiesCodeSystem]] = Field(None, alias="codeSystem", serialization_alias="codeSystem")
+    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
+    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
+    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    expansion: Optional[TerminologyCapabilitiesExpansion] = Field(None, alias="expansion", serialization_alias="expansion")
+    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
+    implementation: Optional[TerminologyCapabilitiesImplementation] = Field(None, alias="implementation", serialization_alias="implementation")
+    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    kind: Optional[Literal["instance", "capability", "requirements"]] = Field(None, alias="kind", serialization_alias="kind")
+    locked_date: Optional[bool] = Field(None, alias="lockedDate", serialization_alias="lockedDate")
+    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
+    software: Optional[TerminologyCapabilitiesSoftware] = Field(None, alias="software", serialization_alias="software")
+    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    translation: Optional[TerminologyCapabilitiesTranslation] = Field(None, alias="translation", serialization_alias="translation")
+    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    validate_code: Optional[TerminologyCapabilitiesValidateCode] = Field(None, alias="validateCode", serialization_alias="validateCode")
+    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
