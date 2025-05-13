@@ -229,17 +229,60 @@ export class PythonGenerator extends Generator {
         }
     }
 
+    listBaseImports(schema: TypeSchema) {
+        const typesFromBase = new Set<string>();
+
+        if (schema.base && schema.base.kind === 'complex-type') {
+            typesFromBase.add(pascalCase(schema.base.name));
+        }
+
+        const complexTypesDeps = schema.dependencies
+            ? schema.dependencies.filter((deps) => deps.kind === 'complex-type')
+            : [];
+
+        complexTypesDeps.forEach((dep) => {
+            typesFromBase.add(pascalCase(dep.name));
+        });
+
+        if (schema.fields) {
+            Object.values(schema.fields).forEach((field) => {
+                if (field.type && field.type.kind === 'complex-type') {
+                    typesFromBase.add(pascalCase(field.type.name));
+                }
+            });
+        }
+
+        if (schema.nested) {
+            schema.nested.forEach((nestedSchema) => {
+                if (nestedSchema.base && nestedSchema.base.kind === 'complex-type') {
+                    typesFromBase.add(pascalCase(nestedSchema.base.name));
+                }
+
+                if (nestedSchema.fields) {
+                    Object.values(nestedSchema.fields).forEach((field) => {
+                        if (field.type && field.type.kind === 'complex-type') {
+                            typesFromBase.add(pascalCase(field.type.name));
+                        }
+                    });
+                }
+            });
+        }
+        return typesFromBase;
+    }
+
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
-            const complexTypesDeps = schema.dependencies.filter(
-                (deps) => deps.kind === 'complex-type',
-            );
             const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
 
             const packageParts = [this.packageRoot];
             if (schema.identifier.package) packageParts.push(snakeCase(schema.identifier.package));
             const pypackage = packageParts.join('.');
-            this.line('from', `${pypackage}.base`, 'import', '*');
+
+            const typesFromBase = this.listBaseImports(schema);
+            if (typesFromBase.size > 0) {
+                const imports = Array.from(typesFromBase).sort().join(', ');
+                this.line('from', `${pypackage}.base`, 'import', imports);
+            }
 
             for (const deps of resourceDeps) {
                 this.line(
@@ -262,6 +305,21 @@ export class PythonGenerator extends Generator {
                 this.generateNestedTypes(schema);
                 this.line();
                 this.generateType(schema);
+            }
+
+            this.line();
+            this.line('# Rebuild models to resolve circular dependencies');
+            for (const schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
+                this.line(`${schema.identifier.name}.model_rebuild()`);
+                if (schema.nested) {
+                    for (const nestedSchema of schema.nested) {
+                        const nestedName = this.deriveNestedSchemaName(
+                            nestedSchema.identifier.url,
+                            true,
+                        );
+                        this.line(`${nestedName}.model_rebuild()`);
+                    }
+                }
             }
         });
     }
