@@ -29,5 +29,6 @@ services:
       PGDATABASE: aidbox
       AIDBOX_BASE_URL: http://localhost:8888
       AIDBOX_PORT: 8888
+      BOX_ADMIN_PASSWORD: password
     env_file:
       - .env

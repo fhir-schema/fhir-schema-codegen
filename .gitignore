@@ -19,4 +19,6 @@ example/csharp/obj
 example/csharp/bin
 *.sln
 
-__pycache__
+# Python SDK
+__pycache__/
+.pytest_cache/
