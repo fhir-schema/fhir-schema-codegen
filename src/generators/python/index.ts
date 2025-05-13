@@ -211,7 +211,12 @@ export class PythonGenerator extends Generator {
 
     defaultImports() {
         this.line('from __future__ import annotations');
-        this.line('from', 'pydantic', 'import', '*');
+        this.line(
+            'from',
+            'pydantic',
+            'import',
+            ['BaseModel', 'ConfigDict', 'Field', 'PositiveInt'].join(', '),
+        );
         this.line('from', 'typing', 'import', ['Optional', 'List as L', 'Literal'].join(', '));
     }
 
