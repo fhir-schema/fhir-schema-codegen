@@ -4,7 +4,6 @@ from typing import Optional, TypeVar, Type, Dict, Any, cast, Union
 import requests
 from pydantic import BaseModel
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
-from aidbox.hl7_fhir_r4_core import Patient, Task  # Import all resource types
 
 T = TypeVar("T", bound=DomainResource)
 

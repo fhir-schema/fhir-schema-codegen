@@ -240,19 +240,11 @@ export class PythonGenerator extends Generator {
         }
     }
 
-    // generateBaseModel() {
-    //     this.curlyBlock(['class BaseModel_(BaseModel)'], async () => {
-    //         this.line('pass');
-    //     });
-    // }
-
     generateBasePy(packageComplexTypes: TypeSchema[]) {
         this.file('base.py', () => {
             this.generateDisclaimer();
             this.defaultImports();
             this.line();
-
-            // this.generateBaseModel();
 
             for (const schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
                 this.generateNestedTypes(schema);
@@ -305,27 +297,36 @@ export class PythonGenerator extends Generator {
 
         const staticDir = this.opts.staticDir as string;
 
+        // Determine the root package directory path
+        const packageRootParts = this.packageRoot.split('.');
+        let packagePath = this.opts.outputDir;
+        for (const part of packageRootParts) {
+            packagePath = path.join(packagePath, part);
+        }
+
+        if (!fs.existsSync(packagePath)) {
+            fs.mkdirSync(packagePath, { recursive: true });
+        }
+
         // Copy all static files except client.py which needs to be processed
         fs.readdirSync(Path.resolve(staticDir)).forEach(file => {
             if (file !== 'client.py') {
                 fs.copyFileSync(
                     Path.resolve(staticDir, file),
-                    Path.resolve(this.opts.outputDir, file)
+                    Path.resolve(packagePath, file)
                 );
             }
         });
 
-        // Read client.py and replace imports with package root imports
         const clientPath = Path.resolve(staticDir, 'client.py');
         if (fs.existsSync(clientPath)) {
             let clientContent = fs.readFileSync(clientPath, 'utf-8');
 
-            // Update imports to use the package root
+            // Fix import in Operation part of FHIR SDK
             clientContent = clientContent.replace(/from aidbox\.hl7_fhir_r4_core/g, `from ${this.packageRoot}.hl7_fhir_r4_core`);
             clientContent = clientContent.replace(/from aidbox import/g, `from ${this.packageRoot} import`);
 
-            // Write the updated client.py
-            fs.writeFileSync(Path.resolve(this.opts.outputDir, 'client.py'), clientContent);
+            fs.writeFileSync(Path.resolve(packagePath, 'client.py'), clientContent);
         }
     }
 
