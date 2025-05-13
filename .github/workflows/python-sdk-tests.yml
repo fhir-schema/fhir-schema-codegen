@@ -1,4 +1,4 @@
-name: Python SDK Tests
+name: python-sdk
 
 on:
   push:
