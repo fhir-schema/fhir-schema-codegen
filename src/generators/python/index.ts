@@ -164,19 +164,19 @@ export class PythonGenerator extends Generator {
         const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
+            this.line('model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)')
+            this.line()
             if (!schema.fields) {
                 this.line('pass');
                 return;
             }
 
             const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
-            // this.line(`resourceType: Literal['${className}'] = '${className}'`);
 
             for (const [fieldName, field] of fields) {
                 if ('choices' in field) continue;
 
                 let fieldType = field.type.name;
-                let defaultValue = '';
 
                 if (field.type.kind === 'nested') {
                     fieldType = this.deriveNestedSchemaName(field.type.url, true);
@@ -190,15 +190,16 @@ export class PythonGenerator extends Generator {
                     fieldType = this.wrapLiteral(field.enum.map((e) => `"${e}"`).join(', '));
                 }
 
-                // return this.uppercaseFirstLetter(field.type.name);
-
                 if (field.array) {
                     fieldType = this.wrapList(fieldType);
                 }
 
+                let defaultValue = '';
                 if (!field.required) {
                     fieldType = this.wrapOptional(fieldType);
-                    defaultValue = ' = None';
+                    defaultValue = ` = Field(None, alias="${fieldName}", serialization_alias="${fieldName}")`;
+                } else {
+                    defaultValue = ' = Field(alias="${fieldName}", serialization_alias="${fieldName}")';
                 }
 
                 const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
