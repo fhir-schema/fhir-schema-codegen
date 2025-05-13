@@ -3,10 +3,10 @@
 # Any manual changes made to this file may be overwritten.
 
 from __future__ import annotations
-from pydantic import *
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import Optional, List as L, Literal
 
-from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.base import Annotation, CodeableConcept, DataRequirement, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 

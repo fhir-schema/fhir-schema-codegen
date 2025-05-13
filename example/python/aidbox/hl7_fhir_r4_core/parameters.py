@@ -3,10 +3,10 @@
 # Any manual changes made to this file may be overwritten.
 
 from __future__ import annotations
-from pydantic import *
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import Optional, List as L, Literal
 
-from aidbox.hl7_fhir_r4_core.base import *
+from aidbox.hl7_fhir_r4_core.base import Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, Contributor, Count, DataRequirement, Distance, Dosage, Duration, Expression, HumanName, Identifier, Meta, Money, ParameterDefinition, Period, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, Timing, TriggerDefinition, UsageContext
 from aidbox.hl7_fhir_r4_core.resource import Resource
 
 

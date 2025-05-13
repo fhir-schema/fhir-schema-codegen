@@ -3,7 +3,7 @@
 # Any manual changes made to this file may be overwritten.
 
 from __future__ import annotations
-from pydantic import *
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import Optional, List as L, Literal
 
 
@@ -646,3 +646,46 @@ class Timing(BackboneElement):
     event: Optional[L[str]] = Field(None, alias="event", serialization_alias="event")
     repeat: Optional[Element] = Field(None, alias="repeat", serialization_alias="repeat")
 
+
+# Rebuild models to resolve circular dependencies
+Element.model_rebuild()
+Quantity.model_rebuild()
+Age.model_rebuild()
+BackboneElement.model_rebuild()
+ProductShelfLife.model_rebuild()
+Duration.model_rebuild()
+Dosage.model_rebuild()
+Population.model_rebuild()
+SampledData.model_rebuild()
+ProdCharacteristic.model_rebuild()
+Extension.model_rebuild()
+Ratio.model_rebuild()
+Count.model_rebuild()
+ParameterDefinition.model_rebuild()
+ContactDetail.model_rebuild()
+Address.model_rebuild()
+Coding.model_rebuild()
+Reference.model_rebuild()
+ElementDefinition.model_rebuild()
+Period.model_rebuild()
+HumanName.model_rebuild()
+RelatedArtifact.model_rebuild()
+Expression.model_rebuild()
+MarketingStatus.model_rebuild()
+Signature.model_rebuild()
+SubstanceAmount.model_rebuild()
+Contributor.model_rebuild()
+UsageContext.model_rebuild()
+Meta.model_rebuild()
+Distance.model_rebuild()
+ContactPoint.model_rebuild()
+Annotation.model_rebuild()
+Attachment.model_rebuild()
+Narrative.model_rebuild()
+TriggerDefinition.model_rebuild()
+Range.model_rebuild()
+CodeableConcept.model_rebuild()
+DataRequirement.model_rebuild()
+Money.model_rebuild()
+Identifier.model_rebuild()
+Timing.model_rebuild()
