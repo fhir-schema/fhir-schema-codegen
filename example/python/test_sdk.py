@@ -1,5 +1,6 @@
 import pytest
 import uuid
+from typing import Iterator
 from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
 from aidbox.hl7_fhir_r4_core import Patient
 from aidbox.client import Client, Auth, AuthCredentials
@@ -11,7 +12,7 @@ PASSWORD = "secret"
 
 
 @pytest.fixture(scope="module")
-def client():
+def client() -> Client:
     return Client(
         base_url=FHIR_SERVER_URL,
         auth=Auth(
@@ -25,12 +26,14 @@ def client():
 
 
 @pytest.fixture
-def created_patient(client):
-    patient = client.create(Patient(
-        name=[HumanName(given=["Test"], family="Patient")],
-        gender="female",
-        birth_date="1980-01-01",
-    ))
+def created_patient(client: Client) -> Iterator[Patient]:
+    patient = client.create(
+        Patient(
+            name=[HumanName(given=["Test"], family="Patient")],
+            gender="female",
+            birth_date="1980-01-01",
+        )
+    )
     # This fixture has module scope, so we yield the result for all tests to use
     yield patient
     try:
@@ -39,7 +42,7 @@ def created_patient(client):
         pass
 
 
-def test_create_patient(client):
+def test_create_patient(client: Client) -> None:
     new_patient = Patient(
         name=[HumanName(given=["Create"], family="Test")],
         gender="female",
@@ -56,7 +59,7 @@ def test_create_patient(client):
     client.delete("Patient", created.id)
 
 
-def test_read_patient(client, created_patient):
+def test_read_patient(client: Client, created_patient: Patient) -> None:
     read_patient = client.read(Patient, created_patient.id)
 
     assert read_patient.id == created_patient.id
@@ -64,7 +67,7 @@ def test_read_patient(client, created_patient):
     assert read_patient.gender == created_patient.gender
 
 
-def test_update_patient(client, created_patient):
+def test_update_patient(client: Client, created_patient: Patient) -> None:
     patient_to_update = client.read(Patient, created_patient.id)
 
     assert patient_to_update.id == created_patient.id
@@ -78,8 +81,12 @@ def test_update_patient(client, created_patient):
 
     assert updated_patient.id == created_patient.id  # ID should not change
     assert updated_patient.gender == "male"  # Gender should be updated
-    assert updated_patient.name[0].family == "UpdatedFamily"  # Family name should be updated
-    assert updated_patient.name[0].given == ["UpdatedGiven"]  # Given name should be updated
+    assert (
+        updated_patient.name[0].family == "UpdatedFamily"
+    )  # Family name should be updated
+    assert updated_patient.name[0].given == [
+        "UpdatedGiven"
+    ]  # Given name should be updated
 
     re_read_patient = client.read(Patient, created_patient.id)
     assert re_read_patient.gender == "male"
@@ -87,24 +94,24 @@ def test_update_patient(client, created_patient):
     assert re_read_patient.name[0].given == ["UpdatedGiven"]
 
 
-def test_search_patient(client, created_patient):
+def test_search_patient(client: Client, created_patient: Patient) -> None:
     search_params = {"name": "Patient"}
     search_result = client.search(Patient, search_params)
 
-    assert search_result.get('total', 0) > 0, "No patients found in search"
+    assert search_result.get("total", 0) > 0, "No patients found in search"
 
     found = False
     print(search_result)
-    for entry in search_result.get('entry', []):
-        print(entry['resource']['id'], created_patient.id)
-        if entry['resource']['id'] == created_patient.id:
+    for entry in search_result.get("entry", []):
+        print(entry["resource"]["id"], created_patient.id)
+        if entry["resource"]["id"] == created_patient.id:
             found = True
             break
 
     assert found, f"Patient with ID {created_patient.id} not found in search results"
 
 
-def test_delete_patient(client):
+def test_delete_patient(client: Client) -> None:
     delete_patient = Patient(
         name=[HumanName(given=["Delete"], family="Test")],
         gender="other",

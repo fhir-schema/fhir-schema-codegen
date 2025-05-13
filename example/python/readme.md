@@ -100,6 +100,7 @@ example/python/
 ### Requirements
 - Python 3.7+
 - Pydantic 2.0+
+- mypy (for type checking)
 
 ### Local Development
 
@@ -112,3 +113,30 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+3. Run type checking:
+```bash
+python -m mypy .
+```
+
+### Type Checking
+
+This project uses mypy for static type checking. The SDK has been fully annotated with type hints to enable static type checking and provide better IDE support.
+
+To run type checking:
+
+```bash
+# Using the provided make command from the project root
+make type-check-python-sdk
+
+# Or directly within the python directory
+python -m mypy . --exclude venv
+```
+
+Type checking is also automatically run as part of the test suite when you run:
+
+```bash
+make test-python-sdk
+```
+
+The mypy configuration is stored in `mypy.ini` and is set to strict mode to catch as many potential issues as possible.

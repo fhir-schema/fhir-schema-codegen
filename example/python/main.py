@@ -4,6 +4,7 @@ from aidbox.hl7_fhir_r4_core import Patient
 from aidbox.client import Client, Auth, AuthCredentials
 
 import requests
+from typing import Dict, Any
 
 client = Client(
     base_url="http://localhost:8888",
@@ -28,4 +29,5 @@ try:
     print(result.model_dump_json(exclude_unset=True, exclude_none=True))
 except requests.exceptions.RequestException as e:
     if e.response is not None:
-        print(e.response.json())
+        response_json: Dict[str, Any] = e.response.json()
+        print(response_json)

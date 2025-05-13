@@ -25,8 +25,14 @@ lint-fix-unsafe:
 test:
 	npm run test
 
+###########################################################
+# Python SDK
+
 PYTHON=python3
 PYTHON_SDK_EXAMPLE=./example/python
+
+format-python:
+	ruff format example/python/test_sdk.py src/generators/python/static/client.py
 
 test-python-sdk: build
 	docker compose -f example/docker-compose.yaml up --wait
@@ -46,7 +52,14 @@ test-python-sdk-without-service:
 
 	cd $(PYTHON_SDK_EXAMPLE) && \
 		. venv/bin/activate && \
+		python -m mypy . --exclude venv
+
+	cd $(PYTHON_SDK_EXAMPLE) && \
+		. venv/bin/activate && \
 		python -m pytest test_sdk.py -v
+
+###########################################################
+# Release
 
 release: lint test format-check
 	@VERSION=$$(grep -E '"version": "[^"]+"' package.json | head -1 | sed -E 's/.*"version": "([^"]+)".*/\1/'); \
