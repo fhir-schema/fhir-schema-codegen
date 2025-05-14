@@ -146,19 +146,19 @@ example/python/
 1. Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 2. Run the example:
 
 ```bash
-python main.py
+$ python main.py
 ```
 
 3. Run type checking:
 
 ```bash
-python -m mypy . --exclude venv
+$ python -m mypy . --exclude venv
 ```
 
 ### Testing
@@ -166,7 +166,7 @@ python -m mypy . --exclude venv
 To run the tests:
 
 ```bash
-python -m pytest test_sdk.py
+$ python -m pytest test_sdk.py
 ```
 
 ### Type Checking
@@ -177,5 +177,5 @@ Type checking is automatically run as part of the test suite, but you can also r
 
 ```bash
 # From the python directory
-python -m mypy .
+$ python -m mypy .
 ```
