@@ -2,7 +2,8 @@
 
 [![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)
 [![fscg](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/tests.yml)
-[![python-sdk](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/python-sdk-tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/python-sdk-tests.yml)
+[![py-sdk](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/python-sdk-tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/python-sdk-tests.yml)
+[![ts-sdk](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/typescript-sdk-tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/typescript-sdk-tests.yml)
 
 Library that generates language-specific models from FHIR StructureDefinition using type-schema ([Github](https://github.com/fhir-clj/type-schema)), enabling developers to work with strongly-typed FHIR resources in their preferred programming language.
 

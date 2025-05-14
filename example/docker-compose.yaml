@@ -32,3 +32,9 @@ services:
       BOX_ADMIN_PASSWORD: password
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
