@@ -150,7 +150,6 @@ export const mergeHeaders = (
   const result = new globalThis.Headers(source1 as HeadersInit);
   const isHeadersInstance = source2 instanceof globalThis.Headers;
   const source = new globalThis.Headers(source2 as HeadersInit);
-  // @ts-expect-error ignore
   for (const [key, value] of source.entries()) {
     if ((isHeadersInstance && value === 'undefined') || value === undefined) {
       result.delete(key);

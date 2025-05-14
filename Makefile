@@ -57,6 +57,28 @@ test-python-sdk-without-service:
 		python -m pytest test_sdk.py -v
 
 ###########################################################
+# TypeScript SDK
+
+TYPESCRIPT_SDK_EXAMPLE=./example/typescript
+
+test-typescript-sdk:
+	docker compose -f example/docker-compose.yaml up --wait
+	make test-typescript-sdk-without-service
+	docker compose -f example/docker-compose.yaml down
+
+test-typescript-sdk-without-service: build
+	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk
+
+	@if [ ! -d "$(TYPESCRIPT_SDK_EXAMPLE)/node_modules" ]; then \
+		cd $(TYPESCRIPT_SDK_EXAMPLE) && \
+		npm install; \
+	fi
+
+	cd $(TYPESCRIPT_SDK_EXAMPLE) && \
+        npm run test && \
+	    npm run type-check
+
+###########################################################
 # Release
 
 release: lint test format-check

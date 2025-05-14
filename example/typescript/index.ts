@@ -1,5 +1,5 @@
-import { Client } from './aidbox';
-import { Patient } from './aidbox/types/hl7-fhir-r4-core';
+import { Client } from './fhirsdk';
+import { Patient } from './fhirsdk/types/hl7-fhir-r4-core';
 import { logger } from '../../src/logger';
 
 async function main() {
