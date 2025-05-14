@@ -31,7 +31,9 @@ jobs:
         run: npm ci
 
       - name: Test python-sdk
-        run: make test-python-sdk
+        run: |
+          export AIDBOX_LICENSE="${{ secrets.AIDBOX_LICENSE }}"
+          make test-python-sdk
 
       - name: Reposity contains actual python-sdk version
         run: |

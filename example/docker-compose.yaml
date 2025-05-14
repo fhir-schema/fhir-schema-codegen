@@ -30,6 +30,7 @@ services:
       AIDBOX_BASE_URL: http://localhost:8888
       AIDBOX_PORT: 8888
       BOX_ADMIN_PASSWORD: password
+      AIDBOX_LICENSE: ${AIDBOX_LICENSE}
     env_file:
       - .env
     healthcheck:

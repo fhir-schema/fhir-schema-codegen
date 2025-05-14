@@ -26,7 +26,9 @@ jobs:
         run: npm ci
 
       - name: Test typescript-sdk
-        run: make test-typescript-sdk
+        run: |
+          export AIDBOX_LICENSE="${{ secrets.AIDBOX_LICENSE }}"
+          make test-typescript-sdk
 
       - name: Repository contains actual typescript-sdk version
         run: |

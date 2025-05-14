@@ -1,5 +1,7 @@
 .PHONY: all format lint lint-fix test format-check release
 
+AIDBOX_LICENSE ?=
+
 all: format lint-fix test build
 
 build:
