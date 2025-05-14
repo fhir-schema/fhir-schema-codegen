@@ -406,9 +406,7 @@ export class PythonGenerator extends Generator {
     }
 
     generate() {
-        // Start at output directory
         this.dir('.', async () => {
-            // Copy static files with proper package root
             this.copyStaticFilesWithPackageRoot();
 
             const packageRootParts = this.packageRoot.split('.');
