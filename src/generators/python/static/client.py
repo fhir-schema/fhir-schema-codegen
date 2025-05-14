@@ -4,7 +4,7 @@
 
 import base64
 import json
-from typing import Optional, TypeVar, Type, Dict, Any, cast, Union
+from typing import Optional, TypeVar, Type, Dict, Any, cast
 import requests
 from pydantic import BaseModel
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource

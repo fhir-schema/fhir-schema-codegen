@@ -28,6 +28,7 @@ try:
     result = client.create(patient)
     print(result.model_dump_json(exclude_unset=True, exclude_none=True))
 except requests.exceptions.RequestException as e:
+    print("Error:", e)
     if e.response is not None:
         response_json: Dict[str, Any] = e.response.json()
         print(response_json)

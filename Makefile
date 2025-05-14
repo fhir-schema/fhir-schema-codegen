@@ -30,7 +30,10 @@ PYTHON=python3
 PYTHON_SDK_EXAMPLE=./example/python
 
 format-python:
-	ruff format example/python/test_sdk.py src/generators/python/static/client.py
+	ruff format \
+	    example/python/test_sdk.py \
+		example/python/main.py \
+	    src/generators/python/static/client.py
 
 test-python-sdk: build
 	docker compose -f example/docker-compose.yaml up --wait

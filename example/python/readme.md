@@ -1,21 +1,25 @@
 # Aidbox Python SDK
 
-A type-safe Python SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides Pydantic models for all FHIR resources and an async client for server communication.
+A type-safe Python SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides Pydantic models for all FHIR resources and a client for server communication with full type checking support.
+
+All files in `example/python/aidbox` are generated and should not be modified manually. If you require any changes, please open an issue or submit a pull request.
 
 ## Quick Start
 
 1. Install dependencies:
+
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 2. Start Aidbox server:
+
 ```bash
-cd ../. && docker compose up -d
+$ cd ../. && docker compose up --wait
 ```
 
 3. Get license (first run only):
-   - Open http://localhost:8888
+   - Open <http://localhost:8888>
    - Follow setup instructions
 
 ## Usage
@@ -23,12 +27,17 @@ cd ../. && docker compose up -d
 ### Client Configuration
 
 ```python
-from aidbox.client import Client
+from aidbox.client import Client, Auth, AuthCredentials
 
 client = Client(
     base_url="http://localhost:8888",
-    username="root",
-    password="secret",
+    auth=Auth(
+        method="basic",
+        credentials=AuthCredentials(
+            username="root",
+            password="secret",
+        ),
+    ),
 )
 ```
 
@@ -51,11 +60,43 @@ try:
     result = client.create(patient)
     print(result.model_dump_json(exclude_unset=True, exclude_none=True))
 except requests.exceptions.RequestException as e:
+    print("Error:", e)
     if e.response is not None:
-        print(e.response.json())
+        response_json: Dict[str, Any] = e.response.json()
+        print(response_json)
 ```
 
-## How This SDK Was Generated
+### Run example
+
+```bash
+$ python main.py | jq
+{
+  "id": "555d6bd2-5b7b-4fe6-9a67-e32a5b5aa1e5",
+  "meta": {
+    "lastUpdated": "2025-05-14T08:45:58.840236Z",
+    "versionId": "246"
+  },
+  "birthDate": "1990-01-01",
+  "gender": "male",
+  "identifier": [
+    {
+      "system": "http://org.io/id",
+      "value": "0000-0000"
+    }
+  ],
+  "name": [
+    {
+      "family": "Doe",
+      "given": [
+        "John"
+      ]
+    }
+  ]
+}
+```
+
+
+## How To Generate Python SDK
 
 This SDK was automatically generated using the FHIR Schema Codegen tool. The generation process:
 
@@ -63,80 +104,78 @@ This SDK was automatically generated using the FHIR Schema Codegen tool. The gen
 2. Generates Python classes for each FHIR resource
 3. Creates a type-safe client for interacting with the Aidbox server
 
-### Generation Process
-
 ```bash
-cd fhir-schema-codegen
-
-npm run build
-
-node dist/cli.js generate --generator python --output ./example/python/aidbox  --packages hl7.fhir.r4.core@4.0.1
+$ npm install -g @fhirschema/codegen
+$ npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 -o example/python --package-root aidbox
 ```
-
-This will:
-1. Generate Python classes in the `aidbox/models` directory
-2. Create the client implementation in `aidbox/client.py`
-3. Set up the package structure with proper imports
 
 ### Project Structure
 
-```
+```text
 example/python/
-├── aidbox/
-│   ├── __init__.py
-│   ├── client.py
-│   └── hl7_fhir_r4_core/
-│       ├── __init__.py
-│       ├── base.py
-│       ├── patient.py
-│       └── ... (other FHIR resources)
-├── main.py
-├── requirements.txt
-└── README.md
+├── aidbox/                            # (Generated) SDK core
+│   ├── __init__.py                    # (Generated)
+│   ├── client.py                      # (Generated) HTTP client implementation
+│   └── hl7_fhir_r4_core/              # (Generated) FHIR R4 resources
+│       ├── __init__.py                # (Generated)
+│       ├── base.py                    # (Generated) Common base classes
+│       ├── patient.py                 # (Generated) Patient resource
+│       └── ... (other FHIR resources) # (Generated)
+├── main.py                            # Example usage file
+├── mypy.ini                           # Type checking configuration
+├── requirements.txt                   # Project dependencies
+├── test_sdk.py                        # SDK tests
+└── README.md                          # This documentation
 ```
 
 ## Development
 
 ### Requirements
+
 - Python 3.7+
-- Pydantic 2.0+
-- mypy (for type checking)
+- Production dependencies:
+  - Pydantic 2.11+ (data validation and serialization)
+  - Requests 2.32+ (HTTP client library)
+- Development dependencies:
+  - pytest 8.3+ (testing framework)
+  - mypy 1.9+ (static type checking)
+  - types-requests 2.32+ (type stubs for requests)
 
 ### Local Development
 
 1. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 2. Run the example:
+
 ```bash
 python main.py
 ```
 
 3. Run type checking:
+
 ```bash
-python -m mypy .
+python -m mypy . --exclude venv
+```
+
+### Testing
+
+To run the tests:
+
+```bash
+python -m pytest test_sdk.py
 ```
 
 ### Type Checking
 
 This project uses mypy for static type checking. The SDK has been fully annotated with type hints to enable static type checking and provide better IDE support.
 
-To run type checking:
+Type checking is automatically run as part of the test suite, but you can also run it manually:
 
 ```bash
-# Using the provided make command from the project root
-make type-check-python-sdk
-
-# Or directly within the python directory
-python -m mypy . --exclude venv
+# From the python directory
+python -m mypy .
 ```
-
-Type checking is also automatically run as part of the test suite when you run:
-
-```bash
-make test-python-sdk
-```
-
-The mypy configuration is stored in `mypy.ini` and is set to strict mode to catch as many potential issues as possible.
