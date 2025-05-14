@@ -35,12 +35,12 @@ format-python:
 		example/python/main.py \
 	    src/generators/python/static/client.py
 
-test-python-sdk: build
+test-python-sdk:
 	docker compose -f example/docker-compose.yaml up --wait
 	make test-python-sdk-without-service
 	docker compose -f example/docker-compose.yaml down
 
-test-python-sdk-without-service:
+test-python-sdk-without-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 					--package-root aidbox -o $(PYTHON_SDK_EXAMPLE)
 

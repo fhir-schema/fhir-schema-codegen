@@ -101,7 +101,6 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
     assert search_result.get("total", 0) > 0, "No patients found in search"
 
     found = False
-    print(search_result)
     for entry in search_result.get("entry", []):
         print(entry["resource"]["id"], created_patient.id)
         if entry["resource"]["id"] == created_patient.id:
