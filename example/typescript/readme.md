@@ -1,22 +1,28 @@
 # Aidbox TypeScript SDK
 
-A type-safe SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides complete type definitions for all FHIR resources and a simple client for server communication.
+A TypeScript SDK for interacting with Aidbox FHIR server, generated from FHIR R4 specifications. The SDK provides TypeScript interfaces for all FHIR resources and a client for server communication with full type checking support.
+
+All files in `example/typescript/aidbox` are generated and should not be modified manually. If you require any changes, please open an issue or submit a pull request.
 
 ## Quick Start
 
 1. Install dependencies:
+
 ```bash
-npm install
+$ npm install
 ```
 
 2. Start Aidbox server:
+
 ```bash
-cd ../. && docker compose up -d
+$ curl -JO https://aidbox.app/runme/sdk && docker compose up --wait
 ```
 
-3. Get license (first run only):
-   - Open http://localhost:8888
-   - Follow setup instructions
+3. Get Aidbox license (first run only):
+    - Open <http://localhost:8888>
+    - Follow setup instructions
+
+4. Get `BOX_ROOT_CLIENT_SECRET` from downloaded `docker-compose.yaml` file.
 
 ## Usage
 
@@ -25,12 +31,12 @@ cd ../. && docker compose up -d
 ```typescript
 import { Client } from './aidbox';
 
-const client = new Client('http://localhost:8888', {
+const client = new Client('http://localhost:8080', {
   auth: {
     method: 'basic',
     credentials: {
       username: 'root',
-      password: 'secret',
+      password: '<SECRET>', // get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
     },
   },
 });
@@ -38,7 +44,7 @@ const client = new Client('http://localhost:8888', {
 
 ### Working with FHIR Resources
 
-The SDK provides full type safety for all FHIR resources. Here's an example of creating a Patient:
+The SDK provides TypeScript interfaces for all FHIR resources. Here's an example of creating a Patient:
 
 ```typescript
 import { Patient } from './aidbox/types/hl7-fhir-r4-core';
@@ -50,11 +56,47 @@ const patient: Patient = {
   birthDate: '1990-01-01',
 };
 
-  const response = await client.resource.create('Patient', patient);
-
-  console.log(response);
+try {
+  const result = await client.resource.create('Patient', patient);
+  console.log(JSON.stringify(result, null, 2));
+} catch (error) {
+  console.error("Error:", error);
+  if (error.response) {
+    console.error(error.response.data);
+  }
+}
 ```
-## How This SDK Was Generated
+
+### Run example
+
+```bash
+$ npm run start | jq
+{
+  "id": "555d6bd2-5b7b-4fe6-9a67-e32a5b5aa1e5",
+  "meta": {
+    "lastUpdated": "2025-05-14T08:45:58.840236Z",
+    "versionId": "246"
+  },
+  "birthDate": "1990-01-01",
+  "gender": "male",
+  "identifier": [
+    {
+      "system": "http://org.io/id",
+      "value": "0000-0000"
+    }
+  ],
+  "name": [
+    {
+      "family": "Doe",
+      "given": [
+        "John"
+      ]
+    }
+  ]
+}
+```
+
+## How To Generate TypeScript SDK
 
 This SDK was automatically generated using the FHIR Schema Codegen tool. The generation process:
 
@@ -62,61 +104,79 @@ This SDK was automatically generated using the FHIR Schema Codegen tool. The gen
 2. Generates TypeScript interfaces for each FHIR resource
 3. Creates a type-safe client for interacting with the Aidbox server
 
-### Generation Process
-
 ```bash
-cd fhir-schema-codegen
-
-npm run build
-
-node dist/cli.js generate --generator typescript --output ./example/typescript/aidbox  --packages hl7.fhir.r4.core@4.0.1
+$ npm install -g @fhirschema/codegen
+$ npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o example/typescript --package-root aidbox
 ```
-
-This will:
-1. Generate TypeScript interfaces and classes in the `aidbox/types` directory
-2. Create the client implementation in `aidbox/http-client.ts`
-3. Set up the package structure with proper exports
 
 ### Project Structure
 
-```
+```text
 example/typescript/
-├── aidbox/
-│   ├── index.ts
-│   ├── http-client.ts
-│   └── types/
-│       └── hl7-fhir-r4-core/
-│           ├── index.ts
-│           ├── resource.ts
-│           ├── patient.ts
-│           └── ... (other FHIR resources)
-├── main.ts
-├── package.json
-├── tsconfig.json
-└── README.md
+├── aidbox/                            # (Generated) SDK core
+│   ├── index.ts                       # (Generated)
+│   ├── http-client.ts                 # (Generated) HTTP client implementation
+│   └── types/                         # (Generated) FHIR R4 resources
+│       └── hl7-fhir-r4-core/          # (Generated)
+│           ├── index.ts               # (Generated)
+│           ├── resource.ts            # (Generated) Common base interfaces
+│           ├── patient.ts             # (Generated) Patient resource
+│           └── ... (other FHIR resources) # (Generated)
+├── main.ts                            # Example usage file
+├── package.json                       # Project dependencies
+├── tsconfig.json                      # TypeScript configuration
+└── README.md                          # This documentation
 ```
 
 ## Development
 
-### Prerequisites
+### Requirements
 
-- Node.js >= 18
-- npm
-- TypeScript 4.9+
+- Node.js 18+
+- Production dependencies:
+  - Axios (HTTP client library)
+  - TypeScript 4.9+ (static typing)
+- Development dependencies:
+  - ts-node (for running TypeScript directly)
+  - eslint (code linting)
+  - jest (testing framework)
 
 ### Local Development
 
 1. Install dependencies:
+
 ```bash
-npm install
+$ npm install
 ```
 
-2. Build the project:
+2. Run the example:
+
 ```bash
-npm run start
+$ npm run start
 ```
 
-3. Run the example:
+3. Build the project:
+
 ```bash
-npm run build
+$ npm run build
+```
+
+### Testing
+
+To run the tests:
+
+```bash
+$ npm test
+```
+
+### Type Checking
+
+This project uses TypeScript for static type checking. The SDK has been fully typed to enable static type checking and provide better IDE support.
+
+Type checking is
+ automatically run as part of the build process, but you can also run it manually:
+
+```bash
+# From the typescript directory
+$ npx tsc --noEmit
 ```
