@@ -15,12 +15,14 @@ $ pip install -r requirements.txt
 2. Start Aidbox server:
 
 ```bash
-$ cd ../. && docker compose up --wait
+$ curl -JO https://aidbox.app/runme/sdk && docker compose up --wait
 ```
 
-3. Get license (first run only):
-   - Open <http://localhost:8888>
-   - Follow setup instructions
+3. Get Aidbox license (first run only):
+    - Open <http://localhost:8888>
+    - Follow setup instructions
+
+4. Get `BOX_ROOT_CLIENT_SECRET` from  downloaded `docker-compose.yaml` file.
 
 ## Usage
 
@@ -35,7 +37,7 @@ client = Client(
         method="basic",
         credentials=AuthCredentials(
             username="root",
-            password="secret",
+            password="<SECRET>", # get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
         ),
     ),
 )

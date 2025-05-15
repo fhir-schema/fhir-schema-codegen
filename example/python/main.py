@@ -7,12 +7,12 @@ import requests
 from typing import Dict, Any
 
 client = Client(
-    base_url="http://localhost:8888",
+    base_url="http://localhost:8080",
     auth=Auth(
         method="basic",
         credentials=AuthCredentials(
             username="root",
-            password="secret",
+            password="<SECRET>",  # get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
         ),
     ),
 )

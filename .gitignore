@@ -19,6 +19,10 @@ example/csharp/obj
 example/csharp/bin
 *.sln
 
+# SDK Examples
+
+example/docker-compose.yaml
+
 # Python SDK
 __pycache__/
 .pytest_cache/

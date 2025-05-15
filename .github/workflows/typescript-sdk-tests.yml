@@ -27,7 +27,7 @@ jobs:
 
       - name: Test typescript-sdk
         run: |
-          export AIDBOX_LICENSE="${{ secrets.AIDBOX_LICENSE }}"
+          export AIDBOX_LICENSE_ID="${{ secrets.AIDBOX_LICENSE_ID }}"
           make test-typescript-sdk
 
       - name: Repository contains actual typescript-sdk version

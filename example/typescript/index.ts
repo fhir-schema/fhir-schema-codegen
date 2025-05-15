@@ -3,12 +3,12 @@ import { Patient } from './fhirsdk/types/hl7-fhir-r4-core';
 import { logger } from '../../src/logger';
 
 async function main() {
-  const client = new Client('http://localhost:8888', {
+  const client = new Client('http://localhost:8080', {
     auth: {
       method: 'basic',
       credentials: {
         username: 'root',
-        password: 'secret',
+        password: '<SECRET>', // get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
       },
     },
   });

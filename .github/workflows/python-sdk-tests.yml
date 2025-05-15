@@ -32,7 +32,7 @@ jobs:
 
       - name: Test python-sdk
         run: |
-          export AIDBOX_LICENSE="${{ secrets.AIDBOX_LICENSE }}"
+          export AIDBOX_LICENSE_ID="${{ secrets.AIDBOX_LICENSE_ID }}"
           make test-python-sdk
 
       - name: Reposity contains actual python-sdk version

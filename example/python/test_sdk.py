@@ -6,9 +6,11 @@ from aidbox.hl7_fhir_r4_core import Patient
 from aidbox.client import Client, Auth, AuthCredentials
 
 
-FHIR_SERVER_URL = "http://localhost:8888/fhir"
+FHIR_SERVER_URL = "http://localhost:8080/fhir"
 USERNAME = "root"
-PASSWORD = "secret"
+PASSWORD = (
+    "<SECRET>"  # get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
+)
 
 
 @pytest.fixture(scope="module")

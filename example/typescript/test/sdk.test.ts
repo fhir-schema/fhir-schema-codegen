@@ -4,9 +4,9 @@ import type { BasicAuthorization } from '../fhirsdk';
 import type { Patient } from '../fhirsdk/types/hl7-fhir-r4-core';
 
 // NOTE: due to internal reasons /fhir added automatically.
-const FHIR_SERVER_URL = 'http://localhost:8888';
+const FHIR_SERVER_URL = 'http://localhost:8080';
 const USERNAME = 'root';
-const PASSWORD = 'secret';
+const PASSWORD = '<SECRET>'; // get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
 
 describe('FHIR API tests', () => {
   let client: Client<BasicAuthorization>;
