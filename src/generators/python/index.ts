@@ -183,15 +183,15 @@ export class PythonGenerator extends Generator {
             }
 
             if (schema.identifier.kind === 'resource') {
-                this.line(`resource_type: str = Field(`);
+                this.line('resource_type: str = Field(');
                 this.indentBlock(() => {
                     this.line(`default='${schema.identifier.name}',`);
                     this.line(`alias='resourceType',`);
                     this.line(`serialization_alias='resourceType',`);
-                    this.line(`frozen=True,`);
+                    this.line('frozen=True,');
                     this.line(`pattern='${schema.identifier.name}'`);
                 });
-                this.line(`)`);
+                this.line(')');
                 this.line();
             }
 
