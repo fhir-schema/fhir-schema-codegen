@@ -406,6 +406,14 @@ export class PythonGenerator extends Generator {
                     `from ${pypackage}.${snakeCase(schemaName.identifier.name)} import ${schemaName.identifier.name}`,
                 );
             }
+            this.line();
+            this.squareBlock(['__all__', '='], () => {
+                for (const schemaName of [...names].sort((a, b) =>
+                    a.identifier.name.localeCompare(b.identifier.name),
+                )) {
+                    this.line(`'${schemaName.identifier.name}',`);
+                }
+            });
         });
     }
 
