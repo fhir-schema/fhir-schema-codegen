@@ -2,6 +2,13 @@
 # https://github.com/fhir-schema/fhir-schema-codegen
 # Any manual changes made to this file may be overwritten.
 
+from aidbox.hl7_fhir_r4_core.base import \
+    Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, \
+    Contributor, Count, DataRequirement, Distance, Dosage, Duration, Element, ElementDefinition, Expression, Extension, \
+    HumanName, Identifier, MarketingStatus, Meta, Money, Narrative, ParameterDefinition, Period, Population, \
+    ProdCharacteristic, ProductShelfLife, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, \
+    SubstanceAmount, Timing, TriggerDefinition, UsageContext
+
 from aidbox.hl7_fhir_r4_core.group import Group
 from aidbox.hl7_fhir_r4_core.questionnaire import Questionnaire
 from aidbox.hl7_fhir_r4_core.provenance import Provenance

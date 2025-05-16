@@ -324,7 +324,10 @@ export class PythonGenerator extends Generator {
         });
     }
 
-    generateResourcePackageInit(packageResources: TypeSchema[]) {
+    generateResourcePackageInit(
+        packageResources: TypeSchema[],
+        packageComplexTypes?: TypeSchema[],
+    ) {
         this.file('__init__.py', () => {
             this.generateDisclaimer();
             const names = removeConstraints(packageResources);
@@ -333,6 +336,46 @@ export class PythonGenerator extends Generator {
                 ? [this.packageRoot, snakeCase(packageName)]
                 : [this.packageRoot];
             const pypackage = packageParts.join('.');
+
+            if (packageComplexTypes && packageComplexTypes.length > 0) {
+                const baseTypes = packageComplexTypes.map((t) => t.identifier.name).sort();
+
+                // Format with backslash at first line and types on new indented lines
+                this.line(`from ${pypackage}.base import \\`);
+
+                const maxLineLength = 120;
+                let currentLine = '';
+                const indentation = '    '; // 4 spaces for indentation
+
+                for (let i = 0; i < baseTypes.length; i++) {
+                    const typeName = baseTypes[i];
+                    const isLast = i === baseTypes.length - 1;
+
+                    // Check if adding this type would exceed line length
+                    if (
+                        currentLine.length + typeName.length + (currentLine ? 2 : 0) >
+                        maxLineLength - indentation.length
+                    ) {
+                        // Output the current line with trailing comma and backslash if not the last type
+                        this.line(`${indentation}${currentLine}${isLast ? '' : ','} \\`);
+                        currentLine = '';
+                    }
+
+                    // Add the type to the current line
+                    if (currentLine) {
+                        currentLine += `, ${typeName}`;
+                    } else {
+                        currentLine = typeName;
+                    }
+
+                    // If this is the last type or we've filled the line, output it
+                    if (isLast) {
+                        this.line(`${indentation}${currentLine}`);
+                    }
+                }
+
+                this.line();
+            }
 
             for (const schemaName of names) {
                 this.line(
@@ -435,7 +478,8 @@ export class PythonGenerator extends Generator {
                 const groupedResources = groupedByPackage(this.loader.resources());
                 for (const [packageName, packageResources] of Object.entries(groupedResources)) {
                     this.dir(snakeCase(packageName), () => {
-                        this.generateResourcePackageInit(packageResources);
+                        const packageComplexTypes = groupedComplexTypes[packageName] || [];
+                        this.generateResourcePackageInit(packageResources, packageComplexTypes);
                         for (const schema of removeConstraints(packageResources)) {
                             this.generateResourceModule(schema);
                         }
