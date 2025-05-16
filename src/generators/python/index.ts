@@ -423,41 +423,39 @@ export class PythonGenerator extends Generator {
     }
 
     generate() {
-        this.dir('.', async () => {
-            // Prepare root package
-            let destPackagePath = '.';
-            for (const part of this.rootPackagePath) {
-                destPackagePath = Path.join(destPackagePath, part);
-                this.dir(destPackagePath, () => {
-                    this.file('__init__.py', () => {
-                        this.generateDisclaimer();
-                    });
+        // Prepare root package path
+        let destPackagePath = '.';
+        for (const part of this.rootPackagePath) {
+            destPackagePath = Path.join(destPackagePath, part);
+            this.inDir(destPackagePath, () => {
+                this.file('__init__.py', () => {
+                    this.generateDisclaimer();
+                });
+            });
+        }
+
+        // Generate SDK
+        this.inRelDir(destPackagePath, () => {
+            this.copyStaticFiles();
+
+            const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
+            for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
+                this.inRelDir(snakeCase(packageName), () => {
+                    this.file('__init__.py', () => {});
+                    this.generateBasePy(packageComplexTypes);
                 });
             }
 
-            this.dir(destPackagePath, () => {
-                this.copyStaticFiles();
-                const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
-                for (const [packageName, packageComplexTypes] of Object.entries(
-                    groupedComplexTypes,
-                )) {
-                    this.dir(Path.join(destPackagePath, snakeCase(packageName)), () => {
-                        this.file('__init__.py', () => {});
-                        this.generateBasePy(packageComplexTypes);
-                    });
-                }
-
-                const groupedResources = groupedByPackage(this.loader.resources());
-                for (const [packageName, packageResources] of Object.entries(groupedResources)) {
-                    this.dir(Path.join(destPackagePath, snakeCase(packageName)), () => {
-                        const packageComplexTypes = groupedComplexTypes[packageName] || [];
-                        this.generateResourcePackageInit(packageResources, packageComplexTypes);
-                        for (const schema of removeConstraints(packageResources)) {
-                            this.generateResourceModule(schema);
-                        }
-                    });
-                }
-            });
+            const groupedResources = groupedByPackage(this.loader.resources());
+            for (const [packageName, packageResources] of Object.entries(groupedResources)) {
+                this.inRelDir(snakeCase(packageName), () => {
+                    const packageComplexTypes = groupedComplexTypes[packageName] || [];
+                    this.generateResourcePackageInit(packageResources, packageComplexTypes);
+                    for (const schema of removeConstraints(packageResources)) {
+                        this.generateResourceModule(schema);
+                    }
+                });
+            }
         });
     }
 }
