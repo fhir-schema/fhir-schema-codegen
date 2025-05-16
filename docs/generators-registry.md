@@ -215,7 +215,7 @@ The Python generator supports the following additional options:
 When using the CLI, these options can be specified with:
 
 ```bash
-fscg generate -g python -o ./output --package-root my_package --py-allow-extra-fields
+fscg generate -g python -o ./output --py-sdk-package my_package --py-allow-extra-fields
 ```
 
 When `allowExtraFields` is enabled (via the `--py-allow-extra-fields` CLI option), models will use `extra="ignore"` in their Pydantic configuration, which allows extra fields to be provided without validation errors. Extra fields will be ignored in JSON serialization processes.

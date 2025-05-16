@@ -58,7 +58,7 @@ test-python-sdk: prepare-aidbox-runme
 
 test-python-sdk-without-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
-					--package-root aidbox -o $(PYTHON_SDK_EXAMPLE)
+					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
 
 	@if [ ! -d "$(PYTHON_SDK_EXAMPLE)/venv" ]; then \
 		cd $(PYTHON_SDK_EXAMPLE) && \

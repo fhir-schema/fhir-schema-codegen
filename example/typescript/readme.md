@@ -106,7 +106,7 @@ This SDK was automatically generated using the FHIR Schema Codegen tool. The gen
 
 ```bash
 $ npm install -g @fhirschema/codegen
-$ npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o example/typescript --package-root aidbox
+$ npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o example/typescript --py-sdk-package aidbox
 ```
 
 ### Project Structure

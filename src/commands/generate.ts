@@ -46,8 +46,8 @@ export class GenerateCommand extends BaseCommand {
                 'Custom command to execute type-schema (e.g. "java --jar type-schema.jar")',
             )
             .option(
-                '--package-root <name>',
-                '[Python only] Root package name for Python package hierarchy (e.g., "fhirsdk" or "aidbox.my_package")',
+                '--py-sdk-package <n>',
+                'Root package name for Python package hierarchy (e.g., "fhirsdk" or "aidbox.my_package")',
                 'fhirsdk',
             )
             .option(
@@ -128,9 +128,14 @@ export class GenerateCommand extends BaseCommand {
                                         jsonDocuments: result,
                                         typesOnly: options.typesOnly,
                                         ...(options.generator === 'python'
-                                            ? { 
-                                                packageRoot: options.packageRoot,
-                                                allowExtraFields: options.pyAllowExtraFields 
+                                            ? {
+                                                  sdkPackage: options.pySdkPackage,
+                                                  allowExtraFields: options.pyAllowExtraFields,
+                                              }
+                                            : {}),
+                                        ...(options.generator === 'typescript'
+                                            ? {
+                                                  sdkPackage: options.tsSdkPackage,
                                               }
                                             : {}),
                                     },
@@ -157,9 +162,14 @@ export class GenerateCommand extends BaseCommand {
                                 files: options.files,
                                 typesOnly: options.typesOnly,
                                 ...(options.generator === 'python'
-                                    ? { 
-                                        packageRoot: options.packageRoot,
-                                        allowExtraFields: options.pyAllowExtraFields 
+                                    ? {
+                                          sdkPackage: options.pySdkPackage,
+                                          allowExtraFields: options.pyAllowExtraFields,
+                                      }
+                                    : {}),
+                                ...(options.generator === 'typescript'
+                                    ? {
+                                          sdkPackage: options.tsSdkPackage,
                                       }
                                     : {}),
                             },

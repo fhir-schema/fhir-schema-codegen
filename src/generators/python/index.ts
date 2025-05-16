@@ -16,8 +16,8 @@ import {
 // class naming: PascalCase
 
 export interface PythonGeneratorOptions extends GeneratorOptions {
-    /** Root package name for Python package hierarchy (e.g., 'fhirsdk' or 'aidbox.my_package') */
-    packageRoot?: string;
+    /** Root package name for Python SDK (e.g., 'fhirsdk' or 'aidbox.my_package') */
+    sdkPackage?: string;
     /** Allow extra fields in resource models. Extra fields will be ignored during serialization. Default is false (extra fields are forbidden) */
     allowExtraFields?: boolean;
 }
@@ -115,7 +115,7 @@ export class PythonGenerator extends Generator {
             typeMap,
             staticDir: Path.resolve(__dirname, 'static'),
         });
-        this.rootPackage = opts.packageRoot || 'fhirsdk';
+        this.rootPackage = opts.sdkPackage || 'fhirsdk';
         this.rootPackagePath = this.rootPackage.split('.');
         this.allowExtraFields = opts.allowExtraFields || false;
     }
