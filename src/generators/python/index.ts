@@ -1,6 +1,5 @@
-import path from 'node:path';
-import * as fs from 'node:fs';
 import * as Path from 'node:path';
+import * as fs from 'node:fs';
 import { Generator, type GeneratorOptions } from '../generator';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
@@ -105,19 +104,21 @@ const fixReservedWords = (name: string) => {
 };
 
 export class PythonGenerator extends Generator {
-    private packageRoot: string;
+    private rootPackage: string;
+    private rootPackagePath: string[];
 
     constructor(opts: PythonGeneratorOptions) {
         super({
             ...opts,
             typeMap,
-            staticDir: path.resolve(__dirname, 'static'),
+            staticDir: Path.resolve(__dirname, 'static'),
         });
-        this.packageRoot = opts.packageRoot || 'fhirsdk';
+        this.rootPackage = opts.packageRoot || 'fhirsdk';
+        this.rootPackagePath = this.rootPackage.split('.');
     }
 
     modulePrefix() {
-        return this.packageRoot;
+        return this.rootPackage;
     }
 
     toLangType(fhirType: TypeRef) {
@@ -125,6 +126,10 @@ export class PythonGenerator extends Generator {
             return typeMap[fhirType.name];
         }
         return this.getFieldName(fhirType.name);
+    }
+
+    commentSymbol() {
+        return '#';
     }
 
     curlyBlock(tokens: string[], gencontent: () => void) {
@@ -274,7 +279,7 @@ export class PythonGenerator extends Generator {
         if (schema.dependencies) {
             const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
 
-            const packageParts = [this.packageRoot];
+            const packageParts = [this.rootPackage];
             if (schema.identifier.package) packageParts.push(snakeCase(schema.identifier.package));
             const pypackage = packageParts.join('.');
 
@@ -333,8 +338,8 @@ export class PythonGenerator extends Generator {
             const names = removeConstraints(packageResources);
             const packageName = names.length > 0 ? names[0].identifier.package : '';
             const packageParts = packageName
-                ? [this.packageRoot, snakeCase(packageName)]
-                : [this.packageRoot];
+                ? [this.rootPackage, snakeCase(packageName)]
+                : [this.rootPackage];
             const pypackage = packageParts.join('.');
 
             if (packageComplexTypes && packageComplexTypes.length > 0) {
@@ -385,10 +390,6 @@ export class PythonGenerator extends Generator {
         });
     }
 
-    commentLine(line: string) {
-        this.line(`# ${line}`);
-    }
-
     generateResourceModule(schema: TypeSchema) {
         this.file(`${snakeCase(schema.identifier.name)}.py`, () => {
             this.generateDisclaimer();
@@ -405,66 +406,38 @@ export class PythonGenerator extends Generator {
         });
     }
 
-    copyStaticFilesWithPackageRoot() {
+    copyStaticFiles() {
         if (!this.opts.staticDir) {
-            throw new Error('staticDir must be set in subclass.');
+            return;
         }
+        const srcPath = this.opts.staticDir;
+        const destPath = this.getCurrentDir();
 
-        const staticDir = this.opts.staticDir as string;
-
-        // Determine the root package directory path
-        const packageRootParts = this.packageRoot.split('.');
-        let packagePath = this.opts.outputDir;
-        for (const part of packageRootParts) {
-            packagePath = path.join(packagePath, part);
-        }
-
-        if (!fs.existsSync(packagePath)) {
-            fs.mkdirSync(packagePath, { recursive: true });
-        }
-
-        // Copy all static files except client.py which needs to be processed
-        fs.readdirSync(Path.resolve(staticDir)).forEach((file) => {
-            if (file !== 'client.py') {
-                fs.copyFileSync(Path.resolve(staticDir, file), Path.resolve(packagePath, file));
-            }
+        this.copyStaticFile(srcPath, destPath, 'client.py', (content: string) => {
+            const updatedContent = content.replace(
+                /from DOMAIN_RESOURCE_PACKAGE/g,
+                `from ${this.rootPackage}.hl7_fhir_r4_core`,
+            );
+            return updatedContent;
         });
-
-        const clientPath = Path.resolve(staticDir, 'client.py');
-        if (fs.existsSync(clientPath)) {
-            let clientContent = fs.readFileSync(clientPath, 'utf-8');
-
-            // Fix import in Operation part of FHIR SDK
-            clientContent = clientContent.replace(
-                /from aidbox\.hl7_fhir_r4_core/g,
-                `from ${this.packageRoot}.hl7_fhir_r4_core`,
-            );
-            clientContent = clientContent.replace(
-                /from aidbox import/g,
-                `from ${this.packageRoot} import`,
-            );
-
-            fs.writeFileSync(Path.resolve(packagePath, 'client.py'), clientContent);
-        }
     }
 
     generate() {
         this.dir('.', async () => {
-            this.copyStaticFilesWithPackageRoot();
-
-            const packageRootParts = this.packageRoot.split('.');
-            let currentPath = '.';
-
-            for (const part of packageRootParts) {
-                currentPath = path.join(currentPath, part);
-                this.dir(currentPath, () => {
+            // Prepare root package path
+            let destPackagePath = '.';
+            for (const part of this.rootPackagePath) {
+                destPackagePath = Path.join(destPackagePath, part);
+                this.dir(destPackagePath, () => {
                     this.file('__init__.py', () => {
                         this.generateDisclaimer();
                     });
                 });
             }
 
-            this.dir(currentPath, () => {
+            this.dir(destPackagePath, () => {
+                this.copyStaticFiles();
+
                 const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
                 for (const [packageName, packageComplexTypes] of Object.entries(
                     groupedComplexTypes,
@@ -488,29 +461,29 @@ export class PythonGenerator extends Generator {
             });
         });
 
-        const externalFhirPath = path.join(this.opts.outputDir, 'hl7_fhir_r4_core');
+        const externalFhirPath = Path.join(this.opts.outputDir, 'hl7_fhir_r4_core');
         if (fs.existsSync(externalFhirPath)) {
-            const packageRootParts = this.packageRoot.split('.');
+            const packageRootParts = this.rootPackage.split('.');
             let packagePath = this.opts.outputDir;
             for (const part of packageRootParts) {
-                packagePath = path.join(packagePath, part);
+                packagePath = Path.join(packagePath, part);
             }
 
-            const targetFhirPath = path.join(packagePath, 'hl7_fhir_r4_core');
+            const targetFhirPath = Path.join(packagePath, 'hl7_fhir_r4_core');
 
             if (!fs.existsSync(targetFhirPath)) {
                 fs.mkdirSync(targetFhirPath, { recursive: true });
             }
 
             fs.readdirSync(externalFhirPath).forEach((file) => {
-                const sourcePath = path.join(externalFhirPath, file);
-                const targetPath = path.join(targetFhirPath, file);
+                const sourcePath = Path.join(externalFhirPath, file);
+                const targetPath = Path.join(targetFhirPath, file);
 
                 if (file.endsWith('.py')) {
                     let content = fs.readFileSync(sourcePath, 'utf-8');
                     content = content.replace(
                         /from fhirsdk\.hl7_fhir_r4_core/g,
-                        `from ${this.packageRoot}.hl7_fhir_r4_core`,
+                        `from ${this.rootPackage}.hl7_fhir_r4_core`,
                     );
                     fs.writeFileSync(targetPath, content);
                 } else {
