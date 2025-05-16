@@ -7,7 +7,7 @@ import requests
 from typing import Dict, Any
 
 client = Client(
-    base_url="http://localhost:8080",
+    base_url="http://localhost:8080/fhir",
     auth=Auth(
         method="basic",
         credentials=AuthCredentials(
