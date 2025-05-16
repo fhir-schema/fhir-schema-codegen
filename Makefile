@@ -53,12 +53,18 @@ format-python:
 
 test-python-sdk: prepare-aidbox-runme
 	docker compose -f example/docker-compose.yaml up --wait
+	make test-python-sdk-extra-fields-no-start-service
 	make test-python-sdk-no-start-service
 	docker compose -f example/docker-compose.yaml down
 
 test-python-sdk-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
+	make test-python-sdk-no-regen
+
+test-python-sdk-extra-fields-no-start-service: build
+	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
+					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) --py-allow-extra-fields
 	make test-python-sdk-no-regen
 
 test-python-sdk-no-regen:
@@ -72,7 +78,8 @@ test-python-sdk-no-regen:
 	cd $(PYTHON_SDK_EXAMPLE) && \
 		. venv/bin/activate && \
 		python -m pytest test_sdk.py -v && \
-		python -m mypy . --strict --exclude venv
+		python -m mypy . --strict --exclude venv && \
+		python main.py
 
 ###########################################################
 # TypeScript SDK
