@@ -168,11 +168,26 @@ export class PythonGenerator extends Generator {
         const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
-            this.line('model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)');
+            this.line(
+                'model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")',
+            );
             this.line();
             if (!schema.fields) {
                 this.line('pass');
                 return;
+            }
+
+            if (schema.identifier.kind === 'resource') {
+                this.line(`resource_type: str = Field(`);
+                this.indentBlock(() => {
+                    this.line(`default='${schema.identifier.name}',`);
+                    this.line(`alias='resourceType',`);
+                    this.line(`serialization_alias='resourceType',`);
+                    this.line(`frozen=True,`);
+                    this.line(`pattern='${schema.identifier.name}'`);
+                });
+                this.line(`)`);
+                this.line();
             }
 
             const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));

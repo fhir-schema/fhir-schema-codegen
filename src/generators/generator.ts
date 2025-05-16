@@ -160,6 +160,12 @@ export class Generator {
         this.line(']');
     }
 
+    indentBlock(gencontent: () => void) {
+        this.ident();
+        gencontent();
+        this.deident();
+    }
+
     curlBrackets(gencontent: () => void) {
         this.write('{');
         gencontent();

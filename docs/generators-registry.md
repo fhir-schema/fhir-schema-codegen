@@ -146,14 +146,14 @@ export class MyGenerator extends Generator {
         this.dir('src', () => {
             this.file('types.txt', () => {
                 this.line(`// Generated types`);
-                
+
                 for (const schema of this.loader.complexTypes()) {
                     this.generateType(schema);
                 }
             });
         });
     }
-    
+
     generateType(schema: TypeSchema) {
         // Implement type generation logic
         this.line(`// Generated type for ${schema.identifier.name}`);
