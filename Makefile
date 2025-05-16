@@ -59,7 +59,9 @@ test-python-sdk: prepare-aidbox-runme
 test-python-sdk-without-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
+	make test-python-sdk-no-regen
 
+test-python-sdk-no-regen:
 	@if [ ! -d "$(PYTHON_SDK_EXAMPLE)/venv" ]; then \
 		cd $(PYTHON_SDK_EXAMPLE) && \
 		$(PYTHON) -m venv venv && \
@@ -69,8 +71,8 @@ test-python-sdk-without-service: build
 
 	cd $(PYTHON_SDK_EXAMPLE) && \
 		. venv/bin/activate && \
-		python -m mypy . --exclude venv && \
-		python -m pytest test_sdk.py -v
+		python -m pytest test_sdk.py -v && \
+		python -m mypy . --strict --exclude venv
 
 ###########################################################
 # TypeScript SDK

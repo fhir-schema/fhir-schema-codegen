@@ -525,7 +525,7 @@ class UsageContext(Element):
 
 
 class Meta(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="ignore")
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     last_updated: Optional[str] = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
     profile: Optional[L[str]] = Field(None, alias="profile", serialization_alias="profile")

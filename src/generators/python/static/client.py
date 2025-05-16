@@ -5,6 +5,7 @@ import requests
 from pydantic import BaseModel
 from DOMAIN_RESOURCE_PACKAGE import DomainResource
 
+
 T = TypeVar("T", bound=DomainResource)
 
 
@@ -24,16 +25,6 @@ def to_camel_case(snake_str: str) -> str:
     return components[0] + "".join(x.title() for x in components[1:])
 
 
-class FHIRJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, BaseModel):
-            return {
-                to_camel_case(k): v
-                for k, v in obj.model_dump(exclude_none=True).items()
-            }
-        return super().default(obj)
-
-
 class Client:
     def __init__(
         self,
@@ -50,7 +41,7 @@ class Client:
             else:
                 raise ValueError(f"Unsupported auth method: {auth.method}")
 
-    def _set_basic_auth(self, username: str, password: str):
+    def _set_basic_auth(self, username: str, password: str) -> None:
         """Set basic authentication headers"""
         credentials = f"{username}:{password}"
         encoded = base64.b64encode(credentials.encode()).decode()
@@ -64,13 +55,13 @@ class Client:
         """Create a new resource"""
         resource_type = self._get_resource_type(resource)
         url = f"{self.base_url}/{resource_type}"
-        data = json.loads(json.dumps(resource, cls=FHIRJSONEncoder))
+        data = resource.model_dump(exclude_none=True)
         response = self.session.post(url, json=data)
         response.raise_for_status()
         data = response.json()
         if not data.get("id"):
             raise ValueError("Response missing required 'id' field")
-        return cast(T, resource.__class__.model_validate(data))
+        return resource.__class__.model_validate(data)
 
     def read(self, resource_class: Type[T], resource_id: str) -> T:
         """Read a resource by ID"""
@@ -90,13 +81,13 @@ class Client:
             raise ValueError("Resource must have an ID for update")
 
         url = f"{self.base_url}/{resource_type}/{resource.id}"
-        data = json.loads(json.dumps(resource, cls=FHIRJSONEncoder))
+        data = resource.model_dump(exclude_none=True)
         response = self.session.put(url, json=data)
         response.raise_for_status()
         data = response.json()
         if not data.get("id"):
             raise ValueError("Response missing required 'id' field")
-        return cast(T, resource.__class__.model_validate(data))
+        return resource.__class__.model_validate(data)
 
     def delete(self, resource_type: str, resource_id: str) -> None:
         """Delete a resource"""
@@ -112,4 +103,4 @@ class Client:
         url = f"{self.base_url}/{resource_type}"
         response = self.session.get(url, params=params)
         response.raise_for_status()
-        return response.json()
+        return response.json()  # type: ignore

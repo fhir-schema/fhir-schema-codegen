@@ -1,4 +1,5 @@
-from aidbox.hl7_fhir_r4_core import HumanName, Identifier, Patient
+from aidbox.hl7_fhir_r4_core import Patient
+from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
 
 from aidbox.client import Client, Auth, AuthCredentials
 
