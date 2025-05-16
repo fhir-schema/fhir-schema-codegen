@@ -172,7 +172,7 @@ export class PythonGenerator extends Generator {
         const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
-            const extraMode = this.allowExtraFields ? 'ignore' : 'forbid';
+            const extraMode = this.allowExtraFields ? 'allow' : 'forbid';
             this.line(
                 `model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="${extraMode}")`,
             );
