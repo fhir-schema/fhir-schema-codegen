@@ -55,7 +55,7 @@ class Client:
         """Create a new resource"""
         resource_type = self._get_resource_type(resource)
         url = f"{self.base_url}/{resource_type}"
-        data = resource.model_dump(exclude_none=True)
+        data = resource.model_dump(exclude_unset=True, exclude_none=True)
         response = self.session.post(url, json=data)
         response.raise_for_status()
         data = response.json()
@@ -81,7 +81,7 @@ class Client:
             raise ValueError("Resource must have an ID for update")
 
         url = f"{self.base_url}/{resource_type}/{resource.id}"
-        data = resource.model_dump(exclude_none=True)
+        data = resource.model_dump(exclude_unset=True, exclude_none=True)
         response = self.session.put(url, json=data)
         response.raise_for_status()
         data = response.json()
