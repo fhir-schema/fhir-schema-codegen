@@ -18,6 +18,8 @@ import {
 export interface PythonGeneratorOptions extends GeneratorOptions {
     /** Root package name for Python package hierarchy (e.g., 'fhirsdk' or 'aidbox.my_package') */
     packageRoot?: string;
+    /** Allow extra fields in resource models. Extra fields will be ignored during serialization. Default is false (extra fields are forbidden) */
+    allowExtraFields?: boolean;
 }
 
 const typeMap: Record<string, string> = {
@@ -105,6 +107,7 @@ const fixReservedWords = (name: string) => {
 export class PythonGenerator extends Generator {
     private rootPackage: string;
     private rootPackagePath: string[];
+    private allowExtraFields: boolean;
 
     constructor(opts: PythonGeneratorOptions) {
         super({
@@ -114,6 +117,7 @@ export class PythonGenerator extends Generator {
         });
         this.rootPackage = opts.packageRoot || 'fhirsdk';
         this.rootPackagePath = this.rootPackage.split('.');
+        this.allowExtraFields = opts.allowExtraFields || false;
     }
 
     modulePrefix() {
@@ -168,8 +172,9 @@ export class PythonGenerator extends Generator {
         const classDefinition = `class ${name}(${superClasses.join(', ')})`;
 
         this.curlyBlock([classDefinition], () => {
+            const extraMode = this.allowExtraFields ? 'ignore' : 'forbid';
             this.line(
-                'model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")',
+                `model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="${extraMode}")`,
             );
             this.line();
             if (!schema.fields) {

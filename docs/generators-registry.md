@@ -204,3 +204,18 @@ interface GeneratorOptions {
 ```
 
 Custom generators can extend this interface to add additional options specific to their implementation.
+
+## Python Generator Options
+
+The Python generator supports the following additional options:
+
+- `packageRoot`: Root package name for Python package hierarchy (e.g., 'fhirsdk' or 'aidbox.my_package')
+- `allowExtraFields`: Allow extra fields in resource models without validation (default: false)
+
+When using the CLI, these options can be specified with:
+
+```bash
+fscg generate -g python -o ./output --package-root my_package --py-allow-extra-fields
+```
+
+When `allowExtraFields` is enabled (via the `--py-allow-extra-fields` CLI option), models will use `extra="ignore"` in their Pydantic configuration, which allows extra fields to be provided without validation errors. Extra fields will be ignored in JSON serialization processes.

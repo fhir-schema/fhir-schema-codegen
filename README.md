@@ -156,6 +156,9 @@ patient = Patient(
 Generate Python SDK:
 ```bash
 fscg generate -g python -o ./python-sdk -p hl7.fhir.r4.core@4.0.1
+
+# With options:
+fscg generate -g python -o ./python-sdk -p hl7.fhir.r4.core@4.0.1 --package-root my_package --py-allow-extra-fields
 ```
 
 ### Custom Generators

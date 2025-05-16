@@ -50,6 +50,10 @@ export class GenerateCommand extends BaseCommand {
                 '[Python only] Root package name for Python package hierarchy (e.g., "fhirsdk" or "aidbox.my_package")',
                 'fhirsdk',
             )
+            .option(
+                '--py-allow-extra-fields',
+                'Allow extra fields in Python resource models without validation (default: false, extra fields are forbidden)',
+            )
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
                 if (!options.files && !options.packages) {
@@ -124,7 +128,10 @@ export class GenerateCommand extends BaseCommand {
                                         jsonDocuments: result,
                                         typesOnly: options.typesOnly,
                                         ...(options.generator === 'python'
-                                            ? { packageRoot: options.packageRoot }
+                                            ? { 
+                                                packageRoot: options.packageRoot,
+                                                allowExtraFields: options.pyAllowExtraFields 
+                                              }
                                             : {}),
                                     },
                                 );
@@ -150,7 +157,10 @@ export class GenerateCommand extends BaseCommand {
                                 files: options.files,
                                 typesOnly: options.typesOnly,
                                 ...(options.generator === 'python'
-                                    ? { packageRoot: options.packageRoot }
+                                    ? { 
+                                        packageRoot: options.packageRoot,
+                                        allowExtraFields: options.pyAllowExtraFields 
+                                      }
                                     : {}),
                             },
                         );

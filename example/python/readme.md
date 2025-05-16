@@ -111,6 +111,21 @@ $ npm install -g @fhirschema/codegen
 $ npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 -o example/python --package-root aidbox
 ```
 
+### Generation Options
+
+You can customize the generated Python SDK with the following options:
+
+- `--package-root`: Root package name for Python package hierarchy (e.g., 'aidbox' or 'my_package.fhir')
+- `--py-allow-extra-fields`: Allow extra fields in resource models without validation
+
+Example with options:
+
+```bash
+$ npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 -o example/python --package-root aidbox --py-allow-extra-fields
+```
+
+When `--py-allow-extra-fields` is enabled, the generated models will accept unknown properties without validation errors, which is useful when working with FHIR servers that might include non-standard extensions or properties. Note that these extra fields will not be included during serialization.
+
 ### Project Structure
 
 ```text
