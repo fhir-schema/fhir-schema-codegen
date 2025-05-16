@@ -53,10 +53,10 @@ format-python:
 
 test-python-sdk: prepare-aidbox-runme
 	docker compose -f example/docker-compose.yaml up --wait
-	make test-python-sdk-without-service
+	make test-python-sdk-no-start-service
 	docker compose -f example/docker-compose.yaml down
 
-test-python-sdk-without-service: build
+test-python-sdk-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
 	make test-python-sdk-no-regen
@@ -81,10 +81,10 @@ TYPESCRIPT_SDK_EXAMPLE=./example/typescript
 
 test-typescript-sdk: prepare-aidbox-runme
 	docker compose -f example/docker-compose.yaml up --wait
-	make test-typescript-sdk-without-service
+	make test-typescript-sdk-no-start-service
 	docker compose -f example/docker-compose.yaml down
 
-test-typescript-sdk-without-service: build
+test-typescript-sdk-no-start-service: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk
 
 	@if [ ! -d "$(TYPESCRIPT_SDK_EXAMPLE)/node_modules" ]; then \
