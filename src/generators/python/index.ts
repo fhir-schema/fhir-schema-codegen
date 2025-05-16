@@ -1,5 +1,4 @@
 import * as Path from 'node:path';
-import * as fs from 'node:fs';
 import { Generator, type GeneratorOptions } from '../generator';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
