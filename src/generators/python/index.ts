@@ -424,7 +424,7 @@ export class PythonGenerator extends Generator {
 
     generate() {
         this.dir('.', async () => {
-            // Prepare root package path
+            // Prepare root package
             let destPackagePath = '.';
             for (const part of this.rootPackagePath) {
                 destPackagePath = Path.join(destPackagePath, part);
@@ -437,12 +437,11 @@ export class PythonGenerator extends Generator {
 
             this.dir(destPackagePath, () => {
                 this.copyStaticFiles();
-
                 const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
                 for (const [packageName, packageComplexTypes] of Object.entries(
                     groupedComplexTypes,
                 )) {
-                    this.dir(snakeCase(packageName), () => {
+                    this.dir(Path.join(destPackagePath, snakeCase(packageName)), () => {
                         this.file('__init__.py', () => {});
                         this.generateBasePy(packageComplexTypes);
                     });
@@ -450,7 +449,7 @@ export class PythonGenerator extends Generator {
 
                 const groupedResources = groupedByPackage(this.loader.resources());
                 for (const [packageName, packageResources] of Object.entries(groupedResources)) {
-                    this.dir(snakeCase(packageName), () => {
+                    this.dir(Path.join(destPackagePath, snakeCase(packageName)), () => {
                         const packageComplexTypes = groupedComplexTypes[packageName] || [];
                         this.generateResourcePackageInit(packageResources, packageComplexTypes);
                         for (const schema of removeConstraints(packageResources)) {
@@ -460,39 +459,6 @@ export class PythonGenerator extends Generator {
                 }
             });
         });
-
-        const externalFhirPath = Path.join(this.opts.outputDir, 'hl7_fhir_r4_core');
-        if (fs.existsSync(externalFhirPath)) {
-            const packageRootParts = this.rootPackage.split('.');
-            let packagePath = this.opts.outputDir;
-            for (const part of packageRootParts) {
-                packagePath = Path.join(packagePath, part);
-            }
-
-            const targetFhirPath = Path.join(packagePath, 'hl7_fhir_r4_core');
-
-            if (!fs.existsSync(targetFhirPath)) {
-                fs.mkdirSync(targetFhirPath, { recursive: true });
-            }
-
-            fs.readdirSync(externalFhirPath).forEach((file) => {
-                const sourcePath = Path.join(externalFhirPath, file);
-                const targetPath = Path.join(targetFhirPath, file);
-
-                if (file.endsWith('.py')) {
-                    let content = fs.readFileSync(sourcePath, 'utf-8');
-                    content = content.replace(
-                        /from fhirsdk\.hl7_fhir_r4_core/g,
-                        `from ${this.rootPackage}.hl7_fhir_r4_core`,
-                    );
-                    fs.writeFileSync(targetPath, content);
-                } else {
-                    fs.copyFileSync(sourcePath, targetPath);
-                }
-            });
-
-            fs.rmSync(externalFhirPath, { recursive: true, force: true });
-        }
     }
 }
 
