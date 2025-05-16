@@ -58,6 +58,34 @@ export class Generator {
         throw Error('Implement this method in target generator type');
     }
 
+    cdHomeDir() {
+        this.currentDir = this.opts.outputDir || '';
+        if (!fs.existsSync(this.currentDir)) {
+            fs.mkdirSync(this.currentDir, { recursive: true });
+        }
+    }
+
+    /** Open path related to OUTPUT_PATH, generate content, go back (don't mix with `dir`).*/
+    inDir(path: string, gencontent: () => void) {
+        const tmp = this.getCurrentDir();
+        this.dir(path, gencontent);
+        this.currentDir = tmp;
+    }
+
+    /** Open path related to currentDir, generate content, go back (don't mix with `dir`).*/
+    inRelDir(path: string, gencontent: () => void) {
+        const tmp = this.getCurrentDir();
+
+        this.currentDir = Path.join(tmp, path);
+        if (!fs.existsSync(this.currentDir)) {
+            fs.mkdirSync(this.currentDir, { recursive: true });
+        }
+        gencontent();
+
+        this.currentDir = tmp;
+    }
+
+    /** Open path related to OUTPUT_PATH, generate content. (don't mix with `inDir` and `inRelDir`).*/
     dir(path: string, gencontent: () => void) {
         this.currentDir = Path.join(this.opts.outputDir || '', path);
         if (!fs.existsSync(this.currentDir)) {
@@ -67,10 +95,7 @@ export class Generator {
     }
 
     getCurrentDir() {
-        if (!this.currentDir) {
-            throw new Error('No current directory');
-        }
-        return this.currentDir;
+        return this.currentDir || this.opts.outputDir || '';
     }
 
     file(path: string, gencontent: () => void) {
