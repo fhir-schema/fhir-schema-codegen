@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CommunicationPayload(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     content_attachment: Optional[Attachment] = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
     content_reference: Optional[Reference] = Field(None, alias="contentReference", serialization_alias="contentReference")
@@ -19,7 +19,15 @@ class CommunicationPayload(BackboneElement):
 
 
 class Communication(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Communication',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Communication'
+    )
     
     about: Optional[L[Reference]] = Field(None, alias="about", serialization_alias="about")
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")

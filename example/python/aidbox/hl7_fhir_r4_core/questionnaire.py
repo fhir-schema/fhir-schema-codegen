@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class QuestionnaireItemEnableWhen(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     answer_boolean: Optional[bool] = Field(None, alias="answerBoolean", serialization_alias="answerBoolean")
     answer_coding: Optional[Coding] = Field(None, alias="answerCoding", serialization_alias="answerCoding")
@@ -27,7 +27,7 @@ class QuestionnaireItemEnableWhen(BackboneElement):
     question: Optional[str] = Field(None, alias="question", serialization_alias="question")
 
 class QuestionnaireItemAnswerOption(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     initial_selected: Optional[bool] = Field(None, alias="initialSelected", serialization_alias="initialSelected")
     value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
@@ -38,7 +38,7 @@ class QuestionnaireItemAnswerOption(BackboneElement):
     value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
 
 class QuestionnaireItemInitial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
     value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
@@ -54,7 +54,7 @@ class QuestionnaireItemInitial(BackboneElement):
     value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class QuestionnaireItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     answer_option: Optional[L[QuestionnaireItemAnswerOption]] = Field(None, alias="answerOption", serialization_alias="answerOption")
     answer_value_set: Optional[str] = Field(None, alias="answerValueSet", serialization_alias="answerValueSet")
@@ -75,7 +75,15 @@ class QuestionnaireItem(BackboneElement):
 
 
 class Questionnaire(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Questionnaire',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Questionnaire'
+    )
     
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     code: Optional[L[Coding]] = Field(None, alias="code", serialization_alias="code")

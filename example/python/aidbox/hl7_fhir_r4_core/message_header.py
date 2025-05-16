@@ -11,14 +11,14 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MessageHeaderResponse(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Literal["ok", "transient-error", "fatal-error"]] = Field(None, alias="code", serialization_alias="code")
     details: Optional[Reference] = Field(None, alias="details", serialization_alias="details")
     identifier: Optional[str] = Field(None, alias="identifier", serialization_alias="identifier")
 
 class MessageHeaderSource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contact: Optional[ContactPoint] = Field(None, alias="contact", serialization_alias="contact")
     endpoint: Optional[str] = Field(None, alias="endpoint", serialization_alias="endpoint")
@@ -27,7 +27,7 @@ class MessageHeaderSource(BackboneElement):
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class MessageHeaderDestination(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     endpoint: Optional[str] = Field(None, alias="endpoint", serialization_alias="endpoint")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
@@ -36,7 +36,15 @@ class MessageHeaderDestination(BackboneElement):
 
 
 class MessageHeader(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MessageHeader',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MessageHeader'
+    )
     
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
     definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class BiologicallyDerivedProductProcessing(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additive: Optional[Reference] = Field(None, alias="additive", serialization_alias="additive")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -20,7 +20,7 @@ class BiologicallyDerivedProductProcessing(BackboneElement):
     time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductStorage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     duration: Optional[Period] = Field(None, alias="duration", serialization_alias="duration")
@@ -28,14 +28,14 @@ class BiologicallyDerivedProductStorage(BackboneElement):
     temperature: Optional[float] = Field(None, alias="temperature", serialization_alias="temperature")
 
 class BiologicallyDerivedProductManipulation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     time_date_time: Optional[str] = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
     time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductCollection(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     collected_date_time: Optional[str] = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
     collected_period: Optional[Period] = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
@@ -44,7 +44,15 @@ class BiologicallyDerivedProductCollection(BackboneElement):
 
 
 class BiologicallyDerivedProduct(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='BiologicallyDerivedProduct',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='BiologicallyDerivedProduct'
+    )
     
     collection: Optional[BiologicallyDerivedProductCollection] = Field(None, alias="collection", serialization_alias="collection")
     identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")

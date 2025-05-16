@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AllergyIntoleranceReaction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     exposure_route: Optional[CodeableConcept] = Field(None, alias="exposureRoute", serialization_alias="exposureRoute")
@@ -23,7 +23,15 @@ class AllergyIntoleranceReaction(BackboneElement):
 
 
 class AllergyIntolerance(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='AllergyIntolerance',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='AllergyIntolerance'
+    )
     
     asserter: Optional[Reference] = Field(None, alias="asserter", serialization_alias="asserter")
     category: Optional[L[Literal["food", "medication", "environment", "biologic"]]] = Field(None, alias="category", serialization_alias="category")

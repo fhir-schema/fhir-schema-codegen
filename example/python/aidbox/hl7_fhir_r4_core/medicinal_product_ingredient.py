@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     country: Optional[L[CodeableConcept]] = Field(None, alias="country", serialization_alias="country")
     measurement_point: Optional[str] = Field(None, alias="measurementPoint", serialization_alias="measurementPoint")
@@ -20,7 +20,7 @@ class MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength(Back
     substance: Optional[CodeableConcept] = Field(None, alias="substance", serialization_alias="substance")
 
 class MedicinalProductIngredientSpecifiedSubstanceStrength(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     concentration: Optional[Ratio] = Field(None, alias="concentration", serialization_alias="concentration")
     concentration_low_limit: Optional[Ratio] = Field(None, alias="concentrationLowLimit", serialization_alias="concentrationLowLimit")
@@ -31,7 +31,7 @@ class MedicinalProductIngredientSpecifiedSubstanceStrength(BackboneElement):
     reference_strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength]] = Field(None, alias="referenceStrength", serialization_alias="referenceStrength")
 
 class MedicinalProductIngredientSpecifiedSubstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     confidentiality: Optional[CodeableConcept] = Field(None, alias="confidentiality", serialization_alias="confidentiality")
@@ -39,14 +39,22 @@ class MedicinalProductIngredientSpecifiedSubstance(BackboneElement):
     strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrength]] = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicinalProductIngredientSubstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     strength: Optional[L[MedicinalProductIngredientSpecifiedSubstanceStrength]] = Field(None, alias="strength", serialization_alias="strength")
 
 
 class MedicinalProductIngredient(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductIngredient',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductIngredient'
+    )
     
     allergenic_indicator: Optional[bool] = Field(None, alias="allergenicIndicator", serialization_alias="allergenicIndicator")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")

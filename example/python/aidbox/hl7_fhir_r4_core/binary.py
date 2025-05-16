@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class Binary(Resource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Binary',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Binary'
+    )
     
     content_type: Optional[str] = Field(None, alias="contentType", serialization_alias="contentType")
     data: Optional[str] = Field(None, alias="data", serialization_alias="data")

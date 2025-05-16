@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class InvoiceParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class InvoiceLineItemPriceComponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
@@ -25,7 +25,7 @@ class InvoiceLineItemPriceComponent(BackboneElement):
     type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = Field(None, alias="type", serialization_alias="type")
 
 class InvoiceLineItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     charge_item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="chargeItemCodeableConcept", serialization_alias="chargeItemCodeableConcept")
     charge_item_reference: Optional[Reference] = Field(None, alias="chargeItemReference", serialization_alias="chargeItemReference")
@@ -34,7 +34,15 @@ class InvoiceLineItem(BackboneElement):
 
 
 class Invoice(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Invoice',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Invoice'
+    )
     
     account: Optional[Reference] = Field(None, alias="account", serialization_alias="account")
     cancelled_reason: Optional[str] = Field(None, alias="cancelledReason", serialization_alias="cancelledReason")

@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Flag(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Flag',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Flag'
+    )
     
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")

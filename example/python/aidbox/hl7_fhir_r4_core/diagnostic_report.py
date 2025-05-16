@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DiagnosticReportMedia(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
     link: Optional[Reference] = Field(None, alias="link", serialization_alias="link")
 
 
 class DiagnosticReport(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DiagnosticReport',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DiagnosticReport'
+    )
     
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")

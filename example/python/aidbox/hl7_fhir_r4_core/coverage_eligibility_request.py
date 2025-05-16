@@ -11,27 +11,27 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CoverageEligibilityRequestInsurance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     business_arrangement: Optional[str] = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
     coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
     focal: Optional[bool] = Field(None, alias="focal", serialization_alias="focal")
 
 class CoverageEligibilityRequestSupportingInfo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     applies_to_all: Optional[bool] = Field(None, alias="appliesToAll", serialization_alias="appliesToAll")
     information: Optional[Reference] = Field(None, alias="information", serialization_alias="information")
     sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 class CoverageEligibilityRequestItemDiagnosis(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     diagnosis_codeable_concept: Optional[CodeableConcept] = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
     diagnosis_reference: Optional[Reference] = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
 
 class CoverageEligibilityRequestItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
@@ -46,7 +46,15 @@ class CoverageEligibilityRequestItem(BackboneElement):
 
 
 class CoverageEligibilityRequest(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CoverageEligibilityRequest',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CoverageEligibilityRequest'
+    )
     
     created: Optional[str] = Field(None, alias="created", serialization_alias="created")
     enterer: Optional[Reference] = Field(None, alias="enterer", serialization_alias="enterer")

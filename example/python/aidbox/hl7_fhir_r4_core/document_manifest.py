@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DocumentManifestRelated(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
     ref: Optional[Reference] = Field(None, alias="ref", serialization_alias="ref")
 
 
 class DocumentManifest(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DocumentManifest',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DocumentManifest'
+    )
     
     author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
     content: Optional[L[Reference]] = Field(None, alias="content", serialization_alias="content")

@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ClinicalImpressionInvestigation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     item: Optional[L[Reference]] = Field(None, alias="item", serialization_alias="item")
 
 class ClinicalImpressionFinding(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     basis: Optional[str] = Field(None, alias="basis", serialization_alias="basis")
     item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
@@ -25,7 +25,15 @@ class ClinicalImpressionFinding(BackboneElement):
 
 
 class ClinicalImpression(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ClinicalImpression',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ClinicalImpression'
+    )
     
     assessor: Optional[Reference] = Field(None, alias="assessor", serialization_alias="assessor")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")

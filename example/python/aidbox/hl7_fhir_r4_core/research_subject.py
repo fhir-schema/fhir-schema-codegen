@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ResearchSubject(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ResearchSubject',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ResearchSubject'
+    )
     
     actual_arm: Optional[str] = Field(None, alias="actualArm", serialization_alias="actualArm")
     assigned_arm: Optional[str] = Field(None, alias="assignedArm", serialization_alias="assignedArm")

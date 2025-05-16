@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DetectedIssueEvidence(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
     detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
 
 class DetectedIssueMitigation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[CodeableConcept] = Field(None, alias="action", serialization_alias="action")
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
@@ -25,7 +25,15 @@ class DetectedIssueMitigation(BackboneElement):
 
 
 class DetectedIssue(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DetectedIssue',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DetectedIssue'
+    )
     
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CoverageEligibilityResponseInsuranceItemBenefit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     allowed_money: Optional[Money] = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
     allowed_string: Optional[str] = Field(None, alias="allowedString", serialization_alias="allowedString")
@@ -22,7 +22,7 @@ class CoverageEligibilityResponseInsuranceItemBenefit(BackboneElement):
     used_unsigned_int: Optional[int] = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
 
 class CoverageEligibilityResponseInsuranceItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     authorization_required: Optional[bool] = Field(None, alias="authorizationRequired", serialization_alias="authorizationRequired")
     authorization_supporting: Optional[L[CodeableConcept]] = Field(None, alias="authorizationSupporting", serialization_alias="authorizationSupporting")
@@ -40,7 +40,7 @@ class CoverageEligibilityResponseInsuranceItem(BackboneElement):
     unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 
 class CoverageEligibilityResponseInsurance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     benefit_period: Optional[Period] = Field(None, alias="benefitPeriod", serialization_alias="benefitPeriod")
     coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
@@ -48,13 +48,21 @@ class CoverageEligibilityResponseInsurance(BackboneElement):
     item: Optional[L[CoverageEligibilityResponseInsuranceItem]] = Field(None, alias="item", serialization_alias="item")
 
 class CoverageEligibilityResponseError(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
 
 
 class CoverageEligibilityResponse(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CoverageEligibilityResponse',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CoverageEligibilityResponse'
+    )
     
     created: Optional[str] = Field(None, alias="created", serialization_alias="created")
     disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")

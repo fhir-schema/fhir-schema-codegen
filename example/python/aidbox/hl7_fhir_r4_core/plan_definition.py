@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PlanDefinitionGoalTarget(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     detail_codeable_concept: Optional[CodeableConcept] = Field(None, alias="detailCodeableConcept", serialization_alias="detailCodeableConcept")
     detail_quantity: Optional[Quantity] = Field(None, alias="detailQuantity", serialization_alias="detailQuantity")
@@ -20,7 +20,7 @@ class PlanDefinitionGoalTarget(BackboneElement):
     measure: Optional[CodeableConcept] = Field(None, alias="measure", serialization_alias="measure")
 
 class PlanDefinitionGoal(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     addresses: Optional[L[CodeableConcept]] = Field(None, alias="addresses", serialization_alias="addresses")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
@@ -31,7 +31,7 @@ class PlanDefinitionGoal(BackboneElement):
     target: Optional[L[PlanDefinitionGoalTarget]] = Field(None, alias="target", serialization_alias="target")
 
 class PlanDefinitionActionRelatedAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action_id: Optional[str] = Field(None, alias="actionId", serialization_alias="actionId")
     offset_duration: Optional[Duration] = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
@@ -39,25 +39,25 @@ class PlanDefinitionActionRelatedAction(BackboneElement):
     relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class PlanDefinitionActionParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
     type: Optional[Literal["patient", "practitioner", "related-person", "device"]] = Field(None, alias="type", serialization_alias="type")
 
 class PlanDefinitionActionCondition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
     kind: Optional[Literal["applicability", "start", "stop"]] = Field(None, alias="kind", serialization_alias="kind")
 
 class PlanDefinitionActionDynamicValue(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
     path: Optional[str] = Field(None, alias="path", serialization_alias="path")
 
 class PlanDefinitionAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[PlanDefinitionAction]] = Field(None, alias="action", serialization_alias="action")
     cardinality_behavior: Optional[Literal["single", "multiple"]] = Field(None, alias="cardinalityBehavior", serialization_alias="cardinalityBehavior")
@@ -96,7 +96,15 @@ class PlanDefinitionAction(BackboneElement):
 
 
 class PlanDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='PlanDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='PlanDefinition'
+    )
     
     action: Optional[L[PlanDefinitionAction]] = Field(None, alias="action", serialization_alias="action")
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")

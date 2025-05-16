@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationDispenseSubstitution(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     reason: Optional[L[CodeableConcept]] = Field(None, alias="reason", serialization_alias="reason")
     responsible_party: Optional[L[Reference]] = Field(None, alias="responsibleParty", serialization_alias="responsibleParty")
@@ -19,14 +19,22 @@ class MedicationDispenseSubstitution(BackboneElement):
     was_substituted: Optional[bool] = Field(None, alias="wasSubstituted", serialization_alias="wasSubstituted")
 
 class MedicationDispensePerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class MedicationDispense(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicationDispense',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicationDispense'
+    )
     
     authorizing_prescription: Optional[L[Reference]] = Field(None, alias="authorizingPrescription", serialization_alias="authorizingPrescription")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")

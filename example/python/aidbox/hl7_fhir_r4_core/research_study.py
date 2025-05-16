@@ -11,21 +11,29 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ResearchStudyArm(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ResearchStudyObjective(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 
 class ResearchStudy(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ResearchStudy',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ResearchStudy'
+    )
     
     arm: Optional[L[ResearchStudyArm]] = Field(None, alias="arm", serialization_alias="arm")
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")

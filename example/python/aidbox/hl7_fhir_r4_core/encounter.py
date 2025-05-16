@@ -11,27 +11,27 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EncounterDiagnosis(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
     rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
     use: Optional[CodeableConcept] = Field(None, alias="use", serialization_alias="use")
 
 class EncounterParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     individual: Optional[Reference] = Field(None, alias="individual", serialization_alias="individual")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
     type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class EncounterClassHistory(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     class_: Optional[Coding] = Field(None, alias="class", serialization_alias="class")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
 
 class EncounterHospitalization(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     admit_source: Optional[CodeableConcept] = Field(None, alias="admitSource", serialization_alias="admitSource")
     destination: Optional[Reference] = Field(None, alias="destination", serialization_alias="destination")
@@ -44,7 +44,7 @@ class EncounterHospitalization(BackboneElement):
     special_courtesy: Optional[L[CodeableConcept]] = Field(None, alias="specialCourtesy", serialization_alias="specialCourtesy")
 
 class EncounterLocation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
@@ -52,14 +52,22 @@ class EncounterLocation(BackboneElement):
     status: Optional[Literal["planned", "active", "reserved", "completed"]] = Field(None, alias="status", serialization_alias="status")
 
 class EncounterStatusHistory(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
     status: Optional[Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
 
 
 class Encounter(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Encounter',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Encounter'
+    )
     
     account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
     appointment: Optional[L[Reference]] = Field(None, alias="appointment", serialization_alias="appointment")

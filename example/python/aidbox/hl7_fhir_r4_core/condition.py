@@ -11,21 +11,29 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ConditionStage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assessment: Optional[L[Reference]] = Field(None, alias="assessment", serialization_alias="assessment")
     summary: Optional[CodeableConcept] = Field(None, alias="summary", serialization_alias="summary")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ConditionEvidence(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
     detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
 
 
 class Condition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Condition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Condition'
+    )
     
     abatement_age: Optional[Age] = Field(None, alias="abatementAge", serialization_alias="abatementAge")
     abatement_date_time: Optional[str] = Field(None, alias="abatementDateTime", serialization_alias="abatementDateTime")

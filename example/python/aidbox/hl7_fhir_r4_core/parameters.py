@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class ParametersParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     part: Optional[L[ParametersParameter]] = Field(None, alias="part", serialization_alias="part")
@@ -69,7 +69,15 @@ class ParametersParameter(BackboneElement):
 
 
 class Parameters(Resource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Parameters',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Parameters'
+    )
     
     parameter: Optional[L[ParametersParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
 

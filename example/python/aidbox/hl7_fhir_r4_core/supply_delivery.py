@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SupplyDeliverySuppliedItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
     item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
@@ -19,7 +19,15 @@ class SupplyDeliverySuppliedItem(BackboneElement):
 
 
 class SupplyDelivery(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SupplyDelivery',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SupplyDelivery'
+    )
     
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
     destination: Optional[Reference] = Field(None, alias="destination", serialization_alias="destination")

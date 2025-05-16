@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstancePolymerMonomerSetStartingMaterial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[SubstanceAmount] = Field(None, alias="amount", serialization_alias="amount")
     is_defining: Optional[bool] = Field(None, alias="isDefining", serialization_alias="isDefining")
@@ -19,26 +19,26 @@ class SubstancePolymerMonomerSetStartingMaterial(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstancePolymerMonomerSet(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     ratio_type: Optional[CodeableConcept] = Field(None, alias="ratioType", serialization_alias="ratioType")
     starting_material: Optional[L[SubstancePolymerMonomerSetStartingMaterial]] = Field(None, alias="startingMaterial", serialization_alias="startingMaterial")
 
 class SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[SubstanceAmount] = Field(None, alias="amount", serialization_alias="amount")
     degree: Optional[CodeableConcept] = Field(None, alias="degree", serialization_alias="degree")
 
 class SubstancePolymerRepeatRepeatUnitStructuralRepresentation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     attachment: Optional[Attachment] = Field(None, alias="attachment", serialization_alias="attachment")
     representation: Optional[str] = Field(None, alias="representation", serialization_alias="representation")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstancePolymerRepeatRepeatUnit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[SubstanceAmount] = Field(None, alias="amount", serialization_alias="amount")
     degree_of_polymerisation: Optional[L[SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation]] = Field(None, alias="degreeOfPolymerisation", serialization_alias="degreeOfPolymerisation")
@@ -47,7 +47,7 @@ class SubstancePolymerRepeatRepeatUnit(BackboneElement):
     structural_representation: Optional[L[SubstancePolymerRepeatRepeatUnitStructuralRepresentation]] = Field(None, alias="structuralRepresentation", serialization_alias="structuralRepresentation")
 
 class SubstancePolymerRepeat(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     average_molecular_formula: Optional[str] = Field(None, alias="averageMolecularFormula", serialization_alias="averageMolecularFormula")
     number_of_units: Optional[int] = Field(None, alias="numberOfUnits", serialization_alias="numberOfUnits")
@@ -56,7 +56,15 @@ class SubstancePolymerRepeat(BackboneElement):
 
 
 class SubstancePolymer(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SubstancePolymer',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SubstancePolymer'
+    )
     
     class_: Optional[CodeableConcept] = Field(None, alias="class", serialization_alias="class")
     copolymer_connectivity: Optional[L[CodeableConcept]] = Field(None, alias="copolymerConnectivity", serialization_alias="copolymerConnectivity")

@@ -11,28 +11,28 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ValueSetComposeIncludeConceptDesignation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     language: Optional[str] = Field(None, alias="language", serialization_alias="language")
     use: Optional[Coding] = Field(None, alias="use", serialization_alias="use")
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ValueSetComposeIncludeConcept(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = Field(None, alias="designation", serialization_alias="designation")
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
 
 class ValueSetComposeIncludeFilter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     op: Optional[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] = Field(None, alias="op", serialization_alias="op")
     property: Optional[str] = Field(None, alias="property", serialization_alias="property")
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ValueSetComposeInclude(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     concept: Optional[L[ValueSetComposeIncludeConcept]] = Field(None, alias="concept", serialization_alias="concept")
     filter: Optional[L[ValueSetComposeIncludeFilter]] = Field(None, alias="filter", serialization_alias="filter")
@@ -41,7 +41,7 @@ class ValueSetComposeInclude(BackboneElement):
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class ValueSetCompose(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     exclude: Optional[L[ValueSetComposeInclude]] = Field(None, alias="exclude", serialization_alias="exclude")
     inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
@@ -49,7 +49,7 @@ class ValueSetCompose(BackboneElement):
     locked_date: Optional[str] = Field(None, alias="lockedDate", serialization_alias="lockedDate")
 
 class ValueSetExpansionParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
@@ -61,7 +61,7 @@ class ValueSetExpansionParameter(BackboneElement):
     value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class ValueSetExpansionContains(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     abstract: Optional[bool] = Field(None, alias="abstract", serialization_alias="abstract")
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
@@ -73,7 +73,7 @@ class ValueSetExpansionContains(BackboneElement):
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class ValueSetExpansion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contains: Optional[L[ValueSetExpansionContains]] = Field(None, alias="contains", serialization_alias="contains")
     identifier: Optional[str] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -84,7 +84,15 @@ class ValueSetExpansion(BackboneElement):
 
 
 class ValueSet(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ValueSet',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ValueSet'
+    )
     
     compose: Optional[ValueSetCompose] = Field(None, alias="compose", serialization_alias="compose")
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class StructureMapGroupInput(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     mode: Optional[Literal["source", "target"]] = Field(None, alias="mode", serialization_alias="mode")
@@ -19,7 +19,7 @@ class StructureMapGroupInput(BackboneElement):
     type: Optional[str] = Field(None, alias="type", serialization_alias="type")
 
 class StructureMapGroupRuleSource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     check: Optional[str] = Field(None, alias="check", serialization_alias="check")
     condition: Optional[str] = Field(None, alias="condition", serialization_alias="condition")
@@ -83,7 +83,7 @@ class StructureMapGroupRuleSource(BackboneElement):
     variable: Optional[str] = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRuleTargetParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
     value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
@@ -92,7 +92,7 @@ class StructureMapGroupRuleTargetParameter(BackboneElement):
     value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class StructureMapGroupRuleTarget(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     context: Optional[str] = Field(None, alias="context", serialization_alias="context")
     context_type: Optional[Literal["type", "variable"]] = Field(None, alias="contextType", serialization_alias="contextType")
@@ -104,13 +104,13 @@ class StructureMapGroupRuleTarget(BackboneElement):
     variable: Optional[str] = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRuleDependent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     variable: Optional[L[str]] = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRule(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     dependent: Optional[L[StructureMapGroupRuleDependent]] = Field(None, alias="dependent", serialization_alias="dependent")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
@@ -120,7 +120,7 @@ class StructureMapGroupRule(BackboneElement):
     target: Optional[L[StructureMapGroupRuleTarget]] = Field(None, alias="target", serialization_alias="target")
 
 class StructureMapGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     extends: Optional[str] = Field(None, alias="extends", serialization_alias="extends")
@@ -130,7 +130,7 @@ class StructureMapGroup(BackboneElement):
     type_mode: Optional[Literal["none", "types", "type-and-types"]] = Field(None, alias="typeMode", serialization_alias="typeMode")
 
 class StructureMapStructure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     alias: Optional[str] = Field(None, alias="alias", serialization_alias="alias")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
@@ -139,7 +139,15 @@ class StructureMapStructure(BackboneElement):
 
 
 class StructureMap(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='StructureMap',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='StructureMap'
+    )
     
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
     copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")

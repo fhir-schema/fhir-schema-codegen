@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Media(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Media',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Media'
+    )
     
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")

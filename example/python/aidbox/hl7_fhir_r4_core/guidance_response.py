@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class GuidanceResponse(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='GuidanceResponse',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='GuidanceResponse'
+    )
     
     data_requirement: Optional[L[DataRequirement]] = Field(None, alias="dataRequirement", serialization_alias="dataRequirement")
     encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")

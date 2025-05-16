@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MolecularSequenceStructureVariantOuter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     end: Optional[int] = Field(None, alias="end", serialization_alias="end")
     start: Optional[int] = Field(None, alias="start", serialization_alias="start")
 
 class MolecularSequenceStructureVariantInner(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     end: Optional[int] = Field(None, alias="end", serialization_alias="end")
     start: Optional[int] = Field(None, alias="start", serialization_alias="start")
 
 class MolecularSequenceStructureVariant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     exact: Optional[bool] = Field(None, alias="exact", serialization_alias="exact")
     inner: Optional[MolecularSequenceStructureVariantInner] = Field(None, alias="inner", serialization_alias="inner")
@@ -32,7 +32,7 @@ class MolecularSequenceStructureVariant(BackboneElement):
     variant_type: Optional[CodeableConcept] = Field(None, alias="variantType", serialization_alias="variantType")
 
 class MolecularSequenceRepository(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     dataset_id: Optional[str] = Field(None, alias="datasetId", serialization_alias="datasetId")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
@@ -42,7 +42,7 @@ class MolecularSequenceRepository(BackboneElement):
     variantset_id: Optional[str] = Field(None, alias="variantsetId", serialization_alias="variantsetId")
 
 class MolecularSequenceVariant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     cigar: Optional[str] = Field(None, alias="cigar", serialization_alias="cigar")
     end: Optional[int] = Field(None, alias="end", serialization_alias="end")
@@ -52,7 +52,7 @@ class MolecularSequenceVariant(BackboneElement):
     variant_pointer: Optional[Reference] = Field(None, alias="variantPointer", serialization_alias="variantPointer")
 
 class MolecularSequenceQualityRoc(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     f_measure: Optional[L[float]] = Field(None, alias="fMeasure", serialization_alias="fMeasure")
     num_fn: Optional[L[int]] = Field(None, alias="numFN", serialization_alias="numFN")
@@ -63,7 +63,7 @@ class MolecularSequenceQualityRoc(BackboneElement):
     sensitivity: Optional[L[float]] = Field(None, alias="sensitivity", serialization_alias="sensitivity")
 
 class MolecularSequenceQuality(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     end: Optional[int] = Field(None, alias="end", serialization_alias="end")
     f_score: Optional[float] = Field(None, alias="fScore", serialization_alias="fScore")
@@ -82,7 +82,7 @@ class MolecularSequenceQuality(BackboneElement):
     type: Optional[Literal["indel", "snp", "unknown"]] = Field(None, alias="type", serialization_alias="type")
 
 class MolecularSequenceReferenceSeq(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     chromosome: Optional[CodeableConcept] = Field(None, alias="chromosome", serialization_alias="chromosome")
     genome_build: Optional[str] = Field(None, alias="genomeBuild", serialization_alias="genomeBuild")
@@ -96,7 +96,15 @@ class MolecularSequenceReferenceSeq(BackboneElement):
 
 
 class MolecularSequence(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MolecularSequence',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MolecularSequence'
+    )
     
     coordinate_system: Optional[int] = Field(None, alias="coordinateSystem", serialization_alias="coordinateSystem")
     device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AppointmentParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
@@ -21,7 +21,15 @@ class AppointmentParticipant(BackboneElement):
 
 
 class Appointment(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Appointment',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Appointment'
+    )
     
     appointment_type: Optional[CodeableConcept] = Field(None, alias="appointmentType", serialization_alias="appointmentType")
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ClaimResponseInsurance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     business_arrangement: Optional[str] = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
     claim_response: Optional[Reference] = Field(None, alias="claimResponse", serialization_alias="claimResponse")
@@ -20,7 +20,7 @@ class ClaimResponseInsurance(BackboneElement):
     sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 class ClaimResponseProcessNote(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
     number: Optional[PositiveInt] = Field(None, alias="number", serialization_alias="number")
@@ -28,7 +28,7 @@ class ClaimResponseProcessNote(BackboneElement):
     type: Optional[Literal["display", "print", "printoper"]] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimResponsePayment(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjustment: Optional[Money] = Field(None, alias="adjustment", serialization_alias="adjustment")
     adjustment_reason: Optional[CodeableConcept] = Field(None, alias="adjustmentReason", serialization_alias="adjustmentReason")
@@ -38,7 +38,7 @@ class ClaimResponsePayment(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimResponseItemAdjudication(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
@@ -46,14 +46,14 @@ class ClaimResponseItemAdjudication(BackboneElement):
     value: Optional[float] = Field(None, alias="value", serialization_alias="value")
 
 class ClaimResponseItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
     sub_detail_sequence: Optional[PositiveInt] = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
 
 class ClaimResponseItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     detail_sequence: Optional[PositiveInt] = Field(None, alias="detailSequence", serialization_alias="detailSequence")
@@ -61,7 +61,7 @@ class ClaimResponseItemDetail(BackboneElement):
     sub_detail: Optional[L[ClaimResponseItemDetailSubDetail]] = Field(None, alias="subDetail", serialization_alias="subDetail")
 
 class ClaimResponseItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     detail: Optional[L[ClaimResponseItemDetail]] = Field(None, alias="detail", serialization_alias="detail")
@@ -69,13 +69,13 @@ class ClaimResponseItem(BackboneElement):
     note_number: Optional[L[PositiveInt]] = Field(None, alias="noteNumber", serialization_alias="noteNumber")
 
 class ClaimResponseTotal(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
 
 class ClaimResponseError(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     detail_sequence: Optional[PositiveInt] = Field(None, alias="detailSequence", serialization_alias="detailSequence")
@@ -83,7 +83,7 @@ class ClaimResponseError(BackboneElement):
     sub_detail_sequence: Optional[PositiveInt] = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
 
 class ClaimResponseAddItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
@@ -95,7 +95,7 @@ class ClaimResponseAddItemDetailSubDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimResponseAddItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
@@ -108,7 +108,7 @@ class ClaimResponseAddItemDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimResponseAddItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
@@ -134,7 +134,15 @@ class ClaimResponseAddItem(BackboneElement):
 
 
 class ClaimResponse(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ClaimResponse',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ClaimResponse'
+    )
     
     add_item: Optional[L[ClaimResponseAddItem]] = Field(None, alias="addItem", serialization_alias="addItem")
     adjudication: Optional[L[ClaimResponseItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")

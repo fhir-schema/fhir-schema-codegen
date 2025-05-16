@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class StructureDefinitionMapping(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
     identity: Optional[str] = Field(None, alias="identity", serialization_alias="identity")
@@ -19,24 +19,32 @@ class StructureDefinitionMapping(BackboneElement):
     uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 class StructureDefinitionSnapshot(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     element: Optional[L[ElementDefinition]] = Field(None, alias="element", serialization_alias="element")
 
 class StructureDefinitionContext(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
     type: Optional[Literal["fhirpath", "element", "extension"]] = Field(None, alias="type", serialization_alias="type")
 
 class StructureDefinitionDifferential(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     element: Optional[L[ElementDefinition]] = Field(None, alias="element", serialization_alias="element")
 
 
 class StructureDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='StructureDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='StructureDefinition'
+    )
     
     abstract: Optional[bool] = Field(None, alias="abstract", serialization_alias="abstract")
     base_definition: Optional[str] = Field(None, alias="baseDefinition", serialization_alias="baseDefinition")

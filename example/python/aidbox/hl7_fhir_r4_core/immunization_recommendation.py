@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImmunizationRecommendationRecommendationDateCriterion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ImmunizationRecommendationRecommendation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contraindicated_vaccine_code: Optional[L[CodeableConcept]] = Field(None, alias="contraindicatedVaccineCode", serialization_alias="contraindicatedVaccineCode")
     date_criterion: Optional[L[ImmunizationRecommendationRecommendationDateCriterion]] = Field(None, alias="dateCriterion", serialization_alias="dateCriterion")
@@ -36,7 +36,15 @@ class ImmunizationRecommendationRecommendation(BackboneElement):
 
 
 class ImmunizationRecommendation(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ImmunizationRecommendation',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ImmunizationRecommendation'
+    )
     
     authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")

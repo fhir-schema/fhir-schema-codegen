@@ -11,14 +11,14 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class VerificationResultValidator(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     attestation_signature: Optional[Signature] = Field(None, alias="attestationSignature", serialization_alias="attestationSignature")
     identity_certificate: Optional[str] = Field(None, alias="identityCertificate", serialization_alias="identityCertificate")
     organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
 
 class VerificationResultPrimarySource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     can_push_updates: Optional[CodeableConcept] = Field(None, alias="canPushUpdates", serialization_alias="canPushUpdates")
     communication_method: Optional[L[CodeableConcept]] = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
@@ -29,7 +29,7 @@ class VerificationResultPrimarySource(BackboneElement):
     who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
 
 class VerificationResultAttestation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     communication_method: Optional[CodeableConcept] = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
@@ -42,7 +42,15 @@ class VerificationResultAttestation(BackboneElement):
 
 
 class VerificationResult(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='VerificationResult',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='VerificationResult'
+    )
     
     attestation: Optional[VerificationResultAttestation] = Field(None, alias="attestation", serialization_alias="attestation")
     failure_action: Optional[CodeableConcept] = Field(None, alias="failureAction", serialization_alias="failureAction")

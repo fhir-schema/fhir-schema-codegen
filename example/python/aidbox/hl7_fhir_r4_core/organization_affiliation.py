@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OrganizationAffiliation(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='OrganizationAffiliation',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='OrganizationAffiliation'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")

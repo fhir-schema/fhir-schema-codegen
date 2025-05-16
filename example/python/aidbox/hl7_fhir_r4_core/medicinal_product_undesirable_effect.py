@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductUndesirableEffect(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductUndesirableEffect',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductUndesirableEffect'
+    )
     
     classification: Optional[CodeableConcept] = Field(None, alias="classification", serialization_alias="classification")
     frequency_of_occurrence: Optional[CodeableConcept] = Field(None, alias="frequencyOfOccurrence", serialization_alias="frequencyOfOccurrence")

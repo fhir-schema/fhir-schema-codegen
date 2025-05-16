@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SpecimenProcessing(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additive: Optional[L[Reference]] = Field(None, alias="additive", serialization_alias="additive")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -20,7 +20,7 @@ class SpecimenProcessing(BackboneElement):
     time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class SpecimenContainer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additive_codeable_concept: Optional[CodeableConcept] = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
     additive_reference: Optional[Reference] = Field(None, alias="additiveReference", serialization_alias="additiveReference")
@@ -31,7 +31,7 @@ class SpecimenContainer(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SpecimenCollection(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
     collected_date_time: Optional[str] = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
@@ -45,7 +45,15 @@ class SpecimenCollection(BackboneElement):
 
 
 class Specimen(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Specimen',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Specimen'
+    )
     
     accession_identifier: Optional[Identifier] = Field(None, alias="accessionIdentifier", serialization_alias="accessionIdentifier")
     collection: Optional[SpecimenCollection] = Field(None, alias="collection", serialization_alias="collection")

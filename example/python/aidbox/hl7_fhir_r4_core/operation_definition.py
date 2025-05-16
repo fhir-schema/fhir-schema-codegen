@@ -11,25 +11,25 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OperationDefinitionOverload(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
     parameter_name: Optional[L[str]] = Field(None, alias="parameterName", serialization_alias="parameterName")
 
 class OperationDefinitionParameterReferencedFrom(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     source: Optional[str] = Field(None, alias="source", serialization_alias="source")
     source_id: Optional[str] = Field(None, alias="sourceId", serialization_alias="sourceId")
 
 class OperationDefinitionParameterBinding(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     strength: Optional[Literal["required", "extensible", "preferred", "example"]] = Field(None, alias="strength", serialization_alias="strength")
     value_set: Optional[str] = Field(None, alias="valueSet", serialization_alias="valueSet")
 
 class OperationDefinitionParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     binding: Optional[OperationDefinitionParameterBinding] = Field(None, alias="binding", serialization_alias="binding")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
@@ -45,7 +45,15 @@ class OperationDefinitionParameter(BackboneElement):
 
 
 class OperationDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='OperationDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='OperationDefinition'
+    )
     
     affects_state: Optional[bool] = Field(None, alias="affectsState", serialization_alias="affectsState")
     base: Optional[str] = Field(None, alias="base", serialization_alias="base")

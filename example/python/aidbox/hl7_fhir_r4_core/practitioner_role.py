@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PractitionerRoleAvailableTime(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     all_day: Optional[bool] = Field(None, alias="allDay", serialization_alias="allDay")
     available_end_time: Optional[str] = Field(None, alias="availableEndTime", serialization_alias="availableEndTime")
@@ -19,14 +19,22 @@ class PractitionerRoleAvailableTime(BackboneElement):
     days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = Field(None, alias="daysOfWeek", serialization_alias="daysOfWeek")
 
 class PractitionerRoleNotAvailable(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     during: Optional[Period] = Field(None, alias="during", serialization_alias="during")
 
 
 class PractitionerRole(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='PractitionerRole',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='PractitionerRole'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     availability_exceptions: Optional[str] = Field(None, alias="availabilityExceptions", serialization_alias="availabilityExceptions")

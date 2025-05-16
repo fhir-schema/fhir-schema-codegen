@@ -11,27 +11,27 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class InsurancePlanCoverageBenefitLimit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
 
 class InsurancePlanCoverageBenefit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     limit: Optional[L[InsurancePlanCoverageBenefitLimit]] = Field(None, alias="limit", serialization_alias="limit")
     requirement: Optional[str] = Field(None, alias="requirement", serialization_alias="requirement")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanCoverage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     benefit: Optional[L[InsurancePlanCoverageBenefit]] = Field(None, alias="benefit", serialization_alias="benefit")
     network: Optional[L[Reference]] = Field(None, alias="network", serialization_alias="network")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanPlanGeneralCost(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
     cost: Optional[Money] = Field(None, alias="cost", serialization_alias="cost")
@@ -39,7 +39,7 @@ class InsurancePlanPlanGeneralCost(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanPlanSpecificCostBenefitCost(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     applicability: Optional[CodeableConcept] = Field(None, alias="applicability", serialization_alias="applicability")
     qualifiers: Optional[L[CodeableConcept]] = Field(None, alias="qualifiers", serialization_alias="qualifiers")
@@ -47,19 +47,19 @@ class InsurancePlanPlanSpecificCostBenefitCost(BackboneElement):
     value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
 
 class InsurancePlanPlanSpecificCostBenefit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     cost: Optional[L[InsurancePlanPlanSpecificCostBenefitCost]] = Field(None, alias="cost", serialization_alias="cost")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanPlanSpecificCost(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     benefit: Optional[L[InsurancePlanPlanSpecificCostBenefit]] = Field(None, alias="benefit", serialization_alias="benefit")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
 
 class InsurancePlanPlan(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     coverage_area: Optional[L[Reference]] = Field(None, alias="coverageArea", serialization_alias="coverageArea")
     general_cost: Optional[L[InsurancePlanPlanGeneralCost]] = Field(None, alias="generalCost", serialization_alias="generalCost")
@@ -69,7 +69,7 @@ class InsurancePlanPlan(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class InsurancePlanContact(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
     name: Optional[HumanName] = Field(None, alias="name", serialization_alias="name")
@@ -78,7 +78,15 @@ class InsurancePlanContact(BackboneElement):
 
 
 class InsurancePlan(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='InsurancePlan',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='InsurancePlan'
+    )
     
     administered_by: Optional[Reference] = Field(None, alias="administeredBy", serialization_alias="administeredBy")
     alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ClaimInsurance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     business_arrangement: Optional[str] = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
     claim_response: Optional[Reference] = Field(None, alias="claimResponse", serialization_alias="claimResponse")
@@ -22,7 +22,7 @@ class ClaimInsurance(BackboneElement):
     sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
 
 class ClaimDiagnosis(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     diagnosis_codeable_concept: Optional[CodeableConcept] = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
     diagnosis_reference: Optional[Reference] = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
@@ -32,7 +32,7 @@ class ClaimDiagnosis(BackboneElement):
     type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimSupportingInfo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
@@ -47,7 +47,7 @@ class ClaimSupportingInfo(BackboneElement):
     value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class ClaimItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
@@ -62,7 +62,7 @@ class ClaimItemDetailSubDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
@@ -78,7 +78,7 @@ class ClaimItemDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
     care_team_sequence: Optional[L[PositiveInt]] = Field(None, alias="careTeamSequence", serialization_alias="careTeamSequence")
@@ -106,7 +106,7 @@ class ClaimItem(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimProcedure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     procedure_codeable_concept: Optional[CodeableConcept] = Field(None, alias="procedureCodeableConcept", serialization_alias="procedureCodeableConcept")
@@ -116,14 +116,14 @@ class ClaimProcedure(BackboneElement):
     udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
 
 class ClaimRelated(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     claim: Optional[Reference] = Field(None, alias="claim", serialization_alias="claim")
     reference: Optional[Identifier] = Field(None, alias="reference", serialization_alias="reference")
     relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class ClaimAccident(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
@@ -131,13 +131,13 @@ class ClaimAccident(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimPayee(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ClaimCareTeam(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
     qualification: Optional[CodeableConcept] = Field(None, alias="qualification", serialization_alias="qualification")
@@ -147,7 +147,15 @@ class ClaimCareTeam(BackboneElement):
 
 
 class Claim(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Claim',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Claim'
+    )
     
     accident: Optional[ClaimAccident] = Field(None, alias="accident", serialization_alias="accident")
     billable_period: Optional[Period] = Field(None, alias="billablePeriod", serialization_alias="billablePeriod")

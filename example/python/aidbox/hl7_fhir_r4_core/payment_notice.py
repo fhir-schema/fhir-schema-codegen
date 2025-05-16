@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PaymentNotice(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='PaymentNotice',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='PaymentNotice'
+    )
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     created: Optional[str] = Field(None, alias="created", serialization_alias="created")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationAdministrationDosage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     dose: Optional[Quantity] = Field(None, alias="dose", serialization_alias="dose")
     method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
@@ -22,14 +22,22 @@ class MedicationAdministrationDosage(BackboneElement):
     text: Optional[str] = Field(None, alias="text", serialization_alias="text")
 
 class MedicationAdministrationPerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class MedicationAdministration(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicationAdministration',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicationAdministration'
+    )
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")

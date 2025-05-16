@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductManufacturingBusinessOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     authorisation_reference_number: Optional[Identifier] = Field(None, alias="authorisationReferenceNumber", serialization_alias="authorisationReferenceNumber")
     confidentiality_indicator: Optional[CodeableConcept] = Field(None, alias="confidentialityIndicator", serialization_alias="confidentialityIndicator")
@@ -21,27 +21,27 @@ class MedicinalProductManufacturingBusinessOperation(BackboneElement):
     regulator: Optional[Reference] = Field(None, alias="regulator", serialization_alias="regulator")
 
 class MedicinalProductNameNamePart(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     part: Optional[str] = Field(None, alias="part", serialization_alias="part")
     type: Optional[Coding] = Field(None, alias="type", serialization_alias="type")
 
 class MedicinalProductNameCountryLanguage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
     jurisdiction: Optional[CodeableConcept] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
     language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
 
 class MedicinalProductName(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     country_language: Optional[L[MedicinalProductNameCountryLanguage]] = Field(None, alias="countryLanguage", serialization_alias="countryLanguage")
     name_part: Optional[L[MedicinalProductNameNamePart]] = Field(None, alias="namePart", serialization_alias="namePart")
     product_name: Optional[str] = Field(None, alias="productName", serialization_alias="productName")
 
 class MedicinalProductSpecialDesignation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -54,7 +54,15 @@ class MedicinalProductSpecialDesignation(BackboneElement):
 
 
 class MedicinalProduct(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProduct',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProduct'
+    )
     
     additional_monitoring_indicator: Optional[CodeableConcept] = Field(None, alias="additionalMonitoringIndicator", serialization_alias="additionalMonitoringIndicator")
     attached_document: Optional[L[Reference]] = Field(None, alias="attachedDocument", serialization_alias="attachedDocument")

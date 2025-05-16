@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ChargeItemPerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class ChargeItem(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ChargeItem',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ChargeItem'
+    )
     
     account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
     bodysite: Optional[L[CodeableConcept]] = Field(None, alias="bodysite", serialization_alias="bodysite")

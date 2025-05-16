@@ -11,21 +11,21 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MeasureGroupPopulation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroupStratifierComponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroupStratifier(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     component: Optional[L[MeasureGroupStratifierComponent]] = Field(None, alias="component", serialization_alias="component")
@@ -33,7 +33,7 @@ class MeasureGroupStratifier(BackboneElement):
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -41,7 +41,7 @@ class MeasureGroup(BackboneElement):
     stratifier: Optional[L[MeasureGroupStratifier]] = Field(None, alias="stratifier", serialization_alias="stratifier")
 
 class MeasureSupplementalData(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
@@ -50,7 +50,15 @@ class MeasureSupplementalData(BackboneElement):
 
 
 class Measure(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Measure',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Measure'
+    )
     
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")

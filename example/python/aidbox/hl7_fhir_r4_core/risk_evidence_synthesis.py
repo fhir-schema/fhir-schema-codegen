@@ -11,28 +11,28 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RiskEvidenceSynthesisSampleSize(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     number_of_participants: Optional[int] = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
     number_of_studies: Optional[int] = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
 
 class RiskEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
     rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class RiskEvidenceSynthesisCertainty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     certainty_subcomponent: Optional[L[RiskEvidenceSynthesisCertaintyCertaintySubcomponent]] = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
     note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
     rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
 
 class RiskEvidenceSynthesisRiskEstimatePrecisionEstimate(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     from_: Optional[float] = Field(None, alias="from", serialization_alias="from")
     level: Optional[float] = Field(None, alias="level", serialization_alias="level")
@@ -40,7 +40,7 @@ class RiskEvidenceSynthesisRiskEstimatePrecisionEstimate(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class RiskEvidenceSynthesisRiskEstimate(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     denominator_count: Optional[int] = Field(None, alias="denominatorCount", serialization_alias="denominatorCount")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -52,7 +52,15 @@ class RiskEvidenceSynthesisRiskEstimate(BackboneElement):
 
 
 class RiskEvidenceSynthesis(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='RiskEvidenceSynthesis',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='RiskEvidenceSynthesis'
+    )
     
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")

@@ -11,14 +11,14 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expiry: Optional[str] = Field(None, alias="expiry", serialization_alias="expiry")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
     quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
 
 class SubstanceIngredient(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     quantity: Optional[Ratio] = Field(None, alias="quantity", serialization_alias="quantity")
     substance_codeable_concept: Optional[CodeableConcept] = Field(None, alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
@@ -26,7 +26,15 @@ class SubstanceIngredient(BackboneElement):
 
 
 class Substance(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Substance',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Substance'
+    )
     
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")

@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Endpoint(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Endpoint',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Endpoint'
+    )
     
     address: Optional[str] = Field(None, alias="address", serialization_alias="address")
     connection_type: Optional[Coding] = Field(None, alias="connectionType", serialization_alias="connectionType")

@@ -11,14 +11,14 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class TaskRestriction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
     recipient: Optional[L[Reference]] = Field(None, alias="recipient", serialization_alias="recipient")
     repetitions: Optional[PositiveInt] = Field(None, alias="repetitions", serialization_alias="repetitions")
 
 class TaskOutput(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
     value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
@@ -73,7 +73,7 @@ class TaskOutput(BackboneElement):
     value_uuid: Optional[str] = Field(None, alias="valueUuid", serialization_alias="valueUuid")
 
 class TaskInput(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
     value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
@@ -129,7 +129,15 @@ class TaskInput(BackboneElement):
 
 
 class Task(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Task',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Task'
+    )
     
     authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")

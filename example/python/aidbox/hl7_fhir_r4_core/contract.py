@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ContractRule(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     content_attachment: Optional[Attachment] = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
     content_reference: Optional[Reference] = Field(None, alias="contentReference", serialization_alias="contentReference")
 
 class ContractLegal(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     content_attachment: Optional[Attachment] = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
     content_reference: Optional[Reference] = Field(None, alias="contentReference", serialization_alias="contentReference")
 
 class ContractContentDefinition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
     publication_date: Optional[str] = Field(None, alias="publicationDate", serialization_alias="publicationDate")
@@ -33,20 +33,20 @@ class ContractContentDefinition(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ContractSigner(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
     signature: Optional[L[Signature]] = Field(None, alias="signature", serialization_alias="signature")
     type: Optional[Coding] = Field(None, alias="type", serialization_alias="type")
 
 class ContractTermOfferParty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     reference: Optional[L[Reference]] = Field(None, alias="reference", serialization_alias="reference")
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class ContractTermOfferAnswer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
     value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
@@ -62,7 +62,7 @@ class ContractTermOfferAnswer(BackboneElement):
     value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class ContractTermOffer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     answer: Optional[L[ContractTermOfferAnswer]] = Field(None, alias="answer", serialization_alias="answer")
     decision: Optional[CodeableConcept] = Field(None, alias="decision", serialization_alias="decision")
@@ -76,13 +76,13 @@ class ContractTermOffer(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ContractTermActionSubject(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     reference: Optional[L[Reference]] = Field(None, alias="reference", serialization_alias="reference")
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class ContractTermAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")
     context_link_id: Optional[L[str]] = Field(None, alias="contextLinkId", serialization_alias="contextLinkId")
@@ -109,7 +109,7 @@ class ContractTermAction(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ContractTermSecurityLabel(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[L[Coding]] = Field(None, alias="category", serialization_alias="category")
     classification: Optional[Coding] = Field(None, alias="classification", serialization_alias="classification")
@@ -117,14 +117,14 @@ class ContractTermSecurityLabel(BackboneElement):
     number: Optional[L[int]] = Field(None, alias="number", serialization_alias="number")
 
 class ContractTermAssetContext(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
     reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
     text: Optional[str] = Field(None, alias="text", serialization_alias="text")
 
 class ContractTermAssetValuedItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     effective_time: Optional[str] = Field(None, alias="effectiveTime", serialization_alias="effectiveTime")
     entity_codeable_concept: Optional[CodeableConcept] = Field(None, alias="entityCodeableConcept", serialization_alias="entityCodeableConcept")
@@ -143,7 +143,7 @@ class ContractTermAssetValuedItem(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ContractTermAsset(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     answer: Optional[L[ContractTermOfferAnswer]] = Field(None, alias="answer", serialization_alias="answer")
     condition: Optional[str] = Field(None, alias="condition", serialization_alias="condition")
@@ -162,7 +162,7 @@ class ContractTermAsset(BackboneElement):
     valued_item: Optional[L[ContractTermAssetValuedItem]] = Field(None, alias="valuedItem", serialization_alias="valuedItem")
 
 class ContractTerm(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[ContractTermAction]] = Field(None, alias="action", serialization_alias="action")
     applies: Optional[Period] = Field(None, alias="applies", serialization_alias="applies")
@@ -179,14 +179,22 @@ class ContractTerm(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ContractFriendly(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     content_attachment: Optional[Attachment] = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
     content_reference: Optional[Reference] = Field(None, alias="contentReference", serialization_alias="contentReference")
 
 
 class Contract(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Contract',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Contract'
+    )
     
     alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
     applies: Optional[Period] = Field(None, alias="applies", serialization_alias="applies")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class FamilyMemberHistoryCondition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     contributed_to_death: Optional[bool] = Field(None, alias="contributedToDeath", serialization_alias="contributedToDeath")
@@ -24,7 +24,15 @@ class FamilyMemberHistoryCondition(BackboneElement):
 
 
 class FamilyMemberHistory(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='FamilyMemberHistory',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='FamilyMemberHistory'
+    )
     
     age_age: Optional[Age] = Field(None, alias="ageAge", serialization_alias="ageAge")
     age_range: Optional[Range] = Field(None, alias="ageRange", serialization_alias="ageRange")

@@ -11,14 +11,14 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ExplanationOfBenefitInsurance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
     focal: Optional[bool] = Field(None, alias="focal", serialization_alias="focal")
     pre_auth_ref: Optional[L[str]] = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
 
 class ExplanationOfBenefitBenefitBalanceFinancial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     allowed_money: Optional[Money] = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
     allowed_string: Optional[str] = Field(None, alias="allowedString", serialization_alias="allowedString")
@@ -28,7 +28,7 @@ class ExplanationOfBenefitBenefitBalanceFinancial(BackboneElement):
     used_unsigned_int: Optional[int] = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
 
 class ExplanationOfBenefitBenefitBalance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -40,7 +40,7 @@ class ExplanationOfBenefitBenefitBalance(BackboneElement):
     unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 
 class ExplanationOfBenefitProcessNote(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
     number: Optional[PositiveInt] = Field(None, alias="number", serialization_alias="number")
@@ -48,7 +48,7 @@ class ExplanationOfBenefitProcessNote(BackboneElement):
     type: Optional[Literal["display", "print", "printoper"]] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitDiagnosis(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     diagnosis_codeable_concept: Optional[CodeableConcept] = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
     diagnosis_reference: Optional[Reference] = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
@@ -58,7 +58,7 @@ class ExplanationOfBenefitDiagnosis(BackboneElement):
     type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitSupportingInfo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
@@ -73,7 +73,7 @@ class ExplanationOfBenefitSupportingInfo(BackboneElement):
     value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class ExplanationOfBenefitPayment(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjustment: Optional[Money] = Field(None, alias="adjustment", serialization_alias="adjustment")
     adjustment_reason: Optional[CodeableConcept] = Field(None, alias="adjustmentReason", serialization_alias="adjustmentReason")
@@ -83,7 +83,7 @@ class ExplanationOfBenefitPayment(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitItemAdjudication(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
@@ -91,7 +91,7 @@ class ExplanationOfBenefitItemAdjudication(BackboneElement):
     value: Optional[float] = Field(None, alias="value", serialization_alias="value")
 
 class ExplanationOfBenefitItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
@@ -108,7 +108,7 @@ class ExplanationOfBenefitItemDetailSubDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
@@ -126,7 +126,7 @@ class ExplanationOfBenefitItemDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
@@ -156,7 +156,7 @@ class ExplanationOfBenefitItem(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitProcedure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     procedure_codeable_concept: Optional[CodeableConcept] = Field(None, alias="procedureCodeableConcept", serialization_alias="procedureCodeableConcept")
@@ -166,20 +166,20 @@ class ExplanationOfBenefitProcedure(BackboneElement):
     udi: Optional[L[Reference]] = Field(None, alias="udi", serialization_alias="udi")
 
 class ExplanationOfBenefitRelated(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     claim: Optional[Reference] = Field(None, alias="claim", serialization_alias="claim")
     reference: Optional[Identifier] = Field(None, alias="reference", serialization_alias="reference")
     relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class ExplanationOfBenefitTotal(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
 
 class ExplanationOfBenefitAccident(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     location_address: Optional[Address] = Field(None, alias="locationAddress", serialization_alias="locationAddress")
@@ -187,13 +187,13 @@ class ExplanationOfBenefitAccident(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitPayee(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitAddItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
@@ -205,7 +205,7 @@ class ExplanationOfBenefitAddItemDetailSubDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitAddItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
@@ -218,7 +218,7 @@ class ExplanationOfBenefitAddItemDetail(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitAddItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     adjudication: Optional[L[ExplanationOfBenefitItemAdjudication]] = Field(None, alias="adjudication", serialization_alias="adjudication")
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
@@ -243,7 +243,7 @@ class ExplanationOfBenefitAddItem(BackboneElement):
     unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitCareTeam(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
     qualification: Optional[CodeableConcept] = Field(None, alias="qualification", serialization_alias="qualification")
@@ -253,7 +253,15 @@ class ExplanationOfBenefitCareTeam(BackboneElement):
 
 
 class ExplanationOfBenefit(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ExplanationOfBenefit',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ExplanationOfBenefit'
+    )
     
     accident: Optional[ExplanationOfBenefitAccident] = Field(None, alias="accident", serialization_alias="accident")
     add_item: Optional[L[ExplanationOfBenefitAddItem]] = Field(None, alias="addItem", serialization_alias="addItem")

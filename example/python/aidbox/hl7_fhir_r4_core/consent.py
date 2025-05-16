@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ConsentProvisionActor(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class ConsentProvisionData(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     meaning: Optional[Literal["instance", "related", "dependents", "authoredby"]] = Field(None, alias="meaning", serialization_alias="meaning")
     reference: Optional[Reference] = Field(None, alias="reference", serialization_alias="reference")
 
 class ConsentProvision(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[CodeableConcept]] = Field(None, alias="action", serialization_alias="action")
     actor: Optional[L[ConsentProvisionActor]] = Field(None, alias="actor", serialization_alias="actor")
@@ -38,21 +38,29 @@ class ConsentProvision(BackboneElement):
     type: Optional[Literal["deny", "permit"]] = Field(None, alias="type", serialization_alias="type")
 
 class ConsentVerification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     verification_date: Optional[str] = Field(None, alias="verificationDate", serialization_alias="verificationDate")
     verified: Optional[bool] = Field(None, alias="verified", serialization_alias="verified")
     verified_with: Optional[Reference] = Field(None, alias="verifiedWith", serialization_alias="verifiedWith")
 
 class ConsentPolicy(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     authority: Optional[str] = Field(None, alias="authority", serialization_alias="authority")
     uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 
 class Consent(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Consent',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Consent'
+    )
     
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
     date_time: Optional[str] = Field(None, alias="dateTime", serialization_alias="dateTime")

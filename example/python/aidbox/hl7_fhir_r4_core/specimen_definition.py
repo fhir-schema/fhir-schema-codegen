@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SpecimenDefinitionTypeTestedContainerAdditive(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additive_codeable_concept: Optional[CodeableConcept] = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
     additive_reference: Optional[Reference] = Field(None, alias="additiveReference", serialization_alias="additiveReference")
 
 class SpecimenDefinitionTypeTestedContainer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additive: Optional[L[SpecimenDefinitionTypeTestedContainerAdditive]] = Field(None, alias="additive", serialization_alias="additive")
     cap: Optional[CodeableConcept] = Field(None, alias="cap", serialization_alias="cap")
@@ -30,7 +30,7 @@ class SpecimenDefinitionTypeTestedContainer(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SpecimenDefinitionTypeTestedHandling(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     instruction: Optional[str] = Field(None, alias="instruction", serialization_alias="instruction")
     max_duration: Optional[Duration] = Field(None, alias="maxDuration", serialization_alias="maxDuration")
@@ -38,7 +38,7 @@ class SpecimenDefinitionTypeTestedHandling(BackboneElement):
     temperature_range: Optional[Range] = Field(None, alias="temperatureRange", serialization_alias="temperatureRange")
 
 class SpecimenDefinitionTypeTested(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     container: Optional[SpecimenDefinitionTypeTestedContainer] = Field(None, alias="container", serialization_alias="container")
     handling: Optional[L[SpecimenDefinitionTypeTestedHandling]] = Field(None, alias="handling", serialization_alias="handling")
@@ -51,7 +51,15 @@ class SpecimenDefinitionTypeTested(BackboneElement):
 
 
 class SpecimenDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SpecimenDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SpecimenDefinition'
+    )
     
     collection: Optional[L[CodeableConcept]] = Field(None, alias="collection", serialization_alias="collection")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")

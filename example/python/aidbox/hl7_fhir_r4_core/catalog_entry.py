@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CatalogEntryRelatedEntry(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     item: Optional[Reference] = Field(None, alias="item", serialization_alias="item")
     relationtype: Optional[Literal["triggers", "is-replaced-by"]] = Field(None, alias="relationtype", serialization_alias="relationtype")
 
 
 class CatalogEntry(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CatalogEntry',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CatalogEntry'
+    )
     
     additional_characteristic: Optional[L[CodeableConcept]] = Field(None, alias="additionalCharacteristic", serialization_alias="additionalCharacteristic")
     additional_classification: Optional[L[CodeableConcept]] = Field(None, alias="additionalClassification", serialization_alias="additionalClassification")

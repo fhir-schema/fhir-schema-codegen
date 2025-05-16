@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductAuthorizationJurisdictionalAuthorization(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
     identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -20,7 +20,7 @@ class MedicinalProductAuthorizationJurisdictionalAuthorization(BackboneElement):
     validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 
 class MedicinalProductAuthorizationProcedure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     application: Optional[L[MedicinalProductAuthorizationProcedure]] = Field(None, alias="application", serialization_alias="application")
     date_date_time: Optional[str] = Field(None, alias="dateDateTime", serialization_alias="dateDateTime")
@@ -30,7 +30,15 @@ class MedicinalProductAuthorizationProcedure(BackboneElement):
 
 
 class MedicinalProductAuthorization(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductAuthorization',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductAuthorization'
+    )
     
     country: Optional[L[CodeableConcept]] = Field(None, alias="country", serialization_alias="country")
     data_exclusivity_period: Optional[Period] = Field(None, alias="dataExclusivityPeriod", serialization_alias="dataExclusivityPeriod")

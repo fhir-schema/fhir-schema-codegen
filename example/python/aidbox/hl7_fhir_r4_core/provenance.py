@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ProvenanceAgent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
     role: Optional[L[CodeableConcept]] = Field(None, alias="role", serialization_alias="role")
@@ -19,7 +19,7 @@ class ProvenanceAgent(BackboneElement):
     who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
 
 class ProvenanceEntity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     agent: Optional[L[ProvenanceAgent]] = Field(None, alias="agent", serialization_alias="agent")
     role: Optional[Literal["derivation"]] = Field(None, alias="role", serialization_alias="role")
@@ -27,7 +27,15 @@ class ProvenanceEntity(BackboneElement):
 
 
 class Provenance(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Provenance',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Provenance'
+    )
     
     activity: Optional[CodeableConcept] = Field(None, alias="activity", serialization_alias="activity")
     agent: Optional[L[ProvenanceAgent]] = Field(None, alias="agent", serialization_alias="agent")

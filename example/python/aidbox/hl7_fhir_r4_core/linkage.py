@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class LinkageItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     resource: Optional[Reference] = Field(None, alias="resource", serialization_alias="resource")
     type: Optional[Literal["source", "alternate", "historical"]] = Field(None, alias="type", serialization_alias="type")
 
 
 class Linkage(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Linkage',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Linkage'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")

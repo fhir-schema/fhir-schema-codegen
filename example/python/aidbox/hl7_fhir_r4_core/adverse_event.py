@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AdverseEventSuspectEntityCausality(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assessment: Optional[CodeableConcept] = Field(None, alias="assessment", serialization_alias="assessment")
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
@@ -19,14 +19,22 @@ class AdverseEventSuspectEntityCausality(BackboneElement):
     product_relatedness: Optional[str] = Field(None, alias="productRelatedness", serialization_alias="productRelatedness")
 
 class AdverseEventSuspectEntity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     causality: Optional[L[AdverseEventSuspectEntityCausality]] = Field(None, alias="causality", serialization_alias="causality")
     instance: Optional[Reference] = Field(None, alias="instance", serialization_alias="instance")
 
 
 class AdverseEvent(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='AdverseEvent',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='AdverseEvent'
+    )
     
     actuality: Optional[Literal["actual", "potential"]] = Field(None, alias="actuality", serialization_alias="actuality")
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")

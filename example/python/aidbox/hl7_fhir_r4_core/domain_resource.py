@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class DomainResource(Resource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DomainResource',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DomainResource'
+    )
     
     contained: Optional[L[Resource]] = Field(None, alias="contained", serialization_alias="contained")
     extension: Optional[L[Extension]] = Field(None, alias="extension", serialization_alias="extension")

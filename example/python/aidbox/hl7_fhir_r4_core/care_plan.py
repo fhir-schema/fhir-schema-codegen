@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CarePlanActivityDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     daily_amount: Optional[Quantity] = Field(None, alias="dailyAmount", serialization_alias="dailyAmount")
@@ -35,7 +35,7 @@ class CarePlanActivityDetail(BackboneElement):
     status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
 
 class CarePlanActivity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     detail: Optional[CarePlanActivityDetail] = Field(None, alias="detail", serialization_alias="detail")
     outcome_codeable_concept: Optional[L[CodeableConcept]] = Field(None, alias="outcomeCodeableConcept", serialization_alias="outcomeCodeableConcept")
@@ -45,7 +45,15 @@ class CarePlanActivity(BackboneElement):
 
 
 class CarePlan(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CarePlan',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CarePlan'
+    )
     
     activity: Optional[L[CarePlanActivity]] = Field(None, alias="activity", serialization_alias="activity")
     addresses: Optional[L[Reference]] = Field(None, alias="addresses", serialization_alias="addresses")

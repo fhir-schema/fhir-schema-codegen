@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RequestGroupActionRelatedAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action_id: Optional[str] = Field(None, alias="actionId", serialization_alias="actionId")
     offset_duration: Optional[Duration] = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
@@ -19,13 +19,13 @@ class RequestGroupActionRelatedAction(BackboneElement):
     relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = Field(None, alias="relationship", serialization_alias="relationship")
 
 class RequestGroupActionCondition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
     kind: Optional[Literal["applicability", "start", "stop"]] = Field(None, alias="kind", serialization_alias="kind")
 
 class RequestGroupAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[RequestGroupAction]] = Field(None, alias="action", serialization_alias="action")
     cardinality_behavior: Optional[Literal["single", "multiple"]] = Field(None, alias="cardinalityBehavior", serialization_alias="cardinalityBehavior")
@@ -54,7 +54,15 @@ class RequestGroupAction(BackboneElement):
 
 
 class RequestGroup(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='RequestGroup',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='RequestGroup'
+    )
     
     action: Optional[L[RequestGroupAction]] = Field(None, alias="action", serialization_alias="action")
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")

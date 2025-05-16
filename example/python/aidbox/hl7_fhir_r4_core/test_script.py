@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class TestScriptVariable(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     default_value: Optional[str] = Field(None, alias="defaultValue", serialization_alias="defaultValue")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -23,13 +23,13 @@ class TestScriptVariable(BackboneElement):
     source_id: Optional[str] = Field(None, alias="sourceId", serialization_alias="sourceId")
 
 class TestScriptSetupActionOperationRequestHeader(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     field: Optional[str] = Field(None, alias="field", serialization_alias="field")
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class TestScriptSetupActionOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     accept: Optional[str] = Field(None, alias="accept", serialization_alias="accept")
     content_type: Optional[str] = Field(None, alias="contentType", serialization_alias="contentType")
@@ -50,7 +50,7 @@ class TestScriptSetupActionOperation(BackboneElement):
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class TestScriptSetupActionAssert(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     compare_to_source_expression: Optional[str] = Field(None, alias="compareToSourceExpression", serialization_alias="compareToSourceExpression")
     compare_to_source_id: Optional[str] = Field(None, alias="compareToSourceId", serialization_alias="compareToSourceId")
@@ -76,47 +76,47 @@ class TestScriptSetupActionAssert(BackboneElement):
     warning_only: Optional[bool] = Field(None, alias="warningOnly", serialization_alias="warningOnly")
 
 class TestScriptSetupAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assert_: Optional[TestScriptSetupActionAssert] = Field(None, alias="assert", serialization_alias="assert")
     operation: Optional[TestScriptSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
 
 class TestScriptSetup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[TestScriptSetupAction]] = Field(None, alias="action", serialization_alias="action")
 
 class TestScriptOrigin(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     index: Optional[int] = Field(None, alias="index", serialization_alias="index")
     profile: Optional[Coding] = Field(None, alias="profile", serialization_alias="profile")
 
 class TestScriptFixture(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     autocreate: Optional[bool] = Field(None, alias="autocreate", serialization_alias="autocreate")
     autodelete: Optional[bool] = Field(None, alias="autodelete", serialization_alias="autodelete")
     resource: Optional[Reference] = Field(None, alias="resource", serialization_alias="resource")
 
 class TestScriptTeardownAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     operation: Optional[TestScriptSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
 
 class TestScriptTeardown(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[TestScriptTeardownAction]] = Field(None, alias="action", serialization_alias="action")
 
 class TestScriptMetadataLink(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class TestScriptMetadataCapability(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     capabilities: Optional[str] = Field(None, alias="capabilities", serialization_alias="capabilities")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -127,25 +127,25 @@ class TestScriptMetadataCapability(BackboneElement):
     validated: Optional[bool] = Field(None, alias="validated", serialization_alias="validated")
 
 class TestScriptMetadata(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     capability: Optional[L[TestScriptMetadataCapability]] = Field(None, alias="capability", serialization_alias="capability")
     link: Optional[L[TestScriptMetadataLink]] = Field(None, alias="link", serialization_alias="link")
 
 class TestScriptDestination(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     index: Optional[int] = Field(None, alias="index", serialization_alias="index")
     profile: Optional[Coding] = Field(None, alias="profile", serialization_alias="profile")
 
 class TestScriptTestAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assert_: Optional[TestScriptSetupActionAssert] = Field(None, alias="assert", serialization_alias="assert")
     operation: Optional[TestScriptSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
 
 class TestScriptTest(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[TestScriptTestAction]] = Field(None, alias="action", serialization_alias="action")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -153,7 +153,15 @@ class TestScriptTest(BackboneElement):
 
 
 class TestScript(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='TestScript',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='TestScript'
+    )
     
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
     copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")

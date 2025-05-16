@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OperationOutcomeIssue(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Literal["invalid", "security", "processing", "transient", "informational"]] = Field(None, alias="code", serialization_alias="code")
     details: Optional[CodeableConcept] = Field(None, alias="details", serialization_alias="details")
@@ -22,7 +22,15 @@ class OperationOutcomeIssue(BackboneElement):
 
 
 class OperationOutcome(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='OperationOutcome',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='OperationOutcome'
+    )
     
     issue: Optional[L[OperationOutcomeIssue]] = Field(None, alias="issue", serialization_alias="issue")
 

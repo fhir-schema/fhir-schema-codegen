@@ -11,21 +11,29 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EpisodeOfCareDiagnosis(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
     rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
 
 class EpisodeOfCareStatusHistory(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
     status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
 
 
 class EpisodeOfCare(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='EpisodeOfCare',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='EpisodeOfCare'
+    )
     
     account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
     care_manager: Optional[Reference] = Field(None, alias="careManager", serialization_alias="careManager")

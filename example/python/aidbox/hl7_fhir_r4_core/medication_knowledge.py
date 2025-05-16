@@ -11,30 +11,30 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationKnowledgeMonograph(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeRegulatorySubstitution(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     allowed: Optional[bool] = Field(None, alias="allowed", serialization_alias="allowed")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeRegulatorySchedule(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     schedule: Optional[CodeableConcept] = Field(None, alias="schedule", serialization_alias="schedule")
 
 class MedicationKnowledgeRegulatoryMaxDispense(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Optional[Duration] = Field(None, alias="period", serialization_alias="period")
     quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
 
 class MedicationKnowledgeRegulatory(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     max_dispense: Optional[MedicationKnowledgeRegulatoryMaxDispense] = Field(None, alias="maxDispense", serialization_alias="maxDispense")
     regulatory_authority: Optional[Reference] = Field(None, alias="regulatoryAuthority", serialization_alias="regulatoryAuthority")
@@ -42,7 +42,7 @@ class MedicationKnowledgeRegulatory(BackboneElement):
     substitution: Optional[L[MedicationKnowledgeRegulatorySubstitution]] = Field(None, alias="substitution", serialization_alias="substitution")
 
 class MedicationKnowledgeDrugCharacteristic(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
     value_base64binary: Optional[str] = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
@@ -51,32 +51,32 @@ class MedicationKnowledgeDrugCharacteristic(BackboneElement):
     value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class MedicationKnowledgePackaging(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeRelatedMedicationKnowledge(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     reference: Optional[L[Reference]] = Field(None, alias="reference", serialization_alias="reference")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeMedicineClassification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     classification: Optional[L[CodeableConcept]] = Field(None, alias="classification", serialization_alias="classification")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeKinetics(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     area_under_curve: Optional[L[Quantity]] = Field(None, alias="areaUnderCurve", serialization_alias="areaUnderCurve")
     half_life_period: Optional[Duration] = Field(None, alias="halfLifePeriod", serialization_alias="halfLifePeriod")
     lethal_dose50: Optional[L[Quantity]] = Field(None, alias="lethalDose50", serialization_alias="lethalDose50")
 
 class MedicationKnowledgeIngredient(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     is_active: Optional[bool] = Field(None, alias="isActive", serialization_alias="isActive")
     item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
@@ -84,26 +84,26 @@ class MedicationKnowledgeIngredient(BackboneElement):
     strength: Optional[Ratio] = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicationKnowledgeMonitoringProgram(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeAdministrationGuidelinesDosage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     dosage: Optional[L[Dosage]] = Field(None, alias="dosage", serialization_alias="dosage")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     characteristic_codeable_concept: Optional[CodeableConcept] = Field(None, alias="characteristicCodeableConcept", serialization_alias="characteristicCodeableConcept")
     characteristic_quantity: Optional[Quantity] = Field(None, alias="characteristicQuantity", serialization_alias="characteristicQuantity")
     value: Optional[L[str]] = Field(None, alias="value", serialization_alias="value")
 
 class MedicationKnowledgeAdministrationGuidelines(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     dosage: Optional[L[MedicationKnowledgeAdministrationGuidelinesDosage]] = Field(None, alias="dosage", serialization_alias="dosage")
     indication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="indicationCodeableConcept", serialization_alias="indicationCodeableConcept")
@@ -111,7 +111,7 @@ class MedicationKnowledgeAdministrationGuidelines(BackboneElement):
     patient_characteristics: Optional[L[MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics]] = Field(None, alias="patientCharacteristics", serialization_alias="patientCharacteristics")
 
 class MedicationKnowledgeCost(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     cost: Optional[Money] = Field(None, alias="cost", serialization_alias="cost")
     source: Optional[str] = Field(None, alias="source", serialization_alias="source")
@@ -119,7 +119,15 @@ class MedicationKnowledgeCost(BackboneElement):
 
 
 class MedicationKnowledge(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicationKnowledge',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicationKnowledge'
+    )
     
     administration_guidelines: Optional[L[MedicationKnowledgeAdministrationGuidelines]] = Field(None, alias="administrationGuidelines", serialization_alias="administrationGuidelines")
     amount: Optional[Quantity] = Field(None, alias="amount", serialization_alias="amount")

@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductManufactured(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductManufactured',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductManufactured'
+    )
     
     ingredient: Optional[L[Reference]] = Field(None, alias="ingredient", serialization_alias="ingredient")
     manufactured_dose_form: Optional[CodeableConcept] = Field(None, alias="manufacturedDoseForm", serialization_alias="manufacturedDoseForm")

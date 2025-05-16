@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EffectEvidenceSynthesisEffectEstimatePrecisionEstimate(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     from_: Optional[float] = Field(None, alias="from", serialization_alias="from")
     level: Optional[float] = Field(None, alias="level", serialization_alias="level")
@@ -19,7 +19,7 @@ class EffectEvidenceSynthesisEffectEstimatePrecisionEstimate(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class EffectEvidenceSynthesisEffectEstimate(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     precision_estimate: Optional[L[EffectEvidenceSynthesisEffectEstimatePrecisionEstimate]] = Field(None, alias="precisionEstimate", serialization_alias="precisionEstimate")
@@ -29,28 +29,28 @@ class EffectEvidenceSynthesisEffectEstimate(BackboneElement):
     variant_state: Optional[CodeableConcept] = Field(None, alias="variantState", serialization_alias="variantState")
 
 class EffectEvidenceSynthesisSampleSize(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     number_of_participants: Optional[int] = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
     number_of_studies: Optional[int] = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
 
 class EffectEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
     rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class EffectEvidenceSynthesisCertainty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     certainty_subcomponent: Optional[L[EffectEvidenceSynthesisCertaintyCertaintySubcomponent]] = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
     note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
     rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
 
 class EffectEvidenceSynthesisResultsByExposure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     exposure_state: Optional[Literal["exposure", "exposure-alternative"]] = Field(None, alias="exposureState", serialization_alias="exposureState")
@@ -59,7 +59,15 @@ class EffectEvidenceSynthesisResultsByExposure(BackboneElement):
 
 
 class EffectEvidenceSynthesis(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='EffectEvidenceSynthesis',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='EffectEvidenceSynthesis'
+    )
     
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")

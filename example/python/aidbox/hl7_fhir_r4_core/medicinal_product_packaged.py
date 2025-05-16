@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductPackagedBatchIdentifier(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     immediate_packaging: Optional[Identifier] = Field(None, alias="immediatePackaging", serialization_alias="immediatePackaging")
     outer_packaging: Optional[Identifier] = Field(None, alias="outerPackaging", serialization_alias="outerPackaging")
 
 class MedicinalProductPackagedPackageItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     alternate_material: Optional[L[CodeableConcept]] = Field(None, alias="alternateMaterial", serialization_alias="alternateMaterial")
     device: Optional[L[Reference]] = Field(None, alias="device", serialization_alias="device")
@@ -34,7 +34,15 @@ class MedicinalProductPackagedPackageItem(BackboneElement):
 
 
 class MedicinalProductPackaged(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductPackaged',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductPackaged'
+    )
     
     batch_identifier: Optional[L[MedicinalProductPackagedBatchIdentifier]] = Field(None, alias="batchIdentifier", serialization_alias="batchIdentifier")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")

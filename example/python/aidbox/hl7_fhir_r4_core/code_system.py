@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CodeSystemProperty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -19,7 +19,7 @@ class CodeSystemProperty(BackboneElement):
     uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 class CodeSystemFilter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -27,14 +27,14 @@ class CodeSystemFilter(BackboneElement):
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class CodeSystemConceptDesignation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     language: Optional[str] = Field(None, alias="language", serialization_alias="language")
     use: Optional[Coding] = Field(None, alias="use", serialization_alias="use")
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class CodeSystemConceptProperty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
@@ -46,7 +46,7 @@ class CodeSystemConceptProperty(BackboneElement):
     value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class CodeSystemConcept(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     concept: Optional[L[CodeSystemConcept]] = Field(None, alias="concept", serialization_alias="concept")
@@ -57,7 +57,15 @@ class CodeSystemConcept(BackboneElement):
 
 
 class CodeSystem(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CodeSystem',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CodeSystem'
+    )
     
     case_sensitive: Optional[bool] = Field(None, alias="caseSensitive", serialization_alias="caseSensitive")
     compositional: Optional[bool] = Field(None, alias="compositional", serialization_alias="compositional")

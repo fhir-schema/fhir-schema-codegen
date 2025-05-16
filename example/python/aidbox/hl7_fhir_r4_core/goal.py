@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class GoalTarget(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     detail_boolean: Optional[bool] = Field(None, alias="detailBoolean", serialization_alias="detailBoolean")
     detail_codeable_concept: Optional[CodeableConcept] = Field(None, alias="detailCodeableConcept", serialization_alias="detailCodeableConcept")
@@ -26,7 +26,15 @@ class GoalTarget(BackboneElement):
 
 
 class Goal(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Goal',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Goal'
+    )
     
     achievement_status: Optional[CodeableConcept] = Field(None, alias="achievementStatus", serialization_alias="achievementStatus")
     addresses: Optional[L[Reference]] = Field(None, alias="addresses", serialization_alias="addresses")

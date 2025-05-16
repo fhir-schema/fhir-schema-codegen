@@ -11,26 +11,26 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductPharmaceuticalCharacteristics(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
 
 class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     supporting_information: Optional[str] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
     tissue: Optional[CodeableConcept] = Field(None, alias="tissue", serialization_alias="tissue")
     value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
 
 class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     withdrawal_period: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod]] = Field(None, alias="withdrawalPeriod", serialization_alias="withdrawalPeriod")
 
 class MedicinalProductPharmaceuticalRouteOfAdministration(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     first_dose: Optional[Quantity] = Field(None, alias="firstDose", serialization_alias="firstDose")
@@ -42,7 +42,15 @@ class MedicinalProductPharmaceuticalRouteOfAdministration(BackboneElement):
 
 
 class MedicinalProductPharmaceutical(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductPharmaceutical',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductPharmaceutical'
+    )
     
     administrable_dose_form: Optional[CodeableConcept] = Field(None, alias="administrableDoseForm", serialization_alias="administrableDoseForm")
     characteristics: Optional[L[MedicinalProductPharmaceuticalCharacteristics]] = Field(None, alias="characteristics", serialization_alias="characteristics")

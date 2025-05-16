@@ -11,55 +11,55 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class TestReportParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
     type: Optional[Literal["test-engine", "client", "server"]] = Field(None, alias="type", serialization_alias="type")
     uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
 
 class TestReportSetupActionOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     detail: Optional[str] = Field(None, alias="detail", serialization_alias="detail")
     message: Optional[str] = Field(None, alias="message", serialization_alias="message")
     result: Optional[Literal["pass", "skip", "fail", "warning", "error"]] = Field(None, alias="result", serialization_alias="result")
 
 class TestReportSetupActionAssert(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     detail: Optional[str] = Field(None, alias="detail", serialization_alias="detail")
     message: Optional[str] = Field(None, alias="message", serialization_alias="message")
     result: Optional[Literal["pass", "skip", "fail", "warning", "error"]] = Field(None, alias="result", serialization_alias="result")
 
 class TestReportSetupAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assert_: Optional[TestReportSetupActionAssert] = Field(None, alias="assert", serialization_alias="assert")
     operation: Optional[TestReportSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportSetup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[TestReportSetupAction]] = Field(None, alias="action", serialization_alias="action")
 
 class TestReportTeardownAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     operation: Optional[TestReportSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportTeardown(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[TestReportTeardownAction]] = Field(None, alias="action", serialization_alias="action")
 
 class TestReportTestAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assert_: Optional[TestReportSetupActionAssert] = Field(None, alias="assert", serialization_alias="assert")
     operation: Optional[TestReportSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportTest(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[L[TestReportTestAction]] = Field(None, alias="action", serialization_alias="action")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -67,7 +67,15 @@ class TestReportTest(BackboneElement):
 
 
 class TestReport(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='TestReport',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='TestReport'
+    )
     
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
     issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")

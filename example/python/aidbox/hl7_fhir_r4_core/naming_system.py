@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class NamingSystemUniqueId(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
@@ -21,7 +21,15 @@ class NamingSystemUniqueId(BackboneElement):
 
 
 class NamingSystem(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='NamingSystem',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='NamingSystem'
+    )
     
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")

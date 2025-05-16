@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PatientLink(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     other: Optional[Reference] = Field(None, alias="other", serialization_alias="other")
     type: Optional[Literal["replaced-by", "replaces", "refer", "seealso"]] = Field(None, alias="type", serialization_alias="type")
 
 class PatientCommunication(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
     preferred: Optional[bool] = Field(None, alias="preferred", serialization_alias="preferred")
 
 class PatientContact(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
     gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
@@ -35,7 +35,15 @@ class PatientContact(BackboneElement):
 
 
 class Patient(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Patient',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Patient'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceSpecificationProperty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
     amount_string: Optional[str] = Field(None, alias="amountString", serialization_alias="amountString")
@@ -22,14 +22,14 @@ class SubstanceSpecificationProperty(BackboneElement):
     parameters: Optional[str] = Field(None, alias="parameters", serialization_alias="parameters")
 
 class SubstanceSpecificationNameOfficial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     authority: Optional[CodeableConcept] = Field(None, alias="authority", serialization_alias="authority")
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
 
 class SubstanceSpecificationName(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     domain: Optional[L[CodeableConcept]] = Field(None, alias="domain", serialization_alias="domain")
     jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
@@ -44,7 +44,7 @@ class SubstanceSpecificationName(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstanceSpecificationRelationship(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
     amount_range: Optional[Range] = Field(None, alias="amountRange", serialization_alias="amountRange")
@@ -59,7 +59,7 @@ class SubstanceSpecificationRelationship(BackboneElement):
     substance_reference: Optional[Reference] = Field(None, alias="substanceReference", serialization_alias="substanceReference")
 
 class SubstanceSpecificationMoiety(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
     amount_string: Optional[str] = Field(None, alias="amountString", serialization_alias="amountString")
@@ -71,14 +71,14 @@ class SubstanceSpecificationMoiety(BackboneElement):
     stereochemistry: Optional[CodeableConcept] = Field(None, alias="stereochemistry", serialization_alias="stereochemistry")
 
 class SubstanceSpecificationStructureIsotopeMolecularWeight(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Quantity] = Field(None, alias="amount", serialization_alias="amount")
     method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstanceSpecificationStructureIsotope(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     half_life: Optional[Quantity] = Field(None, alias="halfLife", serialization_alias="halfLife")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -87,14 +87,14 @@ class SubstanceSpecificationStructureIsotope(BackboneElement):
     substitution: Optional[CodeableConcept] = Field(None, alias="substitution", serialization_alias="substitution")
 
 class SubstanceSpecificationStructureRepresentation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     attachment: Optional[Attachment] = Field(None, alias="attachment", serialization_alias="attachment")
     representation: Optional[str] = Field(None, alias="representation", serialization_alias="representation")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstanceSpecificationStructure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     isotope: Optional[L[SubstanceSpecificationStructureIsotope]] = Field(None, alias="isotope", serialization_alias="isotope")
     molecular_formula: Optional[str] = Field(None, alias="molecularFormula", serialization_alias="molecularFormula")
@@ -106,7 +106,7 @@ class SubstanceSpecificationStructure(BackboneElement):
     stereochemistry: Optional[CodeableConcept] = Field(None, alias="stereochemistry", serialization_alias="stereochemistry")
 
 class SubstanceSpecificationCode(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
@@ -116,7 +116,15 @@ class SubstanceSpecificationCode(BackboneElement):
 
 
 class SubstanceSpecification(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SubstanceSpecification',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SubstanceSpecification'
+    )
     
     code: Optional[L[SubstanceSpecificationCode]] = Field(None, alias="code", serialization_alias="code")
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")

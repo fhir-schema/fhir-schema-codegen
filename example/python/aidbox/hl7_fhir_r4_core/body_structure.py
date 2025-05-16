@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class BodyStructure(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='BodyStructure',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='BodyStructure'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")

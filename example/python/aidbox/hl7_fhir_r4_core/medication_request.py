@@ -11,20 +11,20 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationRequestSubstitution(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     allowed_boolean: Optional[bool] = Field(None, alias="allowedBoolean", serialization_alias="allowedBoolean")
     allowed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="allowedCodeableConcept", serialization_alias="allowedCodeableConcept")
     reason: Optional[CodeableConcept] = Field(None, alias="reason", serialization_alias="reason")
 
 class MedicationRequestDispenseRequestInitialFill(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     duration: Optional[Duration] = Field(None, alias="duration", serialization_alias="duration")
     quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
 
 class MedicationRequestDispenseRequest(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     dispense_interval: Optional[Duration] = Field(None, alias="dispenseInterval", serialization_alias="dispenseInterval")
     expected_supply_duration: Optional[Duration] = Field(None, alias="expectedSupplyDuration", serialization_alias="expectedSupplyDuration")
@@ -36,7 +36,15 @@ class MedicationRequestDispenseRequest(BackboneElement):
 
 
 class MedicationRequest(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicationRequest',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicationRequest'
+    )
     
     authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")

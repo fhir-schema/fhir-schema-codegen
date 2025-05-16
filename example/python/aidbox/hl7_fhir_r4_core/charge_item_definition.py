@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
@@ -19,13 +19,13 @@ class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
     type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = Field(None, alias="type", serialization_alias="type")
 
 class ChargeItemDefinitionPropertyGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     applicability: Optional[L[ChargeItemDefinitionApplicability]] = Field(None, alias="applicability", serialization_alias="applicability")
     price_component: Optional[L[ChargeItemDefinitionPropertyGroupPriceComponent]] = Field(None, alias="priceComponent", serialization_alias="priceComponent")
 
 class ChargeItemDefinitionApplicability(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
@@ -33,7 +33,15 @@ class ChargeItemDefinitionApplicability(BackboneElement):
 
 
 class ChargeItemDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ChargeItemDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ChargeItemDefinition'
+    )
     
     applicability: Optional[L[ChargeItemDefinitionApplicability]] = Field(None, alias="applicability", serialization_alias="applicability")
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")

@@ -10,7 +10,15 @@ from aidbox.hl7_fhir_r4_core.base import Meta
 
 
 class Resource(BaseModel):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Resource',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Resource'
+    )
     
     id: Optional[str] = Field(None, alias="id", serialization_alias="id")
     implicit_rules: Optional[str] = Field(None, alias="implicitRules", serialization_alias="implicitRules")

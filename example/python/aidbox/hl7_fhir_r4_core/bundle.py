@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.resource import Resource
 
 
 class BundleLink(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     relation: Optional[str] = Field(None, alias="relation", serialization_alias="relation")
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class BundleEntrySearch(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     mode: Optional[Literal["match", "include", "outcome"]] = Field(None, alias="mode", serialization_alias="mode")
     score: Optional[float] = Field(None, alias="score", serialization_alias="score")
 
 class BundleEntryRequest(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     if_match: Optional[str] = Field(None, alias="ifMatch", serialization_alias="ifMatch")
     if_modified_since: Optional[str] = Field(None, alias="ifModifiedSince", serialization_alias="ifModifiedSince")
@@ -33,7 +33,7 @@ class BundleEntryRequest(BackboneElement):
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class BundleEntryResponse(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     etag: Optional[str] = Field(None, alias="etag", serialization_alias="etag")
     last_modified: Optional[str] = Field(None, alias="lastModified", serialization_alias="lastModified")
@@ -42,7 +42,7 @@ class BundleEntryResponse(BackboneElement):
     status: Optional[str] = Field(None, alias="status", serialization_alias="status")
 
 class BundleEntry(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     full_url: Optional[str] = Field(None, alias="fullUrl", serialization_alias="fullUrl")
     link: Optional[L[BundleLink]] = Field(None, alias="link", serialization_alias="link")
@@ -53,7 +53,15 @@ class BundleEntry(BackboneElement):
 
 
 class Bundle(Resource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Bundle',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Bundle'
+    )
     
     entry: Optional[L[BundleEntry]] = Field(None, alias="entry", serialization_alias="entry")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")

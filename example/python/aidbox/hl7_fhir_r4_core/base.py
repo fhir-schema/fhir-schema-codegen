@@ -8,14 +8,14 @@ from typing import Optional, List as L, Literal
 
 
 class Element(BaseModel):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     extension: Optional[L[Extension]] = Field(None, alias="extension", serialization_alias="extension")
     id: Optional[str] = Field(None, alias="id", serialization_alias="id")
 
 
 class Quantity(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     comparator: Optional[Literal["<", "<=", ">=", ">"]] = Field(None, alias="comparator", serialization_alias="comparator")
@@ -25,19 +25,19 @@ class Quantity(Element):
 
 
 class Age(Quantity):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     pass
 
 
 class BackboneElement(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     modifier_extension: Optional[L[Extension]] = Field(None, alias="modifierExtension", serialization_alias="modifierExtension")
 
 
 class ProductShelfLife(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
     period: Optional[Quantity] = Field(None, alias="period", serialization_alias="period")
@@ -46,13 +46,13 @@ class ProductShelfLife(BackboneElement):
 
 
 class Duration(Quantity):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     pass
 
 
 class Dosage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additional_instruction: Optional[L[CodeableConcept]] = Field(None, alias="additionalInstruction", serialization_alias="additionalInstruction")
     as_needed_boolean: Optional[bool] = Field(None, alias="asNeededBoolean", serialization_alias="asNeededBoolean")
@@ -71,7 +71,7 @@ class Dosage(BackboneElement):
 
 
 class Population(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     age_codeable_concept: Optional[CodeableConcept] = Field(None, alias="ageCodeableConcept", serialization_alias="ageCodeableConcept")
     age_range: Optional[Range] = Field(None, alias="ageRange", serialization_alias="ageRange")
@@ -81,7 +81,7 @@ class Population(BackboneElement):
 
 
 class SampledData(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     data: Optional[str] = Field(None, alias="data", serialization_alias="data")
     dimensions: Optional[PositiveInt] = Field(None, alias="dimensions", serialization_alias="dimensions")
@@ -93,7 +93,7 @@ class SampledData(Element):
 
 
 class ProdCharacteristic(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     color: Optional[L[str]] = Field(None, alias="color", serialization_alias="color")
     depth: Optional[Quantity] = Field(None, alias="depth", serialization_alias="depth")
@@ -109,7 +109,7 @@ class ProdCharacteristic(BackboneElement):
 
 
 class Extension(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
     value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
@@ -165,20 +165,20 @@ class Extension(Element):
 
 
 class Ratio(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     denominator: Optional[Quantity] = Field(None, alias="denominator", serialization_alias="denominator")
     numerator: Optional[Quantity] = Field(None, alias="numerator", serialization_alias="numerator")
 
 
 class Count(Quantity):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     pass
 
 
 class ParameterDefinition(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     max: Optional[str] = Field(None, alias="max", serialization_alias="max")
@@ -190,14 +190,14 @@ class ParameterDefinition(Element):
 
 
 class ContactDetail(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
 
 
 class Address(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     city: Optional[str] = Field(None, alias="city", serialization_alias="city")
     country: Optional[str] = Field(None, alias="country", serialization_alias="country")
@@ -212,7 +212,7 @@ class Address(Element):
 
 
 class Coding(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
@@ -222,7 +222,7 @@ class Coding(Element):
 
 
 class Reference(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -231,7 +231,7 @@ class Reference(Element):
 
 
 class ElementDefinition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
     base: Optional[Element] = Field(None, alias="base", serialization_alias="base")
@@ -433,14 +433,14 @@ class ElementDefinition(BackboneElement):
 
 
 class Period(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     end: Optional[str] = Field(None, alias="end", serialization_alias="end")
     start: Optional[str] = Field(None, alias="start", serialization_alias="start")
 
 
 class HumanName(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     family: Optional[str] = Field(None, alias="family", serialization_alias="family")
     given: Optional[L[str]] = Field(None, alias="given", serialization_alias="given")
@@ -452,7 +452,7 @@ class HumanName(Element):
 
 
 class RelatedArtifact(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     citation: Optional[str] = Field(None, alias="citation", serialization_alias="citation")
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
@@ -464,7 +464,7 @@ class RelatedArtifact(Element):
 
 
 class Expression(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
@@ -474,7 +474,7 @@ class Expression(Element):
 
 
 class MarketingStatus(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
     date_range: Optional[Period] = Field(None, alias="dateRange", serialization_alias="dateRange")
@@ -484,7 +484,7 @@ class MarketingStatus(BackboneElement):
 
 
 class Signature(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     data: Optional[str] = Field(None, alias="data", serialization_alias="data")
     on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
@@ -496,7 +496,7 @@ class Signature(Element):
 
 
 class SubstanceAmount(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
     amount_range: Optional[Range] = Field(None, alias="amountRange", serialization_alias="amountRange")
@@ -507,7 +507,7 @@ class SubstanceAmount(BackboneElement):
 
 
 class Contributor(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
@@ -515,7 +515,7 @@ class Contributor(Element):
 
 
 class UsageContext(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Coding] = Field(None, alias="code", serialization_alias="code")
     value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
@@ -525,7 +525,7 @@ class UsageContext(Element):
 
 
 class Meta(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="ignore")
     
     last_updated: Optional[str] = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
     profile: Optional[L[str]] = Field(None, alias="profile", serialization_alias="profile")
@@ -536,13 +536,13 @@ class Meta(Element):
 
 
 class Distance(Quantity):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     pass
 
 
 class ContactPoint(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
     rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
@@ -552,7 +552,7 @@ class ContactPoint(Element):
 
 
 class Annotation(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     author_reference: Optional[Reference] = Field(None, alias="authorReference", serialization_alias="authorReference")
     author_string: Optional[str] = Field(None, alias="authorString", serialization_alias="authorString")
@@ -561,7 +561,7 @@ class Annotation(Element):
 
 
 class Attachment(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     content_type: Optional[str] = Field(None, alias="contentType", serialization_alias="contentType")
     creation: Optional[str] = Field(None, alias="creation", serialization_alias="creation")
@@ -574,14 +574,14 @@ class Attachment(Element):
 
 
 class Narrative(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     div: Optional[str] = Field(None, alias="div", serialization_alias="div")
     status: Optional[Literal["generated", "extensions", "additional", "empty"]] = Field(None, alias="status", serialization_alias="status")
 
 
 class TriggerDefinition(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     condition: Optional[Expression] = Field(None, alias="condition", serialization_alias="condition")
     data: Optional[L[DataRequirement]] = Field(None, alias="data", serialization_alias="data")
@@ -594,21 +594,21 @@ class TriggerDefinition(Element):
 
 
 class Range(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     high: Optional[Quantity] = Field(None, alias="high", serialization_alias="high")
     low: Optional[Quantity] = Field(None, alias="low", serialization_alias="low")
 
 
 class CodeableConcept(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     coding: Optional[L[Coding]] = Field(None, alias="coding", serialization_alias="coding")
     text: Optional[str] = Field(None, alias="text", serialization_alias="text")
 
 
 class DataRequirement(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code_filter: Optional[L[Element]] = Field(None, alias="codeFilter", serialization_alias="codeFilter")
     date_filter: Optional[L[Element]] = Field(None, alias="dateFilter", serialization_alias="dateFilter")
@@ -622,14 +622,14 @@ class DataRequirement(Element):
 
 
 class Money(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     currency: Optional[str] = Field(None, alias="currency", serialization_alias="currency")
     value: Optional[float] = Field(None, alias="value", serialization_alias="value")
 
 
 class Identifier(Element):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assigner: Optional[Reference] = Field(None, alias="assigner", serialization_alias="assigner")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
@@ -640,7 +640,7 @@ class Identifier(Element):
 
 
 class Timing(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     event: Optional[L[str]] = Field(None, alias="event", serialization_alias="event")

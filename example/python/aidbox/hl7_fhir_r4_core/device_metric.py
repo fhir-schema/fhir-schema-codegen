@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceMetricCalibration(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     state: Optional[Literal["not-calibrated", "calibration-required", "calibrated", "unspecified"]] = Field(None, alias="state", serialization_alias="state")
     time: Optional[str] = Field(None, alias="time", serialization_alias="time")
@@ -19,7 +19,15 @@ class DeviceMetricCalibration(BackboneElement):
 
 
 class DeviceMetric(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DeviceMetric',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DeviceMetric'
+    )
     
     calibration: Optional[L[DeviceMetricCalibration]] = Field(None, alias="calibration", serialization_alias="calibration")
     category: Optional[Literal["measurement", "setting", "calculation", "unspecified"]] = Field(None, alias="category", serialization_alias="category")

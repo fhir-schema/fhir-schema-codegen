@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EvidenceVariableCharacteristic(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     definition_canonical: Optional[str] = Field(None, alias="definitionCanonical", serialization_alias="definitionCanonical")
     definition_codeable_concept: Optional[CodeableConcept] = Field(None, alias="definitionCodeableConcept", serialization_alias="definitionCodeableConcept")
@@ -31,7 +31,15 @@ class EvidenceVariableCharacteristic(BackboneElement):
 
 
 class EvidenceVariable(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='EvidenceVariable',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='EvidenceVariable'
+    )
     
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")

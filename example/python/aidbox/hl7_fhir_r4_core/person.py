@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PersonLink(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assurance: Optional[Literal["level1", "level2", "level3", "level4"]] = Field(None, alias="assurance", serialization_alias="assurance")
     target: Optional[Reference] = Field(None, alias="target", serialization_alias="target")
 
 
 class Person(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Person',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Person'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")

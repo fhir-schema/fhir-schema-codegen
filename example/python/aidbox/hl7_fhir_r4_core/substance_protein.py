@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceProteinSubunit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     c_terminal_modification: Optional[str] = Field(None, alias="cTerminalModification", serialization_alias="cTerminalModification")
     c_terminal_modification_id: Optional[Identifier] = Field(None, alias="cTerminalModificationId", serialization_alias="cTerminalModificationId")
@@ -24,7 +24,15 @@ class SubstanceProteinSubunit(BackboneElement):
 
 
 class SubstanceProtein(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SubstanceProtein',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SubstanceProtein'
+    )
     
     disulfide_linkage: Optional[L[str]] = Field(None, alias="disulfideLinkage", serialization_alias="disulfideLinkage")
     number_of_subunits: Optional[int] = Field(None, alias="numberOfSubunits", serialization_alias="numberOfSubunits")

@@ -11,33 +11,33 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceDeviceName(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     type: Optional[Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"]] = Field(None, alias="type", serialization_alias="type")
 
 class DeviceProperty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
     value_code: Optional[L[CodeableConcept]] = Field(None, alias="valueCode", serialization_alias="valueCode")
     value_quantity: Optional[L[Quantity]] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class DeviceSpecialization(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     system_type: Optional[CodeableConcept] = Field(None, alias="systemType", serialization_alias="systemType")
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class DeviceVersion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     component: Optional[Identifier] = Field(None, alias="component", serialization_alias="component")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class DeviceUdiCarrier(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     carrier_aidc: Optional[str] = Field(None, alias="carrierAIDC", serialization_alias="carrierAIDC")
     carrier_hrf: Optional[str] = Field(None, alias="carrierHRF", serialization_alias="carrierHRF")
@@ -48,7 +48,15 @@ class DeviceUdiCarrier(BackboneElement):
 
 
 class Device(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Device',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Device'
+    )
     
     contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")
     definition: Optional[Reference] = Field(None, alias="definition", serialization_alias="definition")

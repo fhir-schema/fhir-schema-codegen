@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class HealthcareServiceAvailableTime(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     all_day: Optional[bool] = Field(None, alias="allDay", serialization_alias="allDay")
     available_end_time: Optional[str] = Field(None, alias="availableEndTime", serialization_alias="availableEndTime")
@@ -19,20 +19,28 @@ class HealthcareServiceAvailableTime(BackboneElement):
     days_of_week: Optional[L[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]]] = Field(None, alias="daysOfWeek", serialization_alias="daysOfWeek")
 
 class HealthcareServiceNotAvailable(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     during: Optional[Period] = Field(None, alias="during", serialization_alias="during")
 
 class HealthcareServiceEligibility(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
 
 
 class HealthcareService(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='HealthcareService',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='HealthcareService'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     appointment_required: Optional[bool] = Field(None, alias="appointmentRequired", serialization_alias="appointmentRequired")

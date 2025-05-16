@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ObservationDefinitionQuantitativeDetails(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     conversion_factor: Optional[float] = Field(None, alias="conversionFactor", serialization_alias="conversionFactor")
     customary_unit: Optional[CodeableConcept] = Field(None, alias="customaryUnit", serialization_alias="customaryUnit")
@@ -19,7 +19,7 @@ class ObservationDefinitionQuantitativeDetails(BackboneElement):
     unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
 
 class ObservationDefinitionQualifiedInterval(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     age: Optional[Range] = Field(None, alias="age", serialization_alias="age")
     applies_to: Optional[L[CodeableConcept]] = Field(None, alias="appliesTo", serialization_alias="appliesTo")
@@ -32,7 +32,15 @@ class ObservationDefinitionQualifiedInterval(BackboneElement):
 
 
 class ObservationDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ObservationDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ObservationDefinition'
+    )
     
     abnormal_coded_value_set: Optional[Reference] = Field(None, alias="abnormalCodedValueSet", serialization_alias="abnormalCodedValueSet")
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")

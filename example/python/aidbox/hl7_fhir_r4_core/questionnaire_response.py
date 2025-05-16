@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class QuestionnaireResponseItemAnswer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
     value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
@@ -28,7 +28,7 @@ class QuestionnaireResponseItemAnswer(BackboneElement):
     value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class QuestionnaireResponseItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     answer: Optional[L[QuestionnaireResponseItemAnswer]] = Field(None, alias="answer", serialization_alias="answer")
     definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
@@ -38,7 +38,15 @@ class QuestionnaireResponseItem(BackboneElement):
 
 
 class QuestionnaireResponse(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='QuestionnaireResponse',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='QuestionnaireResponse'
+    )
     
     author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
     authored: Optional[str] = Field(None, alias="authored", serialization_alias="authored")

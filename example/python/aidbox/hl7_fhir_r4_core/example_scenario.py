@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ExampleScenarioInstanceVersion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     version_id: Optional[str] = Field(None, alias="versionId", serialization_alias="versionId")
 
 class ExampleScenarioInstanceContainedInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     resource_id: Optional[str] = Field(None, alias="resourceId", serialization_alias="resourceId")
     version_id: Optional[str] = Field(None, alias="versionId", serialization_alias="versionId")
 
 class ExampleScenarioInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contained_instance: Optional[L[ExampleScenarioInstanceContainedInstance]] = Field(None, alias="containedInstance", serialization_alias="containedInstance")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -33,7 +33,7 @@ class ExampleScenarioInstance(BackboneElement):
     version: Optional[L[ExampleScenarioInstanceVersion]] = Field(None, alias="version", serialization_alias="version")
 
 class ExampleScenarioProcessStepOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     initiator: Optional[str] = Field(None, alias="initiator", serialization_alias="initiator")
@@ -47,14 +47,14 @@ class ExampleScenarioProcessStepOperation(BackboneElement):
     type: Optional[str] = Field(None, alias="type", serialization_alias="type")
 
 class ExampleScenarioProcessStepAlternative(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     step: Optional[L[ExampleScenarioProcessStep]] = Field(None, alias="step", serialization_alias="step")
     title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class ExampleScenarioProcessStep(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     alternative: Optional[L[ExampleScenarioProcessStepAlternative]] = Field(None, alias="alternative", serialization_alias="alternative")
     operation: Optional[ExampleScenarioProcessStepOperation] = Field(None, alias="operation", serialization_alias="operation")
@@ -62,7 +62,7 @@ class ExampleScenarioProcessStep(BackboneElement):
     process: Optional[L[ExampleScenarioProcess]] = Field(None, alias="process", serialization_alias="process")
 
 class ExampleScenarioProcess(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     post_conditions: Optional[str] = Field(None, alias="postConditions", serialization_alias="postConditions")
@@ -71,7 +71,7 @@ class ExampleScenarioProcess(BackboneElement):
     title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class ExampleScenarioActor(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor_id: Optional[str] = Field(None, alias="actorId", serialization_alias="actorId")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -80,7 +80,15 @@ class ExampleScenarioActor(BackboneElement):
 
 
 class ExampleScenario(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ExampleScenario',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ExampleScenario'
+    )
     
     actor: Optional[L[ExampleScenarioActor]] = Field(None, alias="actor", serialization_alias="actor")
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")

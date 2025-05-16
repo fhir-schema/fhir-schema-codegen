@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AppointmentResponse(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='AppointmentResponse',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='AppointmentResponse'
+    )
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     appointment: Optional[Reference] = Field(None, alias="appointment", serialization_alias="appointment")

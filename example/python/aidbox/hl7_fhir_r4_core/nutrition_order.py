@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class NutritionOrderOralDietNutrient(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Quantity] = Field(None, alias="amount", serialization_alias="amount")
     modifier: Optional[CodeableConcept] = Field(None, alias="modifier", serialization_alias="modifier")
 
 class NutritionOrderOralDietTexture(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     food_type: Optional[CodeableConcept] = Field(None, alias="foodType", serialization_alias="foodType")
     modifier: Optional[CodeableConcept] = Field(None, alias="modifier", serialization_alias="modifier")
 
 class NutritionOrderOralDiet(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     fluid_consistency_type: Optional[L[CodeableConcept]] = Field(None, alias="fluidConsistencyType", serialization_alias="fluidConsistencyType")
     instruction: Optional[str] = Field(None, alias="instruction", serialization_alias="instruction")
@@ -33,7 +33,7 @@ class NutritionOrderOralDiet(BackboneElement):
     type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
 
 class NutritionOrderEnteralFormulaAdministration(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
     rate_quantity: Optional[Quantity] = Field(None, alias="rateQuantity", serialization_alias="rateQuantity")
@@ -41,7 +41,7 @@ class NutritionOrderEnteralFormulaAdministration(BackboneElement):
     schedule: Optional[Timing] = Field(None, alias="schedule", serialization_alias="schedule")
 
 class NutritionOrderEnteralFormula(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additive_product_name: Optional[str] = Field(None, alias="additiveProductName", serialization_alias="additiveProductName")
     additive_type: Optional[CodeableConcept] = Field(None, alias="additiveType", serialization_alias="additiveType")
@@ -54,7 +54,7 @@ class NutritionOrderEnteralFormula(BackboneElement):
     routeof_administration: Optional[CodeableConcept] = Field(None, alias="routeofAdministration", serialization_alias="routeofAdministration")
 
 class NutritionOrderSupplement(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     instruction: Optional[str] = Field(None, alias="instruction", serialization_alias="instruction")
     product_name: Optional[str] = Field(None, alias="productName", serialization_alias="productName")
@@ -64,7 +64,15 @@ class NutritionOrderSupplement(BackboneElement):
 
 
 class NutritionOrder(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='NutritionOrder',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='NutritionOrder'
+    )
     
     allergy_intolerance: Optional[L[Reference]] = Field(None, alias="allergyIntolerance", serialization_alias="allergyIntolerance")
     date_time: Optional[str] = Field(None, alias="dateTime", serialization_alias="dateTime")

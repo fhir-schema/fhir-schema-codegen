@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ObservationReferenceRange(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     age: Optional[Range] = Field(None, alias="age", serialization_alias="age")
     applies_to: Optional[L[CodeableConcept]] = Field(None, alias="appliesTo", serialization_alias="appliesTo")
@@ -21,7 +21,7 @@ class ObservationReferenceRange(BackboneElement):
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class ObservationComponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     data_absent_reason: Optional[CodeableConcept] = Field(None, alias="dataAbsentReason", serialization_alias="dataAbsentReason")
@@ -41,7 +41,15 @@ class ObservationComponent(BackboneElement):
 
 
 class Observation(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Observation',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Observation'
+    )
     
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
     body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")

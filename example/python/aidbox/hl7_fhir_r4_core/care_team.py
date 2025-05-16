@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CareTeamParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     member: Optional[Reference] = Field(None, alias="member", serialization_alias="member")
     on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
@@ -20,7 +20,15 @@ class CareTeamParticipant(BackboneElement):
 
 
 class CareTeam(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CareTeam',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CareTeam'
+    )
     
     category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
     encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")

@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class TerminologyCapabilitiesExpansionParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
 
 class TerminologyCapabilitiesExpansion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     hierarchical: Optional[bool] = Field(None, alias="hierarchical", serialization_alias="hierarchical")
     incomplete: Optional[bool] = Field(None, alias="incomplete", serialization_alias="incomplete")
@@ -26,23 +26,23 @@ class TerminologyCapabilitiesExpansion(BackboneElement):
     text_filter: Optional[str] = Field(None, alias="textFilter", serialization_alias="textFilter")
 
 class TerminologyCapabilitiesValidateCode(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     translations: Optional[bool] = Field(None, alias="translations", serialization_alias="translations")
 
 class TerminologyCapabilitiesTranslation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     needs_map: Optional[bool] = Field(None, alias="needsMap", serialization_alias="needsMap")
 
 class TerminologyCapabilitiesCodeSystemVersionFilter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     op: Optional[L[str]] = Field(None, alias="op", serialization_alias="op")
 
 class TerminologyCapabilitiesCodeSystemVersion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     compositional: Optional[bool] = Field(None, alias="compositional", serialization_alias="compositional")
@@ -52,32 +52,40 @@ class TerminologyCapabilitiesCodeSystemVersion(BackboneElement):
     property: Optional[L[str]] = Field(None, alias="property", serialization_alias="property")
 
 class TerminologyCapabilitiesCodeSystem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     subsumption: Optional[bool] = Field(None, alias="subsumption", serialization_alias="subsumption")
     uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
     version: Optional[L[TerminologyCapabilitiesCodeSystemVersion]] = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesSoftware(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesImplementation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class TerminologyCapabilitiesClosure(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     translation: Optional[bool] = Field(None, alias="translation", serialization_alias="translation")
 
 
 class TerminologyCapabilities(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='TerminologyCapabilities',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='TerminologyCapabilities'
+    )
     
     closure: Optional[TerminologyCapabilitiesClosure] = Field(None, alias="closure", serialization_alias="closure")
     code_search: Optional[Literal["explicit", "all"]] = Field(None, alias="codeSearch", serialization_alias="codeSearch")

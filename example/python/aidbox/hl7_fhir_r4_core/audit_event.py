@@ -11,20 +11,20 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class AuditEventSource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     observer: Optional[Reference] = Field(None, alias="observer", serialization_alias="observer")
     site: Optional[str] = Field(None, alias="site", serialization_alias="site")
     type: Optional[L[Coding]] = Field(None, alias="type", serialization_alias="type")
 
 class AuditEventAgentNetwork(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     address: Optional[str] = Field(None, alias="address", serialization_alias="address")
     type: Optional[Literal["1", "2", "3", "4", "5"]] = Field(None, alias="type", serialization_alias="type")
 
 class AuditEventAgent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     alt_id: Optional[str] = Field(None, alias="altId", serialization_alias="altId")
     location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
@@ -39,14 +39,14 @@ class AuditEventAgent(BackboneElement):
     who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
 
 class AuditEventEntityDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     type: Optional[str] = Field(None, alias="type", serialization_alias="type")
     value_base64binary: Optional[str] = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
     value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
 
 class AuditEventEntity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     detail: Optional[L[AuditEventEntityDetail]] = Field(None, alias="detail", serialization_alias="detail")
@@ -60,7 +60,15 @@ class AuditEventEntity(BackboneElement):
 
 
 class AuditEvent(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='AuditEvent',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='AuditEvent'
+    )
     
     action: Optional[Literal["C", "R", "U", "D", "E"]] = Field(None, alias="action", serialization_alias="action")
     agent: Optional[L[AuditEventAgent]] = Field(None, alias="agent", serialization_alias="agent")

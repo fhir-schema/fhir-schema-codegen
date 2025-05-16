@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ConceptMapGroupElementTargetDependsOn(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
     property: Optional[str] = Field(None, alias="property", serialization_alias="property")
@@ -19,7 +19,7 @@ class ConceptMapGroupElementTargetDependsOn(BackboneElement):
     value: Optional[str] = Field(None, alias="value", serialization_alias="value")
 
 class ConceptMapGroupElementTarget(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
@@ -29,14 +29,14 @@ class ConceptMapGroupElementTarget(BackboneElement):
     product: Optional[L[ConceptMapGroupElementTargetDependsOn]] = Field(None, alias="product", serialization_alias="product")
 
 class ConceptMapGroupElement(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
     target: Optional[L[ConceptMapGroupElementTarget]] = Field(None, alias="target", serialization_alias="target")
 
 class ConceptMapGroupUnmapped(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[str] = Field(None, alias="code", serialization_alias="code")
     display: Optional[str] = Field(None, alias="display", serialization_alias="display")
@@ -44,7 +44,7 @@ class ConceptMapGroupUnmapped(BackboneElement):
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class ConceptMapGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     element: Optional[L[ConceptMapGroupElement]] = Field(None, alias="element", serialization_alias="element")
     source: Optional[str] = Field(None, alias="source", serialization_alias="source")
@@ -55,7 +55,15 @@ class ConceptMapGroup(BackboneElement):
 
 
 class ConceptMap(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ConceptMap',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ConceptMap'
+    )
     
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
     copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")

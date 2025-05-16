@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class OrganizationContact(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
     name: Optional[HumanName] = Field(None, alias="name", serialization_alias="name")
@@ -20,7 +20,15 @@ class OrganizationContact(BackboneElement):
 
 
 class Organization(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Organization',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Organization'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")

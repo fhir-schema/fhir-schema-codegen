@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PaymentReconciliationProcessNote(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     text: Optional[str] = Field(None, alias="text", serialization_alias="text")
     type: Optional[Literal["display", "print", "printoper"]] = Field(None, alias="type", serialization_alias="type")
 
 class PaymentReconciliationDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
@@ -32,7 +32,15 @@ class PaymentReconciliationDetail(BackboneElement):
 
 
 class PaymentReconciliation(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='PaymentReconciliation',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='PaymentReconciliation'
+    )
     
     created: Optional[str] = Field(None, alias="created", serialization_alias="created")
     detail: Optional[L[PaymentReconciliationDetail]] = Field(None, alias="detail", serialization_alias="detail")

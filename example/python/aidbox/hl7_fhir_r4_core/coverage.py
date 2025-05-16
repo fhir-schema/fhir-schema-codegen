@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CoverageCostToBeneficiaryException(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class CoverageCostToBeneficiary(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     exception: Optional[L[CoverageCostToBeneficiaryException]] = Field(None, alias="exception", serialization_alias="exception")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
@@ -25,7 +25,7 @@ class CoverageCostToBeneficiary(BackboneElement):
     value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class CoverageClass(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
@@ -33,7 +33,15 @@ class CoverageClass(BackboneElement):
 
 
 class Coverage(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Coverage',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Coverage'
+    )
     
     beneficiary: Optional[Reference] = Field(None, alias="beneficiary", serialization_alias="beneficiary")
     class_: Optional[L[CoverageClass]] = Field(None, alias="class", serialization_alias="class")

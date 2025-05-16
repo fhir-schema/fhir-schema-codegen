@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicinalProductIndicationOtherTherapy(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
     medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
@@ -19,7 +19,15 @@ class MedicinalProductIndicationOtherTherapy(BackboneElement):
 
 
 class MedicinalProductIndication(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MedicinalProductIndication',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MedicinalProductIndication'
+    )
     
     comorbidity: Optional[L[CodeableConcept]] = Field(None, alias="comorbidity", serialization_alias="comorbidity")
     disease_status: Optional[CodeableConcept] = Field(None, alias="diseaseStatus", serialization_alias="diseaseStatus")

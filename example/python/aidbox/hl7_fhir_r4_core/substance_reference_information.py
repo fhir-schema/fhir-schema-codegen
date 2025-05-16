@@ -11,21 +11,21 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceReferenceInformationGene(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     gene: Optional[CodeableConcept] = Field(None, alias="gene", serialization_alias="gene")
     gene_sequence_origin: Optional[CodeableConcept] = Field(None, alias="geneSequenceOrigin", serialization_alias="geneSequenceOrigin")
     source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
 
 class SubstanceReferenceInformationGeneElement(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     element: Optional[Identifier] = Field(None, alias="element", serialization_alias="element")
     source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class SubstanceReferenceInformationClassification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     classification: Optional[CodeableConcept] = Field(None, alias="classification", serialization_alias="classification")
     domain: Optional[CodeableConcept] = Field(None, alias="domain", serialization_alias="domain")
@@ -33,7 +33,7 @@ class SubstanceReferenceInformationClassification(BackboneElement):
     subtype: Optional[L[CodeableConcept]] = Field(None, alias="subtype", serialization_alias="subtype")
 
 class SubstanceReferenceInformationTarget(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
     amount_range: Optional[Range] = Field(None, alias="amountRange", serialization_alias="amountRange")
@@ -48,7 +48,15 @@ class SubstanceReferenceInformationTarget(BackboneElement):
 
 
 class SubstanceReferenceInformation(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SubstanceReferenceInformation',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SubstanceReferenceInformation'
+    )
     
     classification: Optional[L[SubstanceReferenceInformationClassification]] = Field(None, alias="classification", serialization_alias="classification")
     comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")

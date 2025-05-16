@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class PractitionerQualification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -20,7 +20,15 @@ class PractitionerQualification(BackboneElement):
 
 
 class Practitioner(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Practitioner',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Practitioner'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")

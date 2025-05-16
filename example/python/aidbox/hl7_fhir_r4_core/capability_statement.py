@@ -11,26 +11,26 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CapabilityStatementDocument(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     mode: Optional[Literal["producer", "consumer"]] = Field(None, alias="mode", serialization_alias="mode")
     profile: Optional[str] = Field(None, alias="profile", serialization_alias="profile")
 
 class CapabilityStatementMessagingEndpoint(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     address: Optional[str] = Field(None, alias="address", serialization_alias="address")
     protocol: Optional[Coding] = Field(None, alias="protocol", serialization_alias="protocol")
 
 class CapabilityStatementMessagingSupportedMessage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
     mode: Optional[Literal["sender", "receiver"]] = Field(None, alias="mode", serialization_alias="mode")
 
 class CapabilityStatementMessaging(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     endpoint: Optional[L[CapabilityStatementMessagingEndpoint]] = Field(None, alias="endpoint", serialization_alias="endpoint")
@@ -38,28 +38,28 @@ class CapabilityStatementMessaging(BackboneElement):
     supported_message: Optional[L[CapabilityStatementMessagingSupportedMessage]] = Field(None, alias="supportedMessage", serialization_alias="supportedMessage")
 
 class CapabilityStatementSoftware(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     release_date: Optional[str] = Field(None, alias="releaseDate", serialization_alias="releaseDate")
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class CapabilityStatementImplementation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     custodian: Optional[Reference] = Field(None, alias="custodian", serialization_alias="custodian")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     url: Optional[str] = Field(None, alias="url", serialization_alias="url")
 
 class CapabilityStatementRestSecurity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     cors: Optional[bool] = Field(None, alias="cors", serialization_alias="cors")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
     service: Optional[L[CodeableConcept]] = Field(None, alias="service", serialization_alias="service")
 
 class CapabilityStatementRestResourceSearchParam(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
@@ -67,20 +67,20 @@ class CapabilityStatementRestResourceSearchParam(BackboneElement):
     type: Optional[Literal["number", "date", "string", "token", "reference", "composite", "quantity", "uri", "special"]] = Field(None, alias="type", serialization_alias="type")
 
 class CapabilityStatementRestResourceOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
 
 class CapabilityStatementRestResourceInteraction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Literal["read", "vread", "update", "patch", "delete", "history-instance", "history-type", "create", "search-type", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"]] = Field(None, alias="code", serialization_alias="code")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
 
 class CapabilityStatementRestResource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     conditional_create: Optional[bool] = Field(None, alias="conditionalCreate", serialization_alias="conditionalCreate")
     conditional_delete: Optional[Literal["not-supported", "single", "multiple"]] = Field(None, alias="conditionalDelete", serialization_alias="conditionalDelete")
@@ -101,13 +101,13 @@ class CapabilityStatementRestResource(BackboneElement):
     versioning: Optional[Literal["no-version", "versioned", "versioned-update"]] = Field(None, alias="versioning", serialization_alias="versioning")
 
 class CapabilityStatementRestInteraction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Literal["transaction", "batch", "search-system", "history-system", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"]] = Field(None, alias="code", serialization_alias="code")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
 
 class CapabilityStatementRest(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     compartment: Optional[L[str]] = Field(None, alias="compartment", serialization_alias="compartment")
     documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
@@ -120,7 +120,15 @@ class CapabilityStatementRest(BackboneElement):
 
 
 class CapabilityStatement(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='CapabilityStatement',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='CapabilityStatement'
+    )
     
     contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
     copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")

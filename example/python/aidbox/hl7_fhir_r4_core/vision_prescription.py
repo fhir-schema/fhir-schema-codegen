@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class VisionPrescriptionLensSpecificationPrism(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Optional[float] = Field(None, alias="amount", serialization_alias="amount")
     base: Optional[Literal["up", "down", "in", "out"]] = Field(None, alias="base", serialization_alias="base")
 
 class VisionPrescriptionLensSpecification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     add: Optional[float] = Field(None, alias="add", serialization_alias="add")
     axis: Optional[int] = Field(None, alias="axis", serialization_alias="axis")
@@ -36,7 +36,15 @@ class VisionPrescriptionLensSpecification(BackboneElement):
 
 
 class VisionPrescription(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='VisionPrescription',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='VisionPrescription'
+    )
     
     created: Optional[str] = Field(None, alias="created", serialization_alias="created")
     date_written: Optional[str] = Field(None, alias="dateWritten", serialization_alias="dateWritten")

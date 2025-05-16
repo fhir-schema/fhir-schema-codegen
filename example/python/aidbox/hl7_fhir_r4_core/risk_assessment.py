@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RiskAssessmentPrediction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     outcome: Optional[CodeableConcept] = Field(None, alias="outcome", serialization_alias="outcome")
     probability_decimal: Optional[float] = Field(None, alias="probabilityDecimal", serialization_alias="probabilityDecimal")
@@ -24,7 +24,15 @@ class RiskAssessmentPrediction(BackboneElement):
 
 
 class RiskAssessment(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='RiskAssessment',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='RiskAssessment'
+    )
     
     based_on: Optional[Reference] = Field(None, alias="basedOn", serialization_alias="basedOn")
     basis: Optional[L[Reference]] = Field(None, alias="basis", serialization_alias="basis")

@@ -11,14 +11,22 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class RelatedPersonCommunication(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     language: Optional[CodeableConcept] = Field(None, alias="language", serialization_alias="language")
     preferred: Optional[bool] = Field(None, alias="preferred", serialization_alias="preferred")
 
 
 class RelatedPerson(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='RelatedPerson',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='RelatedPerson'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")

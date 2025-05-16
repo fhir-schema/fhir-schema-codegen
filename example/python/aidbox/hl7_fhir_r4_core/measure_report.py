@@ -11,27 +11,27 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MeasureReportGroupPopulation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     count: Optional[int] = Field(None, alias="count", serialization_alias="count")
     subject_results: Optional[Reference] = Field(None, alias="subjectResults", serialization_alias="subjectResults")
 
 class MeasureReportGroupStratifierStratumComponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     value: Optional[CodeableConcept] = Field(None, alias="value", serialization_alias="value")
 
 class MeasureReportGroupStratifierStratumPopulation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     count: Optional[int] = Field(None, alias="count", serialization_alias="count")
     subject_results: Optional[Reference] = Field(None, alias="subjectResults", serialization_alias="subjectResults")
 
 class MeasureReportGroupStratifierStratum(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     component: Optional[L[MeasureReportGroupStratifierStratumComponent]] = Field(None, alias="component", serialization_alias="component")
     measure_score: Optional[Quantity] = Field(None, alias="measureScore", serialization_alias="measureScore")
@@ -39,13 +39,13 @@ class MeasureReportGroupStratifierStratum(BackboneElement):
     value: Optional[CodeableConcept] = Field(None, alias="value", serialization_alias="value")
 
 class MeasureReportGroupStratifier(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
     stratum: Optional[L[MeasureReportGroupStratifierStratum]] = Field(None, alias="stratum", serialization_alias="stratum")
 
 class MeasureReportGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     measure_score: Optional[Quantity] = Field(None, alias="measureScore", serialization_alias="measureScore")
@@ -54,7 +54,15 @@ class MeasureReportGroup(BackboneElement):
 
 
 class MeasureReport(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='MeasureReport',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='MeasureReport'
+    )
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     evaluated_resource: Optional[L[Reference]] = Field(None, alias="evaluatedResource", serialization_alias="evaluatedResource")

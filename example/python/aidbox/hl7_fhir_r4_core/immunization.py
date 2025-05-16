@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImmunizationProtocolApplied(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
     dose_number_positive_int: Optional[PositiveInt] = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
@@ -22,7 +22,7 @@ class ImmunizationProtocolApplied(BackboneElement):
     target_disease: Optional[L[CodeableConcept]] = Field(None, alias="targetDisease", serialization_alias="targetDisease")
 
 class ImmunizationEducation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     document_type: Optional[str] = Field(None, alias="documentType", serialization_alias="documentType")
     presentation_date: Optional[str] = Field(None, alias="presentationDate", serialization_alias="presentationDate")
@@ -30,21 +30,29 @@ class ImmunizationEducation(BackboneElement):
     reference: Optional[str] = Field(None, alias="reference", serialization_alias="reference")
 
 class ImmunizationReaction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     detail: Optional[Reference] = Field(None, alias="detail", serialization_alias="detail")
     reported: Optional[bool] = Field(None, alias="reported", serialization_alias="reported")
 
 class ImmunizationPerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 
 class Immunization(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Immunization',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Immunization'
+    )
     
     dose_quantity: Optional[Quantity] = Field(None, alias="doseQuantity", serialization_alias="doseQuantity")
     education: Optional[L[ImmunizationEducation]] = Field(None, alias="education", serialization_alias="education")

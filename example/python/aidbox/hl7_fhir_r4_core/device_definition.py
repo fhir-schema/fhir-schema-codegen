@@ -11,39 +11,39 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DeviceDefinitionDeviceName(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     type: Optional[Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"]] = Field(None, alias="type", serialization_alias="type")
 
 class DeviceDefinitionProperty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
     value_code: Optional[L[CodeableConcept]] = Field(None, alias="valueCode", serialization_alias="valueCode")
     value_quantity: Optional[L[Quantity]] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class DeviceDefinitionUdiDeviceIdentifier(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     device_identifier: Optional[str] = Field(None, alias="deviceIdentifier", serialization_alias="deviceIdentifier")
     issuer: Optional[str] = Field(None, alias="issuer", serialization_alias="issuer")
     jurisdiction: Optional[str] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
 
 class DeviceDefinitionCapability(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: Optional[L[CodeableConcept]] = Field(None, alias="description", serialization_alias="description")
     type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
 
 class DeviceDefinitionSpecialization(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     system_type: Optional[str] = Field(None, alias="systemType", serialization_alias="systemType")
     version: Optional[str] = Field(None, alias="version", serialization_alias="version")
 
 class DeviceDefinitionMaterial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     allergenic_indicator: Optional[bool] = Field(None, alias="allergenicIndicator", serialization_alias="allergenicIndicator")
     alternate: Optional[bool] = Field(None, alias="alternate", serialization_alias="alternate")
@@ -51,7 +51,15 @@ class DeviceDefinitionMaterial(BackboneElement):
 
 
 class DeviceDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DeviceDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DeviceDefinition'
+    )
     
     capability: Optional[L[DeviceDefinitionCapability]] = Field(None, alias="capability", serialization_alias="capability")
     contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")

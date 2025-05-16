@@ -11,20 +11,28 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ActivityDefinitionParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
     type: Optional[Literal["patient", "practitioner", "related-person", "device"]] = Field(None, alias="type", serialization_alias="type")
 
 class ActivityDefinitionDynamicValue(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
     path: Optional[str] = Field(None, alias="path", serialization_alias="path")
 
 
 class ActivityDefinition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ActivityDefinition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ActivityDefinition'
+    )
     
     approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")

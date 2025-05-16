@@ -11,14 +11,14 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class GroupMember(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     entity: Optional[Reference] = Field(None, alias="entity", serialization_alias="entity")
     inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
 
 class GroupCharacteristic(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     exclude: Optional[bool] = Field(None, alias="exclude", serialization_alias="exclude")
@@ -31,7 +31,15 @@ class GroupCharacteristic(BackboneElement):
 
 
 class Group(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Group',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Group'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     actual: Optional[bool] = Field(None, alias="actual", serialization_alias="actual")

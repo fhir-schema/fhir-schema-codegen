@@ -11,13 +11,13 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ProcedureFocalDevice(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: Optional[CodeableConcept] = Field(None, alias="action", serialization_alias="action")
     manipulated: Optional[Reference] = Field(None, alias="manipulated", serialization_alias="manipulated")
 
 class ProcedurePerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
@@ -25,7 +25,15 @@ class ProcedurePerformer(BackboneElement):
 
 
 class Procedure(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Procedure',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Procedure'
+    )
     
     asserter: Optional[Reference] = Field(None, alias="asserter", serialization_alias="asserter")
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class MedicationIngredient(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     is_active: Optional[bool] = Field(None, alias="isActive", serialization_alias="isActive")
     item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
@@ -19,14 +19,22 @@ class MedicationIngredient(BackboneElement):
     strength: Optional[Ratio] = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicationBatch(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expiration_date: Optional[str] = Field(None, alias="expirationDate", serialization_alias="expirationDate")
     lot_number: Optional[str] = Field(None, alias="lotNumber", serialization_alias="lotNumber")
 
 
 class Medication(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Medication',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Medication'
+    )
     
     amount: Optional[Ratio] = Field(None, alias="amount", serialization_alias="amount")
     batch: Optional[MedicationBatch] = Field(None, alias="batch", serialization_alias="batch")

@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class CompositionSection(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
@@ -25,21 +25,21 @@ class CompositionSection(BackboneElement):
     title: Optional[str] = Field(None, alias="title", serialization_alias="title")
 
 class CompositionAttester(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     mode: Optional[Literal["personal", "professional", "legal", "official"]] = Field(None, alias="mode", serialization_alias="mode")
     party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
     time: Optional[str] = Field(None, alias="time", serialization_alias="time")
 
 class CompositionEvent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
     detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
     period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
 
 class CompositionRelatesTo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Literal["replaces", "transforms", "signs", "appends"]] = Field(None, alias="code", serialization_alias="code")
     target_identifier: Optional[Identifier] = Field(None, alias="targetIdentifier", serialization_alias="targetIdentifier")
@@ -47,7 +47,15 @@ class CompositionRelatesTo(BackboneElement):
 
 
 class Composition(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Composition',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Composition'
+    )
     
     attester: Optional[L[CompositionAttester]] = Field(None, alias="attester", serialization_alias="attester")
     author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")

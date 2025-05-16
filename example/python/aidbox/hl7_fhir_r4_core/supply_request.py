@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SupplyRequestParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
@@ -21,7 +21,15 @@ class SupplyRequestParameter(BackboneElement):
 
 
 class SupplyRequest(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SupplyRequest',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SupplyRequest'
+    )
     
     authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
     category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")

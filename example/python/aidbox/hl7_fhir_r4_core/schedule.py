@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class Schedule(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Schedule',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Schedule'
+    )
     
     active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
     actor: Optional[L[Reference]] = Field(None, alias="actor", serialization_alias="actor")

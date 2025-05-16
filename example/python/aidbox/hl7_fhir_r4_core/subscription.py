@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubscriptionChannel(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     endpoint: Optional[str] = Field(None, alias="endpoint", serialization_alias="endpoint")
     header: Optional[L[str]] = Field(None, alias="header", serialization_alias="header")
@@ -20,7 +20,15 @@ class SubscriptionChannel(BackboneElement):
 
 
 class Subscription(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Subscription',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Subscription'
+    )
     
     channel: Optional[SubscriptionChannel] = Field(None, alias="channel", serialization_alias="channel")
     contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")

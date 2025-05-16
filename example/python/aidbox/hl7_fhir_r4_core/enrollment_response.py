@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class EnrollmentResponse(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='EnrollmentResponse',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='EnrollmentResponse'
+    )
     
     created: Optional[str] = Field(None, alias="created", serialization_alias="created")
     disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")

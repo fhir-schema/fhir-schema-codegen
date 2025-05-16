@@ -11,7 +11,15 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ServiceRequest(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ServiceRequest',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ServiceRequest'
+    )
     
     as_needed_boolean: Optional[bool] = Field(None, alias="asNeededBoolean", serialization_alias="asNeededBoolean")
     as_needed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="asNeededCodeableConcept", serialization_alias="asNeededCodeableConcept")

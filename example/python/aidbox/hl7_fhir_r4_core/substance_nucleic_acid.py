@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class SubstanceNucleicAcidSubunitLinkage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     connectivity: Optional[str] = Field(None, alias="connectivity", serialization_alias="connectivity")
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
@@ -19,14 +19,14 @@ class SubstanceNucleicAcidSubunitLinkage(BackboneElement):
     residue_site: Optional[str] = Field(None, alias="residueSite", serialization_alias="residueSite")
 
 class SubstanceNucleicAcidSubunitSugar(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     residue_site: Optional[str] = Field(None, alias="residueSite", serialization_alias="residueSite")
 
 class SubstanceNucleicAcidSubunit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     five_prime: Optional[CodeableConcept] = Field(None, alias="fivePrime", serialization_alias="fivePrime")
     length: Optional[int] = Field(None, alias="length", serialization_alias="length")
@@ -39,7 +39,15 @@ class SubstanceNucleicAcidSubunit(BackboneElement):
 
 
 class SubstanceNucleicAcid(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='SubstanceNucleicAcid',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='SubstanceNucleicAcid'
+    )
     
     area_of_hybridisation: Optional[str] = Field(None, alias="areaOfHybridisation", serialization_alias="areaOfHybridisation")
     number_of_subunits: Optional[int] = Field(None, alias="numberOfSubunits", serialization_alias="numberOfSubunits")

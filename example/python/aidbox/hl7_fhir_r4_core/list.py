@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ListEntry(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")
     deleted: Optional[bool] = Field(None, alias="deleted", serialization_alias="deleted")
@@ -20,7 +20,15 @@ class ListEntry(BackboneElement):
 
 
 class List(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='List',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='List'
+    )
     
     code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
     date: Optional[str] = Field(None, alias="date", serialization_alias="date")

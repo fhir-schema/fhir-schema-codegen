@@ -11,19 +11,19 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class DocumentReferenceContent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     attachment: Optional[Attachment] = Field(None, alias="attachment", serialization_alias="attachment")
     format: Optional[Coding] = Field(None, alias="format", serialization_alias="format")
 
 class DocumentReferenceRelatesTo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: Optional[Literal["replaces", "transforms", "signs", "appends"]] = Field(None, alias="code", serialization_alias="code")
     target: Optional[Reference] = Field(None, alias="target", serialization_alias="target")
 
 class DocumentReferenceContext(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     encounter: Optional[L[Reference]] = Field(None, alias="encounter", serialization_alias="encounter")
     event: Optional[L[CodeableConcept]] = Field(None, alias="event", serialization_alias="event")
@@ -35,7 +35,15 @@ class DocumentReferenceContext(BackboneElement):
 
 
 class DocumentReference(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='DocumentReference',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='DocumentReference'
+    )
     
     authenticator: Optional[Reference] = Field(None, alias="authenticator", serialization_alias="authenticator")
     author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")

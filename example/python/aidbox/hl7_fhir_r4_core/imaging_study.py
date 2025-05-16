@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class ImagingStudySeriesInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     number: Optional[int] = Field(None, alias="number", serialization_alias="number")
     sop_class: Optional[Coding] = Field(None, alias="sopClass", serialization_alias="sopClass")
@@ -19,13 +19,13 @@ class ImagingStudySeriesInstance(BackboneElement):
     uid: Optional[str] = Field(None, alias="uid", serialization_alias="uid")
 
 class ImagingStudySeriesPerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
     function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
 
 class ImagingStudySeries(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     body_site: Optional[Coding] = Field(None, alias="bodySite", serialization_alias="bodySite")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")
@@ -42,7 +42,15 @@ class ImagingStudySeries(BackboneElement):
 
 
 class ImagingStudy(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='ImagingStudy',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='ImagingStudy'
+    )
     
     based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
     description: Optional[str] = Field(None, alias="description", serialization_alias="description")

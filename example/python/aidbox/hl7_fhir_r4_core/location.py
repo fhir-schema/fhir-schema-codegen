@@ -11,7 +11,7 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 
 
 class LocationHoursOfOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     all_day: Optional[bool] = Field(None, alias="allDay", serialization_alias="allDay")
     closing_time: Optional[str] = Field(None, alias="closingTime", serialization_alias="closingTime")
@@ -19,7 +19,7 @@ class LocationHoursOfOperation(BackboneElement):
     opening_time: Optional[str] = Field(None, alias="openingTime", serialization_alias="openingTime")
 
 class LocationPosition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     altitude: Optional[float] = Field(None, alias="altitude", serialization_alias="altitude")
     latitude: Optional[float] = Field(None, alias="latitude", serialization_alias="latitude")
@@ -27,7 +27,15 @@ class LocationPosition(BackboneElement):
 
 
 class Location(DomainResource):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True)
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_type: str = Field(
+        default='Location',
+        alias='resourceType',
+        serialization_alias='resourceType',
+        frozen=True,
+        pattern='Location'
+    )
     
     address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
     alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
