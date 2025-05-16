@@ -1,5 +1,4 @@
-from aidbox.hl7_fhir_r4_core import Patient
-from aidbox.hl7_fhir_r4_core.base import HumanName, Identifier
+from aidbox.hl7_fhir_r4_core import Patient, HumanName, Identifier
 
 from aidbox.client import Client, Auth, AuthCredentials
 from pprint import pprint

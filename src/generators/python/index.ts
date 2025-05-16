@@ -408,10 +408,11 @@ export class PythonGenerator extends Generator {
             }
             this.line();
             this.squareBlock(['__all__', '='], () => {
-                for (const schemaName of [...names].sort((a, b) =>
-                    a.identifier.name.localeCompare(b.identifier.name),
-                )) {
-                    this.line(`'${schemaName.identifier.name}',`);
+                for (const schemaName of [
+                    ...(packageComplexTypes || []).map((t) => t.identifier.name),
+                    ...names.map((t) => t.identifier.name),
+                ].sort()) {
+                    this.line(`'${schemaName}',`);
                 }
             });
         });
