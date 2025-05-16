@@ -58,13 +58,6 @@ export class Generator {
         throw Error('Implement this method in target generator type');
     }
 
-    cdHomeDir() {
-        this.currentDir = this.opts.outputDir || '';
-        if (!fs.existsSync(this.currentDir)) {
-            fs.mkdirSync(this.currentDir, { recursive: true });
-        }
-    }
-
     /** Open path related to OUTPUT_PATH, generate content, go back (don't mix with `dir`).*/
     inDir(path: string, gencontent: () => void) {
         const tmp = this.getCurrentDir();
