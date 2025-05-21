@@ -1,7 +1,6 @@
 import pytest
-import uuid
 from typing import Iterator
-from aidbox.hl7_fhir_r4_core import Patient, HumanName, Identifier
+from aidbox.hl7_fhir_r4_core import Patient, HumanName
 from aidbox.client import Client, Auth, AuthCredentials
 
 
@@ -38,7 +37,8 @@ def created_patient(client: Client) -> Iterator[Patient]:
     # This fixture has module scope, so we yield the result for all tests to use
     yield patient
     try:
-        client.delete("Patient", patient.id)
+        if patient.id is not None:
+            client.delete("Patient", patient.id)
     except Exception:
         pass
 
@@ -51,8 +51,8 @@ def test_create_patient(client: Client) -> None:
     )
 
     created = client.create(new_patient)
-
     assert created.id is not None
+    assert created.name is not None
     assert created.name[0].family == "Test"
     assert created.gender == "female"
     assert created.birth_date == "1980-01-01"
@@ -61,18 +61,23 @@ def test_create_patient(client: Client) -> None:
 
 
 def test_read_patient(client: Client, created_patient: Patient) -> None:
+    assert created_patient.name is not None
+    assert created_patient.id is not None
     read_patient = client.read(Patient, created_patient.id)
 
     assert read_patient.id == created_patient.id
+    assert read_patient.name is not None
     assert read_patient.name[0].family == created_patient.name[0].family
     assert read_patient.gender == created_patient.gender
 
 
 def test_update_patient(client: Client, created_patient: Patient) -> None:
+    assert created_patient.id is not None
     patient_to_update = client.read(Patient, created_patient.id)
 
     assert patient_to_update.id == created_patient.id
     assert patient_to_update.gender == "female"
+    assert patient_to_update.name is not None
     assert patient_to_update.name[0].family == "Patient"
 
     patient_to_update.name[0].family = "UpdatedFamily"
@@ -82,6 +87,7 @@ def test_update_patient(client: Client, created_patient: Patient) -> None:
 
     assert updated_patient.id == created_patient.id  # ID should not change
     assert updated_patient.gender == "male"  # Gender should be updated
+    assert updated_patient.name is not None
     assert (
         updated_patient.name[0].family == "UpdatedFamily"
     )  # Family name should be updated
@@ -89,8 +95,10 @@ def test_update_patient(client: Client, created_patient: Patient) -> None:
         "UpdatedGiven"
     ]  # Given name should be updated
 
+    assert created_patient.id is not None
     re_read_patient = client.read(Patient, created_patient.id)
     assert re_read_patient.gender == "male"
+    assert re_read_patient.name is not None
     assert re_read_patient.name[0].family == "UpdatedFamily"
     assert re_read_patient.name[0].given == ["UpdatedGiven"]
 
@@ -118,6 +126,7 @@ def test_delete_patient(client: Client) -> None:
     )
 
     created = client.create(delete_patient)
+    assert created.id is not None
     client.delete("Patient", created.id)
     with pytest.raises(Exception) as _excinfo:
         client.read(Patient, created.id)
