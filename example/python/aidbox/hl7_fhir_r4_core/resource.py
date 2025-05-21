@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal
+from typing import Optional, List as L, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Meta
 

@@ -4,10 +4,11 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal
+from typing import Optional, List as L, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Reference
 from aidbox.hl7_fhir_r4_core.resource import Resource
+from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 
 
 class Binary(Resource):

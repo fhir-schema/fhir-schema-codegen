@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal
+from typing import Optional, List as L, Literal, ForwardRef
 
 
 class Element(BaseModel):

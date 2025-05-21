@@ -4,10 +4,11 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal
+from typing import Optional, List as L, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, Identifier, Signature
 from aidbox.hl7_fhir_r4_core.resource import Resource
+from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 
 
 class BundleLink(BackboneElement):
@@ -38,7 +39,7 @@ class BundleEntryResponse(BackboneElement):
     etag: Optional[str] = Field(None, alias="etag", serialization_alias="etag")
     last_modified: Optional[str] = Field(None, alias="lastModified", serialization_alias="lastModified")
     location: Optional[str] = Field(None, alias="location", serialization_alias="location")
-    outcome: Optional[Resource] = Field(None, alias="outcome", serialization_alias="outcome")
+    outcome: Optional[ResourceFamily] = Field(None, alias="outcome", serialization_alias="outcome")
     status: Optional[str] = Field(None, alias="status", serialization_alias="status")
 
 class BundleEntry(BackboneElement):
@@ -47,7 +48,7 @@ class BundleEntry(BackboneElement):
     full_url: Optional[str] = Field(None, alias="fullUrl", serialization_alias="fullUrl")
     link: Optional[L[BundleLink]] = Field(None, alias="link", serialization_alias="link")
     request: Optional[BundleEntryRequest] = Field(None, alias="request", serialization_alias="request")
-    resource: Optional[Resource] = Field(None, alias="resource", serialization_alias="resource")
+    resource: Optional[ResourceFamily] = Field(None, alias="resource", serialization_alias="resource")
     response: Optional[BundleEntryResponse] = Field(None, alias="response", serialization_alias="response")
     search: Optional[BundleEntrySearch] = Field(None, alias="search", serialization_alias="search")
 

@@ -4,10 +4,11 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal
+from typing import Optional, List as L, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, Contributor, Count, DataRequirement, Distance, Dosage, Duration, Expression, HumanName, Identifier, Meta, Money, ParameterDefinition, Period, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, Timing, TriggerDefinition, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
 class StructureMapGroupInput(BackboneElement):

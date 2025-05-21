@@ -3,7 +3,7 @@ import json
 from typing import Optional, TypeVar, Type, Dict, Any, cast
 import requests
 from pydantic import BaseModel
-from DOMAIN_RESOURCE_PACKAGE import DomainResource
+from DOMAIN_RESOURCE_PACKAGE import DomainResource, Bundle
 
 
 T = TypeVar("T", bound=DomainResource)
@@ -97,10 +97,10 @@ class Client:
 
     def search(
         self, resource_class: Type[T], params: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+    ) -> Bundle:
         """Search for resources"""
         resource_type = resource_class.__name__
         url = f"{self.base_url}/{resource_type}"
         response = self.session.get(url, params=params)
         response.raise_for_status()
-        return response.json()  # type: ignore
+        return Bundle.model_validate(response.json())

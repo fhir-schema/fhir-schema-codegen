@@ -108,6 +108,7 @@ export class PythonGenerator extends Generator {
     private rootPackage: string;
     private rootPackagePath: string[];
     private allowExtraFields: boolean;
+    private resourceHierarchy: { parent: TypeRef; child: TypeRef }[] | null = [];
 
     constructor(opts: PythonGeneratorOptions) {
         super({
@@ -118,6 +119,7 @@ export class PythonGenerator extends Generator {
         this.rootPackage = opts.sdkPackage || 'fhirsdk';
         this.rootPackagePath = this.rootPackage.split('.');
         this.allowExtraFields = opts.allowExtraFields || false;
+        this.resourceHierarchy = null;
     }
 
     modulePrefix() {
@@ -201,6 +203,9 @@ export class PythonGenerator extends Generator {
                 if ('choices' in field) continue;
 
                 let fieldType = field.type.name;
+                if (field.type.kind === 'resource' && this.childrenOf(field.type).length > 0) {
+                    fieldType = `${fieldType}Family`;
+                }
 
                 if (field.type.kind === 'nested') {
                     fieldType = this.deriveNestedSchemaName(field.type.url, true);
@@ -241,7 +246,12 @@ export class PythonGenerator extends Generator {
             'import',
             ['BaseModel', 'ConfigDict', 'Field', 'PositiveInt'].join(', '),
         );
-        this.line('from', 'typing', 'import', ['Optional', 'List as L', 'Literal'].join(', '));
+        this.line(
+            'from',
+            'typing',
+            'import',
+            ['Optional', 'List as L', 'Literal', 'ForwardRef'].join(', '),
+        );
     }
 
     generateNestedTypes(schema: TypeSchema) {
@@ -309,11 +319,15 @@ export class PythonGenerator extends Generator {
             }
 
             for (const deps of resourceDeps) {
-                this.line(
-                    'from',
+                this.pyImportFrom(
                     `${pypackage}.${snakeCase(deps.name)}`,
-                    'import',
                     `${pascalCase(deps.name)}`,
+                );
+            }
+            for (const deps of resourceDeps) {
+                this.pyImportFrom(
+                    `${pypackage}.resource_families`,
+                    `${pascalCase(deps.name)}Family`,
                 );
             }
         }
@@ -349,68 +363,45 @@ export class PythonGenerator extends Generator {
     }
 
     generateResourcePackageInit(
+        fullPyPackageName: string,
         packageResources: TypeSchema[],
         packageComplexTypes?: TypeSchema[],
     ) {
         this.file('__init__.py', () => {
             this.generateDisclaimer();
-            const names = removeConstraints(packageResources);
-            const packageName = names.length > 0 ? names[0].identifier.package : '';
-            const packageParts = packageName
-                ? [this.rootPackage, snakeCase(packageName)]
-                : [this.rootPackage];
-            const pypackage = packageParts.join('.');
+            const resources = packageResources;
 
             if (packageComplexTypes && packageComplexTypes.length > 0) {
                 const baseTypes = packageComplexTypes.map((t) => t.identifier.name).sort();
-
-                // Format with backslash at first line and types on new indented lines
-                this.line(`from ${pypackage}.base import \\`);
-
-                const maxLineLength = 120;
-                let currentLine = '';
-                const indentation = '    '; // 4 spaces for indentation
-
-                for (let i = 0; i < baseTypes.length; i++) {
-                    const typeName = baseTypes[i];
-                    const isLast = i === baseTypes.length - 1;
-
-                    // Check if adding this type would exceed line length
-                    if (
-                        currentLine.length + typeName.length + (currentLine ? 2 : 0) >
-                        maxLineLength - indentation.length
-                    ) {
-                        // Output the current line with trailing comma and backslash if not the last type
-                        this.line(`${indentation}${currentLine}${isLast ? '' : ','} \\`);
-                        currentLine = '';
-                    }
-
-                    // Add the type to the current line
-                    if (currentLine) {
-                        currentLine += `, ${typeName}`;
-                    } else {
-                        currentLine = typeName;
-                    }
-
-                    // If this is the last type or we've filled the line, output it
-                    if (isLast) {
-                        this.line(`${indentation}${currentLine}`);
-                    }
-                }
-
+                this.pyImportFrom(`${fullPyPackageName}.base`, ...baseTypes);
                 this.line();
             }
 
-            for (const schemaName of names) {
-                this.line(
-                    `from ${pypackage}.${snakeCase(schemaName.identifier.name)} import ${schemaName.identifier.name}`,
-                );
+            const allResourceNames: string[] = [];
+            for (const resource of resources) {
+                const name = snakeCase(resource.identifier.name);
+                const moduleName = `${fullPyPackageName}.${name}`;
+                this.pyImportFrom(moduleName, resource.identifier.name);
+                const names: string[] = [resource.identifier.name];
+                if (
+                    resource.identifier.kind === 'resource' &&
+                    this.childrenOf(resource.identifier).length > 0
+                ) {
+                    const familyName = `${resource.identifier.name}Family`;
+                    this.pyImportFrom(`${fullPyPackageName}.resource_families`, familyName);
+                    names.push(familyName);
+                }
+                allResourceNames.push(...names);
+            }
+            this.line();
+            for (const schema of resources) {
+                this.line(`${schema.identifier.name}.model_rebuild()`);
             }
             this.line();
             this.squareBlock(['__all__', '='], () => {
                 for (const schemaName of [
                     ...(packageComplexTypes || []).map((t) => t.identifier.name),
-                    ...names.map((t) => t.identifier.name),
+                    ...allResourceNames,
                 ].sort()) {
                     this.line(`'${schemaName}',`);
                 }
@@ -450,6 +441,28 @@ export class PythonGenerator extends Generator {
         });
     }
 
+    evaluateResourceHierarchy() {
+        const resources = this.loader.resources();
+        const pairs: { parent: TypeRef; child: TypeRef }[] = [];
+        for (const schema of resources) {
+            if (schema.base) {
+                pairs.push({ parent: schema.base, child: schema.identifier });
+            }
+        }
+        return pairs;
+    }
+
+    childrenOf(schemaRef: TypeRef) {
+        if (!this.resourceHierarchy) {
+            this.resourceHierarchy = this.evaluateResourceHierarchy();
+        }
+        const childrens = this.resourceHierarchy
+            .filter((pair) => pair.parent.name === schemaRef.name)
+            .map((pair) => pair.child);
+        const subChildrens = childrens.flatMap((child) => this.childrenOf(child));
+        return [...[...childrens].map((child) => child.name), ...subChildrens];
+    }
+
     generate() {
         // Prepare root package path
         let destPackagePath = '.';
@@ -477,13 +490,80 @@ export class PythonGenerator extends Generator {
             const groupedResources = groupedByPackage(this.loader.resources());
             for (const [packageName, packageResources] of Object.entries(groupedResources)) {
                 this.inRelDir(snakeCase(packageName), () => {
+                    const packageName =
+                        packageResources.length > 0 ? packageResources[0].identifier.package : '';
+                    const packageParts = packageName
+                        ? [this.rootPackage, snakeCase(packageName)]
+                        : [this.rootPackage];
+                    const pyPackageName = packageParts.join('.');
                     const packageComplexTypes = groupedComplexTypes[packageName] || [];
-                    this.generateResourcePackageInit(packageResources, packageComplexTypes);
-                    for (const schema of removeConstraints(packageResources)) {
+                    this.generateResourcePackageInit(
+                        pyPackageName,
+                        packageResources,
+                        packageComplexTypes,
+                    );
+                    this.generateResourceFamilies(pyPackageName, packageResources);
+                    for (const schema of packageResources) {
                         this.generateResourceModule(schema);
                     }
                 });
             }
+        });
+    }
+
+    pyImportFrom(pyPackage: string, ...entities: string[]) {
+        const maxLine = 100;
+        const oneLine = ['from', pyPackage, 'import', entities.join(', ')].join(' ');
+        if (oneLine.length <= maxLine || entities.length === 1) {
+            this.line(oneLine);
+        } else {
+            this.line('from', pyPackage, 'import \\');
+            this.indentBlock(() => {
+                while (entities.length > 0) {
+                    let line = '';
+                    while (entities.length > 0 && line.length < maxLine) {
+                        const entity = entities.shift();
+                        if (line.length > 0) {
+                            line += ', ';
+                        }
+                        line += entity;
+                    }
+                    if (entities.length > 0) line += ', \\';
+                    this.line(line);
+                }
+            });
+        }
+    }
+
+    generateResourceFamilies(pyPackageName: string, packageResources: TypeSchema[]) {
+        this.file('resource_families.py', () => {
+            const exportList: string[] = [];
+            this.generateDisclaimer();
+            this.pyImportFrom('typing', 'TYPE_CHECKING');
+            this.line();
+            this.line('if TYPE_CHECKING:');
+            this.indentBlock(() => {
+                for (const resource of packageResources) {
+                    this.pyImportFrom(
+                        `${pyPackageName}.${snakeCase(resource.identifier.name)}`,
+                        `${pascalCase(resource.identifier.name)}`,
+                    );
+                }
+            });
+            this.line();
+            for (const resource of packageResources) {
+                const name = resource.identifier.name;
+                const childrens = this.childrenOf(resource.identifier);
+                if (childrens.length > 0) {
+                    const familyName = `${name}Family`;
+                    this.line(
+                        `type ${familyName} = '${name} | ${childrens.map((e) => `${e}`).join(' | ')}'`,
+                    );
+                    this.line();
+                    exportList.push(familyName);
+                }
+            }
+            this.line(`__all__ = [${exportList.map((e) => `'${e}'`).join(', ')}]`);
         });
     }
 }
