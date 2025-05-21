@@ -4,10 +4,10 @@
 
 from aidbox.hl7_fhir_r4_core.base import \
     Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, \
-    Contributor, Count, DataRequirement, Distance, Dosage, Duration, Element, ElementDefinition, Expression, Extension, \
-    HumanName, Identifier, MarketingStatus, Meta, Money, Narrative, ParameterDefinition, Period, Population, \
-    ProdCharacteristic, ProductShelfLife, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, \
-    SubstanceAmount, Timing, TriggerDefinition, UsageContext
+    Contributor, Count, DataRequirement, Distance, Dosage, Duration, Element, ElementDefinition, Expression, \
+    Extension, HumanName, Identifier, MarketingStatus, Meta, Money, Narrative, ParameterDefinition, Period, \
+    Population, ProdCharacteristic, ProductShelfLife, Quantity, Range, Ratio, Reference, RelatedArtifact, \
+    SampledData, Signature, SubstanceAmount, Timing, TriggerDefinition, UsageContext
 
 from aidbox.hl7_fhir_r4_core.group import Group
 from aidbox.hl7_fhir_r4_core.questionnaire import Questionnaire
@@ -31,6 +31,7 @@ from aidbox.hl7_fhir_r4_core.device_metric import DeviceMetric
 from aidbox.hl7_fhir_r4_core.basic import Basic
 from aidbox.hl7_fhir_r4_core.substance_source_material import SubstanceSourceMaterial
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
+from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 from aidbox.hl7_fhir_r4_core.endpoint import Endpoint
 from aidbox.hl7_fhir_r4_core.research_subject import ResearchSubject
 from aidbox.hl7_fhir_r4_core.related_person import RelatedPerson
@@ -82,6 +83,7 @@ from aidbox.hl7_fhir_r4_core.medicinal_product_manufactured import MedicinalProd
 from aidbox.hl7_fhir_r4_core.coverage import Coverage
 from aidbox.hl7_fhir_r4_core.message_header import MessageHeader
 from aidbox.hl7_fhir_r4_core.resource import Resource
+from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 from aidbox.hl7_fhir_r4_core.nutrition_order import NutritionOrder
 from aidbox.hl7_fhir_r4_core.document_manifest import DocumentManifest
 from aidbox.hl7_fhir_r4_core.medicinal_product_authorization import MedicinalProductAuthorization
@@ -158,6 +160,155 @@ from aidbox.hl7_fhir_r4_core.test_script import TestScript
 from aidbox.hl7_fhir_r4_core.supply_request import SupplyRequest
 from aidbox.hl7_fhir_r4_core.immunization_evaluation import ImmunizationEvaluation
 
+Group.model_rebuild()
+Questionnaire.model_rebuild()
+Provenance.model_rebuild()
+Goal.model_rebuild()
+AppointmentResponse.model_rebuild()
+ResearchStudy.model_rebuild()
+Encounter.model_rebuild()
+ClinicalImpression.model_rebuild()
+DiagnosticReport.model_rebuild()
+OrganizationAffiliation.model_rebuild()
+GuidanceResponse.model_rebuild()
+BiologicallyDerivedProduct.model_rebuild()
+CompartmentDefinition.model_rebuild()
+Substance.model_rebuild()
+MessageDefinition.model_rebuild()
+Slot.model_rebuild()
+StructureMap.model_rebuild()
+SubstanceReferenceInformation.model_rebuild()
+DeviceMetric.model_rebuild()
+Basic.model_rebuild()
+SubstanceSourceMaterial.model_rebuild()
+DomainResource.model_rebuild()
+Endpoint.model_rebuild()
+ResearchSubject.model_rebuild()
+RelatedPerson.model_rebuild()
+EffectEvidenceSynthesis.model_rebuild()
+ImagingStudy.model_rebuild()
+Practitioner.model_rebuild()
+GraphDefinition.model_rebuild()
+CommunicationRequest.model_rebuild()
+List.model_rebuild()
+Flag.model_rebuild()
+Contract.model_rebuild()
+Communication.model_rebuild()
+Media.model_rebuild()
+DeviceDefinition.model_rebuild()
+PlanDefinition.model_rebuild()
+Location.model_rebuild()
+ImmunizationRecommendation.model_rebuild()
+SpecimenDefinition.model_rebuild()
+ChargeItem.model_rebuild()
+Parameters.model_rebuild()
+MedicationKnowledge.model_rebuild()
+ImplementationGuide.model_rebuild()
+OperationDefinition.model_rebuild()
+CatalogEntry.model_rebuild()
+Bundle.model_rebuild()
+EpisodeOfCare.model_rebuild()
+ExplanationOfBenefit.model_rebuild()
+Procedure.model_rebuild()
+SubstanceSpecification.model_rebuild()
+ConceptMap.model_rebuild()
+OperationOutcome.model_rebuild()
+MedicinalProductUndesirableEffect.model_rebuild()
+EnrollmentResponse.model_rebuild()
+DeviceRequest.model_rebuild()
+CoverageEligibilityResponse.model_rebuild()
+Subscription.model_rebuild()
+Composition.model_rebuild()
+Person.model_rebuild()
+Schedule.model_rebuild()
+ExampleScenario.model_rebuild()
+DetectedIssue.model_rebuild()
+PaymentReconciliation.model_rebuild()
+RiskAssessment.model_rebuild()
+MolecularSequence.model_rebuild()
+Measure.model_rebuild()
+TestReport.model_rebuild()
+Observation.model_rebuild()
+MedicinalProductManufactured.model_rebuild()
+Coverage.model_rebuild()
+MessageHeader.model_rebuild()
+Resource.model_rebuild()
+NutritionOrder.model_rebuild()
+DocumentManifest.model_rebuild()
+MedicinalProductAuthorization.model_rebuild()
+ResearchDefinition.model_rebuild()
+Device.model_rebuild()
+FamilyMemberHistory.model_rebuild()
+CareTeam.model_rebuild()
+SearchParameter.model_rebuild()
+HealthcareService.model_rebuild()
+ServiceRequest.model_rebuild()
+VisionPrescription.model_rebuild()
+ClaimResponse.model_rebuild()
+CodeSystem.model_rebuild()
+ChargeItemDefinition.model_rebuild()
+MedicinalProduct.model_rebuild()
+CapabilityStatement.model_rebuild()
+CarePlan.model_rebuild()
+ObservationDefinition.model_rebuild()
+QuestionnaireResponse.model_rebuild()
+MedicinalProductIngredient.model_rebuild()
+NamingSystem.model_rebuild()
+MedicinalProductContraindication.model_rebuild()
+Patient.model_rebuild()
+BodyStructure.model_rebuild()
+Condition.model_rebuild()
+ResearchElementDefinition.model_rebuild()
+EnrollmentRequest.model_rebuild()
+MedicationDispense.model_rebuild()
+TerminologyCapabilities.model_rebuild()
+MedicationAdministration.model_rebuild()
+Task.model_rebuild()
+Appointment.model_rebuild()
+ValueSet.model_rebuild()
+Medication.model_rebuild()
+MeasureReport.model_rebuild()
+MedicinalProductPackaged.model_rebuild()
+Specimen.model_rebuild()
+MedicinalProductInteraction.model_rebuild()
+DeviceUseStatement.model_rebuild()
+SupplyDelivery.model_rebuild()
+Binary.model_rebuild()
+Account.model_rebuild()
+SubstanceProtein.model_rebuild()
+MedicationStatement.model_rebuild()
+AdverseEvent.model_rebuild()
+Consent.model_rebuild()
+StructureDefinition.model_rebuild()
+DocumentReference.model_rebuild()
+Evidence.model_rebuild()
+EventDefinition.model_rebuild()
+PractitionerRole.model_rebuild()
+MedicinalProductPharmaceutical.model_rebuild()
+Organization.model_rebuild()
+PaymentNotice.model_rebuild()
+VerificationResult.model_rebuild()
+AllergyIntolerance.model_rebuild()
+InsurancePlan.model_rebuild()
+Claim.model_rebuild()
+Immunization.model_rebuild()
+AuditEvent.model_rebuild()
+Invoice.model_rebuild()
+ActivityDefinition.model_rebuild()
+SubstanceNucleicAcid.model_rebuild()
+Library.model_rebuild()
+RiskEvidenceSynthesis.model_rebuild()
+MedicationRequest.model_rebuild()
+RequestGroup.model_rebuild()
+Linkage.model_rebuild()
+SubstancePolymer.model_rebuild()
+EvidenceVariable.model_rebuild()
+CoverageEligibilityRequest.model_rebuild()
+MedicinalProductIndication.model_rebuild()
+TestScript.model_rebuild()
+SupplyRequest.model_rebuild()
+ImmunizationEvaluation.model_rebuild()
+
 __all__ =[
     'Account',
     'ActivityDefinition',
@@ -215,6 +366,7 @@ __all__ =[
     'DocumentManifest',
     'DocumentReference',
     'DomainResource',
+    'DomainResourceFamily',
     'Dosage',
     'Duration',
     'EffectEvidenceSynthesis',
@@ -315,6 +467,7 @@ __all__ =[
     'ResearchStudy',
     'ResearchSubject',
     'Resource',
+    'ResourceFamily',
     'RiskAssessment',
     'RiskEvidenceSynthesis',
     'SampledData',

@@ -4,10 +4,11 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal
+from typing import Optional, List as L, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, Contributor, Count, DataRequirement, Distance, Dosage, Duration, Expression, HumanName, Identifier, Meta, Money, ParameterDefinition, Period, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, Timing, TriggerDefinition, UsageContext
 from aidbox.hl7_fhir_r4_core.resource import Resource
+from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 
 
 class ParametersParameter(BackboneElement):
@@ -15,7 +16,7 @@ class ParametersParameter(BackboneElement):
     
     name: Optional[str] = Field(None, alias="name", serialization_alias="name")
     part: Optional[L[ParametersParameter]] = Field(None, alias="part", serialization_alias="part")
-    resource: Optional[Resource] = Field(None, alias="resource", serialization_alias="resource")
+    resource: Optional[ResourceFamily] = Field(None, alias="resource", serialization_alias="resource")
     value_address: Optional[Address] = Field(None, alias="valueAddress", serialization_alias="valueAddress")
     value_age: Optional[Age] = Field(None, alias="valueAge", serialization_alias="valueAge")
     value_annotation: Optional[Annotation] = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
