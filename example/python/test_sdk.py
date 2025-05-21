@@ -105,14 +105,17 @@ def test_update_patient(client: Client, created_patient: Patient) -> None:
 
 def test_search_patient(client: Client, created_patient: Patient) -> None:
     search_params = {"name": "Patient"}
-    search_result = client.search(Patient, search_params)
+    result_bundle = client.search(Patient, search_params)
+    assert result_bundle is not None
+    assert result_bundle.total is not None
+    assert result_bundle.total > 0, "No patients found in search"
 
-    assert search_result.get("total", 0) > 0, "No patients found in search"
-
+    assert result_bundle.entry is not None
     found = False
-    for entry in search_result.get("entry", []):
-        print(entry["resource"]["id"], created_patient.id)
-        if entry["resource"]["id"] == created_patient.id:
+    for entry in result_bundle.entry or []:
+        assert entry.resource is not None
+        print(entry.resource.id, created_patient.id)
+        if entry.resource.id == created_patient.id:
             found = True
             break
 
