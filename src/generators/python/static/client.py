@@ -1,6 +1,6 @@
 import base64
 import json
-from typing import Optional, TypeVar, Type, Dict, Any, cast
+from typing import TypeVar, Type, Dict, Any
 import requests
 from pydantic import BaseModel
 from DOMAIN_RESOURCE_PACKAGE import DomainResource, Bundle
@@ -29,7 +29,7 @@ class Client:
     def __init__(
         self,
         base_url: str,
-        auth: Optional[Auth] = None,
+        auth: Auth | None = None,
     ):
         self.base_url = base_url.rstrip("/")
         self.session = requests.Session()
@@ -96,7 +96,7 @@ class Client:
         response.raise_for_status()
 
     def search(
-        self, resource_class: Type[T], params: Optional[Dict[str, Any]] = None
+        self, resource_class: Type[T], params: Dict[str, Any] | None = None
     ) -> Bundle:
         """Search for resources"""
         resource_type = resource_class.__name__

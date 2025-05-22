@@ -147,11 +147,11 @@ export class PythonGenerator extends Generator {
     }
 
     wrapOptional(s: string) {
-        return `Optional[${s}]`;
+        return `${s} | None`;
     }
 
     wrapList(s: string) {
-        return `L[${s}]`;
+        return `PyList[${s}]`;
     }
 
     wrapLiteral(s: string) {
@@ -250,7 +250,7 @@ export class PythonGenerator extends Generator {
             'from',
             'typing',
             'import',
-            ['Optional', 'List as L', 'Literal', 'ForwardRef'].join(', '),
+            ['List as PyList', 'Literal', 'ForwardRef'].join(', '),
         );
     }
 
