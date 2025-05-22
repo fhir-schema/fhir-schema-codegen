@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,15 +14,15 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DetectedIssueEvidence(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
-    detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
+    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
+    detail: PyList[Reference] | None = Field(None, alias="detail", serialization_alias="detail")
 
 class DetectedIssueMitigation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: Optional[CodeableConcept] = Field(None, alias="action", serialization_alias="action")
-    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
+    action: CodeableConcept | None = Field(None, alias="action", serialization_alias="action")
+    author: Reference | None = Field(None, alias="author", serialization_alias="author")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
 
 
 class DetectedIssue(DomainResource):
@@ -36,17 +36,17 @@ class DetectedIssue(DomainResource):
         pattern='DetectedIssue'
     )
     
-    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    detail: Optional[str] = Field(None, alias="detail", serialization_alias="detail")
-    evidence: Optional[L[DetectedIssueEvidence]] = Field(None, alias="evidence", serialization_alias="evidence")
-    identified_date_time: Optional[str] = Field(None, alias="identifiedDateTime", serialization_alias="identifiedDateTime")
-    identified_period: Optional[Period] = Field(None, alias="identifiedPeriod", serialization_alias="identifiedPeriod")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    implicated: Optional[L[Reference]] = Field(None, alias="implicated", serialization_alias="implicated")
-    mitigation: Optional[L[DetectedIssueMitigation]] = Field(None, alias="mitigation", serialization_alias="mitigation")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    reference: Optional[str] = Field(None, alias="reference", serialization_alias="reference")
-    severity: Optional[Literal["high", "moderate", "low"]] = Field(None, alias="severity", serialization_alias="severity")
-    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
+    author: Reference | None = Field(None, alias="author", serialization_alias="author")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    detail: str | None = Field(None, alias="detail", serialization_alias="detail")
+    evidence: PyList[DetectedIssueEvidence] | None = Field(None, alias="evidence", serialization_alias="evidence")
+    identified_date_time: str | None = Field(None, alias="identifiedDateTime", serialization_alias="identifiedDateTime")
+    identified_period: Period | None = Field(None, alias="identifiedPeriod", serialization_alias="identifiedPeriod")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    implicated: PyList[Reference] | None = Field(None, alias="implicated", serialization_alias="implicated")
+    mitigation: PyList[DetectedIssueMitigation] | None = Field(None, alias="mitigation", serialization_alias="mitigation")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    reference: str | None = Field(None, alias="reference", serialization_alias="reference")
+    severity: Literal["high", "moderate", "low"] | None = Field(None, alias="severity", serialization_alias="severity")
+    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
 

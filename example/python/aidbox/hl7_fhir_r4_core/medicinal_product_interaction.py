@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,8 +14,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductInteractionInteractant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
+    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
 
 
 class MedicinalProductInteraction(DomainResource):
@@ -29,11 +29,11 @@ class MedicinalProductInteraction(DomainResource):
         pattern='MedicinalProductInteraction'
     )
     
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    effect: Optional[CodeableConcept] = Field(None, alias="effect", serialization_alias="effect")
-    incidence: Optional[CodeableConcept] = Field(None, alias="incidence", serialization_alias="incidence")
-    interactant: Optional[L[MedicinalProductInteractionInteractant]] = Field(None, alias="interactant", serialization_alias="interactant")
-    management: Optional[CodeableConcept] = Field(None, alias="management", serialization_alias="management")
-    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    effect: CodeableConcept | None = Field(None, alias="effect", serialization_alias="effect")
+    incidence: CodeableConcept | None = Field(None, alias="incidence", serialization_alias="incidence")
+    interactant: PyList[MedicinalProductInteractionInteractant] | None = Field(None, alias="interactant", serialization_alias="interactant")
+    management: CodeableConcept | None = Field(None, alias="management", serialization_alias="management")
+    subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

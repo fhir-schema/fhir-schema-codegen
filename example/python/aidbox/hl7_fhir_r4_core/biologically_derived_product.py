@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,34 +14,34 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class BiologicallyDerivedProductProcessing(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    additive: Optional[Reference] = Field(None, alias="additive", serialization_alias="additive")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    procedure: Optional[CodeableConcept] = Field(None, alias="procedure", serialization_alias="procedure")
-    time_date_time: Optional[str] = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
-    time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
+    additive: Reference | None = Field(None, alias="additive", serialization_alias="additive")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    procedure: CodeableConcept | None = Field(None, alias="procedure", serialization_alias="procedure")
+    time_date_time: str | None = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Period | None = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductStorage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    duration: Optional[Period] = Field(None, alias="duration", serialization_alias="duration")
-    scale: Optional[Literal["farenheit", "celsius", "kelvin"]] = Field(None, alias="scale", serialization_alias="scale")
-    temperature: Optional[float] = Field(None, alias="temperature", serialization_alias="temperature")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    duration: Period | None = Field(None, alias="duration", serialization_alias="duration")
+    scale: Literal["farenheit", "celsius", "kelvin"] | None = Field(None, alias="scale", serialization_alias="scale")
+    temperature: float | None = Field(None, alias="temperature", serialization_alias="temperature")
 
 class BiologicallyDerivedProductManipulation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    time_date_time: Optional[str] = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
-    time_period: Optional[Period] = Field(None, alias="timePeriod", serialization_alias="timePeriod")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    time_date_time: str | None = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Period | None = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductCollection(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    collected_date_time: Optional[str] = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
-    collected_period: Optional[Period] = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
-    collector: Optional[Reference] = Field(None, alias="collector", serialization_alias="collector")
-    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
+    collected_date_time: str | None = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
+    collected_period: Period | None = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
+    collector: Reference | None = Field(None, alias="collector", serialization_alias="collector")
+    source: Reference | None = Field(None, alias="source", serialization_alias="source")
 
 
 class BiologicallyDerivedProduct(DomainResource):
@@ -55,15 +55,15 @@ class BiologicallyDerivedProduct(DomainResource):
         pattern='BiologicallyDerivedProduct'
     )
     
-    collection: Optional[BiologicallyDerivedProductCollection] = Field(None, alias="collection", serialization_alias="collection")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    manipulation: Optional[BiologicallyDerivedProductManipulation] = Field(None, alias="manipulation", serialization_alias="manipulation")
-    parent: Optional[L[Reference]] = Field(None, alias="parent", serialization_alias="parent")
-    processing: Optional[L[BiologicallyDerivedProductProcessing]] = Field(None, alias="processing", serialization_alias="processing")
-    product_category: Optional[Literal["organ", "tissue", "fluid", "cells", "biologicalAgent"]] = Field(None, alias="productCategory", serialization_alias="productCategory")
-    product_code: Optional[CodeableConcept] = Field(None, alias="productCode", serialization_alias="productCode")
-    quantity: Optional[int] = Field(None, alias="quantity", serialization_alias="quantity")
-    request: Optional[L[Reference]] = Field(None, alias="request", serialization_alias="request")
-    status: Optional[Literal["available", "unavailable"]] = Field(None, alias="status", serialization_alias="status")
-    storage: Optional[L[BiologicallyDerivedProductStorage]] = Field(None, alias="storage", serialization_alias="storage")
+    collection: BiologicallyDerivedProductCollection | None = Field(None, alias="collection", serialization_alias="collection")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    manipulation: BiologicallyDerivedProductManipulation | None = Field(None, alias="manipulation", serialization_alias="manipulation")
+    parent: PyList[Reference] | None = Field(None, alias="parent", serialization_alias="parent")
+    processing: PyList[BiologicallyDerivedProductProcessing] | None = Field(None, alias="processing", serialization_alias="processing")
+    product_category: Literal["organ", "tissue", "fluid", "cells", "biologicalAgent"] | None = Field(None, alias="productCategory", serialization_alias="productCategory")
+    product_code: CodeableConcept | None = Field(None, alias="productCode", serialization_alias="productCode")
+    quantity: int | None = Field(None, alias="quantity", serialization_alias="quantity")
+    request: PyList[Reference] | None = Field(None, alias="request", serialization_alias="request")
+    status: Literal["available", "unavailable"] | None = Field(None, alias="status", serialization_alias="status")
+    storage: PyList[BiologicallyDerivedProductStorage] | None = Field(None, alias="storage", serialization_alias="storage")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, CodeableConcept, Dosage, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,23 +22,23 @@ class MedicationStatement(DomainResource):
         pattern='MedicationStatement'
     )
     
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
-    context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")
-    date_asserted: Optional[str] = Field(None, alias="dateAsserted", serialization_alias="dateAsserted")
-    derived_from: Optional[L[Reference]] = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
-    dosage: Optional[L[Dosage]] = Field(None, alias="dosage", serialization_alias="dosage")
-    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
-    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    information_source: Optional[Reference] = Field(None, alias="informationSource", serialization_alias="informationSource")
-    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
-    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    status: Optional[Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold", "unknown", "not-taken"]] = Field(None, alias="status", serialization_alias="status")
-    status_reason: Optional[L[CodeableConcept]] = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    context: Reference | None = Field(None, alias="context", serialization_alias="context")
+    date_asserted: str | None = Field(None, alias="dateAsserted", serialization_alias="dateAsserted")
+    derived_from: PyList[Reference] | None = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
+    dosage: PyList[Dosage] | None = Field(None, alias="dosage", serialization_alias="dosage")
+    effective_date_time: str | None = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_period: Period | None = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    information_source: Reference | None = Field(None, alias="informationSource", serialization_alias="informationSource")
+    medication_codeable_concept: CodeableConcept | None = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Reference | None = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    status: Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold", "unknown", "not-taken"] | None = Field(None, alias="status", serialization_alias="status")
+    status_reason: PyList[CodeableConcept] | None = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

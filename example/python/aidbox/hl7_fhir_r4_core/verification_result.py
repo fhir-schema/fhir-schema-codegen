@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Reference, Signature, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,32 +14,32 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class VerificationResultValidator(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    attestation_signature: Optional[Signature] = Field(None, alias="attestationSignature", serialization_alias="attestationSignature")
-    identity_certificate: Optional[str] = Field(None, alias="identityCertificate", serialization_alias="identityCertificate")
-    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
+    attestation_signature: Signature | None = Field(None, alias="attestationSignature", serialization_alias="attestationSignature")
+    identity_certificate: str | None = Field(None, alias="identityCertificate", serialization_alias="identityCertificate")
+    organization: Reference | None = Field(None, alias="organization", serialization_alias="organization")
 
 class VerificationResultPrimarySource(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    can_push_updates: Optional[CodeableConcept] = Field(None, alias="canPushUpdates", serialization_alias="canPushUpdates")
-    communication_method: Optional[L[CodeableConcept]] = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
-    push_type_available: Optional[L[CodeableConcept]] = Field(None, alias="pushTypeAvailable", serialization_alias="pushTypeAvailable")
-    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
-    validation_date: Optional[str] = Field(None, alias="validationDate", serialization_alias="validationDate")
-    validation_status: Optional[CodeableConcept] = Field(None, alias="validationStatus", serialization_alias="validationStatus")
-    who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
+    can_push_updates: CodeableConcept | None = Field(None, alias="canPushUpdates", serialization_alias="canPushUpdates")
+    communication_method: PyList[CodeableConcept] | None = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
+    push_type_available: PyList[CodeableConcept] | None = Field(None, alias="pushTypeAvailable", serialization_alias="pushTypeAvailable")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
+    validation_date: str | None = Field(None, alias="validationDate", serialization_alias="validationDate")
+    validation_status: CodeableConcept | None = Field(None, alias="validationStatus", serialization_alias="validationStatus")
+    who: Reference | None = Field(None, alias="who", serialization_alias="who")
 
 class VerificationResultAttestation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    communication_method: Optional[CodeableConcept] = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
-    proxy_identity_certificate: Optional[str] = Field(None, alias="proxyIdentityCertificate", serialization_alias="proxyIdentityCertificate")
-    proxy_signature: Optional[Signature] = Field(None, alias="proxySignature", serialization_alias="proxySignature")
-    source_identity_certificate: Optional[str] = Field(None, alias="sourceIdentityCertificate", serialization_alias="sourceIdentityCertificate")
-    source_signature: Optional[Signature] = Field(None, alias="sourceSignature", serialization_alias="sourceSignature")
-    who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
+    communication_method: CodeableConcept | None = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    proxy_identity_certificate: str | None = Field(None, alias="proxyIdentityCertificate", serialization_alias="proxyIdentityCertificate")
+    proxy_signature: Signature | None = Field(None, alias="proxySignature", serialization_alias="proxySignature")
+    source_identity_certificate: str | None = Field(None, alias="sourceIdentityCertificate", serialization_alias="sourceIdentityCertificate")
+    source_signature: Signature | None = Field(None, alias="sourceSignature", serialization_alias="sourceSignature")
+    who: Reference | None = Field(None, alias="who", serialization_alias="who")
 
 
 class VerificationResult(DomainResource):
@@ -53,18 +53,18 @@ class VerificationResult(DomainResource):
         pattern='VerificationResult'
     )
     
-    attestation: Optional[VerificationResultAttestation] = Field(None, alias="attestation", serialization_alias="attestation")
-    failure_action: Optional[CodeableConcept] = Field(None, alias="failureAction", serialization_alias="failureAction")
-    frequency: Optional[Timing] = Field(None, alias="frequency", serialization_alias="frequency")
-    last_performed: Optional[str] = Field(None, alias="lastPerformed", serialization_alias="lastPerformed")
-    need: Optional[CodeableConcept] = Field(None, alias="need", serialization_alias="need")
-    next_scheduled: Optional[str] = Field(None, alias="nextScheduled", serialization_alias="nextScheduled")
-    primary_source: Optional[L[VerificationResultPrimarySource]] = Field(None, alias="primarySource", serialization_alias="primarySource")
-    status: Optional[Literal["attested", "validated", "in-process", "req-revalid", "val-fail", "reval-fail"]] = Field(None, alias="status", serialization_alias="status")
-    status_date: Optional[str] = Field(None, alias="statusDate", serialization_alias="statusDate")
-    target: Optional[L[Reference]] = Field(None, alias="target", serialization_alias="target")
-    target_location: Optional[L[str]] = Field(None, alias="targetLocation", serialization_alias="targetLocation")
-    validation_process: Optional[L[CodeableConcept]] = Field(None, alias="validationProcess", serialization_alias="validationProcess")
-    validation_type: Optional[CodeableConcept] = Field(None, alias="validationType", serialization_alias="validationType")
-    validator: Optional[L[VerificationResultValidator]] = Field(None, alias="validator", serialization_alias="validator")
+    attestation: VerificationResultAttestation | None = Field(None, alias="attestation", serialization_alias="attestation")
+    failure_action: CodeableConcept | None = Field(None, alias="failureAction", serialization_alias="failureAction")
+    frequency: Timing | None = Field(None, alias="frequency", serialization_alias="frequency")
+    last_performed: str | None = Field(None, alias="lastPerformed", serialization_alias="lastPerformed")
+    need: CodeableConcept | None = Field(None, alias="need", serialization_alias="need")
+    next_scheduled: str | None = Field(None, alias="nextScheduled", serialization_alias="nextScheduled")
+    primary_source: PyList[VerificationResultPrimarySource] | None = Field(None, alias="primarySource", serialization_alias="primarySource")
+    status: Literal["attested", "validated", "in-process", "req-revalid", "val-fail", "reval-fail"] | None = Field(None, alias="status", serialization_alias="status")
+    status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
+    target: PyList[Reference] | None = Field(None, alias="target", serialization_alias="target")
+    target_location: PyList[str] | None = Field(None, alias="targetLocation", serialization_alias="targetLocation")
+    validation_process: PyList[CodeableConcept] | None = Field(None, alias="validationProcess", serialization_alias="validationProcess")
+    validation_type: CodeableConcept | None = Field(None, alias="validationType", serialization_alias="validationType")
+    validator: PyList[VerificationResultValidator] | None = Field(None, alias="validator", serialization_alias="validator")
 

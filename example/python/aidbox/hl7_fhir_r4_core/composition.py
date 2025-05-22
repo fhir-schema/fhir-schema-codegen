@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Narrative, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,37 +14,37 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CompositionSection(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    empty_reason: Optional[CodeableConcept] = Field(None, alias="emptyReason", serialization_alias="emptyReason")
-    entry: Optional[L[Reference]] = Field(None, alias="entry", serialization_alias="entry")
-    focus: Optional[Reference] = Field(None, alias="focus", serialization_alias="focus")
-    mode: Optional[Literal["working", "snapshot", "changes"]] = Field(None, alias="mode", serialization_alias="mode")
-    ordered_by: Optional[CodeableConcept] = Field(None, alias="orderedBy", serialization_alias="orderedBy")
-    section: Optional[L[CompositionSection]] = Field(None, alias="section", serialization_alias="section")
-    text: Optional[Narrative] = Field(None, alias="text", serialization_alias="text")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    empty_reason: CodeableConcept | None = Field(None, alias="emptyReason", serialization_alias="emptyReason")
+    entry: PyList[Reference] | None = Field(None, alias="entry", serialization_alias="entry")
+    focus: Reference | None = Field(None, alias="focus", serialization_alias="focus")
+    mode: Literal["working", "snapshot", "changes"] | None = Field(None, alias="mode", serialization_alias="mode")
+    ordered_by: CodeableConcept | None = Field(None, alias="orderedBy", serialization_alias="orderedBy")
+    section: PyList[CompositionSection] | None = Field(None, alias="section", serialization_alias="section")
+    text: Narrative | None = Field(None, alias="text", serialization_alias="text")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
 
 class CompositionAttester(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    mode: Optional[Literal["personal", "professional", "legal", "official"]] = Field(None, alias="mode", serialization_alias="mode")
-    party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
-    time: Optional[str] = Field(None, alias="time", serialization_alias="time")
+    mode: Literal["personal", "professional", "legal", "official"] | None = Field(None, alias="mode", serialization_alias="mode")
+    party: Reference | None = Field(None, alias="party", serialization_alias="party")
+    time: str | None = Field(None, alias="time", serialization_alias="time")
 
 class CompositionEvent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
-    detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
+    detail: PyList[Reference] | None = Field(None, alias="detail", serialization_alias="detail")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 class CompositionRelatesTo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[Literal["replaces", "transforms", "signs", "appends"]] = Field(None, alias="code", serialization_alias="code")
-    target_identifier: Optional[Identifier] = Field(None, alias="targetIdentifier", serialization_alias="targetIdentifier")
-    target_reference: Optional[Reference] = Field(None, alias="targetReference", serialization_alias="targetReference")
+    code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
+    target_identifier: Identifier | None = Field(None, alias="targetIdentifier", serialization_alias="targetIdentifier")
+    target_reference: Reference | None = Field(None, alias="targetReference", serialization_alias="targetReference")
 
 
 class Composition(DomainResource):
@@ -58,19 +58,19 @@ class Composition(DomainResource):
         pattern='Composition'
     )
     
-    attester: Optional[L[CompositionAttester]] = Field(None, alias="attester", serialization_alias="attester")
-    author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    confidentiality: Optional[Literal["U", "L", "M", "N", "R", "V", "_Confidentiality", "_ConfidentialityByAccessKind", "_ConfidentialityByInfoType", "_ConfidentialityModifiers"]] = Field(None, alias="confidentiality", serialization_alias="confidentiality")
-    custodian: Optional[Reference] = Field(None, alias="custodian", serialization_alias="custodian")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    event: Optional[L[CompositionEvent]] = Field(None, alias="event", serialization_alias="event")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    relates_to: Optional[L[CompositionRelatesTo]] = Field(None, alias="relatesTo", serialization_alias="relatesTo")
-    section: Optional[L[CompositionSection]] = Field(None, alias="section", serialization_alias="section")
-    status: Optional[Literal["preliminary", "final", "amended", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    attester: PyList[CompositionAttester] | None = Field(None, alias="attester", serialization_alias="attester")
+    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    confidentiality: Literal["U", "L", "M", "N", "R", "V", "_Confidentiality", "_ConfidentialityByAccessKind", "_ConfidentialityByInfoType", "_ConfidentialityModifiers"] | None = Field(None, alias="confidentiality", serialization_alias="confidentiality")
+    custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    event: PyList[CompositionEvent] | None = Field(None, alias="event", serialization_alias="event")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    relates_to: PyList[CompositionRelatesTo] | None = Field(None, alias="relatesTo", serialization_alias="relatesTo")
+    section: PyList[CompositionSection] | None = Field(None, alias="section", serialization_alias="section")
+    status: Literal["preliminary", "final", "amended", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

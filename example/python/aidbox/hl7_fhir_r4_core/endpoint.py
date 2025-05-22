@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Coding, ContactPoint, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,15 +22,15 @@ class Endpoint(DomainResource):
         pattern='Endpoint'
     )
     
-    address: Optional[str] = Field(None, alias="address", serialization_alias="address")
-    connection_type: Optional[Coding] = Field(None, alias="connectionType", serialization_alias="connectionType")
-    contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")
-    header: Optional[L[str]] = Field(None, alias="header", serialization_alias="header")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    managing_organization: Optional[Reference] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    payload_mime_type: Optional[L[str]] = Field(None, alias="payloadMimeType", serialization_alias="payloadMimeType")
-    payload_type: Optional[L[CodeableConcept]] = Field(None, alias="payloadType", serialization_alias="payloadType")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    status: Optional[Literal["active", "suspended", "error", "off", "entered-in-error", "test"]] = Field(None, alias="status", serialization_alias="status")
+    address: str | None = Field(None, alias="address", serialization_alias="address")
+    connection_type: Coding | None = Field(None, alias="connectionType", serialization_alias="connectionType")
+    contact: PyList[ContactPoint] | None = Field(None, alias="contact", serialization_alias="contact")
+    header: PyList[str] | None = Field(None, alias="header", serialization_alias="header")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: Reference | None = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    payload_mime_type: PyList[str] | None = Field(None, alias="payloadMimeType", serialization_alias="payloadMimeType")
+    payload_type: PyList[CodeableConcept] | None = Field(None, alias="payloadType", serialization_alias="payloadType")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    status: Literal["active", "suspended", "error", "off", "entered-in-error", "test"] | None = Field(None, alias="status", serialization_alias="status")
 

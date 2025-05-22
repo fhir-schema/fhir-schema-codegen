@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,8 +14,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DocumentManifestRelated(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    ref: Optional[Reference] = Field(None, alias="ref", serialization_alias="ref")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    ref: Reference | None = Field(None, alias="ref", serialization_alias="ref")
 
 
 class DocumentManifest(DomainResource):
@@ -29,16 +29,16 @@ class DocumentManifest(DomainResource):
         pattern='DocumentManifest'
     )
     
-    author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
-    content: Optional[L[Reference]] = Field(None, alias="content", serialization_alias="content")
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    master_identifier: Optional[Identifier] = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
-    recipient: Optional[L[Reference]] = Field(None, alias="recipient", serialization_alias="recipient")
-    related: Optional[L[DocumentManifestRelated]] = Field(None, alias="related", serialization_alias="related")
-    source: Optional[str] = Field(None, alias="source", serialization_alias="source")
-    status: Optional[Literal["current", "superseded", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
+    content: PyList[Reference] | None = Field(None, alias="content", serialization_alias="content")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    master_identifier: Identifier | None = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
+    recipient: PyList[Reference] | None = Field(None, alias="recipient", serialization_alias="recipient")
+    related: PyList[DocumentManifestRelated] | None = Field(None, alias="related", serialization_alias="related")
+    source: str | None = Field(None, alias="source", serialization_alias="source")
+    status: Literal["current", "superseded", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,12 +14,12 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class OperationOutcomeIssue(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[Literal["invalid", "security", "processing", "transient", "informational"]] = Field(None, alias="code", serialization_alias="code")
-    details: Optional[CodeableConcept] = Field(None, alias="details", serialization_alias="details")
-    diagnostics: Optional[str] = Field(None, alias="diagnostics", serialization_alias="diagnostics")
-    expression: Optional[L[str]] = Field(None, alias="expression", serialization_alias="expression")
-    location: Optional[L[str]] = Field(None, alias="location", serialization_alias="location")
-    severity: Optional[Literal["fatal", "error", "warning", "information"]] = Field(None, alias="severity", serialization_alias="severity")
+    code: Literal["invalid", "security", "processing", "transient", "informational"] | None = Field(None, alias="code", serialization_alias="code")
+    details: CodeableConcept | None = Field(None, alias="details", serialization_alias="details")
+    diagnostics: str | None = Field(None, alias="diagnostics", serialization_alias="diagnostics")
+    expression: PyList[str] | None = Field(None, alias="expression", serialization_alias="expression")
+    location: PyList[str] | None = Field(None, alias="location", serialization_alias="location")
+    severity: Literal["fatal", "error", "warning", "information"] | None = Field(None, alias="severity", serialization_alias="severity")
 
 
 class OperationOutcome(DomainResource):
@@ -33,5 +33,5 @@ class OperationOutcome(DomainResource):
         pattern='OperationOutcome'
     )
     
-    issue: Optional[L[OperationOutcomeIssue]] = Field(None, alias="issue", serialization_alias="issue")
+    issue: PyList[OperationOutcomeIssue] | None = Field(None, alias="issue", serialization_alias="issue")
 

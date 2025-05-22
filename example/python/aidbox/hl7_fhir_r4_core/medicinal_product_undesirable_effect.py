@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Population, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,9 +22,9 @@ class MedicinalProductUndesirableEffect(DomainResource):
         pattern='MedicinalProductUndesirableEffect'
     )
     
-    classification: Optional[CodeableConcept] = Field(None, alias="classification", serialization_alias="classification")
-    frequency_of_occurrence: Optional[CodeableConcept] = Field(None, alias="frequencyOfOccurrence", serialization_alias="frequencyOfOccurrence")
-    population: Optional[L[Population]] = Field(None, alias="population", serialization_alias="population")
-    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
-    symptom_condition_effect: Optional[CodeableConcept] = Field(None, alias="symptomConditionEffect", serialization_alias="symptomConditionEffect")
+    classification: CodeableConcept | None = Field(None, alias="classification", serialization_alias="classification")
+    frequency_of_occurrence: CodeableConcept | None = Field(None, alias="frequencyOfOccurrence", serialization_alias="frequencyOfOccurrence")
+    population: PyList[Population] | None = Field(None, alias="population", serialization_alias="population")
+    subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
+    symptom_condition_effect: CodeableConcept | None = Field(None, alias="symptomConditionEffect", serialization_alias="symptomConditionEffect")
 

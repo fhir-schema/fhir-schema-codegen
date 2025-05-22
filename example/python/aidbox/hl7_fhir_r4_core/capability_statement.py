@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactDetail, Reference, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,110 +14,110 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CapabilityStatementDocument(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
-    mode: Optional[Literal["producer", "consumer"]] = Field(None, alias="mode", serialization_alias="mode")
-    profile: Optional[str] = Field(None, alias="profile", serialization_alias="profile")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    mode: Literal["producer", "consumer"] | None = Field(None, alias="mode", serialization_alias="mode")
+    profile: str | None = Field(None, alias="profile", serialization_alias="profile")
 
 class CapabilityStatementMessagingEndpoint(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    address: Optional[str] = Field(None, alias="address", serialization_alias="address")
-    protocol: Optional[Coding] = Field(None, alias="protocol", serialization_alias="protocol")
+    address: str | None = Field(None, alias="address", serialization_alias="address")
+    protocol: Coding | None = Field(None, alias="protocol", serialization_alias="protocol")
 
 class CapabilityStatementMessagingSupportedMessage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
-    mode: Optional[Literal["sender", "receiver"]] = Field(None, alias="mode", serialization_alias="mode")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    mode: Literal["sender", "receiver"] | None = Field(None, alias="mode", serialization_alias="mode")
 
 class CapabilityStatementMessaging(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
-    endpoint: Optional[L[CapabilityStatementMessagingEndpoint]] = Field(None, alias="endpoint", serialization_alias="endpoint")
-    reliable_cache: Optional[int] = Field(None, alias="reliableCache", serialization_alias="reliableCache")
-    supported_message: Optional[L[CapabilityStatementMessagingSupportedMessage]] = Field(None, alias="supportedMessage", serialization_alias="supportedMessage")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    endpoint: PyList[CapabilityStatementMessagingEndpoint] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    reliable_cache: int | None = Field(None, alias="reliableCache", serialization_alias="reliableCache")
+    supported_message: PyList[CapabilityStatementMessagingSupportedMessage] | None = Field(None, alias="supportedMessage", serialization_alias="supportedMessage")
 
 class CapabilityStatementSoftware(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    release_date: Optional[str] = Field(None, alias="releaseDate", serialization_alias="releaseDate")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    release_date: str | None = Field(None, alias="releaseDate", serialization_alias="releaseDate")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class CapabilityStatementImplementation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    custodian: Optional[Reference] = Field(None, alias="custodian", serialization_alias="custodian")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
 
 class CapabilityStatementRestSecurity(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    cors: Optional[bool] = Field(None, alias="cors", serialization_alias="cors")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    service: Optional[L[CodeableConcept]] = Field(None, alias="service", serialization_alias="service")
+    cors: bool | None = Field(None, alias="cors", serialization_alias="cors")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    service: PyList[CodeableConcept] | None = Field(None, alias="service", serialization_alias="service")
 
 class CapabilityStatementRestResourceSearchParam(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    type: Optional[Literal["number", "date", "string", "token", "reference", "composite", "quantity", "uri", "special"]] = Field(None, alias="type", serialization_alias="type")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: Literal["number", "date", "string", "token", "reference", "composite", "quantity", "uri", "special"] | None = Field(None, alias="type", serialization_alias="type")
 
 class CapabilityStatementRestResourceOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
 
 class CapabilityStatementRestResourceInteraction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[Literal["read", "vread", "update", "patch", "delete", "history-instance", "history-type", "create", "search-type", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"]] = Field(None, alias="code", serialization_alias="code")
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    code: Literal["read", "vread", "update", "patch", "delete", "history-instance", "history-type", "create", "search-type", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"] | None = Field(None, alias="code", serialization_alias="code")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
 
 class CapabilityStatementRestResource(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    conditional_create: Optional[bool] = Field(None, alias="conditionalCreate", serialization_alias="conditionalCreate")
-    conditional_delete: Optional[Literal["not-supported", "single", "multiple"]] = Field(None, alias="conditionalDelete", serialization_alias="conditionalDelete")
-    conditional_read: Optional[Literal["not-supported", "modified-since", "not-match", "full-support"]] = Field(None, alias="conditionalRead", serialization_alias="conditionalRead")
-    conditional_update: Optional[bool] = Field(None, alias="conditionalUpdate", serialization_alias="conditionalUpdate")
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
-    interaction: Optional[L[CapabilityStatementRestResourceInteraction]] = Field(None, alias="interaction", serialization_alias="interaction")
-    operation: Optional[L[CapabilityStatementRestResourceOperation]] = Field(None, alias="operation", serialization_alias="operation")
-    profile: Optional[str] = Field(None, alias="profile", serialization_alias="profile")
-    read_history: Optional[bool] = Field(None, alias="readHistory", serialization_alias="readHistory")
-    reference_policy: Optional[L[Literal["literal", "logical", "resolves", "enforced", "local"]]] = Field(None, alias="referencePolicy", serialization_alias="referencePolicy")
-    search_include: Optional[L[str]] = Field(None, alias="searchInclude", serialization_alias="searchInclude")
-    search_param: Optional[L[CapabilityStatementRestResourceSearchParam]] = Field(None, alias="searchParam", serialization_alias="searchParam")
-    search_rev_include: Optional[L[str]] = Field(None, alias="searchRevInclude", serialization_alias="searchRevInclude")
-    supported_profile: Optional[L[str]] = Field(None, alias="supportedProfile", serialization_alias="supportedProfile")
-    type: Optional[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] = Field(None, alias="type", serialization_alias="type")
-    update_create: Optional[bool] = Field(None, alias="updateCreate", serialization_alias="updateCreate")
-    versioning: Optional[Literal["no-version", "versioned", "versioned-update"]] = Field(None, alias="versioning", serialization_alias="versioning")
+    conditional_create: bool | None = Field(None, alias="conditionalCreate", serialization_alias="conditionalCreate")
+    conditional_delete: Literal["not-supported", "single", "multiple"] | None = Field(None, alias="conditionalDelete", serialization_alias="conditionalDelete")
+    conditional_read: Literal["not-supported", "modified-since", "not-match", "full-support"] | None = Field(None, alias="conditionalRead", serialization_alias="conditionalRead")
+    conditional_update: bool | None = Field(None, alias="conditionalUpdate", serialization_alias="conditionalUpdate")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    interaction: PyList[CapabilityStatementRestResourceInteraction] | None = Field(None, alias="interaction", serialization_alias="interaction")
+    operation: PyList[CapabilityStatementRestResourceOperation] | None = Field(None, alias="operation", serialization_alias="operation")
+    profile: str | None = Field(None, alias="profile", serialization_alias="profile")
+    read_history: bool | None = Field(None, alias="readHistory", serialization_alias="readHistory")
+    reference_policy: PyList[Literal["literal", "logical", "resolves", "enforced", "local"]] | None = Field(None, alias="referencePolicy", serialization_alias="referencePolicy")
+    search_include: PyList[str] | None = Field(None, alias="searchInclude", serialization_alias="searchInclude")
+    search_param: PyList[CapabilityStatementRestResourceSearchParam] | None = Field(None, alias="searchParam", serialization_alias="searchParam")
+    search_rev_include: PyList[str] | None = Field(None, alias="searchRevInclude", serialization_alias="searchRevInclude")
+    supported_profile: PyList[str] | None = Field(None, alias="supportedProfile", serialization_alias="supportedProfile")
+    type: Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"] | None = Field(None, alias="type", serialization_alias="type")
+    update_create: bool | None = Field(None, alias="updateCreate", serialization_alias="updateCreate")
+    versioning: Literal["no-version", "versioned", "versioned-update"] | None = Field(None, alias="versioning", serialization_alias="versioning")
 
 class CapabilityStatementRestInteraction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[Literal["transaction", "batch", "search-system", "history-system", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"]] = Field(None, alias="code", serialization_alias="code")
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
+    code: Literal["transaction", "batch", "search-system", "history-system", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"] | None = Field(None, alias="code", serialization_alias="code")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
 
 class CapabilityStatementRest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    compartment: Optional[L[str]] = Field(None, alias="compartment", serialization_alias="compartment")
-    documentation: Optional[str] = Field(None, alias="documentation", serialization_alias="documentation")
-    interaction: Optional[L[CapabilityStatementRestInteraction]] = Field(None, alias="interaction", serialization_alias="interaction")
-    mode: Optional[Literal["client", "server"]] = Field(None, alias="mode", serialization_alias="mode")
-    operation: Optional[L[CapabilityStatementRestResourceOperation]] = Field(None, alias="operation", serialization_alias="operation")
-    resource: Optional[L[CapabilityStatementRestResource]] = Field(None, alias="resource", serialization_alias="resource")
-    search_param: Optional[L[CapabilityStatementRestResourceSearchParam]] = Field(None, alias="searchParam", serialization_alias="searchParam")
-    security: Optional[CapabilityStatementRestSecurity] = Field(None, alias="security", serialization_alias="security")
+    compartment: PyList[str] | None = Field(None, alias="compartment", serialization_alias="compartment")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    interaction: PyList[CapabilityStatementRestInteraction] | None = Field(None, alias="interaction", serialization_alias="interaction")
+    mode: Literal["client", "server"] | None = Field(None, alias="mode", serialization_alias="mode")
+    operation: PyList[CapabilityStatementRestResourceOperation] | None = Field(None, alias="operation", serialization_alias="operation")
+    resource: PyList[CapabilityStatementRestResource] | None = Field(None, alias="resource", serialization_alias="resource")
+    search_param: PyList[CapabilityStatementRestResourceSearchParam] | None = Field(None, alias="searchParam", serialization_alias="searchParam")
+    security: CapabilityStatementRestSecurity | None = Field(None, alias="security", serialization_alias="security")
 
 
 class CapabilityStatement(DomainResource):
@@ -131,30 +131,30 @@ class CapabilityStatement(DomainResource):
         pattern='CapabilityStatement'
     )
     
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    document: Optional[L[CapabilityStatementDocument]] = Field(None, alias="document", serialization_alias="document")
-    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
-    fhir_version: Optional[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]] = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
-    format: Optional[L[str]] = Field(None, alias="format", serialization_alias="format")
-    implementation: Optional[CapabilityStatementImplementation] = Field(None, alias="implementation", serialization_alias="implementation")
-    implementation_guide: Optional[L[str]] = Field(None, alias="implementationGuide", serialization_alias="implementationGuide")
-    imports: Optional[L[str]] = Field(None, alias="imports", serialization_alias="imports")
-    instantiates: Optional[L[str]] = Field(None, alias="instantiates", serialization_alias="instantiates")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    kind: Optional[Literal["instance", "capability", "requirements"]] = Field(None, alias="kind", serialization_alias="kind")
-    messaging: Optional[L[CapabilityStatementMessaging]] = Field(None, alias="messaging", serialization_alias="messaging")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    patch_format: Optional[L[str]] = Field(None, alias="patchFormat", serialization_alias="patchFormat")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
-    rest: Optional[L[CapabilityStatementRest]] = Field(None, alias="rest", serialization_alias="rest")
-    software: Optional[CapabilityStatementSoftware] = Field(None, alias="software", serialization_alias="software")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    document: PyList[CapabilityStatementDocument] | None = Field(None, alias="document", serialization_alias="document")
+    experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
+    fhir_version: Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"] | None = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
+    format: PyList[str] | None = Field(None, alias="format", serialization_alias="format")
+    implementation: CapabilityStatementImplementation | None = Field(None, alias="implementation", serialization_alias="implementation")
+    implementation_guide: PyList[str] | None = Field(None, alias="implementationGuide", serialization_alias="implementationGuide")
+    imports: PyList[str] | None = Field(None, alias="imports", serialization_alias="imports")
+    instantiates: PyList[str] | None = Field(None, alias="instantiates", serialization_alias="instantiates")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    kind: Literal["instance", "capability", "requirements"] | None = Field(None, alias="kind", serialization_alias="kind")
+    messaging: PyList[CapabilityStatementMessaging] | None = Field(None, alias="messaging", serialization_alias="messaging")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    patch_format: PyList[str] | None = Field(None, alias="patchFormat", serialization_alias="patchFormat")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
+    rest: PyList[CapabilityStatementRest] | None = Field(None, alias="rest", serialization_alias="rest")
+    software: CapabilityStatementSoftware | None = Field(None, alias="software", serialization_alias="software")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 

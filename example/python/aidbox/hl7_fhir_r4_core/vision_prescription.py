@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,26 +14,26 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class VisionPrescriptionLensSpecificationPrism(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    amount: Optional[float] = Field(None, alias="amount", serialization_alias="amount")
-    base: Optional[Literal["up", "down", "in", "out"]] = Field(None, alias="base", serialization_alias="base")
+    amount: float | None = Field(None, alias="amount", serialization_alias="amount")
+    base: Literal["up", "down", "in", "out"] | None = Field(None, alias="base", serialization_alias="base")
 
 class VisionPrescriptionLensSpecification(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    add: Optional[float] = Field(None, alias="add", serialization_alias="add")
-    axis: Optional[int] = Field(None, alias="axis", serialization_alias="axis")
-    back_curve: Optional[float] = Field(None, alias="backCurve", serialization_alias="backCurve")
-    brand: Optional[str] = Field(None, alias="brand", serialization_alias="brand")
-    color: Optional[str] = Field(None, alias="color", serialization_alias="color")
-    cylinder: Optional[float] = Field(None, alias="cylinder", serialization_alias="cylinder")
-    diameter: Optional[float] = Field(None, alias="diameter", serialization_alias="diameter")
-    duration: Optional[Quantity] = Field(None, alias="duration", serialization_alias="duration")
-    eye: Optional[Literal["right", "left"]] = Field(None, alias="eye", serialization_alias="eye")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    power: Optional[float] = Field(None, alias="power", serialization_alias="power")
-    prism: Optional[L[VisionPrescriptionLensSpecificationPrism]] = Field(None, alias="prism", serialization_alias="prism")
-    product: Optional[CodeableConcept] = Field(None, alias="product", serialization_alias="product")
-    sphere: Optional[float] = Field(None, alias="sphere", serialization_alias="sphere")
+    add: float | None = Field(None, alias="add", serialization_alias="add")
+    axis: int | None = Field(None, alias="axis", serialization_alias="axis")
+    back_curve: float | None = Field(None, alias="backCurve", serialization_alias="backCurve")
+    brand: str | None = Field(None, alias="brand", serialization_alias="brand")
+    color: str | None = Field(None, alias="color", serialization_alias="color")
+    cylinder: float | None = Field(None, alias="cylinder", serialization_alias="cylinder")
+    diameter: float | None = Field(None, alias="diameter", serialization_alias="diameter")
+    duration: Quantity | None = Field(None, alias="duration", serialization_alias="duration")
+    eye: Literal["right", "left"] | None = Field(None, alias="eye", serialization_alias="eye")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    power: float | None = Field(None, alias="power", serialization_alias="power")
+    prism: PyList[VisionPrescriptionLensSpecificationPrism] | None = Field(None, alias="prism", serialization_alias="prism")
+    product: CodeableConcept | None = Field(None, alias="product", serialization_alias="product")
+    sphere: float | None = Field(None, alias="sphere", serialization_alias="sphere")
 
 
 class VisionPrescription(DomainResource):
@@ -47,12 +47,12 @@ class VisionPrescription(DomainResource):
         pattern='VisionPrescription'
     )
     
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    date_written: Optional[str] = Field(None, alias="dateWritten", serialization_alias="dateWritten")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    lens_specification: Optional[L[VisionPrescriptionLensSpecification]] = Field(None, alias="lensSpecification", serialization_alias="lensSpecification")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    prescriber: Optional[Reference] = Field(None, alias="prescriber", serialization_alias="prescriber")
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    date_written: str | None = Field(None, alias="dateWritten", serialization_alias="dateWritten")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    lens_specification: PyList[VisionPrescriptionLensSpecification] | None = Field(None, alias="lensSpecification", serialization_alias="lensSpecification")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    prescriber: Reference | None = Field(None, alias="prescriber", serialization_alias="prescriber")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

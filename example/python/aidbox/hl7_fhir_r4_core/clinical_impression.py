@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,15 +14,15 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ClinicalImpressionInvestigation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    item: Optional[L[Reference]] = Field(None, alias="item", serialization_alias="item")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    item: PyList[Reference] | None = Field(None, alias="item", serialization_alias="item")
 
 class ClinicalImpressionFinding(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    basis: Optional[str] = Field(None, alias="basis", serialization_alias="basis")
-    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
+    basis: str | None = Field(None, alias="basis", serialization_alias="basis")
+    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
 
 
 class ClinicalImpression(DomainResource):
@@ -36,25 +36,25 @@ class ClinicalImpression(DomainResource):
         pattern='ClinicalImpression'
     )
     
-    assessor: Optional[Reference] = Field(None, alias="assessor", serialization_alias="assessor")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
-    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    finding: Optional[L[ClinicalImpressionFinding]] = Field(None, alias="finding", serialization_alias="finding")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    investigation: Optional[L[ClinicalImpressionInvestigation]] = Field(None, alias="investigation", serialization_alias="investigation")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    previous: Optional[Reference] = Field(None, alias="previous", serialization_alias="previous")
-    problem: Optional[L[Reference]] = Field(None, alias="problem", serialization_alias="problem")
-    prognosis_codeable_concept: Optional[L[CodeableConcept]] = Field(None, alias="prognosisCodeableConcept", serialization_alias="prognosisCodeableConcept")
-    prognosis_reference: Optional[L[Reference]] = Field(None, alias="prognosisReference", serialization_alias="prognosisReference")
-    protocol: Optional[L[str]] = Field(None, alias="protocol", serialization_alias="protocol")
-    status: Optional[Literal["in-progress", "completed", "entered-in-error", "preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    summary: Optional[str] = Field(None, alias="summary", serialization_alias="summary")
-    supporting_info: Optional[L[Reference]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    assessor: Reference | None = Field(None, alias="assessor", serialization_alias="assessor")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    effective_date_time: str | None = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_period: Period | None = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    finding: PyList[ClinicalImpressionFinding] | None = Field(None, alias="finding", serialization_alias="finding")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    investigation: PyList[ClinicalImpressionInvestigation] | None = Field(None, alias="investigation", serialization_alias="investigation")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    previous: Reference | None = Field(None, alias="previous", serialization_alias="previous")
+    problem: PyList[Reference] | None = Field(None, alias="problem", serialization_alias="problem")
+    prognosis_codeable_concept: PyList[CodeableConcept] | None = Field(None, alias="prognosisCodeableConcept", serialization_alias="prognosisCodeableConcept")
+    prognosis_reference: PyList[Reference] | None = Field(None, alias="prognosisReference", serialization_alias="prognosisReference")
+    protocol: PyList[str] | None = Field(None, alias="protocol", serialization_alias="protocol")
+    status: Literal["in-progress", "completed", "entered-in-error", "preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    summary: str | None = Field(None, alias="summary", serialization_alias="summary")
+    supporting_info: PyList[Reference] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Period, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,11 +14,11 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class NamingSystemUniqueId(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    preferred: Optional[bool] = Field(None, alias="preferred", serialization_alias="preferred")
-    type: Optional[Literal["oid", "uuid", "uri", "other"]] = Field(None, alias="type", serialization_alias="type")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    preferred: bool | None = Field(None, alias="preferred", serialization_alias="preferred")
+    type: Literal["oid", "uuid", "uri", "other"] | None = Field(None, alias="type", serialization_alias="type")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 
 class NamingSystem(DomainResource):
@@ -32,17 +32,17 @@ class NamingSystem(DomainResource):
         pattern='NamingSystem'
     )
     
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    kind: Optional[Literal["codesystem", "identifier", "root"]] = Field(None, alias="kind", serialization_alias="kind")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    responsible: Optional[str] = Field(None, alias="responsible", serialization_alias="responsible")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    unique_id: Optional[L[NamingSystemUniqueId]] = Field(None, alias="uniqueId", serialization_alias="uniqueId")
-    usage: Optional[str] = Field(None, alias="usage", serialization_alias="usage")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    kind: Literal["codesystem", "identifier", "root"] | None = Field(None, alias="kind", serialization_alias="kind")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    responsible: str | None = Field(None, alias="responsible", serialization_alias="responsible")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    unique_id: PyList[NamingSystemUniqueId] | None = Field(None, alias="uniqueId", serialization_alias="uniqueId")
+    usage: str | None = Field(None, alias="usage", serialization_alias="usage")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
 

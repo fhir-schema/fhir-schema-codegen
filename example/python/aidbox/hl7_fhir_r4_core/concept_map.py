@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,45 +14,45 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ConceptMapGroupElementTargetDependsOn(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
-    property: Optional[str] = Field(None, alias="property", serialization_alias="property")
-    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    property: str | None = Field(None, alias="property", serialization_alias="property")
+    system: str | None = Field(None, alias="system", serialization_alias="system")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class ConceptMapGroupElementTarget(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    depends_on: Optional[L[ConceptMapGroupElementTargetDependsOn]] = Field(None, alias="dependsOn", serialization_alias="dependsOn")
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
-    equivalence: Optional[Literal["relatedto", "unmatched"]] = Field(None, alias="equivalence", serialization_alias="equivalence")
-    product: Optional[L[ConceptMapGroupElementTargetDependsOn]] = Field(None, alias="product", serialization_alias="product")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    depends_on: PyList[ConceptMapGroupElementTargetDependsOn] | None = Field(None, alias="dependsOn", serialization_alias="dependsOn")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    equivalence: Literal["relatedto", "unmatched"] | None = Field(None, alias="equivalence", serialization_alias="equivalence")
+    product: PyList[ConceptMapGroupElementTargetDependsOn] | None = Field(None, alias="product", serialization_alias="product")
 
 class ConceptMapGroupElement(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
-    target: Optional[L[ConceptMapGroupElementTarget]] = Field(None, alias="target", serialization_alias="target")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    target: PyList[ConceptMapGroupElementTarget] | None = Field(None, alias="target", serialization_alias="target")
 
 class ConceptMapGroupUnmapped(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
-    mode: Optional[Literal["provided", "fixed", "other-map"]] = Field(None, alias="mode", serialization_alias="mode")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    mode: Literal["provided", "fixed", "other-map"] | None = Field(None, alias="mode", serialization_alias="mode")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
 
 class ConceptMapGroup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    element: Optional[L[ConceptMapGroupElement]] = Field(None, alias="element", serialization_alias="element")
-    source: Optional[str] = Field(None, alias="source", serialization_alias="source")
-    source_version: Optional[str] = Field(None, alias="sourceVersion", serialization_alias="sourceVersion")
-    target: Optional[str] = Field(None, alias="target", serialization_alias="target")
-    target_version: Optional[str] = Field(None, alias="targetVersion", serialization_alias="targetVersion")
-    unmapped: Optional[ConceptMapGroupUnmapped] = Field(None, alias="unmapped", serialization_alias="unmapped")
+    element: PyList[ConceptMapGroupElement] | None = Field(None, alias="element", serialization_alias="element")
+    source: str | None = Field(None, alias="source", serialization_alias="source")
+    source_version: str | None = Field(None, alias="sourceVersion", serialization_alias="sourceVersion")
+    target: str | None = Field(None, alias="target", serialization_alias="target")
+    target_version: str | None = Field(None, alias="targetVersion", serialization_alias="targetVersion")
+    unmapped: ConceptMapGroupUnmapped | None = Field(None, alias="unmapped", serialization_alias="unmapped")
 
 
 class ConceptMap(DomainResource):
@@ -66,24 +66,24 @@ class ConceptMap(DomainResource):
         pattern='ConceptMap'
     )
     
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
-    group: Optional[L[ConceptMapGroup]] = Field(None, alias="group", serialization_alias="group")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
-    source_canonical: Optional[str] = Field(None, alias="sourceCanonical", serialization_alias="sourceCanonical")
-    source_uri: Optional[str] = Field(None, alias="sourceUri", serialization_alias="sourceUri")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    target_canonical: Optional[str] = Field(None, alias="targetCanonical", serialization_alias="targetCanonical")
-    target_uri: Optional[str] = Field(None, alias="targetUri", serialization_alias="targetUri")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
+    group: PyList[ConceptMapGroup] | None = Field(None, alias="group", serialization_alias="group")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
+    source_canonical: str | None = Field(None, alias="sourceCanonical", serialization_alias="sourceCanonical")
+    source_uri: str | None = Field(None, alias="sourceUri", serialization_alias="sourceUri")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    target_canonical: str | None = Field(None, alias="targetCanonical", serialization_alias="targetCanonical")
+    target_uri: str | None = Field(None, alias="targetUri", serialization_alias="targetUri")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 

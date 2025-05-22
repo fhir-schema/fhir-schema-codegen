@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,16 +14,16 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicationIngredient(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    is_active: Optional[bool] = Field(None, alias="isActive", serialization_alias="isActive")
-    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
-    strength: Optional[Ratio] = Field(None, alias="strength", serialization_alias="strength")
+    is_active: bool | None = Field(None, alias="isActive", serialization_alias="isActive")
+    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
+    strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicationBatch(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    expiration_date: Optional[str] = Field(None, alias="expirationDate", serialization_alias="expirationDate")
-    lot_number: Optional[str] = Field(None, alias="lotNumber", serialization_alias="lotNumber")
+    expiration_date: str | None = Field(None, alias="expirationDate", serialization_alias="expirationDate")
+    lot_number: str | None = Field(None, alias="lotNumber", serialization_alias="lotNumber")
 
 
 class Medication(DomainResource):
@@ -37,12 +37,12 @@ class Medication(DomainResource):
         pattern='Medication'
     )
     
-    amount: Optional[Ratio] = Field(None, alias="amount", serialization_alias="amount")
-    batch: Optional[MedicationBatch] = Field(None, alias="batch", serialization_alias="batch")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    form: Optional[CodeableConcept] = Field(None, alias="form", serialization_alias="form")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    ingredient: Optional[L[MedicationIngredient]] = Field(None, alias="ingredient", serialization_alias="ingredient")
-    manufacturer: Optional[Reference] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
-    status: Optional[Literal["active", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    amount: Ratio | None = Field(None, alias="amount", serialization_alias="amount")
+    batch: MedicationBatch | None = Field(None, alias="batch", serialization_alias="batch")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    form: CodeableConcept | None = Field(None, alias="form", serialization_alias="form")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    ingredient: PyList[MedicationIngredient] | None = Field(None, alias="ingredient", serialization_alias="ingredient")
+    manufacturer: Reference | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

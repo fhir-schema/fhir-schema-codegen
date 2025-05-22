@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, Coding, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,25 +14,25 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DocumentReferenceContent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    attachment: Optional[Attachment] = Field(None, alias="attachment", serialization_alias="attachment")
-    format: Optional[Coding] = Field(None, alias="format", serialization_alias="format")
+    attachment: Attachment | None = Field(None, alias="attachment", serialization_alias="attachment")
+    format: Coding | None = Field(None, alias="format", serialization_alias="format")
 
 class DocumentReferenceRelatesTo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[Literal["replaces", "transforms", "signs", "appends"]] = Field(None, alias="code", serialization_alias="code")
-    target: Optional[Reference] = Field(None, alias="target", serialization_alias="target")
+    code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
+    target: Reference | None = Field(None, alias="target", serialization_alias="target")
 
 class DocumentReferenceContext(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    encounter: Optional[L[Reference]] = Field(None, alias="encounter", serialization_alias="encounter")
-    event: Optional[L[CodeableConcept]] = Field(None, alias="event", serialization_alias="event")
-    facility_type: Optional[CodeableConcept] = Field(None, alias="facilityType", serialization_alias="facilityType")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    practice_setting: Optional[CodeableConcept] = Field(None, alias="practiceSetting", serialization_alias="practiceSetting")
-    related: Optional[L[Reference]] = Field(None, alias="related", serialization_alias="related")
-    source_patient_info: Optional[Reference] = Field(None, alias="sourcePatientInfo", serialization_alias="sourcePatientInfo")
+    encounter: PyList[Reference] | None = Field(None, alias="encounter", serialization_alias="encounter")
+    event: PyList[CodeableConcept] | None = Field(None, alias="event", serialization_alias="event")
+    facility_type: CodeableConcept | None = Field(None, alias="facilityType", serialization_alias="facilityType")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    practice_setting: CodeableConcept | None = Field(None, alias="practiceSetting", serialization_alias="practiceSetting")
+    related: PyList[Reference] | None = Field(None, alias="related", serialization_alias="related")
+    source_patient_info: Reference | None = Field(None, alias="sourcePatientInfo", serialization_alias="sourcePatientInfo")
 
 
 class DocumentReference(DomainResource):
@@ -46,20 +46,20 @@ class DocumentReference(DomainResource):
         pattern='DocumentReference'
     )
     
-    authenticator: Optional[Reference] = Field(None, alias="authenticator", serialization_alias="authenticator")
-    author: Optional[L[Reference]] = Field(None, alias="author", serialization_alias="author")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    content: Optional[L[DocumentReferenceContent]] = Field(None, alias="content", serialization_alias="content")
-    context: Optional[DocumentReferenceContext] = Field(None, alias="context", serialization_alias="context")
-    custodian: Optional[Reference] = Field(None, alias="custodian", serialization_alias="custodian")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    doc_status: Optional[Literal["preliminary", "final", "amended", "entered-in-error"]] = Field(None, alias="docStatus", serialization_alias="docStatus")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    master_identifier: Optional[Identifier] = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
-    relates_to: Optional[L[DocumentReferenceRelatesTo]] = Field(None, alias="relatesTo", serialization_alias="relatesTo")
-    security_label: Optional[L[CodeableConcept]] = Field(None, alias="securityLabel", serialization_alias="securityLabel")
-    status: Optional[Literal["current", "superseded", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    authenticator: Reference | None = Field(None, alias="authenticator", serialization_alias="authenticator")
+    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    content: PyList[DocumentReferenceContent] | None = Field(None, alias="content", serialization_alias="content")
+    context: DocumentReferenceContext | None = Field(None, alias="context", serialization_alias="context")
+    custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    doc_status: Literal["preliminary", "final", "amended", "entered-in-error"] | None = Field(None, alias="docStatus", serialization_alias="docStatus")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    master_identifier: Identifier | None = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
+    relates_to: PyList[DocumentReferenceRelatesTo] | None = Field(None, alias="relatesTo", serialization_alias="relatesTo")
+    security_label: PyList[CodeableConcept] | None = Field(None, alias="securityLabel", serialization_alias="securityLabel")
+    status: Literal["current", "superseded", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

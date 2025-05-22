@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,23 +14,23 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CoverageCostToBeneficiaryException(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class CoverageCostToBeneficiary(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    exception: Optional[L[CoverageCostToBeneficiaryException]] = Field(None, alias="exception", serialization_alias="exception")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    value_money: Optional[Money] = Field(None, alias="valueMoney", serialization_alias="valueMoney")
-    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    exception: PyList[CoverageCostToBeneficiaryException] | None = Field(None, alias="exception", serialization_alias="exception")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value_money: Money | None = Field(None, alias="valueMoney", serialization_alias="valueMoney")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class CoverageClass(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 
 class Coverage(DomainResource):
@@ -44,21 +44,21 @@ class Coverage(DomainResource):
         pattern='Coverage'
     )
     
-    beneficiary: Optional[Reference] = Field(None, alias="beneficiary", serialization_alias="beneficiary")
-    class_: Optional[L[CoverageClass]] = Field(None, alias="class", serialization_alias="class")
-    contract: Optional[L[Reference]] = Field(None, alias="contract", serialization_alias="contract")
-    cost_to_beneficiary: Optional[L[CoverageCostToBeneficiary]] = Field(None, alias="costToBeneficiary", serialization_alias="costToBeneficiary")
-    dependent: Optional[str] = Field(None, alias="dependent", serialization_alias="dependent")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    network: Optional[str] = Field(None, alias="network", serialization_alias="network")
-    order: Optional[PositiveInt] = Field(None, alias="order", serialization_alias="order")
-    payor: Optional[L[Reference]] = Field(None, alias="payor", serialization_alias="payor")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    policy_holder: Optional[Reference] = Field(None, alias="policyHolder", serialization_alias="policyHolder")
-    relationship: Optional[CodeableConcept] = Field(None, alias="relationship", serialization_alias="relationship")
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subrogation: Optional[bool] = Field(None, alias="subrogation", serialization_alias="subrogation")
-    subscriber: Optional[Reference] = Field(None, alias="subscriber", serialization_alias="subscriber")
-    subscriber_id: Optional[str] = Field(None, alias="subscriberId", serialization_alias="subscriberId")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    beneficiary: Reference | None = Field(None, alias="beneficiary", serialization_alias="beneficiary")
+    class_: PyList[CoverageClass] | None = Field(None, alias="class", serialization_alias="class")
+    contract: PyList[Reference] | None = Field(None, alias="contract", serialization_alias="contract")
+    cost_to_beneficiary: PyList[CoverageCostToBeneficiary] | None = Field(None, alias="costToBeneficiary", serialization_alias="costToBeneficiary")
+    dependent: str | None = Field(None, alias="dependent", serialization_alias="dependent")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    network: str | None = Field(None, alias="network", serialization_alias="network")
+    order: PositiveInt | None = Field(None, alias="order", serialization_alias="order")
+    payor: PyList[Reference] | None = Field(None, alias="payor", serialization_alias="payor")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    policy_holder: Reference | None = Field(None, alias="policyHolder", serialization_alias="policyHolder")
+    relationship: CodeableConcept | None = Field(None, alias="relationship", serialization_alias="relationship")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subrogation: bool | None = Field(None, alias="subrogation", serialization_alias="subrogation")
+    subscriber: Reference | None = Field(None, alias="subscriber", serialization_alias="subscriber")
+    subscriber_id: str | None = Field(None, alias="subscriberId", serialization_alias="subscriberId")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

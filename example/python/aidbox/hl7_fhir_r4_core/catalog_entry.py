@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,8 +14,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CatalogEntryRelatedEntry(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    item: Optional[Reference] = Field(None, alias="item", serialization_alias="item")
-    relationtype: Optional[Literal["triggers", "is-replaced-by"]] = Field(None, alias="relationtype", serialization_alias="relationtype")
+    item: Reference | None = Field(None, alias="item", serialization_alias="item")
+    relationtype: Literal["triggers", "is-replaced-by"] | None = Field(None, alias="relationtype", serialization_alias="relationtype")
 
 
 class CatalogEntry(DomainResource):
@@ -29,17 +29,17 @@ class CatalogEntry(DomainResource):
         pattern='CatalogEntry'
     )
     
-    additional_characteristic: Optional[L[CodeableConcept]] = Field(None, alias="additionalCharacteristic", serialization_alias="additionalCharacteristic")
-    additional_classification: Optional[L[CodeableConcept]] = Field(None, alias="additionalClassification", serialization_alias="additionalClassification")
-    additional_identifier: Optional[L[Identifier]] = Field(None, alias="additionalIdentifier", serialization_alias="additionalIdentifier")
-    classification: Optional[L[CodeableConcept]] = Field(None, alias="classification", serialization_alias="classification")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    last_updated: Optional[str] = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
-    orderable: Optional[bool] = Field(None, alias="orderable", serialization_alias="orderable")
-    referenced_item: Optional[Reference] = Field(None, alias="referencedItem", serialization_alias="referencedItem")
-    related_entry: Optional[L[CatalogEntryRelatedEntry]] = Field(None, alias="relatedEntry", serialization_alias="relatedEntry")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
-    valid_to: Optional[str] = Field(None, alias="validTo", serialization_alias="validTo")
+    additional_characteristic: PyList[CodeableConcept] | None = Field(None, alias="additionalCharacteristic", serialization_alias="additionalCharacteristic")
+    additional_classification: PyList[CodeableConcept] | None = Field(None, alias="additionalClassification", serialization_alias="additionalClassification")
+    additional_identifier: PyList[Identifier] | None = Field(None, alias="additionalIdentifier", serialization_alias="additionalIdentifier")
+    classification: PyList[CodeableConcept] | None = Field(None, alias="classification", serialization_alias="classification")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    last_updated: str | None = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
+    orderable: bool | None = Field(None, alias="orderable", serialization_alias="orderable")
+    referenced_item: Reference | None = Field(None, alias="referencedItem", serialization_alias="referencedItem")
+    related_entry: PyList[CatalogEntryRelatedEntry] | None = Field(None, alias="relatedEntry", serialization_alias="relatedEntry")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+    valid_to: str | None = Field(None, alias="validTo", serialization_alias="validTo")
 

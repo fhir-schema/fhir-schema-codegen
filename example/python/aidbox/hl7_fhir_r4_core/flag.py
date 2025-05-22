@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,12 +22,12 @@ class Flag(DomainResource):
         pattern='Flag'
     )
     
-    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    status: Optional[Literal["active", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    author: Reference | None = Field(None, alias="author", serialization_alias="author")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

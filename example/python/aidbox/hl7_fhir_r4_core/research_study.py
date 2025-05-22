@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactDetail, Identifier, Period, Reference, RelatedArtifact
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,15 +14,15 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ResearchStudyArm(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class ResearchStudyObjective(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class ResearchStudy(DomainResource):
@@ -36,28 +36,28 @@ class ResearchStudy(DomainResource):
         pattern='ResearchStudy'
     )
     
-    arm: Optional[L[ResearchStudyArm]] = Field(None, alias="arm", serialization_alias="arm")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    condition: Optional[L[CodeableConcept]] = Field(None, alias="condition", serialization_alias="condition")
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    enrollment: Optional[L[Reference]] = Field(None, alias="enrollment", serialization_alias="enrollment")
-    focus: Optional[L[CodeableConcept]] = Field(None, alias="focus", serialization_alias="focus")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    keyword: Optional[L[CodeableConcept]] = Field(None, alias="keyword", serialization_alias="keyword")
-    location: Optional[L[CodeableConcept]] = Field(None, alias="location", serialization_alias="location")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    objective: Optional[L[ResearchStudyObjective]] = Field(None, alias="objective", serialization_alias="objective")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    phase: Optional[CodeableConcept] = Field(None, alias="phase", serialization_alias="phase")
-    primary_purpose_type: Optional[CodeableConcept] = Field(None, alias="primaryPurposeType", serialization_alias="primaryPurposeType")
-    principal_investigator: Optional[Reference] = Field(None, alias="principalInvestigator", serialization_alias="principalInvestigator")
-    protocol: Optional[L[Reference]] = Field(None, alias="protocol", serialization_alias="protocol")
-    reason_stopped: Optional[CodeableConcept] = Field(None, alias="reasonStopped", serialization_alias="reasonStopped")
-    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
-    site: Optional[L[Reference]] = Field(None, alias="site", serialization_alias="site")
-    sponsor: Optional[Reference] = Field(None, alias="sponsor", serialization_alias="sponsor")
-    status: Optional[Literal["active", "administratively-completed", "approved", "closed-to-accrual", "closed-to-accrual-and-intervention", "completed", "disapproved", "in-review", "temporarily-closed-to-accrual", "temporarily-closed-to-accrual-and-intervention", "withdrawn"]] = Field(None, alias="status", serialization_alias="status")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
+    arm: PyList[ResearchStudyArm] | None = Field(None, alias="arm", serialization_alias="arm")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    condition: PyList[CodeableConcept] | None = Field(None, alias="condition", serialization_alias="condition")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    enrollment: PyList[Reference] | None = Field(None, alias="enrollment", serialization_alias="enrollment")
+    focus: PyList[CodeableConcept] | None = Field(None, alias="focus", serialization_alias="focus")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    keyword: PyList[CodeableConcept] | None = Field(None, alias="keyword", serialization_alias="keyword")
+    location: PyList[CodeableConcept] | None = Field(None, alias="location", serialization_alias="location")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    objective: PyList[ResearchStudyObjective] | None = Field(None, alias="objective", serialization_alias="objective")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    phase: CodeableConcept | None = Field(None, alias="phase", serialization_alias="phase")
+    primary_purpose_type: CodeableConcept | None = Field(None, alias="primaryPurposeType", serialization_alias="primaryPurposeType")
+    principal_investigator: Reference | None = Field(None, alias="principalInvestigator", serialization_alias="principalInvestigator")
+    protocol: PyList[Reference] | None = Field(None, alias="protocol", serialization_alias="protocol")
+    reason_stopped: CodeableConcept | None = Field(None, alias="reasonStopped", serialization_alias="reasonStopped")
+    related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    site: PyList[Reference] | None = Field(None, alias="site", serialization_alias="site")
+    sponsor: Reference | None = Field(None, alias="sponsor", serialization_alias="sponsor")
+    status: Literal["active", "administratively-completed", "approved", "closed-to-accrual", "closed-to-accrual-and-intervention", "completed", "disapproved", "in-review", "temporarily-closed-to-accrual", "temporarily-closed-to-accrual-and-intervention", "withdrawn"] | None = Field(None, alias="status", serialization_alias="status")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
 

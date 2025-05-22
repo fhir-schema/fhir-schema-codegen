@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Quantity, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,38 +14,38 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class SubstanceReferenceInformationGene(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    gene: Optional[CodeableConcept] = Field(None, alias="gene", serialization_alias="gene")
-    gene_sequence_origin: Optional[CodeableConcept] = Field(None, alias="geneSequenceOrigin", serialization_alias="geneSequenceOrigin")
-    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
+    gene: CodeableConcept | None = Field(None, alias="gene", serialization_alias="gene")
+    gene_sequence_origin: CodeableConcept | None = Field(None, alias="geneSequenceOrigin", serialization_alias="geneSequenceOrigin")
+    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
 
 class SubstanceReferenceInformationGeneElement(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    element: Optional[Identifier] = Field(None, alias="element", serialization_alias="element")
-    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    element: Identifier | None = Field(None, alias="element", serialization_alias="element")
+    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class SubstanceReferenceInformationClassification(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    classification: Optional[CodeableConcept] = Field(None, alias="classification", serialization_alias="classification")
-    domain: Optional[CodeableConcept] = Field(None, alias="domain", serialization_alias="domain")
-    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
-    subtype: Optional[L[CodeableConcept]] = Field(None, alias="subtype", serialization_alias="subtype")
+    classification: CodeableConcept | None = Field(None, alias="classification", serialization_alias="classification")
+    domain: CodeableConcept | None = Field(None, alias="domain", serialization_alias="domain")
+    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
+    subtype: PyList[CodeableConcept] | None = Field(None, alias="subtype", serialization_alias="subtype")
 
 class SubstanceReferenceInformationTarget(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    amount_quantity: Optional[Quantity] = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
-    amount_range: Optional[Range] = Field(None, alias="amountRange", serialization_alias="amountRange")
-    amount_string: Optional[str] = Field(None, alias="amountString", serialization_alias="amountString")
-    amount_type: Optional[CodeableConcept] = Field(None, alias="amountType", serialization_alias="amountType")
-    interaction: Optional[CodeableConcept] = Field(None, alias="interaction", serialization_alias="interaction")
-    organism: Optional[CodeableConcept] = Field(None, alias="organism", serialization_alias="organism")
-    organism_type: Optional[CodeableConcept] = Field(None, alias="organismType", serialization_alias="organismType")
-    source: Optional[L[Reference]] = Field(None, alias="source", serialization_alias="source")
-    target: Optional[Identifier] = Field(None, alias="target", serialization_alias="target")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    amount_quantity: Quantity | None = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
+    amount_range: Range | None = Field(None, alias="amountRange", serialization_alias="amountRange")
+    amount_string: str | None = Field(None, alias="amountString", serialization_alias="amountString")
+    amount_type: CodeableConcept | None = Field(None, alias="amountType", serialization_alias="amountType")
+    interaction: CodeableConcept | None = Field(None, alias="interaction", serialization_alias="interaction")
+    organism: CodeableConcept | None = Field(None, alias="organism", serialization_alias="organism")
+    organism_type: CodeableConcept | None = Field(None, alias="organismType", serialization_alias="organismType")
+    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
+    target: Identifier | None = Field(None, alias="target", serialization_alias="target")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class SubstanceReferenceInformation(DomainResource):
@@ -59,9 +59,9 @@ class SubstanceReferenceInformation(DomainResource):
         pattern='SubstanceReferenceInformation'
     )
     
-    classification: Optional[L[SubstanceReferenceInformationClassification]] = Field(None, alias="classification", serialization_alias="classification")
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    gene: Optional[L[SubstanceReferenceInformationGene]] = Field(None, alias="gene", serialization_alias="gene")
-    gene_element: Optional[L[SubstanceReferenceInformationGeneElement]] = Field(None, alias="geneElement", serialization_alias="geneElement")
-    target: Optional[L[SubstanceReferenceInformationTarget]] = Field(None, alias="target", serialization_alias="target")
+    classification: PyList[SubstanceReferenceInformationClassification] | None = Field(None, alias="classification", serialization_alias="classification")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    gene: PyList[SubstanceReferenceInformationGene] | None = Field(None, alias="gene", serialization_alias="gene")
+    gene_element: PyList[SubstanceReferenceInformationGeneElement] | None = Field(None, alias="geneElement", serialization_alias="geneElement")
+    target: PyList[SubstanceReferenceInformationTarget] | None = Field(None, alias="target", serialization_alias="target")
 

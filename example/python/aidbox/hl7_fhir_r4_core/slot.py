@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,15 +22,15 @@ class Slot(DomainResource):
         pattern='Slot'
     )
     
-    appointment_type: Optional[CodeableConcept] = Field(None, alias="appointmentType", serialization_alias="appointmentType")
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    end: Optional[str] = Field(None, alias="end", serialization_alias="end")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    overbooked: Optional[bool] = Field(None, alias="overbooked", serialization_alias="overbooked")
-    schedule: Optional[Reference] = Field(None, alias="schedule", serialization_alias="schedule")
-    service_category: Optional[L[CodeableConcept]] = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
-    service_type: Optional[L[CodeableConcept]] = Field(None, alias="serviceType", serialization_alias="serviceType")
-    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
-    start: Optional[str] = Field(None, alias="start", serialization_alias="start")
-    status: Optional[Literal["busy", "free", "busy-unavailable", "busy-tentative", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    appointment_type: CodeableConcept | None = Field(None, alias="appointmentType", serialization_alias="appointmentType")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    end: str | None = Field(None, alias="end", serialization_alias="end")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    overbooked: bool | None = Field(None, alias="overbooked", serialization_alias="overbooked")
+    schedule: Reference | None = Field(None, alias="schedule", serialization_alias="schedule")
+    service_category: PyList[CodeableConcept] | None = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
+    service_type: PyList[CodeableConcept] | None = Field(None, alias="serviceType", serialization_alias="serviceType")
+    specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
+    start: str | None = Field(None, alias="start", serialization_alias="start")
+    status: Literal["busy", "free", "busy-unavailable", "busy-tentative", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

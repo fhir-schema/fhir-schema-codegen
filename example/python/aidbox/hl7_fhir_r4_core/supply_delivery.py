@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Quantity, Reference, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,9 +14,9 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class SupplyDeliverySuppliedItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    item_codeable_concept: Optional[CodeableConcept] = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Optional[Reference] = Field(None, alias="itemReference", serialization_alias="itemReference")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
 
 
 class SupplyDelivery(DomainResource):
@@ -30,17 +30,17 @@ class SupplyDelivery(DomainResource):
         pattern='SupplyDelivery'
     )
     
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    destination: Optional[Reference] = Field(None, alias="destination", serialization_alias="destination")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
-    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
-    occurrence_timing: Optional[Timing] = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    receiver: Optional[L[Reference]] = Field(None, alias="receiver", serialization_alias="receiver")
-    status: Optional[Literal["in-progress", "completed", "abandoned", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    supplied_item: Optional[SupplyDeliverySuppliedItem] = Field(None, alias="suppliedItem", serialization_alias="suppliedItem")
-    supplier: Optional[Reference] = Field(None, alias="supplier", serialization_alias="supplier")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    destination: Reference | None = Field(None, alias="destination", serialization_alias="destination")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Period | None = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    occurrence_timing: Timing | None = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    receiver: PyList[Reference] | None = Field(None, alias="receiver", serialization_alias="receiver")
+    status: Literal["in-progress", "completed", "abandoned", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    supplied_item: SupplyDeliverySuppliedItem | None = Field(None, alias="suppliedItem", serialization_alias="suppliedItem")
+    supplier: Reference | None = Field(None, alias="supplier", serialization_alias="supplier")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Period, Reference, Signature
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,17 +14,17 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ProvenanceAgent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
-    role: Optional[L[CodeableConcept]] = Field(None, alias="role", serialization_alias="role")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    who: Optional[Reference] = Field(None, alias="who", serialization_alias="who")
+    on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    role: PyList[CodeableConcept] | None = Field(None, alias="role", serialization_alias="role")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    who: Reference | None = Field(None, alias="who", serialization_alias="who")
 
 class ProvenanceEntity(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    agent: Optional[L[ProvenanceAgent]] = Field(None, alias="agent", serialization_alias="agent")
-    role: Optional[Literal["derivation"]] = Field(None, alias="role", serialization_alias="role")
-    what: Optional[Reference] = Field(None, alias="what", serialization_alias="what")
+    agent: PyList[ProvenanceAgent] | None = Field(None, alias="agent", serialization_alias="agent")
+    role: Literal["derivation"] | None = Field(None, alias="role", serialization_alias="role")
+    what: Reference | None = Field(None, alias="what", serialization_alias="what")
 
 
 class Provenance(DomainResource):
@@ -38,15 +38,15 @@ class Provenance(DomainResource):
         pattern='Provenance'
     )
     
-    activity: Optional[CodeableConcept] = Field(None, alias="activity", serialization_alias="activity")
-    agent: Optional[L[ProvenanceAgent]] = Field(None, alias="agent", serialization_alias="agent")
-    entity: Optional[L[ProvenanceEntity]] = Field(None, alias="entity", serialization_alias="entity")
-    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
-    occurred_date_time: Optional[str] = Field(None, alias="occurredDateTime", serialization_alias="occurredDateTime")
-    occurred_period: Optional[Period] = Field(None, alias="occurredPeriod", serialization_alias="occurredPeriod")
-    policy: Optional[L[str]] = Field(None, alias="policy", serialization_alias="policy")
-    reason: Optional[L[CodeableConcept]] = Field(None, alias="reason", serialization_alias="reason")
-    recorded: Optional[str] = Field(None, alias="recorded", serialization_alias="recorded")
-    signature: Optional[L[Signature]] = Field(None, alias="signature", serialization_alias="signature")
-    target: Optional[L[Reference]] = Field(None, alias="target", serialization_alias="target")
+    activity: CodeableConcept | None = Field(None, alias="activity", serialization_alias="activity")
+    agent: PyList[ProvenanceAgent] | None = Field(None, alias="agent", serialization_alias="agent")
+    entity: PyList[ProvenanceEntity] | None = Field(None, alias="entity", serialization_alias="entity")
+    location: Reference | None = Field(None, alias="location", serialization_alias="location")
+    occurred_date_time: str | None = Field(None, alias="occurredDateTime", serialization_alias="occurredDateTime")
+    occurred_period: Period | None = Field(None, alias="occurredPeriod", serialization_alias="occurredPeriod")
+    policy: PyList[str] | None = Field(None, alias="policy", serialization_alias="policy")
+    reason: PyList[CodeableConcept] | None = Field(None, alias="reason", serialization_alias="reason")
+    recorded: str | None = Field(None, alias="recorded", serialization_alias="recorded")
+    signature: PyList[Signature] | None = Field(None, alias="signature", serialization_alias="signature")
+    target: PyList[Reference] | None = Field(None, alias="target", serialization_alias="target")
 

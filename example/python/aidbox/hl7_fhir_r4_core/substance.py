@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Quantity, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,16 +14,16 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class SubstanceInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    expiry: Optional[str] = Field(None, alias="expiry", serialization_alias="expiry")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    expiry: str | None = Field(None, alias="expiry", serialization_alias="expiry")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
 
 class SubstanceIngredient(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    quantity: Optional[Ratio] = Field(None, alias="quantity", serialization_alias="quantity")
-    substance_codeable_concept: Optional[CodeableConcept] = Field(None, alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
-    substance_reference: Optional[Reference] = Field(None, alias="substanceReference", serialization_alias="substanceReference")
+    quantity: Ratio | None = Field(None, alias="quantity", serialization_alias="quantity")
+    substance_codeable_concept: CodeableConcept | None = Field(None, alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
+    substance_reference: Reference | None = Field(None, alias="substanceReference", serialization_alias="substanceReference")
 
 
 class Substance(DomainResource):
@@ -37,11 +37,11 @@ class Substance(DomainResource):
         pattern='Substance'
     )
     
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    ingredient: Optional[L[SubstanceIngredient]] = Field(None, alias="ingredient", serialization_alias="ingredient")
-    instance: Optional[L[SubstanceInstance]] = Field(None, alias="instance", serialization_alias="instance")
-    status: Optional[Literal["active", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    ingredient: PyList[SubstanceIngredient] | None = Field(None, alias="ingredient", serialization_alias="ingredient")
+    instance: PyList[SubstanceInstance] | None = Field(None, alias="instance", serialization_alias="instance")
+    status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

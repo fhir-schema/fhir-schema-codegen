@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Attachment, CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,12 +22,12 @@ class BodyStructure(DomainResource):
         pattern='BodyStructure'
     )
     
-    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    image: Optional[L[Attachment]] = Field(None, alias="image", serialization_alias="image")
-    location: Optional[CodeableConcept] = Field(None, alias="location", serialization_alias="location")
-    location_qualifier: Optional[L[CodeableConcept]] = Field(None, alias="locationQualifier", serialization_alias="locationQualifier")
-    morphology: Optional[CodeableConcept] = Field(None, alias="morphology", serialization_alias="morphology")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
+    active: bool | None = Field(None, alias="active", serialization_alias="active")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    image: PyList[Attachment] | None = Field(None, alias="image", serialization_alias="image")
+    location: CodeableConcept | None = Field(None, alias="location", serialization_alias="location")
+    location_qualifier: PyList[CodeableConcept] | None = Field(None, alias="locationQualifier", serialization_alias="locationQualifier")
+    morphology: CodeableConcept | None = Field(None, alias="morphology", serialization_alias="morphology")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
 

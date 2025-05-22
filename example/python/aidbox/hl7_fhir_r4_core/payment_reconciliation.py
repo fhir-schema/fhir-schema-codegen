@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,22 +14,22 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class PaymentReconciliationProcessNote(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
-    type: Optional[Literal["display", "print", "printoper"]] = Field(None, alias="type", serialization_alias="type")
+    text: str | None = Field(None, alias="text", serialization_alias="text")
+    type: Literal["display", "print", "printoper"] | None = Field(None, alias="type", serialization_alias="type")
 
 class PaymentReconciliationDetail(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    payee: Optional[Reference] = Field(None, alias="payee", serialization_alias="payee")
-    predecessor: Optional[Identifier] = Field(None, alias="predecessor", serialization_alias="predecessor")
-    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
-    response: Optional[Reference] = Field(None, alias="response", serialization_alias="response")
-    responsible: Optional[Reference] = Field(None, alias="responsible", serialization_alias="responsible")
-    submitter: Optional[Reference] = Field(None, alias="submitter", serialization_alias="submitter")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    payee: Reference | None = Field(None, alias="payee", serialization_alias="payee")
+    predecessor: Identifier | None = Field(None, alias="predecessor", serialization_alias="predecessor")
+    request: Reference | None = Field(None, alias="request", serialization_alias="request")
+    response: Reference | None = Field(None, alias="response", serialization_alias="response")
+    responsible: Reference | None = Field(None, alias="responsible", serialization_alias="responsible")
+    submitter: Reference | None = Field(None, alias="submitter", serialization_alias="submitter")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class PaymentReconciliation(DomainResource):
@@ -43,19 +43,19 @@ class PaymentReconciliation(DomainResource):
         pattern='PaymentReconciliation'
     )
     
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    detail: Optional[L[PaymentReconciliationDetail]] = Field(None, alias="detail", serialization_alias="detail")
-    disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")
-    form_code: Optional[CodeableConcept] = Field(None, alias="formCode", serialization_alias="formCode")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = Field(None, alias="outcome", serialization_alias="outcome")
-    payment_amount: Optional[Money] = Field(None, alias="paymentAmount", serialization_alias="paymentAmount")
-    payment_date: Optional[str] = Field(None, alias="paymentDate", serialization_alias="paymentDate")
-    payment_identifier: Optional[Identifier] = Field(None, alias="paymentIdentifier", serialization_alias="paymentIdentifier")
-    payment_issuer: Optional[Reference] = Field(None, alias="paymentIssuer", serialization_alias="paymentIssuer")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    process_note: Optional[L[PaymentReconciliationProcessNote]] = Field(None, alias="processNote", serialization_alias="processNote")
-    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
-    requestor: Optional[Reference] = Field(None, alias="requestor", serialization_alias="requestor")
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    detail: PyList[PaymentReconciliationDetail] | None = Field(None, alias="detail", serialization_alias="detail")
+    disposition: str | None = Field(None, alias="disposition", serialization_alias="disposition")
+    form_code: CodeableConcept | None = Field(None, alias="formCode", serialization_alias="formCode")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    outcome: Literal["queued", "complete", "error", "partial"] | None = Field(None, alias="outcome", serialization_alias="outcome")
+    payment_amount: Money | None = Field(None, alias="paymentAmount", serialization_alias="paymentAmount")
+    payment_date: str | None = Field(None, alias="paymentDate", serialization_alias="paymentDate")
+    payment_identifier: Identifier | None = Field(None, alias="paymentIdentifier", serialization_alias="paymentIdentifier")
+    payment_issuer: Reference | None = Field(None, alias="paymentIssuer", serialization_alias="paymentIssuer")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    process_note: PyList[PaymentReconciliationProcessNote] | None = Field(None, alias="processNote", serialization_alias="processNote")
+    request: Reference | None = Field(None, alias="request", serialization_alias="request")
+    requestor: Reference | None = Field(None, alias="requestor", serialization_alias="requestor")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

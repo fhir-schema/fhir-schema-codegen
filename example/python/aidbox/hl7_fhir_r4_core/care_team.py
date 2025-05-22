@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactPoint, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,10 +14,10 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CareTeamParticipant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    member: Optional[Reference] = Field(None, alias="member", serialization_alias="member")
-    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    role: Optional[L[CodeableConcept]] = Field(None, alias="role", serialization_alias="role")
+    member: Reference | None = Field(None, alias="member", serialization_alias="member")
+    on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    role: PyList[CodeableConcept] | None = Field(None, alias="role", serialization_alias="role")
 
 
 class CareTeam(DomainResource):
@@ -31,17 +31,17 @@ class CareTeam(DomainResource):
         pattern='CareTeam'
     )
     
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    managing_organization: Optional[L[Reference]] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    participant: Optional[L[CareTeamParticipant]] = Field(None, alias="participant", serialization_alias="participant")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    status: Optional[Literal["proposed", "active", "suspended", "inactive", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: PyList[Reference] | None = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    participant: PyList[CareTeamParticipant] | None = Field(None, alias="participant", serialization_alias="participant")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    status: Literal["proposed", "active", "suspended", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,22 +14,22 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ObservationDefinitionQuantitativeDetails(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    conversion_factor: Optional[float] = Field(None, alias="conversionFactor", serialization_alias="conversionFactor")
-    customary_unit: Optional[CodeableConcept] = Field(None, alias="customaryUnit", serialization_alias="customaryUnit")
-    decimal_precision: Optional[int] = Field(None, alias="decimalPrecision", serialization_alias="decimalPrecision")
-    unit: Optional[CodeableConcept] = Field(None, alias="unit", serialization_alias="unit")
+    conversion_factor: float | None = Field(None, alias="conversionFactor", serialization_alias="conversionFactor")
+    customary_unit: CodeableConcept | None = Field(None, alias="customaryUnit", serialization_alias="customaryUnit")
+    decimal_precision: int | None = Field(None, alias="decimalPrecision", serialization_alias="decimalPrecision")
+    unit: CodeableConcept | None = Field(None, alias="unit", serialization_alias="unit")
 
 class ObservationDefinitionQualifiedInterval(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    age: Optional[Range] = Field(None, alias="age", serialization_alias="age")
-    applies_to: Optional[L[CodeableConcept]] = Field(None, alias="appliesTo", serialization_alias="appliesTo")
-    category: Optional[Literal["reference", "critical", "absolute"]] = Field(None, alias="category", serialization_alias="category")
-    condition: Optional[str] = Field(None, alias="condition", serialization_alias="condition")
-    context: Optional[CodeableConcept] = Field(None, alias="context", serialization_alias="context")
-    gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
-    gestational_age: Optional[Range] = Field(None, alias="gestationalAge", serialization_alias="gestationalAge")
-    range: Optional[Range] = Field(None, alias="range", serialization_alias="range")
+    age: Range | None = Field(None, alias="age", serialization_alias="age")
+    applies_to: PyList[CodeableConcept] | None = Field(None, alias="appliesTo", serialization_alias="appliesTo")
+    category: Literal["reference", "critical", "absolute"] | None = Field(None, alias="category", serialization_alias="category")
+    condition: str | None = Field(None, alias="condition", serialization_alias="condition")
+    context: CodeableConcept | None = Field(None, alias="context", serialization_alias="context")
+    gender: Literal["male", "female", "other", "unknown"] | None = Field(None, alias="gender", serialization_alias="gender")
+    gestational_age: Range | None = Field(None, alias="gestationalAge", serialization_alias="gestationalAge")
+    range: Range | None = Field(None, alias="range", serialization_alias="range")
 
 
 class ObservationDefinition(DomainResource):
@@ -43,17 +43,17 @@ class ObservationDefinition(DomainResource):
         pattern='ObservationDefinition'
     )
     
-    abnormal_coded_value_set: Optional[Reference] = Field(None, alias="abnormalCodedValueSet", serialization_alias="abnormalCodedValueSet")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    critical_coded_value_set: Optional[Reference] = Field(None, alias="criticalCodedValueSet", serialization_alias="criticalCodedValueSet")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
-    multiple_results_allowed: Optional[bool] = Field(None, alias="multipleResultsAllowed", serialization_alias="multipleResultsAllowed")
-    normal_coded_value_set: Optional[Reference] = Field(None, alias="normalCodedValueSet", serialization_alias="normalCodedValueSet")
-    permitted_data_type: Optional[L[Literal["Quantity", "CodeableConcept", "string", "boolean", "integer", "Range", "Ratio", "SampledData", "time", "dateTime", "Period"]]] = Field(None, alias="permittedDataType", serialization_alias="permittedDataType")
-    preferred_report_name: Optional[str] = Field(None, alias="preferredReportName", serialization_alias="preferredReportName")
-    qualified_interval: Optional[L[ObservationDefinitionQualifiedInterval]] = Field(None, alias="qualifiedInterval", serialization_alias="qualifiedInterval")
-    quantitative_details: Optional[ObservationDefinitionQuantitativeDetails] = Field(None, alias="quantitativeDetails", serialization_alias="quantitativeDetails")
-    valid_coded_value_set: Optional[Reference] = Field(None, alias="validCodedValueSet", serialization_alias="validCodedValueSet")
+    abnormal_coded_value_set: Reference | None = Field(None, alias="abnormalCodedValueSet", serialization_alias="abnormalCodedValueSet")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    critical_coded_value_set: Reference | None = Field(None, alias="criticalCodedValueSet", serialization_alias="criticalCodedValueSet")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")
+    multiple_results_allowed: bool | None = Field(None, alias="multipleResultsAllowed", serialization_alias="multipleResultsAllowed")
+    normal_coded_value_set: Reference | None = Field(None, alias="normalCodedValueSet", serialization_alias="normalCodedValueSet")
+    permitted_data_type: PyList[Literal["Quantity", "CodeableConcept", "string", "boolean", "integer", "Range", "Ratio", "SampledData", "time", "dateTime", "Period"]] | None = Field(None, alias="permittedDataType", serialization_alias="permittedDataType")
+    preferred_report_name: str | None = Field(None, alias="preferredReportName", serialization_alias="preferredReportName")
+    qualified_interval: PyList[ObservationDefinitionQualifiedInterval] | None = Field(None, alias="qualifiedInterval", serialization_alias="qualifiedInterval")
+    quantitative_details: ObservationDefinitionQuantitativeDetails | None = Field(None, alias="quantitativeDetails", serialization_alias="quantitativeDetails")
+    valid_coded_value_set: Reference | None = Field(None, alias="validCodedValueSet", serialization_alias="validCodedValueSet")
 

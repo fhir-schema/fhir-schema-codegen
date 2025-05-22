@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactPoint, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,38 +14,38 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DeviceDeviceName(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    type: Optional[Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"]] = Field(None, alias="type", serialization_alias="type")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"] | None = Field(None, alias="type", serialization_alias="type")
 
 class DeviceProperty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    value_code: Optional[L[CodeableConcept]] = Field(None, alias="valueCode", serialization_alias="valueCode")
-    value_quantity: Optional[L[Quantity]] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value_code: PyList[CodeableConcept] | None = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_quantity: PyList[Quantity] | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class DeviceSpecialization(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    system_type: Optional[CodeableConcept] = Field(None, alias="systemType", serialization_alias="systemType")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    system_type: CodeableConcept | None = Field(None, alias="systemType", serialization_alias="systemType")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class DeviceVersion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    component: Optional[Identifier] = Field(None, alias="component", serialization_alias="component")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    component: Identifier | None = Field(None, alias="component", serialization_alias="component")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class DeviceUdiCarrier(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    carrier_aidc: Optional[str] = Field(None, alias="carrierAIDC", serialization_alias="carrierAIDC")
-    carrier_hrf: Optional[str] = Field(None, alias="carrierHRF", serialization_alias="carrierHRF")
-    device_identifier: Optional[str] = Field(None, alias="deviceIdentifier", serialization_alias="deviceIdentifier")
-    entry_type: Optional[Literal["barcode", "rfid", "manual", "card", "self-reported", "unknown"]] = Field(None, alias="entryType", serialization_alias="entryType")
-    issuer: Optional[str] = Field(None, alias="issuer", serialization_alias="issuer")
-    jurisdiction: Optional[str] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    carrier_aidc: str | None = Field(None, alias="carrierAIDC", serialization_alias="carrierAIDC")
+    carrier_hrf: str | None = Field(None, alias="carrierHRF", serialization_alias="carrierHRF")
+    device_identifier: str | None = Field(None, alias="deviceIdentifier", serialization_alias="deviceIdentifier")
+    entry_type: Literal["barcode", "rfid", "manual", "card", "self-reported", "unknown"] | None = Field(None, alias="entryType", serialization_alias="entryType")
+    issuer: str | None = Field(None, alias="issuer", serialization_alias="issuer")
+    jurisdiction: str | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
 
 
 class Device(DomainResource):
@@ -59,30 +59,30 @@ class Device(DomainResource):
         pattern='Device'
     )
     
-    contact: Optional[L[ContactPoint]] = Field(None, alias="contact", serialization_alias="contact")
-    definition: Optional[Reference] = Field(None, alias="definition", serialization_alias="definition")
-    device_name: Optional[L[DeviceDeviceName]] = Field(None, alias="deviceName", serialization_alias="deviceName")
-    distinct_identifier: Optional[str] = Field(None, alias="distinctIdentifier", serialization_alias="distinctIdentifier")
-    expiration_date: Optional[str] = Field(None, alias="expirationDate", serialization_alias="expirationDate")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
-    lot_number: Optional[str] = Field(None, alias="lotNumber", serialization_alias="lotNumber")
-    manufacture_date: Optional[str] = Field(None, alias="manufactureDate", serialization_alias="manufactureDate")
-    manufacturer: Optional[str] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
-    model_number: Optional[str] = Field(None, alias="modelNumber", serialization_alias="modelNumber")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    owner: Optional[Reference] = Field(None, alias="owner", serialization_alias="owner")
-    parent: Optional[Reference] = Field(None, alias="parent", serialization_alias="parent")
-    part_number: Optional[str] = Field(None, alias="partNumber", serialization_alias="partNumber")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    property: Optional[L[DeviceProperty]] = Field(None, alias="property", serialization_alias="property")
-    safety: Optional[L[CodeableConcept]] = Field(None, alias="safety", serialization_alias="safety")
-    serial_number: Optional[str] = Field(None, alias="serialNumber", serialization_alias="serialNumber")
-    specialization: Optional[L[DeviceSpecialization]] = Field(None, alias="specialization", serialization_alias="specialization")
-    status: Optional[Literal["active", "inactive", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    status_reason: Optional[L[CodeableConcept]] = Field(None, alias="statusReason", serialization_alias="statusReason")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    udi_carrier: Optional[L[DeviceUdiCarrier]] = Field(None, alias="udiCarrier", serialization_alias="udiCarrier")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    version: Optional[L[DeviceVersion]] = Field(None, alias="version", serialization_alias="version")
+    contact: PyList[ContactPoint] | None = Field(None, alias="contact", serialization_alias="contact")
+    definition: Reference | None = Field(None, alias="definition", serialization_alias="definition")
+    device_name: PyList[DeviceDeviceName] | None = Field(None, alias="deviceName", serialization_alias="deviceName")
+    distinct_identifier: str | None = Field(None, alias="distinctIdentifier", serialization_alias="distinctIdentifier")
+    expiration_date: str | None = Field(None, alias="expirationDate", serialization_alias="expirationDate")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    location: Reference | None = Field(None, alias="location", serialization_alias="location")
+    lot_number: str | None = Field(None, alias="lotNumber", serialization_alias="lotNumber")
+    manufacture_date: str | None = Field(None, alias="manufactureDate", serialization_alias="manufactureDate")
+    manufacturer: str | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    model_number: str | None = Field(None, alias="modelNumber", serialization_alias="modelNumber")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    owner: Reference | None = Field(None, alias="owner", serialization_alias="owner")
+    parent: Reference | None = Field(None, alias="parent", serialization_alias="parent")
+    part_number: str | None = Field(None, alias="partNumber", serialization_alias="partNumber")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    property: PyList[DeviceProperty] | None = Field(None, alias="property", serialization_alias="property")
+    safety: PyList[CodeableConcept] | None = Field(None, alias="safety", serialization_alias="safety")
+    serial_number: str | None = Field(None, alias="serialNumber", serialization_alias="serialNumber")
+    specialization: PyList[DeviceSpecialization] | None = Field(None, alias="specialization", serialization_alias="specialization")
+    status: Literal["active", "inactive", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status_reason: PyList[CodeableConcept] | None = Field(None, alias="statusReason", serialization_alias="statusReason")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    udi_carrier: PyList[DeviceUdiCarrier] | None = Field(None, alias="udiCarrier", serialization_alias="udiCarrier")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    version: PyList[DeviceVersion] | None = Field(None, alias="version", serialization_alias="version")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Age, Annotation, BackboneElement, CodeableConcept, Identifier, Period, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,15 +14,15 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ProcedureFocalDevice(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: Optional[CodeableConcept] = Field(None, alias="action", serialization_alias="action")
-    manipulated: Optional[Reference] = Field(None, alias="manipulated", serialization_alias="manipulated")
+    action: CodeableConcept | None = Field(None, alias="action", serialization_alias="action")
+    manipulated: Reference | None = Field(None, alias="manipulated", serialization_alias="manipulated")
 
 class ProcedurePerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
-    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
-    on_behalf_of: Optional[Reference] = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
+    on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
 
 
 class Procedure(DomainResource):
@@ -36,36 +36,36 @@ class Procedure(DomainResource):
         pattern='Procedure'
     )
     
-    asserter: Optional[Reference] = Field(None, alias="asserter", serialization_alias="asserter")
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    body_site: Optional[L[CodeableConcept]] = Field(None, alias="bodySite", serialization_alias="bodySite")
-    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    complication: Optional[L[CodeableConcept]] = Field(None, alias="complication", serialization_alias="complication")
-    complication_detail: Optional[L[Reference]] = Field(None, alias="complicationDetail", serialization_alias="complicationDetail")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    focal_device: Optional[L[ProcedureFocalDevice]] = Field(None, alias="focalDevice", serialization_alias="focalDevice")
-    follow_up: Optional[L[CodeableConcept]] = Field(None, alias="followUp", serialization_alias="followUp")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
-    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
-    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    outcome: Optional[CodeableConcept] = Field(None, alias="outcome", serialization_alias="outcome")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    performed_age: Optional[Age] = Field(None, alias="performedAge", serialization_alias="performedAge")
-    performed_date_time: Optional[str] = Field(None, alias="performedDateTime", serialization_alias="performedDateTime")
-    performed_period: Optional[Period] = Field(None, alias="performedPeriod", serialization_alias="performedPeriod")
-    performed_range: Optional[Range] = Field(None, alias="performedRange", serialization_alias="performedRange")
-    performed_string: Optional[str] = Field(None, alias="performedString", serialization_alias="performedString")
-    performer: Optional[L[ProcedurePerformer]] = Field(None, alias="performer", serialization_alias="performer")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    recorder: Optional[Reference] = Field(None, alias="recorder", serialization_alias="recorder")
-    report: Optional[L[Reference]] = Field(None, alias="report", serialization_alias="report")
-    status: Optional[Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    used_code: Optional[L[CodeableConcept]] = Field(None, alias="usedCode", serialization_alias="usedCode")
-    used_reference: Optional[L[Reference]] = Field(None, alias="usedReference", serialization_alias="usedReference")
+    asserter: Reference | None = Field(None, alias="asserter", serialization_alias="asserter")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: PyList[CodeableConcept] | None = Field(None, alias="bodySite", serialization_alias="bodySite")
+    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    complication: PyList[CodeableConcept] | None = Field(None, alias="complication", serialization_alias="complication")
+    complication_detail: PyList[Reference] | None = Field(None, alias="complicationDetail", serialization_alias="complicationDetail")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    focal_device: PyList[ProcedureFocalDevice] | None = Field(None, alias="focalDevice", serialization_alias="focalDevice")
+    follow_up: PyList[CodeableConcept] | None = Field(None, alias="followUp", serialization_alias="followUp")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    location: Reference | None = Field(None, alias="location", serialization_alias="location")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    outcome: CodeableConcept | None = Field(None, alias="outcome", serialization_alias="outcome")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    performed_age: Age | None = Field(None, alias="performedAge", serialization_alias="performedAge")
+    performed_date_time: str | None = Field(None, alias="performedDateTime", serialization_alias="performedDateTime")
+    performed_period: Period | None = Field(None, alias="performedPeriod", serialization_alias="performedPeriod")
+    performed_range: Range | None = Field(None, alias="performedRange", serialization_alias="performedRange")
+    performed_string: str | None = Field(None, alias="performedString", serialization_alias="performedString")
+    performer: PyList[ProcedurePerformer] | None = Field(None, alias="performer", serialization_alias="performer")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    recorder: Reference | None = Field(None, alias="recorder", serialization_alias="recorder")
+    report: PyList[Reference] | None = Field(None, alias="report", serialization_alias="report")
+    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    used_code: PyList[CodeableConcept] | None = Field(None, alias="usedCode", serialization_alias="usedCode")
+    used_reference: PyList[Reference] | None = Field(None, alias="usedReference", serialization_alias="usedReference")
 

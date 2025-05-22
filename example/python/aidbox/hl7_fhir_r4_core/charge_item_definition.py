@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Identifier, Money, Period, Reference, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,23 +14,23 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    amount: Optional[Money] = Field(None, alias="amount", serialization_alias="amount")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    factor: Optional[float] = Field(None, alias="factor", serialization_alias="factor")
-    type: Optional[Literal["base", "surcharge", "deduction", "discount", "tax", "informational"]] = Field(None, alias="type", serialization_alias="type")
+    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    factor: float | None = Field(None, alias="factor", serialization_alias="factor")
+    type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] | None = Field(None, alias="type", serialization_alias="type")
 
 class ChargeItemDefinitionPropertyGroup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    applicability: Optional[L[ChargeItemDefinitionApplicability]] = Field(None, alias="applicability", serialization_alias="applicability")
-    price_component: Optional[L[ChargeItemDefinitionPropertyGroupPriceComponent]] = Field(None, alias="priceComponent", serialization_alias="priceComponent")
+    applicability: PyList[ChargeItemDefinitionApplicability] | None = Field(None, alias="applicability", serialization_alias="applicability")
+    price_component: PyList[ChargeItemDefinitionPropertyGroupPriceComponent] | None = Field(None, alias="priceComponent", serialization_alias="priceComponent")
 
 class ChargeItemDefinitionApplicability(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    expression: Optional[str] = Field(None, alias="expression", serialization_alias="expression")
-    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    expression: str | None = Field(None, alias="expression", serialization_alias="expression")
+    language: str | None = Field(None, alias="language", serialization_alias="language")
 
 
 class ChargeItemDefinition(DomainResource):
@@ -44,27 +44,27 @@ class ChargeItemDefinition(DomainResource):
         pattern='ChargeItemDefinition'
     )
     
-    applicability: Optional[L[ChargeItemDefinitionApplicability]] = Field(None, alias="applicability", serialization_alias="applicability")
-    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    derived_from_uri: Optional[L[str]] = Field(None, alias="derivedFromUri", serialization_alias="derivedFromUri")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
-    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    instance: Optional[L[Reference]] = Field(None, alias="instance", serialization_alias="instance")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
-    part_of: Optional[L[str]] = Field(None, alias="partOf", serialization_alias="partOf")
-    property_group: Optional[L[ChargeItemDefinitionPropertyGroup]] = Field(None, alias="propertyGroup", serialization_alias="propertyGroup")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    replaces: Optional[L[str]] = Field(None, alias="replaces", serialization_alias="replaces")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    applicability: PyList[ChargeItemDefinitionApplicability] | None = Field(None, alias="applicability", serialization_alias="applicability")
+    approval_date: str | None = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    derived_from_uri: PyList[str] | None = Field(None, alias="derivedFromUri", serialization_alias="derivedFromUri")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    effective_period: Period | None = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    instance: PyList[Reference] | None = Field(None, alias="instance", serialization_alias="instance")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: str | None = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    part_of: PyList[str] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    property_group: PyList[ChargeItemDefinitionPropertyGroup] | None = Field(None, alias="propertyGroup", serialization_alias="propertyGroup")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    replaces: PyList[str] | None = Field(None, alias="replaces", serialization_alias="replaces")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 

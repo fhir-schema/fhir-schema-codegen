@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Address, Attachment, BackboneElement, CodeableConcept, ContactPoint, HumanName, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,10 +14,10 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class PractitionerQualification(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    issuer: Optional[Reference] = Field(None, alias="issuer", serialization_alias="issuer")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    issuer: Reference | None = Field(None, alias="issuer", serialization_alias="issuer")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 
 class Practitioner(DomainResource):
@@ -31,14 +31,14 @@ class Practitioner(DomainResource):
         pattern='Practitioner'
     )
     
-    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
-    address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")
-    birth_date: Optional[str] = Field(None, alias="birthDate", serialization_alias="birthDate")
-    communication: Optional[L[CodeableConcept]] = Field(None, alias="communication", serialization_alias="communication")
-    gender: Optional[Literal["male", "female", "other", "unknown"]] = Field(None, alias="gender", serialization_alias="gender")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    name: Optional[L[HumanName]] = Field(None, alias="name", serialization_alias="name")
-    photo: Optional[L[Attachment]] = Field(None, alias="photo", serialization_alias="photo")
-    qualification: Optional[L[PractitionerQualification]] = Field(None, alias="qualification", serialization_alias="qualification")
-    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    active: bool | None = Field(None, alias="active", serialization_alias="active")
+    address: PyList[Address] | None = Field(None, alias="address", serialization_alias="address")
+    birth_date: str | None = Field(None, alias="birthDate", serialization_alias="birthDate")
+    communication: PyList[CodeableConcept] | None = Field(None, alias="communication", serialization_alias="communication")
+    gender: Literal["male", "female", "other", "unknown"] | None = Field(None, alias="gender", serialization_alias="gender")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    name: PyList[HumanName] | None = Field(None, alias="name", serialization_alias="name")
+    photo: PyList[Attachment] | None = Field(None, alias="photo", serialization_alias="photo")
+    qualification: PyList[PractitionerQualification] | None = Field(None, alias="qualification", serialization_alias="qualification")
+    telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
 

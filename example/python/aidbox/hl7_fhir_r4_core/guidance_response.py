@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, CodeableConcept, DataRequirement, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,21 +22,21 @@ class GuidanceResponse(DomainResource):
         pattern='GuidanceResponse'
     )
     
-    data_requirement: Optional[L[DataRequirement]] = Field(None, alias="dataRequirement", serialization_alias="dataRequirement")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    evaluation_message: Optional[L[Reference]] = Field(None, alias="evaluationMessage", serialization_alias="evaluationMessage")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    module_canonical: Optional[str] = Field(None, alias="moduleCanonical", serialization_alias="moduleCanonical")
-    module_codeable_concept: Optional[CodeableConcept] = Field(None, alias="moduleCodeableConcept", serialization_alias="moduleCodeableConcept")
-    module_uri: Optional[str] = Field(None, alias="moduleUri", serialization_alias="moduleUri")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
-    output_parameters: Optional[Reference] = Field(None, alias="outputParameters", serialization_alias="outputParameters")
-    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    request_identifier: Optional[Identifier] = Field(None, alias="requestIdentifier", serialization_alias="requestIdentifier")
-    result: Optional[Reference] = Field(None, alias="result", serialization_alias="result")
-    status: Optional[Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    data_requirement: PyList[DataRequirement] | None = Field(None, alias="dataRequirement", serialization_alias="dataRequirement")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    evaluation_message: PyList[Reference] | None = Field(None, alias="evaluationMessage", serialization_alias="evaluationMessage")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    module_canonical: str | None = Field(None, alias="moduleCanonical", serialization_alias="moduleCanonical")
+    module_codeable_concept: CodeableConcept | None = Field(None, alias="moduleCodeableConcept", serialization_alias="moduleCodeableConcept")
+    module_uri: str | None = Field(None, alias="moduleUri", serialization_alias="moduleUri")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    output_parameters: Reference | None = Field(None, alias="outputParameters", serialization_alias="outputParameters")
+    performer: Reference | None = Field(None, alias="performer", serialization_alias="performer")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    request_identifier: Identifier | None = Field(None, alias="requestIdentifier", serialization_alias="requestIdentifier")
+    result: Reference | None = Field(None, alias="result", serialization_alias="result")
+    status: Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

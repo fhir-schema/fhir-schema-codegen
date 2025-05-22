@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, ContactPoint, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,16 +22,16 @@ class OrganizationAffiliation(DomainResource):
         pattern='OrganizationAffiliation'
     )
     
-    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
-    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
-    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
-    healthcare_service: Optional[L[Reference]] = Field(None, alias="healthcareService", serialization_alias="healthcareService")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    location: Optional[L[Reference]] = Field(None, alias="location", serialization_alias="location")
-    network: Optional[L[Reference]] = Field(None, alias="network", serialization_alias="network")
-    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
-    participating_organization: Optional[Reference] = Field(None, alias="participatingOrganization", serialization_alias="participatingOrganization")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
-    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    active: bool | None = Field(None, alias="active", serialization_alias="active")
+    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
+    endpoint: PyList[Reference] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    healthcare_service: PyList[Reference] | None = Field(None, alias="healthcareService", serialization_alias="healthcareService")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    location: PyList[Reference] | None = Field(None, alias="location", serialization_alias="location")
+    network: PyList[Reference] | None = Field(None, alias="network", serialization_alias="network")
+    organization: Reference | None = Field(None, alias="organization", serialization_alias="organization")
+    participating_organization: Reference | None = Field(None, alias="participatingOrganization", serialization_alias="participatingOrganization")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
+    telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Period, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,14 +14,14 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class RiskAssessmentPrediction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    outcome: Optional[CodeableConcept] = Field(None, alias="outcome", serialization_alias="outcome")
-    probability_decimal: Optional[float] = Field(None, alias="probabilityDecimal", serialization_alias="probabilityDecimal")
-    probability_range: Optional[Range] = Field(None, alias="probabilityRange", serialization_alias="probabilityRange")
-    qualitative_risk: Optional[CodeableConcept] = Field(None, alias="qualitativeRisk", serialization_alias="qualitativeRisk")
-    rationale: Optional[str] = Field(None, alias="rationale", serialization_alias="rationale")
-    relative_risk: Optional[float] = Field(None, alias="relativeRisk", serialization_alias="relativeRisk")
-    when_period: Optional[Period] = Field(None, alias="whenPeriod", serialization_alias="whenPeriod")
-    when_range: Optional[Range] = Field(None, alias="whenRange", serialization_alias="whenRange")
+    outcome: CodeableConcept | None = Field(None, alias="outcome", serialization_alias="outcome")
+    probability_decimal: float | None = Field(None, alias="probabilityDecimal", serialization_alias="probabilityDecimal")
+    probability_range: Range | None = Field(None, alias="probabilityRange", serialization_alias="probabilityRange")
+    qualitative_risk: CodeableConcept | None = Field(None, alias="qualitativeRisk", serialization_alias="qualitativeRisk")
+    rationale: str | None = Field(None, alias="rationale", serialization_alias="rationale")
+    relative_risk: float | None = Field(None, alias="relativeRisk", serialization_alias="relativeRisk")
+    when_period: Period | None = Field(None, alias="whenPeriod", serialization_alias="whenPeriod")
+    when_range: Range | None = Field(None, alias="whenRange", serialization_alias="whenRange")
 
 
 class RiskAssessment(DomainResource):
@@ -35,22 +35,22 @@ class RiskAssessment(DomainResource):
         pattern='RiskAssessment'
     )
     
-    based_on: Optional[Reference] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    basis: Optional[L[Reference]] = Field(None, alias="basis", serialization_alias="basis")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    method: Optional[CodeableConcept] = Field(None, alias="method", serialization_alias="method")
-    mitigation: Optional[str] = Field(None, alias="mitigation", serialization_alias="mitigation")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
-    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
-    parent: Optional[Reference] = Field(None, alias="parent", serialization_alias="parent")
-    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
-    prediction: Optional[L[RiskAssessmentPrediction]] = Field(None, alias="prediction", serialization_alias="prediction")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    status: Optional[Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    based_on: Reference | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    basis: PyList[Reference] | None = Field(None, alias="basis", serialization_alias="basis")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    condition: Reference | None = Field(None, alias="condition", serialization_alias="condition")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")
+    mitigation: str | None = Field(None, alias="mitigation", serialization_alias="mitigation")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Period | None = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    parent: Reference | None = Field(None, alias="parent", serialization_alias="parent")
+    performer: Reference | None = Field(None, alias="performer", serialization_alias="performer")
+    prediction: PyList[RiskAssessmentPrediction] | None = Field(None, alias="prediction", serialization_alias="prediction")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, CodeableConcept, Identifier, Period, Reference, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,19 +22,19 @@ class DeviceUseStatement(DomainResource):
         pattern='DeviceUseStatement'
     )
     
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
-    derived_from: Optional[L[Reference]] = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
-    device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    recorded_on: Optional[str] = Field(None, alias="recordedOn", serialization_alias="recordedOn")
-    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
-    status: Optional[Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
-    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
-    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: CodeableConcept | None = Field(None, alias="bodySite", serialization_alias="bodySite")
+    derived_from: PyList[Reference] | None = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
+    device: Reference | None = Field(None, alias="device", serialization_alias="device")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    recorded_on: str | None = Field(None, alias="recordedOn", serialization_alias="recordedOn")
+    source: Reference | None = Field(None, alias="source", serialization_alias="source")
+    status: Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    timing_date_time: str | None = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_period: Period | None = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    timing_timing: Timing | None = Field(None, alias="timingTiming", serialization_alias="timingTiming")
 

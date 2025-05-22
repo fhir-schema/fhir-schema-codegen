@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Reference
 from aidbox.hl7_fhir_r4_core.resource import Resource
@@ -22,7 +22,7 @@ class Binary(Resource):
         pattern='Binary'
     )
     
-    content_type: Optional[str] = Field(None, alias="contentType", serialization_alias="contentType")
-    data: Optional[str] = Field(None, alias="data", serialization_alias="data")
-    security_context: Optional[Reference] = Field(None, alias="securityContext", serialization_alias="securityContext")
+    content_type: str | None = Field(None, alias="contentType", serialization_alias="contentType")
+    data: str | None = Field(None, alias="data", serialization_alias="data")
+    security_context: Reference | None = Field(None, alias="securityContext", serialization_alias="securityContext")
 

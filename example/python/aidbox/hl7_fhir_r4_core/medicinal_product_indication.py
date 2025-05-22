@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Population, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,9 +14,9 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductIndicationOtherTherapy(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
-    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
-    therapy_relationship_type: Optional[CodeableConcept] = Field(None, alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
+    medication_codeable_concept: CodeableConcept | None = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Reference | None = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    therapy_relationship_type: CodeableConcept | None = Field(None, alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
 
 
 class MedicinalProductIndication(DomainResource):
@@ -30,13 +30,13 @@ class MedicinalProductIndication(DomainResource):
         pattern='MedicinalProductIndication'
     )
     
-    comorbidity: Optional[L[CodeableConcept]] = Field(None, alias="comorbidity", serialization_alias="comorbidity")
-    disease_status: Optional[CodeableConcept] = Field(None, alias="diseaseStatus", serialization_alias="diseaseStatus")
-    disease_symptom_procedure: Optional[CodeableConcept] = Field(None, alias="diseaseSymptomProcedure", serialization_alias="diseaseSymptomProcedure")
-    duration: Optional[Quantity] = Field(None, alias="duration", serialization_alias="duration")
-    intended_effect: Optional[CodeableConcept] = Field(None, alias="intendedEffect", serialization_alias="intendedEffect")
-    other_therapy: Optional[L[MedicinalProductIndicationOtherTherapy]] = Field(None, alias="otherTherapy", serialization_alias="otherTherapy")
-    population: Optional[L[Population]] = Field(None, alias="population", serialization_alias="population")
-    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
-    undesirable_effect: Optional[L[Reference]] = Field(None, alias="undesirableEffect", serialization_alias="undesirableEffect")
+    comorbidity: PyList[CodeableConcept] | None = Field(None, alias="comorbidity", serialization_alias="comorbidity")
+    disease_status: CodeableConcept | None = Field(None, alias="diseaseStatus", serialization_alias="diseaseStatus")
+    disease_symptom_procedure: CodeableConcept | None = Field(None, alias="diseaseSymptomProcedure", serialization_alias="diseaseSymptomProcedure")
+    duration: Quantity | None = Field(None, alias="duration", serialization_alias="duration")
+    intended_effect: CodeableConcept | None = Field(None, alias="intendedEffect", serialization_alias="intendedEffect")
+    other_therapy: PyList[MedicinalProductIndicationOtherTherapy] | None = Field(None, alias="otherTherapy", serialization_alias="otherTherapy")
+    population: PyList[Population] | None = Field(None, alias="population", serialization_alias="population")
+    subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
+    undesirable_effect: PyList[Reference] | None = Field(None, alias="undesirableEffect", serialization_alias="undesirableEffect")
 

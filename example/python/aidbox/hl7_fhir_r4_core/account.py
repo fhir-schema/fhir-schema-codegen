@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,15 +14,15 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class AccountCoverage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
-    priority: Optional[PositiveInt] = Field(None, alias="priority", serialization_alias="priority")
+    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    priority: PositiveInt | None = Field(None, alias="priority", serialization_alias="priority")
 
 class AccountGuarantor(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    on_hold: Optional[bool] = Field(None, alias="onHold", serialization_alias="onHold")
-    party: Optional[Reference] = Field(None, alias="party", serialization_alias="party")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    on_hold: bool | None = Field(None, alias="onHold", serialization_alias="onHold")
+    party: Reference | None = Field(None, alias="party", serialization_alias="party")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 
 class Account(DomainResource):
@@ -36,15 +36,15 @@ class Account(DomainResource):
         pattern='Account'
     )
     
-    coverage: Optional[L[AccountCoverage]] = Field(None, alias="coverage", serialization_alias="coverage")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    guarantor: Optional[L[AccountGuarantor]] = Field(None, alias="guarantor", serialization_alias="guarantor")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    owner: Optional[Reference] = Field(None, alias="owner", serialization_alias="owner")
-    part_of: Optional[Reference] = Field(None, alias="partOf", serialization_alias="partOf")
-    service_period: Optional[Period] = Field(None, alias="servicePeriod", serialization_alias="servicePeriod")
-    status: Optional[Literal["active", "inactive", "entered-in-error", "on-hold", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    coverage: PyList[AccountCoverage] | None = Field(None, alias="coverage", serialization_alias="coverage")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    guarantor: PyList[AccountGuarantor] | None = Field(None, alias="guarantor", serialization_alias="guarantor")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    owner: Reference | None = Field(None, alias="owner", serialization_alias="owner")
+    part_of: Reference | None = Field(None, alias="partOf", serialization_alias="partOf")
+    service_period: Period | None = Field(None, alias="servicePeriod", serialization_alias="servicePeriod")
+    status: Literal["active", "inactive", "entered-in-error", "on-hold", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 

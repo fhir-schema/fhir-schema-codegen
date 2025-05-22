@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Extension, Narrative
 from aidbox.hl7_fhir_r4_core.resource import Resource
@@ -22,8 +22,8 @@ class DomainResource(Resource):
         pattern='DomainResource'
     )
     
-    contained: Optional[L[ResourceFamily]] = Field(None, alias="contained", serialization_alias="contained")
-    extension: Optional[L[Extension]] = Field(None, alias="extension", serialization_alias="extension")
-    modifier_extension: Optional[L[Extension]] = Field(None, alias="modifierExtension", serialization_alias="modifierExtension")
-    text: Optional[Narrative] = Field(None, alias="text", serialization_alias="text")
+    contained: PyList[ResourceFamily] | None = Field(None, alias="contained", serialization_alias="contained")
+    extension: PyList[Extension] | None = Field(None, alias="extension", serialization_alias="extension")
+    modifier_extension: PyList[Extension] | None = Field(None, alias="modifierExtension", serialization_alias="modifierExtension")
+    text: Narrative | None = Field(None, alias="text", serialization_alias="text")
 

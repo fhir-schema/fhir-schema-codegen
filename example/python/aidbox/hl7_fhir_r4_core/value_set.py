@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,74 +14,74 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ValueSetComposeIncludeConceptDesignation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
-    use: Optional[Coding] = Field(None, alias="use", serialization_alias="use")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    language: str | None = Field(None, alias="language", serialization_alias="language")
+    use: Coding | None = Field(None, alias="use", serialization_alias="use")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class ValueSetComposeIncludeConcept(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
-    designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = Field(None, alias="designation", serialization_alias="designation")
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    designation: PyList[ValueSetComposeIncludeConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
 
 class ValueSetComposeIncludeFilter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    op: Optional[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] = Field(None, alias="op", serialization_alias="op")
-    property: Optional[str] = Field(None, alias="property", serialization_alias="property")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    op: Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"] | None = Field(None, alias="op", serialization_alias="op")
+    property: str | None = Field(None, alias="property", serialization_alias="property")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class ValueSetComposeInclude(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    concept: Optional[L[ValueSetComposeIncludeConcept]] = Field(None, alias="concept", serialization_alias="concept")
-    filter: Optional[L[ValueSetComposeIncludeFilter]] = Field(None, alias="filter", serialization_alias="filter")
-    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
-    value_set: Optional[L[str]] = Field(None, alias="valueSet", serialization_alias="valueSet")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    concept: PyList[ValueSetComposeIncludeConcept] | None = Field(None, alias="concept", serialization_alias="concept")
+    filter: PyList[ValueSetComposeIncludeFilter] | None = Field(None, alias="filter", serialization_alias="filter")
+    system: str | None = Field(None, alias="system", serialization_alias="system")
+    value_set: PyList[str] | None = Field(None, alias="valueSet", serialization_alias="valueSet")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class ValueSetCompose(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    exclude: Optional[L[ValueSetComposeInclude]] = Field(None, alias="exclude", serialization_alias="exclude")
-    inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
-    include: Optional[L[ValueSetComposeInclude]] = Field(None, alias="include", serialization_alias="include")
-    locked_date: Optional[str] = Field(None, alias="lockedDate", serialization_alias="lockedDate")
+    exclude: PyList[ValueSetComposeInclude] | None = Field(None, alias="exclude", serialization_alias="exclude")
+    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
+    include: PyList[ValueSetComposeInclude] | None = Field(None, alias="include", serialization_alias="include")
+    locked_date: str | None = Field(None, alias="lockedDate", serialization_alias="lockedDate")
 
 class ValueSetExpansionParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_code: Optional[str] = Field(None, alias="valueCode", serialization_alias="valueCode")
-    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
-    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
-    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
-    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_code: str | None = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class ValueSetExpansionContains(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    abstract: Optional[bool] = Field(None, alias="abstract", serialization_alias="abstract")
-    code: Optional[str] = Field(None, alias="code", serialization_alias="code")
-    contains: Optional[L[ValueSetExpansionContains]] = Field(None, alias="contains", serialization_alias="contains")
-    designation: Optional[L[ValueSetComposeIncludeConceptDesignation]] = Field(None, alias="designation", serialization_alias="designation")
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
-    inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
-    system: Optional[str] = Field(None, alias="system", serialization_alias="system")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    abstract: bool | None = Field(None, alias="abstract", serialization_alias="abstract")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    contains: PyList[ValueSetExpansionContains] | None = Field(None, alias="contains", serialization_alias="contains")
+    designation: PyList[ValueSetComposeIncludeConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
+    system: str | None = Field(None, alias="system", serialization_alias="system")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class ValueSetExpansion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    contains: Optional[L[ValueSetExpansionContains]] = Field(None, alias="contains", serialization_alias="contains")
-    identifier: Optional[str] = Field(None, alias="identifier", serialization_alias="identifier")
-    offset: Optional[int] = Field(None, alias="offset", serialization_alias="offset")
-    parameter: Optional[L[ValueSetExpansionParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
-    timestamp: Optional[str] = Field(None, alias="timestamp", serialization_alias="timestamp")
-    total: Optional[int] = Field(None, alias="total", serialization_alias="total")
+    contains: PyList[ValueSetExpansionContains] | None = Field(None, alias="contains", serialization_alias="contains")
+    identifier: str | None = Field(None, alias="identifier", serialization_alias="identifier")
+    offset: int | None = Field(None, alias="offset", serialization_alias="offset")
+    parameter: PyList[ValueSetExpansionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
+    timestamp: str | None = Field(None, alias="timestamp", serialization_alias="timestamp")
+    total: int | None = Field(None, alias="total", serialization_alias="total")
 
 
 class ValueSet(DomainResource):
@@ -95,22 +95,22 @@ class ValueSet(DomainResource):
         pattern='ValueSet'
     )
     
-    compose: Optional[ValueSetCompose] = Field(None, alias="compose", serialization_alias="compose")
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    expansion: Optional[ValueSetExpansion] = Field(None, alias="expansion", serialization_alias="expansion")
-    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    immutable: Optional[bool] = Field(None, alias="immutable", serialization_alias="immutable")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    compose: ValueSetCompose | None = Field(None, alias="compose", serialization_alias="compose")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    expansion: ValueSetExpansion | None = Field(None, alias="expansion", serialization_alias="expansion")
+    experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    immutable: bool | None = Field(None, alias="immutable", serialization_alias="immutable")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 

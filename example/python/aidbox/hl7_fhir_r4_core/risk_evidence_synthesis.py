@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactDetail, Identifier, Period, Reference, RelatedArtifact, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,42 +14,42 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class RiskEvidenceSynthesisSampleSize(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    number_of_participants: Optional[int] = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
-    number_of_studies: Optional[int] = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    number_of_participants: int | None = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
+    number_of_studies: int | None = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
 
 class RiskEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class RiskEvidenceSynthesisCertainty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    certainty_subcomponent: Optional[L[RiskEvidenceSynthesisCertaintyCertaintySubcomponent]] = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    rating: Optional[L[CodeableConcept]] = Field(None, alias="rating", serialization_alias="rating")
+    certainty_subcomponent: PyList[RiskEvidenceSynthesisCertaintyCertaintySubcomponent] | None = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
 
 class RiskEvidenceSynthesisRiskEstimatePrecisionEstimate(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    from_: Optional[float] = Field(None, alias="from", serialization_alias="from")
-    level: Optional[float] = Field(None, alias="level", serialization_alias="level")
-    to: Optional[float] = Field(None, alias="to", serialization_alias="to")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    from_: float | None = Field(None, alias="from", serialization_alias="from")
+    level: float | None = Field(None, alias="level", serialization_alias="level")
+    to: float | None = Field(None, alias="to", serialization_alias="to")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class RiskEvidenceSynthesisRiskEstimate(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    denominator_count: Optional[int] = Field(None, alias="denominatorCount", serialization_alias="denominatorCount")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    numerator_count: Optional[int] = Field(None, alias="numeratorCount", serialization_alias="numeratorCount")
-    precision_estimate: Optional[L[RiskEvidenceSynthesisRiskEstimatePrecisionEstimate]] = Field(None, alias="precisionEstimate", serialization_alias="precisionEstimate")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    unit_of_measure: Optional[CodeableConcept] = Field(None, alias="unitOfMeasure", serialization_alias="unitOfMeasure")
-    value: Optional[float] = Field(None, alias="value", serialization_alias="value")
+    denominator_count: int | None = Field(None, alias="denominatorCount", serialization_alias="denominatorCount")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    numerator_count: int | None = Field(None, alias="numeratorCount", serialization_alias="numeratorCount")
+    precision_estimate: PyList[RiskEvidenceSynthesisRiskEstimatePrecisionEstimate] | None = Field(None, alias="precisionEstimate", serialization_alias="precisionEstimate")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    unit_of_measure: CodeableConcept | None = Field(None, alias="unitOfMeasure", serialization_alias="unitOfMeasure")
+    value: float | None = Field(None, alias="value", serialization_alias="value")
 
 
 class RiskEvidenceSynthesis(DomainResource):
@@ -63,35 +63,35 @@ class RiskEvidenceSynthesis(DomainResource):
         pattern='RiskEvidenceSynthesis'
     )
     
-    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
-    author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")
-    certainty: Optional[L[RiskEvidenceSynthesisCertainty]] = Field(None, alias="certainty", serialization_alias="certainty")
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    editor: Optional[L[ContactDetail]] = Field(None, alias="editor", serialization_alias="editor")
-    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
-    endorser: Optional[L[ContactDetail]] = Field(None, alias="endorser", serialization_alias="endorser")
-    exposure: Optional[Reference] = Field(None, alias="exposure", serialization_alias="exposure")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    outcome: Optional[Reference] = Field(None, alias="outcome", serialization_alias="outcome")
-    population: Optional[Reference] = Field(None, alias="population", serialization_alias="population")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
-    reviewer: Optional[L[ContactDetail]] = Field(None, alias="reviewer", serialization_alias="reviewer")
-    risk_estimate: Optional[RiskEvidenceSynthesisRiskEstimate] = Field(None, alias="riskEstimate", serialization_alias="riskEstimate")
-    sample_size: Optional[RiskEvidenceSynthesisSampleSize] = Field(None, alias="sampleSize", serialization_alias="sampleSize")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    study_type: Optional[CodeableConcept] = Field(None, alias="studyType", serialization_alias="studyType")
-    synthesis_type: Optional[CodeableConcept] = Field(None, alias="synthesisType", serialization_alias="synthesisType")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    topic: Optional[L[CodeableConcept]] = Field(None, alias="topic", serialization_alias="topic")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    approval_date: str | None = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    author: PyList[ContactDetail] | None = Field(None, alias="author", serialization_alias="author")
+    certainty: PyList[RiskEvidenceSynthesisCertainty] | None = Field(None, alias="certainty", serialization_alias="certainty")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    editor: PyList[ContactDetail] | None = Field(None, alias="editor", serialization_alias="editor")
+    effective_period: Period | None = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    endorser: PyList[ContactDetail] | None = Field(None, alias="endorser", serialization_alias="endorser")
+    exposure: Reference | None = Field(None, alias="exposure", serialization_alias="exposure")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: str | None = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    outcome: Reference | None = Field(None, alias="outcome", serialization_alias="outcome")
+    population: Reference | None = Field(None, alias="population", serialization_alias="population")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    reviewer: PyList[ContactDetail] | None = Field(None, alias="reviewer", serialization_alias="reviewer")
+    risk_estimate: RiskEvidenceSynthesisRiskEstimate | None = Field(None, alias="riskEstimate", serialization_alias="riskEstimate")
+    sample_size: RiskEvidenceSynthesisSampleSize | None = Field(None, alias="sampleSize", serialization_alias="sampleSize")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    study_type: CodeableConcept | None = Field(None, alias="studyType", serialization_alias="studyType")
+    synthesis_type: CodeableConcept | None = Field(None, alias="synthesisType", serialization_alias="synthesisType")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    topic: PyList[CodeableConcept] | None = Field(None, alias="topic", serialization_alias="topic")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Expression, Identifier, Period, Reference, RelatedArtifact, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,40 +14,40 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MeasureGroupPopulation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroupStratifierComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroupStratifier(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    component: Optional[L[MeasureGroupStratifierComponent]] = Field(None, alias="component", serialization_alias="component")
-    criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    component: PyList[MeasureGroupStratifierComponent] | None = Field(None, alias="component", serialization_alias="component")
+    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    population: Optional[L[MeasureGroupPopulation]] = Field(None, alias="population", serialization_alias="population")
-    stratifier: Optional[L[MeasureGroupStratifier]] = Field(None, alias="stratifier", serialization_alias="stratifier")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    population: PyList[MeasureGroupPopulation] | None = Field(None, alias="population", serialization_alias="population")
+    stratifier: PyList[MeasureGroupStratifier] | None = Field(None, alias="stratifier", serialization_alias="stratifier")
 
 class MeasureSupplementalData(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    criteria: Optional[Expression] = Field(None, alias="criteria", serialization_alias="criteria")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    usage: Optional[L[CodeableConcept]] = Field(None, alias="usage", serialization_alias="usage")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    usage: PyList[CodeableConcept] | None = Field(None, alias="usage", serialization_alias="usage")
 
 
 class Measure(DomainResource):
@@ -61,46 +61,46 @@ class Measure(DomainResource):
         pattern='Measure'
     )
     
-    approval_date: Optional[str] = Field(None, alias="approvalDate", serialization_alias="approvalDate")
-    author: Optional[L[ContactDetail]] = Field(None, alias="author", serialization_alias="author")
-    clinical_recommendation_statement: Optional[str] = Field(None, alias="clinicalRecommendationStatement", serialization_alias="clinicalRecommendationStatement")
-    composite_scoring: Optional[CodeableConcept] = Field(None, alias="compositeScoring", serialization_alias="compositeScoring")
-    contact: Optional[L[ContactDetail]] = Field(None, alias="contact", serialization_alias="contact")
-    copyright: Optional[str] = Field(None, alias="copyright", serialization_alias="copyright")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    definition: Optional[L[str]] = Field(None, alias="definition", serialization_alias="definition")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    disclaimer: Optional[str] = Field(None, alias="disclaimer", serialization_alias="disclaimer")
-    editor: Optional[L[ContactDetail]] = Field(None, alias="editor", serialization_alias="editor")
-    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
-    endorser: Optional[L[ContactDetail]] = Field(None, alias="endorser", serialization_alias="endorser")
-    experimental: Optional[bool] = Field(None, alias="experimental", serialization_alias="experimental")
-    group: Optional[L[MeasureGroup]] = Field(None, alias="group", serialization_alias="group")
-    guidance: Optional[str] = Field(None, alias="guidance", serialization_alias="guidance")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    improvement_notation: Optional[CodeableConcept] = Field(None, alias="improvementNotation", serialization_alias="improvementNotation")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    last_review_date: Optional[str] = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
-    library: Optional[L[str]] = Field(None, alias="library", serialization_alias="library")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    publisher: Optional[str] = Field(None, alias="publisher", serialization_alias="publisher")
-    purpose: Optional[str] = Field(None, alias="purpose", serialization_alias="purpose")
-    rate_aggregation: Optional[str] = Field(None, alias="rateAggregation", serialization_alias="rateAggregation")
-    rationale: Optional[str] = Field(None, alias="rationale", serialization_alias="rationale")
-    related_artifact: Optional[L[RelatedArtifact]] = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
-    reviewer: Optional[L[ContactDetail]] = Field(None, alias="reviewer", serialization_alias="reviewer")
-    risk_adjustment: Optional[str] = Field(None, alias="riskAdjustment", serialization_alias="riskAdjustment")
-    scoring: Optional[CodeableConcept] = Field(None, alias="scoring", serialization_alias="scoring")
-    status: Optional[Literal["draft", "active", "retired", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject_codeable_concept: Optional[CodeableConcept] = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
-    subject_reference: Optional[Reference] = Field(None, alias="subjectReference", serialization_alias="subjectReference")
-    subtitle: Optional[str] = Field(None, alias="subtitle", serialization_alias="subtitle")
-    supplemental_data: Optional[L[MeasureSupplementalData]] = Field(None, alias="supplementalData", serialization_alias="supplementalData")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    topic: Optional[L[CodeableConcept]] = Field(None, alias="topic", serialization_alias="topic")
-    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
-    url: Optional[str] = Field(None, alias="url", serialization_alias="url")
-    usage: Optional[str] = Field(None, alias="usage", serialization_alias="usage")
-    use_context: Optional[L[UsageContext]] = Field(None, alias="useContext", serialization_alias="useContext")
-    version: Optional[str] = Field(None, alias="version", serialization_alias="version")
+    approval_date: str | None = Field(None, alias="approvalDate", serialization_alias="approvalDate")
+    author: PyList[ContactDetail] | None = Field(None, alias="author", serialization_alias="author")
+    clinical_recommendation_statement: str | None = Field(None, alias="clinicalRecommendationStatement", serialization_alias="clinicalRecommendationStatement")
+    composite_scoring: CodeableConcept | None = Field(None, alias="compositeScoring", serialization_alias="compositeScoring")
+    contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
+    copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    definition: PyList[str] | None = Field(None, alias="definition", serialization_alias="definition")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    disclaimer: str | None = Field(None, alias="disclaimer", serialization_alias="disclaimer")
+    editor: PyList[ContactDetail] | None = Field(None, alias="editor", serialization_alias="editor")
+    effective_period: Period | None = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    endorser: PyList[ContactDetail] | None = Field(None, alias="endorser", serialization_alias="endorser")
+    experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
+    group: PyList[MeasureGroup] | None = Field(None, alias="group", serialization_alias="group")
+    guidance: str | None = Field(None, alias="guidance", serialization_alias="guidance")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    improvement_notation: CodeableConcept | None = Field(None, alias="improvementNotation", serialization_alias="improvementNotation")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    last_review_date: str | None = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
+    library: PyList[str] | None = Field(None, alias="library", serialization_alias="library")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
+    purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
+    rate_aggregation: str | None = Field(None, alias="rateAggregation", serialization_alias="rateAggregation")
+    rationale: str | None = Field(None, alias="rationale", serialization_alias="rationale")
+    related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
+    reviewer: PyList[ContactDetail] | None = Field(None, alias="reviewer", serialization_alias="reviewer")
+    risk_adjustment: str | None = Field(None, alias="riskAdjustment", serialization_alias="riskAdjustment")
+    scoring: CodeableConcept | None = Field(None, alias="scoring", serialization_alias="scoring")
+    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject_codeable_concept: CodeableConcept | None = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
+    subject_reference: Reference | None = Field(None, alias="subjectReference", serialization_alias="subjectReference")
+    subtitle: str | None = Field(None, alias="subtitle", serialization_alias="subtitle")
+    supplemental_data: PyList[MeasureSupplementalData] | None = Field(None, alias="supplementalData", serialization_alias="supplementalData")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    topic: PyList[CodeableConcept] | None = Field(None, alias="topic", serialization_alias="topic")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+    usage: str | None = Field(None, alias="usage", serialization_alias="usage")
+    use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 

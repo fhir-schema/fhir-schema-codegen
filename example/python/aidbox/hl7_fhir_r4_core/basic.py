@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,9 +22,9 @@ class Basic(DomainResource):
         pattern='Basic'
     )
     
-    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    author: Reference | None = Field(None, alias="author", serialization_alias="author")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

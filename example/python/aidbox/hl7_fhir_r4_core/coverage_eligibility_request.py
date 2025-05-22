@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,36 +14,36 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CoverageEligibilityRequestInsurance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    business_arrangement: Optional[str] = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
-    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
-    focal: Optional[bool] = Field(None, alias="focal", serialization_alias="focal")
+    business_arrangement: str | None = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
+    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
 
 class CoverageEligibilityRequestSupportingInfo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    applies_to_all: Optional[bool] = Field(None, alias="appliesToAll", serialization_alias="appliesToAll")
-    information: Optional[Reference] = Field(None, alias="information", serialization_alias="information")
-    sequence: Optional[PositiveInt] = Field(None, alias="sequence", serialization_alias="sequence")
+    applies_to_all: bool | None = Field(None, alias="appliesToAll", serialization_alias="appliesToAll")
+    information: Reference | None = Field(None, alias="information", serialization_alias="information")
+    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
 
 class CoverageEligibilityRequestItemDiagnosis(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    diagnosis_codeable_concept: Optional[CodeableConcept] = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
-    diagnosis_reference: Optional[Reference] = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
+    diagnosis_codeable_concept: CodeableConcept | None = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
+    diagnosis_reference: Reference | None = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
 
 class CoverageEligibilityRequestItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    category: Optional[CodeableConcept] = Field(None, alias="category", serialization_alias="category")
-    detail: Optional[L[Reference]] = Field(None, alias="detail", serialization_alias="detail")
-    diagnosis: Optional[L[CoverageEligibilityRequestItemDiagnosis]] = Field(None, alias="diagnosis", serialization_alias="diagnosis")
-    facility: Optional[Reference] = Field(None, alias="facility", serialization_alias="facility")
-    modifier: Optional[L[CodeableConcept]] = Field(None, alias="modifier", serialization_alias="modifier")
-    product_or_service: Optional[CodeableConcept] = Field(None, alias="productOrService", serialization_alias="productOrService")
-    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
-    supporting_info_sequence: Optional[L[PositiveInt]] = Field(None, alias="supportingInfoSequence", serialization_alias="supportingInfoSequence")
-    unit_price: Optional[Money] = Field(None, alias="unitPrice", serialization_alias="unitPrice")
+    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    detail: PyList[Reference] | None = Field(None, alias="detail", serialization_alias="detail")
+    diagnosis: PyList[CoverageEligibilityRequestItemDiagnosis] | None = Field(None, alias="diagnosis", serialization_alias="diagnosis")
+    facility: Reference | None = Field(None, alias="facility", serialization_alias="facility")
+    modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
+    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    supporting_info_sequence: PyList[PositiveInt] | None = Field(None, alias="supportingInfoSequence", serialization_alias="supportingInfoSequence")
+    unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 
 class CoverageEligibilityRequest(DomainResource):
@@ -57,19 +57,19 @@ class CoverageEligibilityRequest(DomainResource):
         pattern='CoverageEligibilityRequest'
     )
     
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    enterer: Optional[Reference] = Field(None, alias="enterer", serialization_alias="enterer")
-    facility: Optional[Reference] = Field(None, alias="facility", serialization_alias="facility")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    insurance: Optional[L[CoverageEligibilityRequestInsurance]] = Field(None, alias="insurance", serialization_alias="insurance")
-    insurer: Optional[Reference] = Field(None, alias="insurer", serialization_alias="insurer")
-    item: Optional[L[CoverageEligibilityRequestItem]] = Field(None, alias="item", serialization_alias="item")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
-    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
-    purpose: Optional[L[Literal["auth-requirements", "benefits", "discovery", "validation"]]] = Field(None, alias="purpose", serialization_alias="purpose")
-    serviced_date: Optional[str] = Field(None, alias="servicedDate", serialization_alias="servicedDate")
-    serviced_period: Optional[Period] = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    supporting_info: Optional[L[CoverageEligibilityRequestSupportingInfo]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    enterer: Reference | None = Field(None, alias="enterer", serialization_alias="enterer")
+    facility: Reference | None = Field(None, alias="facility", serialization_alias="facility")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    insurance: PyList[CoverageEligibilityRequestInsurance] | None = Field(None, alias="insurance", serialization_alias="insurance")
+    insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
+    item: PyList[CoverageEligibilityRequestItem] | None = Field(None, alias="item", serialization_alias="item")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    priority: CodeableConcept | None = Field(None, alias="priority", serialization_alias="priority")
+    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    purpose: PyList[Literal["auth-requirements", "benefits", "discovery", "validation"]] | None = Field(None, alias="purpose", serialization_alias="purpose")
+    serviced_date: str | None = Field(None, alias="servicedDate", serialization_alias="servicedDate")
+    serviced_period: Period | None = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    supporting_info: PyList[CoverageEligibilityRequestSupportingInfo] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
 

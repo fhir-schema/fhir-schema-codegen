@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,12 +22,12 @@ class EnrollmentResponse(DomainResource):
         pattern='EnrollmentResponse'
     )
     
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    disposition: Optional[str] = Field(None, alias="disposition", serialization_alias="disposition")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    organization: Optional[Reference] = Field(None, alias="organization", serialization_alias="organization")
-    outcome: Optional[Literal["queued", "complete", "error", "partial"]] = Field(None, alias="outcome", serialization_alias="outcome")
-    request: Optional[Reference] = Field(None, alias="request", serialization_alias="request")
-    request_provider: Optional[Reference] = Field(None, alias="requestProvider", serialization_alias="requestProvider")
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    disposition: str | None = Field(None, alias="disposition", serialization_alias="disposition")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    organization: Reference | None = Field(None, alias="organization", serialization_alias="organization")
+    outcome: Literal["queued", "complete", "error", "partial"] | None = Field(None, alias="outcome", serialization_alias="outcome")
+    request: Reference | None = Field(None, alias="request", serialization_alias="request")
+    request_provider: Reference | None = Field(None, alias="requestProvider", serialization_alias="requestProvider")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

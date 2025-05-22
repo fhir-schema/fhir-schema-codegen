@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,12 +22,12 @@ class AppointmentResponse(DomainResource):
         pattern='AppointmentResponse'
     )
     
-    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
-    appointment: Optional[Reference] = Field(None, alias="appointment", serialization_alias="appointment")
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    end: Optional[str] = Field(None, alias="end", serialization_alias="end")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    participant_status: Optional[Literal["accepted", "declined", "tentative", "needs-action"]] = Field(None, alias="participantStatus", serialization_alias="participantStatus")
-    participant_type: Optional[L[CodeableConcept]] = Field(None, alias="participantType", serialization_alias="participantType")
-    start: Optional[str] = Field(None, alias="start", serialization_alias="start")
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    appointment: Reference | None = Field(None, alias="appointment", serialization_alias="appointment")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    end: str | None = Field(None, alias="end", serialization_alias="end")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    participant_status: Literal["accepted", "declined", "tentative", "needs-action"] | None = Field(None, alias="participantStatus", serialization_alias="participantStatus")
+    participant_type: PyList[CodeableConcept] | None = Field(None, alias="participantType", serialization_alias="participantType")
+    start: str | None = Field(None, alias="start", serialization_alias="start")
 

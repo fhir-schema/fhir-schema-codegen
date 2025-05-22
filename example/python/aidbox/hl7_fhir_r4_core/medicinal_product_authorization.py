@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,20 +14,20 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductAuthorizationJurisdictionalAuthorization(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    country: Optional[CodeableConcept] = Field(None, alias="country", serialization_alias="country")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    legal_status_of_supply: Optional[CodeableConcept] = Field(None, alias="legalStatusOfSupply", serialization_alias="legalStatusOfSupply")
-    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+    country: CodeableConcept | None = Field(None, alias="country", serialization_alias="country")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    legal_status_of_supply: CodeableConcept | None = Field(None, alias="legalStatusOfSupply", serialization_alias="legalStatusOfSupply")
+    validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 
 class MedicinalProductAuthorizationProcedure(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    application: Optional[L[MedicinalProductAuthorizationProcedure]] = Field(None, alias="application", serialization_alias="application")
-    date_date_time: Optional[str] = Field(None, alias="dateDateTime", serialization_alias="dateDateTime")
-    date_period: Optional[Period] = Field(None, alias="datePeriod", serialization_alias="datePeriod")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    application: PyList[MedicinalProductAuthorizationProcedure] | None = Field(None, alias="application", serialization_alias="application")
+    date_date_time: str | None = Field(None, alias="dateDateTime", serialization_alias="dateDateTime")
+    date_period: Period | None = Field(None, alias="datePeriod", serialization_alias="datePeriod")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class MedicinalProductAuthorization(DomainResource):
@@ -41,20 +41,20 @@ class MedicinalProductAuthorization(DomainResource):
         pattern='MedicinalProductAuthorization'
     )
     
-    country: Optional[L[CodeableConcept]] = Field(None, alias="country", serialization_alias="country")
-    data_exclusivity_period: Optional[Period] = Field(None, alias="dataExclusivityPeriod", serialization_alias="dataExclusivityPeriod")
-    date_of_first_authorization: Optional[str] = Field(None, alias="dateOfFirstAuthorization", serialization_alias="dateOfFirstAuthorization")
-    holder: Optional[Reference] = Field(None, alias="holder", serialization_alias="holder")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    international_birth_date: Optional[str] = Field(None, alias="internationalBirthDate", serialization_alias="internationalBirthDate")
-    jurisdiction: Optional[L[CodeableConcept]] = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    jurisdictional_authorization: Optional[L[MedicinalProductAuthorizationJurisdictionalAuthorization]] = Field(None, alias="jurisdictionalAuthorization", serialization_alias="jurisdictionalAuthorization")
-    legal_basis: Optional[CodeableConcept] = Field(None, alias="legalBasis", serialization_alias="legalBasis")
-    procedure: Optional[MedicinalProductAuthorizationProcedure] = Field(None, alias="procedure", serialization_alias="procedure")
-    regulator: Optional[Reference] = Field(None, alias="regulator", serialization_alias="regulator")
-    restore_date: Optional[str] = Field(None, alias="restoreDate", serialization_alias="restoreDate")
-    status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
-    status_date: Optional[str] = Field(None, alias="statusDate", serialization_alias="statusDate")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+    country: PyList[CodeableConcept] | None = Field(None, alias="country", serialization_alias="country")
+    data_exclusivity_period: Period | None = Field(None, alias="dataExclusivityPeriod", serialization_alias="dataExclusivityPeriod")
+    date_of_first_authorization: str | None = Field(None, alias="dateOfFirstAuthorization", serialization_alias="dateOfFirstAuthorization")
+    holder: Reference | None = Field(None, alias="holder", serialization_alias="holder")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    international_birth_date: str | None = Field(None, alias="internationalBirthDate", serialization_alias="internationalBirthDate")
+    jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    jurisdictional_authorization: PyList[MedicinalProductAuthorizationJurisdictionalAuthorization] | None = Field(None, alias="jurisdictionalAuthorization", serialization_alias="jurisdictionalAuthorization")
+    legal_basis: CodeableConcept | None = Field(None, alias="legalBasis", serialization_alias="legalBasis")
+    procedure: MedicinalProductAuthorizationProcedure | None = Field(None, alias="procedure", serialization_alias="procedure")
+    regulator: Reference | None = Field(None, alias="regulator", serialization_alias="regulator")
+    restore_date: str | None = Field(None, alias="restoreDate", serialization_alias="restoreDate")
+    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
+    status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 

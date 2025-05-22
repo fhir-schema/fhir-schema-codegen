@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,12 +22,12 @@ class ResearchSubject(DomainResource):
         pattern='ResearchSubject'
     )
     
-    actual_arm: Optional[str] = Field(None, alias="actualArm", serialization_alias="actualArm")
-    assigned_arm: Optional[str] = Field(None, alias="assignedArm", serialization_alias="assignedArm")
-    consent: Optional[Reference] = Field(None, alias="consent", serialization_alias="consent")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    individual: Optional[Reference] = Field(None, alias="individual", serialization_alias="individual")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    status: Optional[Literal["candidate", "eligible", "follow-up", "ineligible", "not-registered", "off-study", "on-study", "on-study-intervention", "on-study-observation", "pending-on-study", "potential-candidate", "screening", "withdrawn"]] = Field(None, alias="status", serialization_alias="status")
-    study: Optional[Reference] = Field(None, alias="study", serialization_alias="study")
+    actual_arm: str | None = Field(None, alias="actualArm", serialization_alias="actualArm")
+    assigned_arm: str | None = Field(None, alias="assignedArm", serialization_alias="assignedArm")
+    consent: Reference | None = Field(None, alias="consent", serialization_alias="consent")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    individual: Reference | None = Field(None, alias="individual", serialization_alias="individual")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    status: Literal["candidate", "eligible", "follow-up", "ineligible", "not-registered", "off-study", "on-study", "on-study-intervention", "on-study-observation", "pending-on-study", "potential-candidate", "screening", "withdrawn"] | None = Field(None, alias="status", serialization_alias="status")
+    study: Reference | None = Field(None, alias="study", serialization_alias="study")
 

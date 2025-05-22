@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Age, Annotation, BackboneElement, CodeableConcept, Duration, Expression, Identifier, Period, Range, Reference, RelatedArtifact, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,44 +14,44 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class RequestGroupActionRelatedAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action_id: Optional[str] = Field(None, alias="actionId", serialization_alias="actionId")
-    offset_duration: Optional[Duration] = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
-    offset_range: Optional[Range] = Field(None, alias="offsetRange", serialization_alias="offsetRange")
-    relationship: Optional[Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"]] = Field(None, alias="relationship", serialization_alias="relationship")
+    action_id: str | None = Field(None, alias="actionId", serialization_alias="actionId")
+    offset_duration: Duration | None = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
+    offset_range: Range | None = Field(None, alias="offsetRange", serialization_alias="offsetRange")
+    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] | None = Field(None, alias="relationship", serialization_alias="relationship")
 
 class RequestGroupActionCondition(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    expression: Optional[Expression] = Field(None, alias="expression", serialization_alias="expression")
-    kind: Optional[Literal["applicability", "start", "stop"]] = Field(None, alias="kind", serialization_alias="kind")
+    expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
+    kind: Literal["applicability", "start", "stop"] | None = Field(None, alias="kind", serialization_alias="kind")
 
 class RequestGroupAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: Optional[L[RequestGroupAction]] = Field(None, alias="action", serialization_alias="action")
-    cardinality_behavior: Optional[Literal["single", "multiple"]] = Field(None, alias="cardinalityBehavior", serialization_alias="cardinalityBehavior")
-    code: Optional[L[CodeableConcept]] = Field(None, alias="code", serialization_alias="code")
-    condition: Optional[L[RequestGroupActionCondition]] = Field(None, alias="condition", serialization_alias="condition")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    documentation: Optional[L[RelatedArtifact]] = Field(None, alias="documentation", serialization_alias="documentation")
-    grouping_behavior: Optional[Literal["visual-group", "logical-group", "sentence-group"]] = Field(None, alias="groupingBehavior", serialization_alias="groupingBehavior")
-    participant: Optional[L[Reference]] = Field(None, alias="participant", serialization_alias="participant")
-    precheck_behavior: Optional[Literal["yes", "no"]] = Field(None, alias="precheckBehavior", serialization_alias="precheckBehavior")
-    prefix: Optional[str] = Field(None, alias="prefix", serialization_alias="prefix")
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
-    related_action: Optional[L[RequestGroupActionRelatedAction]] = Field(None, alias="relatedAction", serialization_alias="relatedAction")
-    required_behavior: Optional[Literal["must", "could", "must-unless-documented"]] = Field(None, alias="requiredBehavior", serialization_alias="requiredBehavior")
-    resource: Optional[Reference] = Field(None, alias="resource", serialization_alias="resource")
-    selection_behavior: Optional[Literal["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"]] = Field(None, alias="selectionBehavior", serialization_alias="selectionBehavior")
-    text_equivalent: Optional[str] = Field(None, alias="textEquivalent", serialization_alias="textEquivalent")
-    timing_age: Optional[Age] = Field(None, alias="timingAge", serialization_alias="timingAge")
-    timing_date_time: Optional[str] = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
-    timing_duration: Optional[Duration] = Field(None, alias="timingDuration", serialization_alias="timingDuration")
-    timing_period: Optional[Period] = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
-    timing_range: Optional[Range] = Field(None, alias="timingRange", serialization_alias="timingRange")
-    timing_timing: Optional[Timing] = Field(None, alias="timingTiming", serialization_alias="timingTiming")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    action: PyList[RequestGroupAction] | None = Field(None, alias="action", serialization_alias="action")
+    cardinality_behavior: Literal["single", "multiple"] | None = Field(None, alias="cardinalityBehavior", serialization_alias="cardinalityBehavior")
+    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
+    condition: PyList[RequestGroupActionCondition] | None = Field(None, alias="condition", serialization_alias="condition")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    documentation: PyList[RelatedArtifact] | None = Field(None, alias="documentation", serialization_alias="documentation")
+    grouping_behavior: Literal["visual-group", "logical-group", "sentence-group"] | None = Field(None, alias="groupingBehavior", serialization_alias="groupingBehavior")
+    participant: PyList[Reference] | None = Field(None, alias="participant", serialization_alias="participant")
+    precheck_behavior: Literal["yes", "no"] | None = Field(None, alias="precheckBehavior", serialization_alias="precheckBehavior")
+    prefix: str | None = Field(None, alias="prefix", serialization_alias="prefix")
+    priority: Literal["routine", "urgent", "asap", "stat"] | None = Field(None, alias="priority", serialization_alias="priority")
+    related_action: PyList[RequestGroupActionRelatedAction] | None = Field(None, alias="relatedAction", serialization_alias="relatedAction")
+    required_behavior: Literal["must", "could", "must-unless-documented"] | None = Field(None, alias="requiredBehavior", serialization_alias="requiredBehavior")
+    resource: Reference | None = Field(None, alias="resource", serialization_alias="resource")
+    selection_behavior: Literal["any", "all", "all-or-none", "exactly-one", "at-most-one", "one-or-more"] | None = Field(None, alias="selectionBehavior", serialization_alias="selectionBehavior")
+    text_equivalent: str | None = Field(None, alias="textEquivalent", serialization_alias="textEquivalent")
+    timing_age: Age | None = Field(None, alias="timingAge", serialization_alias="timingAge")
+    timing_date_time: str | None = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
+    timing_duration: Duration | None = Field(None, alias="timingDuration", serialization_alias="timingDuration")
+    timing_period: Period | None = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
+    timing_range: Range | None = Field(None, alias="timingRange", serialization_alias="timingRange")
+    timing_timing: Timing | None = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class RequestGroup(DomainResource):
@@ -65,22 +65,22 @@ class RequestGroup(DomainResource):
         pattern='RequestGroup'
     )
     
-    action: Optional[L[RequestGroupAction]] = Field(None, alias="action", serialization_alias="action")
-    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
-    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
-    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    replaces: Optional[L[Reference]] = Field(None, alias="replaces", serialization_alias="replaces")
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    action: PyList[RequestGroupAction] | None = Field(None, alias="action", serialization_alias="action")
+    author: Reference | None = Field(None, alias="author", serialization_alias="author")
+    authored_on: str | None = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    group_identifier: Identifier | None = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    priority: Literal["routine", "urgent", "asap", "stat"] | None = Field(None, alias="priority", serialization_alias="priority")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    replaces: PyList[Reference] | None = Field(None, alias="replaces", serialization_alias="replaces")
+    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

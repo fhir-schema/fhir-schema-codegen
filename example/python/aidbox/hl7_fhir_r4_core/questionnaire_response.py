@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, Coding, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,28 +14,28 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class QuestionnaireResponseItemAnswer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
-    value_attachment: Optional[Attachment] = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
-    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_coding: Optional[Coding] = Field(None, alias="valueCoding", serialization_alias="valueCoding")
-    value_date: Optional[str] = Field(None, alias="valueDate", serialization_alias="valueDate")
-    value_date_time: Optional[str] = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
-    value_decimal: Optional[float] = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
-    value_integer: Optional[int] = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
-    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
-    value_string: Optional[str] = Field(None, alias="valueString", serialization_alias="valueString")
-    value_time: Optional[str] = Field(None, alias="valueTime", serialization_alias="valueTime")
-    value_uri: Optional[str] = Field(None, alias="valueUri", serialization_alias="valueUri")
+    item: PyList[QuestionnaireResponseItem] | None = Field(None, alias="item", serialization_alias="item")
+    value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class QuestionnaireResponseItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    answer: Optional[L[QuestionnaireResponseItemAnswer]] = Field(None, alias="answer", serialization_alias="answer")
-    definition: Optional[str] = Field(None, alias="definition", serialization_alias="definition")
-    item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
-    link_id: Optional[str] = Field(None, alias="linkId", serialization_alias="linkId")
-    text: Optional[str] = Field(None, alias="text", serialization_alias="text")
+    answer: PyList[QuestionnaireResponseItemAnswer] | None = Field(None, alias="answer", serialization_alias="answer")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    item: PyList[QuestionnaireResponseItem] | None = Field(None, alias="item", serialization_alias="item")
+    link_id: str | None = Field(None, alias="linkId", serialization_alias="linkId")
+    text: str | None = Field(None, alias="text", serialization_alias="text")
 
 
 class QuestionnaireResponse(DomainResource):
@@ -49,15 +49,15 @@ class QuestionnaireResponse(DomainResource):
         pattern='QuestionnaireResponse'
     )
     
-    author: Optional[Reference] = Field(None, alias="author", serialization_alias="author")
-    authored: Optional[str] = Field(None, alias="authored", serialization_alias="authored")
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    item: Optional[L[QuestionnaireResponseItem]] = Field(None, alias="item", serialization_alias="item")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    questionnaire: Optional[str] = Field(None, alias="questionnaire", serialization_alias="questionnaire")
-    source: Optional[Reference] = Field(None, alias="source", serialization_alias="source")
-    status: Optional[Literal["in-progress", "completed", "amended", "entered-in-error", "stopped"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    author: Reference | None = Field(None, alias="author", serialization_alias="author")
+    authored: str | None = Field(None, alias="authored", serialization_alias="authored")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    item: PyList[QuestionnaireResponseItem] | None = Field(None, alias="item", serialization_alias="item")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    questionnaire: str | None = Field(None, alias="questionnaire", serialization_alias="questionnaire")
+    source: Reference | None = Field(None, alias="source", serialization_alias="source")
+    status: Literal["in-progress", "completed", "amended", "entered-in-error", "stopped"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,15 +14,15 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class EpisodeOfCareDiagnosis(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    condition: Optional[Reference] = Field(None, alias="condition", serialization_alias="condition")
-    rank: Optional[PositiveInt] = Field(None, alias="rank", serialization_alias="rank")
-    role: Optional[CodeableConcept] = Field(None, alias="role", serialization_alias="role")
+    condition: Reference | None = Field(None, alias="condition", serialization_alias="condition")
+    rank: PositiveInt | None = Field(None, alias="rank", serialization_alias="rank")
+    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
 
 class EpisodeOfCareStatusHistory(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    status: Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 
 
 class EpisodeOfCare(DomainResource):
@@ -36,16 +36,16 @@ class EpisodeOfCare(DomainResource):
         pattern='EpisodeOfCare'
     )
     
-    account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
-    care_manager: Optional[Reference] = Field(None, alias="careManager", serialization_alias="careManager")
-    diagnosis: Optional[L[EpisodeOfCareDiagnosis]] = Field(None, alias="diagnosis", serialization_alias="diagnosis")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    managing_organization: Optional[Reference] = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    referral_request: Optional[L[Reference]] = Field(None, alias="referralRequest", serialization_alias="referralRequest")
-    status: Optional[Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    status_history: Optional[L[EpisodeOfCareStatusHistory]] = Field(None, alias="statusHistory", serialization_alias="statusHistory")
-    team: Optional[L[Reference]] = Field(None, alias="team", serialization_alias="team")
-    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
+    account: PyList[Reference] | None = Field(None, alias="account", serialization_alias="account")
+    care_manager: Reference | None = Field(None, alias="careManager", serialization_alias="careManager")
+    diagnosis: PyList[EpisodeOfCareDiagnosis] | None = Field(None, alias="diagnosis", serialization_alias="diagnosis")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_organization: Reference | None = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    referral_request: PyList[Reference] | None = Field(None, alias="referralRequest", serialization_alias="referralRequest")
+    status: Literal["planned", "waitlist", "active", "onhold", "finished", "cancelled", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status_history: PyList[EpisodeOfCareStatusHistory] | None = Field(None, alias="statusHistory", serialization_alias="statusHistory")
+    team: PyList[Reference] | None = Field(None, alias="team", serialization_alias="team")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
 

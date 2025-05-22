@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,57 +14,57 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class TestReportParticipant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    display: Optional[str] = Field(None, alias="display", serialization_alias="display")
-    type: Optional[Literal["test-engine", "client", "server"]] = Field(None, alias="type", serialization_alias="type")
-    uri: Optional[str] = Field(None, alias="uri", serialization_alias="uri")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    type: Literal["test-engine", "client", "server"] | None = Field(None, alias="type", serialization_alias="type")
+    uri: str | None = Field(None, alias="uri", serialization_alias="uri")
 
 class TestReportSetupActionOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    detail: Optional[str] = Field(None, alias="detail", serialization_alias="detail")
-    message: Optional[str] = Field(None, alias="message", serialization_alias="message")
-    result: Optional[Literal["pass", "skip", "fail", "warning", "error"]] = Field(None, alias="result", serialization_alias="result")
+    detail: str | None = Field(None, alias="detail", serialization_alias="detail")
+    message: str | None = Field(None, alias="message", serialization_alias="message")
+    result: Literal["pass", "skip", "fail", "warning", "error"] | None = Field(None, alias="result", serialization_alias="result")
 
 class TestReportSetupActionAssert(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    detail: Optional[str] = Field(None, alias="detail", serialization_alias="detail")
-    message: Optional[str] = Field(None, alias="message", serialization_alias="message")
-    result: Optional[Literal["pass", "skip", "fail", "warning", "error"]] = Field(None, alias="result", serialization_alias="result")
+    detail: str | None = Field(None, alias="detail", serialization_alias="detail")
+    message: str | None = Field(None, alias="message", serialization_alias="message")
+    result: Literal["pass", "skip", "fail", "warning", "error"] | None = Field(None, alias="result", serialization_alias="result")
 
 class TestReportSetupAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    assert_: Optional[TestReportSetupActionAssert] = Field(None, alias="assert", serialization_alias="assert")
-    operation: Optional[TestReportSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
+    assert_: TestReportSetupActionAssert | None = Field(None, alias="assert", serialization_alias="assert")
+    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportSetup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: Optional[L[TestReportSetupAction]] = Field(None, alias="action", serialization_alias="action")
+    action: PyList[TestReportSetupAction] | None = Field(None, alias="action", serialization_alias="action")
 
 class TestReportTeardownAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    operation: Optional[TestReportSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
+    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportTeardown(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: Optional[L[TestReportTeardownAction]] = Field(None, alias="action", serialization_alias="action")
+    action: PyList[TestReportTeardownAction] | None = Field(None, alias="action", serialization_alias="action")
 
 class TestReportTestAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    assert_: Optional[TestReportSetupActionAssert] = Field(None, alias="assert", serialization_alias="assert")
-    operation: Optional[TestReportSetupActionOperation] = Field(None, alias="operation", serialization_alias="operation")
+    assert_: TestReportSetupActionAssert | None = Field(None, alias="assert", serialization_alias="assert")
+    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportTest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: Optional[L[TestReportTestAction]] = Field(None, alias="action", serialization_alias="action")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
+    action: PyList[TestReportTestAction] | None = Field(None, alias="action", serialization_alias="action")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
 
 
 class TestReport(DomainResource):
@@ -78,16 +78,16 @@ class TestReport(DomainResource):
         pattern='TestReport'
     )
     
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    participant: Optional[L[TestReportParticipant]] = Field(None, alias="participant", serialization_alias="participant")
-    result: Optional[Literal["pass", "fail", "pending"]] = Field(None, alias="result", serialization_alias="result")
-    score: Optional[float] = Field(None, alias="score", serialization_alias="score")
-    setup: Optional[TestReportSetup] = Field(None, alias="setup", serialization_alias="setup")
-    status: Optional[Literal["completed", "in-progress", "waiting", "stopped", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
-    teardown: Optional[TestReportTeardown] = Field(None, alias="teardown", serialization_alias="teardown")
-    test: Optional[L[TestReportTest]] = Field(None, alias="test", serialization_alias="test")
-    tester: Optional[str] = Field(None, alias="tester", serialization_alias="tester")
-    test_script: Optional[Reference] = Field(None, alias="testScript", serialization_alias="testScript")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    issued: str | None = Field(None, alias="issued", serialization_alias="issued")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    participant: PyList[TestReportParticipant] | None = Field(None, alias="participant", serialization_alias="participant")
+    result: Literal["pass", "fail", "pending"] | None = Field(None, alias="result", serialization_alias="result")
+    score: float | None = Field(None, alias="score", serialization_alias="score")
+    setup: TestReportSetup | None = Field(None, alias="setup", serialization_alias="setup")
+    status: Literal["completed", "in-progress", "waiting", "stopped", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    teardown: TestReportTeardown | None = Field(None, alias="teardown", serialization_alias="teardown")
+    test: PyList[TestReportTest] | None = Field(None, alias="test", serialization_alias="test")
+    tester: str | None = Field(None, alias="tester", serialization_alias="tester")
+    test_script: Reference | None = Field(None, alias="testScript", serialization_alias="testScript")
 

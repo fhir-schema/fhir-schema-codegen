@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, ProdCharacteristic, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,11 +22,11 @@ class MedicinalProductManufactured(DomainResource):
         pattern='MedicinalProductManufactured'
     )
     
-    ingredient: Optional[L[Reference]] = Field(None, alias="ingredient", serialization_alias="ingredient")
-    manufactured_dose_form: Optional[CodeableConcept] = Field(None, alias="manufacturedDoseForm", serialization_alias="manufacturedDoseForm")
-    manufacturer: Optional[L[Reference]] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
-    other_characteristics: Optional[L[CodeableConcept]] = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
-    physical_characteristics: Optional[ProdCharacteristic] = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
-    unit_of_presentation: Optional[CodeableConcept] = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
+    ingredient: PyList[Reference] | None = Field(None, alias="ingredient", serialization_alias="ingredient")
+    manufactured_dose_form: CodeableConcept | None = Field(None, alias="manufacturedDoseForm", serialization_alias="manufacturedDoseForm")
+    manufacturer: PyList[Reference] | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    other_characteristics: PyList[CodeableConcept] | None = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
+    physical_characteristics: ProdCharacteristic | None = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    unit_of_presentation: CodeableConcept | None = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
 

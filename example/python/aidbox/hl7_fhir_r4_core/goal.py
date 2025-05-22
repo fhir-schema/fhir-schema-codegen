@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Duration, Identifier, Quantity, Range, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,16 +14,16 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class GoalTarget(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    detail_boolean: Optional[bool] = Field(None, alias="detailBoolean", serialization_alias="detailBoolean")
-    detail_codeable_concept: Optional[CodeableConcept] = Field(None, alias="detailCodeableConcept", serialization_alias="detailCodeableConcept")
-    detail_integer: Optional[int] = Field(None, alias="detailInteger", serialization_alias="detailInteger")
-    detail_quantity: Optional[Quantity] = Field(None, alias="detailQuantity", serialization_alias="detailQuantity")
-    detail_range: Optional[Range] = Field(None, alias="detailRange", serialization_alias="detailRange")
-    detail_ratio: Optional[Ratio] = Field(None, alias="detailRatio", serialization_alias="detailRatio")
-    detail_string: Optional[str] = Field(None, alias="detailString", serialization_alias="detailString")
-    due_date: Optional[str] = Field(None, alias="dueDate", serialization_alias="dueDate")
-    due_duration: Optional[Duration] = Field(None, alias="dueDuration", serialization_alias="dueDuration")
-    measure: Optional[CodeableConcept] = Field(None, alias="measure", serialization_alias="measure")
+    detail_boolean: bool | None = Field(None, alias="detailBoolean", serialization_alias="detailBoolean")
+    detail_codeable_concept: CodeableConcept | None = Field(None, alias="detailCodeableConcept", serialization_alias="detailCodeableConcept")
+    detail_integer: int | None = Field(None, alias="detailInteger", serialization_alias="detailInteger")
+    detail_quantity: Quantity | None = Field(None, alias="detailQuantity", serialization_alias="detailQuantity")
+    detail_range: Range | None = Field(None, alias="detailRange", serialization_alias="detailRange")
+    detail_ratio: Ratio | None = Field(None, alias="detailRatio", serialization_alias="detailRatio")
+    detail_string: str | None = Field(None, alias="detailString", serialization_alias="detailString")
+    due_date: str | None = Field(None, alias="dueDate", serialization_alias="dueDate")
+    due_duration: Duration | None = Field(None, alias="dueDuration", serialization_alias="dueDuration")
+    measure: CodeableConcept | None = Field(None, alias="measure", serialization_alias="measure")
 
 
 class Goal(DomainResource):
@@ -37,21 +37,21 @@ class Goal(DomainResource):
         pattern='Goal'
     )
     
-    achievement_status: Optional[CodeableConcept] = Field(None, alias="achievementStatus", serialization_alias="achievementStatus")
-    addresses: Optional[L[Reference]] = Field(None, alias="addresses", serialization_alias="addresses")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    description: Optional[CodeableConcept] = Field(None, alias="description", serialization_alias="description")
-    expressed_by: Optional[Reference] = Field(None, alias="expressedBy", serialization_alias="expressedBy")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    lifecycle_status: Optional[Literal["proposed", "planned", "accepted", "cancelled", "entered-in-error", "rejected"]] = Field(None, alias="lifecycleStatus", serialization_alias="lifecycleStatus")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    outcome_code: Optional[L[CodeableConcept]] = Field(None, alias="outcomeCode", serialization_alias="outcomeCode")
-    outcome_reference: Optional[L[Reference]] = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
-    priority: Optional[CodeableConcept] = Field(None, alias="priority", serialization_alias="priority")
-    start_codeable_concept: Optional[CodeableConcept] = Field(None, alias="startCodeableConcept", serialization_alias="startCodeableConcept")
-    start_date: Optional[str] = Field(None, alias="startDate", serialization_alias="startDate")
-    status_date: Optional[str] = Field(None, alias="statusDate", serialization_alias="statusDate")
-    status_reason: Optional[str] = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    target: Optional[L[GoalTarget]] = Field(None, alias="target", serialization_alias="target")
+    achievement_status: CodeableConcept | None = Field(None, alias="achievementStatus", serialization_alias="achievementStatus")
+    addresses: PyList[Reference] | None = Field(None, alias="addresses", serialization_alias="addresses")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    description: CodeableConcept | None = Field(None, alias="description", serialization_alias="description")
+    expressed_by: Reference | None = Field(None, alias="expressedBy", serialization_alias="expressedBy")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    lifecycle_status: Literal["proposed", "planned", "accepted", "cancelled", "entered-in-error", "rejected"] | None = Field(None, alias="lifecycleStatus", serialization_alias="lifecycleStatus")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    outcome_code: PyList[CodeableConcept] | None = Field(None, alias="outcomeCode", serialization_alias="outcomeCode")
+    outcome_reference: PyList[Reference] | None = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
+    priority: CodeableConcept | None = Field(None, alias="priority", serialization_alias="priority")
+    start_codeable_concept: CodeableConcept | None = Field(None, alias="startCodeableConcept", serialization_alias="startCodeableConcept")
+    start_date: str | None = Field(None, alias="startDate", serialization_alias="startDate")
+    status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
+    status_reason: str | None = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    target: PyList[GoalTarget] | None = Field(None, alias="target", serialization_alias="target")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, Identifier
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,29 +14,29 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class SubstanceNucleicAcidSubunitLinkage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    connectivity: Optional[str] = Field(None, alias="connectivity", serialization_alias="connectivity")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    residue_site: Optional[str] = Field(None, alias="residueSite", serialization_alias="residueSite")
+    connectivity: str | None = Field(None, alias="connectivity", serialization_alias="connectivity")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    residue_site: str | None = Field(None, alias="residueSite", serialization_alias="residueSite")
 
 class SubstanceNucleicAcidSubunitSugar(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    residue_site: Optional[str] = Field(None, alias="residueSite", serialization_alias="residueSite")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    residue_site: str | None = Field(None, alias="residueSite", serialization_alias="residueSite")
 
 class SubstanceNucleicAcidSubunit(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    five_prime: Optional[CodeableConcept] = Field(None, alias="fivePrime", serialization_alias="fivePrime")
-    length: Optional[int] = Field(None, alias="length", serialization_alias="length")
-    linkage: Optional[L[SubstanceNucleicAcidSubunitLinkage]] = Field(None, alias="linkage", serialization_alias="linkage")
-    sequence: Optional[str] = Field(None, alias="sequence", serialization_alias="sequence")
-    sequence_attachment: Optional[Attachment] = Field(None, alias="sequenceAttachment", serialization_alias="sequenceAttachment")
-    subunit: Optional[int] = Field(None, alias="subunit", serialization_alias="subunit")
-    sugar: Optional[L[SubstanceNucleicAcidSubunitSugar]] = Field(None, alias="sugar", serialization_alias="sugar")
-    three_prime: Optional[CodeableConcept] = Field(None, alias="threePrime", serialization_alias="threePrime")
+    five_prime: CodeableConcept | None = Field(None, alias="fivePrime", serialization_alias="fivePrime")
+    length: int | None = Field(None, alias="length", serialization_alias="length")
+    linkage: PyList[SubstanceNucleicAcidSubunitLinkage] | None = Field(None, alias="linkage", serialization_alias="linkage")
+    sequence: str | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence_attachment: Attachment | None = Field(None, alias="sequenceAttachment", serialization_alias="sequenceAttachment")
+    subunit: int | None = Field(None, alias="subunit", serialization_alias="subunit")
+    sugar: PyList[SubstanceNucleicAcidSubunitSugar] | None = Field(None, alias="sugar", serialization_alias="sugar")
+    three_prime: CodeableConcept | None = Field(None, alias="threePrime", serialization_alias="threePrime")
 
 
 class SubstanceNucleicAcid(DomainResource):
@@ -50,9 +50,9 @@ class SubstanceNucleicAcid(DomainResource):
         pattern='SubstanceNucleicAcid'
     )
     
-    area_of_hybridisation: Optional[str] = Field(None, alias="areaOfHybridisation", serialization_alias="areaOfHybridisation")
-    number_of_subunits: Optional[int] = Field(None, alias="numberOfSubunits", serialization_alias="numberOfSubunits")
-    oligo_nucleotide_type: Optional[CodeableConcept] = Field(None, alias="oligoNucleotideType", serialization_alias="oligoNucleotideType")
-    sequence_type: Optional[CodeableConcept] = Field(None, alias="sequenceType", serialization_alias="sequenceType")
-    subunit: Optional[L[SubstanceNucleicAcidSubunit]] = Field(None, alias="subunit", serialization_alias="subunit")
+    area_of_hybridisation: str | None = Field(None, alias="areaOfHybridisation", serialization_alias="areaOfHybridisation")
+    number_of_subunits: int | None = Field(None, alias="numberOfSubunits", serialization_alias="numberOfSubunits")
+    oligo_nucleotide_type: CodeableConcept | None = Field(None, alias="oligoNucleotideType", serialization_alias="oligoNucleotideType")
+    sequence_type: CodeableConcept | None = Field(None, alias="sequenceType", serialization_alias="sequenceType")
+    subunit: PyList[SubstanceNucleicAcidSubunit] | None = Field(None, alias="subunit", serialization_alias="subunit")
 

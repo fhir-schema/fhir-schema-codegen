@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Period, Quantity, Range, Reference, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,11 +14,11 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DeviceRequestParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
-    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
-    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Range | None = Field(None, alias="valueRange", serialization_alias="valueRange")
 
 
 class DeviceRequest(DomainResource):
@@ -32,31 +32,31 @@ class DeviceRequest(DomainResource):
         pattern='DeviceRequest'
     )
     
-    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    code_codeable_concept: Optional[CodeableConcept] = Field(None, alias="codeCodeableConcept", serialization_alias="codeCodeableConcept")
-    code_reference: Optional[Reference] = Field(None, alias="codeReference", serialization_alias="codeReference")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
-    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
-    insurance: Optional[L[Reference]] = Field(None, alias="insurance", serialization_alias="insurance")
-    intent: Optional[Literal["proposal", "plan", "directive", "order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
-    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
-    occurrence_timing: Optional[Timing] = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
-    parameter: Optional[L[DeviceRequestParameter]] = Field(None, alias="parameter", serialization_alias="parameter")
-    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
-    performer_type: Optional[CodeableConcept] = Field(None, alias="performerType", serialization_alias="performerType")
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
-    prior_request: Optional[L[Reference]] = Field(None, alias="priorRequest", serialization_alias="priorRequest")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    relevant_history: Optional[L[Reference]] = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
-    requester: Optional[Reference] = Field(None, alias="requester", serialization_alias="requester")
-    status: Optional[Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    supporting_info: Optional[L[Reference]] = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    authored_on: str | None = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    code_codeable_concept: CodeableConcept | None = Field(None, alias="codeCodeableConcept", serialization_alias="codeCodeableConcept")
+    code_reference: Reference | None = Field(None, alias="codeReference", serialization_alias="codeReference")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    group_identifier: Identifier | None = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    insurance: PyList[Reference] | None = Field(None, alias="insurance", serialization_alias="insurance")
+    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Period | None = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    occurrence_timing: Timing | None = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
+    parameter: PyList[DeviceRequestParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
+    performer: Reference | None = Field(None, alias="performer", serialization_alias="performer")
+    performer_type: CodeableConcept | None = Field(None, alias="performerType", serialization_alias="performerType")
+    priority: Literal["routine", "urgent", "asap", "stat"] | None = Field(None, alias="priority", serialization_alias="priority")
+    prior_request: PyList[Reference] | None = Field(None, alias="priorRequest", serialization_alias="priorRequest")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    relevant_history: PyList[Reference] | None = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
+    requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
+    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    supporting_info: PyList[Reference] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
 

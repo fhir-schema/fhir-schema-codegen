@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Meta
 
@@ -20,8 +20,8 @@ class Resource(BaseModel):
         pattern='Resource'
     )
     
-    id: Optional[str] = Field(None, alias="id", serialization_alias="id")
-    implicit_rules: Optional[str] = Field(None, alias="implicitRules", serialization_alias="implicitRules")
-    language: Optional[str] = Field(None, alias="language", serialization_alias="language")
-    meta: Optional[Meta] = Field(None, alias="meta", serialization_alias="meta")
+    id: str | None = Field(None, alias="id", serialization_alias="id")
+    implicit_rules: str | None = Field(None, alias="implicitRules", serialization_alias="implicitRules")
+    language: str | None = Field(None, alias="language", serialization_alias="language")
+    meta: Meta | None = Field(None, alias="meta", serialization_alias="meta")
 

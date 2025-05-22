@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, Attachment, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,27 +22,27 @@ class Media(DomainResource):
         pattern='Media'
     )
     
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    body_site: Optional[CodeableConcept] = Field(None, alias="bodySite", serialization_alias="bodySite")
-    content: Optional[Attachment] = Field(None, alias="content", serialization_alias="content")
-    created_date_time: Optional[str] = Field(None, alias="createdDateTime", serialization_alias="createdDateTime")
-    created_period: Optional[Period] = Field(None, alias="createdPeriod", serialization_alias="createdPeriod")
-    device: Optional[Reference] = Field(None, alias="device", serialization_alias="device")
-    device_name: Optional[str] = Field(None, alias="deviceName", serialization_alias="deviceName")
-    duration: Optional[float] = Field(None, alias="duration", serialization_alias="duration")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    frames: Optional[PositiveInt] = Field(None, alias="frames", serialization_alias="frames")
-    height: Optional[PositiveInt] = Field(None, alias="height", serialization_alias="height")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")
-    modality: Optional[CodeableConcept] = Field(None, alias="modality", serialization_alias="modality")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    operator: Optional[Reference] = Field(None, alias="operator", serialization_alias="operator")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    status: Optional[Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
-    view: Optional[CodeableConcept] = Field(None, alias="view", serialization_alias="view")
-    width: Optional[PositiveInt] = Field(None, alias="width", serialization_alias="width")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    body_site: CodeableConcept | None = Field(None, alias="bodySite", serialization_alias="bodySite")
+    content: Attachment | None = Field(None, alias="content", serialization_alias="content")
+    created_date_time: str | None = Field(None, alias="createdDateTime", serialization_alias="createdDateTime")
+    created_period: Period | None = Field(None, alias="createdPeriod", serialization_alias="createdPeriod")
+    device: Reference | None = Field(None, alias="device", serialization_alias="device")
+    device_name: str | None = Field(None, alias="deviceName", serialization_alias="deviceName")
+    duration: float | None = Field(None, alias="duration", serialization_alias="duration")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    frames: PositiveInt | None = Field(None, alias="frames", serialization_alias="frames")
+    height: PositiveInt | None = Field(None, alias="height", serialization_alias="height")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    issued: str | None = Field(None, alias="issued", serialization_alias="issued")
+    modality: CodeableConcept | None = Field(None, alias="modality", serialization_alias="modality")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    operator: Reference | None = Field(None, alias="operator", serialization_alias="operator")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    view: CodeableConcept | None = Field(None, alias="view", serialization_alias="view")
+    width: PositiveInt | None = Field(None, alias="width", serialization_alias="width")
 

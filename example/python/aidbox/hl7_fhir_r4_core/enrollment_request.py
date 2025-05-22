@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,11 +22,11 @@ class EnrollmentRequest(DomainResource):
         pattern='EnrollmentRequest'
     )
     
-    candidate: Optional[Reference] = Field(None, alias="candidate", serialization_alias="candidate")
-    coverage: Optional[Reference] = Field(None, alias="coverage", serialization_alias="coverage")
-    created: Optional[str] = Field(None, alias="created", serialization_alias="created")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    insurer: Optional[Reference] = Field(None, alias="insurer", serialization_alias="insurer")
-    provider: Optional[Reference] = Field(None, alias="provider", serialization_alias="provider")
-    status: Optional[Literal["active", "cancelled", "draft", "entered-in-error"]] = Field(None, alias="status", serialization_alias="status")
+    candidate: Reference | None = Field(None, alias="candidate", serialization_alias="candidate")
+    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    created: str | None = Field(None, alias="created", serialization_alias="created")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
+    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
 

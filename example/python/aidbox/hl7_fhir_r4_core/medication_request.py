@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Dosage, Duration, Identifier, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,26 +14,26 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicationRequestSubstitution(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    allowed_boolean: Optional[bool] = Field(None, alias="allowedBoolean", serialization_alias="allowedBoolean")
-    allowed_codeable_concept: Optional[CodeableConcept] = Field(None, alias="allowedCodeableConcept", serialization_alias="allowedCodeableConcept")
-    reason: Optional[CodeableConcept] = Field(None, alias="reason", serialization_alias="reason")
+    allowed_boolean: bool | None = Field(None, alias="allowedBoolean", serialization_alias="allowedBoolean")
+    allowed_codeable_concept: CodeableConcept | None = Field(None, alias="allowedCodeableConcept", serialization_alias="allowedCodeableConcept")
+    reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
 
 class MedicationRequestDispenseRequestInitialFill(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    duration: Optional[Duration] = Field(None, alias="duration", serialization_alias="duration")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
+    duration: Duration | None = Field(None, alias="duration", serialization_alias="duration")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
 
 class MedicationRequestDispenseRequest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    dispense_interval: Optional[Duration] = Field(None, alias="dispenseInterval", serialization_alias="dispenseInterval")
-    expected_supply_duration: Optional[Duration] = Field(None, alias="expectedSupplyDuration", serialization_alias="expectedSupplyDuration")
-    initial_fill: Optional[MedicationRequestDispenseRequestInitialFill] = Field(None, alias="initialFill", serialization_alias="initialFill")
-    number_of_repeats_allowed: Optional[int] = Field(None, alias="numberOfRepeatsAllowed", serialization_alias="numberOfRepeatsAllowed")
-    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
-    validity_period: Optional[Period] = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+    dispense_interval: Duration | None = Field(None, alias="dispenseInterval", serialization_alias="dispenseInterval")
+    expected_supply_duration: Duration | None = Field(None, alias="expectedSupplyDuration", serialization_alias="expectedSupplyDuration")
+    initial_fill: MedicationRequestDispenseRequestInitialFill | None = Field(None, alias="initialFill", serialization_alias="initialFill")
+    number_of_repeats_allowed: int | None = Field(None, alias="numberOfRepeatsAllowed", serialization_alias="numberOfRepeatsAllowed")
+    performer: Reference | None = Field(None, alias="performer", serialization_alias="performer")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
 
 
 class MedicationRequest(DomainResource):
@@ -47,38 +47,38 @@ class MedicationRequest(DomainResource):
         pattern='MedicationRequest'
     )
     
-    authored_on: Optional[str] = Field(None, alias="authoredOn", serialization_alias="authoredOn")
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    course_of_therapy_type: Optional[CodeableConcept] = Field(None, alias="courseOfTherapyType", serialization_alias="courseOfTherapyType")
-    detected_issue: Optional[L[Reference]] = Field(None, alias="detectedIssue", serialization_alias="detectedIssue")
-    dispense_request: Optional[MedicationRequestDispenseRequest] = Field(None, alias="dispenseRequest", serialization_alias="dispenseRequest")
-    do_not_perform: Optional[bool] = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
-    dosage_instruction: Optional[L[Dosage]] = Field(None, alias="dosageInstruction", serialization_alias="dosageInstruction")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    event_history: Optional[L[Reference]] = Field(None, alias="eventHistory", serialization_alias="eventHistory")
-    group_identifier: Optional[Identifier] = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    instantiates_canonical: Optional[L[str]] = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
-    instantiates_uri: Optional[L[str]] = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
-    insurance: Optional[L[Reference]] = Field(None, alias="insurance", serialization_alias="insurance")
-    intent: Optional[Literal["proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option"]] = Field(None, alias="intent", serialization_alias="intent")
-    medication_codeable_concept: Optional[CodeableConcept] = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
-    medication_reference: Optional[Reference] = Field(None, alias="medicationReference", serialization_alias="medicationReference")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    performer: Optional[Reference] = Field(None, alias="performer", serialization_alias="performer")
-    performer_type: Optional[CodeableConcept] = Field(None, alias="performerType", serialization_alias="performerType")
-    priority: Optional[Literal["routine", "urgent", "asap", "stat"]] = Field(None, alias="priority", serialization_alias="priority")
-    prior_prescription: Optional[Reference] = Field(None, alias="priorPrescription", serialization_alias="priorPrescription")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    recorder: Optional[Reference] = Field(None, alias="recorder", serialization_alias="recorder")
-    reported_boolean: Optional[bool] = Field(None, alias="reportedBoolean", serialization_alias="reportedBoolean")
-    reported_reference: Optional[Reference] = Field(None, alias="reportedReference", serialization_alias="reportedReference")
-    requester: Optional[Reference] = Field(None, alias="requester", serialization_alias="requester")
-    status: Optional[Literal["active", "on-hold", "cancelled", "completed", "entered-in-error", "stopped", "draft", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    status_reason: Optional[CodeableConcept] = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    substitution: Optional[MedicationRequestSubstitution] = Field(None, alias="substitution", serialization_alias="substitution")
-    supporting_information: Optional[L[Reference]] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    authored_on: str | None = Field(None, alias="authoredOn", serialization_alias="authoredOn")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    course_of_therapy_type: CodeableConcept | None = Field(None, alias="courseOfTherapyType", serialization_alias="courseOfTherapyType")
+    detected_issue: PyList[Reference] | None = Field(None, alias="detectedIssue", serialization_alias="detectedIssue")
+    dispense_request: MedicationRequestDispenseRequest | None = Field(None, alias="dispenseRequest", serialization_alias="dispenseRequest")
+    do_not_perform: bool | None = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
+    dosage_instruction: PyList[Dosage] | None = Field(None, alias="dosageInstruction", serialization_alias="dosageInstruction")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    event_history: PyList[Reference] | None = Field(None, alias="eventHistory", serialization_alias="eventHistory")
+    group_identifier: Identifier | None = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
+    instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
+    insurance: PyList[Reference] | None = Field(None, alias="insurance", serialization_alias="insurance")
+    intent: Literal["proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    medication_codeable_concept: CodeableConcept | None = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Reference | None = Field(None, alias="medicationReference", serialization_alias="medicationReference")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    performer: Reference | None = Field(None, alias="performer", serialization_alias="performer")
+    performer_type: CodeableConcept | None = Field(None, alias="performerType", serialization_alias="performerType")
+    priority: Literal["routine", "urgent", "asap", "stat"] | None = Field(None, alias="priority", serialization_alias="priority")
+    prior_prescription: Reference | None = Field(None, alias="priorPrescription", serialization_alias="priorPrescription")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    recorder: Reference | None = Field(None, alias="recorder", serialization_alias="recorder")
+    reported_boolean: bool | None = Field(None, alias="reportedBoolean", serialization_alias="reportedBoolean")
+    reported_reference: Reference | None = Field(None, alias="reportedReference", serialization_alias="reportedReference")
+    requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
+    status: Literal["active", "on-hold", "cancelled", "completed", "entered-in-error", "stopped", "draft", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    substitution: MedicationRequestSubstitution | None = Field(None, alias="substitution", serialization_alias="substitution")
+    supporting_information: PyList[Reference] | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
 

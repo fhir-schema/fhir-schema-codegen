@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, MarketingStatus, ProdCharacteristic, ProductShelfLife, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,24 +14,24 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductPackagedBatchIdentifier(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    immediate_packaging: Optional[Identifier] = Field(None, alias="immediatePackaging", serialization_alias="immediatePackaging")
-    outer_packaging: Optional[Identifier] = Field(None, alias="outerPackaging", serialization_alias="outerPackaging")
+    immediate_packaging: Identifier | None = Field(None, alias="immediatePackaging", serialization_alias="immediatePackaging")
+    outer_packaging: Identifier | None = Field(None, alias="outerPackaging", serialization_alias="outerPackaging")
 
 class MedicinalProductPackagedPackageItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    alternate_material: Optional[L[CodeableConcept]] = Field(None, alias="alternateMaterial", serialization_alias="alternateMaterial")
-    device: Optional[L[Reference]] = Field(None, alias="device", serialization_alias="device")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    manufactured_item: Optional[L[Reference]] = Field(None, alias="manufacturedItem", serialization_alias="manufacturedItem")
-    manufacturer: Optional[L[Reference]] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
-    material: Optional[L[CodeableConcept]] = Field(None, alias="material", serialization_alias="material")
-    other_characteristics: Optional[L[CodeableConcept]] = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
-    package_item: Optional[L[MedicinalProductPackagedPackageItem]] = Field(None, alias="packageItem", serialization_alias="packageItem")
-    physical_characteristics: Optional[ProdCharacteristic] = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
-    shelf_life_storage: Optional[L[ProductShelfLife]] = Field(None, alias="shelfLifeStorage", serialization_alias="shelfLifeStorage")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    alternate_material: PyList[CodeableConcept] | None = Field(None, alias="alternateMaterial", serialization_alias="alternateMaterial")
+    device: PyList[Reference] | None = Field(None, alias="device", serialization_alias="device")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    manufactured_item: PyList[Reference] | None = Field(None, alias="manufacturedItem", serialization_alias="manufacturedItem")
+    manufacturer: PyList[Reference] | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    material: PyList[CodeableConcept] | None = Field(None, alias="material", serialization_alias="material")
+    other_characteristics: PyList[CodeableConcept] | None = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
+    package_item: PyList[MedicinalProductPackagedPackageItem] | None = Field(None, alias="packageItem", serialization_alias="packageItem")
+    physical_characteristics: ProdCharacteristic | None = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    shelf_life_storage: PyList[ProductShelfLife] | None = Field(None, alias="shelfLifeStorage", serialization_alias="shelfLifeStorage")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class MedicinalProductPackaged(DomainResource):
@@ -45,13 +45,13 @@ class MedicinalProductPackaged(DomainResource):
         pattern='MedicinalProductPackaged'
     )
     
-    batch_identifier: Optional[L[MedicinalProductPackagedBatchIdentifier]] = Field(None, alias="batchIdentifier", serialization_alias="batchIdentifier")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    legal_status_of_supply: Optional[CodeableConcept] = Field(None, alias="legalStatusOfSupply", serialization_alias="legalStatusOfSupply")
-    manufacturer: Optional[L[Reference]] = Field(None, alias="manufacturer", serialization_alias="manufacturer")
-    marketing_authorization: Optional[Reference] = Field(None, alias="marketingAuthorization", serialization_alias="marketingAuthorization")
-    marketing_status: Optional[L[MarketingStatus]] = Field(None, alias="marketingStatus", serialization_alias="marketingStatus")
-    package_item: Optional[L[MedicinalProductPackagedPackageItem]] = Field(None, alias="packageItem", serialization_alias="packageItem")
-    subject: Optional[L[Reference]] = Field(None, alias="subject", serialization_alias="subject")
+    batch_identifier: PyList[MedicinalProductPackagedBatchIdentifier] | None = Field(None, alias="batchIdentifier", serialization_alias="batchIdentifier")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    legal_status_of_supply: CodeableConcept | None = Field(None, alias="legalStatusOfSupply", serialization_alias="legalStatusOfSupply")
+    manufacturer: PyList[Reference] | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
+    marketing_authorization: Reference | None = Field(None, alias="marketingAuthorization", serialization_alias="marketingAuthorization")
+    marketing_status: PyList[MarketingStatus] | None = Field(None, alias="marketingStatus", serialization_alias="marketingStatus")
+    package_item: PyList[MedicinalProductPackagedPackageItem] | None = Field(None, alias="packageItem", serialization_alias="packageItem")
+    subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
 

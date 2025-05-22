@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,12 +22,12 @@ class Schedule(DomainResource):
         pattern='Schedule'
     )
     
-    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
-    actor: Optional[L[Reference]] = Field(None, alias="actor", serialization_alias="actor")
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    planning_horizon: Optional[Period] = Field(None, alias="planningHorizon", serialization_alias="planningHorizon")
-    service_category: Optional[L[CodeableConcept]] = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
-    service_type: Optional[L[CodeableConcept]] = Field(None, alias="serviceType", serialization_alias="serviceType")
-    specialty: Optional[L[CodeableConcept]] = Field(None, alias="specialty", serialization_alias="specialty")
+    active: bool | None = Field(None, alias="active", serialization_alias="active")
+    actor: PyList[Reference] | None = Field(None, alias="actor", serialization_alias="actor")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    planning_horizon: Period | None = Field(None, alias="planningHorizon", serialization_alias="planningHorizon")
+    service_category: PyList[CodeableConcept] | None = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
+    service_type: PyList[CodeableConcept] | None = Field(None, alias="serviceType", serialization_alias="serviceType")
+    specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Address, BackboneElement, CodeableConcept, ContactPoint, HumanName, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,10 +14,10 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class OrganizationContact(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    address: Optional[Address] = Field(None, alias="address", serialization_alias="address")
-    name: Optional[HumanName] = Field(None, alias="name", serialization_alias="name")
-    purpose: Optional[CodeableConcept] = Field(None, alias="purpose", serialization_alias="purpose")
-    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
+    address: Address | None = Field(None, alias="address", serialization_alias="address")
+    name: HumanName | None = Field(None, alias="name", serialization_alias="name")
+    purpose: CodeableConcept | None = Field(None, alias="purpose", serialization_alias="purpose")
+    telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
 
 
 class Organization(DomainResource):
@@ -31,14 +31,14 @@ class Organization(DomainResource):
         pattern='Organization'
     )
     
-    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
-    address: Optional[L[Address]] = Field(None, alias="address", serialization_alias="address")
-    alias: Optional[L[str]] = Field(None, alias="alias", serialization_alias="alias")
-    contact: Optional[L[OrganizationContact]] = Field(None, alias="contact", serialization_alias="contact")
-    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    part_of: Optional[Reference] = Field(None, alias="partOf", serialization_alias="partOf")
-    telecom: Optional[L[ContactPoint]] = Field(None, alias="telecom", serialization_alias="telecom")
-    type: Optional[L[CodeableConcept]] = Field(None, alias="type", serialization_alias="type")
+    active: bool | None = Field(None, alias="active", serialization_alias="active")
+    address: PyList[Address] | None = Field(None, alias="address", serialization_alias="address")
+    alias: PyList[str] | None = Field(None, alias="alias", serialization_alias="alias")
+    contact: PyList[OrganizationContact] | None = Field(None, alias="contact", serialization_alias="contact")
+    endpoint: PyList[Reference] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    part_of: Reference | None = Field(None, alias="partOf", serialization_alias="partOf")
+    telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
 

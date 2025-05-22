@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Duration, Identifier, Quantity, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,32 +14,32 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductPharmaceuticalCharacteristics(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    status: Optional[CodeableConcept] = Field(None, alias="status", serialization_alias="status")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
 
 class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    supporting_information: Optional[str] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
-    tissue: Optional[CodeableConcept] = Field(None, alias="tissue", serialization_alias="tissue")
-    value: Optional[Quantity] = Field(None, alias="value", serialization_alias="value")
+    supporting_information: str | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    tissue: CodeableConcept | None = Field(None, alias="tissue", serialization_alias="tissue")
+    value: Quantity | None = Field(None, alias="value", serialization_alias="value")
 
 class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    withdrawal_period: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod]] = Field(None, alias="withdrawalPeriod", serialization_alias="withdrawalPeriod")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    withdrawal_period: PyList[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod] | None = Field(None, alias="withdrawalPeriod", serialization_alias="withdrawalPeriod")
 
 class MedicinalProductPharmaceuticalRouteOfAdministration(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    first_dose: Optional[Quantity] = Field(None, alias="firstDose", serialization_alias="firstDose")
-    max_dose_per_day: Optional[Quantity] = Field(None, alias="maxDosePerDay", serialization_alias="maxDosePerDay")
-    max_dose_per_treatment_period: Optional[Ratio] = Field(None, alias="maxDosePerTreatmentPeriod", serialization_alias="maxDosePerTreatmentPeriod")
-    max_single_dose: Optional[Quantity] = Field(None, alias="maxSingleDose", serialization_alias="maxSingleDose")
-    max_treatment_period: Optional[Duration] = Field(None, alias="maxTreatmentPeriod", serialization_alias="maxTreatmentPeriod")
-    target_species: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies]] = Field(None, alias="targetSpecies", serialization_alias="targetSpecies")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    first_dose: Quantity | None = Field(None, alias="firstDose", serialization_alias="firstDose")
+    max_dose_per_day: Quantity | None = Field(None, alias="maxDosePerDay", serialization_alias="maxDosePerDay")
+    max_dose_per_treatment_period: Ratio | None = Field(None, alias="maxDosePerTreatmentPeriod", serialization_alias="maxDosePerTreatmentPeriod")
+    max_single_dose: Quantity | None = Field(None, alias="maxSingleDose", serialization_alias="maxSingleDose")
+    max_treatment_period: Duration | None = Field(None, alias="maxTreatmentPeriod", serialization_alias="maxTreatmentPeriod")
+    target_species: PyList[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies] | None = Field(None, alias="targetSpecies", serialization_alias="targetSpecies")
 
 
 class MedicinalProductPharmaceutical(DomainResource):
@@ -53,11 +53,11 @@ class MedicinalProductPharmaceutical(DomainResource):
         pattern='MedicinalProductPharmaceutical'
     )
     
-    administrable_dose_form: Optional[CodeableConcept] = Field(None, alias="administrableDoseForm", serialization_alias="administrableDoseForm")
-    characteristics: Optional[L[MedicinalProductPharmaceuticalCharacteristics]] = Field(None, alias="characteristics", serialization_alias="characteristics")
-    device: Optional[L[Reference]] = Field(None, alias="device", serialization_alias="device")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    ingredient: Optional[L[Reference]] = Field(None, alias="ingredient", serialization_alias="ingredient")
-    route_of_administration: Optional[L[MedicinalProductPharmaceuticalRouteOfAdministration]] = Field(None, alias="routeOfAdministration", serialization_alias="routeOfAdministration")
-    unit_of_presentation: Optional[CodeableConcept] = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
+    administrable_dose_form: CodeableConcept | None = Field(None, alias="administrableDoseForm", serialization_alias="administrableDoseForm")
+    characteristics: PyList[MedicinalProductPharmaceuticalCharacteristics] | None = Field(None, alias="characteristics", serialization_alias="characteristics")
+    device: PyList[Reference] | None = Field(None, alias="device", serialization_alias="device")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    ingredient: PyList[Reference] | None = Field(None, alias="ingredient", serialization_alias="ingredient")
+    route_of_administration: PyList[MedicinalProductPharmaceuticalRouteOfAdministration] | None = Field(None, alias="routeOfAdministration", serialization_alias="routeOfAdministration")
+    unit_of_presentation: CodeableConcept | None = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
 

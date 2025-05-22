@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -22,19 +22,19 @@ class ImmunizationEvaluation(DomainResource):
         pattern='ImmunizationEvaluation'
     )
     
-    authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    dose_number_positive_int: Optional[PositiveInt] = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
-    dose_number_string: Optional[str] = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
-    dose_status: Optional[CodeableConcept] = Field(None, alias="doseStatus", serialization_alias="doseStatus")
-    dose_status_reason: Optional[L[CodeableConcept]] = Field(None, alias="doseStatusReason", serialization_alias="doseStatusReason")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    immunization_event: Optional[Reference] = Field(None, alias="immunizationEvent", serialization_alias="immunizationEvent")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    series: Optional[str] = Field(None, alias="series", serialization_alias="series")
-    series_doses_positive_int: Optional[PositiveInt] = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
-    series_doses_string: Optional[str] = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
-    status: Optional[Literal["completed", "entered-in-error", "in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    target_disease: Optional[CodeableConcept] = Field(None, alias="targetDisease", serialization_alias="targetDisease")
+    authority: Reference | None = Field(None, alias="authority", serialization_alias="authority")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    dose_number_positive_int: PositiveInt | None = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
+    dose_number_string: str | None = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
+    dose_status: CodeableConcept | None = Field(None, alias="doseStatus", serialization_alias="doseStatus")
+    dose_status_reason: PyList[CodeableConcept] | None = Field(None, alias="doseStatusReason", serialization_alias="doseStatusReason")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    immunization_event: Reference | None = Field(None, alias="immunizationEvent", serialization_alias="immunizationEvent")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    series: str | None = Field(None, alias="series", serialization_alias="series")
+    series_doses_positive_int: PositiveInt | None = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
+    series_doses_string: str | None = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
+    status: Literal["completed", "entered-in-error", "in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    target_disease: CodeableConcept | None = Field(None, alias="targetDisease", serialization_alias="targetDisease")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Quantity, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,21 +14,21 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class GroupMember(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    entity: Optional[Reference] = Field(None, alias="entity", serialization_alias="entity")
-    inactive: Optional[bool] = Field(None, alias="inactive", serialization_alias="inactive")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
+    entity: Reference | None = Field(None, alias="entity", serialization_alias="entity")
+    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 class GroupCharacteristic(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    exclude: Optional[bool] = Field(None, alias="exclude", serialization_alias="exclude")
-    period: Optional[Period] = Field(None, alias="period", serialization_alias="period")
-    value_boolean: Optional[bool] = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_codeable_concept: Optional[CodeableConcept] = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
-    value_quantity: Optional[Quantity] = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
-    value_range: Optional[Range] = Field(None, alias="valueRange", serialization_alias="valueRange")
-    value_reference: Optional[Reference] = Field(None, alias="valueReference", serialization_alias="valueReference")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    exclude: bool | None = Field(None, alias="exclude", serialization_alias="exclude")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Range | None = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
 
 
 class Group(DomainResource):
@@ -42,14 +42,14 @@ class Group(DomainResource):
         pattern='Group'
     )
     
-    active: Optional[bool] = Field(None, alias="active", serialization_alias="active")
-    actual: Optional[bool] = Field(None, alias="actual", serialization_alias="actual")
-    characteristic: Optional[L[GroupCharacteristic]] = Field(None, alias="characteristic", serialization_alias="characteristic")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    managing_entity: Optional[Reference] = Field(None, alias="managingEntity", serialization_alias="managingEntity")
-    member: Optional[L[GroupMember]] = Field(None, alias="member", serialization_alias="member")
-    name: Optional[str] = Field(None, alias="name", serialization_alias="name")
-    quantity: Optional[int] = Field(None, alias="quantity", serialization_alias="quantity")
-    type: Optional[Literal["person", "animal", "practitioner", "device", "medication", "substance"]] = Field(None, alias="type", serialization_alias="type")
+    active: bool | None = Field(None, alias="active", serialization_alias="active")
+    actual: bool | None = Field(None, alias="actual", serialization_alias="actual")
+    characteristic: PyList[GroupCharacteristic] | None = Field(None, alias="characteristic", serialization_alias="characteristic")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    managing_entity: Reference | None = Field(None, alias="managingEntity", serialization_alias="managingEntity")
+    member: PyList[GroupMember] | None = Field(None, alias="member", serialization_alias="member")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    quantity: int | None = Field(None, alias="quantity", serialization_alias="quantity")
+    type: Literal["person", "animal", "practitioner", "device", "medication", "substance"] | None = Field(None, alias="type", serialization_alias="type")
 

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Coding, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,32 +14,32 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ImagingStudySeriesInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    number: Optional[int] = Field(None, alias="number", serialization_alias="number")
-    sop_class: Optional[Coding] = Field(None, alias="sopClass", serialization_alias="sopClass")
-    title: Optional[str] = Field(None, alias="title", serialization_alias="title")
-    uid: Optional[str] = Field(None, alias="uid", serialization_alias="uid")
+    number: int | None = Field(None, alias="number", serialization_alias="number")
+    sop_class: Coding | None = Field(None, alias="sopClass", serialization_alias="sopClass")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    uid: str | None = Field(None, alias="uid", serialization_alias="uid")
 
 class ImagingStudySeriesPerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
-    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 class ImagingStudySeries(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    body_site: Optional[Coding] = Field(None, alias="bodySite", serialization_alias="bodySite")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
-    instance: Optional[L[ImagingStudySeriesInstance]] = Field(None, alias="instance", serialization_alias="instance")
-    laterality: Optional[Coding] = Field(None, alias="laterality", serialization_alias="laterality")
-    modality: Optional[Coding] = Field(None, alias="modality", serialization_alias="modality")
-    number: Optional[int] = Field(None, alias="number", serialization_alias="number")
-    number_of_instances: Optional[int] = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
-    performer: Optional[L[ImagingStudySeriesPerformer]] = Field(None, alias="performer", serialization_alias="performer")
-    specimen: Optional[L[Reference]] = Field(None, alias="specimen", serialization_alias="specimen")
-    started: Optional[str] = Field(None, alias="started", serialization_alias="started")
-    uid: Optional[str] = Field(None, alias="uid", serialization_alias="uid")
+    body_site: Coding | None = Field(None, alias="bodySite", serialization_alias="bodySite")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    endpoint: PyList[Reference] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    instance: PyList[ImagingStudySeriesInstance] | None = Field(None, alias="instance", serialization_alias="instance")
+    laterality: Coding | None = Field(None, alias="laterality", serialization_alias="laterality")
+    modality: Coding | None = Field(None, alias="modality", serialization_alias="modality")
+    number: int | None = Field(None, alias="number", serialization_alias="number")
+    number_of_instances: int | None = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
+    performer: PyList[ImagingStudySeriesPerformer] | None = Field(None, alias="performer", serialization_alias="performer")
+    specimen: PyList[Reference] | None = Field(None, alias="specimen", serialization_alias="specimen")
+    started: str | None = Field(None, alias="started", serialization_alias="started")
+    uid: str | None = Field(None, alias="uid", serialization_alias="uid")
 
 
 class ImagingStudy(DomainResource):
@@ -53,24 +53,24 @@ class ImagingStudy(DomainResource):
         pattern='ImagingStudy'
     )
     
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    endpoint: Optional[L[Reference]] = Field(None, alias="endpoint", serialization_alias="endpoint")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    interpreter: Optional[L[Reference]] = Field(None, alias="interpreter", serialization_alias="interpreter")
-    location: Optional[Reference] = Field(None, alias="location", serialization_alias="location")
-    modality: Optional[L[Coding]] = Field(None, alias="modality", serialization_alias="modality")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    number_of_instances: Optional[int] = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
-    number_of_series: Optional[int] = Field(None, alias="numberOfSeries", serialization_alias="numberOfSeries")
-    procedure_code: Optional[L[CodeableConcept]] = Field(None, alias="procedureCode", serialization_alias="procedureCode")
-    procedure_reference: Optional[Reference] = Field(None, alias="procedureReference", serialization_alias="procedureReference")
-    reason_code: Optional[L[CodeableConcept]] = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    reason_reference: Optional[L[Reference]] = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    referrer: Optional[Reference] = Field(None, alias="referrer", serialization_alias="referrer")
-    series: Optional[L[ImagingStudySeries]] = Field(None, alias="series", serialization_alias="series")
-    started: Optional[str] = Field(None, alias="started", serialization_alias="started")
-    status: Optional[Literal["registered", "available", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    endpoint: PyList[Reference] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    interpreter: PyList[Reference] | None = Field(None, alias="interpreter", serialization_alias="interpreter")
+    location: Reference | None = Field(None, alias="location", serialization_alias="location")
+    modality: PyList[Coding] | None = Field(None, alias="modality", serialization_alias="modality")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    number_of_instances: int | None = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
+    number_of_series: int | None = Field(None, alias="numberOfSeries", serialization_alias="numberOfSeries")
+    procedure_code: PyList[CodeableConcept] | None = Field(None, alias="procedureCode", serialization_alias="procedureCode")
+    procedure_reference: Reference | None = Field(None, alias="procedureReference", serialization_alias="procedureReference")
+    reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
+    reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
+    referrer: Reference | None = Field(None, alias="referrer", serialization_alias="referrer")
+    series: PyList[ImagingStudySeries] | None = Field(None, alias="series", serialization_alias="series")
+    started: str | None = Field(None, alias="started", serialization_alias="started")
+    status: Literal["registered", "available", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

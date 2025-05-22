@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,8 +14,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DiagnosticReportMedia(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    comment: Optional[str] = Field(None, alias="comment", serialization_alias="comment")
-    link: Optional[Reference] = Field(None, alias="link", serialization_alias="link")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    link: Reference | None = Field(None, alias="link", serialization_alias="link")
 
 
 class DiagnosticReport(DomainResource):
@@ -29,23 +29,23 @@ class DiagnosticReport(DomainResource):
         pattern='DiagnosticReport'
     )
     
-    based_on: Optional[L[Reference]] = Field(None, alias="basedOn", serialization_alias="basedOn")
-    category: Optional[L[CodeableConcept]] = Field(None, alias="category", serialization_alias="category")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    conclusion: Optional[str] = Field(None, alias="conclusion", serialization_alias="conclusion")
-    conclusion_code: Optional[L[CodeableConcept]] = Field(None, alias="conclusionCode", serialization_alias="conclusionCode")
-    effective_date_time: Optional[str] = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
-    effective_period: Optional[Period] = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
-    encounter: Optional[Reference] = Field(None, alias="encounter", serialization_alias="encounter")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    imaging_study: Optional[L[Reference]] = Field(None, alias="imagingStudy", serialization_alias="imagingStudy")
-    issued: Optional[str] = Field(None, alias="issued", serialization_alias="issued")
-    media: Optional[L[DiagnosticReportMedia]] = Field(None, alias="media", serialization_alias="media")
-    performer: Optional[L[Reference]] = Field(None, alias="performer", serialization_alias="performer")
-    presented_form: Optional[L[Attachment]] = Field(None, alias="presentedForm", serialization_alias="presentedForm")
-    result: Optional[L[Reference]] = Field(None, alias="result", serialization_alias="result")
-    results_interpreter: Optional[L[Reference]] = Field(None, alias="resultsInterpreter", serialization_alias="resultsInterpreter")
-    specimen: Optional[L[Reference]] = Field(None, alias="specimen", serialization_alias="specimen")
-    status: Optional[Literal["registered", "partial", "final", "amended", "cancelled", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
+    based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
+    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    conclusion: str | None = Field(None, alias="conclusion", serialization_alias="conclusion")
+    conclusion_code: PyList[CodeableConcept] | None = Field(None, alias="conclusionCode", serialization_alias="conclusionCode")
+    effective_date_time: str | None = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
+    effective_period: Period | None = Field(None, alias="effectivePeriod", serialization_alias="effectivePeriod")
+    encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    imaging_study: PyList[Reference] | None = Field(None, alias="imagingStudy", serialization_alias="imagingStudy")
+    issued: str | None = Field(None, alias="issued", serialization_alias="issued")
+    media: PyList[DiagnosticReportMedia] | None = Field(None, alias="media", serialization_alias="media")
+    performer: PyList[Reference] | None = Field(None, alias="performer", serialization_alias="performer")
+    presented_form: PyList[Attachment] | None = Field(None, alias="presentedForm", serialization_alias="presentedForm")
+    result: PyList[Reference] | None = Field(None, alias="result", serialization_alias="result")
+    results_interpreter: PyList[Reference] | None = Field(None, alias="resultsInterpreter", serialization_alias="resultsInterpreter")
+    specimen: PyList[Reference] | None = Field(None, alias="specimen", serialization_alias="specimen")
+    status: Literal["registered", "partial", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
 

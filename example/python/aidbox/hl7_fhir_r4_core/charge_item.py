@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,8 +14,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ChargeItemPerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Optional[Reference] = Field(None, alias="actor", serialization_alias="actor")
-    function: Optional[CodeableConcept] = Field(None, alias="function", serialization_alias="function")
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
 class ChargeItem(DomainResource):
@@ -29,33 +29,33 @@ class ChargeItem(DomainResource):
         pattern='ChargeItem'
     )
     
-    account: Optional[L[Reference]] = Field(None, alias="account", serialization_alias="account")
-    bodysite: Optional[L[CodeableConcept]] = Field(None, alias="bodysite", serialization_alias="bodysite")
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    context: Optional[Reference] = Field(None, alias="context", serialization_alias="context")
-    cost_center: Optional[Reference] = Field(None, alias="costCenter", serialization_alias="costCenter")
-    definition_canonical: Optional[L[str]] = Field(None, alias="definitionCanonical", serialization_alias="definitionCanonical")
-    definition_uri: Optional[L[str]] = Field(None, alias="definitionUri", serialization_alias="definitionUri")
-    entered_date: Optional[str] = Field(None, alias="enteredDate", serialization_alias="enteredDate")
-    enterer: Optional[Reference] = Field(None, alias="enterer", serialization_alias="enterer")
-    factor_override: Optional[float] = Field(None, alias="factorOverride", serialization_alias="factorOverride")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    note: Optional[L[Annotation]] = Field(None, alias="note", serialization_alias="note")
-    occurrence_date_time: Optional[str] = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
-    occurrence_period: Optional[Period] = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
-    occurrence_timing: Optional[Timing] = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
-    override_reason: Optional[str] = Field(None, alias="overrideReason", serialization_alias="overrideReason")
-    part_of: Optional[L[Reference]] = Field(None, alias="partOf", serialization_alias="partOf")
-    performer: Optional[L[ChargeItemPerformer]] = Field(None, alias="performer", serialization_alias="performer")
-    performing_organization: Optional[Reference] = Field(None, alias="performingOrganization", serialization_alias="performingOrganization")
-    price_override: Optional[Money] = Field(None, alias="priceOverride", serialization_alias="priceOverride")
-    product_codeable_concept: Optional[CodeableConcept] = Field(None, alias="productCodeableConcept", serialization_alias="productCodeableConcept")
-    product_reference: Optional[Reference] = Field(None, alias="productReference", serialization_alias="productReference")
-    quantity: Optional[Quantity] = Field(None, alias="quantity", serialization_alias="quantity")
-    reason: Optional[L[CodeableConcept]] = Field(None, alias="reason", serialization_alias="reason")
-    requesting_organization: Optional[Reference] = Field(None, alias="requestingOrganization", serialization_alias="requestingOrganization")
-    service: Optional[L[Reference]] = Field(None, alias="service", serialization_alias="service")
-    status: Optional[Literal["planned", "billable", "not-billable", "aborted", "billed", "entered-in-error", "unknown"]] = Field(None, alias="status", serialization_alias="status")
-    subject: Optional[Reference] = Field(None, alias="subject", serialization_alias="subject")
-    supporting_information: Optional[L[Reference]] = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    account: PyList[Reference] | None = Field(None, alias="account", serialization_alias="account")
+    bodysite: PyList[CodeableConcept] | None = Field(None, alias="bodysite", serialization_alias="bodysite")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    context: Reference | None = Field(None, alias="context", serialization_alias="context")
+    cost_center: Reference | None = Field(None, alias="costCenter", serialization_alias="costCenter")
+    definition_canonical: PyList[str] | None = Field(None, alias="definitionCanonical", serialization_alias="definitionCanonical")
+    definition_uri: PyList[str] | None = Field(None, alias="definitionUri", serialization_alias="definitionUri")
+    entered_date: str | None = Field(None, alias="enteredDate", serialization_alias="enteredDate")
+    enterer: Reference | None = Field(None, alias="enterer", serialization_alias="enterer")
+    factor_override: float | None = Field(None, alias="factorOverride", serialization_alias="factorOverride")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
+    occurrence_period: Period | None = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
+    occurrence_timing: Timing | None = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
+    override_reason: str | None = Field(None, alias="overrideReason", serialization_alias="overrideReason")
+    part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
+    performer: PyList[ChargeItemPerformer] | None = Field(None, alias="performer", serialization_alias="performer")
+    performing_organization: Reference | None = Field(None, alias="performingOrganization", serialization_alias="performingOrganization")
+    price_override: Money | None = Field(None, alias="priceOverride", serialization_alias="priceOverride")
+    product_codeable_concept: CodeableConcept | None = Field(None, alias="productCodeableConcept", serialization_alias="productCodeableConcept")
+    product_reference: Reference | None = Field(None, alias="productReference", serialization_alias="productReference")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    reason: PyList[CodeableConcept] | None = Field(None, alias="reason", serialization_alias="reason")
+    requesting_organization: Reference | None = Field(None, alias="requestingOrganization", serialization_alias="requestingOrganization")
+    service: PyList[Reference] | None = Field(None, alias="service", serialization_alias="service")
+    status: Literal["planned", "billable", "not-billable", "aborted", "billed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    supporting_information: PyList[Reference] | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
 

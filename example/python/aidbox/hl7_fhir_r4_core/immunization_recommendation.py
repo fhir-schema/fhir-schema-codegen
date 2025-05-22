@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,26 +14,26 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ImmunizationRecommendationRecommendationDateCriterion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Optional[CodeableConcept] = Field(None, alias="code", serialization_alias="code")
-    value: Optional[str] = Field(None, alias="value", serialization_alias="value")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class ImmunizationRecommendationRecommendation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    contraindicated_vaccine_code: Optional[L[CodeableConcept]] = Field(None, alias="contraindicatedVaccineCode", serialization_alias="contraindicatedVaccineCode")
-    date_criterion: Optional[L[ImmunizationRecommendationRecommendationDateCriterion]] = Field(None, alias="dateCriterion", serialization_alias="dateCriterion")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    dose_number_positive_int: Optional[PositiveInt] = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
-    dose_number_string: Optional[str] = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
-    forecast_reason: Optional[L[CodeableConcept]] = Field(None, alias="forecastReason", serialization_alias="forecastReason")
-    forecast_status: Optional[CodeableConcept] = Field(None, alias="forecastStatus", serialization_alias="forecastStatus")
-    series: Optional[str] = Field(None, alias="series", serialization_alias="series")
-    series_doses_positive_int: Optional[PositiveInt] = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
-    series_doses_string: Optional[str] = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
-    supporting_immunization: Optional[L[Reference]] = Field(None, alias="supportingImmunization", serialization_alias="supportingImmunization")
-    supporting_patient_information: Optional[L[Reference]] = Field(None, alias="supportingPatientInformation", serialization_alias="supportingPatientInformation")
-    target_disease: Optional[CodeableConcept] = Field(None, alias="targetDisease", serialization_alias="targetDisease")
-    vaccine_code: Optional[L[CodeableConcept]] = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
+    contraindicated_vaccine_code: PyList[CodeableConcept] | None = Field(None, alias="contraindicatedVaccineCode", serialization_alias="contraindicatedVaccineCode")
+    date_criterion: PyList[ImmunizationRecommendationRecommendationDateCriterion] | None = Field(None, alias="dateCriterion", serialization_alias="dateCriterion")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    dose_number_positive_int: PositiveInt | None = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
+    dose_number_string: str | None = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
+    forecast_reason: PyList[CodeableConcept] | None = Field(None, alias="forecastReason", serialization_alias="forecastReason")
+    forecast_status: CodeableConcept | None = Field(None, alias="forecastStatus", serialization_alias="forecastStatus")
+    series: str | None = Field(None, alias="series", serialization_alias="series")
+    series_doses_positive_int: PositiveInt | None = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
+    series_doses_string: str | None = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
+    supporting_immunization: PyList[Reference] | None = Field(None, alias="supportingImmunization", serialization_alias="supportingImmunization")
+    supporting_patient_information: PyList[Reference] | None = Field(None, alias="supportingPatientInformation", serialization_alias="supportingPatientInformation")
+    target_disease: CodeableConcept | None = Field(None, alias="targetDisease", serialization_alias="targetDisease")
+    vaccine_code: PyList[CodeableConcept] | None = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
 
 
 class ImmunizationRecommendation(DomainResource):
@@ -47,9 +47,9 @@ class ImmunizationRecommendation(DomainResource):
         pattern='ImmunizationRecommendation'
     )
     
-    authority: Optional[Reference] = Field(None, alias="authority", serialization_alias="authority")
-    date: Optional[str] = Field(None, alias="date", serialization_alias="date")
-    identifier: Optional[L[Identifier]] = Field(None, alias="identifier", serialization_alias="identifier")
-    patient: Optional[Reference] = Field(None, alias="patient", serialization_alias="patient")
-    recommendation: Optional[L[ImmunizationRecommendationRecommendation]] = Field(None, alias="recommendation", serialization_alias="recommendation")
+    authority: Reference | None = Field(None, alias="authority", serialization_alias="authority")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    recommendation: PyList[ImmunizationRecommendationRecommendation] | None = Field(None, alias="recommendation", serialization_alias="recommendation")
 

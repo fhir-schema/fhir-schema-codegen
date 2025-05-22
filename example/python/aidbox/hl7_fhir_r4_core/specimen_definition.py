@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import Optional, List as L, Literal, ForwardRef
+from typing import List as PyList, Literal, ForwardRef
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Duration, Identifier, Quantity, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
@@ -14,41 +14,41 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class SpecimenDefinitionTypeTestedContainerAdditive(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    additive_codeable_concept: Optional[CodeableConcept] = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
-    additive_reference: Optional[Reference] = Field(None, alias="additiveReference", serialization_alias="additiveReference")
+    additive_codeable_concept: CodeableConcept | None = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
+    additive_reference: Reference | None = Field(None, alias="additiveReference", serialization_alias="additiveReference")
 
 class SpecimenDefinitionTypeTestedContainer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    additive: Optional[L[SpecimenDefinitionTypeTestedContainerAdditive]] = Field(None, alias="additive", serialization_alias="additive")
-    cap: Optional[CodeableConcept] = Field(None, alias="cap", serialization_alias="cap")
-    capacity: Optional[Quantity] = Field(None, alias="capacity", serialization_alias="capacity")
-    description: Optional[str] = Field(None, alias="description", serialization_alias="description")
-    material: Optional[CodeableConcept] = Field(None, alias="material", serialization_alias="material")
-    minimum_volume_quantity: Optional[Quantity] = Field(None, alias="minimumVolumeQuantity", serialization_alias="minimumVolumeQuantity")
-    minimum_volume_string: Optional[str] = Field(None, alias="minimumVolumeString", serialization_alias="minimumVolumeString")
-    preparation: Optional[str] = Field(None, alias="preparation", serialization_alias="preparation")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    additive: PyList[SpecimenDefinitionTypeTestedContainerAdditive] | None = Field(None, alias="additive", serialization_alias="additive")
+    cap: CodeableConcept | None = Field(None, alias="cap", serialization_alias="cap")
+    capacity: Quantity | None = Field(None, alias="capacity", serialization_alias="capacity")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    material: CodeableConcept | None = Field(None, alias="material", serialization_alias="material")
+    minimum_volume_quantity: Quantity | None = Field(None, alias="minimumVolumeQuantity", serialization_alias="minimumVolumeQuantity")
+    minimum_volume_string: str | None = Field(None, alias="minimumVolumeString", serialization_alias="minimumVolumeString")
+    preparation: str | None = Field(None, alias="preparation", serialization_alias="preparation")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class SpecimenDefinitionTypeTestedHandling(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    instruction: Optional[str] = Field(None, alias="instruction", serialization_alias="instruction")
-    max_duration: Optional[Duration] = Field(None, alias="maxDuration", serialization_alias="maxDuration")
-    temperature_qualifier: Optional[CodeableConcept] = Field(None, alias="temperatureQualifier", serialization_alias="temperatureQualifier")
-    temperature_range: Optional[Range] = Field(None, alias="temperatureRange", serialization_alias="temperatureRange")
+    instruction: str | None = Field(None, alias="instruction", serialization_alias="instruction")
+    max_duration: Duration | None = Field(None, alias="maxDuration", serialization_alias="maxDuration")
+    temperature_qualifier: CodeableConcept | None = Field(None, alias="temperatureQualifier", serialization_alias="temperatureQualifier")
+    temperature_range: Range | None = Field(None, alias="temperatureRange", serialization_alias="temperatureRange")
 
 class SpecimenDefinitionTypeTested(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    container: Optional[SpecimenDefinitionTypeTestedContainer] = Field(None, alias="container", serialization_alias="container")
-    handling: Optional[L[SpecimenDefinitionTypeTestedHandling]] = Field(None, alias="handling", serialization_alias="handling")
-    is_derived: Optional[bool] = Field(None, alias="isDerived", serialization_alias="isDerived")
-    preference: Optional[Literal["preferred", "alternate"]] = Field(None, alias="preference", serialization_alias="preference")
-    rejection_criterion: Optional[L[CodeableConcept]] = Field(None, alias="rejectionCriterion", serialization_alias="rejectionCriterion")
-    requirement: Optional[str] = Field(None, alias="requirement", serialization_alias="requirement")
-    retention_time: Optional[Duration] = Field(None, alias="retentionTime", serialization_alias="retentionTime")
-    type: Optional[CodeableConcept] = Field(None, alias="type", serialization_alias="type")
+    container: SpecimenDefinitionTypeTestedContainer | None = Field(None, alias="container", serialization_alias="container")
+    handling: PyList[SpecimenDefinitionTypeTestedHandling] | None = Field(None, alias="handling", serialization_alias="handling")
+    is_derived: bool | None = Field(None, alias="isDerived", serialization_alias="isDerived")
+    preference: Literal["preferred", "alternate"] | None = Field(None, alias="preference", serialization_alias="preference")
+    rejection_criterion: PyList[CodeableConcept] | None = Field(None, alias="rejectionCriterion", serialization_alias="rejectionCriterion")
+    requirement: str | None = Field(None, alias="requirement", serialization_alias="requirement")
+    retention_time: Duration | None = Field(None, alias="retentionTime", serialization_alias="retentionTime")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class SpecimenDefinition(DomainResource):
@@ -62,10 +62,10 @@ class SpecimenDefinition(DomainResource):
         pattern='SpecimenDefinition'
     )
     
-    collection: Optional[L[CodeableConcept]] = Field(None, alias="collection", serialization_alias="collection")
-    identifier: Optional[Identifier] = Field(None, alias="identifier", serialization_alias="identifier")
-    patient_preparation: Optional[L[CodeableConcept]] = Field(None, alias="patientPreparation", serialization_alias="patientPreparation")
-    time_aspect: Optional[str] = Field(None, alias="timeAspect", serialization_alias="timeAspect")
-    type_collected: Optional[CodeableConcept] = Field(None, alias="typeCollected", serialization_alias="typeCollected")
-    type_tested: Optional[L[SpecimenDefinitionTypeTested]] = Field(None, alias="typeTested", serialization_alias="typeTested")
+    collection: PyList[CodeableConcept] | None = Field(None, alias="collection", serialization_alias="collection")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    patient_preparation: PyList[CodeableConcept] | None = Field(None, alias="patientPreparation", serialization_alias="patientPreparation")
+    time_aspect: str | None = Field(None, alias="timeAspect", serialization_alias="timeAspect")
+    type_collected: CodeableConcept | None = Field(None, alias="typeCollected", serialization_alias="typeCollected")
+    type_tested: PyList[SpecimenDefinitionTypeTested] | None = Field(None, alias="typeTested", serialization_alias="typeTested")
 
