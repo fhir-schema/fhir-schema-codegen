@@ -10,6 +10,13 @@ import { DomainResource } from './DomainResource';
 import { Reference } from './Reference';
 
 
+export interface MessageHeaderDestination extends BackboneElement {
+    endpoint?: string;
+    name?: string;
+    receiver?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    target?: Reference<'Device'>;
+}
+
 export interface MessageHeaderResponse extends BackboneElement {
     code?: 'ok' | 'transient-error' | 'fatal-error';
     details?: Reference<'OperationOutcome'>;
@@ -22,13 +29,6 @@ export interface MessageHeaderSource extends BackboneElement {
     name?: string;
     software?: string;
     version?: string;
-}
-
-export interface MessageHeaderDestination extends BackboneElement {
-    endpoint?: string;
-    name?: string;
-    receiver?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    target?: Reference<'Device'>;
 }
 
 export interface MessageHeader extends DomainResource {

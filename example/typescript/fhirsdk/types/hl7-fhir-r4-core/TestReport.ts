@@ -14,10 +14,13 @@ export interface TestReportParticipant extends BackboneElement {
     uri?: string;
 }
 
-export interface TestReportSetupActionOperation extends BackboneElement {
-    detail?: string;
-    message?: string;
-    result?: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
+export interface TestReportSetup extends BackboneElement {
+    action?: TestReportSetupAction[];
+}
+
+export interface TestReportSetupAction extends BackboneElement {
+    assert?: TestReportSetupActionAssert;
+    operation?: TestReportSetupActionOperation;
 }
 
 export interface TestReportSetupActionAssert extends BackboneElement {
@@ -26,25 +29,17 @@ export interface TestReportSetupActionAssert extends BackboneElement {
     result?: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
 }
 
-export interface TestReportSetupAction extends BackboneElement {
-    assert?: TestReportSetupActionAssert;
-    operation?: TestReportSetupActionOperation;
-}
-
-export interface TestReportSetup extends BackboneElement {
-    action?: TestReportSetupAction[];
-}
-
-export interface TestReportTeardownAction extends BackboneElement {
-    operation?: TestReportSetupActionOperation;
+export interface TestReportSetupActionOperation extends BackboneElement {
+    detail?: string;
+    message?: string;
+    result?: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
 }
 
 export interface TestReportTeardown extends BackboneElement {
     action?: TestReportTeardownAction[];
 }
 
-export interface TestReportTestAction extends BackboneElement {
-    assert?: TestReportSetupActionAssert;
+export interface TestReportTeardownAction extends BackboneElement {
     operation?: TestReportSetupActionOperation;
 }
 
@@ -52,6 +47,11 @@ export interface TestReportTest extends BackboneElement {
     action?: TestReportTestAction[];
     description?: string;
     name?: string;
+}
+
+export interface TestReportTestAction extends BackboneElement {
+    assert?: TestReportSetupActionAssert;
+    operation?: TestReportSetupActionOperation;
 }
 
 export interface TestReport extends DomainResource {

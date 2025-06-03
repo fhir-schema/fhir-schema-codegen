@@ -13,6 +13,14 @@ import { Reference } from './Reference';
 import { Timing } from './Timing';
 
 
+export interface CarePlanActivity extends BackboneElement {
+    detail?: CarePlanActivityDetail;
+    outcomeCodeableConcept?: CodeableConcept[];
+    outcomeReference?: Reference<'Resource'>[];
+    progress?: Annotation[];
+    reference?: Reference<'Appointment' | 'CommunicationRequest' | 'DeviceRequest' | 'MedicationRequest' | 'NutritionOrder' | 'RequestGroup' | 'ServiceRequest' | 'Task' | 'VisionPrescription'>;
+}
+
 export interface CarePlanActivityDetail extends BackboneElement {
     code?: CodeableConcept;
     dailyAmount?: Quantity;
@@ -34,14 +42,6 @@ export interface CarePlanActivityDetail extends BackboneElement {
     scheduledTiming?: Timing;
     status?: 'not-started' | 'scheduled' | 'in-progress' | 'on-hold' | 'completed' | 'cancelled' | 'unknown' | 'entered-in-error';
     statusReason?: CodeableConcept;
-}
-
-export interface CarePlanActivity extends BackboneElement {
-    detail?: CarePlanActivityDetail;
-    outcomeCodeableConcept?: CodeableConcept[];
-    outcomeReference?: Reference<'Resource'>[];
-    progress?: Annotation[];
-    reference?: Reference<'Appointment' | 'CommunicationRequest' | 'DeviceRequest' | 'MedicationRequest' | 'NutritionOrder' | 'RequestGroup' | 'ServiceRequest' | 'Task' | 'VisionPrescription'>;
 }
 
 export interface CarePlan extends DomainResource {

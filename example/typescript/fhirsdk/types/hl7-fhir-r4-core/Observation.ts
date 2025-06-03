@@ -16,15 +16,6 @@ import { SampledData } from './SampledData';
 import { Timing } from './Timing';
 
 
-export interface ObservationReferenceRange extends BackboneElement {
-    age?: Range;
-    appliesTo?: CodeableConcept[];
-    high?: Quantity;
-    low?: Quantity;
-    text?: string;
-    type?: CodeableConcept;
-}
-
 export interface ObservationComponent extends BackboneElement {
     code?: CodeableConcept;
     dataAbsentReason?: CodeableConcept;
@@ -41,6 +32,15 @@ export interface ObservationComponent extends BackboneElement {
     valueSampledData?: SampledData;
     valueString?: string;
     valueTime?: string;
+}
+
+export interface ObservationReferenceRange extends BackboneElement {
+    age?: Range;
+    appliesTo?: CodeableConcept[];
+    high?: Quantity;
+    low?: Quantity;
+    text?: string;
+    type?: CodeableConcept;
 }
 
 export interface Observation extends DomainResource {

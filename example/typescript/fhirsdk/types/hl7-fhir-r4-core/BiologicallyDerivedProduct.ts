@@ -10,6 +10,19 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
+export interface BiologicallyDerivedProductCollection extends BackboneElement {
+    collectedDateTime?: string;
+    collectedPeriod?: Period;
+    collector?: Reference<'Practitioner' | 'PractitionerRole'>;
+    source?: Reference<'Organization' | 'Patient'>;
+}
+
+export interface BiologicallyDerivedProductManipulation extends BackboneElement {
+    description?: string;
+    timeDateTime?: string;
+    timePeriod?: Period;
+}
+
 export interface BiologicallyDerivedProductProcessing extends BackboneElement {
     additive?: Reference<'Substance'>;
     description?: string;
@@ -23,19 +36,6 @@ export interface BiologicallyDerivedProductStorage extends BackboneElement {
     duration?: Period;
     scale?: 'farenheit' | 'celsius' | 'kelvin';
     temperature?: number;
-}
-
-export interface BiologicallyDerivedProductManipulation extends BackboneElement {
-    description?: string;
-    timeDateTime?: string;
-    timePeriod?: Period;
-}
-
-export interface BiologicallyDerivedProductCollection extends BackboneElement {
-    collectedDateTime?: string;
-    collectedPeriod?: Period;
-    collector?: Reference<'Practitioner' | 'PractitionerRole'>;
-    source?: Reference<'Organization' | 'Patient'>;
 }
 
 export interface BiologicallyDerivedProduct extends DomainResource {

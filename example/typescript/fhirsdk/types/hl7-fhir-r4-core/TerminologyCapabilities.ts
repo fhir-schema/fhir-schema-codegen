@@ -9,30 +9,14 @@ import { DomainResource } from './DomainResource';
 import { UsageContext } from './UsageContext';
 
 
-export interface TerminologyCapabilitiesExpansionParameter extends BackboneElement {
-    documentation?: string;
-    name?: string;
+export interface TerminologyCapabilitiesClosure extends BackboneElement {
+    translation?: boolean;
 }
 
-export interface TerminologyCapabilitiesExpansion extends BackboneElement {
-    hierarchical?: boolean;
-    incomplete?: boolean;
-    paging?: boolean;
-    parameter?: TerminologyCapabilitiesExpansionParameter[];
-    textFilter?: string;
-}
-
-export interface TerminologyCapabilitiesValidateCode extends BackboneElement {
-    translations?: boolean;
-}
-
-export interface TerminologyCapabilitiesTranslation extends BackboneElement {
-    needsMap?: boolean;
-}
-
-export interface TerminologyCapabilitiesCodeSystemVersionFilter extends BackboneElement {
-    code?: string;
-    op?: string[];
+export interface TerminologyCapabilitiesCodeSystem extends BackboneElement {
+    subsumption?: boolean;
+    uri?: string;
+    version?: TerminologyCapabilitiesCodeSystemVersion[];
 }
 
 export interface TerminologyCapabilitiesCodeSystemVersion extends BackboneElement {
@@ -44,15 +28,22 @@ export interface TerminologyCapabilitiesCodeSystemVersion extends BackboneElemen
     property?: string[];
 }
 
-export interface TerminologyCapabilitiesCodeSystem extends BackboneElement {
-    subsumption?: boolean;
-    uri?: string;
-    version?: TerminologyCapabilitiesCodeSystemVersion[];
+export interface TerminologyCapabilitiesCodeSystemVersionFilter extends BackboneElement {
+    code?: string;
+    op?: string[];
 }
 
-export interface TerminologyCapabilitiesSoftware extends BackboneElement {
+export interface TerminologyCapabilitiesExpansion extends BackboneElement {
+    hierarchical?: boolean;
+    incomplete?: boolean;
+    paging?: boolean;
+    parameter?: TerminologyCapabilitiesExpansionParameter[];
+    textFilter?: string;
+}
+
+export interface TerminologyCapabilitiesExpansionParameter extends BackboneElement {
+    documentation?: string;
     name?: string;
-    version?: string;
 }
 
 export interface TerminologyCapabilitiesImplementation extends BackboneElement {
@@ -60,8 +51,17 @@ export interface TerminologyCapabilitiesImplementation extends BackboneElement {
     url?: string;
 }
 
-export interface TerminologyCapabilitiesClosure extends BackboneElement {
-    translation?: boolean;
+export interface TerminologyCapabilitiesSoftware extends BackboneElement {
+    name?: string;
+    version?: string;
+}
+
+export interface TerminologyCapabilitiesTranslation extends BackboneElement {
+    needsMap?: boolean;
+}
+
+export interface TerminologyCapabilitiesValidateCode extends BackboneElement {
+    translations?: boolean;
 }
 
 export interface TerminologyCapabilities extends DomainResource {

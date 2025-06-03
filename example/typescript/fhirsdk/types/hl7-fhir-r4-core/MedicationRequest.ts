@@ -14,17 +14,6 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface MedicationRequestSubstitution extends BackboneElement {
-    allowedBoolean?: boolean;
-    allowedCodeableConcept?: CodeableConcept;
-    reason?: CodeableConcept;
-}
-
-export interface MedicationRequestDispenseRequestInitialFill extends BackboneElement {
-    duration?: Duration;
-    quantity?: Quantity;
-}
-
 export interface MedicationRequestDispenseRequest extends BackboneElement {
     dispenseInterval?: Duration;
     expectedSupplyDuration?: Duration;
@@ -33,6 +22,17 @@ export interface MedicationRequestDispenseRequest extends BackboneElement {
     performer?: Reference<'Organization'>;
     quantity?: Quantity;
     validityPeriod?: Period;
+}
+
+export interface MedicationRequestDispenseRequestInitialFill extends BackboneElement {
+    duration?: Duration;
+    quantity?: Quantity;
+}
+
+export interface MedicationRequestSubstitution extends BackboneElement {
+    allowedBoolean?: boolean;
+    allowedCodeableConcept?: CodeableConcept;
+    reason?: CodeableConcept;
 }
 
 export interface MedicationRequest extends DomainResource {

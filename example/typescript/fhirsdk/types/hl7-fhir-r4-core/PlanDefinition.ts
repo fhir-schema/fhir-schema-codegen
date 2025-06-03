@@ -21,46 +21,6 @@ import { TriggerDefinition } from './TriggerDefinition';
 import { UsageContext } from './UsageContext';
 
 
-export interface PlanDefinitionGoalTarget extends BackboneElement {
-    detailCodeableConcept?: CodeableConcept;
-    detailQuantity?: Quantity;
-    detailRange?: Range;
-    due?: Duration;
-    measure?: CodeableConcept;
-}
-
-export interface PlanDefinitionGoal extends BackboneElement {
-    addresses?: CodeableConcept[];
-    category?: CodeableConcept;
-    description?: CodeableConcept;
-    documentation?: RelatedArtifact[];
-    priority?: CodeableConcept;
-    start?: CodeableConcept;
-    target?: PlanDefinitionGoalTarget[];
-}
-
-export interface PlanDefinitionActionRelatedAction extends BackboneElement {
-    actionId?: string;
-    offsetDuration?: Duration;
-    offsetRange?: Range;
-    relationship?: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
-}
-
-export interface PlanDefinitionActionParticipant extends BackboneElement {
-    role?: CodeableConcept;
-    type?: 'patient' | 'practitioner' | 'related-person' | 'device';
-}
-
-export interface PlanDefinitionActionCondition extends BackboneElement {
-    expression?: Expression;
-    kind?: 'applicability' | 'start' | 'stop';
-}
-
-export interface PlanDefinitionActionDynamicValue extends BackboneElement {
-    expression?: Expression;
-    path?: string;
-}
-
 export interface PlanDefinitionAction extends BackboneElement {
     action?: PlanDefinitionAction[];
     cardinalityBehavior?: 'single' | 'multiple';
@@ -96,6 +56,46 @@ export interface PlanDefinitionAction extends BackboneElement {
     transform?: string;
     trigger?: TriggerDefinition[];
     type?: CodeableConcept;
+}
+
+export interface PlanDefinitionActionCondition extends BackboneElement {
+    expression?: Expression;
+    kind?: 'applicability' | 'start' | 'stop';
+}
+
+export interface PlanDefinitionActionDynamicValue extends BackboneElement {
+    expression?: Expression;
+    path?: string;
+}
+
+export interface PlanDefinitionActionParticipant extends BackboneElement {
+    role?: CodeableConcept;
+    type?: 'patient' | 'practitioner' | 'related-person' | 'device';
+}
+
+export interface PlanDefinitionActionRelatedAction extends BackboneElement {
+    actionId?: string;
+    offsetDuration?: Duration;
+    offsetRange?: Range;
+    relationship?: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
+}
+
+export interface PlanDefinitionGoal extends BackboneElement {
+    addresses?: CodeableConcept[];
+    category?: CodeableConcept;
+    description?: CodeableConcept;
+    documentation?: RelatedArtifact[];
+    priority?: CodeableConcept;
+    start?: CodeableConcept;
+    target?: PlanDefinitionGoalTarget[];
+}
+
+export interface PlanDefinitionGoalTarget extends BackboneElement {
+    detailCodeableConcept?: CodeableConcept;
+    detailQuantity?: Quantity;
+    detailRange?: Range;
+    due?: Duration;
+    measure?: CodeableConcept;
 }
 
 export interface PlanDefinition extends DomainResource {

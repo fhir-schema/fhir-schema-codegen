@@ -11,6 +11,14 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
+export interface QuestionnaireResponseItem extends BackboneElement {
+    answer?: QuestionnaireResponseItemAnswer[];
+    definition?: string;
+    item?: QuestionnaireResponseItem[];
+    linkId?: string;
+    text?: string;
+}
+
 export interface QuestionnaireResponseItemAnswer extends BackboneElement {
     item?: QuestionnaireResponseItem[];
     valueAttachment?: Attachment;
@@ -25,14 +33,6 @@ export interface QuestionnaireResponseItemAnswer extends BackboneElement {
     valueString?: string;
     valueTime?: string;
     valueUri?: string;
-}
-
-export interface QuestionnaireResponseItem extends BackboneElement {
-    answer?: QuestionnaireResponseItemAnswer[];
-    definition?: string;
-    item?: QuestionnaireResponseItem[];
-    linkId?: string;
-    text?: string;
 }
 
 export interface QuestionnaireResponse extends DomainResource {

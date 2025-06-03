@@ -10,16 +10,16 @@ import { Ratio } from './Ratio';
 import { Reference } from './Reference';
 
 
+export interface MedicationBatch extends BackboneElement {
+    expirationDate?: string;
+    lotNumber?: string;
+}
+
 export interface MedicationIngredient extends BackboneElement {
     isActive?: boolean;
     itemCodeableConcept?: CodeableConcept;
     itemReference?: Reference<'Medication' | 'Substance'>;
     strength?: Ratio;
-}
-
-export interface MedicationBatch extends BackboneElement {
-    expirationDate?: string;
-    lotNumber?: string;
 }
 
 export interface Medication extends DomainResource {

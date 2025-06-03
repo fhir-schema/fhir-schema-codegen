@@ -28,12 +28,6 @@ export interface DeviceSpecialization extends BackboneElement {
     version?: string;
 }
 
-export interface DeviceVersion extends BackboneElement {
-    component?: Identifier;
-    type?: CodeableConcept;
-    value?: string;
-}
-
 export interface DeviceUdiCarrier extends BackboneElement {
     carrierAIDC?: string;
     carrierHRF?: string;
@@ -41,6 +35,12 @@ export interface DeviceUdiCarrier extends BackboneElement {
     entryType?: 'barcode' | 'rfid' | 'manual' | 'card' | 'self-reported' | 'unknown';
     issuer?: string;
     jurisdiction?: string;
+}
+
+export interface DeviceVersion extends BackboneElement {
+    component?: Identifier;
+    type?: CodeableConcept;
+    value?: string;
 }
 
 export interface Device extends DomainResource {

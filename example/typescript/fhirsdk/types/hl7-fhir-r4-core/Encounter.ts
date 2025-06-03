@@ -12,21 +12,15 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
+export interface EncounterClassHistory extends BackboneElement {
+    class?: Coding;
+    period?: Period;
+}
+
 export interface EncounterDiagnosis extends BackboneElement {
     condition?: Reference<'Condition' | 'Procedure'>;
     rank?: number;
     use?: CodeableConcept;
-}
-
-export interface EncounterParticipant extends BackboneElement {
-    individual?: Reference<'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    period?: Period;
-    type?: CodeableConcept[];
-}
-
-export interface EncounterClassHistory extends BackboneElement {
-    class?: Coding;
-    period?: Period;
 }
 
 export interface EncounterHospitalization extends BackboneElement {
@@ -46,6 +40,12 @@ export interface EncounterLocation extends BackboneElement {
     period?: Period;
     physicalType?: CodeableConcept;
     status?: 'planned' | 'active' | 'reserved' | 'completed';
+}
+
+export interface EncounterParticipant extends BackboneElement {
+    individual?: Reference<'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    period?: Period;
+    type?: CodeableConcept[];
 }
 
 export interface EncounterStatusHistory extends BackboneElement {

@@ -10,11 +10,19 @@ import { Identifier } from './Identifier';
 import { UsageContext } from './UsageContext';
 
 
-export interface ConceptMapGroupElementTargetDependsOn extends BackboneElement {
+export interface ConceptMapGroup extends BackboneElement {
+    element?: ConceptMapGroupElement[];
+    source?: string;
+    sourceVersion?: string;
+    target?: string;
+    targetVersion?: string;
+    unmapped?: ConceptMapGroupUnmapped;
+}
+
+export interface ConceptMapGroupElement extends BackboneElement {
+    code?: string;
     display?: string;
-    property?: string;
-    system?: string;
-    value?: string;
+    target?: ConceptMapGroupElementTarget[];
 }
 
 export interface ConceptMapGroupElementTarget extends BackboneElement {
@@ -26,10 +34,11 @@ export interface ConceptMapGroupElementTarget extends BackboneElement {
     product?: ConceptMapGroupElementTargetDependsOn[];
 }
 
-export interface ConceptMapGroupElement extends BackboneElement {
-    code?: string;
+export interface ConceptMapGroupElementTargetDependsOn extends BackboneElement {
     display?: string;
-    target?: ConceptMapGroupElementTarget[];
+    property?: string;
+    system?: string;
+    value?: string;
 }
 
 export interface ConceptMapGroupUnmapped extends BackboneElement {
@@ -37,15 +46,6 @@ export interface ConceptMapGroupUnmapped extends BackboneElement {
     display?: string;
     mode?: 'provided' | 'fixed' | 'other-map';
     url?: string;
-}
-
-export interface ConceptMapGroup extends BackboneElement {
-    element?: ConceptMapGroupElement[];
-    source?: string;
-    sourceVersion?: string;
-    target?: string;
-    targetVersion?: string;
-    unmapped?: ConceptMapGroupUnmapped;
 }
 
 export interface ConceptMap extends DomainResource {

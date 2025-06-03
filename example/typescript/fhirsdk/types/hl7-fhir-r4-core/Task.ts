@@ -37,10 +37,58 @@ import { TriggerDefinition } from './TriggerDefinition';
 import { UsageContext } from './UsageContext';
 
 
-export interface TaskRestriction extends BackboneElement {
-    period?: Period;
-    recipient?: Reference<'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
-    repetitions?: number;
+export interface TaskInput extends BackboneElement {
+    type?: CodeableConcept;
+    valueAddress?: Address;
+    valueAge?: Age;
+    valueAnnotation?: Annotation;
+    valueAttachment?: Attachment;
+    valueBase64Binary?: string;
+    valueBoolean?: boolean;
+    valueCanonical?: string;
+    valueCode?: string;
+    valueCodeableConcept?: CodeableConcept;
+    valueCoding?: Coding;
+    valueContactDetail?: ContactDetail;
+    valueContactPoint?: ContactPoint;
+    valueContributor?: Contributor;
+    valueCount?: Count;
+    valueDataRequirement?: DataRequirement;
+    valueDate?: string;
+    valueDateTime?: string;
+    valueDecimal?: number;
+    valueDistance?: Distance;
+    valueDosage?: Dosage;
+    valueDuration?: Duration;
+    valueExpression?: Expression;
+    valueHumanName?: HumanName;
+    valueId?: string;
+    valueIdentifier?: Identifier;
+    valueInstant?: string;
+    valueInteger?: number;
+    valueMarkdown?: string;
+    valueMeta?: Meta;
+    valueMoney?: Money;
+    valueOid?: string;
+    valueParameterDefinition?: ParameterDefinition;
+    valuePeriod?: Period;
+    valuePositiveInt?: number;
+    valueQuantity?: Quantity;
+    valueRange?: Range;
+    valueRatio?: Ratio;
+    valueReference?: Reference;
+    valueRelatedArtifact?: RelatedArtifact;
+    valueSampledData?: SampledData;
+    valueSignature?: Signature;
+    valueString?: string;
+    valueTime?: string;
+    valueTiming?: Timing;
+    valueTriggerDefinition?: TriggerDefinition;
+    valueUnsignedInt?: number;
+    valueUri?: string;
+    valueUrl?: string;
+    valueUsageContext?: UsageContext;
+    valueUuid?: string;
 }
 
 export interface TaskOutput extends BackboneElement {
@@ -97,58 +145,10 @@ export interface TaskOutput extends BackboneElement {
     valueUuid?: string;
 }
 
-export interface TaskInput extends BackboneElement {
-    type?: CodeableConcept;
-    valueAddress?: Address;
-    valueAge?: Age;
-    valueAnnotation?: Annotation;
-    valueAttachment?: Attachment;
-    valueBase64Binary?: string;
-    valueBoolean?: boolean;
-    valueCanonical?: string;
-    valueCode?: string;
-    valueCodeableConcept?: CodeableConcept;
-    valueCoding?: Coding;
-    valueContactDetail?: ContactDetail;
-    valueContactPoint?: ContactPoint;
-    valueContributor?: Contributor;
-    valueCount?: Count;
-    valueDataRequirement?: DataRequirement;
-    valueDate?: string;
-    valueDateTime?: string;
-    valueDecimal?: number;
-    valueDistance?: Distance;
-    valueDosage?: Dosage;
-    valueDuration?: Duration;
-    valueExpression?: Expression;
-    valueHumanName?: HumanName;
-    valueId?: string;
-    valueIdentifier?: Identifier;
-    valueInstant?: string;
-    valueInteger?: number;
-    valueMarkdown?: string;
-    valueMeta?: Meta;
-    valueMoney?: Money;
-    valueOid?: string;
-    valueParameterDefinition?: ParameterDefinition;
-    valuePeriod?: Period;
-    valuePositiveInt?: number;
-    valueQuantity?: Quantity;
-    valueRange?: Range;
-    valueRatio?: Ratio;
-    valueReference?: Reference;
-    valueRelatedArtifact?: RelatedArtifact;
-    valueSampledData?: SampledData;
-    valueSignature?: Signature;
-    valueString?: string;
-    valueTime?: string;
-    valueTiming?: Timing;
-    valueTriggerDefinition?: TriggerDefinition;
-    valueUnsignedInt?: number;
-    valueUri?: string;
-    valueUrl?: string;
-    valueUsageContext?: UsageContext;
-    valueUuid?: string;
+export interface TaskRestriction extends BackboneElement {
+    period?: Period;
+    recipient?: Reference<'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
+    repetitions?: number;
 }
 
 export interface Task extends DomainResource {

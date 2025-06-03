@@ -11,16 +11,16 @@ import { Ratio } from './Ratio';
 import { Reference } from './Reference';
 
 
-export interface SubstanceInstance extends BackboneElement {
-    expiry?: string;
-    identifier?: Identifier;
-    quantity?: Quantity;
-}
-
 export interface SubstanceIngredient extends BackboneElement {
     quantity?: Ratio;
     substanceCodeableConcept?: CodeableConcept;
     substanceReference?: Reference<'Substance'>;
+}
+
+export interface SubstanceInstance extends BackboneElement {
+    expiry?: string;
+    identifier?: Identifier;
+    quantity?: Quantity;
 }
 
 export interface Substance extends DomainResource {

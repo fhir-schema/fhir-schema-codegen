@@ -8,6 +8,22 @@ import { DomainResource } from './DomainResource';
 import { Identifier } from './Identifier';
 
 
+export interface SubstanceSourceMaterialFractionDescription extends BackboneElement {
+    fraction?: string;
+    materialType?: CodeableConcept;
+}
+
+export interface SubstanceSourceMaterialOrganism extends BackboneElement {
+    author?: SubstanceSourceMaterialOrganismAuthor[];
+    family?: CodeableConcept;
+    genus?: CodeableConcept;
+    hybrid?: SubstanceSourceMaterialOrganismHybrid;
+    intraspecificDescription?: string;
+    intraspecificType?: CodeableConcept;
+    organismGeneral?: SubstanceSourceMaterialOrganismOrganismGeneral;
+    species?: CodeableConcept;
+}
+
 export interface SubstanceSourceMaterialOrganismAuthor extends BackboneElement {
     authorDescription?: string;
     authorType?: CodeableConcept;
@@ -28,25 +44,9 @@ export interface SubstanceSourceMaterialOrganismOrganismGeneral extends Backbone
     phylum?: CodeableConcept;
 }
 
-export interface SubstanceSourceMaterialOrganism extends BackboneElement {
-    author?: SubstanceSourceMaterialOrganismAuthor[];
-    family?: CodeableConcept;
-    genus?: CodeableConcept;
-    hybrid?: SubstanceSourceMaterialOrganismHybrid;
-    intraspecificDescription?: string;
-    intraspecificType?: CodeableConcept;
-    organismGeneral?: SubstanceSourceMaterialOrganismOrganismGeneral;
-    species?: CodeableConcept;
-}
-
 export interface SubstanceSourceMaterialPartDescription extends BackboneElement {
     part?: CodeableConcept;
     partLocation?: CodeableConcept;
-}
-
-export interface SubstanceSourceMaterialFractionDescription extends BackboneElement {
-    fraction?: string;
-    materialType?: CodeableConcept;
 }
 
 export interface SubstanceSourceMaterial extends DomainResource {

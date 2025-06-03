@@ -17,18 +17,6 @@ import { RelatedArtifact } from './RelatedArtifact';
 import { Timing } from './Timing';
 
 
-export interface RequestGroupActionRelatedAction extends BackboneElement {
-    actionId?: string;
-    offsetDuration?: Duration;
-    offsetRange?: Range;
-    relationship?: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
-}
-
-export interface RequestGroupActionCondition extends BackboneElement {
-    expression?: Expression;
-    kind?: 'applicability' | 'start' | 'stop';
-}
-
 export interface RequestGroupAction extends BackboneElement {
     action?: RequestGroupAction[];
     cardinalityBehavior?: 'single' | 'multiple';
@@ -54,6 +42,18 @@ export interface RequestGroupAction extends BackboneElement {
     timingTiming?: Timing;
     title?: string;
     type?: CodeableConcept;
+}
+
+export interface RequestGroupActionCondition extends BackboneElement {
+    expression?: Expression;
+    kind?: 'applicability' | 'start' | 'stop';
+}
+
+export interface RequestGroupActionRelatedAction extends BackboneElement {
+    actionId?: string;
+    offsetDuration?: Duration;
+    offsetRange?: Range;
+    relationship?: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
 }
 
 export interface RequestGroup extends DomainResource {

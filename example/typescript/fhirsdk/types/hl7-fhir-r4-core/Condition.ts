@@ -13,15 +13,15 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 
+export interface ConditionEvidence extends BackboneElement {
+    code?: CodeableConcept[];
+    detail?: Reference<'Resource'>[];
+}
+
 export interface ConditionStage extends BackboneElement {
     assessment?: Reference<'ClinicalImpression' | 'DiagnosticReport' | 'Observation'>[];
     summary?: CodeableConcept;
     type?: CodeableConcept;
-}
-
-export interface ConditionEvidence extends BackboneElement {
-    code?: CodeableConcept[];
-    detail?: Reference<'Resource'>[];
 }
 
 export interface Condition extends DomainResource {

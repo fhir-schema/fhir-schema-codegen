@@ -18,17 +18,6 @@ export interface CoverageEligibilityRequestInsurance extends BackboneElement {
     focal?: boolean;
 }
 
-export interface CoverageEligibilityRequestSupportingInfo extends BackboneElement {
-    appliesToAll?: boolean;
-    information?: Reference<'Resource'>;
-    sequence?: number;
-}
-
-export interface CoverageEligibilityRequestItemDiagnosis extends BackboneElement {
-    diagnosisCodeableConcept?: CodeableConcept;
-    diagnosisReference?: Reference<'Condition'>;
-}
-
 export interface CoverageEligibilityRequestItem extends BackboneElement {
     category?: CodeableConcept;
     detail?: Reference<'Resource'>[];
@@ -40,6 +29,17 @@ export interface CoverageEligibilityRequestItem extends BackboneElement {
     quantity?: Quantity;
     supportingInfoSequence?: number[];
     unitPrice?: Money;
+}
+
+export interface CoverageEligibilityRequestItemDiagnosis extends BackboneElement {
+    diagnosisCodeableConcept?: CodeableConcept;
+    diagnosisReference?: Reference<'Condition'>;
+}
+
+export interface CoverageEligibilityRequestSupportingInfo extends BackboneElement {
+    appliesToAll?: boolean;
+    information?: Reference<'Resource'>;
+    sequence?: number;
 }
 
 export interface CoverageEligibilityRequest extends DomainResource {

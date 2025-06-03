@@ -11,10 +11,29 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
+export interface MeasureReportGroup extends BackboneElement {
+    code?: CodeableConcept;
+    measureScore?: Quantity;
+    population?: MeasureReportGroupPopulation[];
+    stratifier?: MeasureReportGroupStratifier[];
+}
+
 export interface MeasureReportGroupPopulation extends BackboneElement {
     code?: CodeableConcept;
     count?: number;
     subjectResults?: Reference<'List'>;
+}
+
+export interface MeasureReportGroupStratifier extends BackboneElement {
+    code?: CodeableConcept[];
+    stratum?: MeasureReportGroupStratifierStratum[];
+}
+
+export interface MeasureReportGroupStratifierStratum extends BackboneElement {
+    component?: MeasureReportGroupStratifierStratumComponent[];
+    measureScore?: Quantity;
+    population?: MeasureReportGroupStratifierStratumPopulation[];
+    value?: CodeableConcept;
 }
 
 export interface MeasureReportGroupStratifierStratumComponent extends BackboneElement {
@@ -26,25 +45,6 @@ export interface MeasureReportGroupStratifierStratumPopulation extends BackboneE
     code?: CodeableConcept;
     count?: number;
     subjectResults?: Reference<'List'>;
-}
-
-export interface MeasureReportGroupStratifierStratum extends BackboneElement {
-    component?: MeasureReportGroupStratifierStratumComponent[];
-    measureScore?: Quantity;
-    population?: MeasureReportGroupStratifierStratumPopulation[];
-    value?: CodeableConcept;
-}
-
-export interface MeasureReportGroupStratifier extends BackboneElement {
-    code?: CodeableConcept[];
-    stratum?: MeasureReportGroupStratifierStratum[];
-}
-
-export interface MeasureReportGroup extends BackboneElement {
-    code?: CodeableConcept;
-    measureScore?: Quantity;
-    population?: MeasureReportGroupPopulation[];
-    stratifier?: MeasureReportGroupStratifier[];
 }
 
 export interface MeasureReport extends DomainResource {

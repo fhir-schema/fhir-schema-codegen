@@ -17,6 +17,19 @@ export interface CapabilityStatementDocument extends BackboneElement {
     profile?: string;
 }
 
+export interface CapabilityStatementImplementation extends BackboneElement {
+    custodian?: Reference<'Organization'>;
+    description?: string;
+    url?: string;
+}
+
+export interface CapabilityStatementMessaging extends BackboneElement {
+    documentation?: string;
+    endpoint?: CapabilityStatementMessagingEndpoint[];
+    reliableCache?: number;
+    supportedMessage?: CapabilityStatementMessagingSupportedMessage[];
+}
+
 export interface CapabilityStatementMessagingEndpoint extends BackboneElement {
     address?: string;
     protocol?: Coding;
@@ -27,46 +40,19 @@ export interface CapabilityStatementMessagingSupportedMessage extends BackboneEl
     mode?: 'sender' | 'receiver';
 }
 
-export interface CapabilityStatementMessaging extends BackboneElement {
+export interface CapabilityStatementRest extends BackboneElement {
+    compartment?: string[];
     documentation?: string;
-    endpoint?: CapabilityStatementMessagingEndpoint[];
-    reliableCache?: number;
-    supportedMessage?: CapabilityStatementMessagingSupportedMessage[];
+    interaction?: CapabilityStatementRestInteraction[];
+    mode?: 'client' | 'server';
+    operation?: CapabilityStatementRestResourceOperation[];
+    resource?: CapabilityStatementRestResource[];
+    searchParam?: CapabilityStatementRestResourceSearchParam[];
+    security?: CapabilityStatementRestSecurity;
 }
 
-export interface CapabilityStatementSoftware extends BackboneElement {
-    name?: string;
-    releaseDate?: string;
-    version?: string;
-}
-
-export interface CapabilityStatementImplementation extends BackboneElement {
-    custodian?: Reference<'Organization'>;
-    description?: string;
-    url?: string;
-}
-
-export interface CapabilityStatementRestSecurity extends BackboneElement {
-    cors?: boolean;
-    description?: string;
-    service?: CodeableConcept[];
-}
-
-export interface CapabilityStatementRestResourceSearchParam extends BackboneElement {
-    definition?: string;
-    documentation?: string;
-    name?: string;
-    type?: 'number' | 'date' | 'string' | 'token' | 'reference' | 'composite' | 'quantity' | 'uri' | 'special';
-}
-
-export interface CapabilityStatementRestResourceOperation extends BackboneElement {
-    definition?: string;
-    documentation?: string;
-    name?: string;
-}
-
-export interface CapabilityStatementRestResourceInteraction extends BackboneElement {
-    code?: 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history-instance' | 'history-type' | 'create' | 'search-type' | 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history' | 'create' | 'search' | 'capabilities' | 'transaction' | 'batch' | 'operation';
+export interface CapabilityStatementRestInteraction extends BackboneElement {
+    code?: 'transaction' | 'batch' | 'search-system' | 'history-system' | 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history' | 'create' | 'search' | 'capabilities' | 'transaction' | 'batch' | 'operation';
     documentation?: string;
 }
 
@@ -90,20 +76,34 @@ export interface CapabilityStatementRestResource extends BackboneElement {
     versioning?: 'no-version' | 'versioned' | 'versioned-update';
 }
 
-export interface CapabilityStatementRestInteraction extends BackboneElement {
-    code?: 'transaction' | 'batch' | 'search-system' | 'history-system' | 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history' | 'create' | 'search' | 'capabilities' | 'transaction' | 'batch' | 'operation';
+export interface CapabilityStatementRestResourceInteraction extends BackboneElement {
+    code?: 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history-instance' | 'history-type' | 'create' | 'search-type' | 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history' | 'create' | 'search' | 'capabilities' | 'transaction' | 'batch' | 'operation';
     documentation?: string;
 }
 
-export interface CapabilityStatementRest extends BackboneElement {
-    compartment?: string[];
+export interface CapabilityStatementRestResourceOperation extends BackboneElement {
+    definition?: string;
     documentation?: string;
-    interaction?: CapabilityStatementRestInteraction[];
-    mode?: 'client' | 'server';
-    operation?: CapabilityStatementRestResourceOperation[];
-    resource?: CapabilityStatementRestResource[];
-    searchParam?: CapabilityStatementRestResourceSearchParam[];
-    security?: CapabilityStatementRestSecurity;
+    name?: string;
+}
+
+export interface CapabilityStatementRestResourceSearchParam extends BackboneElement {
+    definition?: string;
+    documentation?: string;
+    name?: string;
+    type?: 'number' | 'date' | 'string' | 'token' | 'reference' | 'composite' | 'quantity' | 'uri' | 'special';
+}
+
+export interface CapabilityStatementRestSecurity extends BackboneElement {
+    cors?: boolean;
+    description?: string;
+    service?: CodeableConcept[];
+}
+
+export interface CapabilityStatementSoftware extends BackboneElement {
+    name?: string;
+    releaseDate?: string;
+    version?: string;
 }
 
 export interface CapabilityStatement extends DomainResource {

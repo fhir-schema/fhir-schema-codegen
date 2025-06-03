@@ -11,11 +11,6 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
-export interface PaymentReconciliationProcessNote extends BackboneElement {
-    text?: string;
-    type?: 'display' | 'print' | 'printoper';
-}
-
 export interface PaymentReconciliationDetail extends BackboneElement {
     amount?: Money;
     date?: string;
@@ -27,6 +22,11 @@ export interface PaymentReconciliationDetail extends BackboneElement {
     responsible?: Reference<'PractitionerRole'>;
     submitter?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     type?: CodeableConcept;
+}
+
+export interface PaymentReconciliationProcessNote extends BackboneElement {
+    text?: string;
+    type?: 'display' | 'print' | 'printoper';
 }
 
 export interface PaymentReconciliation extends DomainResource {

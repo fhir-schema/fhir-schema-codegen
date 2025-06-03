@@ -14,10 +14,15 @@ import { RelatedArtifact } from './RelatedArtifact';
 import { UsageContext } from './UsageContext';
 
 
-export interface EffectEvidenceSynthesisEffectEstimatePrecisionEstimate extends BackboneElement {
-    from?: number;
-    level?: number;
-    to?: number;
+export interface EffectEvidenceSynthesisCertainty extends BackboneElement {
+    certaintySubcomponent?: EffectEvidenceSynthesisCertaintyCertaintySubcomponent[];
+    note?: Annotation[];
+    rating?: CodeableConcept[];
+}
+
+export interface EffectEvidenceSynthesisCertaintyCertaintySubcomponent extends BackboneElement {
+    note?: Annotation[];
+    rating?: CodeableConcept[];
     type?: CodeableConcept;
 }
 
@@ -30,22 +35,11 @@ export interface EffectEvidenceSynthesisEffectEstimate extends BackboneElement {
     variantState?: CodeableConcept;
 }
 
-export interface EffectEvidenceSynthesisSampleSize extends BackboneElement {
-    description?: string;
-    numberOfParticipants?: number;
-    numberOfStudies?: number;
-}
-
-export interface EffectEvidenceSynthesisCertaintyCertaintySubcomponent extends BackboneElement {
-    note?: Annotation[];
-    rating?: CodeableConcept[];
+export interface EffectEvidenceSynthesisEffectEstimatePrecisionEstimate extends BackboneElement {
+    from?: number;
+    level?: number;
+    to?: number;
     type?: CodeableConcept;
-}
-
-export interface EffectEvidenceSynthesisCertainty extends BackboneElement {
-    certaintySubcomponent?: EffectEvidenceSynthesisCertaintyCertaintySubcomponent[];
-    note?: Annotation[];
-    rating?: CodeableConcept[];
 }
 
 export interface EffectEvidenceSynthesisResultsByExposure extends BackboneElement {
@@ -53,6 +47,12 @@ export interface EffectEvidenceSynthesisResultsByExposure extends BackboneElemen
     exposureState?: 'exposure' | 'exposure-alternative';
     riskEvidenceSynthesis?: Reference<'RiskEvidenceSynthesis'>;
     variantState?: CodeableConcept;
+}
+
+export interface EffectEvidenceSynthesisSampleSize extends BackboneElement {
+    description?: string;
+    numberOfParticipants?: number;
+    numberOfStudies?: number;
 }
 
 export interface EffectEvidenceSynthesis extends DomainResource {

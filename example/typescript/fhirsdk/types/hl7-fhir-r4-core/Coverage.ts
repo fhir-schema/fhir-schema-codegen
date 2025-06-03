@@ -12,9 +12,10 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface CoverageCostToBeneficiaryException extends BackboneElement {
-    period?: Period;
+export interface CoverageClass extends BackboneElement {
+    name?: string;
     type?: CodeableConcept;
+    value?: string;
 }
 
 export interface CoverageCostToBeneficiary extends BackboneElement {
@@ -24,10 +25,9 @@ export interface CoverageCostToBeneficiary extends BackboneElement {
     valueQuantity?: Quantity;
 }
 
-export interface CoverageClass extends BackboneElement {
-    name?: string;
+export interface CoverageCostToBeneficiaryException extends BackboneElement {
+    period?: Period;
     type?: CodeableConcept;
-    value?: string;
 }
 
 export interface Coverage extends DomainResource {

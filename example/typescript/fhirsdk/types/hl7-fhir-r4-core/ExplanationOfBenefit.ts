@@ -15,19 +15,58 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface ExplanationOfBenefitInsurance extends BackboneElement {
-    coverage?: Reference<'Coverage'>;
-    focal?: boolean;
-    preAuthRef?: string[];
+export interface ExplanationOfBenefitAccident extends BackboneElement {
+    date?: string;
+    locationAddress?: Address;
+    locationReference?: Reference<'Location'>;
+    type?: CodeableConcept;
 }
 
-export interface ExplanationOfBenefitBenefitBalanceFinancial extends BackboneElement {
-    allowedMoney?: Money;
-    allowedString?: string;
-    allowedUnsignedInt?: number;
-    type?: CodeableConcept;
-    usedMoney?: Money;
-    usedUnsignedInt?: number;
+export interface ExplanationOfBenefitAddItem extends BackboneElement {
+    adjudication?: ExplanationOfBenefitItemAdjudication[];
+    bodySite?: CodeableConcept;
+    detail?: ExplanationOfBenefitAddItemDetail[];
+    detailSequence?: number[];
+    factor?: number;
+    itemSequence?: number[];
+    locationAddress?: Address;
+    locationCodeableConcept?: CodeableConcept;
+    locationReference?: Reference<'Location'>;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    programCode?: CodeableConcept[];
+    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>[];
+    quantity?: Quantity;
+    servicedDate?: string;
+    servicedPeriod?: Period;
+    subDetailSequence?: number[];
+    subSite?: CodeableConcept[];
+    unitPrice?: Money;
+}
+
+export interface ExplanationOfBenefitAddItemDetail extends BackboneElement {
+    adjudication?: ExplanationOfBenefitItemAdjudication[];
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    quantity?: Quantity;
+    subDetail?: ExplanationOfBenefitAddItemDetailSubDetail[];
+    unitPrice?: Money;
+}
+
+export interface ExplanationOfBenefitAddItemDetailSubDetail extends BackboneElement {
+    adjudication?: ExplanationOfBenefitItemAdjudication[];
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    quantity?: Quantity;
+    unitPrice?: Money;
 }
 
 export interface ExplanationOfBenefitBenefitBalance extends BackboneElement {
@@ -41,11 +80,21 @@ export interface ExplanationOfBenefitBenefitBalance extends BackboneElement {
     unit?: CodeableConcept;
 }
 
-export interface ExplanationOfBenefitProcessNote extends BackboneElement {
-    language?: CodeableConcept;
-    number?: number;
-    text?: string;
-    type?: 'display' | 'print' | 'printoper';
+export interface ExplanationOfBenefitBenefitBalanceFinancial extends BackboneElement {
+    allowedMoney?: Money;
+    allowedString?: string;
+    allowedUnsignedInt?: number;
+    type?: CodeableConcept;
+    usedMoney?: Money;
+    usedUnsignedInt?: number;
+}
+
+export interface ExplanationOfBenefitCareTeam extends BackboneElement {
+    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    qualification?: CodeableConcept;
+    responsible?: boolean;
+    role?: CodeableConcept;
+    sequence?: number;
 }
 
 export interface ExplanationOfBenefitDiagnosis extends BackboneElement {
@@ -57,67 +106,10 @@ export interface ExplanationOfBenefitDiagnosis extends BackboneElement {
     type?: CodeableConcept[];
 }
 
-export interface ExplanationOfBenefitSupportingInfo extends BackboneElement {
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    reason?: Coding;
-    sequence?: number;
-    timingDate?: string;
-    timingPeriod?: Period;
-    valueAttachment?: Attachment;
-    valueBoolean?: boolean;
-    valueQuantity?: Quantity;
-    valueReference?: Reference<'Resource'>;
-    valueString?: string;
-}
-
-export interface ExplanationOfBenefitPayment extends BackboneElement {
-    adjustment?: Money;
-    adjustmentReason?: CodeableConcept;
-    amount?: Money;
-    date?: string;
-    identifier?: Identifier;
-    type?: CodeableConcept;
-}
-
-export interface ExplanationOfBenefitItemAdjudication extends BackboneElement {
-    amount?: Money;
-    category?: CodeableConcept;
-    reason?: CodeableConcept;
-    value?: number;
-}
-
-export interface ExplanationOfBenefitItemDetailSubDetail extends BackboneElement {
-    adjudication?: ExplanationOfBenefitItemAdjudication[];
-    category?: CodeableConcept;
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    programCode?: CodeableConcept[];
-    quantity?: Quantity;
-    revenue?: CodeableConcept;
-    sequence?: number;
-    udi?: Reference<'Device'>[];
-    unitPrice?: Money;
-}
-
-export interface ExplanationOfBenefitItemDetail extends BackboneElement {
-    adjudication?: ExplanationOfBenefitItemAdjudication[];
-    category?: CodeableConcept;
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    programCode?: CodeableConcept[];
-    quantity?: Quantity;
-    revenue?: CodeableConcept;
-    sequence?: number;
-    subDetail?: ExplanationOfBenefitItemDetailSubDetail[];
-    udi?: Reference<'Device'>[];
-    unitPrice?: Money;
+export interface ExplanationOfBenefitInsurance extends BackboneElement {
+    coverage?: Reference<'Coverage'>;
+    focal?: boolean;
+    preAuthRef?: string[];
 }
 
 export interface ExplanationOfBenefitItem extends BackboneElement {
@@ -149,6 +141,60 @@ export interface ExplanationOfBenefitItem extends BackboneElement {
     unitPrice?: Money;
 }
 
+export interface ExplanationOfBenefitItemAdjudication extends BackboneElement {
+    amount?: Money;
+    category?: CodeableConcept;
+    reason?: CodeableConcept;
+    value?: number;
+}
+
+export interface ExplanationOfBenefitItemDetail extends BackboneElement {
+    adjudication?: ExplanationOfBenefitItemAdjudication[];
+    category?: CodeableConcept;
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    programCode?: CodeableConcept[];
+    quantity?: Quantity;
+    revenue?: CodeableConcept;
+    sequence?: number;
+    subDetail?: ExplanationOfBenefitItemDetailSubDetail[];
+    udi?: Reference<'Device'>[];
+    unitPrice?: Money;
+}
+
+export interface ExplanationOfBenefitItemDetailSubDetail extends BackboneElement {
+    adjudication?: ExplanationOfBenefitItemAdjudication[];
+    category?: CodeableConcept;
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    programCode?: CodeableConcept[];
+    quantity?: Quantity;
+    revenue?: CodeableConcept;
+    sequence?: number;
+    udi?: Reference<'Device'>[];
+    unitPrice?: Money;
+}
+
+export interface ExplanationOfBenefitPayee extends BackboneElement {
+    party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    type?: CodeableConcept;
+}
+
+export interface ExplanationOfBenefitPayment extends BackboneElement {
+    adjustment?: Money;
+    adjustmentReason?: CodeableConcept;
+    amount?: Money;
+    date?: string;
+    identifier?: Identifier;
+    type?: CodeableConcept;
+}
+
 export interface ExplanationOfBenefitProcedure extends BackboneElement {
     date?: string;
     procedureCodeableConcept?: CodeableConcept;
@@ -158,82 +204,36 @@ export interface ExplanationOfBenefitProcedure extends BackboneElement {
     udi?: Reference<'Device'>[];
 }
 
+export interface ExplanationOfBenefitProcessNote extends BackboneElement {
+    language?: CodeableConcept;
+    number?: number;
+    text?: string;
+    type?: 'display' | 'print' | 'printoper';
+}
+
 export interface ExplanationOfBenefitRelated extends BackboneElement {
     claim?: Reference<'Claim'>;
     reference?: Identifier;
     relationship?: CodeableConcept;
 }
 
+export interface ExplanationOfBenefitSupportingInfo extends BackboneElement {
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    reason?: Coding;
+    sequence?: number;
+    timingDate?: string;
+    timingPeriod?: Period;
+    valueAttachment?: Attachment;
+    valueBoolean?: boolean;
+    valueQuantity?: Quantity;
+    valueReference?: Reference<'Resource'>;
+    valueString?: string;
+}
+
 export interface ExplanationOfBenefitTotal extends BackboneElement {
     amount?: Money;
     category?: CodeableConcept;
-}
-
-export interface ExplanationOfBenefitAccident extends BackboneElement {
-    date?: string;
-    locationAddress?: Address;
-    locationReference?: Reference<'Location'>;
-    type?: CodeableConcept;
-}
-
-export interface ExplanationOfBenefitPayee extends BackboneElement {
-    party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    type?: CodeableConcept;
-}
-
-export interface ExplanationOfBenefitAddItemDetailSubDetail extends BackboneElement {
-    adjudication?: ExplanationOfBenefitItemAdjudication[];
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    quantity?: Quantity;
-    unitPrice?: Money;
-}
-
-export interface ExplanationOfBenefitAddItemDetail extends BackboneElement {
-    adjudication?: ExplanationOfBenefitItemAdjudication[];
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    quantity?: Quantity;
-    subDetail?: ExplanationOfBenefitAddItemDetailSubDetail[];
-    unitPrice?: Money;
-}
-
-export interface ExplanationOfBenefitAddItem extends BackboneElement {
-    adjudication?: ExplanationOfBenefitItemAdjudication[];
-    bodySite?: CodeableConcept;
-    detail?: ExplanationOfBenefitAddItemDetail[];
-    detailSequence?: number[];
-    factor?: number;
-    itemSequence?: number[];
-    locationAddress?: Address;
-    locationCodeableConcept?: CodeableConcept;
-    locationReference?: Reference<'Location'>;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    programCode?: CodeableConcept[];
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>[];
-    quantity?: Quantity;
-    servicedDate?: string;
-    servicedPeriod?: Period;
-    subDetailSequence?: number[];
-    subSite?: CodeableConcept[];
-    unitPrice?: Money;
-}
-
-export interface ExplanationOfBenefitCareTeam extends BackboneElement {
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    qualification?: CodeableConcept;
-    responsible?: boolean;
-    role?: CodeableConcept;
-    sequence?: number;
 }
 
 export interface ExplanationOfBenefit extends DomainResource {

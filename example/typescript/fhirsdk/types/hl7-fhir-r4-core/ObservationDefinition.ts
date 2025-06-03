@@ -10,13 +10,6 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 
-export interface ObservationDefinitionQuantitativeDetails extends BackboneElement {
-    conversionFactor?: number;
-    customaryUnit?: CodeableConcept;
-    decimalPrecision?: number;
-    unit?: CodeableConcept;
-}
-
 export interface ObservationDefinitionQualifiedInterval extends BackboneElement {
     age?: Range;
     appliesTo?: CodeableConcept[];
@@ -26,6 +19,13 @@ export interface ObservationDefinitionQualifiedInterval extends BackboneElement 
     gender?: 'male' | 'female' | 'other' | 'unknown';
     gestationalAge?: Range;
     range?: Range;
+}
+
+export interface ObservationDefinitionQuantitativeDetails extends BackboneElement {
+    conversionFactor?: number;
+    customaryUnit?: CodeableConcept;
+    decimalPrecision?: number;
+    unit?: CodeableConcept;
 }
 
 export interface ObservationDefinition extends DomainResource {

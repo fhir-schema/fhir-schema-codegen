@@ -11,6 +11,18 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
+export interface ImmunizationEducation extends BackboneElement {
+    documentType?: string;
+    presentationDate?: string;
+    publicationDate?: string;
+    reference?: string;
+}
+
+export interface ImmunizationPerformer extends BackboneElement {
+    actor?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    function?: CodeableConcept;
+}
+
 export interface ImmunizationProtocolApplied extends BackboneElement {
     authority?: Reference<'Organization'>;
     doseNumberPositiveInt?: number;
@@ -21,22 +33,10 @@ export interface ImmunizationProtocolApplied extends BackboneElement {
     targetDisease?: CodeableConcept[];
 }
 
-export interface ImmunizationEducation extends BackboneElement {
-    documentType?: string;
-    presentationDate?: string;
-    publicationDate?: string;
-    reference?: string;
-}
-
 export interface ImmunizationReaction extends BackboneElement {
     date?: string;
     detail?: Reference<'Observation'>;
     reported?: boolean;
-}
-
-export interface ImmunizationPerformer extends BackboneElement {
-    actor?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    function?: CodeableConcept;
 }
 
 export interface Immunization extends DomainResource {

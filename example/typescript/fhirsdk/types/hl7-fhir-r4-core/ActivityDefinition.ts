@@ -20,14 +20,14 @@ import { Timing } from './Timing';
 import { UsageContext } from './UsageContext';
 
 
-export interface ActivityDefinitionParticipant extends BackboneElement {
-    role?: CodeableConcept;
-    type?: 'patient' | 'practitioner' | 'related-person' | 'device';
-}
-
 export interface ActivityDefinitionDynamicValue extends BackboneElement {
     expression?: Expression;
     path?: string;
+}
+
+export interface ActivityDefinitionParticipant extends BackboneElement {
+    role?: CodeableConcept;
+    type?: 'patient' | 'practitioner' | 'related-person' | 'device';
 }
 
 export interface ActivityDefinition extends DomainResource {

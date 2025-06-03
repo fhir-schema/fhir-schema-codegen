@@ -14,92 +14,6 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface ClaimResponseInsurance extends BackboneElement {
-    businessArrangement?: string;
-    claimResponse?: Reference<'ClaimResponse'>;
-    coverage?: Reference<'Coverage'>;
-    focal?: boolean;
-    sequence?: number;
-}
-
-export interface ClaimResponseProcessNote extends BackboneElement {
-    language?: CodeableConcept;
-    number?: number;
-    text?: string;
-    type?: 'display' | 'print' | 'printoper';
-}
-
-export interface ClaimResponsePayment extends BackboneElement {
-    adjustment?: Money;
-    adjustmentReason?: CodeableConcept;
-    amount?: Money;
-    date?: string;
-    identifier?: Identifier;
-    type?: CodeableConcept;
-}
-
-export interface ClaimResponseItemAdjudication extends BackboneElement {
-    amount?: Money;
-    category?: CodeableConcept;
-    reason?: CodeableConcept;
-    value?: number;
-}
-
-export interface ClaimResponseItemDetailSubDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
-    noteNumber?: number[];
-    subDetailSequence?: number;
-}
-
-export interface ClaimResponseItemDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
-    detailSequence?: number;
-    noteNumber?: number[];
-    subDetail?: ClaimResponseItemDetailSubDetail[];
-}
-
-export interface ClaimResponseItem extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
-    detail?: ClaimResponseItemDetail[];
-    itemSequence?: number;
-    noteNumber?: number[];
-}
-
-export interface ClaimResponseTotal extends BackboneElement {
-    amount?: Money;
-    category?: CodeableConcept;
-}
-
-export interface ClaimResponseError extends BackboneElement {
-    code?: CodeableConcept;
-    detailSequence?: number;
-    itemSequence?: number;
-    subDetailSequence?: number;
-}
-
-export interface ClaimResponseAddItemDetailSubDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    quantity?: Quantity;
-    unitPrice?: Money;
-}
-
-export interface ClaimResponseAddItemDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    noteNumber?: number[];
-    productOrService?: CodeableConcept;
-    quantity?: Quantity;
-    subDetail?: ClaimResponseAddItemDetailSubDetail[];
-    unitPrice?: Money;
-}
-
 export interface ClaimResponseAddItem extends BackboneElement {
     adjudication?: ClaimResponseItemAdjudication[];
     bodySite?: CodeableConcept;
@@ -122,6 +36,92 @@ export interface ClaimResponseAddItem extends BackboneElement {
     subdetailSequence?: number[];
     subSite?: CodeableConcept[];
     unitPrice?: Money;
+}
+
+export interface ClaimResponseAddItemDetail extends BackboneElement {
+    adjudication?: ClaimResponseItemAdjudication[];
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    quantity?: Quantity;
+    subDetail?: ClaimResponseAddItemDetailSubDetail[];
+    unitPrice?: Money;
+}
+
+export interface ClaimResponseAddItemDetailSubDetail extends BackboneElement {
+    adjudication?: ClaimResponseItemAdjudication[];
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    noteNumber?: number[];
+    productOrService?: CodeableConcept;
+    quantity?: Quantity;
+    unitPrice?: Money;
+}
+
+export interface ClaimResponseError extends BackboneElement {
+    code?: CodeableConcept;
+    detailSequence?: number;
+    itemSequence?: number;
+    subDetailSequence?: number;
+}
+
+export interface ClaimResponseInsurance extends BackboneElement {
+    businessArrangement?: string;
+    claimResponse?: Reference<'ClaimResponse'>;
+    coverage?: Reference<'Coverage'>;
+    focal?: boolean;
+    sequence?: number;
+}
+
+export interface ClaimResponseItem extends BackboneElement {
+    adjudication?: ClaimResponseItemAdjudication[];
+    detail?: ClaimResponseItemDetail[];
+    itemSequence?: number;
+    noteNumber?: number[];
+}
+
+export interface ClaimResponseItemAdjudication extends BackboneElement {
+    amount?: Money;
+    category?: CodeableConcept;
+    reason?: CodeableConcept;
+    value?: number;
+}
+
+export interface ClaimResponseItemDetail extends BackboneElement {
+    adjudication?: ClaimResponseItemAdjudication[];
+    detailSequence?: number;
+    noteNumber?: number[];
+    subDetail?: ClaimResponseItemDetailSubDetail[];
+}
+
+export interface ClaimResponseItemDetailSubDetail extends BackboneElement {
+    adjudication?: ClaimResponseItemAdjudication[];
+    noteNumber?: number[];
+    subDetailSequence?: number;
+}
+
+export interface ClaimResponsePayment extends BackboneElement {
+    adjustment?: Money;
+    adjustmentReason?: CodeableConcept;
+    amount?: Money;
+    date?: string;
+    identifier?: Identifier;
+    type?: CodeableConcept;
+}
+
+export interface ClaimResponseProcessNote extends BackboneElement {
+    language?: CodeableConcept;
+    number?: number;
+    text?: string;
+    type?: 'display' | 'print' | 'printoper';
+}
+
+export interface ClaimResponseTotal extends BackboneElement {
+    amount?: Money;
+    category?: CodeableConcept;
 }
 
 export interface ClaimResponse extends DomainResource {

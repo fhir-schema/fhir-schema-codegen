@@ -12,6 +12,15 @@ import { Identifier } from './Identifier';
 import { UsageContext } from './UsageContext';
 
 
+export interface StructureDefinitionContext extends BackboneElement {
+    expression?: string;
+    type?: 'fhirpath' | 'element' | 'extension';
+}
+
+export interface StructureDefinitionDifferential extends BackboneElement {
+    element?: ElementDefinition[];
+}
+
 export interface StructureDefinitionMapping extends BackboneElement {
     comment?: string;
     identity?: string;
@@ -20,15 +29,6 @@ export interface StructureDefinitionMapping extends BackboneElement {
 }
 
 export interface StructureDefinitionSnapshot extends BackboneElement {
-    element?: ElementDefinition[];
-}
-
-export interface StructureDefinitionContext extends BackboneElement {
-    expression?: string;
-    type?: 'fhirpath' | 'element' | 'extension';
-}
-
-export interface StructureDefinitionDifferential extends BackboneElement {
     element?: ElementDefinition[];
 }
 

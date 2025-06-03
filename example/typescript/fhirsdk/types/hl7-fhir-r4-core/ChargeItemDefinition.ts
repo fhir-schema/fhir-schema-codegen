@@ -13,11 +13,10 @@ import { Reference } from './Reference';
 import { UsageContext } from './UsageContext';
 
 
-export interface ChargeItemDefinitionPropertyGroupPriceComponent extends BackboneElement {
-    amount?: Money;
-    code?: CodeableConcept;
-    factor?: number;
-    type?: 'base' | 'surcharge' | 'deduction' | 'discount' | 'tax' | 'informational';
+export interface ChargeItemDefinitionApplicability extends BackboneElement {
+    description?: string;
+    expression?: string;
+    language?: string;
 }
 
 export interface ChargeItemDefinitionPropertyGroup extends BackboneElement {
@@ -25,10 +24,11 @@ export interface ChargeItemDefinitionPropertyGroup extends BackboneElement {
     priceComponent?: ChargeItemDefinitionPropertyGroupPriceComponent[];
 }
 
-export interface ChargeItemDefinitionApplicability extends BackboneElement {
-    description?: string;
-    expression?: string;
-    language?: string;
+export interface ChargeItemDefinitionPropertyGroupPriceComponent extends BackboneElement {
+    amount?: Money;
+    code?: CodeableConcept;
+    factor?: number;
+    type?: 'base' | 'surcharge' | 'deduction' | 'discount' | 'tax' | 'informational';
 }
 
 export interface ChargeItemDefinition extends DomainResource {

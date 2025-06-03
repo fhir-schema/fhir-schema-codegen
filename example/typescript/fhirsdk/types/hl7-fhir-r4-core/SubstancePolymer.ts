@@ -9,6 +9,11 @@ import { DomainResource } from './DomainResource';
 import { SubstanceAmount } from './SubstanceAmount';
 
 
+export interface SubstancePolymerMonomerSet extends BackboneElement {
+    ratioType?: CodeableConcept;
+    startingMaterial?: SubstancePolymerMonomerSetStartingMaterial[];
+}
+
 export interface SubstancePolymerMonomerSetStartingMaterial extends BackboneElement {
     amount?: SubstanceAmount;
     isDefining?: boolean;
@@ -16,9 +21,19 @@ export interface SubstancePolymerMonomerSetStartingMaterial extends BackboneElem
     type?: CodeableConcept;
 }
 
-export interface SubstancePolymerMonomerSet extends BackboneElement {
-    ratioType?: CodeableConcept;
-    startingMaterial?: SubstancePolymerMonomerSetStartingMaterial[];
+export interface SubstancePolymerRepeat extends BackboneElement {
+    averageMolecularFormula?: string;
+    numberOfUnits?: number;
+    repeatUnit?: SubstancePolymerRepeatRepeatUnit[];
+    repeatUnitAmountType?: CodeableConcept;
+}
+
+export interface SubstancePolymerRepeatRepeatUnit extends BackboneElement {
+    amount?: SubstanceAmount;
+    degreeOfPolymerisation?: SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation[];
+    orientationOfPolymerisation?: CodeableConcept;
+    repeatUnit?: string;
+    structuralRepresentation?: SubstancePolymerRepeatRepeatUnitStructuralRepresentation[];
 }
 
 export interface SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation extends BackboneElement {
@@ -30,21 +45,6 @@ export interface SubstancePolymerRepeatRepeatUnitStructuralRepresentation extend
     attachment?: Attachment;
     representation?: string;
     type?: CodeableConcept;
-}
-
-export interface SubstancePolymerRepeatRepeatUnit extends BackboneElement {
-    amount?: SubstanceAmount;
-    degreeOfPolymerisation?: SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation[];
-    orientationOfPolymerisation?: CodeableConcept;
-    repeatUnit?: string;
-    structuralRepresentation?: SubstancePolymerRepeatRepeatUnitStructuralRepresentation[];
-}
-
-export interface SubstancePolymerRepeat extends BackboneElement {
-    averageMolecularFormula?: string;
-    numberOfUnits?: number;
-    repeatUnit?: SubstancePolymerRepeatRepeatUnit[];
-    repeatUnitAmountType?: CodeableConcept;
 }
 
 export interface SubstancePolymer extends DomainResource {

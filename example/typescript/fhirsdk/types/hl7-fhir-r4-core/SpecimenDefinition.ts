@@ -12,9 +12,15 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 
-export interface SpecimenDefinitionTypeTestedContainerAdditive extends BackboneElement {
-    additiveCodeableConcept?: CodeableConcept;
-    additiveReference?: Reference<'Substance'>;
+export interface SpecimenDefinitionTypeTested extends BackboneElement {
+    container?: SpecimenDefinitionTypeTestedContainer;
+    handling?: SpecimenDefinitionTypeTestedHandling[];
+    isDerived?: boolean;
+    preference?: 'preferred' | 'alternate';
+    rejectionCriterion?: CodeableConcept[];
+    requirement?: string;
+    retentionTime?: Duration;
+    type?: CodeableConcept;
 }
 
 export interface SpecimenDefinitionTypeTestedContainer extends BackboneElement {
@@ -29,22 +35,16 @@ export interface SpecimenDefinitionTypeTestedContainer extends BackboneElement {
     type?: CodeableConcept;
 }
 
+export interface SpecimenDefinitionTypeTestedContainerAdditive extends BackboneElement {
+    additiveCodeableConcept?: CodeableConcept;
+    additiveReference?: Reference<'Substance'>;
+}
+
 export interface SpecimenDefinitionTypeTestedHandling extends BackboneElement {
     instruction?: string;
     maxDuration?: Duration;
     temperatureQualifier?: CodeableConcept;
     temperatureRange?: Range;
-}
-
-export interface SpecimenDefinitionTypeTested extends BackboneElement {
-    container?: SpecimenDefinitionTypeTestedContainer;
-    handling?: SpecimenDefinitionTypeTestedHandling[];
-    isDerived?: boolean;
-    preference?: 'preferred' | 'alternate';
-    rejectionCriterion?: CodeableConcept[];
-    requirement?: string;
-    retentionTime?: Duration;
-    type?: CodeableConcept;
 }
 
 export interface SpecimenDefinition extends DomainResource {

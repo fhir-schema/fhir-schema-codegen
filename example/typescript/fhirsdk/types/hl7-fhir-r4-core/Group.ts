@@ -12,12 +12,6 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 
-export interface GroupMember extends BackboneElement {
-    entity?: Reference<'Device' | 'Group' | 'Medication' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'Substance'>;
-    inactive?: boolean;
-    period?: Period;
-}
-
 export interface GroupCharacteristic extends BackboneElement {
     code?: CodeableConcept;
     exclude?: boolean;
@@ -27,6 +21,12 @@ export interface GroupCharacteristic extends BackboneElement {
     valueQuantity?: Quantity;
     valueRange?: Range;
     valueReference?: Reference;
+}
+
+export interface GroupMember extends BackboneElement {
+    entity?: Reference<'Device' | 'Group' | 'Medication' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'Substance'>;
+    inactive?: boolean;
+    period?: Period;
 }
 
 export interface Group extends DomainResource {

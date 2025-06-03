@@ -11,6 +11,13 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 
+export interface SubstanceReferenceInformationClassification extends BackboneElement {
+    classification?: CodeableConcept;
+    domain?: CodeableConcept;
+    source?: Reference<'DocumentReference'>[];
+    subtype?: CodeableConcept[];
+}
+
 export interface SubstanceReferenceInformationGene extends BackboneElement {
     gene?: CodeableConcept;
     geneSequenceOrigin?: CodeableConcept;
@@ -21,13 +28,6 @@ export interface SubstanceReferenceInformationGeneElement extends BackboneElemen
     element?: Identifier;
     source?: Reference<'DocumentReference'>[];
     type?: CodeableConcept;
-}
-
-export interface SubstanceReferenceInformationClassification extends BackboneElement {
-    classification?: CodeableConcept;
-    domain?: CodeableConcept;
-    source?: Reference<'DocumentReference'>[];
-    subtype?: CodeableConcept[];
 }
 
 export interface SubstanceReferenceInformationTarget extends BackboneElement {

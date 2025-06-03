@@ -9,11 +9,6 @@ import { Identifier } from './Identifier';
 import { Reference } from './Reference';
 
 
-export interface ImmunizationRecommendationRecommendationDateCriterion extends BackboneElement {
-    code?: CodeableConcept;
-    value?: string;
-}
-
 export interface ImmunizationRecommendationRecommendation extends BackboneElement {
     contraindicatedVaccineCode?: CodeableConcept[];
     dateCriterion?: ImmunizationRecommendationRecommendationDateCriterion[];
@@ -29,6 +24,11 @@ export interface ImmunizationRecommendationRecommendation extends BackboneElemen
     supportingPatientInformation?: Reference<'Resource'>[];
     targetDisease?: CodeableConcept;
     vaccineCode?: CodeableConcept[];
+}
+
+export interface ImmunizationRecommendationRecommendationDateCriterion extends BackboneElement {
+    code?: CodeableConcept;
+    value?: string;
 }
 
 export interface ImmunizationRecommendation extends DomainResource {

@@ -11,15 +11,15 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
-export interface ClinicalImpressionInvestigation extends BackboneElement {
-    code?: CodeableConcept;
-    item?: Reference<'DiagnosticReport' | 'FamilyMemberHistory' | 'ImagingStudy' | 'Media' | 'Observation' | 'QuestionnaireResponse' | 'RiskAssessment'>[];
-}
-
 export interface ClinicalImpressionFinding extends BackboneElement {
     basis?: string;
     itemCodeableConcept?: CodeableConcept;
     itemReference?: Reference<'Condition' | 'Media' | 'Observation'>;
+}
+
+export interface ClinicalImpressionInvestigation extends BackboneElement {
+    code?: CodeableConcept;
+    item?: Reference<'DiagnosticReport' | 'FamilyMemberHistory' | 'ImagingStudy' | 'Media' | 'Observation' | 'QuestionnaireResponse' | 'RiskAssessment'>[];
 }
 
 export interface ClinicalImpression extends DomainResource {

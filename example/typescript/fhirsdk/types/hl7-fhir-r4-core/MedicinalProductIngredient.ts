@@ -10,12 +10,11 @@ import { Ratio } from './Ratio';
 import { Reference } from './Reference';
 
 
-export interface MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength extends BackboneElement {
-    country?: CodeableConcept[];
-    measurementPoint?: string;
-    strength?: Ratio;
-    strengthLowLimit?: Ratio;
-    substance?: CodeableConcept;
+export interface MedicinalProductIngredientSpecifiedSubstance extends BackboneElement {
+    code?: CodeableConcept;
+    confidentiality?: CodeableConcept;
+    group?: CodeableConcept;
+    strength?: MedicinalProductIngredientSpecifiedSubstanceStrength[];
 }
 
 export interface MedicinalProductIngredientSpecifiedSubstanceStrength extends BackboneElement {
@@ -28,11 +27,12 @@ export interface MedicinalProductIngredientSpecifiedSubstanceStrength extends Ba
     referenceStrength?: MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength[];
 }
 
-export interface MedicinalProductIngredientSpecifiedSubstance extends BackboneElement {
-    code?: CodeableConcept;
-    confidentiality?: CodeableConcept;
-    group?: CodeableConcept;
-    strength?: MedicinalProductIngredientSpecifiedSubstanceStrength[];
+export interface MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength extends BackboneElement {
+    country?: CodeableConcept[];
+    measurementPoint?: string;
+    strength?: Ratio;
+    strengthLowLimit?: Ratio;
+    substance?: CodeableConcept;
 }
 
 export interface MedicinalProductIngredientSubstance extends BackboneElement {

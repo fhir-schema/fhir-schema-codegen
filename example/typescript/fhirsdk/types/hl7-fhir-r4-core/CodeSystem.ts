@@ -11,18 +11,13 @@ import { Identifier } from './Identifier';
 import { UsageContext } from './UsageContext';
 
 
-export interface CodeSystemProperty extends BackboneElement {
+export interface CodeSystemConcept extends BackboneElement {
     code?: string;
-    description?: string;
-    type?: 'code' | 'Coding' | 'string' | 'integer' | 'boolean' | 'dateTime' | 'decimal';
-    uri?: string;
-}
-
-export interface CodeSystemFilter extends BackboneElement {
-    code?: string;
-    description?: string;
-    operator?: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists'[];
-    value?: string;
+    concept?: CodeSystemConcept[];
+    definition?: string;
+    designation?: CodeSystemConceptDesignation[];
+    display?: string;
+    property?: CodeSystemConceptProperty[];
 }
 
 export interface CodeSystemConceptDesignation extends BackboneElement {
@@ -42,13 +37,18 @@ export interface CodeSystemConceptProperty extends BackboneElement {
     valueString?: string;
 }
 
-export interface CodeSystemConcept extends BackboneElement {
+export interface CodeSystemFilter extends BackboneElement {
     code?: string;
-    concept?: CodeSystemConcept[];
-    definition?: string;
-    designation?: CodeSystemConceptDesignation[];
-    display?: string;
-    property?: CodeSystemConceptProperty[];
+    description?: string;
+    operator?: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists'[];
+    value?: string;
+}
+
+export interface CodeSystemProperty extends BackboneElement {
+    code?: string;
+    description?: string;
+    type?: 'code' | 'Coding' | 'string' | 'integer' | 'boolean' | 'dateTime' | 'decimal';
+    uri?: string;
 }
 
 export interface CodeSystem extends DomainResource {

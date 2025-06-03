@@ -8,14 +8,13 @@ import { Resource } from './Resource';
 import { Signature } from './Signature';
 
 
-export interface BundleLink extends BackboneElement {
-    relation?: string;
-    url?: string;
-}
-
-export interface BundleEntrySearch extends BackboneElement {
-    mode?: 'match' | 'include' | 'outcome';
-    score?: number;
+export interface BundleEntry extends BackboneElement {
+    fullUrl?: string;
+    link?: BundleLink[];
+    request?: BundleEntryRequest;
+    resource?: Resource;
+    response?: BundleEntryResponse;
+    search?: BundleEntrySearch;
 }
 
 export interface BundleEntryRequest extends BackboneElement {
@@ -35,13 +34,14 @@ export interface BundleEntryResponse extends BackboneElement {
     status?: string;
 }
 
-export interface BundleEntry extends BackboneElement {
-    fullUrl?: string;
-    link?: BundleLink[];
-    request?: BundleEntryRequest;
-    resource?: Resource;
-    response?: BundleEntryResponse;
-    search?: BundleEntrySearch;
+export interface BundleEntrySearch extends BackboneElement {
+    mode?: 'match' | 'include' | 'outcome';
+    score?: number;
+}
+
+export interface BundleLink extends BackboneElement {
+    relation?: string;
+    url?: string;
 }
 
 export interface Bundle extends Resource {

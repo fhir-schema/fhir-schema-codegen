@@ -20,9 +20,10 @@ export interface MedicinalProductManufacturingBusinessOperation extends Backbone
     regulator?: Reference<'Organization'>;
 }
 
-export interface MedicinalProductNameNamePart extends BackboneElement {
-    part?: string;
-    type?: Coding;
+export interface MedicinalProductName extends BackboneElement {
+    countryLanguage?: MedicinalProductNameCountryLanguage[];
+    namePart?: MedicinalProductNameNamePart[];
+    productName?: string;
 }
 
 export interface MedicinalProductNameCountryLanguage extends BackboneElement {
@@ -31,10 +32,9 @@ export interface MedicinalProductNameCountryLanguage extends BackboneElement {
     language?: CodeableConcept;
 }
 
-export interface MedicinalProductName extends BackboneElement {
-    countryLanguage?: MedicinalProductNameCountryLanguage[];
-    namePart?: MedicinalProductNameNamePart[];
-    productName?: string;
+export interface MedicinalProductNameNamePart extends BackboneElement {
+    part?: string;
+    type?: Coding;
 }
 
 export interface MedicinalProductSpecialDesignation extends BackboneElement {

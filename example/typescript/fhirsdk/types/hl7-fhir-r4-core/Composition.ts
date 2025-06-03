@@ -11,19 +11,6 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
-export interface CompositionSection extends BackboneElement {
-    author?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
-    code?: CodeableConcept;
-    emptyReason?: CodeableConcept;
-    entry?: Reference<'Resource'>[];
-    focus?: Reference<'Resource'>;
-    mode?: 'working' | 'snapshot' | 'changes';
-    orderedBy?: CodeableConcept;
-    section?: CompositionSection[];
-    text?: Narrative;
-    title?: string;
-}
-
 export interface CompositionAttester extends BackboneElement {
     mode?: 'personal' | 'professional' | 'legal' | 'official';
     party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
@@ -40,6 +27,19 @@ export interface CompositionRelatesTo extends BackboneElement {
     code?: 'replaces' | 'transforms' | 'signs' | 'appends';
     targetIdentifier?: Identifier;
     targetReference?: Reference<'Composition'>;
+}
+
+export interface CompositionSection extends BackboneElement {
+    author?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
+    code?: CodeableConcept;
+    emptyReason?: CodeableConcept;
+    entry?: Reference<'Resource'>[];
+    focus?: Reference<'Resource'>;
+    mode?: 'working' | 'snapshot' | 'changes';
+    orderedBy?: CodeableConcept;
+    section?: CompositionSection[];
+    text?: Narrative;
+    title?: string;
 }
 
 export interface Composition extends DomainResource {

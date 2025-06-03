@@ -14,9 +14,20 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
+export interface DeviceDefinitionCapability extends BackboneElement {
+    description?: CodeableConcept[];
+    type?: CodeableConcept;
+}
+
 export interface DeviceDefinitionDeviceName extends BackboneElement {
     name?: string;
     type?: 'udi-label-name' | 'user-friendly-name' | 'patient-reported-name' | 'manufacturer-name' | 'model-name' | 'other';
+}
+
+export interface DeviceDefinitionMaterial extends BackboneElement {
+    allergenicIndicator?: boolean;
+    alternate?: boolean;
+    substance?: CodeableConcept;
 }
 
 export interface DeviceDefinitionProperty extends BackboneElement {
@@ -25,26 +36,15 @@ export interface DeviceDefinitionProperty extends BackboneElement {
     valueQuantity?: Quantity[];
 }
 
-export interface DeviceDefinitionUdiDeviceIdentifier extends BackboneElement {
-    deviceIdentifier?: string;
-    issuer?: string;
-    jurisdiction?: string;
-}
-
-export interface DeviceDefinitionCapability extends BackboneElement {
-    description?: CodeableConcept[];
-    type?: CodeableConcept;
-}
-
 export interface DeviceDefinitionSpecialization extends BackboneElement {
     systemType?: string;
     version?: string;
 }
 
-export interface DeviceDefinitionMaterial extends BackboneElement {
-    allergenicIndicator?: boolean;
-    alternate?: boolean;
-    substance?: CodeableConcept;
+export interface DeviceDefinitionUdiDeviceIdentifier extends BackboneElement {
+    deviceIdentifier?: string;
+    issuer?: string;
+    jurisdiction?: string;
 }
 
 export interface DeviceDefinition extends DomainResource {

@@ -17,16 +17,6 @@ import { Signature } from './Signature';
 import { Timing } from './Timing';
 
 
-export interface ContractRule extends BackboneElement {
-    contentAttachment?: Attachment;
-    contentReference?: Reference<'DocumentReference'>;
-}
-
-export interface ContractLegal extends BackboneElement {
-    contentAttachment?: Attachment;
-    contentReference?: Reference<'Composition' | 'DocumentReference' | 'QuestionnaireResponse'>;
-}
-
 export interface ContractContentDefinition extends BackboneElement {
     copyright?: string;
     publicationDate?: string;
@@ -36,48 +26,41 @@ export interface ContractContentDefinition extends BackboneElement {
     type?: CodeableConcept;
 }
 
+export interface ContractFriendly extends BackboneElement {
+    contentAttachment?: Attachment;
+    contentReference?: Reference<'Composition' | 'DocumentReference' | 'QuestionnaireResponse'>;
+}
+
+export interface ContractLegal extends BackboneElement {
+    contentAttachment?: Attachment;
+    contentReference?: Reference<'Composition' | 'DocumentReference' | 'QuestionnaireResponse'>;
+}
+
+export interface ContractRule extends BackboneElement {
+    contentAttachment?: Attachment;
+    contentReference?: Reference<'DocumentReference'>;
+}
+
 export interface ContractSigner extends BackboneElement {
     party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     signature?: Signature[];
     type?: Coding;
 }
 
-export interface ContractTermOfferParty extends BackboneElement {
-    reference?: Reference<'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
-    role?: CodeableConcept;
-}
-
-export interface ContractTermOfferAnswer extends BackboneElement {
-    valueAttachment?: Attachment;
-    valueBoolean?: boolean;
-    valueCoding?: Coding;
-    valueDate?: string;
-    valueDateTime?: string;
-    valueDecimal?: number;
-    valueInteger?: number;
-    valueQuantity?: Quantity;
-    valueReference?: Reference<'Resource'>;
-    valueString?: string;
-    valueTime?: string;
-    valueUri?: string;
-}
-
-export interface ContractTermOffer extends BackboneElement {
-    answer?: ContractTermOfferAnswer[];
-    decision?: CodeableConcept;
-    decisionMode?: CodeableConcept[];
-    identifier?: Identifier[];
-    linkId?: string[];
-    party?: ContractTermOfferParty[];
-    securityLabelNumber?: number[];
+export interface ContractTerm extends BackboneElement {
+    action?: ContractTermAction[];
+    applies?: Period;
+    asset?: ContractTermAsset[];
+    group?: ContractTerm[];
+    identifier?: Identifier;
+    issued?: string;
+    offer?: ContractTermOffer;
+    securityLabel?: ContractTermSecurityLabel[];
+    subType?: CodeableConcept;
     text?: string;
-    topic?: Reference<'Resource'>;
+    topicCodeableConcept?: CodeableConcept;
+    topicReference?: Reference<'Resource'>;
     type?: CodeableConcept;
-}
-
-export interface ContractTermActionSubject extends BackboneElement {
-    reference?: Reference<'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
-    role?: CodeableConcept;
 }
 
 export interface ContractTermAction extends BackboneElement {
@@ -106,11 +89,27 @@ export interface ContractTermAction extends BackboneElement {
     type?: CodeableConcept;
 }
 
-export interface ContractTermSecurityLabel extends BackboneElement {
-    category?: Coding[];
-    classification?: Coding;
-    control?: Coding[];
-    number?: number[];
+export interface ContractTermActionSubject extends BackboneElement {
+    reference?: Reference<'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
+    role?: CodeableConcept;
+}
+
+export interface ContractTermAsset extends BackboneElement {
+    answer?: ContractTermOfferAnswer[];
+    condition?: string;
+    context?: ContractTermAssetContext[];
+    linkId?: string[];
+    period?: Period[];
+    periodType?: CodeableConcept[];
+    relationship?: Coding;
+    scope?: CodeableConcept;
+    securityLabelNumber?: number[];
+    subtype?: CodeableConcept[];
+    text?: string;
+    type?: CodeableConcept[];
+    typeReference?: Reference<'Resource'>[];
+    usePeriod?: Period[];
+    valuedItem?: ContractTermAssetValuedItem[];
 }
 
 export interface ContractTermAssetContext extends BackboneElement {
@@ -137,43 +136,44 @@ export interface ContractTermAssetValuedItem extends BackboneElement {
     unitPrice?: Money;
 }
 
-export interface ContractTermAsset extends BackboneElement {
+export interface ContractTermOffer extends BackboneElement {
     answer?: ContractTermOfferAnswer[];
-    condition?: string;
-    context?: ContractTermAssetContext[];
+    decision?: CodeableConcept;
+    decisionMode?: CodeableConcept[];
+    identifier?: Identifier[];
     linkId?: string[];
-    period?: Period[];
-    periodType?: CodeableConcept[];
-    relationship?: Coding;
-    scope?: CodeableConcept;
+    party?: ContractTermOfferParty[];
     securityLabelNumber?: number[];
-    subtype?: CodeableConcept[];
     text?: string;
-    type?: CodeableConcept[];
-    typeReference?: Reference<'Resource'>[];
-    usePeriod?: Period[];
-    valuedItem?: ContractTermAssetValuedItem[];
-}
-
-export interface ContractTerm extends BackboneElement {
-    action?: ContractTermAction[];
-    applies?: Period;
-    asset?: ContractTermAsset[];
-    group?: ContractTerm[];
-    identifier?: Identifier;
-    issued?: string;
-    offer?: ContractTermOffer;
-    securityLabel?: ContractTermSecurityLabel[];
-    subType?: CodeableConcept;
-    text?: string;
-    topicCodeableConcept?: CodeableConcept;
-    topicReference?: Reference<'Resource'>;
+    topic?: Reference<'Resource'>;
     type?: CodeableConcept;
 }
 
-export interface ContractFriendly extends BackboneElement {
-    contentAttachment?: Attachment;
-    contentReference?: Reference<'Composition' | 'DocumentReference' | 'QuestionnaireResponse'>;
+export interface ContractTermOfferAnswer extends BackboneElement {
+    valueAttachment?: Attachment;
+    valueBoolean?: boolean;
+    valueCoding?: Coding;
+    valueDate?: string;
+    valueDateTime?: string;
+    valueDecimal?: number;
+    valueInteger?: number;
+    valueQuantity?: Quantity;
+    valueReference?: Reference<'Resource'>;
+    valueString?: string;
+    valueTime?: string;
+    valueUri?: string;
+}
+
+export interface ContractTermOfferParty extends BackboneElement {
+    reference?: Reference<'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
+    role?: CodeableConcept;
+}
+
+export interface ContractTermSecurityLabel extends BackboneElement {
+    category?: Coding[];
+    classification?: Coding;
+    control?: Coding[];
+    number?: number[];
 }
 
 export interface Contract extends DomainResource {

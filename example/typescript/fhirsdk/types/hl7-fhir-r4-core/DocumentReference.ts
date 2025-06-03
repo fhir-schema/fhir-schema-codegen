@@ -17,11 +17,6 @@ export interface DocumentReferenceContent extends BackboneElement {
     format?: Coding;
 }
 
-export interface DocumentReferenceRelatesTo extends BackboneElement {
-    code?: 'replaces' | 'transforms' | 'signs' | 'appends';
-    target?: Reference<'DocumentReference'>;
-}
-
 export interface DocumentReferenceContext extends BackboneElement {
     encounter?: Reference<'Encounter' | 'EpisodeOfCare'>[];
     event?: CodeableConcept[];
@@ -30,6 +25,11 @@ export interface DocumentReferenceContext extends BackboneElement {
     practiceSetting?: CodeableConcept;
     related?: Reference<'Resource'>[];
     sourcePatientInfo?: Reference<'Patient'>;
+}
+
+export interface DocumentReferenceRelatesTo extends BackboneElement {
+    code?: 'replaces' | 'transforms' | 'signs' | 'appends';
+    target?: Reference<'DocumentReference'>;
 }
 
 export interface DocumentReference extends DomainResource {

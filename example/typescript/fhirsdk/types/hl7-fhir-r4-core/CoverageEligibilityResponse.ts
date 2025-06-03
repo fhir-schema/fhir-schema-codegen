@@ -11,14 +11,15 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
-export interface CoverageEligibilityResponseInsuranceItemBenefit extends BackboneElement {
-    allowedMoney?: Money;
-    allowedString?: string;
-    allowedUnsignedInt?: number;
-    type?: CodeableConcept;
-    usedMoney?: Money;
-    usedString?: string;
-    usedUnsignedInt?: number;
+export interface CoverageEligibilityResponseError extends BackboneElement {
+    code?: CodeableConcept;
+}
+
+export interface CoverageEligibilityResponseInsurance extends BackboneElement {
+    benefitPeriod?: Period;
+    coverage?: Reference<'Coverage'>;
+    inforce?: boolean;
+    item?: CoverageEligibilityResponseInsuranceItem[];
 }
 
 export interface CoverageEligibilityResponseInsuranceItem extends BackboneElement {
@@ -38,15 +39,14 @@ export interface CoverageEligibilityResponseInsuranceItem extends BackboneElemen
     unit?: CodeableConcept;
 }
 
-export interface CoverageEligibilityResponseInsurance extends BackboneElement {
-    benefitPeriod?: Period;
-    coverage?: Reference<'Coverage'>;
-    inforce?: boolean;
-    item?: CoverageEligibilityResponseInsuranceItem[];
-}
-
-export interface CoverageEligibilityResponseError extends BackboneElement {
-    code?: CodeableConcept;
+export interface CoverageEligibilityResponseInsuranceItemBenefit extends BackboneElement {
+    allowedMoney?: Money;
+    allowedString?: string;
+    allowedUnsignedInt?: number;
+    type?: CodeableConcept;
+    usedMoney?: Money;
+    usedString?: string;
+    usedUnsignedInt?: number;
 }
 
 export interface CoverageEligibilityResponse extends DomainResource {

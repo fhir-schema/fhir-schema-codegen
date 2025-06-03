@@ -13,14 +13,23 @@ import { Reference } from './Reference';
 import { Timing } from './Timing';
 
 
-export interface NutritionOrderOralDietNutrient extends BackboneElement {
-    amount?: Quantity;
-    modifier?: CodeableConcept;
+export interface NutritionOrderEnteralFormula extends BackboneElement {
+    additiveProductName?: string;
+    additiveType?: CodeableConcept;
+    administration?: NutritionOrderEnteralFormulaAdministration[];
+    administrationInstruction?: string;
+    baseFormulaProductName?: string;
+    baseFormulaType?: CodeableConcept;
+    caloricDensity?: Quantity;
+    maxVolumeToDeliver?: Quantity;
+    routeofAdministration?: CodeableConcept;
 }
 
-export interface NutritionOrderOralDietTexture extends BackboneElement {
-    foodType?: CodeableConcept;
-    modifier?: CodeableConcept;
+export interface NutritionOrderEnteralFormulaAdministration extends BackboneElement {
+    quantity?: Quantity;
+    rateQuantity?: Quantity;
+    rateRatio?: Ratio;
+    schedule?: Timing;
 }
 
 export interface NutritionOrderOralDiet extends BackboneElement {
@@ -32,23 +41,14 @@ export interface NutritionOrderOralDiet extends BackboneElement {
     type?: CodeableConcept[];
 }
 
-export interface NutritionOrderEnteralFormulaAdministration extends BackboneElement {
-    quantity?: Quantity;
-    rateQuantity?: Quantity;
-    rateRatio?: Ratio;
-    schedule?: Timing;
+export interface NutritionOrderOralDietNutrient extends BackboneElement {
+    amount?: Quantity;
+    modifier?: CodeableConcept;
 }
 
-export interface NutritionOrderEnteralFormula extends BackboneElement {
-    additiveProductName?: string;
-    additiveType?: CodeableConcept;
-    administration?: NutritionOrderEnteralFormulaAdministration[];
-    administrationInstruction?: string;
-    baseFormulaProductName?: string;
-    baseFormulaType?: CodeableConcept;
-    caloricDensity?: Quantity;
-    maxVolumeToDeliver?: Quantity;
-    routeofAdministration?: CodeableConcept;
+export interface NutritionOrderOralDietTexture extends BackboneElement {
+    foodType?: CodeableConcept;
+    modifier?: CodeableConcept;
 }
 
 export interface NutritionOrderSupplement extends BackboneElement {

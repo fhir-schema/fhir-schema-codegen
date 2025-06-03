@@ -10,10 +10,15 @@ import { Signature } from './Signature';
 import { Timing } from './Timing';
 
 
-export interface VerificationResultValidator extends BackboneElement {
-    attestationSignature?: Signature;
-    identityCertificate?: string;
-    organization?: Reference<'Organization'>;
+export interface VerificationResultAttestation extends BackboneElement {
+    communicationMethod?: CodeableConcept;
+    date?: string;
+    onBehalfOf?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    proxyIdentityCertificate?: string;
+    proxySignature?: Signature;
+    sourceIdentityCertificate?: string;
+    sourceSignature?: Signature;
+    who?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
 }
 
 export interface VerificationResultPrimarySource extends BackboneElement {
@@ -26,15 +31,10 @@ export interface VerificationResultPrimarySource extends BackboneElement {
     who?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
 }
 
-export interface VerificationResultAttestation extends BackboneElement {
-    communicationMethod?: CodeableConcept;
-    date?: string;
-    onBehalfOf?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    proxyIdentityCertificate?: string;
-    proxySignature?: Signature;
-    sourceIdentityCertificate?: string;
-    sourceSignature?: Signature;
-    who?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+export interface VerificationResultValidator extends BackboneElement {
+    attestationSignature?: Signature;
+    identityCertificate?: string;
+    organization?: Reference<'Organization'>;
 }
 
 export interface VerificationResult extends DomainResource {

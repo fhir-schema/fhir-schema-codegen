@@ -15,46 +15,6 @@ import { Reference } from './Reference';
 import { UsageContext } from './UsageContext';
 
 
-export interface QuestionnaireItemEnableWhen extends BackboneElement {
-    answerBoolean?: boolean;
-    answerCoding?: Coding;
-    answerDate?: string;
-    answerDateTime?: string;
-    answerDecimal?: number;
-    answerInteger?: number;
-    answerQuantity?: Quantity;
-    answerReference?: Reference<'Resource'>;
-    answerString?: string;
-    answerTime?: string;
-    operator?: 'exists' | '=' | '!=' | '>' | '<' | '>=' | '<=';
-    question?: string;
-}
-
-export interface QuestionnaireItemAnswerOption extends BackboneElement {
-    initialSelected?: boolean;
-    valueCoding?: Coding;
-    valueDate?: string;
-    valueInteger?: number;
-    valueReference?: Reference<'Resource'>;
-    valueString?: string;
-    valueTime?: string;
-}
-
-export interface QuestionnaireItemInitial extends BackboneElement {
-    valueAttachment?: Attachment;
-    valueBoolean?: boolean;
-    valueCoding?: Coding;
-    valueDate?: string;
-    valueDateTime?: string;
-    valueDecimal?: number;
-    valueInteger?: number;
-    valueQuantity?: Quantity;
-    valueReference?: Reference<'Resource'>;
-    valueString?: string;
-    valueTime?: string;
-    valueUri?: string;
-}
-
 export interface QuestionnaireItem extends BackboneElement {
     answerOption?: QuestionnaireItemAnswerOption[];
     answerValueSet?: string;
@@ -72,6 +32,46 @@ export interface QuestionnaireItem extends BackboneElement {
     required?: boolean;
     text?: string;
     type?: 'group' | 'display' | 'question';
+}
+
+export interface QuestionnaireItemAnswerOption extends BackboneElement {
+    initialSelected?: boolean;
+    valueCoding?: Coding;
+    valueDate?: string;
+    valueInteger?: number;
+    valueReference?: Reference<'Resource'>;
+    valueString?: string;
+    valueTime?: string;
+}
+
+export interface QuestionnaireItemEnableWhen extends BackboneElement {
+    answerBoolean?: boolean;
+    answerCoding?: Coding;
+    answerDate?: string;
+    answerDateTime?: string;
+    answerDecimal?: number;
+    answerInteger?: number;
+    answerQuantity?: Quantity;
+    answerReference?: Reference<'Resource'>;
+    answerString?: string;
+    answerTime?: string;
+    operator?: 'exists' | '=' | '!=' | '>' | '<' | '>=' | '<=';
+    question?: string;
+}
+
+export interface QuestionnaireItemInitial extends BackboneElement {
+    valueAttachment?: Attachment;
+    valueBoolean?: boolean;
+    valueCoding?: Coding;
+    valueDate?: string;
+    valueDateTime?: string;
+    valueDecimal?: number;
+    valueInteger?: number;
+    valueQuantity?: Quantity;
+    valueReference?: Reference<'Resource'>;
+    valueString?: string;
+    valueTime?: string;
+    valueUri?: string;
 }
 
 export interface Questionnaire extends DomainResource {

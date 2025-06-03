@@ -14,13 +14,14 @@ import { RelatedArtifact } from './RelatedArtifact';
 import { UsageContext } from './UsageContext';
 
 
-export interface MeasureGroupPopulation extends BackboneElement {
+export interface MeasureGroup extends BackboneElement {
     code?: CodeableConcept;
-    criteria?: Expression;
     description?: string;
+    population?: MeasureGroupPopulation[];
+    stratifier?: MeasureGroupStratifier[];
 }
 
-export interface MeasureGroupStratifierComponent extends BackboneElement {
+export interface MeasureGroupPopulation extends BackboneElement {
     code?: CodeableConcept;
     criteria?: Expression;
     description?: string;
@@ -33,11 +34,10 @@ export interface MeasureGroupStratifier extends BackboneElement {
     description?: string;
 }
 
-export interface MeasureGroup extends BackboneElement {
+export interface MeasureGroupStratifierComponent extends BackboneElement {
     code?: CodeableConcept;
+    criteria?: Expression;
     description?: string;
-    population?: MeasureGroupPopulation[];
-    stratifier?: MeasureGroupStratifier[];
 }
 
 export interface MeasureSupplementalData extends BackboneElement {

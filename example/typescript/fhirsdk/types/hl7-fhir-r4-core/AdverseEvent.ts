@@ -9,16 +9,16 @@ import { Identifier } from './Identifier';
 import { Reference } from './Reference';
 
 
+export interface AdverseEventSuspectEntity extends BackboneElement {
+    causality?: AdverseEventSuspectEntityCausality[];
+    instance?: Reference<'Device' | 'Immunization' | 'Medication' | 'MedicationAdministration' | 'MedicationStatement' | 'Procedure' | 'Substance'>;
+}
+
 export interface AdverseEventSuspectEntityCausality extends BackboneElement {
     assessment?: CodeableConcept;
     author?: Reference<'Practitioner' | 'PractitionerRole'>;
     method?: CodeableConcept;
     productRelatedness?: string;
-}
-
-export interface AdverseEventSuspectEntity extends BackboneElement {
-    causality?: AdverseEventSuspectEntityCausality[];
-    instance?: Reference<'Device' | 'Immunization' | 'Medication' | 'MedicationAdministration' | 'MedicationStatement' | 'Procedure' | 'Substance'>;
 }
 
 export interface AdverseEvent extends DomainResource {

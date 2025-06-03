@@ -9,6 +9,17 @@ import { DomainResource } from './DomainResource';
 import { Identifier } from './Identifier';
 
 
+export interface SubstanceNucleicAcidSubunit extends BackboneElement {
+    fivePrime?: CodeableConcept;
+    length?: number;
+    linkage?: SubstanceNucleicAcidSubunitLinkage[];
+    sequence?: string;
+    sequenceAttachment?: Attachment;
+    subunit?: number;
+    sugar?: SubstanceNucleicAcidSubunitSugar[];
+    threePrime?: CodeableConcept;
+}
+
 export interface SubstanceNucleicAcidSubunitLinkage extends BackboneElement {
     connectivity?: string;
     identifier?: Identifier;
@@ -20,17 +31,6 @@ export interface SubstanceNucleicAcidSubunitSugar extends BackboneElement {
     identifier?: Identifier;
     name?: string;
     residueSite?: string;
-}
-
-export interface SubstanceNucleicAcidSubunit extends BackboneElement {
-    fivePrime?: CodeableConcept;
-    length?: number;
-    linkage?: SubstanceNucleicAcidSubunitLinkage[];
-    sequence?: string;
-    sequenceAttachment?: Attachment;
-    subunit?: number;
-    sugar?: SubstanceNucleicAcidSubunitSugar[];
-    threePrime?: CodeableConcept;
 }
 
 export interface SubstanceNucleicAcid extends DomainResource {

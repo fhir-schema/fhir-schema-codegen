@@ -13,20 +13,23 @@ import { Ratio } from './Ratio';
 import { Reference } from './Reference';
 
 
-export interface SubstanceSpecificationProperty extends BackboneElement {
-    amountQuantity?: Quantity;
-    amountString?: string;
-    category?: CodeableConcept;
+export interface SubstanceSpecificationCode extends BackboneElement {
     code?: CodeableConcept;
-    definingSubstanceCodeableConcept?: CodeableConcept;
-    definingSubstanceReference?: Reference<'Substance' | 'SubstanceSpecification'>;
-    parameters?: string;
+    comment?: string;
+    source?: Reference<'DocumentReference'>[];
+    status?: CodeableConcept;
+    statusDate?: string;
 }
 
-export interface SubstanceSpecificationNameOfficial extends BackboneElement {
-    authority?: CodeableConcept;
-    date?: string;
-    status?: CodeableConcept;
+export interface SubstanceSpecificationMoiety extends BackboneElement {
+    amountQuantity?: Quantity;
+    amountString?: string;
+    identifier?: Identifier;
+    molecularFormula?: string;
+    name?: string;
+    opticalActivity?: CodeableConcept;
+    role?: CodeableConcept;
+    stereochemistry?: CodeableConcept;
 }
 
 export interface SubstanceSpecificationName extends BackboneElement {
@@ -43,6 +46,22 @@ export interface SubstanceSpecificationName extends BackboneElement {
     type?: CodeableConcept;
 }
 
+export interface SubstanceSpecificationNameOfficial extends BackboneElement {
+    authority?: CodeableConcept;
+    date?: string;
+    status?: CodeableConcept;
+}
+
+export interface SubstanceSpecificationProperty extends BackboneElement {
+    amountQuantity?: Quantity;
+    amountString?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    definingSubstanceCodeableConcept?: CodeableConcept;
+    definingSubstanceReference?: Reference<'Substance' | 'SubstanceSpecification'>;
+    parameters?: string;
+}
+
 export interface SubstanceSpecificationRelationship extends BackboneElement {
     amountQuantity?: Quantity;
     amountRange?: Range;
@@ -57,37 +76,6 @@ export interface SubstanceSpecificationRelationship extends BackboneElement {
     substanceReference?: Reference<'SubstanceSpecification'>;
 }
 
-export interface SubstanceSpecificationMoiety extends BackboneElement {
-    amountQuantity?: Quantity;
-    amountString?: string;
-    identifier?: Identifier;
-    molecularFormula?: string;
-    name?: string;
-    opticalActivity?: CodeableConcept;
-    role?: CodeableConcept;
-    stereochemistry?: CodeableConcept;
-}
-
-export interface SubstanceSpecificationStructureIsotopeMolecularWeight extends BackboneElement {
-    amount?: Quantity;
-    method?: CodeableConcept;
-    type?: CodeableConcept;
-}
-
-export interface SubstanceSpecificationStructureIsotope extends BackboneElement {
-    halfLife?: Quantity;
-    identifier?: Identifier;
-    molecularWeight?: SubstanceSpecificationStructureIsotopeMolecularWeight;
-    name?: CodeableConcept;
-    substitution?: CodeableConcept;
-}
-
-export interface SubstanceSpecificationStructureRepresentation extends BackboneElement {
-    attachment?: Attachment;
-    representation?: string;
-    type?: CodeableConcept;
-}
-
 export interface SubstanceSpecificationStructure extends BackboneElement {
     isotope?: SubstanceSpecificationStructureIsotope[];
     molecularFormula?: string;
@@ -99,12 +87,24 @@ export interface SubstanceSpecificationStructure extends BackboneElement {
     stereochemistry?: CodeableConcept;
 }
 
-export interface SubstanceSpecificationCode extends BackboneElement {
-    code?: CodeableConcept;
-    comment?: string;
-    source?: Reference<'DocumentReference'>[];
-    status?: CodeableConcept;
-    statusDate?: string;
+export interface SubstanceSpecificationStructureIsotope extends BackboneElement {
+    halfLife?: Quantity;
+    identifier?: Identifier;
+    molecularWeight?: SubstanceSpecificationStructureIsotopeMolecularWeight;
+    name?: CodeableConcept;
+    substitution?: CodeableConcept;
+}
+
+export interface SubstanceSpecificationStructureIsotopeMolecularWeight extends BackboneElement {
+    amount?: Quantity;
+    method?: CodeableConcept;
+    type?: CodeableConcept;
+}
+
+export interface SubstanceSpecificationStructureRepresentation extends BackboneElement {
+    attachment?: Attachment;
+    representation?: string;
+    type?: CodeableConcept;
 }
 
 export interface SubstanceSpecification extends DomainResource {

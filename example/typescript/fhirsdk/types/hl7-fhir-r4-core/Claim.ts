@@ -14,13 +14,18 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface ClaimInsurance extends BackboneElement {
-    businessArrangement?: string;
-    claimResponse?: Reference<'ClaimResponse'>;
-    coverage?: Reference<'Coverage'>;
-    focal?: boolean;
-    identifier?: Identifier;
-    preAuthRef?: string[];
+export interface ClaimAccident extends BackboneElement {
+    date?: string;
+    locationAddress?: Address;
+    locationReference?: Reference<'Location'>;
+    type?: CodeableConcept;
+}
+
+export interface ClaimCareTeam extends BackboneElement {
+    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    qualification?: CodeableConcept;
+    responsible?: boolean;
+    role?: CodeableConcept;
     sequence?: number;
 }
 
@@ -33,47 +38,14 @@ export interface ClaimDiagnosis extends BackboneElement {
     type?: CodeableConcept[];
 }
 
-export interface ClaimSupportingInfo extends BackboneElement {
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    reason?: CodeableConcept;
+export interface ClaimInsurance extends BackboneElement {
+    businessArrangement?: string;
+    claimResponse?: Reference<'ClaimResponse'>;
+    coverage?: Reference<'Coverage'>;
+    focal?: boolean;
+    identifier?: Identifier;
+    preAuthRef?: string[];
     sequence?: number;
-    timingDate?: string;
-    timingPeriod?: Period;
-    valueAttachment?: Attachment;
-    valueBoolean?: boolean;
-    valueQuantity?: Quantity;
-    valueReference?: Reference<'Resource'>;
-    valueString?: string;
-}
-
-export interface ClaimItemDetailSubDetail extends BackboneElement {
-    category?: CodeableConcept;
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    productOrService?: CodeableConcept;
-    programCode?: CodeableConcept[];
-    quantity?: Quantity;
-    revenue?: CodeableConcept;
-    sequence?: number;
-    udi?: Reference<'Device'>[];
-    unitPrice?: Money;
-}
-
-export interface ClaimItemDetail extends BackboneElement {
-    category?: CodeableConcept;
-    factor?: number;
-    modifier?: CodeableConcept[];
-    net?: Money;
-    productOrService?: CodeableConcept;
-    programCode?: CodeableConcept[];
-    quantity?: Quantity;
-    revenue?: CodeableConcept;
-    sequence?: number;
-    subDetail?: ClaimItemDetailSubDetail[];
-    udi?: Reference<'Device'>[];
-    unitPrice?: Money;
 }
 
 export interface ClaimItem extends BackboneElement {
@@ -103,6 +75,40 @@ export interface ClaimItem extends BackboneElement {
     unitPrice?: Money;
 }
 
+export interface ClaimItemDetail extends BackboneElement {
+    category?: CodeableConcept;
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    productOrService?: CodeableConcept;
+    programCode?: CodeableConcept[];
+    quantity?: Quantity;
+    revenue?: CodeableConcept;
+    sequence?: number;
+    subDetail?: ClaimItemDetailSubDetail[];
+    udi?: Reference<'Device'>[];
+    unitPrice?: Money;
+}
+
+export interface ClaimItemDetailSubDetail extends BackboneElement {
+    category?: CodeableConcept;
+    factor?: number;
+    modifier?: CodeableConcept[];
+    net?: Money;
+    productOrService?: CodeableConcept;
+    programCode?: CodeableConcept[];
+    quantity?: Quantity;
+    revenue?: CodeableConcept;
+    sequence?: number;
+    udi?: Reference<'Device'>[];
+    unitPrice?: Money;
+}
+
+export interface ClaimPayee extends BackboneElement {
+    party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    type?: CodeableConcept;
+}
+
 export interface ClaimProcedure extends BackboneElement {
     date?: string;
     procedureCodeableConcept?: CodeableConcept;
@@ -118,24 +124,18 @@ export interface ClaimRelated extends BackboneElement {
     relationship?: CodeableConcept;
 }
 
-export interface ClaimAccident extends BackboneElement {
-    date?: string;
-    locationAddress?: Address;
-    locationReference?: Reference<'Location'>;
-    type?: CodeableConcept;
-}
-
-export interface ClaimPayee extends BackboneElement {
-    party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    type?: CodeableConcept;
-}
-
-export interface ClaimCareTeam extends BackboneElement {
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    qualification?: CodeableConcept;
-    responsible?: boolean;
-    role?: CodeableConcept;
+export interface ClaimSupportingInfo extends BackboneElement {
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    reason?: CodeableConcept;
     sequence?: number;
+    timingDate?: string;
+    timingPeriod?: Period;
+    valueAttachment?: Attachment;
+    valueBoolean?: boolean;
+    valueQuantity?: Quantity;
+    valueReference?: Reference<'Resource'>;
+    valueString?: string;
 }
 
 export interface Claim extends DomainResource {

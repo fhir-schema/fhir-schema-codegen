@@ -12,14 +12,9 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
-export interface ConsentProvisionActor extends BackboneElement {
-    reference?: Reference<'CareTeam' | 'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    role?: CodeableConcept;
-}
-
-export interface ConsentProvisionData extends BackboneElement {
-    meaning?: 'instance' | 'related' | 'dependents' | 'authoredby';
-    reference?: Reference<'Resource'>;
+export interface ConsentPolicy extends BackboneElement {
+    authority?: string;
+    uri?: string;
 }
 
 export interface ConsentProvision extends BackboneElement {
@@ -36,15 +31,20 @@ export interface ConsentProvision extends BackboneElement {
     type?: 'deny' | 'permit';
 }
 
+export interface ConsentProvisionActor extends BackboneElement {
+    reference?: Reference<'CareTeam' | 'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    role?: CodeableConcept;
+}
+
+export interface ConsentProvisionData extends BackboneElement {
+    meaning?: 'instance' | 'related' | 'dependents' | 'authoredby';
+    reference?: Reference<'Resource'>;
+}
+
 export interface ConsentVerification extends BackboneElement {
     verificationDate?: string;
     verified?: boolean;
     verifiedWith?: Reference<'Patient' | 'RelatedPerson'>;
-}
-
-export interface ConsentPolicy extends BackboneElement {
-    authority?: string;
-    uri?: string;
 }
 
 export interface Consent extends DomainResource {

@@ -14,28 +14,15 @@ import { RelatedArtifact } from './RelatedArtifact';
 import { UsageContext } from './UsageContext';
 
 
-export interface RiskEvidenceSynthesisSampleSize extends BackboneElement {
-    description?: string;
-    numberOfParticipants?: number;
-    numberOfStudies?: number;
-}
-
-export interface RiskEvidenceSynthesisCertaintyCertaintySubcomponent extends BackboneElement {
-    note?: Annotation[];
-    rating?: CodeableConcept[];
-    type?: CodeableConcept;
-}
-
 export interface RiskEvidenceSynthesisCertainty extends BackboneElement {
     certaintySubcomponent?: RiskEvidenceSynthesisCertaintyCertaintySubcomponent[];
     note?: Annotation[];
     rating?: CodeableConcept[];
 }
 
-export interface RiskEvidenceSynthesisRiskEstimatePrecisionEstimate extends BackboneElement {
-    from?: number;
-    level?: number;
-    to?: number;
+export interface RiskEvidenceSynthesisCertaintyCertaintySubcomponent extends BackboneElement {
+    note?: Annotation[];
+    rating?: CodeableConcept[];
     type?: CodeableConcept;
 }
 
@@ -47,6 +34,19 @@ export interface RiskEvidenceSynthesisRiskEstimate extends BackboneElement {
     type?: CodeableConcept;
     unitOfMeasure?: CodeableConcept;
     value?: number;
+}
+
+export interface RiskEvidenceSynthesisRiskEstimatePrecisionEstimate extends BackboneElement {
+    from?: number;
+    level?: number;
+    to?: number;
+    type?: CodeableConcept;
+}
+
+export interface RiskEvidenceSynthesisSampleSize extends BackboneElement {
+    description?: string;
+    numberOfParticipants?: number;
+    numberOfStudies?: number;
 }
 
 export interface RiskEvidenceSynthesis extends DomainResource {

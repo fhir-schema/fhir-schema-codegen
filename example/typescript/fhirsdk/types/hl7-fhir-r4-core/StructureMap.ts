@@ -37,11 +37,34 @@ import { TriggerDefinition } from './TriggerDefinition';
 import { UsageContext } from './UsageContext';
 
 
+export interface StructureMapGroup extends BackboneElement {
+    documentation?: string;
+    extends?: string;
+    input?: StructureMapGroupInput[];
+    name?: string;
+    rule?: StructureMapGroupRule[];
+    typeMode?: 'none' | 'types' | 'type-and-types';
+}
+
 export interface StructureMapGroupInput extends BackboneElement {
     documentation?: string;
     mode?: 'source' | 'target';
     name?: string;
     type?: string;
+}
+
+export interface StructureMapGroupRule extends BackboneElement {
+    dependent?: StructureMapGroupRuleDependent[];
+    documentation?: string;
+    name?: string;
+    rule?: StructureMapGroupRule[];
+    source?: StructureMapGroupRuleSource[];
+    target?: StructureMapGroupRuleTarget[];
+}
+
+export interface StructureMapGroupRuleDependent extends BackboneElement {
+    name?: string;
+    variable?: string[];
 }
 
 export interface StructureMapGroupRuleSource extends BackboneElement {
@@ -107,14 +130,6 @@ export interface StructureMapGroupRuleSource extends BackboneElement {
     variable?: string;
 }
 
-export interface StructureMapGroupRuleTargetParameter extends BackboneElement {
-    valueBoolean?: boolean;
-    valueDecimal?: number;
-    valueId?: string;
-    valueInteger?: number;
-    valueString?: string;
-}
-
 export interface StructureMapGroupRuleTarget extends BackboneElement {
     context?: string;
     contextType?: 'type' | 'variable';
@@ -126,27 +141,12 @@ export interface StructureMapGroupRuleTarget extends BackboneElement {
     variable?: string;
 }
 
-export interface StructureMapGroupRuleDependent extends BackboneElement {
-    name?: string;
-    variable?: string[];
-}
-
-export interface StructureMapGroupRule extends BackboneElement {
-    dependent?: StructureMapGroupRuleDependent[];
-    documentation?: string;
-    name?: string;
-    rule?: StructureMapGroupRule[];
-    source?: StructureMapGroupRuleSource[];
-    target?: StructureMapGroupRuleTarget[];
-}
-
-export interface StructureMapGroup extends BackboneElement {
-    documentation?: string;
-    extends?: string;
-    input?: StructureMapGroupInput[];
-    name?: string;
-    rule?: StructureMapGroupRule[];
-    typeMode?: 'none' | 'types' | 'type-and-types';
+export interface StructureMapGroupRuleTargetParameter extends BackboneElement {
+    valueBoolean?: boolean;
+    valueDecimal?: number;
+    valueId?: string;
+    valueInteger?: number;
+    valueString?: string;
 }
 
 export interface StructureMapStructure extends BackboneElement {

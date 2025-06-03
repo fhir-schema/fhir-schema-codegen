@@ -11,18 +11,6 @@ import { Identifier } from './Identifier';
 import { Reference } from './Reference';
 
 
-export interface ImagingStudySeriesInstance extends BackboneElement {
-    number?: number;
-    sopClass?: Coding;
-    title?: string;
-    uid?: string;
-}
-
-export interface ImagingStudySeriesPerformer extends BackboneElement {
-    actor?: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    function?: CodeableConcept;
-}
-
 export interface ImagingStudySeries extends BackboneElement {
     bodySite?: Coding;
     description?: string;
@@ -36,6 +24,18 @@ export interface ImagingStudySeries extends BackboneElement {
     specimen?: Reference<'Specimen'>[];
     started?: string;
     uid?: string;
+}
+
+export interface ImagingStudySeriesInstance extends BackboneElement {
+    number?: number;
+    sopClass?: Coding;
+    title?: string;
+    uid?: string;
+}
+
+export interface ImagingStudySeriesPerformer extends BackboneElement {
+    actor?: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    function?: CodeableConcept;
 }
 
 export interface ImagingStudy extends DomainResource {

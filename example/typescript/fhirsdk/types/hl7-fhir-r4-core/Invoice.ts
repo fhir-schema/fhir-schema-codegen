@@ -11,9 +11,11 @@ import { Money } from './Money';
 import { Reference } from './Reference';
 
 
-export interface InvoiceParticipant extends BackboneElement {
-    actor?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    role?: CodeableConcept;
+export interface InvoiceLineItem extends BackboneElement {
+    chargeItemCodeableConcept?: CodeableConcept;
+    chargeItemReference?: Reference<'ChargeItem'>;
+    priceComponent?: InvoiceLineItemPriceComponent[];
+    sequence?: number;
 }
 
 export interface InvoiceLineItemPriceComponent extends BackboneElement {
@@ -23,11 +25,9 @@ export interface InvoiceLineItemPriceComponent extends BackboneElement {
     type?: 'base' | 'surcharge' | 'deduction' | 'discount' | 'tax' | 'informational';
 }
 
-export interface InvoiceLineItem extends BackboneElement {
-    chargeItemCodeableConcept?: CodeableConcept;
-    chargeItemReference?: Reference<'ChargeItem'>;
-    priceComponent?: InvoiceLineItemPriceComponent[];
-    sequence?: number;
+export interface InvoiceParticipant extends BackboneElement {
+    actor?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    role?: CodeableConcept;
 }
 
 export interface Invoice extends DomainResource {

@@ -11,22 +11,11 @@ import { Identifier } from './Identifier';
 import { UsageContext } from './UsageContext';
 
 
-export interface ValueSetComposeIncludeConceptDesignation extends BackboneElement {
-    language?: string;
-    use?: Coding;
-    value?: string;
-}
-
-export interface ValueSetComposeIncludeConcept extends BackboneElement {
-    code?: string;
-    designation?: ValueSetComposeIncludeConceptDesignation[];
-    display?: string;
-}
-
-export interface ValueSetComposeIncludeFilter extends BackboneElement {
-    op?: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists';
-    property?: string;
-    value?: string;
+export interface ValueSetCompose extends BackboneElement {
+    exclude?: ValueSetComposeInclude[];
+    inactive?: boolean;
+    include?: ValueSetComposeInclude[];
+    lockedDate?: string;
 }
 
 export interface ValueSetComposeInclude extends BackboneElement {
@@ -37,22 +26,31 @@ export interface ValueSetComposeInclude extends BackboneElement {
     version?: string;
 }
 
-export interface ValueSetCompose extends BackboneElement {
-    exclude?: ValueSetComposeInclude[];
-    inactive?: boolean;
-    include?: ValueSetComposeInclude[];
-    lockedDate?: string;
+export interface ValueSetComposeIncludeConcept extends BackboneElement {
+    code?: string;
+    designation?: ValueSetComposeIncludeConceptDesignation[];
+    display?: string;
 }
 
-export interface ValueSetExpansionParameter extends BackboneElement {
-    name?: string;
-    valueBoolean?: boolean;
-    valueCode?: string;
-    valueDateTime?: string;
-    valueDecimal?: number;
-    valueInteger?: number;
-    valueString?: string;
-    valueUri?: string;
+export interface ValueSetComposeIncludeConceptDesignation extends BackboneElement {
+    language?: string;
+    use?: Coding;
+    value?: string;
+}
+
+export interface ValueSetComposeIncludeFilter extends BackboneElement {
+    op?: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists';
+    property?: string;
+    value?: string;
+}
+
+export interface ValueSetExpansion extends BackboneElement {
+    contains?: ValueSetExpansionContains[];
+    identifier?: string;
+    offset?: number;
+    parameter?: ValueSetExpansionParameter[];
+    timestamp?: string;
+    total?: number;
 }
 
 export interface ValueSetExpansionContains extends BackboneElement {
@@ -66,13 +64,15 @@ export interface ValueSetExpansionContains extends BackboneElement {
     version?: string;
 }
 
-export interface ValueSetExpansion extends BackboneElement {
-    contains?: ValueSetExpansionContains[];
-    identifier?: string;
-    offset?: number;
-    parameter?: ValueSetExpansionParameter[];
-    timestamp?: string;
-    total?: number;
+export interface ValueSetExpansionParameter extends BackboneElement {
+    name?: string;
+    valueBoolean?: boolean;
+    valueCode?: string;
+    valueDateTime?: string;
+    valueDecimal?: number;
+    valueInteger?: number;
+    valueString?: string;
+    valueUri?: string;
 }
 
 export interface ValueSet extends DomainResource {

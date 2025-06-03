@@ -10,17 +10,6 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 
-export interface AuditEventSource extends BackboneElement {
-    observer?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    site?: string;
-    type?: Coding[];
-}
-
-export interface AuditEventAgentNetwork extends BackboneElement {
-    address?: string;
-    type?: '1' | '2' | '3' | '4' | '5';
-}
-
 export interface AuditEventAgent extends BackboneElement {
     altId?: string;
     location?: Reference<'Location'>;
@@ -35,10 +24,9 @@ export interface AuditEventAgent extends BackboneElement {
     who?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
 }
 
-export interface AuditEventEntityDetail extends BackboneElement {
-    type?: string;
-    valueBase64Binary?: string;
-    valueString?: string;
+export interface AuditEventAgentNetwork extends BackboneElement {
+    address?: string;
+    type?: '1' | '2' | '3' | '4' | '5';
 }
 
 export interface AuditEventEntity extends BackboneElement {
@@ -51,6 +39,18 @@ export interface AuditEventEntity extends BackboneElement {
     securityLabel?: Coding[];
     type?: Coding;
     what?: Reference<'Resource'>;
+}
+
+export interface AuditEventEntityDetail extends BackboneElement {
+    type?: string;
+    valueBase64Binary?: string;
+    valueString?: string;
+}
+
+export interface AuditEventSource extends BackboneElement {
+    observer?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    site?: string;
+    type?: Coding[];
 }
 
 export interface AuditEvent extends DomainResource {

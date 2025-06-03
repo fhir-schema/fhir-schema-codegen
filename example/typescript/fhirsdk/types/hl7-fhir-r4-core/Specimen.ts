@@ -13,12 +13,16 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface SpecimenProcessing extends BackboneElement {
-    additive?: Reference<'Substance'>[];
-    description?: string;
-    procedure?: CodeableConcept;
-    timeDateTime?: string;
-    timePeriod?: Period;
+export interface SpecimenCollection extends BackboneElement {
+    bodySite?: CodeableConcept;
+    collectedDateTime?: string;
+    collectedPeriod?: Period;
+    collector?: Reference<'Practitioner' | 'PractitionerRole'>;
+    duration?: Duration;
+    fastingStatusCodeableConcept?: CodeableConcept;
+    fastingStatusDuration?: Duration;
+    method?: CodeableConcept;
+    quantity?: Quantity;
 }
 
 export interface SpecimenContainer extends BackboneElement {
@@ -31,16 +35,12 @@ export interface SpecimenContainer extends BackboneElement {
     type?: CodeableConcept;
 }
 
-export interface SpecimenCollection extends BackboneElement {
-    bodySite?: CodeableConcept;
-    collectedDateTime?: string;
-    collectedPeriod?: Period;
-    collector?: Reference<'Practitioner' | 'PractitionerRole'>;
-    duration?: Duration;
-    fastingStatusCodeableConcept?: CodeableConcept;
-    fastingStatusDuration?: Duration;
-    method?: CodeableConcept;
-    quantity?: Quantity;
+export interface SpecimenProcessing extends BackboneElement {
+    additive?: Reference<'Substance'>[];
+    description?: string;
+    procedure?: CodeableConcept;
+    timeDateTime?: string;
+    timePeriod?: Period;
 }
 
 export interface Specimen extends DomainResource {

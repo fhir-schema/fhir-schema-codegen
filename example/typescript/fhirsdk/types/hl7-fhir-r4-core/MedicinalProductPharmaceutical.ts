@@ -17,17 +17,6 @@ export interface MedicinalProductPharmaceuticalCharacteristics extends BackboneE
     status?: CodeableConcept;
 }
 
-export interface MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod extends BackboneElement {
-    supportingInformation?: string;
-    tissue?: CodeableConcept;
-    value?: Quantity;
-}
-
-export interface MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies extends BackboneElement {
-    code?: CodeableConcept;
-    withdrawalPeriod?: MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod[];
-}
-
 export interface MedicinalProductPharmaceuticalRouteOfAdministration extends BackboneElement {
     code?: CodeableConcept;
     firstDose?: Quantity;
@@ -36,6 +25,17 @@ export interface MedicinalProductPharmaceuticalRouteOfAdministration extends Bac
     maxSingleDose?: Quantity;
     maxTreatmentPeriod?: Duration;
     targetSpecies?: MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies[];
+}
+
+export interface MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies extends BackboneElement {
+    code?: CodeableConcept;
+    withdrawalPeriod?: MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod[];
+}
+
+export interface MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod extends BackboneElement {
+    supportingInformation?: string;
+    tissue?: CodeableConcept;
+    value?: Quantity;
 }
 
 export interface MedicinalProductPharmaceutical extends DomainResource {

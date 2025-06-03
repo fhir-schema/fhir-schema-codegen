@@ -11,11 +11,6 @@ import { Quantity } from './Quantity';
 import { Reference } from './Reference';
 
 
-export interface VisionPrescriptionLensSpecificationPrism extends BackboneElement {
-    amount?: number;
-    base?: 'up' | 'down' | 'in' | 'out';
-}
-
 export interface VisionPrescriptionLensSpecification extends BackboneElement {
     add?: number;
     axis?: number;
@@ -31,6 +26,11 @@ export interface VisionPrescriptionLensSpecification extends BackboneElement {
     prism?: VisionPrescriptionLensSpecificationPrism[];
     product?: CodeableConcept;
     sphere?: number;
+}
+
+export interface VisionPrescriptionLensSpecificationPrism extends BackboneElement {
+    amount?: number;
+    base?: 'up' | 'down' | 'in' | 'out';
 }
 
 export interface VisionPrescription extends DomainResource {
