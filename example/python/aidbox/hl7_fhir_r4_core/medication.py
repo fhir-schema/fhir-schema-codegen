@@ -6,10 +6,17 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Ratio, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class MedicationBatch(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    expiration_date: str | None = Field(None, alias="expirationDate", serialization_alias="expirationDate")
+    lot_number: str | None = Field(None, alias="lotNumber", serialization_alias="lotNumber")
 
 class MedicationIngredient(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -18,12 +25,6 @@ class MedicationIngredient(BackboneElement):
     item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
     item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
     strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
-
-class MedicationBatch(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    expiration_date: str | None = Field(None, alias="expirationDate", serialization_alias="expirationDate")
-    lot_number: str | None = Field(None, alias="lotNumber", serialization_alias="lotNumber")
 
 
 class Medication(DomainResource):

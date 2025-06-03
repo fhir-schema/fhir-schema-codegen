@@ -6,16 +6,18 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class CoverageCostToBeneficiaryException(BackboneElement):
+class CoverageClass(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class CoverageCostToBeneficiary(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -25,12 +27,11 @@ class CoverageCostToBeneficiary(BackboneElement):
     value_money: Money | None = Field(None, alias="valueMoney", serialization_alias="valueMoney")
     value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
-class CoverageClass(BackboneElement):
+class CoverageCostToBeneficiaryException(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 
 class Coverage(DomainResource):

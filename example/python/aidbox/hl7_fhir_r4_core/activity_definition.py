@@ -6,22 +6,24 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Age, BackboneElement, CodeableConcept, ContactDetail, Dosage, Duration, Expression, Identifier, Period, Quantity, Range, Reference, RelatedArtifact, Timing, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    Age, BackboneElement, CodeableConcept, ContactDetail, Dosage, Duration, Expression, Identifier, Period, \
+    Quantity, Range, Reference, RelatedArtifact, Timing, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class ActivityDefinitionParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
-    type: Literal["patient", "practitioner", "related-person", "device"] | None = Field(None, alias="type", serialization_alias="type")
 
 class ActivityDefinitionDynamicValue(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
     path: str | None = Field(None, alias="path", serialization_alias="path")
+
+class ActivityDefinitionParticipant(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
+    type: Literal["patient", "practitioner", "related-person", "device"] | None = Field(None, alias="type", serialization_alias="type")
 
 
 class ActivityDefinition(DomainResource):

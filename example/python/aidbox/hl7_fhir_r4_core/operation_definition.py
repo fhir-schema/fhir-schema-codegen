@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -16,18 +17,6 @@ class OperationDefinitionOverload(BackboneElement):
     
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
     parameter_name: PyList[str] | None = Field(None, alias="parameterName", serialization_alias="parameterName")
-
-class OperationDefinitionParameterReferencedFrom(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    source: str | None = Field(None, alias="source", serialization_alias="source")
-    source_id: str | None = Field(None, alias="sourceId", serialization_alias="sourceId")
-
-class OperationDefinitionParameterBinding(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    strength: Literal["required", "extensible", "preferred", "example"] | None = Field(None, alias="strength", serialization_alias="strength")
-    value_set: str | None = Field(None, alias="valueSet", serialization_alias="valueSet")
 
 class OperationDefinitionParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -43,6 +32,18 @@ class OperationDefinitionParameter(BackboneElement):
     target_profile: PyList[str] | None = Field(None, alias="targetProfile", serialization_alias="targetProfile")
     type: Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"] | None = Field(None, alias="type", serialization_alias="type")
     use: Literal["in", "out"] | None = Field(None, alias="use", serialization_alias="use")
+
+class OperationDefinitionParameterBinding(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    strength: Literal["required", "extensible", "preferred", "example"] | None = Field(None, alias="strength", serialization_alias="strength")
+    value_set: str | None = Field(None, alias="valueSet", serialization_alias="valueSet")
+
+class OperationDefinitionParameterReferencedFrom(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    source: str | None = Field(None, alias="source", serialization_alias="source")
+    source_id: str | None = Field(None, alias="sourceId", serialization_alias="sourceId")
 
 
 class OperationDefinition(DomainResource):

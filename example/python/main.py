@@ -24,8 +24,8 @@ patient = Patient(
 
 try:
     result = client.create(patient)
-    print(result.model_dump_json(exclude_unset=True, exclude_none=True))
-    print(result.model_dump(exclude_unset=True, exclude_none=True))
+    print(result.model_dump_json(exclude_unset=True, exclude_none=True, indent=2))
+    pprint(result.model_dump(exclude_unset=True, exclude_none=True))
 except requests.exceptions.RequestException as e:
     print("Error:", e)
     if e.response is not None:
@@ -54,3 +54,10 @@ else:
     except ValueError as e:
         error_happens = True
     assert error_happens
+
+
+# Patient(
+#     name=[HumanName(family="Doe")],
+#     gender="FOO",  # wrong value
+#     some_data="1990-01-01",  # wrong field
+# )

@@ -6,10 +6,17 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, Duration, Identifier, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, Duration, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class EncounterClassHistory(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    class_: Coding | None = Field(None, alias="class", serialization_alias="class")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 class EncounterDiagnosis(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -17,19 +24,6 @@ class EncounterDiagnosis(BackboneElement):
     condition: Reference | None = Field(None, alias="condition", serialization_alias="condition")
     rank: PositiveInt | None = Field(None, alias="rank", serialization_alias="rank")
     use: CodeableConcept | None = Field(None, alias="use", serialization_alias="use")
-
-class EncounterParticipant(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    individual: Reference | None = Field(None, alias="individual", serialization_alias="individual")
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
-    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
-
-class EncounterClassHistory(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    class_: Coding | None = Field(None, alias="class", serialization_alias="class")
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 class EncounterHospitalization(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -51,6 +45,13 @@ class EncounterLocation(BackboneElement):
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     physical_type: CodeableConcept | None = Field(None, alias="physicalType", serialization_alias="physicalType")
     status: Literal["planned", "active", "reserved", "completed"] | None = Field(None, alias="status", serialization_alias="status")
+
+class EncounterParticipant(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    individual: Reference | None = Field(None, alias="individual", serialization_alias="individual")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
 
 class EncounterStatusHistory(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

@@ -6,31 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class ValueSetComposeIncludeConceptDesignation(BackboneElement):
+class ValueSetCompose(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    language: str | None = Field(None, alias="language", serialization_alias="language")
-    use: Coding | None = Field(None, alias="use", serialization_alias="use")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
-
-class ValueSetComposeIncludeConcept(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: str | None = Field(None, alias="code", serialization_alias="code")
-    designation: PyList[ValueSetComposeIncludeConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
-    display: str | None = Field(None, alias="display", serialization_alias="display")
-
-class ValueSetComposeIncludeFilter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    op: Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"] | None = Field(None, alias="op", serialization_alias="op")
-    property: str | None = Field(None, alias="property", serialization_alias="property")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    exclude: PyList[ValueSetComposeInclude] | None = Field(None, alias="exclude", serialization_alias="exclude")
+    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
+    include: PyList[ValueSetComposeInclude] | None = Field(None, alias="include", serialization_alias="include")
+    locked_date: str | None = Field(None, alias="lockedDate", serialization_alias="lockedDate")
 
 class ValueSetComposeInclude(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -41,25 +29,36 @@ class ValueSetComposeInclude(BackboneElement):
     value_set: PyList[str] | None = Field(None, alias="valueSet", serialization_alias="valueSet")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
-class ValueSetCompose(BackboneElement):
+class ValueSetComposeIncludeConcept(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    exclude: PyList[ValueSetComposeInclude] | None = Field(None, alias="exclude", serialization_alias="exclude")
-    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
-    include: PyList[ValueSetComposeInclude] | None = Field(None, alias="include", serialization_alias="include")
-    locked_date: str | None = Field(None, alias="lockedDate", serialization_alias="lockedDate")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    designation: PyList[ValueSetComposeIncludeConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
 
-class ValueSetExpansionParameter(BackboneElement):
+class ValueSetComposeIncludeConceptDesignation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_code: str | None = Field(None, alias="valueCode", serialization_alias="valueCode")
-    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
-    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
-    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
-    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
+    language: str | None = Field(None, alias="language", serialization_alias="language")
+    use: Coding | None = Field(None, alias="use", serialization_alias="use")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
+
+class ValueSetComposeIncludeFilter(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    op: Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"] | None = Field(None, alias="op", serialization_alias="op")
+    property: str | None = Field(None, alias="property", serialization_alias="property")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
+
+class ValueSetExpansion(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    contains: PyList[ValueSetExpansionContains] | None = Field(None, alias="contains", serialization_alias="contains")
+    identifier: str | None = Field(None, alias="identifier", serialization_alias="identifier")
+    offset: int | None = Field(None, alias="offset", serialization_alias="offset")
+    parameter: PyList[ValueSetExpansionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
+    timestamp: str | None = Field(None, alias="timestamp", serialization_alias="timestamp")
+    total: int | None = Field(None, alias="total", serialization_alias="total")
 
 class ValueSetExpansionContains(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -73,15 +72,17 @@ class ValueSetExpansionContains(BackboneElement):
     system: str | None = Field(None, alias="system", serialization_alias="system")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
-class ValueSetExpansion(BackboneElement):
+class ValueSetExpansionParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    contains: PyList[ValueSetExpansionContains] | None = Field(None, alias="contains", serialization_alias="contains")
-    identifier: str | None = Field(None, alias="identifier", serialization_alias="identifier")
-    offset: int | None = Field(None, alias="offset", serialization_alias="offset")
-    parameter: PyList[ValueSetExpansionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
-    timestamp: str | None = Field(None, alias="timestamp", serialization_alias="timestamp")
-    total: int | None = Field(None, alias="total", serialization_alias="total")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_code: str | None = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 
 class ValueSet(DomainResource):

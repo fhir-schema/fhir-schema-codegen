@@ -6,16 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Address, Attachment, BackboneElement, CodeableConcept, ContactPoint, HumanName, Identifier, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Address, Attachment, BackboneElement, CodeableConcept, ContactPoint, HumanName, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class PatientLink(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    other: Reference | None = Field(None, alias="other", serialization_alias="other")
-    type: Literal["replaced-by", "replaces", "refer", "seealso"] | None = Field(None, alias="type", serialization_alias="type")
 
 class PatientCommunication(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -33,6 +28,12 @@ class PatientContact(BackboneElement):
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     relationship: PyList[CodeableConcept] | None = Field(None, alias="relationship", serialization_alias="relationship")
     telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
+
+class PatientLink(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    other: Reference | None = Field(None, alias="other", serialization_alias="other")
+    type: Literal["replaced-by", "replaces", "refer", "seealso"] | None = Field(None, alias="type", serialization_alias="type")
 
 
 class Patient(DomainResource):

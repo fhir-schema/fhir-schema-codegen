@@ -6,27 +6,26 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Reference, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, Reference, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class ImplementationGuideDefinition(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    grouping: PyList[ImplementationGuideDefinitionGrouping] | None = Field(None, alias="grouping", serialization_alias="grouping")
+    page: ImplementationGuideDefinitionPage | None = Field(None, alias="page", serialization_alias="page")
+    parameter: PyList[ImplementationGuideDefinitionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
+    resource: PyList[ImplementationGuideDefinitionResource] | None = Field(None, alias="resource", serialization_alias="resource")
+    template: PyList[ImplementationGuideDefinitionTemplate] | None = Field(None, alias="template", serialization_alias="template")
 
 class ImplementationGuideDefinitionGrouping(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
     name: str | None = Field(None, alias="name", serialization_alias="name")
-
-class ImplementationGuideDefinitionResource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    example_boolean: bool | None = Field(None, alias="exampleBoolean", serialization_alias="exampleBoolean")
-    example_canonical: str | None = Field(None, alias="exampleCanonical", serialization_alias="exampleCanonical")
-    fhir_version: PyList[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]] | None = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
-    grouping_id: str | None = Field(None, alias="groupingId", serialization_alias="groupingId")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
 
 class ImplementationGuideDefinitionPage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -43,27 +42,23 @@ class ImplementationGuideDefinitionParameter(BackboneElement):
     code: Literal["apply", "path-resource", "path-pages", "path-tx-cache", "expansion-parameter", "rule-broken-links", "generate-xml", "generate-json", "generate-turtle", "html-template"] | None = Field(None, alias="code", serialization_alias="code")
     value: str | None = Field(None, alias="value", serialization_alias="value")
 
+class ImplementationGuideDefinitionResource(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    example_boolean: bool | None = Field(None, alias="exampleBoolean", serialization_alias="exampleBoolean")
+    example_canonical: str | None = Field(None, alias="exampleCanonical", serialization_alias="exampleCanonical")
+    fhir_version: PyList[Literal["0.01", "0.05", "0.06", "0.11", "0.0.80", "0.0.81", "0.0.82", "0.4.0", "0.5.0", "1.0.0", "1.0.1", "1.0.2", "1.1.0", "1.4.0", "1.6.0", "1.8.0", "3.0.0", "3.0.1", "3.3.0", "3.5.0", "4.0.0", "4.0.1"]] | None = Field(None, alias="fhirVersion", serialization_alias="fhirVersion")
+    grouping_id: str | None = Field(None, alias="groupingId", serialization_alias="groupingId")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
+
 class ImplementationGuideDefinitionTemplate(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: str | None = Field(None, alias="code", serialization_alias="code")
     scope: str | None = Field(None, alias="scope", serialization_alias="scope")
     source: str | None = Field(None, alias="source", serialization_alias="source")
-
-class ImplementationGuideDefinition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    grouping: PyList[ImplementationGuideDefinitionGrouping] | None = Field(None, alias="grouping", serialization_alias="grouping")
-    page: ImplementationGuideDefinitionPage | None = Field(None, alias="page", serialization_alias="page")
-    parameter: PyList[ImplementationGuideDefinitionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
-    resource: PyList[ImplementationGuideDefinitionResource] | None = Field(None, alias="resource", serialization_alias="resource")
-    template: PyList[ImplementationGuideDefinitionTemplate] | None = Field(None, alias="template", serialization_alias="template")
-
-class ImplementationGuideGlobal(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    profile: str | None = Field(None, alias="profile", serialization_alias="profile")
-    type: Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"] | None = Field(None, alias="type", serialization_alias="type")
 
 class ImplementationGuideDependsOn(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -72,20 +67,11 @@ class ImplementationGuideDependsOn(BackboneElement):
     uri: str | None = Field(None, alias="uri", serialization_alias="uri")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
-class ImplementationGuideManifestResource(BackboneElement):
+class ImplementationGuideGlobal(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    example_boolean: bool | None = Field(None, alias="exampleBoolean", serialization_alias="exampleBoolean")
-    example_canonical: str | None = Field(None, alias="exampleCanonical", serialization_alias="exampleCanonical")
-    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
-    relative_path: str | None = Field(None, alias="relativePath", serialization_alias="relativePath")
-
-class ImplementationGuideManifestPage(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    anchor: PyList[str] | None = Field(None, alias="anchor", serialization_alias="anchor")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
+    profile: str | None = Field(None, alias="profile", serialization_alias="profile")
+    type: Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"] | None = Field(None, alias="type", serialization_alias="type")
 
 class ImplementationGuideManifest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -95,6 +81,21 @@ class ImplementationGuideManifest(BackboneElement):
     page: PyList[ImplementationGuideManifestPage] | None = Field(None, alias="page", serialization_alias="page")
     rendering: str | None = Field(None, alias="rendering", serialization_alias="rendering")
     resource: PyList[ImplementationGuideManifestResource] | None = Field(None, alias="resource", serialization_alias="resource")
+
+class ImplementationGuideManifestPage(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    anchor: PyList[str] | None = Field(None, alias="anchor", serialization_alias="anchor")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+
+class ImplementationGuideManifestResource(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    example_boolean: bool | None = Field(None, alias="exampleBoolean", serialization_alias="exampleBoolean")
+    example_canonical: str | None = Field(None, alias="exampleCanonical", serialization_alias="exampleCanonical")
+    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
+    relative_path: str | None = Field(None, alias="relativePath", serialization_alias="relativePath")
 
 
 class ImplementationGuide(DomainResource):

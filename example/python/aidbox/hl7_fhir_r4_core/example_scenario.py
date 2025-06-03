@@ -6,22 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Identifier, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class ExampleScenarioInstanceVersion(BackboneElement):
+class ExampleScenarioActor(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
+    actor_id: str | None = Field(None, alias="actorId", serialization_alias="actorId")
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    version_id: str | None = Field(None, alias="versionId", serialization_alias="versionId")
-
-class ExampleScenarioInstanceContainedInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    resource_id: str | None = Field(None, alias="resourceId", serialization_alias="resourceId")
-    version_id: str | None = Field(None, alias="versionId", serialization_alias="versionId")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: Literal["person", "entity"] | None = Field(None, alias="type", serialization_alias="type")
 
 class ExampleScenarioInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -32,6 +29,42 @@ class ExampleScenarioInstance(BackboneElement):
     resource_id: str | None = Field(None, alias="resourceId", serialization_alias="resourceId")
     resource_type: Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"] | None = Field(None, alias="resourceType", serialization_alias="resourceType")
     version: PyList[ExampleScenarioInstanceVersion] | None = Field(None, alias="version", serialization_alias="version")
+
+class ExampleScenarioInstanceContainedInstance(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    resource_id: str | None = Field(None, alias="resourceId", serialization_alias="resourceId")
+    version_id: str | None = Field(None, alias="versionId", serialization_alias="versionId")
+
+class ExampleScenarioInstanceVersion(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    version_id: str | None = Field(None, alias="versionId", serialization_alias="versionId")
+
+class ExampleScenarioProcess(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    post_conditions: str | None = Field(None, alias="postConditions", serialization_alias="postConditions")
+    pre_conditions: str | None = Field(None, alias="preConditions", serialization_alias="preConditions")
+    step: PyList[ExampleScenarioProcessStep] | None = Field(None, alias="step", serialization_alias="step")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+
+class ExampleScenarioProcessStep(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    alternative: PyList[ExampleScenarioProcessStepAlternative] | None = Field(None, alias="alternative", serialization_alias="alternative")
+    operation: ExampleScenarioProcessStepOperation | None = Field(None, alias="operation", serialization_alias="operation")
+    pause: bool | None = Field(None, alias="pause", serialization_alias="pause")
+    process: PyList[ExampleScenarioProcess] | None = Field(None, alias="process", serialization_alias="process")
+
+class ExampleScenarioProcessStepAlternative(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    step: PyList[ExampleScenarioProcessStep] | None = Field(None, alias="step", serialization_alias="step")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
 
 class ExampleScenarioProcessStepOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -46,38 +79,6 @@ class ExampleScenarioProcessStepOperation(BackboneElement):
     request: ExampleScenarioInstanceContainedInstance | None = Field(None, alias="request", serialization_alias="request")
     response: ExampleScenarioInstanceContainedInstance | None = Field(None, alias="response", serialization_alias="response")
     type: str | None = Field(None, alias="type", serialization_alias="type")
-
-class ExampleScenarioProcessStepAlternative(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    step: PyList[ExampleScenarioProcessStep] | None = Field(None, alias="step", serialization_alias="step")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
-
-class ExampleScenarioProcessStep(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    alternative: PyList[ExampleScenarioProcessStepAlternative] | None = Field(None, alias="alternative", serialization_alias="alternative")
-    operation: ExampleScenarioProcessStepOperation | None = Field(None, alias="operation", serialization_alias="operation")
-    pause: bool | None = Field(None, alias="pause", serialization_alias="pause")
-    process: PyList[ExampleScenarioProcess] | None = Field(None, alias="process", serialization_alias="process")
-
-class ExampleScenarioProcess(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    post_conditions: str | None = Field(None, alias="postConditions", serialization_alias="postConditions")
-    pre_conditions: str | None = Field(None, alias="preConditions", serialization_alias="preConditions")
-    step: PyList[ExampleScenarioProcessStep] | None = Field(None, alias="step", serialization_alias="step")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
-
-class ExampleScenarioActor(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    actor_id: str | None = Field(None, alias="actorId", serialization_alias="actorId")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: Literal["person", "entity"] | None = Field(None, alias="type", serialization_alias="type")
 
 
 class ExampleScenario(DomainResource):

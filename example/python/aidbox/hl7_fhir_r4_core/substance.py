@@ -6,17 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Quantity, Ratio, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Quantity, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class SubstanceInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    expiry: str | None = Field(None, alias="expiry", serialization_alias="expiry")
-    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
 
 class SubstanceIngredient(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -24,6 +18,13 @@ class SubstanceIngredient(BackboneElement):
     quantity: Ratio | None = Field(None, alias="quantity", serialization_alias="quantity")
     substance_codeable_concept: CodeableConcept | None = Field(None, alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
     substance_reference: Reference | None = Field(None, alias="substanceReference", serialization_alias="substanceReference")
+
+class SubstanceInstance(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    expiry: str | None = Field(None, alias="expiry", serialization_alias="expiry")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
 
 
 class Substance(DomainResource):

@@ -6,53 +6,12 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, Period, Quantity, Reference, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, Period, Quantity, Reference, \
+    UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class QuestionnaireItemEnableWhen(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    answer_boolean: bool | None = Field(None, alias="answerBoolean", serialization_alias="answerBoolean")
-    answer_coding: Coding | None = Field(None, alias="answerCoding", serialization_alias="answerCoding")
-    answer_date: str | None = Field(None, alias="answerDate", serialization_alias="answerDate")
-    answer_date_time: str | None = Field(None, alias="answerDateTime", serialization_alias="answerDateTime")
-    answer_decimal: float | None = Field(None, alias="answerDecimal", serialization_alias="answerDecimal")
-    answer_integer: int | None = Field(None, alias="answerInteger", serialization_alias="answerInteger")
-    answer_quantity: Quantity | None = Field(None, alias="answerQuantity", serialization_alias="answerQuantity")
-    answer_reference: Reference | None = Field(None, alias="answerReference", serialization_alias="answerReference")
-    answer_string: str | None = Field(None, alias="answerString", serialization_alias="answerString")
-    answer_time: str | None = Field(None, alias="answerTime", serialization_alias="answerTime")
-    operator: Literal["exists", "=", "!=", ">", "<", ">=", "<="] | None = Field(None, alias="operator", serialization_alias="operator")
-    question: str | None = Field(None, alias="question", serialization_alias="question")
-
-class QuestionnaireItemAnswerOption(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    initial_selected: bool | None = Field(None, alias="initialSelected", serialization_alias="initialSelected")
-    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
-    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
-    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
-    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
-
-class QuestionnaireItemInitial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
-    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
-    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
-    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
-    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
-    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
-    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
-    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
-    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 class QuestionnaireItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -73,6 +32,49 @@ class QuestionnaireItem(BackboneElement):
     required: bool | None = Field(None, alias="required", serialization_alias="required")
     text: str | None = Field(None, alias="text", serialization_alias="text")
     type: Literal["group", "display", "question"] | None = Field(None, alias="type", serialization_alias="type")
+
+class QuestionnaireItemAnswerOption(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    initial_selected: bool | None = Field(None, alias="initialSelected", serialization_alias="initialSelected")
+    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
+
+class QuestionnaireItemEnableWhen(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    answer_boolean: bool | None = Field(None, alias="answerBoolean", serialization_alias="answerBoolean")
+    answer_coding: Coding | None = Field(None, alias="answerCoding", serialization_alias="answerCoding")
+    answer_date: str | None = Field(None, alias="answerDate", serialization_alias="answerDate")
+    answer_date_time: str | None = Field(None, alias="answerDateTime", serialization_alias="answerDateTime")
+    answer_decimal: float | None = Field(None, alias="answerDecimal", serialization_alias="answerDecimal")
+    answer_integer: int | None = Field(None, alias="answerInteger", serialization_alias="answerInteger")
+    answer_quantity: Quantity | None = Field(None, alias="answerQuantity", serialization_alias="answerQuantity")
+    answer_reference: Reference | None = Field(None, alias="answerReference", serialization_alias="answerReference")
+    answer_string: str | None = Field(None, alias="answerString", serialization_alias="answerString")
+    answer_time: str | None = Field(None, alias="answerTime", serialization_alias="answerTime")
+    operator: Literal["exists", "=", "!=", ">", "<", ">=", "<="] | None = Field(None, alias="operator", serialization_alias="operator")
+    question: str | None = Field(None, alias="question", serialization_alias="question")
+
+class QuestionnaireItemInitial(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
 
 
 class Questionnaire(DomainResource):

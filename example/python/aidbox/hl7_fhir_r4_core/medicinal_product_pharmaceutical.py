@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Duration, Identifier, Quantity, Ratio, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Duration, Identifier, Quantity, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -16,19 +17,6 @@ class MedicinalProductPharmaceuticalCharacteristics(BackboneElement):
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
-
-class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    supporting_information: str | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
-    tissue: CodeableConcept | None = Field(None, alias="tissue", serialization_alias="tissue")
-    value: Quantity | None = Field(None, alias="value", serialization_alias="value")
-
-class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    withdrawal_period: PyList[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod] | None = Field(None, alias="withdrawalPeriod", serialization_alias="withdrawalPeriod")
 
 class MedicinalProductPharmaceuticalRouteOfAdministration(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -40,6 +28,19 @@ class MedicinalProductPharmaceuticalRouteOfAdministration(BackboneElement):
     max_single_dose: Quantity | None = Field(None, alias="maxSingleDose", serialization_alias="maxSingleDose")
     max_treatment_period: Duration | None = Field(None, alias="maxTreatmentPeriod", serialization_alias="maxTreatmentPeriod")
     target_species: PyList[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies] | None = Field(None, alias="targetSpecies", serialization_alias="targetSpecies")
+
+class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    withdrawal_period: PyList[MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod] | None = Field(None, alias="withdrawalPeriod", serialization_alias="withdrawalPeriod")
+
+class MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    supporting_information: str | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    tissue: CodeableConcept | None = Field(None, alias="tissue", serialization_alias="tissue")
+    value: Quantity | None = Field(None, alias="value", serialization_alias="value")
 
 
 class MedicinalProductPharmaceutical(DomainResource):

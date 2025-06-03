@@ -6,40 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Ratio, Reference, Timing
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Ratio, Reference, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class NutritionOrderOralDietNutrient(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    amount: Quantity | None = Field(None, alias="amount", serialization_alias="amount")
-    modifier: CodeableConcept | None = Field(None, alias="modifier", serialization_alias="modifier")
-
-class NutritionOrderOralDietTexture(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    food_type: CodeableConcept | None = Field(None, alias="foodType", serialization_alias="foodType")
-    modifier: CodeableConcept | None = Field(None, alias="modifier", serialization_alias="modifier")
-
-class NutritionOrderOralDiet(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    fluid_consistency_type: PyList[CodeableConcept] | None = Field(None, alias="fluidConsistencyType", serialization_alias="fluidConsistencyType")
-    instruction: str | None = Field(None, alias="instruction", serialization_alias="instruction")
-    nutrient: PyList[NutritionOrderOralDietNutrient] | None = Field(None, alias="nutrient", serialization_alias="nutrient")
-    schedule: PyList[Timing] | None = Field(None, alias="schedule", serialization_alias="schedule")
-    texture: PyList[NutritionOrderOralDietTexture] | None = Field(None, alias="texture", serialization_alias="texture")
-    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
-
-class NutritionOrderEnteralFormulaAdministration(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
-    rate_quantity: Quantity | None = Field(None, alias="rateQuantity", serialization_alias="rateQuantity")
-    rate_ratio: Ratio | None = Field(None, alias="rateRatio", serialization_alias="rateRatio")
-    schedule: Timing | None = Field(None, alias="schedule", serialization_alias="schedule")
 
 class NutritionOrderEnteralFormula(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -53,6 +24,36 @@ class NutritionOrderEnteralFormula(BackboneElement):
     caloric_density: Quantity | None = Field(None, alias="caloricDensity", serialization_alias="caloricDensity")
     max_volume_to_deliver: Quantity | None = Field(None, alias="maxVolumeToDeliver", serialization_alias="maxVolumeToDeliver")
     routeof_administration: CodeableConcept | None = Field(None, alias="routeofAdministration", serialization_alias="routeofAdministration")
+
+class NutritionOrderEnteralFormulaAdministration(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    rate_quantity: Quantity | None = Field(None, alias="rateQuantity", serialization_alias="rateQuantity")
+    rate_ratio: Ratio | None = Field(None, alias="rateRatio", serialization_alias="rateRatio")
+    schedule: Timing | None = Field(None, alias="schedule", serialization_alias="schedule")
+
+class NutritionOrderOralDiet(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    fluid_consistency_type: PyList[CodeableConcept] | None = Field(None, alias="fluidConsistencyType", serialization_alias="fluidConsistencyType")
+    instruction: str | None = Field(None, alias="instruction", serialization_alias="instruction")
+    nutrient: PyList[NutritionOrderOralDietNutrient] | None = Field(None, alias="nutrient", serialization_alias="nutrient")
+    schedule: PyList[Timing] | None = Field(None, alias="schedule", serialization_alias="schedule")
+    texture: PyList[NutritionOrderOralDietTexture] | None = Field(None, alias="texture", serialization_alias="texture")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
+
+class NutritionOrderOralDietNutrient(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    amount: Quantity | None = Field(None, alias="amount", serialization_alias="amount")
+    modifier: CodeableConcept | None = Field(None, alias="modifier", serialization_alias="modifier")
+
+class NutritionOrderOralDietTexture(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    food_type: CodeableConcept | None = Field(None, alias="foodType", serialization_alias="foodType")
+    modifier: CodeableConcept | None = Field(None, alias="modifier", serialization_alias="modifier")
 
 class NutritionOrderSupplement(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

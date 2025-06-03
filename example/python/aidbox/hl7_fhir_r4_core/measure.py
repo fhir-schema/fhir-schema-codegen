@@ -6,19 +6,22 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Expression, Identifier, Period, Reference, RelatedArtifact, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, Expression, Identifier, Period, Reference, RelatedArtifact, \
+    UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class MeasureGroupPopulation(BackboneElement):
+class MeasureGroup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
     description: str | None = Field(None, alias="description", serialization_alias="description")
+    population: PyList[MeasureGroupPopulation] | None = Field(None, alias="population", serialization_alias="population")
+    stratifier: PyList[MeasureGroupStratifier] | None = Field(None, alias="stratifier", serialization_alias="stratifier")
 
-class MeasureGroupStratifierComponent(BackboneElement):
+class MeasureGroupPopulation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
@@ -33,13 +36,12 @@ class MeasureGroupStratifier(BackboneElement):
     criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
     description: str | None = Field(None, alias="description", serialization_alias="description")
 
-class MeasureGroup(BackboneElement):
+class MeasureGroupStratifierComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    population: PyList[MeasureGroupPopulation] | None = Field(None, alias="population", serialization_alias="population")
-    stratifier: PyList[MeasureGroupStratifier] | None = Field(None, alias="stratifier", serialization_alias="stratifier")
 
 class MeasureSupplementalData(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

@@ -6,18 +6,28 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Identifier, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class ConceptMapGroupElementTargetDependsOn(BackboneElement):
+class ConceptMapGroup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
+    element: PyList[ConceptMapGroupElement] | None = Field(None, alias="element", serialization_alias="element")
+    source: str | None = Field(None, alias="source", serialization_alias="source")
+    source_version: str | None = Field(None, alias="sourceVersion", serialization_alias="sourceVersion")
+    target: str | None = Field(None, alias="target", serialization_alias="target")
+    target_version: str | None = Field(None, alias="targetVersion", serialization_alias="targetVersion")
+    unmapped: ConceptMapGroupUnmapped | None = Field(None, alias="unmapped", serialization_alias="unmapped")
+
+class ConceptMapGroupElement(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: str | None = Field(None, alias="code", serialization_alias="code")
     display: str | None = Field(None, alias="display", serialization_alias="display")
-    property: str | None = Field(None, alias="property", serialization_alias="property")
-    system: str | None = Field(None, alias="system", serialization_alias="system")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    target: PyList[ConceptMapGroupElementTarget] | None = Field(None, alias="target", serialization_alias="target")
 
 class ConceptMapGroupElementTarget(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -29,12 +39,13 @@ class ConceptMapGroupElementTarget(BackboneElement):
     equivalence: Literal["relatedto", "unmatched"] | None = Field(None, alias="equivalence", serialization_alias="equivalence")
     product: PyList[ConceptMapGroupElementTargetDependsOn] | None = Field(None, alias="product", serialization_alias="product")
 
-class ConceptMapGroupElement(BackboneElement):
+class ConceptMapGroupElementTargetDependsOn(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
     display: str | None = Field(None, alias="display", serialization_alias="display")
-    target: PyList[ConceptMapGroupElementTarget] | None = Field(None, alias="target", serialization_alias="target")
+    property: str | None = Field(None, alias="property", serialization_alias="property")
+    system: str | None = Field(None, alias="system", serialization_alias="system")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 class ConceptMapGroupUnmapped(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -43,16 +54,6 @@ class ConceptMapGroupUnmapped(BackboneElement):
     display: str | None = Field(None, alias="display", serialization_alias="display")
     mode: Literal["provided", "fixed", "other-map"] | None = Field(None, alias="mode", serialization_alias="mode")
     url: str | None = Field(None, alias="url", serialization_alias="url")
-
-class ConceptMapGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    element: PyList[ConceptMapGroupElement] | None = Field(None, alias="element", serialization_alias="element")
-    source: str | None = Field(None, alias="source", serialization_alias="source")
-    source_version: str | None = Field(None, alias="sourceVersion", serialization_alias="sourceVersion")
-    target: str | None = Field(None, alias="target", serialization_alias="target")
-    target_version: str | None = Field(None, alias="targetVersion", serialization_alias="targetVersion")
-    unmapped: ConceptMapGroupUnmapped | None = Field(None, alias="unmapped", serialization_alias="unmapped")
 
 
 class ConceptMap(DomainResource):

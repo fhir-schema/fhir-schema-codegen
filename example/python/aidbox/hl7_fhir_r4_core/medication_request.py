@@ -6,23 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Dosage, Duration, Identifier, Period, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Dosage, Duration, Identifier, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class MedicationRequestSubstitution(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    allowed_boolean: bool | None = Field(None, alias="allowedBoolean", serialization_alias="allowedBoolean")
-    allowed_codeable_concept: CodeableConcept | None = Field(None, alias="allowedCodeableConcept", serialization_alias="allowedCodeableConcept")
-    reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
-
-class MedicationRequestDispenseRequestInitialFill(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    duration: Duration | None = Field(None, alias="duration", serialization_alias="duration")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
 
 class MedicationRequestDispenseRequest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -34,6 +22,19 @@ class MedicationRequestDispenseRequest(BackboneElement):
     performer: Reference | None = Field(None, alias="performer", serialization_alias="performer")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+
+class MedicationRequestDispenseRequestInitialFill(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    duration: Duration | None = Field(None, alias="duration", serialization_alias="duration")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+
+class MedicationRequestSubstitution(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    allowed_boolean: bool | None = Field(None, alias="allowedBoolean", serialization_alias="allowedBoolean")
+    allowed_codeable_concept: CodeableConcept | None = Field(None, alias="allowedCodeableConcept", serialization_alias="allowedCodeableConcept")
+    reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
 
 
 class MedicationRequest(DomainResource):

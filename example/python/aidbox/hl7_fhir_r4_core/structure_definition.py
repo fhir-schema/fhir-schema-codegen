@@ -6,10 +6,22 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactDetail, ElementDefinition, Identifier, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, ContactDetail, ElementDefinition, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class StructureDefinitionContext(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    expression: str | None = Field(None, alias="expression", serialization_alias="expression")
+    type: Literal["fhirpath", "element", "extension"] | None = Field(None, alias="type", serialization_alias="type")
+
+class StructureDefinitionDifferential(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    element: PyList[ElementDefinition] | None = Field(None, alias="element", serialization_alias="element")
 
 class StructureDefinitionMapping(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -20,17 +32,6 @@ class StructureDefinitionMapping(BackboneElement):
     uri: str | None = Field(None, alias="uri", serialization_alias="uri")
 
 class StructureDefinitionSnapshot(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    element: PyList[ElementDefinition] | None = Field(None, alias="element", serialization_alias="element")
-
-class StructureDefinitionContext(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    expression: str | None = Field(None, alias="expression", serialization_alias="expression")
-    type: Literal["fhirpath", "element", "extension"] | None = Field(None, alias="type", serialization_alias="type")
-
-class StructureDefinitionDifferential(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     element: PyList[ElementDefinition] | None = Field(None, alias="element", serialization_alias="element")

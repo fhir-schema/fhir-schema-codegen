@@ -6,10 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactPoint, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, ContactPoint, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class MessageHeaderDestination(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    endpoint: str | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    receiver: Reference | None = Field(None, alias="receiver", serialization_alias="receiver")
+    target: Reference | None = Field(None, alias="target", serialization_alias="target")
 
 class MessageHeaderResponse(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -26,14 +35,6 @@ class MessageHeaderSource(BackboneElement):
     name: str | None = Field(None, alias="name", serialization_alias="name")
     software: str | None = Field(None, alias="software", serialization_alias="software")
     version: str | None = Field(None, alias="version", serialization_alias="version")
-
-class MessageHeaderDestination(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    endpoint: str | None = Field(None, alias="endpoint", serialization_alias="endpoint")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    receiver: Reference | None = Field(None, alias="receiver", serialization_alias="receiver")
-    target: Reference | None = Field(None, alias="target", serialization_alias="target")
 
 
 class MessageHeader(DomainResource):

@@ -6,28 +6,32 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, Identifier, Quantity, Range, Ratio, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Attachment, BackboneElement, CodeableConcept, Identifier, Quantity, Range, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class SubstanceSpecificationProperty(BackboneElement):
+class SubstanceSpecificationCode(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
+    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
+    status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
+
+class SubstanceSpecificationMoiety(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount_quantity: Quantity | None = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
     amount_string: str | None = Field(None, alias="amountString", serialization_alias="amountString")
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    defining_substance_codeable_concept: CodeableConcept | None = Field(None, alias="definingSubstanceCodeableConcept", serialization_alias="definingSubstanceCodeableConcept")
-    defining_substance_reference: Reference | None = Field(None, alias="definingSubstanceReference", serialization_alias="definingSubstanceReference")
-    parameters: str | None = Field(None, alias="parameters", serialization_alias="parameters")
-
-class SubstanceSpecificationNameOfficial(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    authority: CodeableConcept | None = Field(None, alias="authority", serialization_alias="authority")
-    date: str | None = Field(None, alias="date", serialization_alias="date")
-    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    molecular_formula: str | None = Field(None, alias="molecularFormula", serialization_alias="molecularFormula")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    optical_activity: CodeableConcept | None = Field(None, alias="opticalActivity", serialization_alias="opticalActivity")
+    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
+    stereochemistry: CodeableConcept | None = Field(None, alias="stereochemistry", serialization_alias="stereochemistry")
 
 class SubstanceSpecificationName(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -44,6 +48,24 @@ class SubstanceSpecificationName(BackboneElement):
     translation: PyList[SubstanceSpecificationName] | None = Field(None, alias="translation", serialization_alias="translation")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
+class SubstanceSpecificationNameOfficial(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    authority: CodeableConcept | None = Field(None, alias="authority", serialization_alias="authority")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
+
+class SubstanceSpecificationProperty(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    amount_quantity: Quantity | None = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
+    amount_string: str | None = Field(None, alias="amountString", serialization_alias="amountString")
+    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    defining_substance_codeable_concept: CodeableConcept | None = Field(None, alias="definingSubstanceCodeableConcept", serialization_alias="definingSubstanceCodeableConcept")
+    defining_substance_reference: Reference | None = Field(None, alias="definingSubstanceReference", serialization_alias="definingSubstanceReference")
+    parameters: str | None = Field(None, alias="parameters", serialization_alias="parameters")
+
 class SubstanceSpecificationRelationship(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -59,41 +81,6 @@ class SubstanceSpecificationRelationship(BackboneElement):
     substance_codeable_concept: CodeableConcept | None = Field(None, alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
     substance_reference: Reference | None = Field(None, alias="substanceReference", serialization_alias="substanceReference")
 
-class SubstanceSpecificationMoiety(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    amount_quantity: Quantity | None = Field(None, alias="amountQuantity", serialization_alias="amountQuantity")
-    amount_string: str | None = Field(None, alias="amountString", serialization_alias="amountString")
-    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
-    molecular_formula: str | None = Field(None, alias="molecularFormula", serialization_alias="molecularFormula")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    optical_activity: CodeableConcept | None = Field(None, alias="opticalActivity", serialization_alias="opticalActivity")
-    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
-    stereochemistry: CodeableConcept | None = Field(None, alias="stereochemistry", serialization_alias="stereochemistry")
-
-class SubstanceSpecificationStructureIsotopeMolecularWeight(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    amount: Quantity | None = Field(None, alias="amount", serialization_alias="amount")
-    method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class SubstanceSpecificationStructureIsotope(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    half_life: Quantity | None = Field(None, alias="halfLife", serialization_alias="halfLife")
-    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
-    molecular_weight: SubstanceSpecificationStructureIsotopeMolecularWeight | None = Field(None, alias="molecularWeight", serialization_alias="molecularWeight")
-    name: CodeableConcept | None = Field(None, alias="name", serialization_alias="name")
-    substitution: CodeableConcept | None = Field(None, alias="substitution", serialization_alias="substitution")
-
-class SubstanceSpecificationStructureRepresentation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    attachment: Attachment | None = Field(None, alias="attachment", serialization_alias="attachment")
-    representation: str | None = Field(None, alias="representation", serialization_alias="representation")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
 class SubstanceSpecificationStructure(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -106,14 +93,28 @@ class SubstanceSpecificationStructure(BackboneElement):
     source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
     stereochemistry: CodeableConcept | None = Field(None, alias="stereochemistry", serialization_alias="stereochemistry")
 
-class SubstanceSpecificationCode(BackboneElement):
+class SubstanceSpecificationStructureIsotope(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
-    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
-    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
-    status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
+    half_life: Quantity | None = Field(None, alias="halfLife", serialization_alias="halfLife")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    molecular_weight: SubstanceSpecificationStructureIsotopeMolecularWeight | None = Field(None, alias="molecularWeight", serialization_alias="molecularWeight")
+    name: CodeableConcept | None = Field(None, alias="name", serialization_alias="name")
+    substitution: CodeableConcept | None = Field(None, alias="substitution", serialization_alias="substitution")
+
+class SubstanceSpecificationStructureIsotopeMolecularWeight(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    amount: Quantity | None = Field(None, alias="amount", serialization_alias="amount")
+    method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class SubstanceSpecificationStructureRepresentation(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    attachment: Attachment | None = Field(None, alias="attachment", serialization_alias="attachment")
+    representation: str | None = Field(None, alias="representation", serialization_alias="representation")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class SubstanceSpecification(DomainResource):

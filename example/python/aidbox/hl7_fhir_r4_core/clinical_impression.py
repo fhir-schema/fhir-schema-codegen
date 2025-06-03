@@ -6,16 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class ClinicalImpressionInvestigation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    item: PyList[Reference] | None = Field(None, alias="item", serialization_alias="item")
 
 class ClinicalImpressionFinding(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -23,6 +18,12 @@ class ClinicalImpressionFinding(BackboneElement):
     basis: str | None = Field(None, alias="basis", serialization_alias="basis")
     item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
     item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
+
+class ClinicalImpressionInvestigation(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    item: PyList[Reference] | None = Field(None, alias="item", serialization_alias="item")
 
 
 class ClinicalImpression(DomainResource):

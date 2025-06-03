@@ -11,12 +11,6 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class ImmunizationRecommendationRecommendationDateCriterion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
-
 class ImmunizationRecommendationRecommendation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -34,6 +28,12 @@ class ImmunizationRecommendationRecommendation(BackboneElement):
     supporting_patient_information: PyList[Reference] | None = Field(None, alias="supportingPatientInformation", serialization_alias="supportingPatientInformation")
     target_disease: CodeableConcept | None = Field(None, alias="targetDisease", serialization_alias="targetDisease")
     vaccine_code: PyList[CodeableConcept] | None = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
+
+class ImmunizationRecommendationRecommendationDateCriterion(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 
 class ImmunizationRecommendation(DomainResource):

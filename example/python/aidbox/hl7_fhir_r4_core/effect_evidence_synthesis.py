@@ -6,17 +6,25 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactDetail, Identifier, Period, Reference, RelatedArtifact, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, ContactDetail, Identifier, Period, Reference, RelatedArtifact, \
+    UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class EffectEvidenceSynthesisEffectEstimatePrecisionEstimate(BackboneElement):
+class EffectEvidenceSynthesisCertainty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    from_: float | None = Field(None, alias="from", serialization_alias="from")
-    level: float | None = Field(None, alias="level", serialization_alias="level")
-    to: float | None = Field(None, alias="to", serialization_alias="to")
+    certainty_subcomponent: PyList[EffectEvidenceSynthesisCertaintyCertaintySubcomponent] | None = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
+
+class EffectEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class EffectEvidenceSynthesisEffectEstimate(BackboneElement):
@@ -29,26 +37,13 @@ class EffectEvidenceSynthesisEffectEstimate(BackboneElement):
     value: float | None = Field(None, alias="value", serialization_alias="value")
     variant_state: CodeableConcept | None = Field(None, alias="variantState", serialization_alias="variantState")
 
-class EffectEvidenceSynthesisSampleSize(BackboneElement):
+class EffectEvidenceSynthesisEffectEstimatePrecisionEstimate(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    number_of_participants: int | None = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
-    number_of_studies: int | None = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
-
-class EffectEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
-    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
+    from_: float | None = Field(None, alias="from", serialization_alias="from")
+    level: float | None = Field(None, alias="level", serialization_alias="level")
+    to: float | None = Field(None, alias="to", serialization_alias="to")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class EffectEvidenceSynthesisCertainty(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    certainty_subcomponent: PyList[EffectEvidenceSynthesisCertaintyCertaintySubcomponent] | None = Field(None, alias="certaintySubcomponent", serialization_alias="certaintySubcomponent")
-    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
-    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
 
 class EffectEvidenceSynthesisResultsByExposure(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -57,6 +52,13 @@ class EffectEvidenceSynthesisResultsByExposure(BackboneElement):
     exposure_state: Literal["exposure", "exposure-alternative"] | None = Field(None, alias="exposureState", serialization_alias="exposureState")
     risk_evidence_synthesis: Reference | None = Field(None, alias="riskEvidenceSynthesis", serialization_alias="riskEvidenceSynthesis")
     variant_state: CodeableConcept | None = Field(None, alias="variantState", serialization_alias="variantState")
+
+class EffectEvidenceSynthesisSampleSize(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    number_of_participants: int | None = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
+    number_of_studies: int | None = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
 
 
 class EffectEvidenceSynthesis(DomainResource):

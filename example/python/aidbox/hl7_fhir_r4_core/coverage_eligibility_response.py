@@ -6,21 +6,24 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Money, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class CoverageEligibilityResponseInsuranceItemBenefit(BackboneElement):
+class CoverageEligibilityResponseError(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    allowed_money: Money | None = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
-    allowed_string: str | None = Field(None, alias="allowedString", serialization_alias="allowedString")
-    allowed_unsigned_int: int | None = Field(None, alias="allowedUnsignedInt", serialization_alias="allowedUnsignedInt")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    used_money: Money | None = Field(None, alias="usedMoney", serialization_alias="usedMoney")
-    used_string: str | None = Field(None, alias="usedString", serialization_alias="usedString")
-    used_unsigned_int: int | None = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+
+class CoverageEligibilityResponseInsurance(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    benefit_period: Period | None = Field(None, alias="benefitPeriod", serialization_alias="benefitPeriod")
+    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    inforce: bool | None = Field(None, alias="inforce", serialization_alias="inforce")
+    item: PyList[CoverageEligibilityResponseInsuranceItem] | None = Field(None, alias="item", serialization_alias="item")
 
 class CoverageEligibilityResponseInsuranceItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -40,18 +43,16 @@ class CoverageEligibilityResponseInsuranceItem(BackboneElement):
     term: CodeableConcept | None = Field(None, alias="term", serialization_alias="term")
     unit: CodeableConcept | None = Field(None, alias="unit", serialization_alias="unit")
 
-class CoverageEligibilityResponseInsurance(BackboneElement):
+class CoverageEligibilityResponseInsuranceItemBenefit(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    benefit_period: Period | None = Field(None, alias="benefitPeriod", serialization_alias="benefitPeriod")
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
-    inforce: bool | None = Field(None, alias="inforce", serialization_alias="inforce")
-    item: PyList[CoverageEligibilityResponseInsuranceItem] | None = Field(None, alias="item", serialization_alias="item")
-
-class CoverageEligibilityResponseError(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    allowed_money: Money | None = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
+    allowed_string: str | None = Field(None, alias="allowedString", serialization_alias="allowedString")
+    allowed_unsigned_int: int | None = Field(None, alias="allowedUnsignedInt", serialization_alias="allowedUnsignedInt")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    used_money: Money | None = Field(None, alias="usedMoney", serialization_alias="usedMoney")
+    used_string: str | None = Field(None, alias="usedString", serialization_alias="usedString")
+    used_unsigned_int: int | None = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
 
 
 class CoverageEligibilityResponse(DomainResource):

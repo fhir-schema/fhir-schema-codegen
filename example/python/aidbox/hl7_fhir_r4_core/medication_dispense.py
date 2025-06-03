@@ -6,10 +6,17 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Dosage, Identifier, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Dosage, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class MedicationDispensePerformer(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 class MedicationDispenseSubstitution(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -18,12 +25,6 @@ class MedicationDispenseSubstitution(BackboneElement):
     responsible_party: PyList[Reference] | None = Field(None, alias="responsibleParty", serialization_alias="responsibleParty")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     was_substituted: bool | None = Field(None, alias="wasSubstituted", serialization_alias="wasSubstituted")
-
-class MedicationDispensePerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
-    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
 class MedicationDispense(DomainResource):

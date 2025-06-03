@@ -6,89 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Dosage, Duration, Money, Quantity, Ratio, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Dosage, Duration, Money, Quantity, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class MedicationKnowledgeMonograph(BackboneElement):
+class MedicationKnowledgeAdministrationGuidelines(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    source: Reference | None = Field(None, alias="source", serialization_alias="source")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class MedicationKnowledgeRegulatorySubstitution(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    allowed: bool | None = Field(None, alias="allowed", serialization_alias="allowed")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class MedicationKnowledgeRegulatorySchedule(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    schedule: CodeableConcept | None = Field(None, alias="schedule", serialization_alias="schedule")
-
-class MedicationKnowledgeRegulatoryMaxDispense(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    period: Duration | None = Field(None, alias="period", serialization_alias="period")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
-
-class MedicationKnowledgeRegulatory(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    max_dispense: MedicationKnowledgeRegulatoryMaxDispense | None = Field(None, alias="maxDispense", serialization_alias="maxDispense")
-    regulatory_authority: Reference | None = Field(None, alias="regulatoryAuthority", serialization_alias="regulatoryAuthority")
-    schedule: PyList[MedicationKnowledgeRegulatorySchedule] | None = Field(None, alias="schedule", serialization_alias="schedule")
-    substitution: PyList[MedicationKnowledgeRegulatorySubstitution] | None = Field(None, alias="substitution", serialization_alias="substitution")
-
-class MedicationKnowledgeDrugCharacteristic(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    value_base64binary: str | None = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
-    value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
-    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
-
-class MedicationKnowledgePackaging(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class MedicationKnowledgeRelatedMedicationKnowledge(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    reference: PyList[Reference] | None = Field(None, alias="reference", serialization_alias="reference")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class MedicationKnowledgeMedicineClassification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    classification: PyList[CodeableConcept] | None = Field(None, alias="classification", serialization_alias="classification")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class MedicationKnowledgeKinetics(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    area_under_curve: PyList[Quantity] | None = Field(None, alias="areaUnderCurve", serialization_alias="areaUnderCurve")
-    half_life_period: Duration | None = Field(None, alias="halfLifePeriod", serialization_alias="halfLifePeriod")
-    lethal_dose50: PyList[Quantity] | None = Field(None, alias="lethalDose50", serialization_alias="lethalDose50")
-
-class MedicationKnowledgeIngredient(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    is_active: bool | None = Field(None, alias="isActive", serialization_alias="isActive")
-    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
-    strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
-
-class MedicationKnowledgeMonitoringProgram(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    dosage: PyList[MedicationKnowledgeAdministrationGuidelinesDosage] | None = Field(None, alias="dosage", serialization_alias="dosage")
+    indication_codeable_concept: CodeableConcept | None = Field(None, alias="indicationCodeableConcept", serialization_alias="indicationCodeableConcept")
+    indication_reference: Reference | None = Field(None, alias="indicationReference", serialization_alias="indicationReference")
+    patient_characteristics: PyList[MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics] | None = Field(None, alias="patientCharacteristics", serialization_alias="patientCharacteristics")
 
 class MedicationKnowledgeAdministrationGuidelinesDosage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -103,19 +33,90 @@ class MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics(Backbone
     characteristic_quantity: Quantity | None = Field(None, alias="characteristicQuantity", serialization_alias="characteristicQuantity")
     value: PyList[str] | None = Field(None, alias="value", serialization_alias="value")
 
-class MedicationKnowledgeAdministrationGuidelines(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    dosage: PyList[MedicationKnowledgeAdministrationGuidelinesDosage] | None = Field(None, alias="dosage", serialization_alias="dosage")
-    indication_codeable_concept: CodeableConcept | None = Field(None, alias="indicationCodeableConcept", serialization_alias="indicationCodeableConcept")
-    indication_reference: Reference | None = Field(None, alias="indicationReference", serialization_alias="indicationReference")
-    patient_characteristics: PyList[MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics] | None = Field(None, alias="patientCharacteristics", serialization_alias="patientCharacteristics")
-
 class MedicationKnowledgeCost(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     cost: Money | None = Field(None, alias="cost", serialization_alias="cost")
     source: str | None = Field(None, alias="source", serialization_alias="source")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class MedicationKnowledgeDrugCharacteristic(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value_base64binary: str | None = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
+    value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+
+class MedicationKnowledgeIngredient(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    is_active: bool | None = Field(None, alias="isActive", serialization_alias="isActive")
+    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
+    strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
+
+class MedicationKnowledgeKinetics(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    area_under_curve: PyList[Quantity] | None = Field(None, alias="areaUnderCurve", serialization_alias="areaUnderCurve")
+    half_life_period: Duration | None = Field(None, alias="halfLifePeriod", serialization_alias="halfLifePeriod")
+    lethal_dose50: PyList[Quantity] | None = Field(None, alias="lethalDose50", serialization_alias="lethalDose50")
+
+class MedicationKnowledgeMedicineClassification(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    classification: PyList[CodeableConcept] | None = Field(None, alias="classification", serialization_alias="classification")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class MedicationKnowledgeMonitoringProgram(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class MedicationKnowledgeMonograph(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    source: Reference | None = Field(None, alias="source", serialization_alias="source")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class MedicationKnowledgePackaging(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class MedicationKnowledgeRegulatory(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    max_dispense: MedicationKnowledgeRegulatoryMaxDispense | None = Field(None, alias="maxDispense", serialization_alias="maxDispense")
+    regulatory_authority: Reference | None = Field(None, alias="regulatoryAuthority", serialization_alias="regulatoryAuthority")
+    schedule: PyList[MedicationKnowledgeRegulatorySchedule] | None = Field(None, alias="schedule", serialization_alias="schedule")
+    substitution: PyList[MedicationKnowledgeRegulatorySubstitution] | None = Field(None, alias="substitution", serialization_alias="substitution")
+
+class MedicationKnowledgeRegulatoryMaxDispense(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    period: Duration | None = Field(None, alias="period", serialization_alias="period")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+
+class MedicationKnowledgeRegulatorySchedule(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    schedule: CodeableConcept | None = Field(None, alias="schedule", serialization_alias="schedule")
+
+class MedicationKnowledgeRegulatorySubstitution(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    allowed: bool | None = Field(None, alias="allowed", serialization_alias="allowed")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class MedicationKnowledgeRelatedMedicationKnowledge(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    reference: PyList[Reference] | None = Field(None, alias="reference", serialization_alias="reference")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 

@@ -6,24 +6,12 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Age, Annotation, BackboneElement, CodeableConcept, Duration, Expression, Identifier, Period, Range, Reference, RelatedArtifact, Timing
+from aidbox.hl7_fhir_r4_core.base import \
+    Age, Annotation, BackboneElement, CodeableConcept, Duration, Expression, Identifier, Period, Range, Reference, \
+    RelatedArtifact, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class RequestGroupActionRelatedAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    action_id: str | None = Field(None, alias="actionId", serialization_alias="actionId")
-    offset_duration: Duration | None = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
-    offset_range: Range | None = Field(None, alias="offsetRange", serialization_alias="offsetRange")
-    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] | None = Field(None, alias="relationship", serialization_alias="relationship")
-
-class RequestGroupActionCondition(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
-    kind: Literal["applicability", "start", "stop"] | None = Field(None, alias="kind", serialization_alias="kind")
 
 class RequestGroupAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -52,6 +40,20 @@ class RequestGroupAction(BackboneElement):
     timing_timing: Timing | None = Field(None, alias="timingTiming", serialization_alias="timingTiming")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class RequestGroupActionCondition(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
+    kind: Literal["applicability", "start", "stop"] | None = Field(None, alias="kind", serialization_alias="kind")
+
+class RequestGroupActionRelatedAction(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    action_id: str | None = Field(None, alias="actionId", serialization_alias="actionId")
+    offset_duration: Duration | None = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
+    offset_range: Range | None = Field(None, alias="offsetRange", serialization_alias="offsetRange")
+    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] | None = Field(None, alias="relationship", serialization_alias="relationship")
 
 
 class RequestGroup(DomainResource):

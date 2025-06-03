@@ -6,20 +6,12 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Period, Quantity, Range, Ratio, Reference, SampledData, Timing
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Period, Quantity, Range, Ratio, Reference, SampledData, \
+    Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class ObservationReferenceRange(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    age: Range | None = Field(None, alias="age", serialization_alias="age")
-    applies_to: PyList[CodeableConcept] | None = Field(None, alias="appliesTo", serialization_alias="appliesTo")
-    high: Quantity | None = Field(None, alias="high", serialization_alias="high")
-    low: Quantity | None = Field(None, alias="low", serialization_alias="low")
-    text: str | None = Field(None, alias="text", serialization_alias="text")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class ObservationComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -39,6 +31,16 @@ class ObservationComponent(BackboneElement):
     value_sampled_data: SampledData | None = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
     value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
     value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
+
+class ObservationReferenceRange(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    age: Range | None = Field(None, alias="age", serialization_alias="age")
+    applies_to: PyList[CodeableConcept] | None = Field(None, alias="appliesTo", serialization_alias="appliesTo")
+    high: Quantity | None = Field(None, alias="high", serialization_alias="high")
+    low: Quantity | None = Field(None, alias="low", serialization_alias="low")
+    text: str | None = Field(None, alias="text", serialization_alias="text")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 
 class Observation(DomainResource):

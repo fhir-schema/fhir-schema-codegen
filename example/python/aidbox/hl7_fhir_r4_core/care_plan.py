@@ -6,10 +6,20 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Period, Quantity, Reference, Timing
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Period, Quantity, Reference, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class CarePlanActivity(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    detail: CarePlanActivityDetail | None = Field(None, alias="detail", serialization_alias="detail")
+    outcome_codeable_concept: PyList[CodeableConcept] | None = Field(None, alias="outcomeCodeableConcept", serialization_alias="outcomeCodeableConcept")
+    outcome_reference: PyList[Reference] | None = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
+    progress: PyList[Annotation] | None = Field(None, alias="progress", serialization_alias="progress")
+    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
 
 class CarePlanActivityDetail(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -34,15 +44,6 @@ class CarePlanActivityDetail(BackboneElement):
     scheduled_timing: Timing | None = Field(None, alias="scheduledTiming", serialization_alias="scheduledTiming")
     status: Literal["not-started", "scheduled", "in-progress", "on-hold", "completed", "cancelled", "unknown", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
-
-class CarePlanActivity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    detail: CarePlanActivityDetail | None = Field(None, alias="detail", serialization_alias="detail")
-    outcome_codeable_concept: PyList[CodeableConcept] | None = Field(None, alias="outcomeCodeableConcept", serialization_alias="outcomeCodeableConcept")
-    outcome_reference: PyList[Reference] | None = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
-    progress: PyList[Annotation] | None = Field(None, alias="progress", serialization_alias="progress")
-    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
 
 
 class CarePlan(DomainResource):

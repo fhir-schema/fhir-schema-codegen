@@ -6,26 +6,21 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, ContactDetail, Identifier, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class CodeSystemProperty(BackboneElement):
+class CodeSystemConcept(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: str | None = Field(None, alias="code", serialization_alias="code")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    type: Literal["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"] | None = Field(None, alias="type", serialization_alias="type")
-    uri: str | None = Field(None, alias="uri", serialization_alias="uri")
-
-class CodeSystemFilter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: str | None = Field(None, alias="code", serialization_alias="code")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    operator: PyList[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] | None = Field(None, alias="operator", serialization_alias="operator")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    concept: PyList[CodeSystemConcept] | None = Field(None, alias="concept", serialization_alias="concept")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    designation: PyList[CodeSystemConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
+    display: str | None = Field(None, alias="display", serialization_alias="display")
+    property: PyList[CodeSystemConceptProperty] | None = Field(None, alias="property", serialization_alias="property")
 
 class CodeSystemConceptDesignation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -46,15 +41,21 @@ class CodeSystemConceptProperty(BackboneElement):
     value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
     value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
 
-class CodeSystemConcept(BackboneElement):
+class CodeSystemFilter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: str | None = Field(None, alias="code", serialization_alias="code")
-    concept: PyList[CodeSystemConcept] | None = Field(None, alias="concept", serialization_alias="concept")
-    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
-    designation: PyList[CodeSystemConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
-    display: str | None = Field(None, alias="display", serialization_alias="display")
-    property: PyList[CodeSystemConceptProperty] | None = Field(None, alias="property", serialization_alias="property")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    operator: PyList[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] | None = Field(None, alias="operator", serialization_alias="operator")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
+
+class CodeSystemProperty(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    type: Literal["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"] | None = Field(None, alias="type", serialization_alias="type")
+    uri: str | None = Field(None, alias="uri", serialization_alias="uri")
 
 
 class CodeSystem(DomainResource):

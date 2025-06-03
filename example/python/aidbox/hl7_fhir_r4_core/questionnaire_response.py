@@ -6,10 +6,20 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, Coding, Identifier, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Attachment, BackboneElement, Coding, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class QuestionnaireResponseItem(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    answer: PyList[QuestionnaireResponseItemAnswer] | None = Field(None, alias="answer", serialization_alias="answer")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    item: PyList[QuestionnaireResponseItem] | None = Field(None, alias="item", serialization_alias="item")
+    link_id: str | None = Field(None, alias="linkId", serialization_alias="linkId")
+    text: str | None = Field(None, alias="text", serialization_alias="text")
 
 class QuestionnaireResponseItemAnswer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -27,15 +37,6 @@ class QuestionnaireResponseItemAnswer(BackboneElement):
     value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
     value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
     value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
-
-class QuestionnaireResponseItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    answer: PyList[QuestionnaireResponseItemAnswer] | None = Field(None, alias="answer", serialization_alias="answer")
-    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
-    item: PyList[QuestionnaireResponseItem] | None = Field(None, alias="item", serialization_alias="item")
-    link_id: str | None = Field(None, alias="linkId", serialization_alias="linkId")
-    text: str | None = Field(None, alias="text", serialization_alias="text")
 
 
 class QuestionnaireResponse(DomainResource):

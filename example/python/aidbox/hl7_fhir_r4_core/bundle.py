@@ -11,17 +11,15 @@ from aidbox.hl7_fhir_r4_core.resource import Resource
 from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 
 
-class BundleLink(BackboneElement):
+class BundleEntry(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    relation: str | None = Field(None, alias="relation", serialization_alias="relation")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
-
-class BundleEntrySearch(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    mode: Literal["match", "include", "outcome"] | None = Field(None, alias="mode", serialization_alias="mode")
-    score: float | None = Field(None, alias="score", serialization_alias="score")
+    full_url: str | None = Field(None, alias="fullUrl", serialization_alias="fullUrl")
+    link: PyList[BundleLink] | None = Field(None, alias="link", serialization_alias="link")
+    request: BundleEntryRequest | None = Field(None, alias="request", serialization_alias="request")
+    resource: ResourceFamily | None = Field(None, alias="resource", serialization_alias="resource")
+    response: BundleEntryResponse | None = Field(None, alias="response", serialization_alias="response")
+    search: BundleEntrySearch | None = Field(None, alias="search", serialization_alias="search")
 
 class BundleEntryRequest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -42,15 +40,17 @@ class BundleEntryResponse(BackboneElement):
     outcome: ResourceFamily | None = Field(None, alias="outcome", serialization_alias="outcome")
     status: str | None = Field(None, alias="status", serialization_alias="status")
 
-class BundleEntry(BackboneElement):
+class BundleEntrySearch(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    full_url: str | None = Field(None, alias="fullUrl", serialization_alias="fullUrl")
-    link: PyList[BundleLink] | None = Field(None, alias="link", serialization_alias="link")
-    request: BundleEntryRequest | None = Field(None, alias="request", serialization_alias="request")
-    resource: ResourceFamily | None = Field(None, alias="resource", serialization_alias="resource")
-    response: BundleEntryResponse | None = Field(None, alias="response", serialization_alias="response")
-    search: BundleEntrySearch | None = Field(None, alias="search", serialization_alias="search")
+    mode: Literal["match", "include", "outcome"] | None = Field(None, alias="mode", serialization_alias="mode")
+    score: float | None = Field(None, alias="score", serialization_alias="score")
+
+class BundleLink(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    relation: str | None = Field(None, alias="relation", serialization_alias="relation")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
 
 
 class Bundle(Resource):

@@ -6,24 +6,12 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactDetail, Identifier, Period, Reference, RelatedArtifact, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, ContactDetail, Identifier, Period, Reference, RelatedArtifact, \
+    UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class RiskEvidenceSynthesisSampleSize(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    number_of_participants: int | None = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
-    number_of_studies: int | None = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
-
-class RiskEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
-    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class RiskEvidenceSynthesisCertainty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -32,12 +20,11 @@ class RiskEvidenceSynthesisCertainty(BackboneElement):
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
 
-class RiskEvidenceSynthesisRiskEstimatePrecisionEstimate(BackboneElement):
+class RiskEvidenceSynthesisCertaintyCertaintySubcomponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    from_: float | None = Field(None, alias="from", serialization_alias="from")
-    level: float | None = Field(None, alias="level", serialization_alias="level")
-    to: float | None = Field(None, alias="to", serialization_alias="to")
+    note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
+    rating: PyList[CodeableConcept] | None = Field(None, alias="rating", serialization_alias="rating")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class RiskEvidenceSynthesisRiskEstimate(BackboneElement):
@@ -50,6 +37,21 @@ class RiskEvidenceSynthesisRiskEstimate(BackboneElement):
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     unit_of_measure: CodeableConcept | None = Field(None, alias="unitOfMeasure", serialization_alias="unitOfMeasure")
     value: float | None = Field(None, alias="value", serialization_alias="value")
+
+class RiskEvidenceSynthesisRiskEstimatePrecisionEstimate(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    from_: float | None = Field(None, alias="from", serialization_alias="from")
+    level: float | None = Field(None, alias="level", serialization_alias="level")
+    to: float | None = Field(None, alias="to", serialization_alias="to")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class RiskEvidenceSynthesisSampleSize(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    number_of_participants: int | None = Field(None, alias="numberOfParticipants", serialization_alias="numberOfParticipants")
+    number_of_studies: int | None = Field(None, alias="numberOfStudies", serialization_alias="numberOfStudies")
 
 
 class RiskEvidenceSynthesis(DomainResource):

@@ -6,10 +6,25 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class ImmunizationEducation(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    document_type: str | None = Field(None, alias="documentType", serialization_alias="documentType")
+    presentation_date: str | None = Field(None, alias="presentationDate", serialization_alias="presentationDate")
+    publication_date: str | None = Field(None, alias="publicationDate", serialization_alias="publicationDate")
+    reference: str | None = Field(None, alias="reference", serialization_alias="reference")
+
+class ImmunizationPerformer(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 class ImmunizationProtocolApplied(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -22,26 +37,12 @@ class ImmunizationProtocolApplied(BackboneElement):
     series_doses_string: str | None = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
     target_disease: PyList[CodeableConcept] | None = Field(None, alias="targetDisease", serialization_alias="targetDisease")
 
-class ImmunizationEducation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    document_type: str | None = Field(None, alias="documentType", serialization_alias="documentType")
-    presentation_date: str | None = Field(None, alias="presentationDate", serialization_alias="presentationDate")
-    publication_date: str | None = Field(None, alias="publicationDate", serialization_alias="publicationDate")
-    reference: str | None = Field(None, alias="reference", serialization_alias="reference")
-
 class ImmunizationReaction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     date: str | None = Field(None, alias="date", serialization_alias="date")
     detail: Reference | None = Field(None, alias="detail", serialization_alias="detail")
     reported: bool | None = Field(None, alias="reported", serialization_alias="reported")
-
-class ImmunizationPerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
-    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
 class Immunization(DomainResource):

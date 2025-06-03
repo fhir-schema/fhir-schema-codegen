@@ -6,24 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Narrative, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Narrative, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class CompositionSection(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    empty_reason: CodeableConcept | None = Field(None, alias="emptyReason", serialization_alias="emptyReason")
-    entry: PyList[Reference] | None = Field(None, alias="entry", serialization_alias="entry")
-    focus: Reference | None = Field(None, alias="focus", serialization_alias="focus")
-    mode: Literal["working", "snapshot", "changes"] | None = Field(None, alias="mode", serialization_alias="mode")
-    ordered_by: CodeableConcept | None = Field(None, alias="orderedBy", serialization_alias="orderedBy")
-    section: PyList[CompositionSection] | None = Field(None, alias="section", serialization_alias="section")
-    text: Narrative | None = Field(None, alias="text", serialization_alias="text")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
 
 class CompositionAttester(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -45,6 +32,20 @@ class CompositionRelatesTo(BackboneElement):
     code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
     target_identifier: Identifier | None = Field(None, alias="targetIdentifier", serialization_alias="targetIdentifier")
     target_reference: Reference | None = Field(None, alias="targetReference", serialization_alias="targetReference")
+
+class CompositionSection(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    empty_reason: CodeableConcept | None = Field(None, alias="emptyReason", serialization_alias="emptyReason")
+    entry: PyList[Reference] | None = Field(None, alias="entry", serialization_alias="entry")
+    focus: Reference | None = Field(None, alias="focus", serialization_alias="focus")
+    mode: Literal["working", "snapshot", "changes"] | None = Field(None, alias="mode", serialization_alias="mode")
+    ordered_by: CodeableConcept | None = Field(None, alias="orderedBy", serialization_alias="orderedBy")
+    section: PyList[CompositionSection] | None = Field(None, alias="section", serialization_alias="section")
+    text: Narrative | None = Field(None, alias="text", serialization_alias="text")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
 
 
 class Composition(DomainResource):

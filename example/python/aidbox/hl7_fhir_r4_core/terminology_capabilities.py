@@ -6,41 +6,23 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class TerminologyCapabilitiesExpansionParameter(BackboneElement):
+class TerminologyCapabilitiesClosure(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    translation: bool | None = Field(None, alias="translation", serialization_alias="translation")
 
-class TerminologyCapabilitiesExpansion(BackboneElement):
+class TerminologyCapabilitiesCodeSystem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    hierarchical: bool | None = Field(None, alias="hierarchical", serialization_alias="hierarchical")
-    incomplete: bool | None = Field(None, alias="incomplete", serialization_alias="incomplete")
-    paging: bool | None = Field(None, alias="paging", serialization_alias="paging")
-    parameter: PyList[TerminologyCapabilitiesExpansionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
-    text_filter: str | None = Field(None, alias="textFilter", serialization_alias="textFilter")
-
-class TerminologyCapabilitiesValidateCode(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    translations: bool | None = Field(None, alias="translations", serialization_alias="translations")
-
-class TerminologyCapabilitiesTranslation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    needs_map: bool | None = Field(None, alias="needsMap", serialization_alias="needsMap")
-
-class TerminologyCapabilitiesCodeSystemVersionFilter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: str | None = Field(None, alias="code", serialization_alias="code")
-    op: PyList[str] | None = Field(None, alias="op", serialization_alias="op")
+    subsumption: bool | None = Field(None, alias="subsumption", serialization_alias="subsumption")
+    uri: str | None = Field(None, alias="uri", serialization_alias="uri")
+    version: PyList[TerminologyCapabilitiesCodeSystemVersion] | None = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesCodeSystemVersion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -52,18 +34,26 @@ class TerminologyCapabilitiesCodeSystemVersion(BackboneElement):
     language: PyList[str] | None = Field(None, alias="language", serialization_alias="language")
     property: PyList[str] | None = Field(None, alias="property", serialization_alias="property")
 
-class TerminologyCapabilitiesCodeSystem(BackboneElement):
+class TerminologyCapabilitiesCodeSystemVersionFilter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    subsumption: bool | None = Field(None, alias="subsumption", serialization_alias="subsumption")
-    uri: str | None = Field(None, alias="uri", serialization_alias="uri")
-    version: PyList[TerminologyCapabilitiesCodeSystemVersion] | None = Field(None, alias="version", serialization_alias="version")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    op: PyList[str] | None = Field(None, alias="op", serialization_alias="op")
 
-class TerminologyCapabilitiesSoftware(BackboneElement):
+class TerminologyCapabilitiesExpansion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
+    hierarchical: bool | None = Field(None, alias="hierarchical", serialization_alias="hierarchical")
+    incomplete: bool | None = Field(None, alias="incomplete", serialization_alias="incomplete")
+    paging: bool | None = Field(None, alias="paging", serialization_alias="paging")
+    parameter: PyList[TerminologyCapabilitiesExpansionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
+    text_filter: str | None = Field(None, alias="textFilter", serialization_alias="textFilter")
+
+class TerminologyCapabilitiesExpansionParameter(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
     name: str | None = Field(None, alias="name", serialization_alias="name")
-    version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesImplementation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -71,10 +61,21 @@ class TerminologyCapabilitiesImplementation(BackboneElement):
     description: str | None = Field(None, alias="description", serialization_alias="description")
     url: str | None = Field(None, alias="url", serialization_alias="url")
 
-class TerminologyCapabilitiesClosure(BackboneElement):
+class TerminologyCapabilitiesSoftware(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    translation: bool | None = Field(None, alias="translation", serialization_alias="translation")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
+
+class TerminologyCapabilitiesTranslation(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    needs_map: bool | None = Field(None, alias="needsMap", serialization_alias="needsMap")
+
+class TerminologyCapabilitiesValidateCode(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    translations: bool | None = Field(None, alias="translations", serialization_alias="translations")
 
 
 class TerminologyCapabilities(DomainResource):

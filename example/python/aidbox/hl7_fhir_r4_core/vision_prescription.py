@@ -6,16 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class VisionPrescriptionLensSpecificationPrism(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    amount: float | None = Field(None, alias="amount", serialization_alias="amount")
-    base: Literal["up", "down", "in", "out"] | None = Field(None, alias="base", serialization_alias="base")
 
 class VisionPrescriptionLensSpecification(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -34,6 +29,12 @@ class VisionPrescriptionLensSpecification(BackboneElement):
     prism: PyList[VisionPrescriptionLensSpecificationPrism] | None = Field(None, alias="prism", serialization_alias="prism")
     product: CodeableConcept | None = Field(None, alias="product", serialization_alias="product")
     sphere: float | None = Field(None, alias="sphere", serialization_alias="sphere")
+
+class VisionPrescriptionLensSpecificationPrism(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    amount: float | None = Field(None, alias="amount", serialization_alias="amount")
+    base: Literal["up", "down", "in", "out"] | None = Field(None, alias="base", serialization_alias="base")
 
 
 class VisionPrescription(DomainResource):

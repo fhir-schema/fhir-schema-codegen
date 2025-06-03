@@ -6,19 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Ratio, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Ratio, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength(BackboneElement):
+class MedicinalProductIngredientSpecifiedSubstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    country: PyList[CodeableConcept] | None = Field(None, alias="country", serialization_alias="country")
-    measurement_point: str | None = Field(None, alias="measurementPoint", serialization_alias="measurementPoint")
-    strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
-    strength_low_limit: Ratio | None = Field(None, alias="strengthLowLimit", serialization_alias="strengthLowLimit")
-    substance: CodeableConcept | None = Field(None, alias="substance", serialization_alias="substance")
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    confidentiality: CodeableConcept | None = Field(None, alias="confidentiality", serialization_alias="confidentiality")
+    group: CodeableConcept | None = Field(None, alias="group", serialization_alias="group")
+    strength: PyList[MedicinalProductIngredientSpecifiedSubstanceStrength] | None = Field(None, alias="strength", serialization_alias="strength")
 
 class MedicinalProductIngredientSpecifiedSubstanceStrength(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -31,13 +31,14 @@ class MedicinalProductIngredientSpecifiedSubstanceStrength(BackboneElement):
     presentation_low_limit: Ratio | None = Field(None, alias="presentationLowLimit", serialization_alias="presentationLowLimit")
     reference_strength: PyList[MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength] | None = Field(None, alias="referenceStrength", serialization_alias="referenceStrength")
 
-class MedicinalProductIngredientSpecifiedSubstance(BackboneElement):
+class MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    confidentiality: CodeableConcept | None = Field(None, alias="confidentiality", serialization_alias="confidentiality")
-    group: CodeableConcept | None = Field(None, alias="group", serialization_alias="group")
-    strength: PyList[MedicinalProductIngredientSpecifiedSubstanceStrength] | None = Field(None, alias="strength", serialization_alias="strength")
+    country: PyList[CodeableConcept] | None = Field(None, alias="country", serialization_alias="country")
+    measurement_point: str | None = Field(None, alias="measurementPoint", serialization_alias="measurementPoint")
+    strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
+    strength_low_limit: Ratio | None = Field(None, alias="strengthLowLimit", serialization_alias="strengthLowLimit")
+    substance: CodeableConcept | None = Field(None, alias="substance", serialization_alias="substance")
 
 class MedicinalProductIngredientSubstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

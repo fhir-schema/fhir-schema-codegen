@@ -11,6 +11,24 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
+class SubstanceSourceMaterialFractionDescription(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    fraction: str | None = Field(None, alias="fraction", serialization_alias="fraction")
+    material_type: CodeableConcept | None = Field(None, alias="materialType", serialization_alias="materialType")
+
+class SubstanceSourceMaterialOrganism(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    author: PyList[SubstanceSourceMaterialOrganismAuthor] | None = Field(None, alias="author", serialization_alias="author")
+    family: CodeableConcept | None = Field(None, alias="family", serialization_alias="family")
+    genus: CodeableConcept | None = Field(None, alias="genus", serialization_alias="genus")
+    hybrid: SubstanceSourceMaterialOrganismHybrid | None = Field(None, alias="hybrid", serialization_alias="hybrid")
+    intraspecific_description: str | None = Field(None, alias="intraspecificDescription", serialization_alias="intraspecificDescription")
+    intraspecific_type: CodeableConcept | None = Field(None, alias="intraspecificType", serialization_alias="intraspecificType")
+    organism_general: SubstanceSourceMaterialOrganismOrganismGeneral | None = Field(None, alias="organismGeneral", serialization_alias="organismGeneral")
+    species: CodeableConcept | None = Field(None, alias="species", serialization_alias="species")
+
 class SubstanceSourceMaterialOrganismAuthor(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -34,29 +52,11 @@ class SubstanceSourceMaterialOrganismOrganismGeneral(BackboneElement):
     order: CodeableConcept | None = Field(None, alias="order", serialization_alias="order")
     phylum: CodeableConcept | None = Field(None, alias="phylum", serialization_alias="phylum")
 
-class SubstanceSourceMaterialOrganism(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    author: PyList[SubstanceSourceMaterialOrganismAuthor] | None = Field(None, alias="author", serialization_alias="author")
-    family: CodeableConcept | None = Field(None, alias="family", serialization_alias="family")
-    genus: CodeableConcept | None = Field(None, alias="genus", serialization_alias="genus")
-    hybrid: SubstanceSourceMaterialOrganismHybrid | None = Field(None, alias="hybrid", serialization_alias="hybrid")
-    intraspecific_description: str | None = Field(None, alias="intraspecificDescription", serialization_alias="intraspecificDescription")
-    intraspecific_type: CodeableConcept | None = Field(None, alias="intraspecificType", serialization_alias="intraspecificType")
-    organism_general: SubstanceSourceMaterialOrganismOrganismGeneral | None = Field(None, alias="organismGeneral", serialization_alias="organismGeneral")
-    species: CodeableConcept | None = Field(None, alias="species", serialization_alias="species")
-
 class SubstanceSourceMaterialPartDescription(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     part: CodeableConcept | None = Field(None, alias="part", serialization_alias="part")
     part_location: CodeableConcept | None = Field(None, alias="partLocation", serialization_alias="partLocation")
-
-class SubstanceSourceMaterialFractionDescription(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    fraction: str | None = Field(None, alias="fraction", serialization_alias="fraction")
-    material_type: CodeableConcept | None = Field(None, alias="materialType", serialization_alias="materialType")
 
 
 class SubstanceSourceMaterial(DomainResource):

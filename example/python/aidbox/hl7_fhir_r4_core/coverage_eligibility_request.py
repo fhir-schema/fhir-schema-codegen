@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -17,19 +18,6 @@ class CoverageEligibilityRequestInsurance(BackboneElement):
     business_arrangement: str | None = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
     coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
     focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
-
-class CoverageEligibilityRequestSupportingInfo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    applies_to_all: bool | None = Field(None, alias="appliesToAll", serialization_alias="appliesToAll")
-    information: Reference | None = Field(None, alias="information", serialization_alias="information")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
-
-class CoverageEligibilityRequestItemDiagnosis(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    diagnosis_codeable_concept: CodeableConcept | None = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
-    diagnosis_reference: Reference | None = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
 
 class CoverageEligibilityRequestItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -44,6 +32,19 @@ class CoverageEligibilityRequestItem(BackboneElement):
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     supporting_info_sequence: PyList[PositiveInt] | None = Field(None, alias="supportingInfoSequence", serialization_alias="supportingInfoSequence")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
+
+class CoverageEligibilityRequestItemDiagnosis(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    diagnosis_codeable_concept: CodeableConcept | None = Field(None, alias="diagnosisCodeableConcept", serialization_alias="diagnosisCodeableConcept")
+    diagnosis_reference: Reference | None = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
+
+class CoverageEligibilityRequestSupportingInfo(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    applies_to_all: bool | None = Field(None, alias="appliesToAll", serialization_alias="appliesToAll")
+    information: Reference | None = Field(None, alias="information", serialization_alias="information")
+    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
 
 
 class CoverageEligibilityRequest(DomainResource):

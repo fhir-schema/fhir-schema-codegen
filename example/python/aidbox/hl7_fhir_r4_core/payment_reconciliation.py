@@ -6,16 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Money, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Money, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class PaymentReconciliationProcessNote(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    text: str | None = Field(None, alias="text", serialization_alias="text")
-    type: Literal["display", "print", "printoper"] | None = Field(None, alias="type", serialization_alias="type")
 
 class PaymentReconciliationDetail(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -30,6 +25,12 @@ class PaymentReconciliationDetail(BackboneElement):
     responsible: Reference | None = Field(None, alias="responsible", serialization_alias="responsible")
     submitter: Reference | None = Field(None, alias="submitter", serialization_alias="submitter")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class PaymentReconciliationProcessNote(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    text: str | None = Field(None, alias="text", serialization_alias="text")
+    type: Literal["display", "print", "printoper"] | None = Field(None, alias="type", serialization_alias="type")
 
 
 class PaymentReconciliation(DomainResource):

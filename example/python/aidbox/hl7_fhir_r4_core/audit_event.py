@@ -11,19 +11,6 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class AuditEventSource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    observer: Reference | None = Field(None, alias="observer", serialization_alias="observer")
-    site: str | None = Field(None, alias="site", serialization_alias="site")
-    type: PyList[Coding] | None = Field(None, alias="type", serialization_alias="type")
-
-class AuditEventAgentNetwork(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    address: str | None = Field(None, alias="address", serialization_alias="address")
-    type: Literal["1", "2", "3", "4", "5"] | None = Field(None, alias="type", serialization_alias="type")
-
 class AuditEventAgent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -39,12 +26,11 @@ class AuditEventAgent(BackboneElement):
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     who: Reference | None = Field(None, alias="who", serialization_alias="who")
 
-class AuditEventEntityDetail(BackboneElement):
+class AuditEventAgentNetwork(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: str | None = Field(None, alias="type", serialization_alias="type")
-    value_base64binary: str | None = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    address: str | None = Field(None, alias="address", serialization_alias="address")
+    type: Literal["1", "2", "3", "4", "5"] | None = Field(None, alias="type", serialization_alias="type")
 
 class AuditEventEntity(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -58,6 +44,20 @@ class AuditEventEntity(BackboneElement):
     security_label: PyList[Coding] | None = Field(None, alias="securityLabel", serialization_alias="securityLabel")
     type: Coding | None = Field(None, alias="type", serialization_alias="type")
     what: Reference | None = Field(None, alias="what", serialization_alias="what")
+
+class AuditEventEntityDetail(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    type: str | None = Field(None, alias="type", serialization_alias="type")
+    value_base64binary: str | None = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+
+class AuditEventSource(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    observer: Reference | None = Field(None, alias="observer", serialization_alias="observer")
+    site: str | None = Field(None, alias="site", serialization_alias="site")
+    type: PyList[Coding] | None = Field(None, alias="type", serialization_alias="type")
 
 
 class AuditEvent(DomainResource):

@@ -6,16 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Identifier, Money, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Identifier, Money, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
-class InvoiceParticipant(BackboneElement):
+class InvoiceLineItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
-    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
+    charge_item_codeable_concept: CodeableConcept | None = Field(None, alias="chargeItemCodeableConcept", serialization_alias="chargeItemCodeableConcept")
+    charge_item_reference: Reference | None = Field(None, alias="chargeItemReference", serialization_alias="chargeItemReference")
+    price_component: PyList[InvoiceLineItemPriceComponent] | None = Field(None, alias="priceComponent", serialization_alias="priceComponent")
+    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
 
 class InvoiceLineItemPriceComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -25,13 +28,11 @@ class InvoiceLineItemPriceComponent(BackboneElement):
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
     type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] | None = Field(None, alias="type", serialization_alias="type")
 
-class InvoiceLineItem(BackboneElement):
+class InvoiceParticipant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    charge_item_codeable_concept: CodeableConcept | None = Field(None, alias="chargeItemCodeableConcept", serialization_alias="chargeItemCodeableConcept")
-    charge_item_reference: Reference | None = Field(None, alias="chargeItemReference", serialization_alias="chargeItemReference")
-    price_component: PyList[InvoiceLineItemPriceComponent] | None = Field(None, alias="priceComponent", serialization_alias="priceComponent")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
 
 
 class Invoice(DomainResource):

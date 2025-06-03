@@ -6,10 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class MeasureReportGroup(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    measure_score: Quantity | None = Field(None, alias="measureScore", serialization_alias="measureScore")
+    population: PyList[MeasureReportGroupPopulation] | None = Field(None, alias="population", serialization_alias="population")
+    stratifier: PyList[MeasureReportGroupStratifier] | None = Field(None, alias="stratifier", serialization_alias="stratifier")
 
 class MeasureReportGroupPopulation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -17,6 +26,20 @@ class MeasureReportGroupPopulation(BackboneElement):
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     count: int | None = Field(None, alias="count", serialization_alias="count")
     subject_results: Reference | None = Field(None, alias="subjectResults", serialization_alias="subjectResults")
+
+class MeasureReportGroupStratifier(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
+    stratum: PyList[MeasureReportGroupStratifierStratum] | None = Field(None, alias="stratum", serialization_alias="stratum")
+
+class MeasureReportGroupStratifierStratum(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    component: PyList[MeasureReportGroupStratifierStratumComponent] | None = Field(None, alias="component", serialization_alias="component")
+    measure_score: Quantity | None = Field(None, alias="measureScore", serialization_alias="measureScore")
+    population: PyList[MeasureReportGroupStratifierStratumPopulation] | None = Field(None, alias="population", serialization_alias="population")
+    value: CodeableConcept | None = Field(None, alias="value", serialization_alias="value")
 
 class MeasureReportGroupStratifierStratumComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -30,28 +53,6 @@ class MeasureReportGroupStratifierStratumPopulation(BackboneElement):
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     count: int | None = Field(None, alias="count", serialization_alias="count")
     subject_results: Reference | None = Field(None, alias="subjectResults", serialization_alias="subjectResults")
-
-class MeasureReportGroupStratifierStratum(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    component: PyList[MeasureReportGroupStratifierStratumComponent] | None = Field(None, alias="component", serialization_alias="component")
-    measure_score: Quantity | None = Field(None, alias="measureScore", serialization_alias="measureScore")
-    population: PyList[MeasureReportGroupStratifierStratumPopulation] | None = Field(None, alias="population", serialization_alias="population")
-    value: CodeableConcept | None = Field(None, alias="value", serialization_alias="value")
-
-class MeasureReportGroupStratifier(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
-    stratum: PyList[MeasureReportGroupStratifierStratum] | None = Field(None, alias="stratum", serialization_alias="stratum")
-
-class MeasureReportGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    measure_score: Quantity | None = Field(None, alias="measureScore", serialization_alias="measureScore")
-    population: PyList[MeasureReportGroupPopulation] | None = Field(None, alias="population", serialization_alias="population")
-    stratifier: PyList[MeasureReportGroupStratifier] | None = Field(None, alias="stratifier", serialization_alias="stratifier")
 
 
 class MeasureReport(DomainResource):

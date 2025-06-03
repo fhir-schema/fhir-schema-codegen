@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, Coding, Identifier, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Attachment, BackboneElement, CodeableConcept, Coding, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -16,12 +17,6 @@ class DocumentReferenceContent(BackboneElement):
     
     attachment: Attachment | None = Field(None, alias="attachment", serialization_alias="attachment")
     format: Coding | None = Field(None, alias="format", serialization_alias="format")
-
-class DocumentReferenceRelatesTo(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
-    target: Reference | None = Field(None, alias="target", serialization_alias="target")
 
 class DocumentReferenceContext(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -33,6 +28,12 @@ class DocumentReferenceContext(BackboneElement):
     practice_setting: CodeableConcept | None = Field(None, alias="practiceSetting", serialization_alias="practiceSetting")
     related: PyList[Reference] | None = Field(None, alias="related", serialization_alias="related")
     source_patient_info: Reference | None = Field(None, alias="sourcePatientInfo", serialization_alias="sourcePatientInfo")
+
+class DocumentReferenceRelatesTo(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
+    target: Reference | None = Field(None, alias="target", serialization_alias="target")
 
 
 class DocumentReference(DomainResource):

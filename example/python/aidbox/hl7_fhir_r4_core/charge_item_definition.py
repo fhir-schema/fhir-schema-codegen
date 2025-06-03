@@ -6,10 +6,24 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, ContactDetail, Identifier, Money, Period, Reference, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, ContactDetail, Identifier, Money, Period, Reference, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class ChargeItemDefinitionApplicability(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    expression: str | None = Field(None, alias="expression", serialization_alias="expression")
+    language: str | None = Field(None, alias="language", serialization_alias="language")
+
+class ChargeItemDefinitionPropertyGroup(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    applicability: PyList[ChargeItemDefinitionApplicability] | None = Field(None, alias="applicability", serialization_alias="applicability")
+    price_component: PyList[ChargeItemDefinitionPropertyGroupPriceComponent] | None = Field(None, alias="priceComponent", serialization_alias="priceComponent")
 
 class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -18,19 +32,6 @@ class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
     type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] | None = Field(None, alias="type", serialization_alias="type")
-
-class ChargeItemDefinitionPropertyGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    applicability: PyList[ChargeItemDefinitionApplicability] | None = Field(None, alias="applicability", serialization_alias="applicability")
-    price_component: PyList[ChargeItemDefinitionPropertyGroupPriceComponent] | None = Field(None, alias="priceComponent", serialization_alias="priceComponent")
-
-class ChargeItemDefinitionApplicability(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    expression: str | None = Field(None, alias="expression", serialization_alias="expression")
-    language: str | None = Field(None, alias="language", serialization_alias="language")
 
 
 class ChargeItemDefinition(DomainResource):

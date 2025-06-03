@@ -6,30 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Duration, Identifier, Period, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Duration, Identifier, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class SpecimenProcessing(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    additive: PyList[Reference] | None = Field(None, alias="additive", serialization_alias="additive")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    procedure: CodeableConcept | None = Field(None, alias="procedure", serialization_alias="procedure")
-    time_date_time: str | None = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
-    time_period: Period | None = Field(None, alias="timePeriod", serialization_alias="timePeriod")
-
-class SpecimenContainer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    additive_codeable_concept: CodeableConcept | None = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
-    additive_reference: Reference | None = Field(None, alias="additiveReference", serialization_alias="additiveReference")
-    capacity: Quantity | None = Field(None, alias="capacity", serialization_alias="capacity")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    specimen_quantity: Quantity | None = Field(None, alias="specimenQuantity", serialization_alias="specimenQuantity")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class SpecimenCollection(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -43,6 +24,26 @@ class SpecimenCollection(BackboneElement):
     fasting_status_duration: Duration | None = Field(None, alias="fastingStatusDuration", serialization_alias="fastingStatusDuration")
     method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+
+class SpecimenContainer(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    additive_codeable_concept: CodeableConcept | None = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
+    additive_reference: Reference | None = Field(None, alias="additiveReference", serialization_alias="additiveReference")
+    capacity: Quantity | None = Field(None, alias="capacity", serialization_alias="capacity")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
+    specimen_quantity: Quantity | None = Field(None, alias="specimenQuantity", serialization_alias="specimenQuantity")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class SpecimenProcessing(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    additive: PyList[Reference] | None = Field(None, alias="additive", serialization_alias="additive")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    procedure: CodeableConcept | None = Field(None, alias="procedure", serialization_alias="procedure")
+    time_date_time: str | None = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Period | None = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 
 class Specimen(DomainResource):

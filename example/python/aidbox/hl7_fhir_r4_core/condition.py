@@ -6,10 +6,17 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Age, Annotation, BackboneElement, CodeableConcept, Identifier, Period, Range, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Age, Annotation, BackboneElement, CodeableConcept, Identifier, Period, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class ConditionEvidence(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
+    detail: PyList[Reference] | None = Field(None, alias="detail", serialization_alias="detail")
 
 class ConditionStage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -17,12 +24,6 @@ class ConditionStage(BackboneElement):
     assessment: PyList[Reference] | None = Field(None, alias="assessment", serialization_alias="assessment")
     summary: CodeableConcept | None = Field(None, alias="summary", serialization_alias="summary")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class ConditionEvidence(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: PyList[CodeableConcept] | None = Field(None, alias="code", serialization_alias="code")
-    detail: PyList[Reference] | None = Field(None, alias="detail", serialization_alias="detail")
 
 
 class Condition(DomainResource):

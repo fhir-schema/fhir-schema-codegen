@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, ContactDetail, Reference, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, ContactDetail, Reference, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -17,6 +18,21 @@ class CapabilityStatementDocument(BackboneElement):
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
     mode: Literal["producer", "consumer"] | None = Field(None, alias="mode", serialization_alias="mode")
     profile: str | None = Field(None, alias="profile", serialization_alias="profile")
+
+class CapabilityStatementImplementation(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    url: str | None = Field(None, alias="url", serialization_alias="url")
+
+class CapabilityStatementMessaging(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    endpoint: PyList[CapabilityStatementMessagingEndpoint] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    reliable_cache: int | None = Field(None, alias="reliableCache", serialization_alias="reliableCache")
+    supported_message: PyList[CapabilityStatementMessagingSupportedMessage] | None = Field(None, alias="supportedMessage", serialization_alias="supportedMessage")
 
 class CapabilityStatementMessagingEndpoint(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -30,54 +46,22 @@ class CapabilityStatementMessagingSupportedMessage(BackboneElement):
     definition: str | None = Field(None, alias="definition", serialization_alias="definition")
     mode: Literal["sender", "receiver"] | None = Field(None, alias="mode", serialization_alias="mode")
 
-class CapabilityStatementMessaging(BackboneElement):
+class CapabilityStatementRest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
+    compartment: PyList[str] | None = Field(None, alias="compartment", serialization_alias="compartment")
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    endpoint: PyList[CapabilityStatementMessagingEndpoint] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
-    reliable_cache: int | None = Field(None, alias="reliableCache", serialization_alias="reliableCache")
-    supported_message: PyList[CapabilityStatementMessagingSupportedMessage] | None = Field(None, alias="supportedMessage", serialization_alias="supportedMessage")
+    interaction: PyList[CapabilityStatementRestInteraction] | None = Field(None, alias="interaction", serialization_alias="interaction")
+    mode: Literal["client", "server"] | None = Field(None, alias="mode", serialization_alias="mode")
+    operation: PyList[CapabilityStatementRestResourceOperation] | None = Field(None, alias="operation", serialization_alias="operation")
+    resource: PyList[CapabilityStatementRestResource] | None = Field(None, alias="resource", serialization_alias="resource")
+    search_param: PyList[CapabilityStatementRestResourceSearchParam] | None = Field(None, alias="searchParam", serialization_alias="searchParam")
+    security: CapabilityStatementRestSecurity | None = Field(None, alias="security", serialization_alias="security")
 
-class CapabilityStatementSoftware(BackboneElement):
+class CapabilityStatementRestInteraction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    release_date: str | None = Field(None, alias="releaseDate", serialization_alias="releaseDate")
-    version: str | None = Field(None, alias="version", serialization_alias="version")
-
-class CapabilityStatementImplementation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
-
-class CapabilityStatementRestSecurity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    cors: bool | None = Field(None, alias="cors", serialization_alias="cors")
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    service: PyList[CodeableConcept] | None = Field(None, alias="service", serialization_alias="service")
-
-class CapabilityStatementRestResourceSearchParam(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
-    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: Literal["number", "date", "string", "token", "reference", "composite", "quantity", "uri", "special"] | None = Field(None, alias="type", serialization_alias="type")
-
-class CapabilityStatementRestResourceOperation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
-    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-
-class CapabilityStatementRestResourceInteraction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: Literal["read", "vread", "update", "patch", "delete", "history-instance", "history-type", "create", "search-type", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"] | None = Field(None, alias="code", serialization_alias="code")
+    code: Literal["transaction", "batch", "search-system", "history-system", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"] | None = Field(None, alias="code", serialization_alias="code")
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
 
 class CapabilityStatementRestResource(BackboneElement):
@@ -101,23 +85,40 @@ class CapabilityStatementRestResource(BackboneElement):
     update_create: bool | None = Field(None, alias="updateCreate", serialization_alias="updateCreate")
     versioning: Literal["no-version", "versioned", "versioned-update"] | None = Field(None, alias="versioning", serialization_alias="versioning")
 
-class CapabilityStatementRestInteraction(BackboneElement):
+class CapabilityStatementRestResourceInteraction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Literal["transaction", "batch", "search-system", "history-system", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"] | None = Field(None, alias="code", serialization_alias="code")
+    code: Literal["read", "vread", "update", "patch", "delete", "history-instance", "history-type", "create", "search-type", "read", "vread", "update", "patch", "delete", "history", "create", "search", "capabilities", "transaction", "batch", "operation"] | None = Field(None, alias="code", serialization_alias="code")
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
 
-class CapabilityStatementRest(BackboneElement):
+class CapabilityStatementRestResourceOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    compartment: PyList[str] | None = Field(None, alias="compartment", serialization_alias="compartment")
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    interaction: PyList[CapabilityStatementRestInteraction] | None = Field(None, alias="interaction", serialization_alias="interaction")
-    mode: Literal["client", "server"] | None = Field(None, alias="mode", serialization_alias="mode")
-    operation: PyList[CapabilityStatementRestResourceOperation] | None = Field(None, alias="operation", serialization_alias="operation")
-    resource: PyList[CapabilityStatementRestResource] | None = Field(None, alias="resource", serialization_alias="resource")
-    search_param: PyList[CapabilityStatementRestResourceSearchParam] | None = Field(None, alias="searchParam", serialization_alias="searchParam")
-    security: CapabilityStatementRestSecurity | None = Field(None, alias="security", serialization_alias="security")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+
+class CapabilityStatementRestResourceSearchParam(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    definition: str | None = Field(None, alias="definition", serialization_alias="definition")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    type: Literal["number", "date", "string", "token", "reference", "composite", "quantity", "uri", "special"] | None = Field(None, alias="type", serialization_alias="type")
+
+class CapabilityStatementRestSecurity(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    cors: bool | None = Field(None, alias="cors", serialization_alias="cors")
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    service: PyList[CodeableConcept] | None = Field(None, alias="service", serialization_alias="service")
+
+class CapabilityStatementSoftware(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    release_date: str | None = Field(None, alias="releaseDate", serialization_alias="releaseDate")
+    version: str | None = Field(None, alias="version", serialization_alias="version")
 
 
 class CapabilityStatement(DomainResource):

@@ -6,10 +6,24 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, Contributor, Count, DataRequirement, Distance, Dosage, Duration, Expression, HumanName, Identifier, Meta, Money, ParameterDefinition, Period, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, Timing, TriggerDefinition, UsageContext
+from aidbox.hl7_fhir_r4_core.base import \
+    Address, Age, Annotation, Attachment, BackboneElement, CodeableConcept, Coding, ContactDetail, ContactPoint, \
+    Contributor, Count, DataRequirement, Distance, Dosage, Duration, Expression, HumanName, Identifier, Meta, \
+    Money, ParameterDefinition, Period, Quantity, Range, Ratio, Reference, RelatedArtifact, SampledData, Signature, \
+    Timing, TriggerDefinition, UsageContext
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class StructureMapGroup(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    extends: str | None = Field(None, alias="extends", serialization_alias="extends")
+    input: PyList[StructureMapGroupInput] | None = Field(None, alias="input", serialization_alias="input")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    rule: PyList[StructureMapGroupRule] | None = Field(None, alias="rule", serialization_alias="rule")
+    type_mode: Literal["none", "types", "type-and-types"] | None = Field(None, alias="typeMode", serialization_alias="typeMode")
 
 class StructureMapGroupInput(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -18,6 +32,22 @@ class StructureMapGroupInput(BackboneElement):
     mode: Literal["source", "target"] | None = Field(None, alias="mode", serialization_alias="mode")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     type: str | None = Field(None, alias="type", serialization_alias="type")
+
+class StructureMapGroupRule(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    dependent: PyList[StructureMapGroupRuleDependent] | None = Field(None, alias="dependent", serialization_alias="dependent")
+    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    rule: PyList[StructureMapGroupRule] | None = Field(None, alias="rule", serialization_alias="rule")
+    source: PyList[StructureMapGroupRuleSource] | None = Field(None, alias="source", serialization_alias="source")
+    target: PyList[StructureMapGroupRuleTarget] | None = Field(None, alias="target", serialization_alias="target")
+
+class StructureMapGroupRuleDependent(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    name: str | None = Field(None, alias="name", serialization_alias="name")
+    variable: PyList[str] | None = Field(None, alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRuleSource(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -83,15 +113,6 @@ class StructureMapGroupRuleSource(BackboneElement):
     type: str | None = Field(None, alias="type", serialization_alias="type")
     variable: str | None = Field(None, alias="variable", serialization_alias="variable")
 
-class StructureMapGroupRuleTargetParameter(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
-    value_id: str | None = Field(None, alias="valueId", serialization_alias="valueId")
-    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
-
 class StructureMapGroupRuleTarget(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -104,31 +125,14 @@ class StructureMapGroupRuleTarget(BackboneElement):
     transform: Literal["create", "copy", "truncate", "escape", "cast", "append", "translate", "reference", "dateOp", "uuid", "pointer", "evaluate", "cc", "c", "qty", "id", "cp"] | None = Field(None, alias="transform", serialization_alias="transform")
     variable: str | None = Field(None, alias="variable", serialization_alias="variable")
 
-class StructureMapGroupRuleDependent(BackboneElement):
+class StructureMapGroupRuleTargetParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    variable: PyList[str] | None = Field(None, alias="variable", serialization_alias="variable")
-
-class StructureMapGroupRule(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    dependent: PyList[StructureMapGroupRuleDependent] | None = Field(None, alias="dependent", serialization_alias="dependent")
-    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    rule: PyList[StructureMapGroupRule] | None = Field(None, alias="rule", serialization_alias="rule")
-    source: PyList[StructureMapGroupRuleSource] | None = Field(None, alias="source", serialization_alias="source")
-    target: PyList[StructureMapGroupRuleTarget] | None = Field(None, alias="target", serialization_alias="target")
-
-class StructureMapGroup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    extends: str | None = Field(None, alias="extends", serialization_alias="extends")
-    input: PyList[StructureMapGroupInput] | None = Field(None, alias="input", serialization_alias="input")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    rule: PyList[StructureMapGroupRule] | None = Field(None, alias="rule", serialization_alias="rule")
-    type_mode: Literal["none", "types", "type-and-types"] | None = Field(None, alias="typeMode", serialization_alias="typeMode")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_id: str | None = Field(None, alias="valueId", serialization_alias="valueId")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
 
 class StructureMapStructure(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

@@ -6,10 +6,26 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class BiologicallyDerivedProductCollection(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    collected_date_time: str | None = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
+    collected_period: Period | None = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
+    collector: Reference | None = Field(None, alias="collector", serialization_alias="collector")
+    source: Reference | None = Field(None, alias="source", serialization_alias="source")
+
+class BiologicallyDerivedProductManipulation(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    time_date_time: str | None = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
+    time_period: Period | None = Field(None, alias="timePeriod", serialization_alias="timePeriod")
 
 class BiologicallyDerivedProductProcessing(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -27,21 +43,6 @@ class BiologicallyDerivedProductStorage(BackboneElement):
     duration: Period | None = Field(None, alias="duration", serialization_alias="duration")
     scale: Literal["farenheit", "celsius", "kelvin"] | None = Field(None, alias="scale", serialization_alias="scale")
     temperature: float | None = Field(None, alias="temperature", serialization_alias="temperature")
-
-class BiologicallyDerivedProductManipulation(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    time_date_time: str | None = Field(None, alias="timeDateTime", serialization_alias="timeDateTime")
-    time_period: Period | None = Field(None, alias="timePeriod", serialization_alias="timePeriod")
-
-class BiologicallyDerivedProductCollection(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    collected_date_time: str | None = Field(None, alias="collectedDateTime", serialization_alias="collectedDateTime")
-    collected_period: Period | None = Field(None, alias="collectedPeriod", serialization_alias="collectedPeriod")
-    collector: Reference | None = Field(None, alias="collector", serialization_alias="collector")
-    source: Reference | None = Field(None, alias="source", serialization_alias="source")
 
 
 class BiologicallyDerivedProduct(DomainResource):

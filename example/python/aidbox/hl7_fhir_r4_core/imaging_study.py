@@ -6,24 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, Coding, Identifier, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, Coding, Identifier, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class ImagingStudySeriesInstance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    number: int | None = Field(None, alias="number", serialization_alias="number")
-    sop_class: Coding | None = Field(None, alias="sopClass", serialization_alias="sopClass")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
-    uid: str | None = Field(None, alias="uid", serialization_alias="uid")
-
-class ImagingStudySeriesPerformer(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
-    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 class ImagingStudySeries(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -40,6 +27,20 @@ class ImagingStudySeries(BackboneElement):
     specimen: PyList[Reference] | None = Field(None, alias="specimen", serialization_alias="specimen")
     started: str | None = Field(None, alias="started", serialization_alias="started")
     uid: str | None = Field(None, alias="uid", serialization_alias="uid")
+
+class ImagingStudySeriesInstance(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    number: int | None = Field(None, alias="number", serialization_alias="number")
+    sop_class: Coding | None = Field(None, alias="sopClass", serialization_alias="sopClass")
+    title: str | None = Field(None, alias="title", serialization_alias="title")
+    uid: str | None = Field(None, alias="uid", serialization_alias="uid")
+
+class ImagingStudySeriesPerformer(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
 class ImagingStudy(DomainResource):

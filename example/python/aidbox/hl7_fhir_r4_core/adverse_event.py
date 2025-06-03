@@ -11,6 +11,12 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
+class AdverseEventSuspectEntity(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    causality: PyList[AdverseEventSuspectEntityCausality] | None = Field(None, alias="causality", serialization_alias="causality")
+    instance: Reference | None = Field(None, alias="instance", serialization_alias="instance")
+
 class AdverseEventSuspectEntityCausality(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -18,12 +24,6 @@ class AdverseEventSuspectEntityCausality(BackboneElement):
     author: Reference | None = Field(None, alias="author", serialization_alias="author")
     method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")
     product_relatedness: str | None = Field(None, alias="productRelatedness", serialization_alias="productRelatedness")
-
-class AdverseEventSuspectEntity(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    causality: PyList[AdverseEventSuspectEntityCausality] | None = Field(None, alias="causality", serialization_alias="causality")
-    instance: Reference | None = Field(None, alias="instance", serialization_alias="instance")
 
 
 class AdverseEvent(DomainResource):

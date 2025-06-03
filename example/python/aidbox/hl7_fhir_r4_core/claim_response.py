@@ -6,107 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Address, Attachment, BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Address, Attachment, BackboneElement, CodeableConcept, Identifier, Money, Period, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class ClaimResponseInsurance(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    business_arrangement: str | None = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
-    claim_response: Reference | None = Field(None, alias="claimResponse", serialization_alias="claimResponse")
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
-    focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
-
-class ClaimResponseProcessNote(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    language: CodeableConcept | None = Field(None, alias="language", serialization_alias="language")
-    number: PositiveInt | None = Field(None, alias="number", serialization_alias="number")
-    text: str | None = Field(None, alias="text", serialization_alias="text")
-    type: Literal["display", "print", "printoper"] | None = Field(None, alias="type", serialization_alias="type")
-
-class ClaimResponsePayment(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    adjustment: Money | None = Field(None, alias="adjustment", serialization_alias="adjustment")
-    adjustment_reason: CodeableConcept | None = Field(None, alias="adjustmentReason", serialization_alias="adjustmentReason")
-    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
-    date: str | None = Field(None, alias="date", serialization_alias="date")
-    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class ClaimResponseItemAdjudication(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
-    reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
-    value: float | None = Field(None, alias="value", serialization_alias="value")
-
-class ClaimResponseItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
-    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    sub_detail_sequence: PositiveInt | None = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
-
-class ClaimResponseItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
-    detail_sequence: PositiveInt | None = Field(None, alias="detailSequence", serialization_alias="detailSequence")
-    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    sub_detail: PyList[ClaimResponseItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
-
-class ClaimResponseItem(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
-    detail: PyList[ClaimResponseItemDetail] | None = Field(None, alias="detail", serialization_alias="detail")
-    item_sequence: PositiveInt | None = Field(None, alias="itemSequence", serialization_alias="itemSequence")
-    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-
-class ClaimResponseTotal(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
-
-class ClaimResponseError(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    detail_sequence: PositiveInt | None = Field(None, alias="detailSequence", serialization_alias="detailSequence")
-    item_sequence: PositiveInt | None = Field(None, alias="itemSequence", serialization_alias="itemSequence")
-    sub_detail_sequence: PositiveInt | None = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
-
-class ClaimResponseAddItemDetailSubDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
-    factor: float | None = Field(None, alias="factor", serialization_alias="factor")
-    modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
-    net: Money | None = Field(None, alias="net", serialization_alias="net")
-    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
-    unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
-
-class ClaimResponseAddItemDetail(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
-    factor: float | None = Field(None, alias="factor", serialization_alias="factor")
-    modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
-    net: Money | None = Field(None, alias="net", serialization_alias="net")
-    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
-    sub_detail: PyList[ClaimResponseAddItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
-    unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ClaimResponseAddItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -132,6 +36,103 @@ class ClaimResponseAddItem(BackboneElement):
     subdetail_sequence: PyList[PositiveInt] | None = Field(None, alias="subdetailSequence", serialization_alias="subdetailSequence")
     sub_site: PyList[CodeableConcept] | None = Field(None, alias="subSite", serialization_alias="subSite")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
+
+class ClaimResponseAddItemDetail(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
+    factor: float | None = Field(None, alias="factor", serialization_alias="factor")
+    modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Money | None = Field(None, alias="net", serialization_alias="net")
+    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    sub_detail: PyList[ClaimResponseAddItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
+    unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
+
+class ClaimResponseAddItemDetailSubDetail(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
+    factor: float | None = Field(None, alias="factor", serialization_alias="factor")
+    modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
+    net: Money | None = Field(None, alias="net", serialization_alias="net")
+    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
+
+class ClaimResponseError(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    detail_sequence: PositiveInt | None = Field(None, alias="detailSequence", serialization_alias="detailSequence")
+    item_sequence: PositiveInt | None = Field(None, alias="itemSequence", serialization_alias="itemSequence")
+    sub_detail_sequence: PositiveInt | None = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
+
+class ClaimResponseInsurance(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    business_arrangement: str | None = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
+    claim_response: Reference | None = Field(None, alias="claimResponse", serialization_alias="claimResponse")
+    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
+    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+
+class ClaimResponseItem(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
+    detail: PyList[ClaimResponseItemDetail] | None = Field(None, alias="detail", serialization_alias="detail")
+    item_sequence: PositiveInt | None = Field(None, alias="itemSequence", serialization_alias="itemSequence")
+    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+
+class ClaimResponseItemAdjudication(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
+    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
+    value: float | None = Field(None, alias="value", serialization_alias="value")
+
+class ClaimResponseItemDetail(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
+    detail_sequence: PositiveInt | None = Field(None, alias="detailSequence", serialization_alias="detailSequence")
+    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    sub_detail: PyList[ClaimResponseItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
+
+class ClaimResponseItemDetailSubDetail(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    adjudication: PyList[ClaimResponseItemAdjudication] | None = Field(None, alias="adjudication", serialization_alias="adjudication")
+    note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
+    sub_detail_sequence: PositiveInt | None = Field(None, alias="subDetailSequence", serialization_alias="subDetailSequence")
+
+class ClaimResponsePayment(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    adjustment: Money | None = Field(None, alias="adjustment", serialization_alias="adjustment")
+    adjustment_reason: CodeableConcept | None = Field(None, alias="adjustmentReason", serialization_alias="adjustmentReason")
+    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
+    date: str | None = Field(None, alias="date", serialization_alias="date")
+    identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+class ClaimResponseProcessNote(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    language: CodeableConcept | None = Field(None, alias="language", serialization_alias="language")
+    number: PositiveInt | None = Field(None, alias="number", serialization_alias="number")
+    text: str | None = Field(None, alias="text", serialization_alias="text")
+    type: Literal["display", "print", "printoper"] | None = Field(None, alias="type", serialization_alias="type")
+
+class ClaimResponseTotal(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
+    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
 
 
 class ClaimResponse(DomainResource):

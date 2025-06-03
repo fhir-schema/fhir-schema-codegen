@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Coding, Identifier, MarketingStatus, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Coding, Identifier, MarketingStatus, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -21,11 +22,12 @@ class MedicinalProductManufacturingBusinessOperation(BackboneElement):
     operation_type: CodeableConcept | None = Field(None, alias="operationType", serialization_alias="operationType")
     regulator: Reference | None = Field(None, alias="regulator", serialization_alias="regulator")
 
-class MedicinalProductNameNamePart(BackboneElement):
+class MedicinalProductName(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    part: str | None = Field(None, alias="part", serialization_alias="part")
-    type: Coding | None = Field(None, alias="type", serialization_alias="type")
+    country_language: PyList[MedicinalProductNameCountryLanguage] | None = Field(None, alias="countryLanguage", serialization_alias="countryLanguage")
+    name_part: PyList[MedicinalProductNameNamePart] | None = Field(None, alias="namePart", serialization_alias="namePart")
+    product_name: str | None = Field(None, alias="productName", serialization_alias="productName")
 
 class MedicinalProductNameCountryLanguage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -34,12 +36,11 @@ class MedicinalProductNameCountryLanguage(BackboneElement):
     jurisdiction: CodeableConcept | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
     language: CodeableConcept | None = Field(None, alias="language", serialization_alias="language")
 
-class MedicinalProductName(BackboneElement):
+class MedicinalProductNameNamePart(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    country_language: PyList[MedicinalProductNameCountryLanguage] | None = Field(None, alias="countryLanguage", serialization_alias="countryLanguage")
-    name_part: PyList[MedicinalProductNameNamePart] | None = Field(None, alias="namePart", serialization_alias="namePart")
-    product_name: str | None = Field(None, alias="productName", serialization_alias="productName")
+    part: str | None = Field(None, alias="part", serialization_alias="part")
+    type: Coding | None = Field(None, alias="type", serialization_alias="type")
 
 class MedicinalProductSpecialDesignation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

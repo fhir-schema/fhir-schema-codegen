@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Attachment, BackboneElement, CodeableConcept, ContactPoint, Identifier, Period, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Attachment, BackboneElement, CodeableConcept, ContactPoint, Identifier, Period, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -19,17 +20,17 @@ class HealthcareServiceAvailableTime(BackboneElement):
     available_start_time: str | None = Field(None, alias="availableStartTime", serialization_alias="availableStartTime")
     days_of_week: PyList[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]] | None = Field(None, alias="daysOfWeek", serialization_alias="daysOfWeek")
 
-class HealthcareServiceNotAvailable(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    during: Period | None = Field(None, alias="during", serialization_alias="during")
-
 class HealthcareServiceEligibility(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+
+class HealthcareServiceNotAvailable(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    during: Period | None = Field(None, alias="during", serialization_alias="during")
 
 
 class HealthcareService(DomainResource):

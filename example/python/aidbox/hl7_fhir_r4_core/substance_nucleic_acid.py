@@ -11,6 +11,18 @@ from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
 
+class SubstanceNucleicAcidSubunit(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    five_prime: CodeableConcept | None = Field(None, alias="fivePrime", serialization_alias="fivePrime")
+    length: int | None = Field(None, alias="length", serialization_alias="length")
+    linkage: PyList[SubstanceNucleicAcidSubunitLinkage] | None = Field(None, alias="linkage", serialization_alias="linkage")
+    sequence: str | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence_attachment: Attachment | None = Field(None, alias="sequenceAttachment", serialization_alias="sequenceAttachment")
+    subunit: int | None = Field(None, alias="subunit", serialization_alias="subunit")
+    sugar: PyList[SubstanceNucleicAcidSubunitSugar] | None = Field(None, alias="sugar", serialization_alias="sugar")
+    three_prime: CodeableConcept | None = Field(None, alias="threePrime", serialization_alias="threePrime")
+
 class SubstanceNucleicAcidSubunitLinkage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -25,18 +37,6 @@ class SubstanceNucleicAcidSubunitSugar(BackboneElement):
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     residue_site: str | None = Field(None, alias="residueSite", serialization_alias="residueSite")
-
-class SubstanceNucleicAcidSubunit(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    five_prime: CodeableConcept | None = Field(None, alias="fivePrime", serialization_alias="fivePrime")
-    length: int | None = Field(None, alias="length", serialization_alias="length")
-    linkage: PyList[SubstanceNucleicAcidSubunitLinkage] | None = Field(None, alias="linkage", serialization_alias="linkage")
-    sequence: str | None = Field(None, alias="sequence", serialization_alias="sequence")
-    sequence_attachment: Attachment | None = Field(None, alias="sequenceAttachment", serialization_alias="sequenceAttachment")
-    subunit: int | None = Field(None, alias="subunit", serialization_alias="subunit")
-    sugar: PyList[SubstanceNucleicAcidSubunitSugar] | None = Field(None, alias="sugar", serialization_alias="sugar")
-    three_prime: CodeableConcept | None = Field(None, alias="threePrime", serialization_alias="threePrime")
 
 
 class SubstanceNucleicAcid(DomainResource):

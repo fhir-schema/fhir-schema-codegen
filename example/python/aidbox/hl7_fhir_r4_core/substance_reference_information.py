@@ -6,10 +6,19 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Quantity, Range, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Quantity, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
+
+class SubstanceReferenceInformationClassification(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    classification: CodeableConcept | None = Field(None, alias="classification", serialization_alias="classification")
+    domain: CodeableConcept | None = Field(None, alias="domain", serialization_alias="domain")
+    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
+    subtype: PyList[CodeableConcept] | None = Field(None, alias="subtype", serialization_alias="subtype")
 
 class SubstanceReferenceInformationGene(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -24,14 +33,6 @@ class SubstanceReferenceInformationGeneElement(BackboneElement):
     element: Identifier | None = Field(None, alias="element", serialization_alias="element")
     source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-
-class SubstanceReferenceInformationClassification(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    classification: CodeableConcept | None = Field(None, alias="classification", serialization_alias="classification")
-    domain: CodeableConcept | None = Field(None, alias="domain", serialization_alias="domain")
-    source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")
-    subtype: PyList[CodeableConcept] | None = Field(None, alias="subtype", serialization_alias="subtype")
 
 class SubstanceReferenceInformationTarget(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

@@ -6,18 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Range, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class ObservationDefinitionQuantitativeDetails(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    conversion_factor: float | None = Field(None, alias="conversionFactor", serialization_alias="conversionFactor")
-    customary_unit: CodeableConcept | None = Field(None, alias="customaryUnit", serialization_alias="customaryUnit")
-    decimal_precision: int | None = Field(None, alias="decimalPrecision", serialization_alias="decimalPrecision")
-    unit: CodeableConcept | None = Field(None, alias="unit", serialization_alias="unit")
 
 class ObservationDefinitionQualifiedInterval(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -30,6 +23,14 @@ class ObservationDefinitionQualifiedInterval(BackboneElement):
     gender: Literal["male", "female", "other", "unknown"] | None = Field(None, alias="gender", serialization_alias="gender")
     gestational_age: Range | None = Field(None, alias="gestationalAge", serialization_alias="gestationalAge")
     range: Range | None = Field(None, alias="range", serialization_alias="range")
+
+class ObservationDefinitionQuantitativeDetails(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    conversion_factor: float | None = Field(None, alias="conversionFactor", serialization_alias="conversionFactor")
+    customary_unit: CodeableConcept | None = Field(None, alias="customaryUnit", serialization_alias="customaryUnit")
+    decimal_precision: int | None = Field(None, alias="decimalPrecision", serialization_alias="decimalPrecision")
+    unit: CodeableConcept | None = Field(None, alias="unit", serialization_alias="unit")
 
 
 class ObservationDefinition(DomainResource):

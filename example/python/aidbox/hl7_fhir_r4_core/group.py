@@ -6,17 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Identifier, Period, Quantity, Range, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Identifier, Period, Quantity, Range, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class GroupMember(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    entity: Reference | None = Field(None, alias="entity", serialization_alias="entity")
-    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 class GroupCharacteristic(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -29,6 +23,13 @@ class GroupCharacteristic(BackboneElement):
     value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
     value_range: Range | None = Field(None, alias="valueRange", serialization_alias="valueRange")
     value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
+
+class GroupMember(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    entity: Reference | None = Field(None, alias="entity", serialization_alias="entity")
+    inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
+    period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 
 class Group(DomainResource):

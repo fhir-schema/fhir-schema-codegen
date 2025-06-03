@@ -6,7 +6,8 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import Annotation, BackboneElement, CodeableConcept, ContactPoint, Identifier, Quantity, Reference
+from aidbox.hl7_fhir_r4_core.base import \
+    Annotation, BackboneElement, CodeableConcept, ContactPoint, Identifier, Quantity, Reference
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
@@ -30,13 +31,6 @@ class DeviceSpecialization(BackboneElement):
     system_type: CodeableConcept | None = Field(None, alias="systemType", serialization_alias="systemType")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
-class DeviceVersion(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    component: Identifier | None = Field(None, alias="component", serialization_alias="component")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
-
 class DeviceUdiCarrier(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -46,6 +40,13 @@ class DeviceUdiCarrier(BackboneElement):
     entry_type: Literal["barcode", "rfid", "manual", "card", "self-reported", "unknown"] | None = Field(None, alias="entryType", serialization_alias="entryType")
     issuer: str | None = Field(None, alias="issuer", serialization_alias="issuer")
     jurisdiction: str | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+
+class DeviceVersion(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    component: Identifier | None = Field(None, alias="component", serialization_alias="component")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    value: str | None = Field(None, alias="value", serialization_alias="value")
 
 
 class Device(DomainResource):

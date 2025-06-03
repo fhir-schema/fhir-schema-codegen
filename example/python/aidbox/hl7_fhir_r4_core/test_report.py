@@ -18,12 +18,16 @@ class TestReportParticipant(BackboneElement):
     type: Literal["test-engine", "client", "server"] | None = Field(None, alias="type", serialization_alias="type")
     uri: str | None = Field(None, alias="uri", serialization_alias="uri")
 
-class TestReportSetupActionOperation(BackboneElement):
+class TestReportSetup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    detail: str | None = Field(None, alias="detail", serialization_alias="detail")
-    message: str | None = Field(None, alias="message", serialization_alias="message")
-    result: Literal["pass", "skip", "fail", "warning", "error"] | None = Field(None, alias="result", serialization_alias="result")
+    action: PyList[TestReportSetupAction] | None = Field(None, alias="action", serialization_alias="action")
+
+class TestReportSetupAction(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    assert_: TestReportSetupActionAssert | None = Field(None, alias="assert", serialization_alias="assert")
+    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportSetupActionAssert(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -32,31 +36,21 @@ class TestReportSetupActionAssert(BackboneElement):
     message: str | None = Field(None, alias="message", serialization_alias="message")
     result: Literal["pass", "skip", "fail", "warning", "error"] | None = Field(None, alias="result", serialization_alias="result")
 
-class TestReportSetupAction(BackboneElement):
+class TestReportSetupActionOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    assert_: TestReportSetupActionAssert | None = Field(None, alias="assert", serialization_alias="assert")
-    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
-
-class TestReportSetup(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    action: PyList[TestReportSetupAction] | None = Field(None, alias="action", serialization_alias="action")
-
-class TestReportTeardownAction(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
+    detail: str | None = Field(None, alias="detail", serialization_alias="detail")
+    message: str | None = Field(None, alias="message", serialization_alias="message")
+    result: Literal["pass", "skip", "fail", "warning", "error"] | None = Field(None, alias="result", serialization_alias="result")
 
 class TestReportTeardown(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: PyList[TestReportTeardownAction] | None = Field(None, alias="action", serialization_alias="action")
 
-class TestReportTestAction(BackboneElement):
+class TestReportTeardownAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    assert_: TestReportSetupActionAssert | None = Field(None, alias="assert", serialization_alias="assert")
     operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
 
 class TestReportTest(BackboneElement):
@@ -65,6 +59,12 @@ class TestReportTest(BackboneElement):
     action: PyList[TestReportTestAction] | None = Field(None, alias="action", serialization_alias="action")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     name: str | None = Field(None, alias="name", serialization_alias="name")
+
+class TestReportTestAction(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    assert_: TestReportSetupActionAssert | None = Field(None, alias="assert", serialization_alias="assert")
+    operation: TestReportSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
 
 
 class TestReport(DomainResource):

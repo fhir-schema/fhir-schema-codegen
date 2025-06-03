@@ -6,28 +6,11 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from typing import List as PyList, Literal, ForwardRef
 
-from aidbox.hl7_fhir_r4_core.base import BackboneElement, CodeableConcept, Reference, Signature, Timing
+from aidbox.hl7_fhir_r4_core.base import \
+    BackboneElement, CodeableConcept, Reference, Signature, Timing
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 
-
-class VerificationResultValidator(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    attestation_signature: Signature | None = Field(None, alias="attestationSignature", serialization_alias="attestationSignature")
-    identity_certificate: str | None = Field(None, alias="identityCertificate", serialization_alias="identityCertificate")
-    organization: Reference | None = Field(None, alias="organization", serialization_alias="organization")
-
-class VerificationResultPrimarySource(BackboneElement):
-    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
-    can_push_updates: CodeableConcept | None = Field(None, alias="canPushUpdates", serialization_alias="canPushUpdates")
-    communication_method: PyList[CodeableConcept] | None = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
-    push_type_available: PyList[CodeableConcept] | None = Field(None, alias="pushTypeAvailable", serialization_alias="pushTypeAvailable")
-    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
-    validation_date: str | None = Field(None, alias="validationDate", serialization_alias="validationDate")
-    validation_status: CodeableConcept | None = Field(None, alias="validationStatus", serialization_alias="validationStatus")
-    who: Reference | None = Field(None, alias="who", serialization_alias="who")
 
 class VerificationResultAttestation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -40,6 +23,24 @@ class VerificationResultAttestation(BackboneElement):
     source_identity_certificate: str | None = Field(None, alias="sourceIdentityCertificate", serialization_alias="sourceIdentityCertificate")
     source_signature: Signature | None = Field(None, alias="sourceSignature", serialization_alias="sourceSignature")
     who: Reference | None = Field(None, alias="who", serialization_alias="who")
+
+class VerificationResultPrimarySource(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    can_push_updates: CodeableConcept | None = Field(None, alias="canPushUpdates", serialization_alias="canPushUpdates")
+    communication_method: PyList[CodeableConcept] | None = Field(None, alias="communicationMethod", serialization_alias="communicationMethod")
+    push_type_available: PyList[CodeableConcept] | None = Field(None, alias="pushTypeAvailable", serialization_alias="pushTypeAvailable")
+    type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
+    validation_date: str | None = Field(None, alias="validationDate", serialization_alias="validationDate")
+    validation_status: CodeableConcept | None = Field(None, alias="validationStatus", serialization_alias="validationStatus")
+    who: Reference | None = Field(None, alias="who", serialization_alias="who")
+
+class VerificationResultValidator(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    attestation_signature: Signature | None = Field(None, alias="attestationSignature", serialization_alias="attestationSignature")
+    identity_certificate: str | None = Field(None, alias="identityCertificate", serialization_alias="identityCertificate")
+    organization: Reference | None = Field(None, alias="organization", serialization_alias="organization")
 
 
 class VerificationResult(DomainResource):
