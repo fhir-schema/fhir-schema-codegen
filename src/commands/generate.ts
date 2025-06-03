@@ -45,6 +45,7 @@ export class GenerateCommand extends BaseCommand {
                 '--type-schema-exec <command>',
                 'Custom command to execute type-schema (e.g. "java --jar type-schema.jar")',
             )
+            .option('--fhir-schema <paths...>', 'Additional FHIR schema files to include')
             .option(
                 '--py-sdk-package <n>',
                 'Root package name for Python package hierarchy (e.g., "fhirsdk" or "aidbox.my_package")',
@@ -118,6 +119,7 @@ export class GenerateCommand extends BaseCommand {
                                 options.packages,
                                 TYPE_SCHEMA_VERSION,
                                 options.typeSchemaExec,
+                                options.fhirSchema,
                             );
 
                             if (result) {

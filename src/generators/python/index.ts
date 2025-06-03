@@ -304,30 +304,49 @@ export class PythonGenerator extends Generator {
         return typesFromBase;
     }
 
+    pyFhirPackage(identifier: TypeRef) {
+        return [this.rootPackage, snakeCase(identifier.package)].join('.');
+    }
+
+    pyPackage(identifier: TypeRef) {
+        if (identifier.kind === 'complex-type') {
+            return `${this.pyFhirPackage(identifier)}.base`;
+        }
+        if (identifier.kind === 'resource') {
+            return [this.pyFhirPackage(identifier), snakeCase(identifier.name)].join('.');
+        }
+        return this.pyFhirPackage(identifier);
+    }
+
+    pyImportType(identifier: TypeRef) {
+        this.pyImportFrom(this.pyPackage(identifier), pascalCase(identifier.name));
+    }
+
     generateDependenciesImports(schema: TypeSchema) {
-        if (schema.dependencies) {
-            const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
+        if (schema.dependencies == null || schema.dependencies.length === 0) return;
 
-            const packageParts = [this.rootPackage];
-            if (schema.identifier.package) packageParts.push(snakeCase(schema.identifier.package));
-            const pypackage = packageParts.join('.');
-
-            const typesFromBase = this.listBaseImports(schema);
-            if (typesFromBase.size > 0) {
-                const imports = Array.from(typesFromBase).sort().join(', ');
-                this.line('from', `${pypackage}.base`, 'import', imports);
+        // Import complex types from <package>.base
+        const complexTypeDeps = schema.dependencies.filter((deps) => deps.kind === 'complex-type');
+        const complexTypeDepsByPackage: Record<string, string[]> = {};
+        for (const schema of complexTypeDeps) {
+            const pyPackage = this.pyPackage(schema);
+            if (!complexTypeDepsByPackage[pyPackage]) {
+                complexTypeDepsByPackage[pyPackage] = [];
             }
+            complexTypeDepsByPackage[pyPackage].push(schema.name);
+        }
+        for (const [pyPackage, names] of Object.entries(complexTypeDepsByPackage)) {
+            this.pyImportFrom(pyPackage, ...names.sort());
+        }
 
-            for (const deps of resourceDeps) {
+        // Import resource types from <package>.<resource_name>
+        const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
+        for (const dep of resourceDeps) {
+            this.pyImportType(dep);
+            if (this.childrenOf(dep).length > 0) {
                 this.pyImportFrom(
-                    `${pypackage}.${snakeCase(deps.name)}`,
-                    `${pascalCase(deps.name)}`,
-                );
-            }
-            for (const deps of resourceDeps) {
-                this.pyImportFrom(
-                    `${pypackage}.resource_families`,
-                    `${pascalCase(deps.name)}Family`,
+                    `${this.pyFhirPackage(dep)}.resource_families`,
+                    `${pascalCase(dep.name)}Family`,
                 );
             }
         }
@@ -346,19 +365,6 @@ export class PythonGenerator extends Generator {
             }
 
             this.line();
-            this.line('# Rebuild models to resolve circular dependencies');
-            for (const schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
-                this.line(`${schema.identifier.name}.model_rebuild()`);
-                if (schema.nested) {
-                    for (const nestedSchema of schema.nested) {
-                        const nestedName = this.deriveNestedSchemaName(
-                            nestedSchema.identifier.url,
-                            true,
-                        );
-                        this.line(`${nestedName}.model_rebuild()`);
-                    }
-                }
-            }
         });
     }
 
@@ -392,10 +398,6 @@ export class PythonGenerator extends Generator {
                     names.push(familyName);
                 }
                 allResourceNames.push(...names);
-            }
-            this.line();
-            for (const schema of resources) {
-                this.line(`${schema.identifier.name}.model_rebuild()`);
             }
             this.line();
             this.squareBlock(['__all__', '='], () => {
@@ -460,7 +462,7 @@ export class PythonGenerator extends Generator {
             .filter((pair) => pair.parent.name === schemaRef.name)
             .map((pair) => pair.child);
         const subChildrens = childrens.flatMap((child) => this.childrenOf(child));
-        return [...[...childrens].map((child) => child.name), ...subChildrens];
+        return [...[...childrens].map((child) => child), ...subChildrens];
     }
 
     generate() {
@@ -471,6 +473,36 @@ export class PythonGenerator extends Generator {
             this.inDir(destPackagePath, () => {
                 this.file('__init__.py', () => {
                     this.generateDisclaimer();
+                    const pydanticModels: string[] = [];
+
+                    const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
+                    for (const [packageName, complexTypes] of Object.entries(groupedComplexTypes)) {
+                        const pyPackageName = [this.rootPackage, snakeCase(packageName)].join('.');
+                        const complexTypeNames = complexTypes.map((t) => t.identifier.name);
+                        this.pyImportFrom(pyPackageName, ...complexTypeNames.sort());
+                        pydanticModels.push(...complexTypeNames);
+                        this.line();
+                    }
+
+                    const groupedResources = groupedByPackage(this.loader.resources());
+                    for (const [packageName, resources] of Object.entries(groupedResources)) {
+                        const pyPackageName = [this.rootPackage, snakeCase(packageName)].join('.');
+                        for (const resource of resources) {
+                            const name = resource.identifier.name;
+                            this.pyImportFrom(`${pyPackageName}.${snakeCase(name)}`, name);
+                            pydanticModels.push(name);
+
+                            if (this.childrenOf(resource.identifier).length > 0) {
+                                const familyName = `${resource.identifier.name}Family`;
+                                this.pyImportFrom(`${pyPackageName}.resource_families`, familyName);
+                            }
+                        }
+                        this.line();
+                    }
+
+                    for (const modelName of pydanticModels.sort()) {
+                        this.line(`${modelName}.model_rebuild()`);
+                    }
                 });
             });
         }
@@ -502,7 +534,7 @@ export class PythonGenerator extends Generator {
                         packageResources,
                         packageComplexTypes,
                     );
-                    this.generateResourceFamilies(pyPackageName, packageResources);
+                    this.generateResourceFamilies(packageResources);
                     for (const schema of packageResources) {
                         this.generateResourceModule(schema);
                     }
@@ -535,33 +567,38 @@ export class PythonGenerator extends Generator {
         }
     }
 
-    generateResourceFamilies(pyPackageName: string, packageResources: TypeSchema[]) {
+    generateResourceFamilies(packageResources: TypeSchema[]) {
+        const importList: TypeRef[] = [];
+        const familyDefinition: Record<string, TypeRef[]> = {};
+        const exportList: string[] = [];
+
+        for (const resource of packageResources) {
+            const childrens = this.childrenOf(resource.identifier);
+            if (childrens.length > 0) {
+                const familyName = `${resource.identifier.name}Family`;
+                importList.push(resource.identifier, ...childrens);
+                familyDefinition[familyName] = [resource.identifier, ...childrens];
+                exportList.push(familyName);
+            }
+        }
+        if (exportList.length === 0) return;
         this.file('resource_families.py', () => {
-            const exportList: string[] = [];
             this.generateDisclaimer();
             this.pyImportFrom('typing', 'TYPE_CHECKING');
             this.line();
             this.line('if TYPE_CHECKING:');
             this.indentBlock(() => {
-                for (const resource of packageResources) {
-                    this.pyImportFrom(
-                        `${pyPackageName}.${snakeCase(resource.identifier.name)}`,
-                        `${pascalCase(resource.identifier.name)}`,
-                    );
+                for (const res of importList) {
+                    this.pyImportType(res);
                 }
             });
             this.line();
-            for (const resource of packageResources) {
-                const name = resource.identifier.name;
-                const childrens = this.childrenOf(resource.identifier);
-                if (childrens.length > 0) {
-                    const familyName = `${name}Family`;
-                    this.line(
-                        `type ${familyName} = '${name} | ${childrens.map((e) => `${e}`).join(' | ')}'`,
-                    );
-                    this.line();
-                    exportList.push(familyName);
-                }
+
+            for (const [familyName, resources] of Object.entries(familyDefinition)) {
+                this.line(
+                    `type ${familyName} = '${resources.map((e) => `${e.name}`).join(' | ')}'`,
+                );
+                this.line();
             }
             this.line(`__all__ = [${exportList.map((e) => `'${e}'`).join(', ')}]`);
         });

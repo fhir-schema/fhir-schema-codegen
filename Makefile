@@ -59,6 +59,8 @@ test-python-sdk: prepare-aidbox-runme
 
 test-python-sdk-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
+	                --fhir-schema example/custom_resources/TutorNotification.fs.json \
+					--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
 	make test-python-sdk-no-regen
 
