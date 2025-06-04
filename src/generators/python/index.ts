@@ -441,6 +441,7 @@ export class PythonGenerator extends Generator {
             );
             return updatedContent;
         });
+        this.copyStaticFile(srcPath, destPath, 'requirements.txt')
     }
 
     evaluateResourceHierarchy() {
