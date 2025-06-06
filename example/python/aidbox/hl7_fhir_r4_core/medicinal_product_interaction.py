@@ -36,4 +36,11 @@ class MedicinalProductInteraction(DomainResource):
     management: CodeableConcept | None = Field(None, alias="management", serialization_alias="management")
     subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicinalProductInteraction:
+        return cls.model_validate_json(json)
 

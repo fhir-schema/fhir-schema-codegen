@@ -35,4 +35,11 @@ class OrganizationAffiliation(DomainResource):
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
     telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> OrganizationAffiliation:
+        return cls.model_validate_json(json)
 

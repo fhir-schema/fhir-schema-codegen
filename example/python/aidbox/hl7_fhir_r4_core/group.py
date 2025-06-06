@@ -53,4 +53,11 @@ class Group(DomainResource):
     name: str | None = Field(None, alias="name", serialization_alias="name")
     quantity: int | None = Field(None, alias="quantity", serialization_alias="quantity")
     type: Literal["person", "animal", "practitioner", "device", "medication", "substance"] | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Group:
+        return cls.model_validate_json(json)
 

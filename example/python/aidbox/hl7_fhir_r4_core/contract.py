@@ -234,4 +234,11 @@ class Contract(DomainResource):
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     url: str | None = Field(None, alias="url", serialization_alias="url")
     version: str | None = Field(None, alias="version", serialization_alias="version")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Contract:
+        return cls.model_validate_json(json)
 

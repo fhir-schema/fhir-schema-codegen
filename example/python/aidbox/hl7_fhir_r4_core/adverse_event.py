@@ -57,4 +57,11 @@ class AdverseEvent(DomainResource):
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     subject_medical_history: PyList[Reference] | None = Field(None, alias="subjectMedicalHistory", serialization_alias="subjectMedicalHistory")
     suspect_entity: PyList[AdverseEventSuspectEntity] | None = Field(None, alias="suspectEntity", serialization_alias="suspectEntity")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> AdverseEvent:
+        return cls.model_validate_json(json)
 

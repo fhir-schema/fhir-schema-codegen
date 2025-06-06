@@ -82,4 +82,11 @@ class MedicationRequest(DomainResource):
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     substitution: MedicationRequestSubstitution | None = Field(None, alias="substitution", serialization_alias="substitution")
     supporting_information: PyList[Reference] | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicationRequest:
+        return cls.model_validate_json(json)
 

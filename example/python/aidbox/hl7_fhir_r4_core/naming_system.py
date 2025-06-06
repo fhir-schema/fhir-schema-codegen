@@ -46,4 +46,11 @@ class NamingSystem(DomainResource):
     unique_id: PyList[NamingSystemUniqueId] | None = Field(None, alias="uniqueId", serialization_alias="uniqueId")
     usage: str | None = Field(None, alias="usage", serialization_alias="usage")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> NamingSystem:
+        return cls.model_validate_json(json)
 

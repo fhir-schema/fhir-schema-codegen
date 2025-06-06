@@ -43,4 +43,11 @@ class CatalogEntry(DomainResource):
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
     valid_to: str | None = Field(None, alias="validTo", serialization_alias="validTo")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> CatalogEntry:
+        return cls.model_validate_json(json)
 

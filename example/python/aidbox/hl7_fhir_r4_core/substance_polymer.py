@@ -74,4 +74,11 @@ class SubstancePolymer(DomainResource):
     modification: PyList[str] | None = Field(None, alias="modification", serialization_alias="modification")
     monomer_set: PyList[SubstancePolymerMonomerSet] | None = Field(None, alias="monomerSet", serialization_alias="monomerSet")
     repeat: PyList[SubstancePolymerRepeat] | None = Field(None, alias="repeat", serialization_alias="repeat")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> SubstancePolymer:
+        return cls.model_validate_json(json)
 

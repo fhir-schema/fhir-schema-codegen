@@ -29,4 +29,11 @@ class EnrollmentRequest(DomainResource):
     insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
     provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
     status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> EnrollmentRequest:
+        return cls.model_validate_json(json)
 

@@ -58,4 +58,11 @@ class MedicinalProductAuthorization(DomainResource):
     status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     validity_period: Period | None = Field(None, alias="validityPeriod", serialization_alias="validityPeriod")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicinalProductAuthorization:
+        return cls.model_validate_json(json)
 

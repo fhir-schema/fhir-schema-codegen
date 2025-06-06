@@ -34,4 +34,11 @@ class Endpoint(DomainResource):
     payload_type: PyList[CodeableConcept] | None = Field(None, alias="payloadType", serialization_alias="payloadType")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     status: Literal["active", "suspended", "error", "off", "entered-in-error", "test"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Endpoint:
+        return cls.model_validate_json(json)
 

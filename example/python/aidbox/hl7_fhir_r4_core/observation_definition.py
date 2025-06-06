@@ -57,4 +57,11 @@ class ObservationDefinition(DomainResource):
     qualified_interval: PyList[ObservationDefinitionQualifiedInterval] | None = Field(None, alias="qualifiedInterval", serialization_alias="qualifiedInterval")
     quantitative_details: ObservationDefinitionQuantitativeDetails | None = Field(None, alias="quantitativeDetails", serialization_alias="quantitativeDetails")
     valid_coded_value_set: Reference | None = Field(None, alias="validCodedValueSet", serialization_alias="validCodedValueSet")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> ObservationDefinition:
+        return cls.model_validate_json(json)
 

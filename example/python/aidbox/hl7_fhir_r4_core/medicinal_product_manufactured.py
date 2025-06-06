@@ -29,4 +29,11 @@ class MedicinalProductManufactured(DomainResource):
     physical_characteristics: ProdCharacteristic | None = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     unit_of_presentation: CodeableConcept | None = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicinalProductManufactured:
+        return cls.model_validate_json(json)
 

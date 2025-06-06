@@ -124,4 +124,11 @@ class MolecularSequence(DomainResource):
     structure_variant: PyList[MolecularSequenceStructureVariant] | None = Field(None, alias="structureVariant", serialization_alias="structureVariant")
     type: Literal["aa", "dna", "rna"] | None = Field(None, alias="type", serialization_alias="type")
     variant: PyList[MolecularSequenceVariant] | None = Field(None, alias="variant", serialization_alias="variant")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MolecularSequence:
+        return cls.model_validate_json(json)
 

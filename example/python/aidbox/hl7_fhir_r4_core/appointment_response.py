@@ -30,4 +30,11 @@ class AppointmentResponse(DomainResource):
     participant_status: Literal["accepted", "declined", "tentative", "needs-action"] | None = Field(None, alias="participantStatus", serialization_alias="participantStatus")
     participant_type: PyList[CodeableConcept] | None = Field(None, alias="participantType", serialization_alias="participantType")
     start: str | None = Field(None, alias="start", serialization_alias="start")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> AppointmentResponse:
+        return cls.model_validate_json(json)
 

@@ -32,4 +32,11 @@ class Linkage(DomainResource):
     active: bool | None = Field(None, alias="active", serialization_alias="active")
     author: Reference | None = Field(None, alias="author", serialization_alias="author")
     item: PyList[LinkageItem] | None = Field(None, alias="item", serialization_alias="item")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Linkage:
+        return cls.model_validate_json(json)
 

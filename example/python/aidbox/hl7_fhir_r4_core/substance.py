@@ -45,4 +45,11 @@ class Substance(DomainResource):
     ingredient: PyList[SubstanceIngredient] | None = Field(None, alias="ingredient", serialization_alias="ingredient")
     instance: PyList[SubstanceInstance] | None = Field(None, alias="instance", serialization_alias="instance")
     status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Substance:
+        return cls.model_validate_json(json)
 

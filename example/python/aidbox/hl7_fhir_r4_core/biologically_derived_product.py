@@ -67,4 +67,11 @@ class BiologicallyDerivedProduct(DomainResource):
     request: PyList[Reference] | None = Field(None, alias="request", serialization_alias="request")
     status: Literal["available", "unavailable"] | None = Field(None, alias="status", serialization_alias="status")
     storage: PyList[BiologicallyDerivedProductStorage] | None = Field(None, alias="storage", serialization_alias="storage")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> BiologicallyDerivedProduct:
+        return cls.model_validate_json(json)
 

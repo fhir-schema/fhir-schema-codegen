@@ -65,4 +65,11 @@ class SubstanceReferenceInformation(DomainResource):
     gene: PyList[SubstanceReferenceInformationGene] | None = Field(None, alias="gene", serialization_alias="gene")
     gene_element: PyList[SubstanceReferenceInformationGeneElement] | None = Field(None, alias="geneElement", serialization_alias="geneElement")
     target: PyList[SubstanceReferenceInformationTarget] | None = Field(None, alias="target", serialization_alias="target")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> SubstanceReferenceInformation:
+        return cls.model_validate_json(json)
 

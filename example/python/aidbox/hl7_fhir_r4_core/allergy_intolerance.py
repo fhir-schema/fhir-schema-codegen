@@ -55,4 +55,11 @@ class AllergyIntolerance(DomainResource):
     recorder: Reference | None = Field(None, alias="recorder", serialization_alias="recorder")
     type: Literal["allergy", "intolerance"] | None = Field(None, alias="type", serialization_alias="type")
     verification_status: CodeableConcept | None = Field(None, alias="verificationStatus", serialization_alias="verificationStatus")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> AllergyIntolerance:
+        return cls.model_validate_json(json)
 

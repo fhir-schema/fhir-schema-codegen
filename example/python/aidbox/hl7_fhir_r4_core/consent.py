@@ -78,4 +78,11 @@ class Consent(DomainResource):
     source_reference: Reference | None = Field(None, alias="sourceReference", serialization_alias="sourceReference")
     status: Literal["draft", "proposed", "active", "rejected", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
     verification: PyList[ConsentVerification] | None = Field(None, alias="verification", serialization_alias="verification")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Consent:
+        return cls.model_validate_json(json)
 

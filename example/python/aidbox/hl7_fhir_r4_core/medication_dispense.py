@@ -64,4 +64,11 @@ class MedicationDispense(DomainResource):
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     when_handed_over: str | None = Field(None, alias="whenHandedOver", serialization_alias="whenHandedOver")
     when_prepared: str | None = Field(None, alias="whenPrepared", serialization_alias="whenPrepared")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicationDispense:
+        return cls.model_validate_json(json)
 

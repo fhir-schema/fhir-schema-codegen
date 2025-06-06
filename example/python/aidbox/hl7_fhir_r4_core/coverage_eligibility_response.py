@@ -82,4 +82,11 @@ class CoverageEligibilityResponse(DomainResource):
     serviced_date: str | None = Field(None, alias="servicedDate", serialization_alias="servicedDate")
     serviced_period: Period | None = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
     status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> CoverageEligibilityResponse:
+        return cls.model_validate_json(json)
 

@@ -95,4 +95,11 @@ class CodeSystem(DomainResource):
     value_set: str | None = Field(None, alias="valueSet", serialization_alias="valueSet")
     version: str | None = Field(None, alias="version", serialization_alias="version")
     version_needed: bool | None = Field(None, alias="versionNeeded", serialization_alias="versionNeeded")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> CodeSystem:
+        return cls.model_validate_json(json)
 

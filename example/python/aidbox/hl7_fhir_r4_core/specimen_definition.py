@@ -69,4 +69,11 @@ class SpecimenDefinition(DomainResource):
     time_aspect: str | None = Field(None, alias="timeAspect", serialization_alias="timeAspect")
     type_collected: CodeableConcept | None = Field(None, alias="typeCollected", serialization_alias="typeCollected")
     type_tested: PyList[SpecimenDefinitionTypeTested] | None = Field(None, alias="typeTested", serialization_alias="typeTested")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> SpecimenDefinition:
+        return cls.model_validate_json(json)
 

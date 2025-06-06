@@ -37,4 +37,11 @@ class ImmunizationEvaluation(DomainResource):
     series_doses_string: str | None = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
     status: Literal["completed", "entered-in-error", "in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
     target_disease: CodeableConcept | None = Field(None, alias="targetDisease", serialization_alias="targetDisease")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> ImmunizationEvaluation:
+        return cls.model_validate_json(json)
 

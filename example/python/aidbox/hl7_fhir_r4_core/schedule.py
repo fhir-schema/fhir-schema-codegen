@@ -30,4 +30,11 @@ class Schedule(DomainResource):
     service_category: PyList[CodeableConcept] | None = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
     service_type: PyList[CodeableConcept] | None = Field(None, alias="serviceType", serialization_alias="serviceType")
     specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Schedule:
+        return cls.model_validate_json(json)
 

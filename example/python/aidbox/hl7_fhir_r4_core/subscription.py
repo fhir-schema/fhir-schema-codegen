@@ -38,4 +38,11 @@ class Subscription(DomainResource):
     error: str | None = Field(None, alias="error", serialization_alias="error")
     reason: str | None = Field(None, alias="reason", serialization_alias="reason")
     status: Literal["requested", "active", "error", "off"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Subscription:
+        return cls.model_validate_json(json)
 

@@ -68,4 +68,11 @@ class VerificationResult(DomainResource):
     validation_process: PyList[CodeableConcept] | None = Field(None, alias="validationProcess", serialization_alias="validationProcess")
     validation_type: CodeableConcept | None = Field(None, alias="validationType", serialization_alias="validationType")
     validator: PyList[VerificationResultValidator] | None = Field(None, alias="validator", serialization_alias="validator")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> VerificationResult:
+        return cls.model_validate_json(json)
 

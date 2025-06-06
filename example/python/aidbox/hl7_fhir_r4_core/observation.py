@@ -91,4 +91,11 @@ class Observation(DomainResource):
     value_sampled_data: SampledData | None = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
     value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
     value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Observation:
+        return cls.model_validate_json(json)
 

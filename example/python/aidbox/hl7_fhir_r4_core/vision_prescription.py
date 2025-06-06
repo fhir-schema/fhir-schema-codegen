@@ -56,4 +56,11 @@ class VisionPrescription(DomainResource):
     patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
     prescriber: Reference | None = Field(None, alias="prescriber", serialization_alias="prescriber")
     status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> VisionPrescription:
+        return cls.model_validate_json(json)
 

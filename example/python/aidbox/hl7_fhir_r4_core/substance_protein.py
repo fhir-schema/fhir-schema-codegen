@@ -39,4 +39,11 @@ class SubstanceProtein(DomainResource):
     number_of_subunits: int | None = Field(None, alias="numberOfSubunits", serialization_alias="numberOfSubunits")
     sequence_type: CodeableConcept | None = Field(None, alias="sequenceType", serialization_alias="sequenceType")
     subunit: PyList[SubstanceProteinSubunit] | None = Field(None, alias="subunit", serialization_alias="subunit")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> SubstanceProtein:
+        return cls.model_validate_json(json)
 

@@ -42,4 +42,11 @@ class RelatedPerson(DomainResource):
     photo: PyList[Attachment] | None = Field(None, alias="photo", serialization_alias="photo")
     relationship: PyList[CodeableConcept] | None = Field(None, alias="relationship", serialization_alias="relationship")
     telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> RelatedPerson:
+        return cls.model_validate_json(json)
 

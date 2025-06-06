@@ -28,4 +28,11 @@ class TutorNotification(DomainResource):
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     template: Reference | None = Field(None, alias="template", serialization_alias="template")
     type: str | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> TutorNotification:
+        return cls.model_validate_json(json)
 

@@ -24,4 +24,11 @@ class Resource(BaseModel):
     implicit_rules: str | None = Field(None, alias="implicitRules", serialization_alias="implicitRules")
     language: str | None = Field(None, alias="language", serialization_alias="language")
     meta: Meta | None = Field(None, alias="meta", serialization_alias="meta")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Resource:
+        return cls.model_validate_json(json)
 

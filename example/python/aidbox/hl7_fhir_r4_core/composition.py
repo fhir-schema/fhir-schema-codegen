@@ -74,4 +74,11 @@ class Composition(DomainResource):
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Composition:
+        return cls.model_validate_json(json)
 

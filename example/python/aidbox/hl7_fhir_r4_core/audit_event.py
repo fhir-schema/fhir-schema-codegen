@@ -82,4 +82,11 @@ class AuditEvent(DomainResource):
     source: AuditEventSource | None = Field(None, alias="source", serialization_alias="source")
     subtype: PyList[Coding] | None = Field(None, alias="subtype", serialization_alias="subtype")
     type: Coding | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> AuditEvent:
+        return cls.model_validate_json(json)
 

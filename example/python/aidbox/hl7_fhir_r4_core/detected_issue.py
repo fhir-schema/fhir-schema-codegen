@@ -50,4 +50,11 @@ class DetectedIssue(DomainResource):
     reference: str | None = Field(None, alias="reference", serialization_alias="reference")
     severity: Literal["high", "moderate", "low"] | None = Field(None, alias="severity", serialization_alias="severity")
     status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> DetectedIssue:
+        return cls.model_validate_json(json)
 

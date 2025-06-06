@@ -54,4 +54,11 @@ class CommunicationRequest(DomainResource):
     status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> CommunicationRequest:
+        return cls.model_validate_json(json)
 

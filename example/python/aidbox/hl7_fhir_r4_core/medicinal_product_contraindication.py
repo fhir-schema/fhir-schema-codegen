@@ -37,4 +37,11 @@ class MedicinalProductContraindication(DomainResource):
     population: PyList[Population] | None = Field(None, alias="population", serialization_alias="population")
     subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
     therapeutic_indication: PyList[Reference] | None = Field(None, alias="therapeuticIndication", serialization_alias="therapeuticIndication")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicinalProductContraindication:
+        return cls.model_validate_json(json)
 

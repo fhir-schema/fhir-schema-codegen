@@ -64,4 +64,11 @@ class MedicinalProductIngredient(DomainResource):
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
     specified_substance: PyList[MedicinalProductIngredientSpecifiedSubstance] | None = Field(None, alias="specifiedSubstance", serialization_alias="specifiedSubstance")
     substance: MedicinalProductIngredientSubstance | None = Field(None, alias="substance", serialization_alias="substance")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicinalProductIngredient:
+        return cls.model_validate_json(json)
 

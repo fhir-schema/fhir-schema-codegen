@@ -93,4 +93,11 @@ class NutritionOrder(DomainResource):
     patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
     status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
     supplement: PyList[NutritionOrderSupplement] | None = Field(None, alias="supplement", serialization_alias="supplement")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> NutritionOrder:
+        return cls.model_validate_json(json)
 

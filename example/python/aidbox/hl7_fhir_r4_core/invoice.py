@@ -62,4 +62,11 @@ class Invoice(DomainResource):
     total_net: Money | None = Field(None, alias="totalNet", serialization_alias="totalNet")
     total_price_component: PyList[InvoiceLineItemPriceComponent] | None = Field(None, alias="totalPriceComponent", serialization_alias="totalPriceComponent")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Invoice:
+        return cls.model_validate_json(json)
 

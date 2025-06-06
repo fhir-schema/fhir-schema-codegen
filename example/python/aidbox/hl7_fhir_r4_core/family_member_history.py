@@ -62,4 +62,11 @@ class FamilyMemberHistory(DomainResource):
     relationship: CodeableConcept | None = Field(None, alias="relationship", serialization_alias="relationship")
     sex: CodeableConcept | None = Field(None, alias="sex", serialization_alias="sex")
     status: Literal["partial", "completed", "entered-in-error", "health-unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> FamilyMemberHistory:
+        return cls.model_validate_json(json)
 

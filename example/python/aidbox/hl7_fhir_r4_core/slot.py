@@ -33,4 +33,11 @@ class Slot(DomainResource):
     specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
     start: str | None = Field(None, alias="start", serialization_alias="start")
     status: Literal["busy", "free", "busy-unavailable", "busy-tentative", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Slot:
+        return cls.model_validate_json(json)
 

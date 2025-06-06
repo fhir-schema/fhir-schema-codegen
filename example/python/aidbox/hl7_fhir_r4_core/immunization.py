@@ -85,4 +85,11 @@ class Immunization(DomainResource):
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     subpotent_reason: PyList[CodeableConcept] | None = Field(None, alias="subpotentReason", serialization_alias="subpotentReason")
     vaccine_code: CodeableConcept | None = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Immunization:
+        return cls.model_validate_json(json)
 

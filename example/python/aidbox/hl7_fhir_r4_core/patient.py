@@ -65,4 +65,11 @@ class Patient(DomainResource):
     name: PyList[HumanName] | None = Field(None, alias="name", serialization_alias="name")
     photo: PyList[Attachment] | None = Field(None, alias="photo", serialization_alias="photo")
     telecom: PyList[ContactPoint] | None = Field(None, alias="telecom", serialization_alias="telecom")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Patient:
+        return cls.model_validate_json(json)
 

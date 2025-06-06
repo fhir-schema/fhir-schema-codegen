@@ -83,4 +83,11 @@ class SubstanceSourceMaterial(DomainResource):
     source_material_class: CodeableConcept | None = Field(None, alias="sourceMaterialClass", serialization_alias="sourceMaterialClass")
     source_material_state: CodeableConcept | None = Field(None, alias="sourceMaterialState", serialization_alias="sourceMaterialState")
     source_material_type: CodeableConcept | None = Field(None, alias="sourceMaterialType", serialization_alias="sourceMaterialType")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> SubstanceSourceMaterial:
+        return cls.model_validate_json(json)
 

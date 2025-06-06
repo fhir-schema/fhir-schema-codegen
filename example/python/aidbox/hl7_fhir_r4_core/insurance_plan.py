@@ -105,4 +105,11 @@ class InsurancePlan(DomainResource):
     plan: PyList[InsurancePlanPlan] | None = Field(None, alias="plan", serialization_alias="plan")
     status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> InsurancePlan:
+        return cls.model_validate_json(json)
 

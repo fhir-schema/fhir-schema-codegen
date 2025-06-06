@@ -30,4 +30,11 @@ class ResearchSubject(DomainResource):
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     status: Literal["candidate", "eligible", "follow-up", "ineligible", "not-registered", "off-study", "on-study", "on-study-intervention", "on-study-observation", "pending-on-study", "potential-candidate", "screening", "withdrawn"] | None = Field(None, alias="status", serialization_alias="status")
     study: Reference | None = Field(None, alias="study", serialization_alias="study")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> ResearchSubject:
+        return cls.model_validate_json(json)
 

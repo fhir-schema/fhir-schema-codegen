@@ -109,4 +109,11 @@ class ExampleScenario(DomainResource):
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
     version: str | None = Field(None, alias="version", serialization_alias="version")
     workflow: PyList[str] | None = Field(None, alias="workflow", serialization_alias="workflow")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> ExampleScenario:
+        return cls.model_validate_json(json)
 

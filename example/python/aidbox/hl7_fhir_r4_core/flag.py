@@ -30,4 +30,11 @@ class Flag(DomainResource):
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Flag:
+        return cls.model_validate_json(json)
 

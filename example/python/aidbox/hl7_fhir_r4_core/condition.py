@@ -62,4 +62,11 @@ class Condition(DomainResource):
     stage: PyList[ConditionStage] | None = Field(None, alias="stage", serialization_alias="stage")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     verification_status: CodeableConcept | None = Field(None, alias="verificationStatus", serialization_alias="verificationStatus")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> Condition:
+        return cls.model_validate_json(json)
 

@@ -153,4 +153,11 @@ class MedicationKnowledge(DomainResource):
     related_medication_knowledge: PyList[MedicationKnowledgeRelatedMedicationKnowledge] | None = Field(None, alias="relatedMedicationKnowledge", serialization_alias="relatedMedicationKnowledge")
     status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
     synonym: PyList[str] | None = Field(None, alias="synonym", serialization_alias="synonym")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> MedicationKnowledge:
+        return cls.model_validate_json(json)
 

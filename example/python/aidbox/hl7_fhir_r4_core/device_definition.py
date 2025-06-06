@@ -87,4 +87,11 @@ class DeviceDefinition(DomainResource):
     udi_device_identifier: PyList[DeviceDefinitionUdiDeviceIdentifier] | None = Field(None, alias="udiDeviceIdentifier", serialization_alias="udiDeviceIdentifier")
     url: str | None = Field(None, alias="url", serialization_alias="url")
     version: PyList[str] | None = Field(None, alias="version", serialization_alias="version")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> DeviceDefinition:
+        return cls.model_validate_json(json)
 

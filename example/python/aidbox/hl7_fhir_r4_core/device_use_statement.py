@@ -38,4 +38,11 @@ class DeviceUseStatement(DomainResource):
     timing_date_time: str | None = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
     timing_period: Period | None = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
     timing_timing: Timing | None = Field(None, alias="timingTiming", serialization_alias="timingTiming")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> DeviceUseStatement:
+        return cls.model_validate_json(json)
 

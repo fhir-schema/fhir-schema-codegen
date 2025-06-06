@@ -51,4 +51,11 @@ class SupplyRequest(DomainResource):
     requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
     status: Literal["draft", "active", "suspended", "cancelled", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
     supplier: PyList[Reference] | None = Field(None, alias="supplier", serialization_alias="supplier")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> SupplyRequest:
+        return cls.model_validate_json(json)
 

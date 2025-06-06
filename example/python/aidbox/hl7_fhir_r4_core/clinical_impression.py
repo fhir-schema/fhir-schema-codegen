@@ -58,4 +58,11 @@ class ClinicalImpression(DomainResource):
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     summary: str | None = Field(None, alias="summary", serialization_alias="summary")
     supporting_info: PyList[Reference] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
+    
+    def to_json(self, indent: int | None = None) -> str:
+        return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)
+    
+    @classmethod
+    def from_json(cls, json: str) -> ClinicalImpression:
+        return cls.model_validate_json(json)
 
