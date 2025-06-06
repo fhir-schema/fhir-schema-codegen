@@ -235,6 +235,16 @@ export class PythonGenerator extends Generator {
                 const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
                 this.line(fieldDecl);
             }
+
+            if (schema.identifier.kind === 'resource'){
+                this.line()
+                this.line("def to_json(self, indent: int | None = None) -> str:")
+                this.line("    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)")
+                this.line()
+                this.line("@classmethod")
+                this.line(`def from_json(cls, json: str) -> ${name}:`)
+                this.line("    return cls.model_validate_json(json)")
+            }
         });
     }
 

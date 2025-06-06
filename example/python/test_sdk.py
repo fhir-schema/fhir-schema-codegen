@@ -133,3 +133,13 @@ def test_delete_patient(client: Client) -> None:
     client.delete("Patient", created.id)
     with pytest.raises(Exception) as _excinfo:
         client.read(Patient, created.id)
+
+def test_to_from_json() -> None:
+    p = Patient(
+        name=[HumanName(given=["Test"], family="Patient")],
+        gender="female",
+        birth_date="1980-01-01",
+    )
+    json = p.to_json(indent=2)
+    p2 = Patient.from_json(json)
+    assert p == p2
