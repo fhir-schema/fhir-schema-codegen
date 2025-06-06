@@ -134,6 +134,7 @@ def test_delete_patient(client: Client) -> None:
     with pytest.raises(Exception) as _excinfo:
         client.read(Patient, created.id)
 
+
 def test_to_from_json() -> None:
     p = Patient(
         name=[HumanName(given=["Test"], family="Patient")],
