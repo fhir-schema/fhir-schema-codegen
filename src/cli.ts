@@ -20,11 +20,12 @@ program
 
 // Add global options
 program
-    .option('--debug', 'Enable debug output')
+    .option('--debug', 'Enable debug output (synonym for --verbose)')
+    .option('--verbose', 'Enable verbose output')
     .option('--quiet', 'Suppress all output except errors')
     .hook('preAction', (thisCommand) => {
         const options = thisCommand.opts();
-        if (options.debug) {
+        if (options.debug || options.verbose) {
             logger.setLevel(LogLevel.DEBUG);
         } else if (options.quiet) {
             logger.setLevel(LogLevel.ERROR);
