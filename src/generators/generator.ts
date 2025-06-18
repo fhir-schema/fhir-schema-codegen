@@ -269,20 +269,18 @@ export class Generator {
         return strings.map((str) => this.uppercaseFirstLetter(str));
     }
 
-    deriveNestedSchemaName(url: string, includeResourceName = false) {
+    deriveNestedSchemaName(url: string, includeResourceName = false): string {
         const path = this.canonicalToName(url);
-
-        if (path) {
-            const [resourceName, rest] = path.split('#');
-            const name = this.uppercaseFirstLetterOfEach(rest.split('.')).join('');
-
-            if (includeResourceName) {
-                return [resourceName, name].join('');
-            }
-
-            return name;
+        if (!path) {
+            return '';
         }
 
-        return '';
+        const [resourceName, rest] = path.split('#');
+        const name = this.uppercaseFirstLetterOfEach((rest ?? '').split('.')).join('');
+        if (includeResourceName) {
+            return [resourceName, name].join('');
+        }
+
+        return name;
     }
 }

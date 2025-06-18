@@ -96,13 +96,12 @@ export class GenerateCommand extends BaseCommand {
                         }
                     }
                 } catch (error) {
-                    this.handleError(error);
+                    this.handleError("can't initialize generator", error);
                 }
             })
             .action(async (options) => {
                 try {
                     const outputDir = path.resolve(process.cwd(), options.output);
-
                     if (!fs.existsSync(outputDir)) {
                         fs.mkdirSync(outputDir, { recursive: true });
                     }
@@ -115,48 +114,49 @@ export class GenerateCommand extends BaseCommand {
                         logger.info('Processing packages with type-schema...');
 
                         try {
-                            const result = await executeTypeSchema(
+                            const typeSchemaNdJson = await executeTypeSchema(
                                 options.packages,
                                 TYPE_SCHEMA_VERSION,
                                 options.typeSchemaExec,
                                 options.fhirSchema,
                             );
-
-                            if (result) {
-                                const generator = await generatorsRegistry.createGenerator(
-                                    options.generator ?? options.customGenerator,
-                                    {
-                                        outputDir,
-                                        jsonDocuments: result,
-                                        typesOnly: options.typesOnly,
-                                        ...(options.generator === 'python'
-                                            ? {
-                                                  sdkPackage: options.pySdkPackage,
-                                                  allowExtraFields: options.pyAllowExtraFields,
-                                              }
-                                            : {}),
-                                        ...(options.generator === 'typescript'
-                                            ? {
-                                                  sdkPackage: options.tsSdkPackage,
-                                              }
-                                            : {}),
-                                    },
+                            if (!typeSchemaNdJson) {
+                                this.handleError(
+                                    'can not generate type schemas',
+                                    new Error('No schemas found'),
                                 );
-
-                                await generator.init();
-                                generator.generate();
                             }
+
+                            const generator = await generatorsRegistry.createGenerator(
+                                options.generator ?? options.customGenerator,
+                                {
+                                    outputDir,
+                                    jsonDocuments: typeSchemaNdJson,
+                                    typesOnly: options.typesOnly,
+                                    ...(options.generator === 'python'
+                                        ? {
+                                              sdkPackage: options.pySdkPackage,
+                                              allowExtraFields: options.pyAllowExtraFields,
+                                          }
+                                        : {}),
+                                    ...(options.generator === 'typescript'
+                                        ? {
+                                              sdkPackage: options.tsSdkPackage,
+                                          }
+                                        : {}),
+                                },
+                            );
+
+                            await generator.init();
+                            generator.generate();
                         } catch (error) {
-                            logger.error(
-                                `${error instanceof Error ? error.message : String(error)}`,
-                            );
-                            throw new Error(
-                                `Failed to process packages with type-schema: ${error instanceof Error ? error.message : String(error)}`,
-                            );
+                            this.handleError("can't generate sdk", error);
                         }
                     }
 
+                    // TODO: merge flows
                     if (options.files) {
+                        logger.info('Processing files with type-schema...');
                         const generator = await generatorsRegistry.createGenerator(
                             options.generator ?? options.customGenerator,
                             {
@@ -183,20 +183,16 @@ export class GenerateCommand extends BaseCommand {
 
                     logger.success(`Successfully generated code to ${options.output}`);
                 } catch (error) {
-                    this.handleError(error);
+                    this.handleError('can not generate SDK', error);
                 }
             });
     }
 
-    /**
-     * Handle errors in a consistent way for all commands
-     * @param error - Error object
-     */
-    private handleError(error: unknown): never {
+    private handleError(msg: string, error: unknown): never {
         if (error instanceof GeneratorError) {
-            logger.error(`Generator error: ${error.message}`);
+            logger.error(`Generator error: ${msg}: ${error.message}`);
         } else {
-            logger.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+            logger.error(`Error: ${msg}: ${String(error)}`);
         }
         process.exit(1);
     }
