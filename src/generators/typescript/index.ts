@@ -129,12 +129,12 @@ class TypeScriptGenerator extends Generator {
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
             const deps = schema.dependencies
-                .filter((dep) => ['complex-type', 'resource'].includes(dep.kind))
+                .filter((dep) => ['complex-type', 'resource', 'logical'].includes(dep.kind))
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             for (const dep of deps) {
                 this.lineSM(
-                    `import { ${this.uppercaseFirstLetter(dep.name)} } from './${dep.name}'`,
+                    `import { ${this.uppercaseFirstLetter(dep.name)} } from './${pascalCase(dep.name)}'`,
                 );
             }
         }
@@ -165,13 +165,17 @@ class TypeScriptGenerator extends Generator {
             if (schema.identifier.name === 'Reference') {
                 name = 'Reference<T extends string = string>';
             } else {
-                name = schema.identifier.name;
+                name = this.normilizeName(schema.identifier.name);
             }
         } else {
             name = this.deriveNestedSchemaName(schema.identifier.url, true);
         }
+        name = this.normilizeName(name);
 
-        const parent = this.canonicalToName(schema.base?.url);
+        let parent = this.canonicalToName(schema.base?.url);
+        if (parent) {
+            parent = this.normilizeName(parent);
+        }
         const extendsClause = parent && `extends ${parent}`;
 
         this.curlyBlock(['export', 'interface', name, extendsClause], () => {
@@ -193,6 +197,9 @@ class TypeScriptGenerator extends Generator {
                 const optionalSymbol = field.required ? '' : '?';
                 const arraySymbol = field.array ? '[]' : '';
 
+                if (field.type === undefined) {
+                    continue;
+                }
                 let type = field.type.name;
 
                 if (field.type.kind === 'nested') {
@@ -258,6 +265,10 @@ class TypeScriptGenerator extends Generator {
         });
     }
 
+    normilizeName(n: string): string {
+        return n.replace(/-/g, '_');
+    }
+
     generate() {
         const typesOnly = (this.opts as TypeScriptGeneratorOptions).typesOnly || false;
         const typesPath = typesOnly ? '' : 'types';
@@ -266,6 +277,7 @@ class TypeScriptGenerator extends Generator {
             const typesToGenerate = removeConstraints([
                 ...this.loader.complexTypes(),
                 ...this.loader.resources(),
+                ...this.loader.logicalModels(),
             ]);
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
 

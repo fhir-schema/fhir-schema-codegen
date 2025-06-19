@@ -120,6 +120,12 @@ export class SchemaLoader {
             .map((item: TypeSchema) => new TypeSchema(item));
     }
 
+    logicalModels(): TypeSchema[] {
+        return this.canonicalResources.package.filter(
+            (res: TypeSchema) => res.identifier.kind === 'logical',
+        );
+    }
+
     profiles(): TypeSchema[] {
         return this.canonicalResources.package.filter(
             (res: TypeSchema) => res.identifier.kind === 'constraint',

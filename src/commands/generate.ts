@@ -194,6 +194,9 @@ export class GenerateCommand extends BaseCommand {
         } else {
             logger.error(`Error: ${msg}: ${String(error)}`);
         }
+        if (error instanceof Error) {
+            logger.error(error.stack ?? '');
+        }
         process.exit(1);
     }
 }
