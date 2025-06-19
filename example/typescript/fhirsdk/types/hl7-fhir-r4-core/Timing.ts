@@ -4,12 +4,35 @@
 
 import { BackboneElement } from './BackboneElement';
 import { CodeableConcept } from './CodeableConcept';
-import { Element } from './Element';
+import { Duration } from './Duration';
+import { Period } from './Period';
+import { Range } from './Range';
+
+
+export interface TimingRepeat extends BackboneElement {
+    boundsDuration?: Duration;
+    boundsPeriod?: Period;
+    boundsRange?: Range;
+    count?: number;
+    countMax?: number;
+    dayOfWeek?: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'[];
+    duration?: number;
+    durationMax?: number;
+    durationUnit?: string;
+    frequency?: number;
+    frequencyMax?: number;
+    offset?: number;
+    period?: number;
+    periodMax?: number;
+    periodUnit?: string;
+    timeOfDay?: string[];
+    when?: 'MORN' | 'MORN.early' | 'MORN.late' | 'NOON' | 'AFT' | 'AFT.early' | 'AFT.late' | 'EVE' | 'EVE.early' | 'EVE.late' | 'NIGHT' | 'PHS' | 'HS' | 'WAKE' | 'C' | 'CM' | 'CD' | 'CV' | 'AC' | 'ACM' | 'ACD' | 'ACV' | 'PC' | 'PCM' | 'PCD' | 'PCV' | 'AC' | 'ACD' | 'ACM' | 'ACV' | 'C' | 'HS' | 'IC' | 'ICD' | 'ICM' | 'ICV' | 'PC' | 'PCD' | 'PCM' | 'PCV' | 'WAKE'[];
+}
 
 export interface Timing extends BackboneElement {
     code?: CodeableConcept;
     event?: string[];
     _event?: Element;
-    repeat?: Element;
+    repeat?: TimingRepeat;
 }
 

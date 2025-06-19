@@ -4,17 +4,27 @@
 
 import { BackboneElement } from './BackboneElement';
 import { CodeableConcept } from './CodeableConcept';
-import { Element } from './Element';
 import { Quantity } from './Quantity';
+import { Range } from './Range';
 import { Ratio } from './Ratio';
 import { Timing } from './Timing';
+
+
+export interface DosageDoseAndRate extends BackboneElement {
+    doseQuantity?: Quantity;
+    doseRange?: Range;
+    rateQuantity?: Quantity;
+    rateRange?: Range;
+    rateRatio?: Ratio;
+    type?: CodeableConcept;
+}
 
 export interface Dosage extends BackboneElement {
     additionalInstruction?: CodeableConcept[];
     asNeededBoolean?: boolean;
     _asNeededBoolean?: Element;
     asNeededCodeableConcept?: CodeableConcept;
-    doseAndRate?: Element[];
+    doseAndRate?: DosageDoseAndRate[];
     maxDosePerAdministration?: Quantity;
     maxDosePerLifetime?: Quantity;
     maxDosePerPeriod?: Ratio;

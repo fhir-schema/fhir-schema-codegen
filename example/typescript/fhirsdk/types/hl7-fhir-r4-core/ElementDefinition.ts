@@ -17,7 +17,6 @@ import { DataRequirement } from './DataRequirement';
 import { Distance } from './Distance';
 import { Dosage } from './Dosage';
 import { Duration } from './Duration';
-import { Element } from './Element';
 import { Expression } from './Expression';
 import { HumanName } from './HumanName';
 import { Identifier } from './Identifier';
@@ -36,17 +35,121 @@ import { Timing } from './Timing';
 import { TriggerDefinition } from './TriggerDefinition';
 import { UsageContext } from './UsageContext';
 
+
+export interface ElementDefinitionBase extends BackboneElement {
+    max?: string;
+    min?: number;
+    path?: string;
+}
+
+export interface ElementDefinitionBinding extends BackboneElement {
+    description?: string;
+    strength?: 'required' | 'extensible' | 'preferred' | 'example';
+    valueSet?: string;
+}
+
+export interface ElementDefinitionConstraint extends BackboneElement {
+    expression?: string;
+    human?: string;
+    key?: string;
+    requirements?: string;
+    severity?: 'error' | 'warning';
+    source?: string;
+    xpath?: string;
+}
+
+export interface ElementDefinitionExample extends BackboneElement {
+    label?: string;
+    valueAddress?: Address;
+    valueAge?: Age;
+    valueAnnotation?: Annotation;
+    valueAttachment?: Attachment;
+    valueBase64Binary?: string;
+    valueBoolean?: boolean;
+    valueCanonical?: string;
+    valueCode?: string;
+    valueCodeableConcept?: CodeableConcept;
+    valueCoding?: Coding;
+    valueContactDetail?: ContactDetail;
+    valueContactPoint?: ContactPoint;
+    valueContributor?: Contributor;
+    valueCount?: Count;
+    valueDataRequirement?: DataRequirement;
+    valueDate?: string;
+    valueDateTime?: string;
+    valueDecimal?: number;
+    valueDistance?: Distance;
+    valueDosage?: Dosage;
+    valueDuration?: Duration;
+    valueExpression?: Expression;
+    valueHumanName?: HumanName;
+    valueId?: string;
+    valueIdentifier?: Identifier;
+    valueInstant?: string;
+    valueInteger?: number;
+    valueMarkdown?: string;
+    valueMeta?: Meta;
+    valueMoney?: Money;
+    valueOid?: string;
+    valueParameterDefinition?: ParameterDefinition;
+    valuePeriod?: Period;
+    valuePositiveInt?: number;
+    valueQuantity?: Quantity;
+    valueRange?: Range;
+    valueRatio?: Ratio;
+    valueReference?: Reference;
+    valueRelatedArtifact?: RelatedArtifact;
+    valueSampledData?: SampledData;
+    valueSignature?: Signature;
+    valueString?: string;
+    valueTime?: string;
+    valueTiming?: Timing;
+    valueTriggerDefinition?: TriggerDefinition;
+    valueUnsignedInt?: number;
+    valueUri?: string;
+    valueUrl?: string;
+    valueUsageContext?: UsageContext;
+    valueUuid?: string;
+}
+
+export interface ElementDefinitionMapping extends BackboneElement {
+    comment?: string;
+    identity?: string;
+    language?: string;
+    map?: string;
+}
+
+export interface ElementDefinitionSlicing extends BackboneElement {
+    description?: string;
+    discriminator?: ElementDefinitionSlicingDiscriminator[];
+    ordered?: boolean;
+    rules?: 'closed' | 'open' | 'openAtEnd';
+}
+
+export interface ElementDefinitionSlicingDiscriminator extends BackboneElement {
+    path?: string;
+    type?: 'value' | 'exists' | 'pattern' | 'type' | 'profile';
+}
+
+export interface ElementDefinitionType extends BackboneElement {
+    aggregation?: 'contained' | 'referenced'[];
+    code?: string;
+    profile?: string[];
+    targetProfile?: string[];
+    versioning?: 'either' | 'independent' | 'specific';
+}
+
 export interface ElementDefinition extends BackboneElement {
     alias?: string[];
     _alias?: Element;
-    base?: Element;
-    binding?: Element;
+    base?: ElementDefinitionBase;
+    binding?: ElementDefinitionBinding;
     code?: Coding[];
     comment?: string;
     _comment?: Element;
     condition?: string[];
     _condition?: Element;
-    constraint?: Element[];
+    constraint?: ElementDefinitionConstraint[];
     contentReference?: string;
     _contentReference?: Element;
     defaultValueAddress?: Address;
@@ -120,7 +223,7 @@ export interface ElementDefinition extends BackboneElement {
     _defaultValueUuid?: Element;
     definition?: string;
     _definition?: Element;
-    example?: Element[];
+    example?: ElementDefinitionExample[];
     fixedAddress?: Address;
     fixedAge?: Age;
     fixedAnnotation?: Annotation;
@@ -198,7 +301,7 @@ export interface ElementDefinition extends BackboneElement {
     _isSummary?: Element;
     label?: string;
     _label?: Element;
-    mapping?: Element[];
+    mapping?: ElementDefinitionMapping[];
     max?: string;
     _max?: Element;
     maxLength?: number;
@@ -326,7 +429,7 @@ export interface ElementDefinition extends BackboneElement {
     _sliceIsConstraining?: Element;
     sliceName?: string;
     _sliceName?: Element;
-    slicing?: Element;
-    type?: Element[];
+    slicing?: ElementDefinitionSlicing;
+    type?: ElementDefinitionType[];
 }
 

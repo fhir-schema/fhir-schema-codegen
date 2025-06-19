@@ -4,9 +4,14 @@
 
 import { BackboneElement } from './BackboneElement';
 import { CodeableConcept } from './CodeableConcept';
-import { Element } from './Element';
 import { Quantity } from './Quantity';
 import { Range } from './Range';
+
+
+export interface SubstanceAmountReferenceRange extends BackboneElement {
+    highLimit?: Quantity;
+    lowLimit?: Quantity;
+}
 
 export interface SubstanceAmount extends BackboneElement {
     amountQuantity?: Quantity;
@@ -16,6 +21,6 @@ export interface SubstanceAmount extends BackboneElement {
     amountText?: string;
     _amountText?: Element;
     amountType?: CodeableConcept;
-    referenceRange?: Element;
+    referenceRange?: SubstanceAmountReferenceRange;
 }
 
