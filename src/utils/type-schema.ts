@@ -74,8 +74,9 @@ export async function executeTypeSchema(
 
     if (!customExecCommand && typeSchemaVersion !== version && typeSchemaVersion !== 'unknown') {
         logger.warn(
-            `TypeSchema version is not recommended. Expected ${version}, got ${typeSchemaVersion}. \n\nUse \`fscg install-type-schema\` to install recommended version.`,
+            `TypeSchema version is not recommended. Expected ${version}, got ${typeSchemaVersion}. \n\nDownload the recommended version...`,
         );
+        await ensureBinaryExists(version, true);
     }
 
     const outputPath = './tmp';
