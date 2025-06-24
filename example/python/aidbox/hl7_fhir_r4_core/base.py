@@ -51,13 +51,24 @@ class Duration(Quantity):
     pass
 
 
+class DosageDoseAndRate(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    dose_quantity: Quantity | None = Field(None, alias="doseQuantity", serialization_alias="doseQuantity")
+    dose_range: Range | None = Field(None, alias="doseRange", serialization_alias="doseRange")
+    rate_quantity: Quantity | None = Field(None, alias="rateQuantity", serialization_alias="rateQuantity")
+    rate_range: Range | None = Field(None, alias="rateRange", serialization_alias="rateRange")
+    rate_ratio: Ratio | None = Field(None, alias="rateRatio", serialization_alias="rateRatio")
+    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+
+
 class Dosage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     additional_instruction: PyList[CodeableConcept] | None = Field(None, alias="additionalInstruction", serialization_alias="additionalInstruction")
     as_needed_boolean: bool | None = Field(None, alias="asNeededBoolean", serialization_alias="asNeededBoolean")
     as_needed_codeable_concept: CodeableConcept | None = Field(None, alias="asNeededCodeableConcept", serialization_alias="asNeededCodeableConcept")
-    dose_and_rate: PyList[Element] | None = Field(None, alias="doseAndRate", serialization_alias="doseAndRate")
+    dose_and_rate: PyList[DosageDoseAndRate] | None = Field(None, alias="doseAndRate", serialization_alias="doseAndRate")
     max_dose_per_administration: Quantity | None = Field(None, alias="maxDosePerAdministration", serialization_alias="maxDosePerAdministration")
     max_dose_per_lifetime: Quantity | None = Field(None, alias="maxDosePerLifetime", serialization_alias="maxDosePerLifetime")
     max_dose_per_period: Ratio | None = Field(None, alias="maxDosePerPeriod", serialization_alias="maxDosePerPeriod")
@@ -230,16 +241,128 @@ class Reference(Element):
     type: str | None = Field(None, alias="type", serialization_alias="type")
 
 
+class ElementDefinitionBase(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    max: str | None = Field(None, alias="max", serialization_alias="max")
+    min: int | None = Field(None, alias="min", serialization_alias="min")
+    path: str | None = Field(None, alias="path", serialization_alias="path")
+
+class ElementDefinitionBinding(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    strength: Literal["required", "extensible", "preferred", "example"] | None = Field(None, alias="strength", serialization_alias="strength")
+    value_set: str | None = Field(None, alias="valueSet", serialization_alias="valueSet")
+
+class ElementDefinitionConstraint(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    expression: str | None = Field(None, alias="expression", serialization_alias="expression")
+    human: str | None = Field(None, alias="human", serialization_alias="human")
+    key: str | None = Field(None, alias="key", serialization_alias="key")
+    requirements: str | None = Field(None, alias="requirements", serialization_alias="requirements")
+    severity: Literal["error", "warning"] | None = Field(None, alias="severity", serialization_alias="severity")
+    source: str | None = Field(None, alias="source", serialization_alias="source")
+    xpath: str | None = Field(None, alias="xpath", serialization_alias="xpath")
+
+class ElementDefinitionExample(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    label: str | None = Field(None, alias="label", serialization_alias="label")
+    value_address: Address | None = Field(None, alias="valueAddress", serialization_alias="valueAddress")
+    value_age: Age | None = Field(None, alias="valueAge", serialization_alias="valueAge")
+    value_annotation: Annotation | None = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
+    value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
+    value_base64binary: str | None = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
+    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
+    value_canonical: str | None = Field(None, alias="valueCanonical", serialization_alias="valueCanonical")
+    value_code: str | None = Field(None, alias="valueCode", serialization_alias="valueCode")
+    value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
+    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
+    value_contact_detail: ContactDetail | None = Field(None, alias="valueContactDetail", serialization_alias="valueContactDetail")
+    value_contact_point: ContactPoint | None = Field(None, alias="valueContactPoint", serialization_alias="valueContactPoint")
+    value_contributor: Contributor | None = Field(None, alias="valueContributor", serialization_alias="valueContributor")
+    value_count: Count | None = Field(None, alias="valueCount", serialization_alias="valueCount")
+    value_data_requirement: DataRequirement | None = Field(None, alias="valueDataRequirement", serialization_alias="valueDataRequirement")
+    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
+    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
+    value_distance: Distance | None = Field(None, alias="valueDistance", serialization_alias="valueDistance")
+    value_dosage: Dosage | None = Field(None, alias="valueDosage", serialization_alias="valueDosage")
+    value_duration: Duration | None = Field(None, alias="valueDuration", serialization_alias="valueDuration")
+    value_expression: Expression | None = Field(None, alias="valueExpression", serialization_alias="valueExpression")
+    value_human_name: HumanName | None = Field(None, alias="valueHumanName", serialization_alias="valueHumanName")
+    value_id: str | None = Field(None, alias="valueId", serialization_alias="valueId")
+    value_identifier: Identifier | None = Field(None, alias="valueIdentifier", serialization_alias="valueIdentifier")
+    value_instant: str | None = Field(None, alias="valueInstant", serialization_alias="valueInstant")
+    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
+    value_markdown: str | None = Field(None, alias="valueMarkdown", serialization_alias="valueMarkdown")
+    value_meta: Meta | None = Field(None, alias="valueMeta", serialization_alias="valueMeta")
+    value_money: Money | None = Field(None, alias="valueMoney", serialization_alias="valueMoney")
+    value_oid: str | None = Field(None, alias="valueOid", serialization_alias="valueOid")
+    value_parameter_definition: ParameterDefinition | None = Field(None, alias="valueParameterDefinition", serialization_alias="valueParameterDefinition")
+    value_period: Period | None = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+    value_positive_int: PositiveInt | None = Field(None, alias="valuePositiveInt", serialization_alias="valuePositiveInt")
+    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
+    value_range: Range | None = Field(None, alias="valueRange", serialization_alias="valueRange")
+    value_ratio: Ratio | None = Field(None, alias="valueRatio", serialization_alias="valueRatio")
+    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
+    value_related_artifact: RelatedArtifact | None = Field(None, alias="valueRelatedArtifact", serialization_alias="valueRelatedArtifact")
+    value_sampled_data: SampledData | None = Field(None, alias="valueSampledData", serialization_alias="valueSampledData")
+    value_signature: Signature | None = Field(None, alias="valueSignature", serialization_alias="valueSignature")
+    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
+    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
+    value_timing: Timing | None = Field(None, alias="valueTiming", serialization_alias="valueTiming")
+    value_trigger_definition: TriggerDefinition | None = Field(None, alias="valueTriggerDefinition", serialization_alias="valueTriggerDefinition")
+    value_unsigned_int: int | None = Field(None, alias="valueUnsignedInt", serialization_alias="valueUnsignedInt")
+    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
+    value_url: str | None = Field(None, alias="valueUrl", serialization_alias="valueUrl")
+    value_usage_context: UsageContext | None = Field(None, alias="valueUsageContext", serialization_alias="valueUsageContext")
+    value_uuid: str | None = Field(None, alias="valueUuid", serialization_alias="valueUuid")
+
+class ElementDefinitionMapping(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    comment: str | None = Field(None, alias="comment", serialization_alias="comment")
+    identity: str | None = Field(None, alias="identity", serialization_alias="identity")
+    language: str | None = Field(None, alias="language", serialization_alias="language")
+    map: str | None = Field(None, alias="map", serialization_alias="map")
+
+class ElementDefinitionSlicing(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    description: str | None = Field(None, alias="description", serialization_alias="description")
+    discriminator: PyList[ElementDefinitionSlicingDiscriminator] | None = Field(None, alias="discriminator", serialization_alias="discriminator")
+    ordered: bool | None = Field(None, alias="ordered", serialization_alias="ordered")
+    rules: Literal["closed", "open", "openAtEnd"] | None = Field(None, alias="rules", serialization_alias="rules")
+
+class ElementDefinitionSlicingDiscriminator(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    path: str | None = Field(None, alias="path", serialization_alias="path")
+    type: Literal["value", "exists", "pattern", "type", "profile"] | None = Field(None, alias="type", serialization_alias="type")
+
+class ElementDefinitionType(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    aggregation: PyList[Literal["contained", "referenced"]] | None = Field(None, alias="aggregation", serialization_alias="aggregation")
+    code: str | None = Field(None, alias="code", serialization_alias="code")
+    profile: PyList[str] | None = Field(None, alias="profile", serialization_alias="profile")
+    target_profile: PyList[str] | None = Field(None, alias="targetProfile", serialization_alias="targetProfile")
+    versioning: Literal["either", "independent", "specific"] | None = Field(None, alias="versioning", serialization_alias="versioning")
+
+
 class ElementDefinition(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     alias: PyList[str] | None = Field(None, alias="alias", serialization_alias="alias")
-    base: Element | None = Field(None, alias="base", serialization_alias="base")
-    binding: Element | None = Field(None, alias="binding", serialization_alias="binding")
+    base: ElementDefinitionBase | None = Field(None, alias="base", serialization_alias="base")
+    binding: ElementDefinitionBinding | None = Field(None, alias="binding", serialization_alias="binding")
     code: PyList[Coding] | None = Field(None, alias="code", serialization_alias="code")
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
     condition: PyList[str] | None = Field(None, alias="condition", serialization_alias="condition")
-    constraint: PyList[Element] | None = Field(None, alias="constraint", serialization_alias="constraint")
+    constraint: PyList[ElementDefinitionConstraint] | None = Field(None, alias="constraint", serialization_alias="constraint")
     content_reference: str | None = Field(None, alias="contentReference", serialization_alias="contentReference")
     default_value_address: Address | None = Field(None, alias="defaultValueAddress", serialization_alias="defaultValueAddress")
     default_value_age: Age | None = Field(None, alias="defaultValueAge", serialization_alias="defaultValueAge")
@@ -292,7 +415,7 @@ class ElementDefinition(BackboneElement):
     default_value_usage_context: UsageContext | None = Field(None, alias="defaultValueUsageContext", serialization_alias="defaultValueUsageContext")
     default_value_uuid: str | None = Field(None, alias="defaultValueUuid", serialization_alias="defaultValueUuid")
     definition: str | None = Field(None, alias="definition", serialization_alias="definition")
-    example: PyList[Element] | None = Field(None, alias="example", serialization_alias="example")
+    example: PyList[ElementDefinitionExample] | None = Field(None, alias="example", serialization_alias="example")
     fixed_address: Address | None = Field(None, alias="fixedAddress", serialization_alias="fixedAddress")
     fixed_age: Age | None = Field(None, alias="fixedAge", serialization_alias="fixedAge")
     fixed_annotation: Annotation | None = Field(None, alias="fixedAnnotation", serialization_alias="fixedAnnotation")
@@ -347,7 +470,7 @@ class ElementDefinition(BackboneElement):
     is_modifier_reason: str | None = Field(None, alias="isModifierReason", serialization_alias="isModifierReason")
     is_summary: bool | None = Field(None, alias="isSummary", serialization_alias="isSummary")
     label: str | None = Field(None, alias="label", serialization_alias="label")
-    mapping: PyList[Element] | None = Field(None, alias="mapping", serialization_alias="mapping")
+    mapping: PyList[ElementDefinitionMapping] | None = Field(None, alias="mapping", serialization_alias="mapping")
     max: str | None = Field(None, alias="max", serialization_alias="max")
     max_length: int | None = Field(None, alias="maxLength", serialization_alias="maxLength")
     max_value_date: str | None = Field(None, alias="maxValueDate", serialization_alias="maxValueDate")
@@ -428,8 +551,8 @@ class ElementDefinition(BackboneElement):
     short: str | None = Field(None, alias="short", serialization_alias="short")
     slice_is_constraining: bool | None = Field(None, alias="sliceIsConstraining", serialization_alias="sliceIsConstraining")
     slice_name: str | None = Field(None, alias="sliceName", serialization_alias="sliceName")
-    slicing: Element | None = Field(None, alias="slicing", serialization_alias="slicing")
-    type: PyList[Element] | None = Field(None, alias="type", serialization_alias="type")
+    slicing: ElementDefinitionSlicing | None = Field(None, alias="slicing", serialization_alias="slicing")
+    type: PyList[ElementDefinitionType] | None = Field(None, alias="type", serialization_alias="type")
 
 
 class Period(Element):
@@ -495,6 +618,13 @@ class Signature(Element):
     who: Reference | None = Field(None, alias="who", serialization_alias="who")
 
 
+class SubstanceAmountReferenceRange(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    high_limit: Quantity | None = Field(None, alias="highLimit", serialization_alias="highLimit")
+    low_limit: Quantity | None = Field(None, alias="lowLimit", serialization_alias="lowLimit")
+
+
 class SubstanceAmount(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
@@ -503,7 +633,7 @@ class SubstanceAmount(BackboneElement):
     amount_string: str | None = Field(None, alias="amountString", serialization_alias="amountString")
     amount_text: str | None = Field(None, alias="amountText", serialization_alias="amountText")
     amount_type: CodeableConcept | None = Field(None, alias="amountType", serialization_alias="amountType")
-    reference_range: Element | None = Field(None, alias="referenceRange", serialization_alias="referenceRange")
+    reference_range: SubstanceAmountReferenceRange | None = Field(None, alias="referenceRange", serialization_alias="referenceRange")
 
 
 class Contributor(Element):
@@ -607,15 +737,39 @@ class CodeableConcept(Element):
     text: str | None = Field(None, alias="text", serialization_alias="text")
 
 
+class DataRequirementCodeFilter(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    code: PyList[Coding] | None = Field(None, alias="code", serialization_alias="code")
+    path: str | None = Field(None, alias="path", serialization_alias="path")
+    search_param: str | None = Field(None, alias="searchParam", serialization_alias="searchParam")
+    value_set: str | None = Field(None, alias="valueSet", serialization_alias="valueSet")
+
+class DataRequirementDateFilter(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    path: str | None = Field(None, alias="path", serialization_alias="path")
+    search_param: str | None = Field(None, alias="searchParam", serialization_alias="searchParam")
+    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
+    value_duration: Duration | None = Field(None, alias="valueDuration", serialization_alias="valueDuration")
+    value_period: Period | None = Field(None, alias="valuePeriod", serialization_alias="valuePeriod")
+
+class DataRequirementSort(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    direction: Literal["ascending", "descending"] | None = Field(None, alias="direction", serialization_alias="direction")
+    path: str | None = Field(None, alias="path", serialization_alias="path")
+
+
 class DataRequirement(Element):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code_filter: PyList[Element] | None = Field(None, alias="codeFilter", serialization_alias="codeFilter")
-    date_filter: PyList[Element] | None = Field(None, alias="dateFilter", serialization_alias="dateFilter")
+    code_filter: PyList[DataRequirementCodeFilter] | None = Field(None, alias="codeFilter", serialization_alias="codeFilter")
+    date_filter: PyList[DataRequirementDateFilter] | None = Field(None, alias="dateFilter", serialization_alias="dateFilter")
     limit: PositiveInt | None = Field(None, alias="limit", serialization_alias="limit")
     must_support: PyList[str] | None = Field(None, alias="mustSupport", serialization_alias="mustSupport")
     profile: PyList[str] | None = Field(None, alias="profile", serialization_alias="profile")
-    sort: PyList[Element] | None = Field(None, alias="sort", serialization_alias="sort")
+    sort: PyList[DataRequirementSort] | None = Field(None, alias="sort", serialization_alias="sort")
     subject_codeable_concept: CodeableConcept | None = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
     subject_reference: Reference | None = Field(None, alias="subjectReference", serialization_alias="subjectReference")
     type: Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"] | None = Field(None, alias="type", serialization_alias="type")
@@ -639,11 +793,33 @@ class Identifier(Element):
     value: str | None = Field(None, alias="value", serialization_alias="value")
 
 
+class TimingRepeat(BackboneElement):
+    model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
+    
+    bounds_duration: Duration | None = Field(None, alias="boundsDuration", serialization_alias="boundsDuration")
+    bounds_period: Period | None = Field(None, alias="boundsPeriod", serialization_alias="boundsPeriod")
+    bounds_range: Range | None = Field(None, alias="boundsRange", serialization_alias="boundsRange")
+    count: PositiveInt | None = Field(None, alias="count", serialization_alias="count")
+    count_max: PositiveInt | None = Field(None, alias="countMax", serialization_alias="countMax")
+    day_of_week: PyList[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]] | None = Field(None, alias="dayOfWeek", serialization_alias="dayOfWeek")
+    duration: float | None = Field(None, alias="duration", serialization_alias="duration")
+    duration_max: float | None = Field(None, alias="durationMax", serialization_alias="durationMax")
+    duration_unit: str | None = Field(None, alias="durationUnit", serialization_alias="durationUnit")
+    frequency: PositiveInt | None = Field(None, alias="frequency", serialization_alias="frequency")
+    frequency_max: PositiveInt | None = Field(None, alias="frequencyMax", serialization_alias="frequencyMax")
+    offset: int | None = Field(None, alias="offset", serialization_alias="offset")
+    period: float | None = Field(None, alias="period", serialization_alias="period")
+    period_max: float | None = Field(None, alias="periodMax", serialization_alias="periodMax")
+    period_unit: str | None = Field(None, alias="periodUnit", serialization_alias="periodUnit")
+    time_of_day: PyList[str] | None = Field(None, alias="timeOfDay", serialization_alias="timeOfDay")
+    when: PyList[Literal["MORN", "MORN.early", "MORN.late", "NOON", "AFT", "AFT.early", "AFT.late", "EVE", "EVE.early", "EVE.late", "NIGHT", "PHS", "HS", "WAKE", "C", "CM", "CD", "CV", "AC", "ACM", "ACD", "ACV", "PC", "PCM", "PCD", "PCV", "AC", "ACD", "ACM", "ACV", "C", "HS", "IC", "ICD", "ICM", "ICV", "PC", "PCD", "PCM", "PCV", "WAKE"]] | None = Field(None, alias="when", serialization_alias="when")
+
+
 class Timing(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     event: PyList[str] | None = Field(None, alias="event", serialization_alias="event")
-    repeat: Element | None = Field(None, alias="repeat", serialization_alias="repeat")
+    repeat: TimingRepeat | None = Field(None, alias="repeat", serialization_alias="repeat")
 
 
