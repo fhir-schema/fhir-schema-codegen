@@ -222,7 +222,7 @@ export class Generator {
         //     return name + '_';
         // }
 
-        return name;
+        return name.replace(/-/g, '_');
     }
 
     getFieldType(field: ClassField): string {
