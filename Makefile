@@ -25,6 +25,13 @@ lint-fix-unsafe:
 test:
 	npm run test
 
+generate-examples: build
+	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk
+	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
+        --fhir-schema example/custom_resources/TutorNotification.fs.json \
+		--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
+		--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
+
 ###########################################################
 # SDK Test Env
 
