@@ -169,7 +169,7 @@ You can create custom generators to support additional languages or specialized 
 - Customize the output format
 - Add language-specific features
 
- Generator inherits from base [Generator](src/generator.ts) class and implements `generate()` method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
+ Generator inherits from base [Generator](src/generators/generator.ts) class and implements `generate()` method to produce target language code based on type-schema (see [./src/generators/typescript/index.ts](./src/generators/typescript/index.ts))
 
 >For more information on creating and using custom generators, see the [Generators Registry documentation](docs/generators-registry.md).
 
