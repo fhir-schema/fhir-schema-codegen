@@ -52,6 +52,8 @@ prepare-aidbox-runme:
 PYTHON=python3
 PYTHON_SDK_EXAMPLE=./example/python
 
+python: format-python test-python-sdk-no-start-service
+
 format-python:
 	ruff format \
 	    example/python/test_sdk.py \

@@ -9,347 +9,956 @@ from aidbox.hl7_fhir_r4_core.base import \
     Population, ProdCharacteristic, ProductShelfLife, Quantity, Range, Ratio, Reference, RelatedArtifact, \
     SampledData, Signature, SubstanceAmount, Timing, TriggerDefinition, UsageContext
 
-from aidbox.hl7_fhir_r4_core.group import Group
-from aidbox.hl7_fhir_r4_core.questionnaire import Questionnaire
-from aidbox.hl7_fhir_r4_core.provenance import Provenance
-from aidbox.hl7_fhir_r4_core.goal import Goal
+from aidbox.hl7_fhir_r4_core.group import Group, GroupCharacteristic, GroupMember
+from aidbox.hl7_fhir_r4_core.questionnaire import \
+    Questionnaire, QuestionnaireItem, QuestionnaireItemAnswerOption, QuestionnaireItemEnableWhen, QuestionnaireItemInitial
+from aidbox.hl7_fhir_r4_core.provenance import Provenance, ProvenanceAgent, ProvenanceEntity
+from aidbox.hl7_fhir_r4_core.goal import Goal, GoalTarget
 from aidbox.hl7_fhir_r4_core.appointment_response import AppointmentResponse
-from aidbox.hl7_fhir_r4_core.research_study import ResearchStudy
-from aidbox.hl7_fhir_r4_core.encounter import Encounter
-from aidbox.hl7_fhir_r4_core.clinical_impression import ClinicalImpression
-from aidbox.hl7_fhir_r4_core.diagnostic_report import DiagnosticReport
+from aidbox.hl7_fhir_r4_core.research_study import \
+    ResearchStudy, ResearchStudyArm, ResearchStudyObjective
+from aidbox.hl7_fhir_r4_core.encounter import \
+    Encounter, EncounterClassHistory, EncounterDiagnosis, EncounterHospitalization, EncounterLocation, EncounterParticipant, \
+    EncounterStatusHistory
+from aidbox.hl7_fhir_r4_core.clinical_impression import \
+    ClinicalImpression, ClinicalImpressionFinding, ClinicalImpressionInvestigation
+from aidbox.hl7_fhir_r4_core.diagnostic_report import DiagnosticReport, DiagnosticReportMedia
 from aidbox.hl7_fhir_r4_core.organization_affiliation import OrganizationAffiliation
 from aidbox.hl7_fhir_r4_core.guidance_response import GuidanceResponse
-from aidbox.hl7_fhir_r4_core.biologically_derived_product import BiologicallyDerivedProduct
-from aidbox.hl7_fhir_r4_core.compartment_definition import CompartmentDefinition
-from aidbox.hl7_fhir_r4_core.substance import Substance
-from aidbox.hl7_fhir_r4_core.message_definition import MessageDefinition
+from aidbox.hl7_fhir_r4_core.biologically_derived_product import \
+    BiologicallyDerivedProduct, BiologicallyDerivedProductCollection, BiologicallyDerivedProductManipulation, \
+    BiologicallyDerivedProductProcessing, BiologicallyDerivedProductStorage
+from aidbox.hl7_fhir_r4_core.compartment_definition import \
+    CompartmentDefinition, CompartmentDefinitionResource
+from aidbox.hl7_fhir_r4_core.substance import Substance, SubstanceIngredient, SubstanceInstance
+from aidbox.hl7_fhir_r4_core.message_definition import \
+    MessageDefinition, MessageDefinitionAllowedResponse, MessageDefinitionFocus
 from aidbox.hl7_fhir_r4_core.slot import Slot
-from aidbox.hl7_fhir_r4_core.structure_map import StructureMap
-from aidbox.hl7_fhir_r4_core.substance_reference_information import SubstanceReferenceInformation
-from aidbox.hl7_fhir_r4_core.device_metric import DeviceMetric
+from aidbox.hl7_fhir_r4_core.structure_map import \
+    StructureMap, StructureMapGroup, StructureMapGroupInput, StructureMapGroupRule, StructureMapGroupRuleDependent, \
+    StructureMapGroupRuleSource, StructureMapGroupRuleTarget, StructureMapGroupRuleTargetParameter, StructureMapStructure
+from aidbox.hl7_fhir_r4_core.substance_reference_information import \
+    SubstanceReferenceInformation, SubstanceReferenceInformationClassification, SubstanceReferenceInformationGene, \
+    SubstanceReferenceInformationGeneElement, SubstanceReferenceInformationTarget
+from aidbox.hl7_fhir_r4_core.device_metric import DeviceMetric, DeviceMetricCalibration
 from aidbox.hl7_fhir_r4_core.basic import Basic
-from aidbox.hl7_fhir_r4_core.substance_source_material import SubstanceSourceMaterial
+from aidbox.hl7_fhir_r4_core.substance_source_material import \
+    SubstanceSourceMaterial, SubstanceSourceMaterialFractionDescription, SubstanceSourceMaterialOrganism, \
+    SubstanceSourceMaterialOrganismAuthor, SubstanceSourceMaterialOrganismHybrid, SubstanceSourceMaterialOrganismOrganismGeneral, \
+    SubstanceSourceMaterialPartDescription
 from aidbox.hl7_fhir_r4_core.domain_resource import DomainResource
 from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 from aidbox.hl7_fhir_r4_core.endpoint import Endpoint
 from aidbox.hl7_fhir_r4_core.research_subject import ResearchSubject
-from aidbox.hl7_fhir_r4_core.related_person import RelatedPerson
-from aidbox.hl7_fhir_r4_core.effect_evidence_synthesis import EffectEvidenceSynthesis
-from aidbox.hl7_fhir_r4_core.imaging_study import ImagingStudy
-from aidbox.hl7_fhir_r4_core.practitioner import Practitioner
-from aidbox.hl7_fhir_r4_core.graph_definition import GraphDefinition
-from aidbox.hl7_fhir_r4_core.communication_request import CommunicationRequest
-from aidbox.hl7_fhir_r4_core.list import List
+from aidbox.hl7_fhir_r4_core.related_person import RelatedPerson, RelatedPersonCommunication
+from aidbox.hl7_fhir_r4_core.effect_evidence_synthesis import \
+    EffectEvidenceSynthesis, EffectEvidenceSynthesisCertainty, EffectEvidenceSynthesisCertaintyCertaintySubcomponent, \
+    EffectEvidenceSynthesisEffectEstimate, EffectEvidenceSynthesisEffectEstimatePrecisionEstimate, EffectEvidenceSynthesisResultsByExposure, \
+    EffectEvidenceSynthesisSampleSize
+from aidbox.hl7_fhir_r4_core.imaging_study import \
+    ImagingStudy, ImagingStudySeries, ImagingStudySeriesInstance, ImagingStudySeriesPerformer
+from aidbox.hl7_fhir_r4_core.practitioner import Practitioner, PractitionerQualification
+from aidbox.hl7_fhir_r4_core.graph_definition import \
+    GraphDefinition, GraphDefinitionLink, GraphDefinitionLinkTarget, GraphDefinitionLinkTargetCompartment
+from aidbox.hl7_fhir_r4_core.communication_request import \
+    CommunicationRequest, CommunicationRequestPayload
+from aidbox.hl7_fhir_r4_core.list import List, ListEntry
 from aidbox.hl7_fhir_r4_core.flag import Flag
-from aidbox.hl7_fhir_r4_core.contract import Contract
-from aidbox.hl7_fhir_r4_core.communication import Communication
+from aidbox.hl7_fhir_r4_core.contract import \
+    Contract, ContractContentDefinition, ContractFriendly, ContractLegal, ContractRule, ContractSigner, ContractTerm, \
+    ContractTermAction, ContractTermActionSubject, ContractTermAsset, ContractTermAssetContext, ContractTermAssetValuedItem, \
+    ContractTermOffer, ContractTermOfferAnswer, ContractTermOfferParty, ContractTermSecurityLabel
+from aidbox.hl7_fhir_r4_core.communication import Communication, CommunicationPayload
 from aidbox.hl7_fhir_r4_core.media import Media
-from aidbox.hl7_fhir_r4_core.device_definition import DeviceDefinition
-from aidbox.hl7_fhir_r4_core.plan_definition import PlanDefinition
-from aidbox.hl7_fhir_r4_core.location import Location
-from aidbox.hl7_fhir_r4_core.immunization_recommendation import ImmunizationRecommendation
-from aidbox.hl7_fhir_r4_core.specimen_definition import SpecimenDefinition
-from aidbox.hl7_fhir_r4_core.charge_item import ChargeItem
-from aidbox.hl7_fhir_r4_core.parameters import Parameters
-from aidbox.hl7_fhir_r4_core.medication_knowledge import MedicationKnowledge
-from aidbox.hl7_fhir_r4_core.implementation_guide import ImplementationGuide
-from aidbox.hl7_fhir_r4_core.operation_definition import OperationDefinition
-from aidbox.hl7_fhir_r4_core.catalog_entry import CatalogEntry
-from aidbox.hl7_fhir_r4_core.bundle import Bundle
-from aidbox.hl7_fhir_r4_core.episode_of_care import EpisodeOfCare
-from aidbox.hl7_fhir_r4_core.explanation_of_benefit import ExplanationOfBenefit
-from aidbox.hl7_fhir_r4_core.procedure import Procedure
-from aidbox.hl7_fhir_r4_core.substance_specification import SubstanceSpecification
-from aidbox.hl7_fhir_r4_core.concept_map import ConceptMap
-from aidbox.hl7_fhir_r4_core.operation_outcome import OperationOutcome
+from aidbox.hl7_fhir_r4_core.device_definition import \
+    DeviceDefinition, DeviceDefinitionCapability, DeviceDefinitionDeviceName, DeviceDefinitionMaterial, DeviceDefinitionProperty, \
+    DeviceDefinitionSpecialization, DeviceDefinitionUdiDeviceIdentifier
+from aidbox.hl7_fhir_r4_core.plan_definition import \
+    PlanDefinition, PlanDefinitionAction, PlanDefinitionActionCondition, PlanDefinitionActionDynamicValue, \
+    PlanDefinitionActionParticipant, PlanDefinitionActionRelatedAction, PlanDefinitionGoal, PlanDefinitionGoalTarget
+from aidbox.hl7_fhir_r4_core.location import Location, LocationHoursOfOperation, LocationPosition
+from aidbox.hl7_fhir_r4_core.immunization_recommendation import \
+    ImmunizationRecommendation, ImmunizationRecommendationRecommendation, ImmunizationRecommendationRecommendationDateCriterion
+from aidbox.hl7_fhir_r4_core.specimen_definition import \
+    SpecimenDefinition, SpecimenDefinitionTypeTested, SpecimenDefinitionTypeTestedContainer, SpecimenDefinitionTypeTestedContainerAdditive, \
+    SpecimenDefinitionTypeTestedHandling
+from aidbox.hl7_fhir_r4_core.charge_item import ChargeItem, ChargeItemPerformer
+from aidbox.hl7_fhir_r4_core.parameters import Parameters, ParametersParameter
+from aidbox.hl7_fhir_r4_core.medication_knowledge import \
+    MedicationKnowledge, MedicationKnowledgeAdministrationGuidelines, MedicationKnowledgeAdministrationGuidelinesDosage, \
+    MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics, MedicationKnowledgeCost, MedicationKnowledgeDrugCharacteristic, \
+    MedicationKnowledgeIngredient, MedicationKnowledgeKinetics, MedicationKnowledgeMedicineClassification, \
+    MedicationKnowledgeMonitoringProgram, MedicationKnowledgeMonograph, MedicationKnowledgePackaging, MedicationKnowledgeRegulatory, \
+    MedicationKnowledgeRegulatoryMaxDispense, MedicationKnowledgeRegulatorySchedule, MedicationKnowledgeRegulatorySubstitution, \
+    MedicationKnowledgeRelatedMedicationKnowledge
+from aidbox.hl7_fhir_r4_core.implementation_guide import \
+    ImplementationGuide, ImplementationGuideDefinition, ImplementationGuideDefinitionGrouping, ImplementationGuideDefinitionPage, \
+    ImplementationGuideDefinitionParameter, ImplementationGuideDefinitionResource, ImplementationGuideDefinitionTemplate, \
+    ImplementationGuideDependsOn, ImplementationGuideGlobal, ImplementationGuideManifest, ImplementationGuideManifestPage, \
+    ImplementationGuideManifestResource
+from aidbox.hl7_fhir_r4_core.operation_definition import \
+    OperationDefinition, OperationDefinitionOverload, OperationDefinitionParameter, OperationDefinitionParameterBinding, \
+    OperationDefinitionParameterReferencedFrom
+from aidbox.hl7_fhir_r4_core.catalog_entry import CatalogEntry, CatalogEntryRelatedEntry
+from aidbox.hl7_fhir_r4_core.bundle import \
+    Bundle, BundleEntry, BundleEntryRequest, BundleEntryResponse, BundleEntrySearch, BundleLink
+from aidbox.hl7_fhir_r4_core.episode_of_care import \
+    EpisodeOfCare, EpisodeOfCareDiagnosis, EpisodeOfCareStatusHistory
+from aidbox.hl7_fhir_r4_core.explanation_of_benefit import \
+    ExplanationOfBenefit, ExplanationOfBenefitAccident, ExplanationOfBenefitAddItem, ExplanationOfBenefitAddItemDetail, \
+    ExplanationOfBenefitAddItemDetailSubDetail, ExplanationOfBenefitBenefitBalance, ExplanationOfBenefitBenefitBalanceFinancial, \
+    ExplanationOfBenefitCareTeam, ExplanationOfBenefitDiagnosis, ExplanationOfBenefitInsurance, ExplanationOfBenefitItem, \
+    ExplanationOfBenefitItemAdjudication, ExplanationOfBenefitItemDetail, ExplanationOfBenefitItemDetailSubDetail, \
+    ExplanationOfBenefitPayee, ExplanationOfBenefitPayment, ExplanationOfBenefitProcedure, ExplanationOfBenefitProcessNote, \
+    ExplanationOfBenefitRelated, ExplanationOfBenefitSupportingInfo, ExplanationOfBenefitTotal
+from aidbox.hl7_fhir_r4_core.procedure import Procedure, ProcedureFocalDevice, ProcedurePerformer
+from aidbox.hl7_fhir_r4_core.substance_specification import \
+    SubstanceSpecification, SubstanceSpecificationCode, SubstanceSpecificationMoiety, SubstanceSpecificationName, \
+    SubstanceSpecificationNameOfficial, SubstanceSpecificationProperty, SubstanceSpecificationRelationship, \
+    SubstanceSpecificationStructure, SubstanceSpecificationStructureIsotope, SubstanceSpecificationStructureIsotopeMolecularWeight, \
+    SubstanceSpecificationStructureRepresentation
+from aidbox.hl7_fhir_r4_core.concept_map import \
+    ConceptMap, ConceptMapGroup, ConceptMapGroupElement, ConceptMapGroupElementTarget, ConceptMapGroupElementTargetDependsOn, \
+    ConceptMapGroupUnmapped
+from aidbox.hl7_fhir_r4_core.operation_outcome import OperationOutcome, OperationOutcomeIssue
 from aidbox.hl7_fhir_r4_core.medicinal_product_undesirable_effect import MedicinalProductUndesirableEffect
 from aidbox.hl7_fhir_r4_core.enrollment_response import EnrollmentResponse
-from aidbox.hl7_fhir_r4_core.device_request import DeviceRequest
-from aidbox.hl7_fhir_r4_core.coverage_eligibility_response import CoverageEligibilityResponse
-from aidbox.hl7_fhir_r4_core.subscription import Subscription
-from aidbox.hl7_fhir_r4_core.composition import Composition
-from aidbox.hl7_fhir_r4_core.person import Person
+from aidbox.hl7_fhir_r4_core.device_request import DeviceRequest, DeviceRequestParameter
+from aidbox.hl7_fhir_r4_core.coverage_eligibility_response import \
+    CoverageEligibilityResponse, CoverageEligibilityResponseError, CoverageEligibilityResponseInsurance, CoverageEligibilityResponseInsuranceItem, \
+    CoverageEligibilityResponseInsuranceItemBenefit
+from aidbox.hl7_fhir_r4_core.subscription import Subscription, SubscriptionChannel
+from aidbox.hl7_fhir_r4_core.composition import \
+    Composition, CompositionAttester, CompositionEvent, CompositionRelatesTo, CompositionSection
+from aidbox.hl7_fhir_r4_core.person import Person, PersonLink
 from aidbox.hl7_fhir_r4_core.schedule import Schedule
-from aidbox.hl7_fhir_r4_core.example_scenario import ExampleScenario
-from aidbox.hl7_fhir_r4_core.detected_issue import DetectedIssue
-from aidbox.hl7_fhir_r4_core.payment_reconciliation import PaymentReconciliation
-from aidbox.hl7_fhir_r4_core.risk_assessment import RiskAssessment
-from aidbox.hl7_fhir_r4_core.molecular_sequence import MolecularSequence
-from aidbox.hl7_fhir_r4_core.measure import Measure
-from aidbox.hl7_fhir_r4_core.test_report import TestReport
-from aidbox.hl7_fhir_r4_core.observation import Observation
+from aidbox.hl7_fhir_r4_core.example_scenario import \
+    ExampleScenario, ExampleScenarioActor, ExampleScenarioInstance, ExampleScenarioInstanceContainedInstance, \
+    ExampleScenarioInstanceVersion, ExampleScenarioProcess, ExampleScenarioProcessStep, ExampleScenarioProcessStepAlternative, \
+    ExampleScenarioProcessStepOperation
+from aidbox.hl7_fhir_r4_core.detected_issue import \
+    DetectedIssue, DetectedIssueEvidence, DetectedIssueMitigation
+from aidbox.hl7_fhir_r4_core.payment_reconciliation import \
+    PaymentReconciliation, PaymentReconciliationDetail, PaymentReconciliationProcessNote
+from aidbox.hl7_fhir_r4_core.risk_assessment import RiskAssessment, RiskAssessmentPrediction
+from aidbox.hl7_fhir_r4_core.molecular_sequence import \
+    MolecularSequence, MolecularSequenceQuality, MolecularSequenceQualityRoc, MolecularSequenceReferenceSeq, \
+    MolecularSequenceRepository, MolecularSequenceStructureVariant, MolecularSequenceStructureVariantInner, \
+    MolecularSequenceStructureVariantOuter, MolecularSequenceVariant
+from aidbox.hl7_fhir_r4_core.measure import \
+    Measure, MeasureGroup, MeasureGroupPopulation, MeasureGroupStratifier, MeasureGroupStratifierComponent, \
+    MeasureSupplementalData
+from aidbox.hl7_fhir_r4_core.test_report import \
+    TestReport, TestReportParticipant, TestReportSetup, TestReportSetupAction, TestReportSetupActionAssert, \
+    TestReportSetupActionOperation, TestReportTeardown, TestReportTeardownAction, TestReportTest, TestReportTestAction
+from aidbox.hl7_fhir_r4_core.observation import \
+    Observation, ObservationComponent, ObservationReferenceRange
 from aidbox.hl7_fhir_r4_core.medicinal_product_manufactured import MedicinalProductManufactured
-from aidbox.hl7_fhir_r4_core.coverage import Coverage
-from aidbox.hl7_fhir_r4_core.message_header import MessageHeader
+from aidbox.hl7_fhir_r4_core.coverage import \
+    Coverage, CoverageClass, CoverageCostToBeneficiary, CoverageCostToBeneficiaryException
+from aidbox.hl7_fhir_r4_core.message_header import \
+    MessageHeader, MessageHeaderDestination, MessageHeaderResponse, MessageHeaderSource
 from aidbox.hl7_fhir_r4_core.resource import Resource
 from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
-from aidbox.hl7_fhir_r4_core.nutrition_order import NutritionOrder
-from aidbox.hl7_fhir_r4_core.document_manifest import DocumentManifest
-from aidbox.hl7_fhir_r4_core.medicinal_product_authorization import MedicinalProductAuthorization
+from aidbox.hl7_fhir_r4_core.nutrition_order import \
+    NutritionOrder, NutritionOrderEnteralFormula, NutritionOrderEnteralFormulaAdministration, NutritionOrderOralDiet, \
+    NutritionOrderOralDietNutrient, NutritionOrderOralDietTexture, NutritionOrderSupplement
+from aidbox.hl7_fhir_r4_core.document_manifest import DocumentManifest, DocumentManifestRelated
+from aidbox.hl7_fhir_r4_core.medicinal_product_authorization import \
+    MedicinalProductAuthorization, MedicinalProductAuthorizationJurisdictionalAuthorization, MedicinalProductAuthorizationProcedure
 from aidbox.hl7_fhir_r4_core.research_definition import ResearchDefinition
-from aidbox.hl7_fhir_r4_core.device import Device
-from aidbox.hl7_fhir_r4_core.family_member_history import FamilyMemberHistory
-from aidbox.hl7_fhir_r4_core.care_team import CareTeam
-from aidbox.hl7_fhir_r4_core.search_parameter import SearchParameter
-from aidbox.hl7_fhir_r4_core.healthcare_service import HealthcareService
+from aidbox.hl7_fhir_r4_core.device import \
+    Device, DeviceDeviceName, DeviceProperty, DeviceSpecialization, DeviceUdiCarrier, DeviceVersion
+from aidbox.hl7_fhir_r4_core.family_member_history import \
+    FamilyMemberHistory, FamilyMemberHistoryCondition
+from aidbox.hl7_fhir_r4_core.care_team import CareTeam, CareTeamParticipant
+from aidbox.hl7_fhir_r4_core.search_parameter import SearchParameter, SearchParameterComponent
+from aidbox.hl7_fhir_r4_core.healthcare_service import \
+    HealthcareService, HealthcareServiceAvailableTime, HealthcareServiceEligibility, HealthcareServiceNotAvailable
 from aidbox.hl7_fhir_r4_core.service_request import ServiceRequest
-from aidbox.hl7_fhir_r4_core.vision_prescription import VisionPrescription
-from aidbox.hl7_fhir_r4_core.claim_response import ClaimResponse
-from aidbox.hl7_fhir_r4_core.code_system import CodeSystem
-from aidbox.hl7_fhir_r4_core.charge_item_definition import ChargeItemDefinition
-from aidbox.hl7_fhir_r4_core.medicinal_product import MedicinalProduct
-from aidbox.hl7_fhir_r4_core.capability_statement import CapabilityStatement
-from aidbox.hl7_fhir_r4_core.care_plan import CarePlan
-from aidbox.hl7_fhir_r4_core.observation_definition import ObservationDefinition
-from aidbox.hl7_fhir_r4_core.questionnaire_response import QuestionnaireResponse
-from aidbox.hl7_fhir_r4_core.medicinal_product_ingredient import MedicinalProductIngredient
-from aidbox.hl7_fhir_r4_core.naming_system import NamingSystem
-from aidbox.hl7_fhir_r4_core.medicinal_product_contraindication import MedicinalProductContraindication
-from aidbox.hl7_fhir_r4_core.patient import Patient
+from aidbox.hl7_fhir_r4_core.vision_prescription import \
+    VisionPrescription, VisionPrescriptionLensSpecification, VisionPrescriptionLensSpecificationPrism
+from aidbox.hl7_fhir_r4_core.claim_response import \
+    ClaimResponse, ClaimResponseAddItem, ClaimResponseAddItemDetail, ClaimResponseAddItemDetailSubDetail, \
+    ClaimResponseError, ClaimResponseInsurance, ClaimResponseItem, ClaimResponseItemAdjudication, ClaimResponseItemDetail, \
+    ClaimResponseItemDetailSubDetail, ClaimResponsePayment, ClaimResponseProcessNote, ClaimResponseTotal
+from aidbox.hl7_fhir_r4_core.code_system import \
+    CodeSystem, CodeSystemConcept, CodeSystemConceptDesignation, CodeSystemConceptProperty, CodeSystemFilter, \
+    CodeSystemProperty
+from aidbox.hl7_fhir_r4_core.charge_item_definition import \
+    ChargeItemDefinition, ChargeItemDefinitionApplicability, ChargeItemDefinitionPropertyGroup, ChargeItemDefinitionPropertyGroupPriceComponent
+from aidbox.hl7_fhir_r4_core.medicinal_product import \
+    MedicinalProduct, MedicinalProductManufacturingBusinessOperation, MedicinalProductName, MedicinalProductNameCountryLanguage, \
+    MedicinalProductNameNamePart, MedicinalProductSpecialDesignation
+from aidbox.hl7_fhir_r4_core.capability_statement import \
+    CapabilityStatement, CapabilityStatementDocument, CapabilityStatementImplementation, CapabilityStatementMessaging, \
+    CapabilityStatementMessagingEndpoint, CapabilityStatementMessagingSupportedMessage, CapabilityStatementRest, \
+    CapabilityStatementRestInteraction, CapabilityStatementRestResource, CapabilityStatementRestResourceInteraction, \
+    CapabilityStatementRestResourceOperation, CapabilityStatementRestResourceSearchParam, CapabilityStatementRestSecurity, \
+    CapabilityStatementSoftware
+from aidbox.hl7_fhir_r4_core.care_plan import CarePlan, CarePlanActivity, CarePlanActivityDetail
+from aidbox.hl7_fhir_r4_core.observation_definition import \
+    ObservationDefinition, ObservationDefinitionQualifiedInterval, ObservationDefinitionQuantitativeDetails
+from aidbox.hl7_fhir_r4_core.questionnaire_response import \
+    QuestionnaireResponse, QuestionnaireResponseItem, QuestionnaireResponseItemAnswer
+from aidbox.hl7_fhir_r4_core.medicinal_product_ingredient import \
+    MedicinalProductIngredient, MedicinalProductIngredientSpecifiedSubstance, MedicinalProductIngredientSpecifiedSubstanceStrength, \
+    MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength, MedicinalProductIngredientSubstance
+from aidbox.hl7_fhir_r4_core.naming_system import NamingSystem, NamingSystemUniqueId
+from aidbox.hl7_fhir_r4_core.medicinal_product_contraindication import \
+    MedicinalProductContraindication, MedicinalProductContraindicationOtherTherapy
+from aidbox.hl7_fhir_r4_core.patient import \
+    Patient, PatientCommunication, PatientContact, PatientLink
 from aidbox.hl7_fhir_r4_core.body_structure import BodyStructure
-from aidbox.hl7_fhir_r4_core.condition import Condition
-from aidbox.hl7_fhir_r4_core.research_element_definition import ResearchElementDefinition
+from aidbox.hl7_fhir_r4_core.condition import Condition, ConditionEvidence, ConditionStage
+from aidbox.hl7_fhir_r4_core.research_element_definition import \
+    ResearchElementDefinition, ResearchElementDefinitionCharacteristic
 from aidbox.hl7_fhir_r4_core.enrollment_request import EnrollmentRequest
-from aidbox.hl7_fhir_r4_core.medication_dispense import MedicationDispense
-from aidbox.hl7_fhir_r4_core.terminology_capabilities import TerminologyCapabilities
-from aidbox.hl7_fhir_r4_core.medication_administration import MedicationAdministration
-from aidbox.hl7_fhir_r4_core.task import Task
-from aidbox.hl7_fhir_r4_core.appointment import Appointment
-from aidbox.hl7_fhir_r4_core.value_set import ValueSet
-from aidbox.hl7_fhir_r4_core.medication import Medication
-from aidbox.hl7_fhir_r4_core.measure_report import MeasureReport
-from aidbox.hl7_fhir_r4_core.medicinal_product_packaged import MedicinalProductPackaged
-from aidbox.hl7_fhir_r4_core.specimen import Specimen
-from aidbox.hl7_fhir_r4_core.medicinal_product_interaction import MedicinalProductInteraction
+from aidbox.hl7_fhir_r4_core.medication_dispense import \
+    MedicationDispense, MedicationDispensePerformer, MedicationDispenseSubstitution
+from aidbox.hl7_fhir_r4_core.terminology_capabilities import \
+    TerminologyCapabilities, TerminologyCapabilitiesClosure, TerminologyCapabilitiesCodeSystem, TerminologyCapabilitiesCodeSystemVersion, \
+    TerminologyCapabilitiesCodeSystemVersionFilter, TerminologyCapabilitiesExpansion, TerminologyCapabilitiesExpansionParameter, \
+    TerminologyCapabilitiesImplementation, TerminologyCapabilitiesSoftware, TerminologyCapabilitiesTranslation, \
+    TerminologyCapabilitiesValidateCode
+from aidbox.hl7_fhir_r4_core.medication_administration import \
+    MedicationAdministration, MedicationAdministrationDosage, MedicationAdministrationPerformer
+from aidbox.hl7_fhir_r4_core.task import Task, TaskInput, TaskOutput, TaskRestriction
+from aidbox.hl7_fhir_r4_core.appointment import Appointment, AppointmentParticipant
+from aidbox.hl7_fhir_r4_core.value_set import \
+    ValueSet, ValueSetCompose, ValueSetComposeInclude, ValueSetComposeIncludeConcept, ValueSetComposeIncludeConceptDesignation, \
+    ValueSetComposeIncludeFilter, ValueSetExpansion, ValueSetExpansionContains, ValueSetExpansionParameter
+from aidbox.hl7_fhir_r4_core.medication import Medication, MedicationBatch, MedicationIngredient
+from aidbox.hl7_fhir_r4_core.measure_report import \
+    MeasureReport, MeasureReportGroup, MeasureReportGroupPopulation, MeasureReportGroupStratifier, MeasureReportGroupStratifierStratum, \
+    MeasureReportGroupStratifierStratumComponent, MeasureReportGroupStratifierStratumPopulation
+from aidbox.hl7_fhir_r4_core.medicinal_product_packaged import \
+    MedicinalProductPackaged, MedicinalProductPackagedBatchIdentifier, MedicinalProductPackagedPackageItem
+from aidbox.hl7_fhir_r4_core.specimen import \
+    Specimen, SpecimenCollection, SpecimenContainer, SpecimenProcessing
+from aidbox.hl7_fhir_r4_core.medicinal_product_interaction import \
+    MedicinalProductInteraction, MedicinalProductInteractionInteractant
 from aidbox.hl7_fhir_r4_core.device_use_statement import DeviceUseStatement
-from aidbox.hl7_fhir_r4_core.supply_delivery import SupplyDelivery
+from aidbox.hl7_fhir_r4_core.supply_delivery import SupplyDelivery, SupplyDeliverySuppliedItem
 from aidbox.hl7_fhir_r4_core.binary import Binary
-from aidbox.hl7_fhir_r4_core.account import Account
-from aidbox.hl7_fhir_r4_core.substance_protein import SubstanceProtein
+from aidbox.hl7_fhir_r4_core.account import Account, AccountCoverage, AccountGuarantor
+from aidbox.hl7_fhir_r4_core.substance_protein import SubstanceProtein, SubstanceProteinSubunit
 from aidbox.hl7_fhir_r4_core.medication_statement import MedicationStatement
-from aidbox.hl7_fhir_r4_core.adverse_event import AdverseEvent
-from aidbox.hl7_fhir_r4_core.consent import Consent
-from aidbox.hl7_fhir_r4_core.structure_definition import StructureDefinition
-from aidbox.hl7_fhir_r4_core.document_reference import DocumentReference
+from aidbox.hl7_fhir_r4_core.adverse_event import \
+    AdverseEvent, AdverseEventSuspectEntity, AdverseEventSuspectEntityCausality
+from aidbox.hl7_fhir_r4_core.consent import \
+    Consent, ConsentPolicy, ConsentProvision, ConsentProvisionActor, ConsentProvisionData, ConsentVerification
+from aidbox.hl7_fhir_r4_core.structure_definition import \
+    StructureDefinition, StructureDefinitionContext, StructureDefinitionDifferential, StructureDefinitionMapping, \
+    StructureDefinitionSnapshot
+from aidbox.hl7_fhir_r4_core.document_reference import \
+    DocumentReference, DocumentReferenceContent, DocumentReferenceContext, DocumentReferenceRelatesTo
 from aidbox.hl7_fhir_r4_core.evidence import Evidence
 from aidbox.hl7_fhir_r4_core.event_definition import EventDefinition
-from aidbox.hl7_fhir_r4_core.practitioner_role import PractitionerRole
-from aidbox.hl7_fhir_r4_core.medicinal_product_pharmaceutical import MedicinalProductPharmaceutical
-from aidbox.hl7_fhir_r4_core.organization import Organization
+from aidbox.hl7_fhir_r4_core.practitioner_role import \
+    PractitionerRole, PractitionerRoleAvailableTime, PractitionerRoleNotAvailable
+from aidbox.hl7_fhir_r4_core.medicinal_product_pharmaceutical import \
+    MedicinalProductPharmaceutical, MedicinalProductPharmaceuticalCharacteristics, MedicinalProductPharmaceuticalRouteOfAdministration, \
+    MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies, MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod
+from aidbox.hl7_fhir_r4_core.organization import Organization, OrganizationContact
 from aidbox.hl7_fhir_r4_core.payment_notice import PaymentNotice
-from aidbox.hl7_fhir_r4_core.verification_result import VerificationResult
-from aidbox.hl7_fhir_r4_core.allergy_intolerance import AllergyIntolerance
-from aidbox.hl7_fhir_r4_core.insurance_plan import InsurancePlan
-from aidbox.hl7_fhir_r4_core.claim import Claim
-from aidbox.hl7_fhir_r4_core.immunization import Immunization
-from aidbox.hl7_fhir_r4_core.audit_event import AuditEvent
-from aidbox.hl7_fhir_r4_core.invoice import Invoice
-from aidbox.hl7_fhir_r4_core.activity_definition import ActivityDefinition
-from aidbox.hl7_fhir_r4_core.substance_nucleic_acid import SubstanceNucleicAcid
+from aidbox.hl7_fhir_r4_core.verification_result import \
+    VerificationResult, VerificationResultAttestation, VerificationResultPrimarySource, VerificationResultValidator
+from aidbox.hl7_fhir_r4_core.allergy_intolerance import \
+    AllergyIntolerance, AllergyIntoleranceReaction
+from aidbox.hl7_fhir_r4_core.insurance_plan import \
+    InsurancePlan, InsurancePlanContact, InsurancePlanCoverage, InsurancePlanCoverageBenefit, InsurancePlanCoverageBenefitLimit, \
+    InsurancePlanPlan, InsurancePlanPlanGeneralCost, InsurancePlanPlanSpecificCost, InsurancePlanPlanSpecificCostBenefit, \
+    InsurancePlanPlanSpecificCostBenefitCost
+from aidbox.hl7_fhir_r4_core.claim import \
+    Claim, ClaimAccident, ClaimCareTeam, ClaimDiagnosis, ClaimInsurance, ClaimItem, ClaimItemDetail, ClaimItemDetailSubDetail, \
+    ClaimPayee, ClaimProcedure, ClaimRelated, ClaimSupportingInfo
+from aidbox.hl7_fhir_r4_core.immunization import \
+    Immunization, ImmunizationEducation, ImmunizationPerformer, ImmunizationProtocolApplied, ImmunizationReaction
+from aidbox.hl7_fhir_r4_core.audit_event import \
+    AuditEvent, AuditEventAgent, AuditEventAgentNetwork, AuditEventEntity, AuditEventEntityDetail, AuditEventSource
+from aidbox.hl7_fhir_r4_core.invoice import \
+    Invoice, InvoiceLineItem, InvoiceLineItemPriceComponent, InvoiceParticipant
+from aidbox.hl7_fhir_r4_core.activity_definition import \
+    ActivityDefinition, ActivityDefinitionDynamicValue, ActivityDefinitionParticipant
+from aidbox.hl7_fhir_r4_core.substance_nucleic_acid import \
+    SubstanceNucleicAcid, SubstanceNucleicAcidSubunit, SubstanceNucleicAcidSubunitLinkage, SubstanceNucleicAcidSubunitSugar
 from aidbox.hl7_fhir_r4_core.library import Library
-from aidbox.hl7_fhir_r4_core.risk_evidence_synthesis import RiskEvidenceSynthesis
-from aidbox.hl7_fhir_r4_core.medication_request import MedicationRequest
-from aidbox.hl7_fhir_r4_core.request_group import RequestGroup
-from aidbox.hl7_fhir_r4_core.linkage import Linkage
-from aidbox.hl7_fhir_r4_core.substance_polymer import SubstancePolymer
-from aidbox.hl7_fhir_r4_core.evidence_variable import EvidenceVariable
-from aidbox.hl7_fhir_r4_core.coverage_eligibility_request import CoverageEligibilityRequest
-from aidbox.hl7_fhir_r4_core.medicinal_product_indication import MedicinalProductIndication
-from aidbox.hl7_fhir_r4_core.test_script import TestScript
-from aidbox.hl7_fhir_r4_core.supply_request import SupplyRequest
+from aidbox.hl7_fhir_r4_core.risk_evidence_synthesis import \
+    RiskEvidenceSynthesis, RiskEvidenceSynthesisCertainty, RiskEvidenceSynthesisCertaintyCertaintySubcomponent, \
+    RiskEvidenceSynthesisRiskEstimate, RiskEvidenceSynthesisRiskEstimatePrecisionEstimate, RiskEvidenceSynthesisSampleSize
+from aidbox.hl7_fhir_r4_core.medication_request import \
+    MedicationRequest, MedicationRequestDispenseRequest, MedicationRequestDispenseRequestInitialFill, MedicationRequestSubstitution
+from aidbox.hl7_fhir_r4_core.request_group import \
+    RequestGroup, RequestGroupAction, RequestGroupActionCondition, RequestGroupActionRelatedAction
+from aidbox.hl7_fhir_r4_core.linkage import Linkage, LinkageItem
+from aidbox.hl7_fhir_r4_core.substance_polymer import \
+    SubstancePolymer, SubstancePolymerMonomerSet, SubstancePolymerMonomerSetStartingMaterial, SubstancePolymerRepeat, \
+    SubstancePolymerRepeatRepeatUnit, SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation, SubstancePolymerRepeatRepeatUnitStructuralRepresentation
+from aidbox.hl7_fhir_r4_core.evidence_variable import \
+    EvidenceVariable, EvidenceVariableCharacteristic
+from aidbox.hl7_fhir_r4_core.coverage_eligibility_request import \
+    CoverageEligibilityRequest, CoverageEligibilityRequestInsurance, CoverageEligibilityRequestItem, CoverageEligibilityRequestItemDiagnosis, \
+    CoverageEligibilityRequestSupportingInfo
+from aidbox.hl7_fhir_r4_core.medicinal_product_indication import \
+    MedicinalProductIndication, MedicinalProductIndicationOtherTherapy
+from aidbox.hl7_fhir_r4_core.test_script import \
+    TestScript, TestScriptDestination, TestScriptFixture, TestScriptMetadata, TestScriptMetadataCapability, \
+    TestScriptMetadataLink, TestScriptOrigin, TestScriptSetup, TestScriptSetupAction, TestScriptSetupActionAssert, \
+    TestScriptSetupActionOperation, TestScriptSetupActionOperationRequestHeader, TestScriptTeardown, TestScriptTeardownAction, \
+    TestScriptTest, TestScriptTestAction, TestScriptVariable
+from aidbox.hl7_fhir_r4_core.supply_request import SupplyRequest, SupplyRequestParameter
 from aidbox.hl7_fhir_r4_core.immunization_evaluation import ImmunizationEvaluation
 
 __all__ =[
     'Account',
+    'AccountCoverage',
+    'AccountGuarantor',
     'ActivityDefinition',
+    'ActivityDefinitionDynamicValue',
+    'ActivityDefinitionParticipant',
     'Address',
     'AdverseEvent',
+    'AdverseEventSuspectEntity',
+    'AdverseEventSuspectEntityCausality',
     'Age',
     'AllergyIntolerance',
+    'AllergyIntoleranceReaction',
     'Annotation',
     'Appointment',
+    'AppointmentParticipant',
     'AppointmentResponse',
     'Attachment',
     'AuditEvent',
+    'AuditEventAgent',
+    'AuditEventAgentNetwork',
+    'AuditEventEntity',
+    'AuditEventEntityDetail',
+    'AuditEventSource',
     'BackboneElement',
     'Basic',
     'Binary',
     'BiologicallyDerivedProduct',
+    'BiologicallyDerivedProductCollection',
+    'BiologicallyDerivedProductManipulation',
+    'BiologicallyDerivedProductProcessing',
+    'BiologicallyDerivedProductStorage',
     'BodyStructure',
     'Bundle',
+    'BundleEntry',
+    'BundleEntryRequest',
+    'BundleEntryResponse',
+    'BundleEntrySearch',
+    'BundleLink',
     'CapabilityStatement',
+    'CapabilityStatementDocument',
+    'CapabilityStatementImplementation',
+    'CapabilityStatementMessaging',
+    'CapabilityStatementMessagingEndpoint',
+    'CapabilityStatementMessagingSupportedMessage',
+    'CapabilityStatementRest',
+    'CapabilityStatementRestInteraction',
+    'CapabilityStatementRestResource',
+    'CapabilityStatementRestResourceInteraction',
+    'CapabilityStatementRestResourceOperation',
+    'CapabilityStatementRestResourceSearchParam',
+    'CapabilityStatementRestSecurity',
+    'CapabilityStatementSoftware',
     'CarePlan',
+    'CarePlanActivity',
+    'CarePlanActivityDetail',
     'CareTeam',
+    'CareTeamParticipant',
     'CatalogEntry',
+    'CatalogEntryRelatedEntry',
     'ChargeItem',
     'ChargeItemDefinition',
+    'ChargeItemDefinitionApplicability',
+    'ChargeItemDefinitionPropertyGroup',
+    'ChargeItemDefinitionPropertyGroupPriceComponent',
+    'ChargeItemPerformer',
     'Claim',
+    'ClaimAccident',
+    'ClaimCareTeam',
+    'ClaimDiagnosis',
+    'ClaimInsurance',
+    'ClaimItem',
+    'ClaimItemDetail',
+    'ClaimItemDetailSubDetail',
+    'ClaimPayee',
+    'ClaimProcedure',
+    'ClaimRelated',
     'ClaimResponse',
+    'ClaimResponseAddItem',
+    'ClaimResponseAddItemDetail',
+    'ClaimResponseAddItemDetailSubDetail',
+    'ClaimResponseError',
+    'ClaimResponseInsurance',
+    'ClaimResponseItem',
+    'ClaimResponseItemAdjudication',
+    'ClaimResponseItemDetail',
+    'ClaimResponseItemDetailSubDetail',
+    'ClaimResponsePayment',
+    'ClaimResponseProcessNote',
+    'ClaimResponseTotal',
+    'ClaimSupportingInfo',
     'ClinicalImpression',
+    'ClinicalImpressionFinding',
+    'ClinicalImpressionInvestigation',
     'CodeSystem',
+    'CodeSystemConcept',
+    'CodeSystemConceptDesignation',
+    'CodeSystemConceptProperty',
+    'CodeSystemFilter',
+    'CodeSystemProperty',
     'CodeableConcept',
     'Coding',
     'Communication',
+    'CommunicationPayload',
     'CommunicationRequest',
+    'CommunicationRequestPayload',
     'CompartmentDefinition',
+    'CompartmentDefinitionResource',
     'Composition',
+    'CompositionAttester',
+    'CompositionEvent',
+    'CompositionRelatesTo',
+    'CompositionSection',
     'ConceptMap',
+    'ConceptMapGroup',
+    'ConceptMapGroupElement',
+    'ConceptMapGroupElementTarget',
+    'ConceptMapGroupElementTargetDependsOn',
+    'ConceptMapGroupUnmapped',
     'Condition',
+    'ConditionEvidence',
+    'ConditionStage',
     'Consent',
+    'ConsentPolicy',
+    'ConsentProvision',
+    'ConsentProvisionActor',
+    'ConsentProvisionData',
+    'ConsentVerification',
     'ContactDetail',
     'ContactPoint',
     'Contract',
+    'ContractContentDefinition',
+    'ContractFriendly',
+    'ContractLegal',
+    'ContractRule',
+    'ContractSigner',
+    'ContractTerm',
+    'ContractTermAction',
+    'ContractTermActionSubject',
+    'ContractTermAsset',
+    'ContractTermAssetContext',
+    'ContractTermAssetValuedItem',
+    'ContractTermOffer',
+    'ContractTermOfferAnswer',
+    'ContractTermOfferParty',
+    'ContractTermSecurityLabel',
     'Contributor',
     'Count',
     'Coverage',
+    'CoverageClass',
+    'CoverageCostToBeneficiary',
+    'CoverageCostToBeneficiaryException',
     'CoverageEligibilityRequest',
+    'CoverageEligibilityRequestInsurance',
+    'CoverageEligibilityRequestItem',
+    'CoverageEligibilityRequestItemDiagnosis',
+    'CoverageEligibilityRequestSupportingInfo',
     'CoverageEligibilityResponse',
+    'CoverageEligibilityResponseError',
+    'CoverageEligibilityResponseInsurance',
+    'CoverageEligibilityResponseInsuranceItem',
+    'CoverageEligibilityResponseInsuranceItemBenefit',
     'DataRequirement',
     'DetectedIssue',
+    'DetectedIssueEvidence',
+    'DetectedIssueMitigation',
     'Device',
     'DeviceDefinition',
+    'DeviceDefinitionCapability',
+    'DeviceDefinitionDeviceName',
+    'DeviceDefinitionMaterial',
+    'DeviceDefinitionProperty',
+    'DeviceDefinitionSpecialization',
+    'DeviceDefinitionUdiDeviceIdentifier',
+    'DeviceDeviceName',
     'DeviceMetric',
+    'DeviceMetricCalibration',
+    'DeviceProperty',
     'DeviceRequest',
+    'DeviceRequestParameter',
+    'DeviceSpecialization',
+    'DeviceUdiCarrier',
     'DeviceUseStatement',
+    'DeviceVersion',
     'DiagnosticReport',
+    'DiagnosticReportMedia',
     'Distance',
     'DocumentManifest',
+    'DocumentManifestRelated',
     'DocumentReference',
+    'DocumentReferenceContent',
+    'DocumentReferenceContext',
+    'DocumentReferenceRelatesTo',
     'DomainResource',
     'DomainResourceFamily',
     'Dosage',
     'Duration',
     'EffectEvidenceSynthesis',
+    'EffectEvidenceSynthesisCertainty',
+    'EffectEvidenceSynthesisCertaintyCertaintySubcomponent',
+    'EffectEvidenceSynthesisEffectEstimate',
+    'EffectEvidenceSynthesisEffectEstimatePrecisionEstimate',
+    'EffectEvidenceSynthesisResultsByExposure',
+    'EffectEvidenceSynthesisSampleSize',
     'Element',
     'ElementDefinition',
     'Encounter',
+    'EncounterClassHistory',
+    'EncounterDiagnosis',
+    'EncounterHospitalization',
+    'EncounterLocation',
+    'EncounterParticipant',
+    'EncounterStatusHistory',
     'Endpoint',
     'EnrollmentRequest',
     'EnrollmentResponse',
     'EpisodeOfCare',
+    'EpisodeOfCareDiagnosis',
+    'EpisodeOfCareStatusHistory',
     'EventDefinition',
     'Evidence',
     'EvidenceVariable',
+    'EvidenceVariableCharacteristic',
     'ExampleScenario',
+    'ExampleScenarioActor',
+    'ExampleScenarioInstance',
+    'ExampleScenarioInstanceContainedInstance',
+    'ExampleScenarioInstanceVersion',
+    'ExampleScenarioProcess',
+    'ExampleScenarioProcessStep',
+    'ExampleScenarioProcessStepAlternative',
+    'ExampleScenarioProcessStepOperation',
     'ExplanationOfBenefit',
+    'ExplanationOfBenefitAccident',
+    'ExplanationOfBenefitAddItem',
+    'ExplanationOfBenefitAddItemDetail',
+    'ExplanationOfBenefitAddItemDetailSubDetail',
+    'ExplanationOfBenefitBenefitBalance',
+    'ExplanationOfBenefitBenefitBalanceFinancial',
+    'ExplanationOfBenefitCareTeam',
+    'ExplanationOfBenefitDiagnosis',
+    'ExplanationOfBenefitInsurance',
+    'ExplanationOfBenefitItem',
+    'ExplanationOfBenefitItemAdjudication',
+    'ExplanationOfBenefitItemDetail',
+    'ExplanationOfBenefitItemDetailSubDetail',
+    'ExplanationOfBenefitPayee',
+    'ExplanationOfBenefitPayment',
+    'ExplanationOfBenefitProcedure',
+    'ExplanationOfBenefitProcessNote',
+    'ExplanationOfBenefitRelated',
+    'ExplanationOfBenefitSupportingInfo',
+    'ExplanationOfBenefitTotal',
     'Expression',
     'Extension',
     'FamilyMemberHistory',
+    'FamilyMemberHistoryCondition',
     'Flag',
     'Goal',
+    'GoalTarget',
     'GraphDefinition',
+    'GraphDefinitionLink',
+    'GraphDefinitionLinkTarget',
+    'GraphDefinitionLinkTargetCompartment',
     'Group',
+    'GroupCharacteristic',
+    'GroupMember',
     'GuidanceResponse',
     'HealthcareService',
+    'HealthcareServiceAvailableTime',
+    'HealthcareServiceEligibility',
+    'HealthcareServiceNotAvailable',
     'HumanName',
     'Identifier',
     'ImagingStudy',
+    'ImagingStudySeries',
+    'ImagingStudySeriesInstance',
+    'ImagingStudySeriesPerformer',
     'Immunization',
+    'ImmunizationEducation',
     'ImmunizationEvaluation',
+    'ImmunizationPerformer',
+    'ImmunizationProtocolApplied',
+    'ImmunizationReaction',
     'ImmunizationRecommendation',
+    'ImmunizationRecommendationRecommendation',
+    'ImmunizationRecommendationRecommendationDateCriterion',
     'ImplementationGuide',
+    'ImplementationGuideDefinition',
+    'ImplementationGuideDefinitionGrouping',
+    'ImplementationGuideDefinitionPage',
+    'ImplementationGuideDefinitionParameter',
+    'ImplementationGuideDefinitionResource',
+    'ImplementationGuideDefinitionTemplate',
+    'ImplementationGuideDependsOn',
+    'ImplementationGuideGlobal',
+    'ImplementationGuideManifest',
+    'ImplementationGuideManifestPage',
+    'ImplementationGuideManifestResource',
     'InsurancePlan',
+    'InsurancePlanContact',
+    'InsurancePlanCoverage',
+    'InsurancePlanCoverageBenefit',
+    'InsurancePlanCoverageBenefitLimit',
+    'InsurancePlanPlan',
+    'InsurancePlanPlanGeneralCost',
+    'InsurancePlanPlanSpecificCost',
+    'InsurancePlanPlanSpecificCostBenefit',
+    'InsurancePlanPlanSpecificCostBenefitCost',
     'Invoice',
+    'InvoiceLineItem',
+    'InvoiceLineItemPriceComponent',
+    'InvoiceParticipant',
     'Library',
     'Linkage',
+    'LinkageItem',
     'List',
+    'ListEntry',
     'Location',
+    'LocationHoursOfOperation',
+    'LocationPosition',
     'MarketingStatus',
     'Measure',
+    'MeasureGroup',
+    'MeasureGroupPopulation',
+    'MeasureGroupStratifier',
+    'MeasureGroupStratifierComponent',
     'MeasureReport',
+    'MeasureReportGroup',
+    'MeasureReportGroupPopulation',
+    'MeasureReportGroupStratifier',
+    'MeasureReportGroupStratifierStratum',
+    'MeasureReportGroupStratifierStratumComponent',
+    'MeasureReportGroupStratifierStratumPopulation',
+    'MeasureSupplementalData',
     'Media',
     'Medication',
     'MedicationAdministration',
+    'MedicationAdministrationDosage',
+    'MedicationAdministrationPerformer',
+    'MedicationBatch',
     'MedicationDispense',
+    'MedicationDispensePerformer',
+    'MedicationDispenseSubstitution',
+    'MedicationIngredient',
     'MedicationKnowledge',
+    'MedicationKnowledgeAdministrationGuidelines',
+    'MedicationKnowledgeAdministrationGuidelinesDosage',
+    'MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics',
+    'MedicationKnowledgeCost',
+    'MedicationKnowledgeDrugCharacteristic',
+    'MedicationKnowledgeIngredient',
+    'MedicationKnowledgeKinetics',
+    'MedicationKnowledgeMedicineClassification',
+    'MedicationKnowledgeMonitoringProgram',
+    'MedicationKnowledgeMonograph',
+    'MedicationKnowledgePackaging',
+    'MedicationKnowledgeRegulatory',
+    'MedicationKnowledgeRegulatoryMaxDispense',
+    'MedicationKnowledgeRegulatorySchedule',
+    'MedicationKnowledgeRegulatorySubstitution',
+    'MedicationKnowledgeRelatedMedicationKnowledge',
     'MedicationRequest',
+    'MedicationRequestDispenseRequest',
+    'MedicationRequestDispenseRequestInitialFill',
+    'MedicationRequestSubstitution',
     'MedicationStatement',
     'MedicinalProduct',
     'MedicinalProductAuthorization',
+    'MedicinalProductAuthorizationJurisdictionalAuthorization',
+    'MedicinalProductAuthorizationProcedure',
     'MedicinalProductContraindication',
+    'MedicinalProductContraindicationOtherTherapy',
     'MedicinalProductIndication',
+    'MedicinalProductIndicationOtherTherapy',
     'MedicinalProductIngredient',
+    'MedicinalProductIngredientSpecifiedSubstance',
+    'MedicinalProductIngredientSpecifiedSubstanceStrength',
+    'MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength',
+    'MedicinalProductIngredientSubstance',
     'MedicinalProductInteraction',
+    'MedicinalProductInteractionInteractant',
     'MedicinalProductManufactured',
+    'MedicinalProductManufacturingBusinessOperation',
+    'MedicinalProductName',
+    'MedicinalProductNameCountryLanguage',
+    'MedicinalProductNameNamePart',
     'MedicinalProductPackaged',
+    'MedicinalProductPackagedBatchIdentifier',
+    'MedicinalProductPackagedPackageItem',
     'MedicinalProductPharmaceutical',
+    'MedicinalProductPharmaceuticalCharacteristics',
+    'MedicinalProductPharmaceuticalRouteOfAdministration',
+    'MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies',
+    'MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod',
+    'MedicinalProductSpecialDesignation',
     'MedicinalProductUndesirableEffect',
     'MessageDefinition',
+    'MessageDefinitionAllowedResponse',
+    'MessageDefinitionFocus',
     'MessageHeader',
+    'MessageHeaderDestination',
+    'MessageHeaderResponse',
+    'MessageHeaderSource',
     'Meta',
     'MolecularSequence',
+    'MolecularSequenceQuality',
+    'MolecularSequenceQualityRoc',
+    'MolecularSequenceReferenceSeq',
+    'MolecularSequenceRepository',
+    'MolecularSequenceStructureVariant',
+    'MolecularSequenceStructureVariantInner',
+    'MolecularSequenceStructureVariantOuter',
+    'MolecularSequenceVariant',
     'Money',
     'NamingSystem',
+    'NamingSystemUniqueId',
     'Narrative',
     'NutritionOrder',
+    'NutritionOrderEnteralFormula',
+    'NutritionOrderEnteralFormulaAdministration',
+    'NutritionOrderOralDiet',
+    'NutritionOrderOralDietNutrient',
+    'NutritionOrderOralDietTexture',
+    'NutritionOrderSupplement',
     'Observation',
+    'ObservationComponent',
     'ObservationDefinition',
+    'ObservationDefinitionQualifiedInterval',
+    'ObservationDefinitionQuantitativeDetails',
+    'ObservationReferenceRange',
     'OperationDefinition',
+    'OperationDefinitionOverload',
+    'OperationDefinitionParameter',
+    'OperationDefinitionParameterBinding',
+    'OperationDefinitionParameterReferencedFrom',
     'OperationOutcome',
+    'OperationOutcomeIssue',
     'Organization',
     'OrganizationAffiliation',
+    'OrganizationContact',
     'ParameterDefinition',
     'Parameters',
+    'ParametersParameter',
     'Patient',
+    'PatientCommunication',
+    'PatientContact',
+    'PatientLink',
     'PaymentNotice',
     'PaymentReconciliation',
+    'PaymentReconciliationDetail',
+    'PaymentReconciliationProcessNote',
     'Period',
     'Person',
+    'PersonLink',
     'PlanDefinition',
+    'PlanDefinitionAction',
+    'PlanDefinitionActionCondition',
+    'PlanDefinitionActionDynamicValue',
+    'PlanDefinitionActionParticipant',
+    'PlanDefinitionActionRelatedAction',
+    'PlanDefinitionGoal',
+    'PlanDefinitionGoalTarget',
     'Population',
     'Practitioner',
+    'PractitionerQualification',
     'PractitionerRole',
+    'PractitionerRoleAvailableTime',
+    'PractitionerRoleNotAvailable',
     'Procedure',
+    'ProcedureFocalDevice',
+    'ProcedurePerformer',
     'ProdCharacteristic',
     'ProductShelfLife',
     'Provenance',
+    'ProvenanceAgent',
+    'ProvenanceEntity',
     'Quantity',
     'Questionnaire',
+    'QuestionnaireItem',
+    'QuestionnaireItemAnswerOption',
+    'QuestionnaireItemEnableWhen',
+    'QuestionnaireItemInitial',
     'QuestionnaireResponse',
+    'QuestionnaireResponseItem',
+    'QuestionnaireResponseItemAnswer',
     'Range',
     'Ratio',
     'Reference',
     'RelatedArtifact',
     'RelatedPerson',
+    'RelatedPersonCommunication',
     'RequestGroup',
+    'RequestGroupAction',
+    'RequestGroupActionCondition',
+    'RequestGroupActionRelatedAction',
     'ResearchDefinition',
     'ResearchElementDefinition',
+    'ResearchElementDefinitionCharacteristic',
     'ResearchStudy',
+    'ResearchStudyArm',
+    'ResearchStudyObjective',
     'ResearchSubject',
     'Resource',
     'ResourceFamily',
     'RiskAssessment',
+    'RiskAssessmentPrediction',
     'RiskEvidenceSynthesis',
+    'RiskEvidenceSynthesisCertainty',
+    'RiskEvidenceSynthesisCertaintyCertaintySubcomponent',
+    'RiskEvidenceSynthesisRiskEstimate',
+    'RiskEvidenceSynthesisRiskEstimatePrecisionEstimate',
+    'RiskEvidenceSynthesisSampleSize',
     'SampledData',
     'Schedule',
     'SearchParameter',
+    'SearchParameterComponent',
     'ServiceRequest',
     'Signature',
     'Slot',
     'Specimen',
+    'SpecimenCollection',
+    'SpecimenContainer',
     'SpecimenDefinition',
+    'SpecimenDefinitionTypeTested',
+    'SpecimenDefinitionTypeTestedContainer',
+    'SpecimenDefinitionTypeTestedContainerAdditive',
+    'SpecimenDefinitionTypeTestedHandling',
+    'SpecimenProcessing',
     'StructureDefinition',
+    'StructureDefinitionContext',
+    'StructureDefinitionDifferential',
+    'StructureDefinitionMapping',
+    'StructureDefinitionSnapshot',
     'StructureMap',
+    'StructureMapGroup',
+    'StructureMapGroupInput',
+    'StructureMapGroupRule',
+    'StructureMapGroupRuleDependent',
+    'StructureMapGroupRuleSource',
+    'StructureMapGroupRuleTarget',
+    'StructureMapGroupRuleTargetParameter',
+    'StructureMapStructure',
     'Subscription',
+    'SubscriptionChannel',
     'Substance',
     'SubstanceAmount',
+    'SubstanceIngredient',
+    'SubstanceInstance',
     'SubstanceNucleicAcid',
+    'SubstanceNucleicAcidSubunit',
+    'SubstanceNucleicAcidSubunitLinkage',
+    'SubstanceNucleicAcidSubunitSugar',
     'SubstancePolymer',
+    'SubstancePolymerMonomerSet',
+    'SubstancePolymerMonomerSetStartingMaterial',
+    'SubstancePolymerRepeat',
+    'SubstancePolymerRepeatRepeatUnit',
+    'SubstancePolymerRepeatRepeatUnitDegreeOfPolymerisation',
+    'SubstancePolymerRepeatRepeatUnitStructuralRepresentation',
     'SubstanceProtein',
+    'SubstanceProteinSubunit',
     'SubstanceReferenceInformation',
+    'SubstanceReferenceInformationClassification',
+    'SubstanceReferenceInformationGene',
+    'SubstanceReferenceInformationGeneElement',
+    'SubstanceReferenceInformationTarget',
     'SubstanceSourceMaterial',
+    'SubstanceSourceMaterialFractionDescription',
+    'SubstanceSourceMaterialOrganism',
+    'SubstanceSourceMaterialOrganismAuthor',
+    'SubstanceSourceMaterialOrganismHybrid',
+    'SubstanceSourceMaterialOrganismOrganismGeneral',
+    'SubstanceSourceMaterialPartDescription',
     'SubstanceSpecification',
+    'SubstanceSpecificationCode',
+    'SubstanceSpecificationMoiety',
+    'SubstanceSpecificationName',
+    'SubstanceSpecificationNameOfficial',
+    'SubstanceSpecificationProperty',
+    'SubstanceSpecificationRelationship',
+    'SubstanceSpecificationStructure',
+    'SubstanceSpecificationStructureIsotope',
+    'SubstanceSpecificationStructureIsotopeMolecularWeight',
+    'SubstanceSpecificationStructureRepresentation',
     'SupplyDelivery',
+    'SupplyDeliverySuppliedItem',
     'SupplyRequest',
+    'SupplyRequestParameter',
     'Task',
+    'TaskInput',
+    'TaskOutput',
+    'TaskRestriction',
     'TerminologyCapabilities',
+    'TerminologyCapabilitiesClosure',
+    'TerminologyCapabilitiesCodeSystem',
+    'TerminologyCapabilitiesCodeSystemVersion',
+    'TerminologyCapabilitiesCodeSystemVersionFilter',
+    'TerminologyCapabilitiesExpansion',
+    'TerminologyCapabilitiesExpansionParameter',
+    'TerminologyCapabilitiesImplementation',
+    'TerminologyCapabilitiesSoftware',
+    'TerminologyCapabilitiesTranslation',
+    'TerminologyCapabilitiesValidateCode',
     'TestReport',
+    'TestReportParticipant',
+    'TestReportSetup',
+    'TestReportSetupAction',
+    'TestReportSetupActionAssert',
+    'TestReportSetupActionOperation',
+    'TestReportTeardown',
+    'TestReportTeardownAction',
+    'TestReportTest',
+    'TestReportTestAction',
     'TestScript',
+    'TestScriptDestination',
+    'TestScriptFixture',
+    'TestScriptMetadata',
+    'TestScriptMetadataCapability',
+    'TestScriptMetadataLink',
+    'TestScriptOrigin',
+    'TestScriptSetup',
+    'TestScriptSetupAction',
+    'TestScriptSetupActionAssert',
+    'TestScriptSetupActionOperation',
+    'TestScriptSetupActionOperationRequestHeader',
+    'TestScriptTeardown',
+    'TestScriptTeardownAction',
+    'TestScriptTest',
+    'TestScriptTestAction',
+    'TestScriptVariable',
     'Timing',
     'TriggerDefinition',
     'UsageContext',
     'ValueSet',
+    'ValueSetCompose',
+    'ValueSetComposeInclude',
+    'ValueSetComposeIncludeConcept',
+    'ValueSetComposeIncludeConceptDesignation',
+    'ValueSetComposeIncludeFilter',
+    'ValueSetExpansion',
+    'ValueSetExpansionContains',
+    'ValueSetExpansionParameter',
     'VerificationResult',
+    'VerificationResultAttestation',
+    'VerificationResultPrimarySource',
+    'VerificationResultValidator',
     'VisionPrescription',
+    'VisionPrescriptionLensSpecification',
+    'VisionPrescriptionLensSpecificationPrism',
 ]

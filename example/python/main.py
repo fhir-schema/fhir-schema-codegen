@@ -1,4 +1,13 @@
-from aidbox.hl7_fhir_r4_core import Patient, HumanName, Identifier
+from aidbox.hl7_fhir_r4_core import (
+    Patient,
+    HumanName,
+    Identifier,
+    ObservationComponent,
+    Observation,
+    Quantity,
+    CodeableConcept,
+    Reference,
+)
 
 from aidbox.client import Client, Auth, AuthCredentials
 from pprint import pprint
@@ -55,6 +64,35 @@ else:
         error_happens = True
     assert error_happens
 
+# TODO: add subject.reference
+
+observation = Observation(
+    code=CodeableConcept(coding=[{"system": "http://loinc.org", "code": "85354-9"}]),
+    status="final",
+    effective_date_time="2025-07-08",
+    subject=Reference(reference="Patient/pt1"),
+    component=[
+        ObservationComponent(
+            code=CodeableConcept(
+                coding=[{"system": "http://loinc.org", "code": "8480-6"}]
+            ),
+            value_quantity=Quantity(
+                value=120,
+                unit="mmHg",
+                system="http://unitsofmeasure.org",
+                code="mm[Hg]",
+            ),
+        ),
+        ObservationComponent(
+            code=CodeableConcept(
+                coding=[{"system": "http://loinc.org", "code": "8462-4"}]
+            ),
+            value_quantity=Quantity(
+                value=80, unit="mmHg", system="http://unitsofmeasure.org", code="mm[Hg]"
+            ),
+        ),
+    ],
+)
 
 # Patient(
 #     name=[HumanName(family="Doe")],
