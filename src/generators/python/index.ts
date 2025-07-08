@@ -397,10 +397,14 @@ export class PythonGenerator extends Generator {
 
             const allResourceNames: string[] = [];
             for (const resource of resources) {
-                const name = snakeCase(resource.identifier.name);
-                const moduleName = `${fullPyPackageName}.${name}`;
-                this.pyImportFrom(moduleName, resource.identifier.name);
-                const names: string[] = [resource.identifier.name];
+                const moduleName = `${fullPyPackageName}.${snakeCase(resource.identifier.name)}`;
+                const importNames = [resource.identifier.name];
+                for (const nested of resource.nested ?? []) {
+                    const nestedName = this.deriveNestedSchemaName(nested.identifier.url, true);
+                    importNames.push(nestedName);
+                }
+                this.pyImportFrom(moduleName, ...importNames);
+                const names: string[] = [...importNames];
                 if (
                     resource.identifier.kind === 'resource' &&
                     this.childrenOf(resource.identifier).length > 0
