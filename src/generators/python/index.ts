@@ -502,8 +502,22 @@ export class PythonGenerator extends Generator {
                         const pyPackageName = [this.rootPackage, snakeCase(packageName)].join('.');
                         for (const resource of resources) {
                             const name = resource.identifier.name;
-                            this.pyImportFrom(`${pyPackageName}.${snakeCase(name)}`, name);
+                            const importNames = [name];
                             pydanticModels.push(name);
+
+                            for (const nested of resource.nested ?? []) {
+                                const nestedName = this.deriveNestedSchemaName(
+                                    nested.identifier.url,
+                                    true,
+                                );
+                                importNames.push(nestedName);
+                                pydanticModels.push(nestedName);
+                            }
+
+                            this.pyImportFrom(
+                                `${pyPackageName}.${snakeCase(name)}`,
+                                ...importNames,
+                            );
 
                             if (this.childrenOf(resource.identifier).length > 0) {
                                 const familyName = `${resource.identifier.name}Family`;
