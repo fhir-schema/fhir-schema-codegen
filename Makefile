@@ -1,6 +1,8 @@
 .PHONY: all format lint lint-fix test format-check release
 
 AIDBOX_LICENSE ?=
+TYPE_SCHEMA ?=
+ADDITIONAL_FLAGS =
 
 all: format lint-fix test build
 
@@ -25,12 +27,17 @@ lint-fix-unsafe:
 test:
 	npm run test
 
+ifdef TYPE_SCHEMA
+generate-examples: ADDITIONAL_FLAGS = --type-schema-exec 'java -jar $(TYPE_SCHEMA)'
+endif
 generate-examples: build
-	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk
+	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
+		$(ADDITIONAL_FLAGS)
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
-        --fhir-schema example/custom_resources/TutorNotification.fs.json \
+		--fhir-schema example/custom_resources/TutorNotification.fs.json \
 		--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
-		--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
+		--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
+		$(ADDITIONAL_FLAGS)
 
 ###########################################################
 # SDK Test Env

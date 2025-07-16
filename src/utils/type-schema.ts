@@ -70,7 +70,10 @@ export async function executeTypeSchema(
     const binaryPath = customExecCommand || (await ensureBinaryExists(version));
 
     const typeSchemaVersion = await getTypeSchemaVersion(binaryPath);
-    logger.info(`Use type-schema version ${typeSchemaVersion}`);
+    logger.info(
+        `Use type-schema version ${typeSchemaVersion} ` +
+            (customExecCommand !== undefined ? `(custom command: '${customExecCommand}')` : ''),
+    );
 
     if (!customExecCommand && typeSchemaVersion !== version && typeSchemaVersion !== 'unknown') {
         logger.warn(
