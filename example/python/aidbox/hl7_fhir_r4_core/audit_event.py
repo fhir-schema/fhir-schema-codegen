@@ -21,7 +21,7 @@ class AuditEventAgent(BackboneElement):
     network: AuditEventAgentNetwork | None = Field(None, alias="network", serialization_alias="network")
     policy: PyList[str] | None = Field(None, alias="policy", serialization_alias="policy")
     purpose_of_use: PyList[CodeableConcept] | None = Field(None, alias="purposeOfUse", serialization_alias="purposeOfUse")
-    requestor: bool | None = Field(None, alias="requestor", serialization_alias="requestor")
+    requestor: bool = Field(alias="requestor", serialization_alias="requestor")
     role: PyList[CodeableConcept] | None = Field(None, alias="role", serialization_alias="role")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     who: Reference | None = Field(None, alias="who", serialization_alias="who")
@@ -48,14 +48,14 @@ class AuditEventEntity(BackboneElement):
 class AuditEventEntityDetail(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: str | None = Field(None, alias="type", serialization_alias="type")
+    type: str = Field(alias="type", serialization_alias="type")
     value_base64binary: str | None = Field(None, alias="valueBase64Binary", serialization_alias="valueBase64Binary")
     value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
 
 class AuditEventSource(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    observer: Reference | None = Field(None, alias="observer", serialization_alias="observer")
+    observer: Reference = Field(alias="observer", serialization_alias="observer")
     site: str | None = Field(None, alias="site", serialization_alias="site")
     type: PyList[Coding] | None = Field(None, alias="type", serialization_alias="type")
 
@@ -72,16 +72,16 @@ class AuditEvent(DomainResource):
     )
     
     action: Literal["C", "R", "U", "D", "E"] | None = Field(None, alias="action", serialization_alias="action")
-    agent: PyList[AuditEventAgent] | None = Field(None, alias="agent", serialization_alias="agent")
+    agent: PyList[AuditEventAgent] = Field(alias="agent", serialization_alias="agent")
     entity: PyList[AuditEventEntity] | None = Field(None, alias="entity", serialization_alias="entity")
     outcome: Literal["0", "4", "8", "12"] | None = Field(None, alias="outcome", serialization_alias="outcome")
     outcome_desc: str | None = Field(None, alias="outcomeDesc", serialization_alias="outcomeDesc")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     purpose_of_event: PyList[CodeableConcept] | None = Field(None, alias="purposeOfEvent", serialization_alias="purposeOfEvent")
-    recorded: str | None = Field(None, alias="recorded", serialization_alias="recorded")
-    source: AuditEventSource | None = Field(None, alias="source", serialization_alias="source")
+    recorded: str = Field(alias="recorded", serialization_alias="recorded")
+    source: AuditEventSource = Field(alias="source", serialization_alias="source")
     subtype: PyList[Coding] | None = Field(None, alias="subtype", serialization_alias="subtype")
-    type: Coding | None = Field(None, alias="type", serialization_alias="type")
+    type: Coding = Field(alias="type", serialization_alias="type")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

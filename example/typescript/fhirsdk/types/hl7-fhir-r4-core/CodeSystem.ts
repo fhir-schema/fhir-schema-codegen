@@ -12,7 +12,7 @@ import { UsageContext } from './UsageContext';
 
 
 export interface CodeSystemConcept extends BackboneElement {
-    code?: string;
+    code: string;
     concept?: CodeSystemConcept[];
     definition?: string;
     designation?: CodeSystemConceptDesignation[];
@@ -23,11 +23,11 @@ export interface CodeSystemConcept extends BackboneElement {
 export interface CodeSystemConceptDesignation extends BackboneElement {
     language?: string;
     use?: Coding;
-    value?: string;
+    value: string;
 }
 
 export interface CodeSystemConceptProperty extends BackboneElement {
-    code?: string;
+    code: string;
     valueBoolean?: boolean;
     valueCode?: string;
     valueCoding?: Coding;
@@ -38,16 +38,16 @@ export interface CodeSystemConceptProperty extends BackboneElement {
 }
 
 export interface CodeSystemFilter extends BackboneElement {
-    code?: string;
+    code: string;
     description?: string;
-    operator?: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists'[];
-    value?: string;
+    operator: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists'[];
+    value: string;
 }
 
 export interface CodeSystemProperty extends BackboneElement {
-    code?: string;
+    code: string;
     description?: string;
-    type?: 'code' | 'Coding' | 'string' | 'integer' | 'boolean' | 'dateTime' | 'decimal';
+    type: 'code' | 'Coding' | 'string' | 'integer' | 'boolean' | 'dateTime' | 'decimal';
     uri?: string;
 }
 
@@ -58,7 +58,7 @@ export interface CodeSystem extends DomainResource {
     _compositional?: Element;
     concept?: CodeSystemConcept[];
     contact?: ContactDetail[];
-    content?: 'not-present' | 'example' | 'fragment' | 'complete' | 'supplement';
+    content: 'not-present' | 'example' | 'fragment' | 'complete' | 'supplement';
     _content?: Element;
     copyright?: string;
     _copyright?: Element;
@@ -82,7 +82,7 @@ export interface CodeSystem extends DomainResource {
     _publisher?: Element;
     purpose?: string;
     _purpose?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     supplements?: string;
     _supplements?: Element;

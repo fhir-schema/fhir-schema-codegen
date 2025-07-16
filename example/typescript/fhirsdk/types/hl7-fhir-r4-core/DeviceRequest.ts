@@ -36,7 +36,7 @@ export interface DeviceRequest extends DomainResource {
     instantiatesUri?: string[];
     _instantiatesUri?: Element;
     insurance?: Reference<'ClaimResponse' | 'Coverage'>[];
-    intent?: 'proposal' | 'plan' | 'directive' | 'order' | 'option';
+    intent: 'proposal' | 'plan' | 'directive' | 'order' | 'option' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order';
     _intent?: Element;
     note?: Annotation[];
     occurrenceDateTime?: string;
@@ -55,7 +55,7 @@ export interface DeviceRequest extends DomainResource {
     requester?: Reference<'Device' | 'Organization' | 'Practitioner' | 'PractitionerRole'>;
     status?: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
-    subject?: Reference<'Device' | 'Group' | 'Location' | 'Patient'>;
+    subject: Reference<'Device' | 'Group' | 'Location' | 'Patient'>;
     supportingInfo?: Reference<'Resource'>[];
 }
 

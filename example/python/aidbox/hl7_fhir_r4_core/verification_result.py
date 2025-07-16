@@ -40,7 +40,7 @@ class VerificationResultValidator(BackboneElement):
     
     attestation_signature: Signature | None = Field(None, alias="attestationSignature", serialization_alias="attestationSignature")
     identity_certificate: str | None = Field(None, alias="identityCertificate", serialization_alias="identityCertificate")
-    organization: Reference | None = Field(None, alias="organization", serialization_alias="organization")
+    organization: Reference = Field(alias="organization", serialization_alias="organization")
 
 
 class VerificationResult(DomainResource):
@@ -61,7 +61,7 @@ class VerificationResult(DomainResource):
     need: CodeableConcept | None = Field(None, alias="need", serialization_alias="need")
     next_scheduled: str | None = Field(None, alias="nextScheduled", serialization_alias="nextScheduled")
     primary_source: PyList[VerificationResultPrimarySource] | None = Field(None, alias="primarySource", serialization_alias="primarySource")
-    status: Literal["attested", "validated", "in-process", "req-revalid", "val-fail", "reval-fail"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["attested", "validated", "in-process", "req-revalid", "val-fail", "reval-fail"] = Field(alias="status", serialization_alias="status")
     status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
     target: PyList[Reference] | None = Field(None, alias="target", serialization_alias="target")
     target_location: PyList[str] | None = Field(None, alias="targetLocation", serialization_alias="targetLocation")

@@ -11,7 +11,7 @@ import { Reference } from './Reference';
 
 export interface AdverseEventSuspectEntity extends BackboneElement {
     causality?: AdverseEventSuspectEntityCausality[];
-    instance?: Reference<'Device' | 'Immunization' | 'Medication' | 'MedicationAdministration' | 'MedicationStatement' | 'Procedure' | 'Substance'>;
+    instance: Reference<'Device' | 'Immunization' | 'Medication' | 'MedicationAdministration' | 'MedicationStatement' | 'Procedure' | 'Substance'>;
 }
 
 export interface AdverseEventSuspectEntityCausality extends BackboneElement {
@@ -22,7 +22,7 @@ export interface AdverseEventSuspectEntityCausality extends BackboneElement {
 }
 
 export interface AdverseEvent extends DomainResource {
-    actuality?: 'actual' | 'potential';
+    actuality: 'actual' | 'potential';
     _actuality?: Element;
     category?: CodeableConcept[];
     contributor?: Reference<'Device' | 'Practitioner' | 'PractitionerRole'>[];
@@ -43,7 +43,7 @@ export interface AdverseEvent extends DomainResource {
     seriousness?: CodeableConcept;
     severity?: CodeableConcept;
     study?: Reference<'ResearchStudy'>[];
-    subject?: Reference<'Group' | 'Patient' | 'Practitioner' | 'RelatedPerson'>;
+    subject: Reference<'Group' | 'Patient' | 'Practitioner' | 'RelatedPerson'>;
     subjectMedicalHistory?: Reference<'AllergyIntolerance' | 'Condition' | 'DocumentReference' | 'FamilyMemberHistory' | 'Immunization' | 'Media' | 'Observation' | 'Procedure'>[];
     suspectEntity?: AdverseEventSuspectEntity[];
 }

@@ -37,8 +37,8 @@ export interface MeasureReportGroupStratifierStratum extends BackboneElement {
 }
 
 export interface MeasureReportGroupStratifierStratumComponent extends BackboneElement {
-    code?: CodeableConcept;
-    value?: CodeableConcept;
+    code: CodeableConcept;
+    value: CodeableConcept;
 }
 
 export interface MeasureReportGroupStratifierStratumPopulation extends BackboneElement {
@@ -54,14 +54,14 @@ export interface MeasureReport extends DomainResource {
     group?: MeasureReportGroup[];
     identifier?: Identifier[];
     improvementNotation?: CodeableConcept;
-    measure?: string;
+    measure: string;
     _measure?: Element;
-    period?: Period;
+    period: Period;
     reporter?: Reference<'Location' | 'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    status?: 'complete' | 'pending' | 'error';
+    status: 'complete' | 'pending' | 'error';
     _status?: Element;
     subject?: Reference<'Device' | 'Group' | 'Location' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    type?: 'individual' | 'subject-list' | 'summary' | 'data-collection';
+    type: 'individual' | 'subject-list' | 'summary' | 'data-collection';
     _type?: Element;
 }
 

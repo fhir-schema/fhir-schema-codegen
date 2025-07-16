@@ -45,7 +45,7 @@ export interface ResearchElementDefinition extends DomainResource {
     approvalDate?: string;
     _approvalDate?: Element;
     author?: ContactDetail[];
-    characteristic?: ResearchElementDefinitionCharacteristic[];
+    characteristic: ResearchElementDefinitionCharacteristic[];
     comment?: string[];
     _comment?: Element;
     contact?: ContactDetail[];
@@ -76,7 +76,7 @@ export interface ResearchElementDefinition extends DomainResource {
     reviewer?: ContactDetail[];
     shortTitle?: string;
     _shortTitle?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subjectCodeableConcept?: CodeableConcept;
     subjectReference?: Reference<'Group'>;
@@ -85,7 +85,7 @@ export interface ResearchElementDefinition extends DomainResource {
     title?: string;
     _title?: Element;
     topic?: CodeableConcept[];
-    type?: 'population' | 'exposure' | 'outcome';
+    type: 'population' | 'exposure' | 'outcome';
     _type?: Element;
     url?: string;
     _url?: Element;

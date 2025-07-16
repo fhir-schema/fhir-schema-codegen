@@ -19,7 +19,7 @@ export interface ImmunizationEducation extends BackboneElement {
 }
 
 export interface ImmunizationPerformer extends BackboneElement {
-    actor?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    actor: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     function?: CodeableConcept;
 }
 
@@ -58,7 +58,7 @@ export interface Immunization extends DomainResource {
     _occurrenceDateTime?: Element;
     occurrenceString?: string;
     _occurrenceString?: Element;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     performer?: ImmunizationPerformer[];
     primarySource?: boolean;
     _primarySource?: Element;
@@ -72,10 +72,10 @@ export interface Immunization extends DomainResource {
     reportOrigin?: CodeableConcept;
     route?: CodeableConcept;
     site?: CodeableConcept;
-    status?: 'completed' | 'entered-in-error' | 'not-done' | 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'completed' | 'entered-in-error' | 'not-done';
     _status?: Element;
     statusReason?: CodeableConcept;
     subpotentReason?: CodeableConcept[];
-    vaccineCode?: CodeableConcept;
+    vaccineCode: CodeableConcept;
 }
 

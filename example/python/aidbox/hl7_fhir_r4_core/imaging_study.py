@@ -20,26 +20,26 @@ class ImagingStudySeries(BackboneElement):
     endpoint: PyList[Reference] | None = Field(None, alias="endpoint", serialization_alias="endpoint")
     instance: PyList[ImagingStudySeriesInstance] | None = Field(None, alias="instance", serialization_alias="instance")
     laterality: Coding | None = Field(None, alias="laterality", serialization_alias="laterality")
-    modality: Coding | None = Field(None, alias="modality", serialization_alias="modality")
+    modality: Coding = Field(alias="modality", serialization_alias="modality")
     number: int | None = Field(None, alias="number", serialization_alias="number")
     number_of_instances: int | None = Field(None, alias="numberOfInstances", serialization_alias="numberOfInstances")
     performer: PyList[ImagingStudySeriesPerformer] | None = Field(None, alias="performer", serialization_alias="performer")
     specimen: PyList[Reference] | None = Field(None, alias="specimen", serialization_alias="specimen")
     started: str | None = Field(None, alias="started", serialization_alias="started")
-    uid: str | None = Field(None, alias="uid", serialization_alias="uid")
+    uid: str = Field(alias="uid", serialization_alias="uid")
 
 class ImagingStudySeriesInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     number: int | None = Field(None, alias="number", serialization_alias="number")
-    sop_class: Coding | None = Field(None, alias="sopClass", serialization_alias="sopClass")
+    sop_class: Coding = Field(alias="sopClass", serialization_alias="sopClass")
     title: str | None = Field(None, alias="title", serialization_alias="title")
-    uid: str | None = Field(None, alias="uid", serialization_alias="uid")
+    uid: str = Field(alias="uid", serialization_alias="uid")
 
 class ImagingStudySeriesPerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
@@ -72,8 +72,8 @@ class ImagingStudy(DomainResource):
     referrer: Reference | None = Field(None, alias="referrer", serialization_alias="referrer")
     series: PyList[ImagingStudySeries] | None = Field(None, alias="series", serialization_alias="series")
     started: str | None = Field(None, alias="started", serialization_alias="started")
-    status: Literal["registered", "available", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    status: Literal["registered", "available", "cancelled", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

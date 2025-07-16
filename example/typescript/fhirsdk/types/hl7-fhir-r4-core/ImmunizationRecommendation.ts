@@ -16,7 +16,7 @@ export interface ImmunizationRecommendationRecommendation extends BackboneElemen
     doseNumberPositiveInt?: number;
     doseNumberString?: string;
     forecastReason?: CodeableConcept[];
-    forecastStatus?: CodeableConcept;
+    forecastStatus: CodeableConcept;
     series?: string;
     seriesDosesPositiveInt?: number;
     seriesDosesString?: string;
@@ -27,16 +27,16 @@ export interface ImmunizationRecommendationRecommendation extends BackboneElemen
 }
 
 export interface ImmunizationRecommendationRecommendationDateCriterion extends BackboneElement {
-    code?: CodeableConcept;
-    value?: string;
+    code: CodeableConcept;
+    value: string;
 }
 
 export interface ImmunizationRecommendation extends DomainResource {
     authority?: Reference<'Organization'>;
-    date?: string;
+    date: string;
     _date?: Element;
     identifier?: Identifier[];
-    patient?: Reference<'Patient'>;
-    recommendation?: ImmunizationRecommendationRecommendation[];
+    patient: Reference<'Patient'>;
+    recommendation: ImmunizationRecommendationRecommendation[];
 }
 

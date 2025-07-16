@@ -10,12 +10,12 @@ import { Reference } from './Reference';
 
 export interface TestReportParticipant extends BackboneElement {
     display?: string;
-    type?: 'test-engine' | 'client' | 'server';
-    uri?: string;
+    type: 'test-engine' | 'client' | 'server';
+    uri: string;
 }
 
 export interface TestReportSetup extends BackboneElement {
-    action?: TestReportSetupAction[];
+    action: TestReportSetupAction[];
 }
 
 export interface TestReportSetupAction extends BackboneElement {
@@ -26,25 +26,25 @@ export interface TestReportSetupAction extends BackboneElement {
 export interface TestReportSetupActionAssert extends BackboneElement {
     detail?: string;
     message?: string;
-    result?: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
+    result: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
 }
 
 export interface TestReportSetupActionOperation extends BackboneElement {
     detail?: string;
     message?: string;
-    result?: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
+    result: 'pass' | 'skip' | 'fail' | 'warning' | 'error';
 }
 
 export interface TestReportTeardown extends BackboneElement {
-    action?: TestReportTeardownAction[];
+    action: TestReportTeardownAction[];
 }
 
 export interface TestReportTeardownAction extends BackboneElement {
-    operation?: TestReportSetupActionOperation;
+    operation: TestReportSetupActionOperation;
 }
 
 export interface TestReportTest extends BackboneElement {
-    action?: TestReportTestAction[];
+    action: TestReportTestAction[];
     description?: string;
     name?: string;
 }
@@ -61,17 +61,17 @@ export interface TestReport extends DomainResource {
     name?: string;
     _name?: Element;
     participant?: TestReportParticipant[];
-    result?: 'pass' | 'fail' | 'pending';
+    result: 'pass' | 'fail' | 'pending';
     _result?: Element;
     score?: number;
     _score?: Element;
     setup?: TestReportSetup;
-    status?: 'completed' | 'in-progress' | 'waiting' | 'stopped' | 'entered-in-error';
+    status: 'completed' | 'in-progress' | 'waiting' | 'stopped' | 'entered-in-error';
     _status?: Element;
     teardown?: TestReportTeardown;
     test?: TestReportTest[];
     tester?: string;
     _tester?: Element;
-    testScript?: Reference<'TestScript'>;
+    testScript: Reference<'TestScript'>;
 }
 

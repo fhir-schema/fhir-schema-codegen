@@ -16,7 +16,7 @@ class CoverageEligibilityRequestInsurance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     business_arrangement: str | None = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    coverage: Reference = Field(alias="coverage", serialization_alias="coverage")
     focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
 
 class CoverageEligibilityRequestItem(BackboneElement):
@@ -43,8 +43,8 @@ class CoverageEligibilityRequestSupportingInfo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     applies_to_all: bool | None = Field(None, alias="appliesToAll", serialization_alias="appliesToAll")
-    information: Reference | None = Field(None, alias="information", serialization_alias="information")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    information: Reference = Field(alias="information", serialization_alias="information")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
 
 
 class CoverageEligibilityRequest(DomainResource):
@@ -58,20 +58,20 @@ class CoverageEligibilityRequest(DomainResource):
         pattern='CoverageEligibilityRequest'
     )
     
-    created: str | None = Field(None, alias="created", serialization_alias="created")
+    created: str = Field(alias="created", serialization_alias="created")
     enterer: Reference | None = Field(None, alias="enterer", serialization_alias="enterer")
     facility: Reference | None = Field(None, alias="facility", serialization_alias="facility")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     insurance: PyList[CoverageEligibilityRequestInsurance] | None = Field(None, alias="insurance", serialization_alias="insurance")
-    insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
+    insurer: Reference = Field(alias="insurer", serialization_alias="insurer")
     item: PyList[CoverageEligibilityRequestItem] | None = Field(None, alias="item", serialization_alias="item")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     priority: CodeableConcept | None = Field(None, alias="priority", serialization_alias="priority")
     provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
-    purpose: PyList[Literal["auth-requirements", "benefits", "discovery", "validation"]] | None = Field(None, alias="purpose", serialization_alias="purpose")
+    purpose: PyList[Literal["auth-requirements", "benefits", "discovery", "validation"]] = Field(alias="purpose", serialization_alias="purpose")
     serviced_date: str | None = Field(None, alias="servicedDate", serialization_alias="servicedDate")
     serviced_period: Period | None = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     supporting_info: PyList[CoverageEligibilityRequestSupportingInfo] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
     
     def to_json(self, indent: int | None = None) -> str:

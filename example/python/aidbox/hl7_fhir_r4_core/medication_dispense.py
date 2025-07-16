@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicationDispensePerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 class MedicationDispenseSubstitution(BackboneElement):
@@ -24,7 +24,7 @@ class MedicationDispenseSubstitution(BackboneElement):
     reason: PyList[CodeableConcept] | None = Field(None, alias="reason", serialization_alias="reason")
     responsible_party: PyList[Reference] | None = Field(None, alias="responsibleParty", serialization_alias="responsibleParty")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    was_substituted: bool | None = Field(None, alias="wasSubstituted", serialization_alias="wasSubstituted")
+    was_substituted: bool = Field(alias="wasSubstituted", serialization_alias="wasSubstituted")
 
 
 class MedicationDispense(DomainResource):
@@ -55,7 +55,7 @@ class MedicationDispense(DomainResource):
     performer: PyList[MedicationDispensePerformer] | None = Field(None, alias="performer", serialization_alias="performer")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     receiver: PyList[Reference] | None = Field(None, alias="receiver", serialization_alias="receiver")
-    status: Literal["preparation", "in-progress", "cancelled", "on-hold", "completed", "entered-in-error", "stopped", "declined", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["preparation", "in-progress", "cancelled", "on-hold", "completed", "entered-in-error", "stopped", "declined", "unknown"] = Field(alias="status", serialization_alias="status")
     status_reason_codeable_concept: CodeableConcept | None = Field(None, alias="statusReasonCodeableConcept", serialization_alias="statusReasonCodeableConcept")
     status_reason_reference: Reference | None = Field(None, alias="statusReasonReference", serialization_alias="statusReasonReference")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")

@@ -42,7 +42,7 @@ export interface Communication extends DomainResource {
     sender?: Reference<'Device' | 'HealthcareService' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     sent?: string;
     _sent?: Element;
-    status?: 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
     statusReason?: CodeableConcept;
     subject?: Reference<'Group' | 'Patient'>;

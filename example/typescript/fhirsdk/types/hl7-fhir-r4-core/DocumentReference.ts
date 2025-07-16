@@ -13,7 +13,7 @@ import { Reference } from './Reference';
 
 
 export interface DocumentReferenceContent extends BackboneElement {
-    attachment?: Attachment;
+    attachment: Attachment;
     format?: Coding;
 }
 
@@ -28,15 +28,15 @@ export interface DocumentReferenceContext extends BackboneElement {
 }
 
 export interface DocumentReferenceRelatesTo extends BackboneElement {
-    code?: 'replaces' | 'transforms' | 'signs' | 'appends';
-    target?: Reference<'DocumentReference'>;
+    code: 'replaces' | 'transforms' | 'signs' | 'appends';
+    target: Reference<'DocumentReference'>;
 }
 
 export interface DocumentReference extends DomainResource {
     authenticator?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     author?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
     category?: CodeableConcept[];
-    content?: DocumentReferenceContent[];
+    content: DocumentReferenceContent[];
     context?: DocumentReferenceContext;
     custodian?: Reference<'Organization'>;
     date?: string;
@@ -49,7 +49,7 @@ export interface DocumentReference extends DomainResource {
     masterIdentifier?: Identifier;
     relatesTo?: DocumentReferenceRelatesTo[];
     securityLabel?: CodeableConcept[];
-    status?: 'current' | 'superseded' | 'entered-in-error';
+    status: 'current' | 'superseded' | 'entered-in-error';
     _status?: Element;
     subject?: Reference<'Device' | 'Group' | 'Patient' | 'Practitioner'>;
     type?: CodeableConcept;

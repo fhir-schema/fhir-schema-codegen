@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ClaimAccident(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    date: str | None = Field(None, alias="date", serialization_alias="date")
+    date: str = Field(alias="date", serialization_alias="date")
     location_address: Address | None = Field(None, alias="locationAddress", serialization_alias="locationAddress")
     location_reference: Reference | None = Field(None, alias="locationReference", serialization_alias="locationReference")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
@@ -23,11 +23,11 @@ class ClaimAccident(BackboneElement):
 class ClaimCareTeam(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    provider: Reference = Field(alias="provider", serialization_alias="provider")
     qualification: CodeableConcept | None = Field(None, alias="qualification", serialization_alias="qualification")
     responsible: bool | None = Field(None, alias="responsible", serialization_alias="responsible")
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
 
 class ClaimDiagnosis(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -36,7 +36,7 @@ class ClaimDiagnosis(BackboneElement):
     diagnosis_reference: Reference | None = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
     on_admission: CodeableConcept | None = Field(None, alias="onAdmission", serialization_alias="onAdmission")
     package_code: CodeableConcept | None = Field(None, alias="packageCode", serialization_alias="packageCode")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
 
 class ClaimInsurance(BackboneElement):
@@ -44,11 +44,11 @@ class ClaimInsurance(BackboneElement):
     
     business_arrangement: str | None = Field(None, alias="businessArrangement", serialization_alias="businessArrangement")
     claim_response: Reference | None = Field(None, alias="claimResponse", serialization_alias="claimResponse")
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
-    focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
+    coverage: Reference = Field(alias="coverage", serialization_alias="coverage")
+    focal: bool = Field(alias="focal", serialization_alias="focal")
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
     pre_auth_ref: PyList[str] | None = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
 
 class ClaimItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -67,11 +67,11 @@ class ClaimItem(BackboneElement):
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     procedure_sequence: PyList[PositiveInt] | None = Field(None, alias="procedureSequence", serialization_alias="procedureSequence")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     revenue: CodeableConcept | None = Field(None, alias="revenue", serialization_alias="revenue")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     serviced_date: str | None = Field(None, alias="servicedDate", serialization_alias="servicedDate")
     serviced_period: Period | None = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
     sub_site: PyList[CodeableConcept] | None = Field(None, alias="subSite", serialization_alias="subSite")
@@ -85,11 +85,11 @@ class ClaimItemDetail(BackboneElement):
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     revenue: CodeableConcept | None = Field(None, alias="revenue", serialization_alias="revenue")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     sub_detail: PyList[ClaimItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
     udi: PyList[Reference] | None = Field(None, alias="udi", serialization_alias="udi")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
@@ -101,11 +101,11 @@ class ClaimItemDetailSubDetail(BackboneElement):
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     revenue: CodeableConcept | None = Field(None, alias="revenue", serialization_alias="revenue")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     udi: PyList[Reference] | None = Field(None, alias="udi", serialization_alias="udi")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
@@ -113,7 +113,7 @@ class ClaimPayee(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     party: Reference | None = Field(None, alias="party", serialization_alias="party")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class ClaimProcedure(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -121,7 +121,7 @@ class ClaimProcedure(BackboneElement):
     date: str | None = Field(None, alias="date", serialization_alias="date")
     procedure_codeable_concept: CodeableConcept | None = Field(None, alias="procedureCodeableConcept", serialization_alias="procedureCodeableConcept")
     procedure_reference: Reference | None = Field(None, alias="procedureReference", serialization_alias="procedureReference")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
     udi: PyList[Reference] | None = Field(None, alias="udi", serialization_alias="udi")
 
@@ -135,10 +135,10 @@ class ClaimRelated(BackboneElement):
 class ClaimSupportingInfo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    category: CodeableConcept = Field(alias="category", serialization_alias="category")
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     timing_date: str | None = Field(None, alias="timingDate", serialization_alias="timingDate")
     timing_period: Period | None = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
     value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
@@ -162,30 +162,30 @@ class Claim(DomainResource):
     accident: ClaimAccident | None = Field(None, alias="accident", serialization_alias="accident")
     billable_period: Period | None = Field(None, alias="billablePeriod", serialization_alias="billablePeriod")
     care_team: PyList[ClaimCareTeam] | None = Field(None, alias="careTeam", serialization_alias="careTeam")
-    created: str | None = Field(None, alias="created", serialization_alias="created")
+    created: str = Field(alias="created", serialization_alias="created")
     diagnosis: PyList[ClaimDiagnosis] | None = Field(None, alias="diagnosis", serialization_alias="diagnosis")
     enterer: Reference | None = Field(None, alias="enterer", serialization_alias="enterer")
     facility: Reference | None = Field(None, alias="facility", serialization_alias="facility")
     funds_reserve: CodeableConcept | None = Field(None, alias="fundsReserve", serialization_alias="fundsReserve")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    insurance: PyList[ClaimInsurance] | None = Field(None, alias="insurance", serialization_alias="insurance")
+    insurance: PyList[ClaimInsurance] = Field(alias="insurance", serialization_alias="insurance")
     insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
     item: PyList[ClaimItem] | None = Field(None, alias="item", serialization_alias="item")
     original_prescription: Reference | None = Field(None, alias="originalPrescription", serialization_alias="originalPrescription")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     payee: ClaimPayee | None = Field(None, alias="payee", serialization_alias="payee")
     prescription: Reference | None = Field(None, alias="prescription", serialization_alias="prescription")
-    priority: CodeableConcept | None = Field(None, alias="priority", serialization_alias="priority")
+    priority: CodeableConcept = Field(alias="priority", serialization_alias="priority")
     procedure: PyList[ClaimProcedure] | None = Field(None, alias="procedure", serialization_alias="procedure")
-    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    provider: Reference = Field(alias="provider", serialization_alias="provider")
     referral: Reference | None = Field(None, alias="referral", serialization_alias="referral")
     related: PyList[ClaimRelated] | None = Field(None, alias="related", serialization_alias="related")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     sub_type: CodeableConcept | None = Field(None, alias="subType", serialization_alias="subType")
     supporting_info: PyList[ClaimSupportingInfo] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
     total: Money | None = Field(None, alias="total", serialization_alias="total")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    use: Literal["claim", "preauthorization", "predetermination"] | None = Field(None, alias="use", serialization_alias="use")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
+    use: Literal["claim", "preauthorization", "predetermination"] = Field(alias="use", serialization_alias="use")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

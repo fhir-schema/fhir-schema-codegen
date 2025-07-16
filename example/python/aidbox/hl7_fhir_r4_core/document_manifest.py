@@ -30,7 +30,7 @@ class DocumentManifest(DomainResource):
     )
     
     author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
-    content: PyList[Reference] | None = Field(None, alias="content", serialization_alias="content")
+    content: PyList[Reference] = Field(alias="content", serialization_alias="content")
     created: str | None = Field(None, alias="created", serialization_alias="created")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
@@ -38,7 +38,7 @@ class DocumentManifest(DomainResource):
     recipient: PyList[Reference] | None = Field(None, alias="recipient", serialization_alias="recipient")
     related: PyList[DocumentManifestRelated] | None = Field(None, alias="related", serialization_alias="related")
     source: str | None = Field(None, alias="source", serialization_alias="source")
-    status: Literal["current", "superseded", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["current", "superseded", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     

@@ -38,7 +38,7 @@ import { UsageContext } from './UsageContext';
 
 
 export interface TaskInput extends BackboneElement {
-    type?: CodeableConcept;
+    type: CodeableConcept;
     valueAddress?: Address;
     valueAge?: Age;
     valueAnnotation?: Annotation;
@@ -92,7 +92,7 @@ export interface TaskInput extends BackboneElement {
 }
 
 export interface TaskOutput extends BackboneElement {
-    type?: CodeableConcept;
+    type: CodeableConcept;
     valueAddress?: Address;
     valueAge?: Age;
     valueAnnotation?: Annotation;
@@ -171,7 +171,7 @@ export interface Task extends DomainResource {
     instantiatesUri?: string;
     _instantiatesUri?: Element;
     insurance?: Reference<'ClaimResponse' | 'Coverage'>[];
-    intent?: 'unknown' | 'proposal' | 'plan' | 'order' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order' | 'option' | 'proposal' | 'plan' | 'directive' | 'order' | 'option';
+    intent: 'unknown' | 'proposal' | 'plan' | 'order' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order' | 'option';
     _intent?: Element;
     lastModified?: string;
     _lastModified?: Element;
@@ -188,7 +188,7 @@ export interface Task extends DomainResource {
     relevantHistory?: Reference<'Provenance'>[];
     requester?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     restriction?: TaskRestriction;
-    status?: 'draft' | 'requested' | 'received' | 'accepted' | 'rejected' | 'ready' | 'cancelled' | 'in-progress' | 'on-hold' | 'failed' | 'completed' | 'entered-in-error';
+    status: 'draft' | 'requested' | 'received' | 'accepted' | 'rejected' | 'ready' | 'cancelled' | 'in-progress' | 'on-hold' | 'failed' | 'completed' | 'entered-in-error';
     _status?: Element;
     statusReason?: CodeableConcept;
 }

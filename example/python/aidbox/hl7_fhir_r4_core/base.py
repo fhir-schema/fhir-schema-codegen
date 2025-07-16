@@ -40,9 +40,9 @@ class ProductShelfLife(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
-    period: Quantity | None = Field(None, alias="period", serialization_alias="period")
+    period: Quantity = Field(alias="period", serialization_alias="period")
     special_precautions_for_storage: PyList[CodeableConcept] | None = Field(None, alias="specialPrecautionsForStorage", serialization_alias="specialPrecautionsForStorage")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 
 class Duration(Quantity):
@@ -95,11 +95,11 @@ class SampledData(Element):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     data: str | None = Field(None, alias="data", serialization_alias="data")
-    dimensions: PositiveInt | None = Field(None, alias="dimensions", serialization_alias="dimensions")
+    dimensions: PositiveInt = Field(alias="dimensions", serialization_alias="dimensions")
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
     lower_limit: float | None = Field(None, alias="lowerLimit", serialization_alias="lowerLimit")
-    origin: Quantity | None = Field(None, alias="origin", serialization_alias="origin")
-    period: float | None = Field(None, alias="period", serialization_alias="period")
+    origin: Quantity = Field(alias="origin", serialization_alias="origin")
+    period: float = Field(alias="period", serialization_alias="period")
     upper_limit: float | None = Field(None, alias="upperLimit", serialization_alias="upperLimit")
 
 
@@ -122,7 +122,7 @@ class ProdCharacteristic(BackboneElement):
 class Extension(Element):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    url: str = Field(alias="url", serialization_alias="url")
     value_address: Address | None = Field(None, alias="valueAddress", serialization_alias="valueAddress")
     value_age: Age | None = Field(None, alias="valueAge", serialization_alias="valueAge")
     value_annotation: Annotation | None = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
@@ -196,8 +196,8 @@ class ParameterDefinition(Element):
     min: int | None = Field(None, alias="min", serialization_alias="min")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     profile: str | None = Field(None, alias="profile", serialization_alias="profile")
-    type: Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"] | None = Field(None, alias="type", serialization_alias="type")
-    use: Literal["in", "out"] | None = Field(None, alias="use", serialization_alias="use")
+    type: Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"] = Field(alias="type", serialization_alias="type")
+    use: Literal["in", "out"] = Field(alias="use", serialization_alias="use")
 
 
 class ContactDetail(Element):
@@ -244,32 +244,32 @@ class Reference(Element):
 class ElementDefinitionBase(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    max: str | None = Field(None, alias="max", serialization_alias="max")
-    min: int | None = Field(None, alias="min", serialization_alias="min")
-    path: str | None = Field(None, alias="path", serialization_alias="path")
+    max: str = Field(alias="max", serialization_alias="max")
+    min: int = Field(alias="min", serialization_alias="min")
+    path: str = Field(alias="path", serialization_alias="path")
 
 class ElementDefinitionBinding(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    strength: Literal["required", "extensible", "preferred", "example"] | None = Field(None, alias="strength", serialization_alias="strength")
+    strength: Literal["required", "extensible", "preferred", "example"] = Field(alias="strength", serialization_alias="strength")
     value_set: str | None = Field(None, alias="valueSet", serialization_alias="valueSet")
 
 class ElementDefinitionConstraint(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: str | None = Field(None, alias="expression", serialization_alias="expression")
-    human: str | None = Field(None, alias="human", serialization_alias="human")
-    key: str | None = Field(None, alias="key", serialization_alias="key")
+    human: str = Field(alias="human", serialization_alias="human")
+    key: str = Field(alias="key", serialization_alias="key")
     requirements: str | None = Field(None, alias="requirements", serialization_alias="requirements")
-    severity: Literal["error", "warning"] | None = Field(None, alias="severity", serialization_alias="severity")
+    severity: Literal["error", "warning"] = Field(alias="severity", serialization_alias="severity")
     source: str | None = Field(None, alias="source", serialization_alias="source")
     xpath: str | None = Field(None, alias="xpath", serialization_alias="xpath")
 
 class ElementDefinitionExample(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    label: str | None = Field(None, alias="label", serialization_alias="label")
+    label: str = Field(alias="label", serialization_alias="label")
     value_address: Address | None = Field(None, alias="valueAddress", serialization_alias="valueAddress")
     value_age: Age | None = Field(None, alias="valueAge", serialization_alias="valueAge")
     value_annotation: Annotation | None = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
@@ -325,9 +325,9 @@ class ElementDefinitionMapping(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
-    identity: str | None = Field(None, alias="identity", serialization_alias="identity")
+    identity: str = Field(alias="identity", serialization_alias="identity")
     language: str | None = Field(None, alias="language", serialization_alias="language")
-    map: str | None = Field(None, alias="map", serialization_alias="map")
+    map: str = Field(alias="map", serialization_alias="map")
 
 class ElementDefinitionSlicing(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -335,19 +335,19 @@ class ElementDefinitionSlicing(BackboneElement):
     description: str | None = Field(None, alias="description", serialization_alias="description")
     discriminator: PyList[ElementDefinitionSlicingDiscriminator] | None = Field(None, alias="discriminator", serialization_alias="discriminator")
     ordered: bool | None = Field(None, alias="ordered", serialization_alias="ordered")
-    rules: Literal["closed", "open", "openAtEnd"] | None = Field(None, alias="rules", serialization_alias="rules")
+    rules: Literal["closed", "open", "openAtEnd"] = Field(alias="rules", serialization_alias="rules")
 
 class ElementDefinitionSlicingDiscriminator(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    path: str | None = Field(None, alias="path", serialization_alias="path")
-    type: Literal["value", "exists", "pattern", "type", "profile"] | None = Field(None, alias="type", serialization_alias="type")
+    path: str = Field(alias="path", serialization_alias="path")
+    type: Literal["value", "exists", "pattern", "type", "profile"] = Field(alias="type", serialization_alias="type")
 
 class ElementDefinitionType(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    aggregation: PyList[Literal["contained", "referenced"]] | None = Field(None, alias="aggregation", serialization_alias="aggregation")
-    code: str | None = Field(None, alias="code", serialization_alias="code")
+    aggregation: PyList[Literal["contained", "referenced", "bundled"]] | None = Field(None, alias="aggregation", serialization_alias="aggregation")
+    code: str = Field(alias="code", serialization_alias="code")
     profile: PyList[str] | None = Field(None, alias="profile", serialization_alias="profile")
     target_profile: PyList[str] | None = Field(None, alias="targetProfile", serialization_alias="targetProfile")
     versioning: Literal["either", "independent", "specific"] | None = Field(None, alias="versioning", serialization_alias="versioning")
@@ -495,7 +495,7 @@ class ElementDefinition(BackboneElement):
     min_value_unsigned_int: int | None = Field(None, alias="minValueUnsignedInt", serialization_alias="minValueUnsignedInt")
     must_support: bool | None = Field(None, alias="mustSupport", serialization_alias="mustSupport")
     order_meaning: str | None = Field(None, alias="orderMeaning", serialization_alias="orderMeaning")
-    path: str | None = Field(None, alias="path", serialization_alias="path")
+    path: str = Field(alias="path", serialization_alias="path")
     pattern_address: Address | None = Field(None, alias="patternAddress", serialization_alias="patternAddress")
     pattern_age: Age | None = Field(None, alias="patternAge", serialization_alias="patternAge")
     pattern_annotation: Annotation | None = Field(None, alias="patternAnnotation", serialization_alias="patternAnnotation")
@@ -571,7 +571,7 @@ class HumanName(Element):
     prefix: PyList[str] | None = Field(None, alias="prefix", serialization_alias="prefix")
     suffix: PyList[str] | None = Field(None, alias="suffix", serialization_alias="suffix")
     text: str | None = Field(None, alias="text", serialization_alias="text")
-    use: Literal["usual", "official", "temp", "nickname", "anonymous", "old"] | None = Field(None, alias="use", serialization_alias="use")
+    use: Literal["usual", "official", "temp", "nickname", "anonymous", "old", "maiden"] | None = Field(None, alias="use", serialization_alias="use")
 
 
 class RelatedArtifact(Element):
@@ -582,7 +582,7 @@ class RelatedArtifact(Element):
     document: Attachment | None = Field(None, alias="document", serialization_alias="document")
     label: str | None = Field(None, alias="label", serialization_alias="label")
     resource: str | None = Field(None, alias="resource", serialization_alias="resource")
-    type: Literal["documentation", "justification", "citation", "predecessor", "successor", "derived-from", "depends-on", "composed-of"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["documentation", "justification", "citation", "predecessor", "successor", "derived-from", "depends-on", "composed-of"] = Field(alias="type", serialization_alias="type")
     url: str | None = Field(None, alias="url", serialization_alias="url")
 
 
@@ -591,7 +591,7 @@ class Expression(Element):
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
     expression: str | None = Field(None, alias="expression", serialization_alias="expression")
-    language: str | None = Field(None, alias="language", serialization_alias="language")
+    language: str = Field(alias="language", serialization_alias="language")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     reference: str | None = Field(None, alias="reference", serialization_alias="reference")
 
@@ -599,11 +599,11 @@ class Expression(Element):
 class MarketingStatus(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    country: CodeableConcept | None = Field(None, alias="country", serialization_alias="country")
-    date_range: Period | None = Field(None, alias="dateRange", serialization_alias="dateRange")
+    country: CodeableConcept = Field(alias="country", serialization_alias="country")
+    date_range: Period = Field(alias="dateRange", serialization_alias="dateRange")
     jurisdiction: CodeableConcept | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
     restore_date: str | None = Field(None, alias="restoreDate", serialization_alias="restoreDate")
-    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
+    status: CodeableConcept = Field(alias="status", serialization_alias="status")
 
 
 class Signature(Element):
@@ -613,9 +613,9 @@ class Signature(Element):
     on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
     sig_format: str | None = Field(None, alias="sigFormat", serialization_alias="sigFormat")
     target_format: str | None = Field(None, alias="targetFormat", serialization_alias="targetFormat")
-    type: PyList[Coding] | None = Field(None, alias="type", serialization_alias="type")
-    when: str | None = Field(None, alias="when", serialization_alias="when")
-    who: Reference | None = Field(None, alias="who", serialization_alias="who")
+    type: PyList[Coding] = Field(alias="type", serialization_alias="type")
+    when: str = Field(alias="when", serialization_alias="when")
+    who: Reference = Field(alias="who", serialization_alias="who")
 
 
 class SubstanceAmountReferenceRange(BackboneElement):
@@ -640,14 +640,14 @@ class Contributor(Element):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: Literal["author", "editor", "reviewer", "endorser"] | None = Field(None, alias="type", serialization_alias="type")
+    name: str = Field(alias="name", serialization_alias="name")
+    type: Literal["author", "editor", "reviewer", "endorser"] = Field(alias="type", serialization_alias="type")
 
 
 class UsageContext(Element):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Coding | None = Field(None, alias="code", serialization_alias="code")
+    code: Coding = Field(alias="code", serialization_alias="code")
     value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
     value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
     value_range: Range | None = Field(None, alias="valueRange", serialization_alias="valueRange")
@@ -686,7 +686,7 @@ class Annotation(Element):
     
     author_reference: Reference | None = Field(None, alias="authorReference", serialization_alias="authorReference")
     author_string: str | None = Field(None, alias="authorString", serialization_alias="authorString")
-    text: str | None = Field(None, alias="text", serialization_alias="text")
+    text: str = Field(alias="text", serialization_alias="text")
     time: str | None = Field(None, alias="time", serialization_alias="time")
 
 
@@ -706,8 +706,8 @@ class Attachment(Element):
 class Narrative(Element):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    div: str | None = Field(None, alias="div", serialization_alias="div")
-    status: Literal["generated", "extensions", "additional", "empty"] | None = Field(None, alias="status", serialization_alias="status")
+    div: str = Field(alias="div", serialization_alias="div")
+    status: Literal["generated", "extensions", "additional", "empty"] = Field(alias="status", serialization_alias="status")
 
 
 class TriggerDefinition(Element):
@@ -720,7 +720,7 @@ class TriggerDefinition(Element):
     timing_date_time: str | None = Field(None, alias="timingDateTime", serialization_alias="timingDateTime")
     timing_reference: Reference | None = Field(None, alias="timingReference", serialization_alias="timingReference")
     timing_timing: Timing | None = Field(None, alias="timingTiming", serialization_alias="timingTiming")
-    type: Literal["named-event", "periodic", "data-changed", "data-accessed", "data-access-ended"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["named-event", "periodic", "data-changed", "data-accessed", "data-access-ended", "data-added", "data-modified", "data-removed"] = Field(alias="type", serialization_alias="type")
 
 
 class Range(Element):
@@ -757,8 +757,8 @@ class DataRequirementDateFilter(BackboneElement):
 class DataRequirementSort(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    direction: Literal["ascending", "descending"] | None = Field(None, alias="direction", serialization_alias="direction")
-    path: str | None = Field(None, alias="path", serialization_alias="path")
+    direction: Literal["ascending", "descending"] = Field(alias="direction", serialization_alias="direction")
+    path: str = Field(alias="path", serialization_alias="path")
 
 
 class DataRequirement(Element):
@@ -772,7 +772,7 @@ class DataRequirement(Element):
     sort: PyList[DataRequirementSort] | None = Field(None, alias="sort", serialization_alias="sort")
     subject_codeable_concept: CodeableConcept | None = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
     subject_reference: Reference | None = Field(None, alias="subjectReference", serialization_alias="subjectReference")
-    type: Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["Address", "Age", "Annotation", "Attachment", "BackboneElement", "CodeableConcept", "Coding", "ContactDetail", "ContactPoint", "Contributor", "Count", "DataRequirement", "Distance", "Dosage", "Duration", "Element", "ElementDefinition", "Expression", "Extension", "HumanName", "Identifier", "MarketingStatus", "Meta", "Money", "MoneyQuantity", "Narrative", "ParameterDefinition", "Period", "Population", "ProdCharacteristic", "ProductShelfLife", "Quantity", "Range", "Ratio", "Reference", "RelatedArtifact", "SampledData", "Signature", "SimpleQuantity", "SubstanceAmount", "Timing", "TriggerDefinition", "UsageContext", "base64Binary", "boolean", "canonical", "code", "date", "dateTime", "decimal", "id", "instant", "integer", "markdown", "oid", "positiveInt", "string", "time", "unsignedInt", "uri", "url", "uuid", "xhtml", "Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription", "Type", "Any"] = Field(alias="type", serialization_alias="type")
 
 
 class Money(Element):
@@ -804,15 +804,15 @@ class TimingRepeat(BackboneElement):
     day_of_week: PyList[Literal["mon", "tue", "wed", "thu", "fri", "sat", "sun"]] | None = Field(None, alias="dayOfWeek", serialization_alias="dayOfWeek")
     duration: float | None = Field(None, alias="duration", serialization_alias="duration")
     duration_max: float | None = Field(None, alias="durationMax", serialization_alias="durationMax")
-    duration_unit: str | None = Field(None, alias="durationUnit", serialization_alias="durationUnit")
+    duration_unit: Literal["s", "min", "h", "d", "wk", "mo", "a"] | None = Field(None, alias="durationUnit", serialization_alias="durationUnit")
     frequency: PositiveInt | None = Field(None, alias="frequency", serialization_alias="frequency")
     frequency_max: PositiveInt | None = Field(None, alias="frequencyMax", serialization_alias="frequencyMax")
     offset: int | None = Field(None, alias="offset", serialization_alias="offset")
     period: float | None = Field(None, alias="period", serialization_alias="period")
     period_max: float | None = Field(None, alias="periodMax", serialization_alias="periodMax")
-    period_unit: str | None = Field(None, alias="periodUnit", serialization_alias="periodUnit")
+    period_unit: Literal["s", "min", "h", "d", "wk", "mo", "a"] | None = Field(None, alias="periodUnit", serialization_alias="periodUnit")
     time_of_day: PyList[str] | None = Field(None, alias="timeOfDay", serialization_alias="timeOfDay")
-    when: PyList[Literal["MORN", "MORN.early", "MORN.late", "NOON", "AFT", "AFT.early", "AFT.late", "EVE", "EVE.early", "EVE.late", "NIGHT", "PHS", "HS", "WAKE", "C", "CM", "CD", "CV", "AC", "ACM", "ACD", "ACV", "PC", "PCM", "PCD", "PCV", "AC", "ACD", "ACM", "ACV", "C", "HS", "IC", "ICD", "ICM", "ICV", "PC", "PCD", "PCM", "PCV", "WAKE"]] | None = Field(None, alias="when", serialization_alias="when")
+    when: PyList[Literal["MORN", "MORN.early", "MORN.late", "NOON", "AFT", "AFT.early", "AFT.late", "EVE", "EVE.early", "EVE.late", "NIGHT", "PHS", "HS", "WAKE", "C", "CM", "CD", "CV", "AC", "ACM", "ACD", "ACV", "PC", "PCM", "PCD", "PCV"]] | None = Field(None, alias="when", serialization_alias="when")
 
 
 class Timing(BackboneElement):

@@ -15,8 +15,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class GroupCharacteristic(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    exclude: bool | None = Field(None, alias="exclude", serialization_alias="exclude")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
+    exclude: bool = Field(alias="exclude", serialization_alias="exclude")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
     value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")
@@ -27,7 +27,7 @@ class GroupCharacteristic(BackboneElement):
 class GroupMember(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    entity: Reference | None = Field(None, alias="entity", serialization_alias="entity")
+    entity: Reference = Field(alias="entity", serialization_alias="entity")
     inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
 
@@ -44,7 +44,7 @@ class Group(DomainResource):
     )
     
     active: bool | None = Field(None, alias="active", serialization_alias="active")
-    actual: bool | None = Field(None, alias="actual", serialization_alias="actual")
+    actual: bool = Field(alias="actual", serialization_alias="actual")
     characteristic: PyList[GroupCharacteristic] | None = Field(None, alias="characteristic", serialization_alias="characteristic")
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
@@ -52,7 +52,7 @@ class Group(DomainResource):
     member: PyList[GroupMember] | None = Field(None, alias="member", serialization_alias="member")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     quantity: int | None = Field(None, alias="quantity", serialization_alias="quantity")
-    type: Literal["person", "animal", "practitioner", "device", "medication", "substance"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["person", "animal", "practitioner", "device", "medication", "substance"] = Field(alias="type", serialization_alias="type")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

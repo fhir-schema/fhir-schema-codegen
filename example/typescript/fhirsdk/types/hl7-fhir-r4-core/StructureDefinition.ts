@@ -13,27 +13,27 @@ import { UsageContext } from './UsageContext';
 
 
 export interface StructureDefinitionContext extends BackboneElement {
-    expression?: string;
-    type?: 'fhirpath' | 'element' | 'extension';
+    expression: string;
+    type: 'fhirpath' | 'element' | 'extension';
 }
 
 export interface StructureDefinitionDifferential extends BackboneElement {
-    element?: ElementDefinition[];
+    element: ElementDefinition[];
 }
 
 export interface StructureDefinitionMapping extends BackboneElement {
     comment?: string;
-    identity?: string;
+    identity: string;
     name?: string;
     uri?: string;
 }
 
 export interface StructureDefinitionSnapshot extends BackboneElement {
-    element?: ElementDefinition[];
+    element: ElementDefinition[];
 }
 
 export interface StructureDefinition extends DomainResource {
-    abstract?: boolean;
+    abstract: boolean;
     _abstract?: Element;
     baseDefinition?: string;
     _baseDefinition?: Element;
@@ -57,23 +57,23 @@ export interface StructureDefinition extends DomainResource {
     identifier?: Identifier[];
     jurisdiction?: CodeableConcept[];
     keyword?: Coding[];
-    kind?: 'primitive-type' | 'complex-type' | 'resource' | 'logical';
+    kind: 'primitive-type' | 'complex-type' | 'resource' | 'logical';
     _kind?: Element;
     mapping?: StructureDefinitionMapping[];
-    name?: string;
+    name: string;
     _name?: Element;
     publisher?: string;
     _publisher?: Element;
     purpose?: string;
     _purpose?: Element;
     snapshot?: StructureDefinitionSnapshot;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     title?: string;
     _title?: Element;
-    type?: string;
+    type: string;
     _type?: Element;
-    url?: string;
+    url: string;
     _url?: Element;
     useContext?: UsageContext[];
     version?: string;

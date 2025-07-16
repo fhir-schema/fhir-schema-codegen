@@ -15,18 +15,18 @@ import { Reference } from './Reference';
 
 
 export interface ClaimAccident extends BackboneElement {
-    date?: string;
+    date: string;
     locationAddress?: Address;
     locationReference?: Reference<'Location'>;
     type?: CodeableConcept;
 }
 
 export interface ClaimCareTeam extends BackboneElement {
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    provider: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     qualification?: CodeableConcept;
     responsible?: boolean;
     role?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
 }
 
 export interface ClaimDiagnosis extends BackboneElement {
@@ -34,18 +34,18 @@ export interface ClaimDiagnosis extends BackboneElement {
     diagnosisReference?: Reference<'Condition'>;
     onAdmission?: CodeableConcept;
     packageCode?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     type?: CodeableConcept[];
 }
 
 export interface ClaimInsurance extends BackboneElement {
     businessArrangement?: string;
     claimResponse?: Reference<'ClaimResponse'>;
-    coverage?: Reference<'Coverage'>;
-    focal?: boolean;
+    coverage: Reference<'Coverage'>;
+    focal: boolean;
     identifier?: Identifier;
     preAuthRef?: string[];
-    sequence?: number;
+    sequence: number;
 }
 
 export interface ClaimItem extends BackboneElement {
@@ -63,11 +63,11 @@ export interface ClaimItem extends BackboneElement {
     modifier?: CodeableConcept[];
     net?: Money;
     procedureSequence?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     quantity?: Quantity;
     revenue?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     servicedDate?: string;
     servicedPeriod?: Period;
     subSite?: CodeableConcept[];
@@ -80,11 +80,11 @@ export interface ClaimItemDetail extends BackboneElement {
     factor?: number;
     modifier?: CodeableConcept[];
     net?: Money;
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     quantity?: Quantity;
     revenue?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     subDetail?: ClaimItemDetailSubDetail[];
     udi?: Reference<'Device'>[];
     unitPrice?: Money;
@@ -95,25 +95,25 @@ export interface ClaimItemDetailSubDetail extends BackboneElement {
     factor?: number;
     modifier?: CodeableConcept[];
     net?: Money;
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     quantity?: Quantity;
     revenue?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     udi?: Reference<'Device'>[];
     unitPrice?: Money;
 }
 
 export interface ClaimPayee extends BackboneElement {
     party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface ClaimProcedure extends BackboneElement {
     date?: string;
     procedureCodeableConcept?: CodeableConcept;
     procedureReference?: Reference<'Procedure'>;
-    sequence?: number;
+    sequence: number;
     type?: CodeableConcept[];
     udi?: Reference<'Device'>[];
 }
@@ -125,10 +125,10 @@ export interface ClaimRelated extends BackboneElement {
 }
 
 export interface ClaimSupportingInfo extends BackboneElement {
-    category?: CodeableConcept;
+    category: CodeableConcept;
     code?: CodeableConcept;
     reason?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     timingDate?: string;
     timingPeriod?: Period;
     valueAttachment?: Attachment;
@@ -142,32 +142,32 @@ export interface Claim extends DomainResource {
     accident?: ClaimAccident;
     billablePeriod?: Period;
     careTeam?: ClaimCareTeam[];
-    created?: string;
+    created: string;
     _created?: Element;
     diagnosis?: ClaimDiagnosis[];
     enterer?: Reference<'Practitioner' | 'PractitionerRole'>;
     facility?: Reference<'Location'>;
     fundsReserve?: CodeableConcept;
     identifier?: Identifier[];
-    insurance?: ClaimInsurance[];
+    insurance: ClaimInsurance[];
     insurer?: Reference<'Organization'>;
     item?: ClaimItem[];
     originalPrescription?: Reference<'DeviceRequest' | 'MedicationRequest' | 'VisionPrescription'>;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     payee?: ClaimPayee;
     prescription?: Reference<'DeviceRequest' | 'MedicationRequest' | 'VisionPrescription'>;
-    priority?: CodeableConcept;
+    priority: CodeableConcept;
     procedure?: ClaimProcedure[];
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    provider: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     referral?: Reference<'ServiceRequest'>;
     related?: ClaimRelated[];
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
     subType?: CodeableConcept;
     supportingInfo?: ClaimSupportingInfo[];
     total?: Money;
-    type?: CodeableConcept;
-    use?: 'claim' | 'preauthorization' | 'predetermination';
+    type: CodeableConcept;
+    use: 'claim' | 'preauthorization' | 'predetermination';
     _use?: Element;
 }
 

@@ -46,7 +46,7 @@ class EvidenceVariable(DomainResource):
     
     approval_date: str | None = Field(None, alias="approvalDate", serialization_alias="approvalDate")
     author: PyList[ContactDetail] | None = Field(None, alias="author", serialization_alias="author")
-    characteristic: PyList[EvidenceVariableCharacteristic] | None = Field(None, alias="characteristic", serialization_alias="characteristic")
+    characteristic: PyList[EvidenceVariableCharacteristic] = Field(alias="characteristic", serialization_alias="characteristic")
     contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
     copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
     date: str | None = Field(None, alias="date", serialization_alias="date")
@@ -63,7 +63,7 @@ class EvidenceVariable(DomainResource):
     related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
     reviewer: PyList[ContactDetail] | None = Field(None, alias="reviewer", serialization_alias="reviewer")
     short_title: str | None = Field(None, alias="shortTitle", serialization_alias="shortTitle")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     subtitle: str | None = Field(None, alias="subtitle", serialization_alias="subtitle")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     topic: PyList[CodeableConcept] | None = Field(None, alias="topic", serialization_alias="topic")

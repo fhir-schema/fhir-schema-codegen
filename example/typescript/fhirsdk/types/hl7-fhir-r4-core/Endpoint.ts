@@ -11,9 +11,9 @@ import { Period } from './Period';
 import { Reference } from './Reference';
 
 export interface Endpoint extends DomainResource {
-    address?: string;
+    address: string;
     _address?: Element;
-    connectionType?: Coding;
+    connectionType: Coding;
     contact?: ContactPoint[];
     header?: string[];
     _header?: Element;
@@ -23,9 +23,9 @@ export interface Endpoint extends DomainResource {
     _name?: Element;
     payloadMimeType?: string[];
     _payloadMimeType?: Element;
-    payloadType?: CodeableConcept[];
+    payloadType: CodeableConcept[];
     period?: Period;
-    status?: 'active' | 'suspended' | 'error' | 'off' | 'entered-in-error' | 'test';
+    status: 'active' | 'suspended' | 'error' | 'off' | 'entered-in-error' | 'test';
     _status?: Element;
 }
 

@@ -40,7 +40,7 @@ export interface ResearchDefinition extends DomainResource {
     name?: string;
     _name?: Element;
     outcome?: Reference<'ResearchElementDefinition'>;
-    population?: Reference<'ResearchElementDefinition'>;
+    population: Reference<'ResearchElementDefinition'>;
     publisher?: string;
     _publisher?: Element;
     purpose?: string;
@@ -49,7 +49,7 @@ export interface ResearchDefinition extends DomainResource {
     reviewer?: ContactDetail[];
     shortTitle?: string;
     _shortTitle?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subjectCodeableConcept?: CodeableConcept;
     subjectReference?: Reference<'Group'>;

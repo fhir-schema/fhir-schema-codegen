@@ -36,20 +36,20 @@ class ConsentProvision(BackboneElement):
 class ConsentProvisionActor(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
-    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
+    reference: Reference = Field(alias="reference", serialization_alias="reference")
+    role: CodeableConcept = Field(alias="role", serialization_alias="role")
 
 class ConsentProvisionData(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    meaning: Literal["instance", "related", "dependents", "authoredby"] | None = Field(None, alias="meaning", serialization_alias="meaning")
-    reference: Reference | None = Field(None, alias="reference", serialization_alias="reference")
+    meaning: Literal["instance", "related", "dependents", "authoredby"] = Field(alias="meaning", serialization_alias="meaning")
+    reference: Reference = Field(alias="reference", serialization_alias="reference")
 
 class ConsentVerification(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     verification_date: str | None = Field(None, alias="verificationDate", serialization_alias="verificationDate")
-    verified: bool | None = Field(None, alias="verified", serialization_alias="verified")
+    verified: bool = Field(alias="verified", serialization_alias="verified")
     verified_with: Reference | None = Field(None, alias="verifiedWith", serialization_alias="verifiedWith")
 
 
@@ -64,7 +64,7 @@ class Consent(DomainResource):
         pattern='Consent'
     )
     
-    category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
+    category: PyList[CodeableConcept] = Field(alias="category", serialization_alias="category")
     date_time: str | None = Field(None, alias="dateTime", serialization_alias="dateTime")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     organization: PyList[Reference] | None = Field(None, alias="organization", serialization_alias="organization")
@@ -73,10 +73,10 @@ class Consent(DomainResource):
     policy: PyList[ConsentPolicy] | None = Field(None, alias="policy", serialization_alias="policy")
     policy_rule: CodeableConcept | None = Field(None, alias="policyRule", serialization_alias="policyRule")
     provision: ConsentProvision | None = Field(None, alias="provision", serialization_alias="provision")
-    scope: CodeableConcept | None = Field(None, alias="scope", serialization_alias="scope")
+    scope: CodeableConcept = Field(alias="scope", serialization_alias="scope")
     source_attachment: Attachment | None = Field(None, alias="sourceAttachment", serialization_alias="sourceAttachment")
     source_reference: Reference | None = Field(None, alias="sourceReference", serialization_alias="sourceReference")
-    status: Literal["draft", "proposed", "active", "rejected", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "proposed", "active", "rejected", "inactive", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     verification: PyList[ConsentVerification] | None = Field(None, alias="verification", serialization_alias="verification")
     
     def to_json(self, indent: int | None = None) -> str:

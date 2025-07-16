@@ -15,20 +15,20 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DeviceDeviceName(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"] | None = Field(None, alias="type", serialization_alias="type")
+    name: str = Field(alias="name", serialization_alias="name")
+    type: Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"] = Field(alias="type", serialization_alias="type")
 
 class DeviceProperty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     value_code: PyList[CodeableConcept] | None = Field(None, alias="valueCode", serialization_alias="valueCode")
     value_quantity: PyList[Quantity] | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class DeviceSpecialization(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    system_type: CodeableConcept | None = Field(None, alias="systemType", serialization_alias="systemType")
+    system_type: CodeableConcept = Field(alias="systemType", serialization_alias="systemType")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class DeviceUdiCarrier(BackboneElement):
@@ -46,7 +46,7 @@ class DeviceVersion(BackboneElement):
     
     component: Identifier | None = Field(None, alias="component", serialization_alias="component")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    value: str = Field(alias="value", serialization_alias="value")
 
 
 class Device(DomainResource):

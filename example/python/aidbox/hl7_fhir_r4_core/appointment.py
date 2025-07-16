@@ -18,7 +18,7 @@ class AppointmentParticipant(BackboneElement):
     actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     required: Literal["required", "optional", "information-only"] | None = Field(None, alias="required", serialization_alias="required")
-    status: Literal["accepted", "declined", "tentative", "needs-action"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["accepted", "declined", "tentative", "needs-action"] = Field(alias="status", serialization_alias="status")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
 
 
@@ -42,7 +42,7 @@ class Appointment(DomainResource):
     end: str | None = Field(None, alias="end", serialization_alias="end")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     minutes_duration: PositiveInt | None = Field(None, alias="minutesDuration", serialization_alias="minutesDuration")
-    participant: PyList[AppointmentParticipant] | None = Field(None, alias="participant", serialization_alias="participant")
+    participant: PyList[AppointmentParticipant] = Field(alias="participant", serialization_alias="participant")
     patient_instruction: str | None = Field(None, alias="patientInstruction", serialization_alias="patientInstruction")
     priority: int | None = Field(None, alias="priority", serialization_alias="priority")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
@@ -53,7 +53,7 @@ class Appointment(DomainResource):
     slot: PyList[Reference] | None = Field(None, alias="slot", serialization_alias="slot")
     specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
     start: str | None = Field(None, alias="start", serialization_alias="start")
-    status: Literal["proposed", "pending", "booked", "arrived", "fulfilled", "cancelled", "noshow", "entered-in-error", "checked-in", "waitlist"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["proposed", "pending", "booked", "arrived", "fulfilled", "cancelled", "noshow", "entered-in-error", "checked-in", "waitlist"] = Field(alias="status", serialization_alias="status")
     supporting_information: PyList[Reference] | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
     
     def to_json(self, indent: int | None = None) -> str:

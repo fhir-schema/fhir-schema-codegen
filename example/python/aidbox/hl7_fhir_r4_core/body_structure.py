@@ -29,7 +29,7 @@ class BodyStructure(DomainResource):
     location: CodeableConcept | None = Field(None, alias="location", serialization_alias="location")
     location_qualifier: PyList[CodeableConcept] | None = Field(None, alias="locationQualifier", serialization_alias="locationQualifier")
     morphology: CodeableConcept | None = Field(None, alias="morphology", serialization_alias="morphology")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

@@ -16,7 +16,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ObservationComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     data_absent_reason: CodeableConcept | None = Field(None, alias="dataAbsentReason", serialization_alias="dataAbsentReason")
     interpretation: PyList[CodeableConcept] | None = Field(None, alias="interpretation", serialization_alias="interpretation")
     reference_range: PyList[ObservationReferenceRange] | None = Field(None, alias="referenceRange", serialization_alias="referenceRange")
@@ -57,7 +57,7 @@ class Observation(DomainResource):
     based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
     body_site: CodeableConcept | None = Field(None, alias="bodySite", serialization_alias="bodySite")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     component: PyList[ObservationComponent] | None = Field(None, alias="component", serialization_alias="component")
     data_absent_reason: CodeableConcept | None = Field(None, alias="dataAbsentReason", serialization_alias="dataAbsentReason")
     derived_from: PyList[Reference] | None = Field(None, alias="derivedFrom", serialization_alias="derivedFrom")
@@ -78,7 +78,7 @@ class Observation(DomainResource):
     performer: PyList[Reference] | None = Field(None, alias="performer", serialization_alias="performer")
     reference_range: PyList[ObservationReferenceRange] | None = Field(None, alias="referenceRange", serialization_alias="referenceRange")
     specimen: Reference | None = Field(None, alias="specimen", serialization_alias="specimen")
-    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown", "corrected"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
     value_codeable_concept: CodeableConcept | None = Field(None, alias="valueCodeableConcept", serialization_alias="valueCodeableConcept")

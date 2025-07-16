@@ -37,7 +37,7 @@ export interface SupplyRequest extends DomainResource {
     parameter?: SupplyRequestParameter[];
     priority?: 'routine' | 'urgent' | 'asap' | 'stat';
     _priority?: Element;
-    quantity?: Quantity;
+    quantity: Quantity;
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'DocumentReference' | 'Observation'>[];
     requester?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;

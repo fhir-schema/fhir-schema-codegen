@@ -11,21 +11,21 @@ export interface SubscriptionChannel extends BackboneElement {
     endpoint?: string;
     header?: string[];
     payload?: string;
-    type?: 'rest-hook' | 'websocket' | 'email' | 'sms' | 'message';
+    type: 'rest-hook' | 'websocket' | 'email' | 'sms' | 'message';
 }
 
 export interface Subscription extends DomainResource {
-    channel?: SubscriptionChannel;
+    channel: SubscriptionChannel;
     contact?: ContactPoint[];
-    criteria?: string;
+    criteria: string;
     _criteria?: Element;
     end?: string;
     _end?: Element;
     error?: string;
     _error?: Element;
-    reason?: string;
+    reason: string;
     _reason?: Element;
-    status?: 'requested' | 'active' | 'error' | 'off';
+    status: 'requested' | 'active' | 'error' | 'off';
     _status?: Element;
 }
 

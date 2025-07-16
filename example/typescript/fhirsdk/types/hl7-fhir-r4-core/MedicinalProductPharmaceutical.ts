@@ -13,12 +13,12 @@ import { Reference } from './Reference';
 
 
 export interface MedicinalProductPharmaceuticalCharacteristics extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     status?: CodeableConcept;
 }
 
 export interface MedicinalProductPharmaceuticalRouteOfAdministration extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     firstDose?: Quantity;
     maxDosePerDay?: Quantity;
     maxDosePerTreatmentPeriod?: Ratio;
@@ -28,23 +28,23 @@ export interface MedicinalProductPharmaceuticalRouteOfAdministration extends Bac
 }
 
 export interface MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpecies extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     withdrawalPeriod?: MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod[];
 }
 
 export interface MedicinalProductPharmaceuticalRouteOfAdministrationTargetSpeciesWithdrawalPeriod extends BackboneElement {
     supportingInformation?: string;
-    tissue?: CodeableConcept;
-    value?: Quantity;
+    tissue: CodeableConcept;
+    value: Quantity;
 }
 
 export interface MedicinalProductPharmaceutical extends DomainResource {
-    administrableDoseForm?: CodeableConcept;
+    administrableDoseForm: CodeableConcept;
     characteristics?: MedicinalProductPharmaceuticalCharacteristics[];
     device?: Reference<'DeviceDefinition'>[];
     identifier?: Identifier[];
     ingredient?: Reference<'MedicinalProductIngredient'>[];
-    routeOfAdministration?: MedicinalProductPharmaceuticalRouteOfAdministration[];
+    routeOfAdministration: MedicinalProductPharmaceuticalRouteOfAdministration[];
     unitOfPresentation?: CodeableConcept;
 }
 

@@ -55,7 +55,7 @@ class PlanDefinitionActionCondition(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
-    kind: Literal["applicability", "start", "stop"] | None = Field(None, alias="kind", serialization_alias="kind")
+    kind: Literal["applicability", "start", "stop"] = Field(alias="kind", serialization_alias="kind")
 
 class PlanDefinitionActionDynamicValue(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -67,22 +67,22 @@ class PlanDefinitionActionParticipant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
-    type: Literal["patient", "practitioner", "related-person", "device"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["patient", "practitioner", "related-person", "device"] = Field(alias="type", serialization_alias="type")
 
 class PlanDefinitionActionRelatedAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action_id: str | None = Field(None, alias="actionId", serialization_alias="actionId")
+    action_id: str = Field(alias="actionId", serialization_alias="actionId")
     offset_duration: Duration | None = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
     offset_range: Range | None = Field(None, alias="offsetRange", serialization_alias="offsetRange")
-    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] | None = Field(None, alias="relationship", serialization_alias="relationship")
+    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] = Field(alias="relationship", serialization_alias="relationship")
 
 class PlanDefinitionGoal(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     addresses: PyList[CodeableConcept] | None = Field(None, alias="addresses", serialization_alias="addresses")
     category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
-    description: CodeableConcept | None = Field(None, alias="description", serialization_alias="description")
+    description: CodeableConcept = Field(alias="description", serialization_alias="description")
     documentation: PyList[RelatedArtifact] | None = Field(None, alias="documentation", serialization_alias="documentation")
     priority: CodeableConcept | None = Field(None, alias="priority", serialization_alias="priority")
     start: CodeableConcept | None = Field(None, alias="start", serialization_alias="start")
@@ -130,7 +130,7 @@ class PlanDefinition(DomainResource):
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
     related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
     reviewer: PyList[ContactDetail] | None = Field(None, alias="reviewer", serialization_alias="reviewer")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     subject_codeable_concept: CodeableConcept | None = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
     subject_reference: Reference | None = Field(None, alias="subjectReference", serialization_alias="subjectReference")
     subtitle: str | None = Field(None, alias="subtitle", serialization_alias="subtitle")

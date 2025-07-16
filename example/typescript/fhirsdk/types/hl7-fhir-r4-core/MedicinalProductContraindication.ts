@@ -12,7 +12,7 @@ import { Reference } from './Reference';
 export interface MedicinalProductContraindicationOtherTherapy extends BackboneElement {
     medicationCodeableConcept?: CodeableConcept;
     medicationReference?: Reference<'Medication' | 'MedicinalProduct' | 'Substance' | 'SubstanceSpecification'>;
-    therapyRelationshipType?: CodeableConcept;
+    therapyRelationshipType: CodeableConcept;
 }
 
 export interface MedicinalProductContraindication extends DomainResource {

@@ -16,7 +16,7 @@ class ResearchStudyArm(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
 
 class ResearchStudyObjective(BackboneElement):
@@ -59,7 +59,7 @@ class ResearchStudy(DomainResource):
     related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
     site: PyList[Reference] | None = Field(None, alias="site", serialization_alias="site")
     sponsor: Reference | None = Field(None, alias="sponsor", serialization_alias="sponsor")
-    status: Literal["active", "administratively-completed", "approved", "closed-to-accrual", "closed-to-accrual-and-intervention", "completed", "disapproved", "in-review", "temporarily-closed-to-accrual", "temporarily-closed-to-accrual-and-intervention", "withdrawn"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "administratively-completed", "approved", "closed-to-accrual", "closed-to-accrual-and-intervention", "completed", "disapproved", "in-review", "temporarily-closed-to-accrual", "temporarily-closed-to-accrual-and-intervention", "withdrawn"] = Field(alias="status", serialization_alias="status")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     
     def to_json(self, indent: int | None = None) -> str:

@@ -18,8 +18,8 @@ class NamingSystemUniqueId(BackboneElement):
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     preferred: bool | None = Field(None, alias="preferred", serialization_alias="preferred")
-    type: Literal["oid", "uuid", "uri", "other"] | None = Field(None, alias="type", serialization_alias="type")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    type: Literal["oid", "uuid", "uri", "other"] = Field(alias="type", serialization_alias="type")
+    value: str = Field(alias="value", serialization_alias="value")
 
 
 class NamingSystem(DomainResource):
@@ -34,16 +34,16 @@ class NamingSystem(DomainResource):
     )
     
     contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
-    date: str | None = Field(None, alias="date", serialization_alias="date")
+    date: str = Field(alias="date", serialization_alias="date")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    kind: Literal["codesystem", "identifier", "root"] | None = Field(None, alias="kind", serialization_alias="kind")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    kind: Literal["codesystem", "identifier", "root"] = Field(alias="kind", serialization_alias="kind")
+    name: str = Field(alias="name", serialization_alias="name")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     responsible: str | None = Field(None, alias="responsible", serialization_alias="responsible")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    unique_id: PyList[NamingSystemUniqueId] | None = Field(None, alias="uniqueId", serialization_alias="uniqueId")
+    unique_id: PyList[NamingSystemUniqueId] = Field(alias="uniqueId", serialization_alias="uniqueId")
     usage: str | None = Field(None, alias="usage", serialization_alias="usage")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
     

@@ -18,7 +18,7 @@ export interface ClinicalImpressionFinding extends BackboneElement {
 }
 
 export interface ClinicalImpressionInvestigation extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     item?: Reference<'DiagnosticReport' | 'FamilyMemberHistory' | 'ImagingStudy' | 'Media' | 'Observation' | 'QuestionnaireResponse' | 'RiskAssessment'>[];
 }
 
@@ -43,10 +43,10 @@ export interface ClinicalImpression extends DomainResource {
     prognosisReference?: Reference<'RiskAssessment'>[];
     protocol?: string[];
     _protocol?: Element;
-    status?: 'in-progress' | 'completed' | 'entered-in-error' | 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'in-progress' | 'completed' | 'entered-in-error';
     _status?: Element;
     statusReason?: CodeableConcept;
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     summary?: string;
     _summary?: Element;
     supportingInfo?: Reference<'Resource'>[];

@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class FamilyMemberHistoryCondition(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     contributed_to_death: bool | None = Field(None, alias="contributedToDeath", serialization_alias="contributedToDeath")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     onset_age: Age | None = Field(None, alias="onsetAge", serialization_alias="onsetAge")
@@ -56,12 +56,12 @@ class FamilyMemberHistory(DomainResource):
     instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    relationship: CodeableConcept | None = Field(None, alias="relationship", serialization_alias="relationship")
+    relationship: CodeableConcept = Field(alias="relationship", serialization_alias="relationship")
     sex: CodeableConcept | None = Field(None, alias="sex", serialization_alias="sex")
-    status: Literal["partial", "completed", "entered-in-error", "health-unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["partial", "completed", "entered-in-error", "health-unknown"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

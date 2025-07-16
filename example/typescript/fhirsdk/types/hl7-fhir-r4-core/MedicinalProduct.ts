@@ -23,18 +23,18 @@ export interface MedicinalProductManufacturingBusinessOperation extends Backbone
 export interface MedicinalProductName extends BackboneElement {
     countryLanguage?: MedicinalProductNameCountryLanguage[];
     namePart?: MedicinalProductNameNamePart[];
-    productName?: string;
+    productName: string;
 }
 
 export interface MedicinalProductNameCountryLanguage extends BackboneElement {
-    country?: CodeableConcept;
+    country: CodeableConcept;
     jurisdiction?: CodeableConcept;
-    language?: CodeableConcept;
+    language: CodeableConcept;
 }
 
 export interface MedicinalProductNameNamePart extends BackboneElement {
-    part?: string;
-    type?: Coding;
+    part: string;
+    type: Coding;
 }
 
 export interface MedicinalProductSpecialDesignation extends BackboneElement {
@@ -61,7 +61,7 @@ export interface MedicinalProduct extends DomainResource {
     manufacturingBusinessOperation?: MedicinalProductManufacturingBusinessOperation[];
     marketingStatus?: MarketingStatus[];
     masterFile?: Reference<'DocumentReference'>[];
-    name?: MedicinalProductName[];
+    name: MedicinalProductName[];
     packagedMedicinalProduct?: Reference<'MedicinalProductPackaged'>[];
     paediatricUseIndicator?: CodeableConcept;
     pharmaceuticalProduct?: Reference<'MedicinalProductPharmaceutical'>[];

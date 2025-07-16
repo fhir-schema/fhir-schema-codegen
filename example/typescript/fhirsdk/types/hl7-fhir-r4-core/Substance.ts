@@ -25,7 +25,7 @@ export interface SubstanceInstance extends BackboneElement {
 
 export interface Substance extends DomainResource {
     category?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     description?: string;
     _description?: Element;
     identifier?: Identifier[];

@@ -14,8 +14,8 @@ import { Reference } from './Reference';
 
 export interface CoverageClass extends BackboneElement {
     name?: string;
-    type?: CodeableConcept;
-    value?: string;
+    type: CodeableConcept;
+    value: string;
 }
 
 export interface CoverageCostToBeneficiary extends BackboneElement {
@@ -27,11 +27,11 @@ export interface CoverageCostToBeneficiary extends BackboneElement {
 
 export interface CoverageCostToBeneficiaryException extends BackboneElement {
     period?: Period;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface Coverage extends DomainResource {
-    beneficiary?: Reference<'Patient'>;
+    beneficiary: Reference<'Patient'>;
     class?: CoverageClass[];
     contract?: Reference<'Contract'>[];
     costToBeneficiary?: CoverageCostToBeneficiary[];
@@ -42,11 +42,11 @@ export interface Coverage extends DomainResource {
     _network?: Element;
     order?: number;
     _order?: Element;
-    payor?: Reference<'Organization' | 'Patient' | 'RelatedPerson'>[];
+    payor: Reference<'Organization' | 'Patient' | 'RelatedPerson'>[];
     period?: Period;
     policyHolder?: Reference<'Organization' | 'Patient' | 'RelatedPerson'>;
     relationship?: CodeableConcept;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
     subrogation?: boolean;
     _subrogation?: Element;

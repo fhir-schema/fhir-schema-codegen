@@ -15,7 +15,7 @@ class AdverseEventSuspectEntity(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     causality: PyList[AdverseEventSuspectEntityCausality] | None = Field(None, alias="causality", serialization_alias="causality")
-    instance: Reference | None = Field(None, alias="instance", serialization_alias="instance")
+    instance: Reference = Field(alias="instance", serialization_alias="instance")
 
 class AdverseEventSuspectEntityCausality(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -37,7 +37,7 @@ class AdverseEvent(DomainResource):
         pattern='AdverseEvent'
     )
     
-    actuality: Literal["actual", "potential"] | None = Field(None, alias="actuality", serialization_alias="actuality")
+    actuality: Literal["actual", "potential"] = Field(alias="actuality", serialization_alias="actuality")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
     contributor: PyList[Reference] | None = Field(None, alias="contributor", serialization_alias="contributor")
     date: str | None = Field(None, alias="date", serialization_alias="date")
@@ -54,7 +54,7 @@ class AdverseEvent(DomainResource):
     seriousness: CodeableConcept | None = Field(None, alias="seriousness", serialization_alias="seriousness")
     severity: CodeableConcept | None = Field(None, alias="severity", serialization_alias="severity")
     study: PyList[Reference] | None = Field(None, alias="study", serialization_alias="study")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     subject_medical_history: PyList[Reference] | None = Field(None, alias="subjectMedicalHistory", serialization_alias="subjectMedicalHistory")
     suspect_entity: PyList[AdverseEventSuspectEntity] | None = Field(None, alias="suspectEntity", serialization_alias="suspectEntity")
     

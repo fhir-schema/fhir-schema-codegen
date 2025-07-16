@@ -21,8 +21,8 @@ export interface LocationHoursOfOperation extends BackboneElement {
 
 export interface LocationPosition extends BackboneElement {
     altitude?: number;
-    latitude?: number;
-    longitude?: number;
+    latitude: number;
+    longitude: number;
 }
 
 export interface Location extends DomainResource {

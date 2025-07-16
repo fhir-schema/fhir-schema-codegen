@@ -23,17 +23,17 @@ class Endpoint(DomainResource):
         pattern='Endpoint'
     )
     
-    address: str | None = Field(None, alias="address", serialization_alias="address")
-    connection_type: Coding | None = Field(None, alias="connectionType", serialization_alias="connectionType")
+    address: str = Field(alias="address", serialization_alias="address")
+    connection_type: Coding = Field(alias="connectionType", serialization_alias="connectionType")
     contact: PyList[ContactPoint] | None = Field(None, alias="contact", serialization_alias="contact")
     header: PyList[str] | None = Field(None, alias="header", serialization_alias="header")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     managing_organization: Reference | None = Field(None, alias="managingOrganization", serialization_alias="managingOrganization")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     payload_mime_type: PyList[str] | None = Field(None, alias="payloadMimeType", serialization_alias="payloadMimeType")
-    payload_type: PyList[CodeableConcept] | None = Field(None, alias="payloadType", serialization_alias="payloadType")
+    payload_type: PyList[CodeableConcept] = Field(alias="payloadType", serialization_alias="payloadType")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
-    status: Literal["active", "suspended", "error", "off", "entered-in-error", "test"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "suspended", "error", "off", "entered-in-error", "test"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

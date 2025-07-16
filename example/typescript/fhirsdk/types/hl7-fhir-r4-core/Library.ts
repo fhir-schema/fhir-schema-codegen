@@ -45,7 +45,7 @@ export interface Library extends DomainResource {
     _purpose?: Element;
     relatedArtifact?: RelatedArtifact[];
     reviewer?: ContactDetail[];
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subjectCodeableConcept?: CodeableConcept;
     subjectReference?: Reference<'Group'>;
@@ -54,7 +54,7 @@ export interface Library extends DomainResource {
     title?: string;
     _title?: Element;
     topic?: CodeableConcept[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
     url?: string;
     _url?: Element;
     usage?: string;

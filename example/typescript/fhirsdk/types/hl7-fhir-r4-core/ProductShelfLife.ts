@@ -9,8 +9,8 @@ import { Quantity } from './Quantity';
 
 export interface ProductShelfLife extends BackboneElement {
     identifier?: Identifier;
-    period?: Quantity;
+    period: Quantity;
     specialPrecautionsForStorage?: CodeableConcept[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 

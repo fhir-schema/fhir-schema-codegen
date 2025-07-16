@@ -25,7 +25,7 @@ class MeasureGroupPopulation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    criteria: Expression = Field(alias="criteria", serialization_alias="criteria")
     description: str | None = Field(None, alias="description", serialization_alias="description")
 
 class MeasureGroupStratifier(BackboneElement):
@@ -40,14 +40,14 @@ class MeasureGroupStratifierComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    criteria: Expression = Field(alias="criteria", serialization_alias="criteria")
     description: str | None = Field(None, alias="description", serialization_alias="description")
 
 class MeasureSupplementalData(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    criteria: Expression | None = Field(None, alias="criteria", serialization_alias="criteria")
+    criteria: Expression = Field(alias="criteria", serialization_alias="criteria")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     usage: PyList[CodeableConcept] | None = Field(None, alias="usage", serialization_alias="usage")
 
@@ -93,7 +93,7 @@ class Measure(DomainResource):
     reviewer: PyList[ContactDetail] | None = Field(None, alias="reviewer", serialization_alias="reviewer")
     risk_adjustment: str | None = Field(None, alias="riskAdjustment", serialization_alias="riskAdjustment")
     scoring: CodeableConcept | None = Field(None, alias="scoring", serialization_alias="scoring")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     subject_codeable_concept: CodeableConcept | None = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
     subject_reference: Reference | None = Field(None, alias="subjectReference", serialization_alias="subjectReference")
     subtitle: str | None = Field(None, alias="subtitle", serialization_alias="subtitle")

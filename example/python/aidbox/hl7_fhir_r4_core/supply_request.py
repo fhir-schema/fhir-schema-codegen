@@ -45,7 +45,7 @@ class SupplyRequest(DomainResource):
     occurrence_timing: Timing | None = Field(None, alias="occurrenceTiming", serialization_alias="occurrenceTiming")
     parameter: PyList[SupplyRequestParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
     priority: Literal["routine", "urgent", "asap", "stat"] | None = Field(None, alias="priority", serialization_alias="priority")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    quantity: Quantity = Field(alias="quantity", serialization_alias="quantity")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")

@@ -16,8 +16,8 @@ class CoverageClass(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class CoverageCostToBeneficiary(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -31,7 +31,7 @@ class CoverageCostToBeneficiaryException(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     period: Period | None = Field(None, alias="period", serialization_alias="period")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 
 class Coverage(DomainResource):
@@ -45,7 +45,7 @@ class Coverage(DomainResource):
         pattern='Coverage'
     )
     
-    beneficiary: Reference | None = Field(None, alias="beneficiary", serialization_alias="beneficiary")
+    beneficiary: Reference = Field(alias="beneficiary", serialization_alias="beneficiary")
     class_: PyList[CoverageClass] | None = Field(None, alias="class", serialization_alias="class")
     contract: PyList[Reference] | None = Field(None, alias="contract", serialization_alias="contract")
     cost_to_beneficiary: PyList[CoverageCostToBeneficiary] | None = Field(None, alias="costToBeneficiary", serialization_alias="costToBeneficiary")
@@ -53,11 +53,11 @@ class Coverage(DomainResource):
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     network: str | None = Field(None, alias="network", serialization_alias="network")
     order: PositiveInt | None = Field(None, alias="order", serialization_alias="order")
-    payor: PyList[Reference] | None = Field(None, alias="payor", serialization_alias="payor")
+    payor: PyList[Reference] = Field(alias="payor", serialization_alias="payor")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     policy_holder: Reference | None = Field(None, alias="policyHolder", serialization_alias="policyHolder")
     relationship: CodeableConcept | None = Field(None, alias="relationship", serialization_alias="relationship")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subrogation: bool | None = Field(None, alias="subrogation", serialization_alias="subrogation")
     subscriber: Reference | None = Field(None, alias="subscriber", serialization_alias="subscriber")
     subscriber_id: str | None = Field(None, alias="subscriberId", serialization_alias="subscriberId")

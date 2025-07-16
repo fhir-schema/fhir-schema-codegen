@@ -23,11 +23,11 @@ class MedicinalProductManufactured(DomainResource):
     )
     
     ingredient: PyList[Reference] | None = Field(None, alias="ingredient", serialization_alias="ingredient")
-    manufactured_dose_form: CodeableConcept | None = Field(None, alias="manufacturedDoseForm", serialization_alias="manufacturedDoseForm")
+    manufactured_dose_form: CodeableConcept = Field(alias="manufacturedDoseForm", serialization_alias="manufacturedDoseForm")
     manufacturer: PyList[Reference] | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
     other_characteristics: PyList[CodeableConcept] | None = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
     physical_characteristics: ProdCharacteristic | None = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    quantity: Quantity = Field(alias="quantity", serialization_alias="quantity")
     unit_of_presentation: CodeableConcept | None = Field(None, alias="unitOfPresentation", serialization_alias="unitOfPresentation")
     
     def to_json(self, indent: int | None = None) -> str:

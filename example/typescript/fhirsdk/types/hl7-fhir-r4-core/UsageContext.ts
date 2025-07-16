@@ -10,7 +10,7 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 export interface UsageContext extends Element {
-    code?: Coding;
+    code: Coding;
     valueCodeableConcept?: CodeableConcept;
     valueQuantity?: Quantity;
     valueRange?: Range;

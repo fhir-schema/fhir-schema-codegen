@@ -29,9 +29,9 @@ export interface MedicationStatement extends DomainResource {
     partOf?: Reference<'MedicationAdministration' | 'MedicationDispense' | 'MedicationStatement' | 'Observation' | 'Procedure'>[];
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'Observation'>[];
-    status?: 'active' | 'completed' | 'entered-in-error' | 'intended' | 'stopped' | 'on-hold' | 'unknown' | 'not-taken';
+    status: 'active' | 'completed' | 'entered-in-error' | 'intended' | 'stopped' | 'on-hold' | 'unknown' | 'not-taken';
     _status?: Element;
     statusReason?: CodeableConcept[];
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
 }
 

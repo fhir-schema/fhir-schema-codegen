@@ -15,14 +15,14 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class AccountCoverage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    coverage: Reference = Field(alias="coverage", serialization_alias="coverage")
     priority: PositiveInt | None = Field(None, alias="priority", serialization_alias="priority")
 
 class AccountGuarantor(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     on_hold: bool | None = Field(None, alias="onHold", serialization_alias="onHold")
-    party: Reference | None = Field(None, alias="party", serialization_alias="party")
+    party: Reference = Field(alias="party", serialization_alias="party")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
 
 
@@ -45,7 +45,7 @@ class Account(DomainResource):
     owner: Reference | None = Field(None, alias="owner", serialization_alias="owner")
     part_of: Reference | None = Field(None, alias="partOf", serialization_alias="partOf")
     service_period: Period | None = Field(None, alias="servicePeriod", serialization_alias="servicePeriod")
-    status: Literal["active", "inactive", "entered-in-error", "on-hold", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "inactive", "entered-in-error", "on-hold", "unknown"] = Field(alias="status", serialization_alias="status")
     subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     

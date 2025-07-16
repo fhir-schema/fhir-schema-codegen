@@ -15,10 +15,10 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ExampleScenarioActor(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor_id: str | None = Field(None, alias="actorId", serialization_alias="actorId")
+    actor_id: str = Field(alias="actorId", serialization_alias="actorId")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: Literal["person", "entity"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["person", "entity"] = Field(alias="type", serialization_alias="type")
 
 class ExampleScenarioInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -26,21 +26,21 @@ class ExampleScenarioInstance(BackboneElement):
     contained_instance: PyList[ExampleScenarioInstanceContainedInstance] | None = Field(None, alias="containedInstance", serialization_alias="containedInstance")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     name: str | None = Field(None, alias="name", serialization_alias="name")
-    resource_id: str | None = Field(None, alias="resourceId", serialization_alias="resourceId")
-    resource_type: Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"] | None = Field(None, alias="resourceType", serialization_alias="resourceType")
+    resource_id: str = Field(alias="resourceId", serialization_alias="resourceId")
+    resource_type: Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"] = Field(alias="resourceType", serialization_alias="resourceType")
     version: PyList[ExampleScenarioInstanceVersion] | None = Field(None, alias="version", serialization_alias="version")
 
 class ExampleScenarioInstanceContainedInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    resource_id: str | None = Field(None, alias="resourceId", serialization_alias="resourceId")
+    resource_id: str = Field(alias="resourceId", serialization_alias="resourceId")
     version_id: str | None = Field(None, alias="versionId", serialization_alias="versionId")
 
 class ExampleScenarioInstanceVersion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: str | None = Field(None, alias="description", serialization_alias="description")
-    version_id: str | None = Field(None, alias="versionId", serialization_alias="versionId")
+    description: str = Field(alias="description", serialization_alias="description")
+    version_id: str = Field(alias="versionId", serialization_alias="versionId")
 
 class ExampleScenarioProcess(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -49,7 +49,7 @@ class ExampleScenarioProcess(BackboneElement):
     post_conditions: str | None = Field(None, alias="postConditions", serialization_alias="postConditions")
     pre_conditions: str | None = Field(None, alias="preConditions", serialization_alias="preConditions")
     step: PyList[ExampleScenarioProcessStep] | None = Field(None, alias="step", serialization_alias="step")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
+    title: str = Field(alias="title", serialization_alias="title")
 
 class ExampleScenarioProcessStep(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -64,7 +64,7 @@ class ExampleScenarioProcessStepAlternative(BackboneElement):
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
     step: PyList[ExampleScenarioProcessStep] | None = Field(None, alias="step", serialization_alias="step")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
+    title: str = Field(alias="title", serialization_alias="title")
 
 class ExampleScenarioProcessStepOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -73,7 +73,7 @@ class ExampleScenarioProcessStepOperation(BackboneElement):
     initiator: str | None = Field(None, alias="initiator", serialization_alias="initiator")
     initiator_active: bool | None = Field(None, alias="initiatorActive", serialization_alias="initiatorActive")
     name: str | None = Field(None, alias="name", serialization_alias="name")
-    number: str | None = Field(None, alias="number", serialization_alias="number")
+    number: str = Field(alias="number", serialization_alias="number")
     receiver: str | None = Field(None, alias="receiver", serialization_alias="receiver")
     receiver_active: bool | None = Field(None, alias="receiverActive", serialization_alias="receiverActive")
     request: ExampleScenarioInstanceContainedInstance | None = Field(None, alias="request", serialization_alias="request")
@@ -104,7 +104,7 @@ class ExampleScenario(DomainResource):
     process: PyList[ExampleScenarioProcess] | None = Field(None, alias="process", serialization_alias="process")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     url: str | None = Field(None, alias="url", serialization_alias="url")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
     version: str | None = Field(None, alias="version", serialization_alias="version")

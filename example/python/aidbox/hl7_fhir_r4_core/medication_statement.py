@@ -39,9 +39,9 @@ class MedicationStatement(DomainResource):
     part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    status: Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold", "unknown", "not-taken"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "completed", "entered-in-error", "intended", "stopped", "on-hold", "unknown", "not-taken"] = Field(alias="status", serialization_alias="status")
     status_reason: PyList[CodeableConcept] | None = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

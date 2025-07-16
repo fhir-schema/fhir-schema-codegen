@@ -18,7 +18,7 @@ export interface AuditEventAgent extends BackboneElement {
     network?: AuditEventAgentNetwork;
     policy?: string[];
     purposeOfUse?: CodeableConcept[];
-    requestor?: boolean;
+    requestor: boolean;
     role?: CodeableConcept[];
     type?: CodeableConcept;
     who?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
@@ -42,13 +42,13 @@ export interface AuditEventEntity extends BackboneElement {
 }
 
 export interface AuditEventEntityDetail extends BackboneElement {
-    type?: string;
+    type: string;
     valueBase64Binary?: string;
     valueString?: string;
 }
 
 export interface AuditEventSource extends BackboneElement {
-    observer?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    observer: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     site?: string;
     type?: Coding[];
 }
@@ -56,7 +56,7 @@ export interface AuditEventSource extends BackboneElement {
 export interface AuditEvent extends DomainResource {
     action?: 'C' | 'R' | 'U' | 'D' | 'E';
     _action?: Element;
-    agent?: AuditEventAgent[];
+    agent: AuditEventAgent[];
     entity?: AuditEventEntity[];
     outcome?: '0' | '4' | '8' | '12';
     _outcome?: Element;
@@ -64,10 +64,10 @@ export interface AuditEvent extends DomainResource {
     _outcomeDesc?: Element;
     period?: Period;
     purposeOfEvent?: CodeableConcept[];
-    recorded?: string;
+    recorded: string;
     _recorded?: Element;
-    source?: AuditEventSource;
+    source: AuditEventSource;
     subtype?: Coding[];
-    type?: Coding;
+    type: Coding;
 }
 

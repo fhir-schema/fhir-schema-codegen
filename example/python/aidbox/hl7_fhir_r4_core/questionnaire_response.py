@@ -18,7 +18,7 @@ class QuestionnaireResponseItem(BackboneElement):
     answer: PyList[QuestionnaireResponseItemAnswer] | None = Field(None, alias="answer", serialization_alias="answer")
     definition: str | None = Field(None, alias="definition", serialization_alias="definition")
     item: PyList[QuestionnaireResponseItem] | None = Field(None, alias="item", serialization_alias="item")
-    link_id: str | None = Field(None, alias="linkId", serialization_alias="linkId")
+    link_id: str = Field(alias="linkId", serialization_alias="linkId")
     text: str | None = Field(None, alias="text", serialization_alias="text")
 
 class QuestionnaireResponseItemAnswer(BackboneElement):
@@ -59,7 +59,7 @@ class QuestionnaireResponse(DomainResource):
     part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
     questionnaire: str | None = Field(None, alias="questionnaire", serialization_alias="questionnaire")
     source: Reference | None = Field(None, alias="source", serialization_alias="source")
-    status: Literal["in-progress", "completed", "amended", "entered-in-error", "stopped"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["in-progress", "completed", "amended", "entered-in-error", "stopped"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:

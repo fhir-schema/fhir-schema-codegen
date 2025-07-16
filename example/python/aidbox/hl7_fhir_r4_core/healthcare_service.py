@@ -29,7 +29,7 @@ class HealthcareServiceEligibility(BackboneElement):
 class HealthcareServiceNotAvailable(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: str | None = Field(None, alias="description", serialization_alias="description")
+    description: str = Field(alias="description", serialization_alias="description")
     during: Period | None = Field(None, alias="during", serialization_alias="during")
 
 

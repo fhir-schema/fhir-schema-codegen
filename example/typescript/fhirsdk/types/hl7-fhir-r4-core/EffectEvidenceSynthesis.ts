@@ -45,7 +45,7 @@ export interface EffectEvidenceSynthesisEffectEstimatePrecisionEstimate extends 
 export interface EffectEvidenceSynthesisResultsByExposure extends BackboneElement {
     description?: string;
     exposureState?: 'exposure' | 'exposure-alternative';
-    riskEvidenceSynthesis?: Reference<'RiskEvidenceSynthesis'>;
+    riskEvidenceSynthesis: Reference<'RiskEvidenceSynthesis'>;
     variantState?: CodeableConcept;
 }
 
@@ -71,8 +71,8 @@ export interface EffectEvidenceSynthesis extends DomainResource {
     effectEstimate?: EffectEvidenceSynthesisEffectEstimate[];
     effectivePeriod?: Period;
     endorser?: ContactDetail[];
-    exposure?: Reference<'EvidenceVariable'>;
-    exposureAlternative?: Reference<'EvidenceVariable'>;
+    exposure: Reference<'EvidenceVariable'>;
+    exposureAlternative: Reference<'EvidenceVariable'>;
     identifier?: Identifier[];
     jurisdiction?: CodeableConcept[];
     lastReviewDate?: string;
@@ -80,15 +80,15 @@ export interface EffectEvidenceSynthesis extends DomainResource {
     name?: string;
     _name?: Element;
     note?: Annotation[];
-    outcome?: Reference<'EvidenceVariable'>;
-    population?: Reference<'EvidenceVariable'>;
+    outcome: Reference<'EvidenceVariable'>;
+    population: Reference<'EvidenceVariable'>;
     publisher?: string;
     _publisher?: Element;
     relatedArtifact?: RelatedArtifact[];
     resultsByExposure?: EffectEvidenceSynthesisResultsByExposure[];
     reviewer?: ContactDetail[];
     sampleSize?: EffectEvidenceSynthesisSampleSize;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     studyType?: CodeableConcept;
     synthesisType?: CodeableConcept;

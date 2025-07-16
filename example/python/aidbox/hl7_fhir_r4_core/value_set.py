@@ -17,7 +17,7 @@ class ValueSetCompose(BackboneElement):
     
     exclude: PyList[ValueSetComposeInclude] | None = Field(None, alias="exclude", serialization_alias="exclude")
     inactive: bool | None = Field(None, alias="inactive", serialization_alias="inactive")
-    include: PyList[ValueSetComposeInclude] | None = Field(None, alias="include", serialization_alias="include")
+    include: PyList[ValueSetComposeInclude] = Field(alias="include", serialization_alias="include")
     locked_date: str | None = Field(None, alias="lockedDate", serialization_alias="lockedDate")
 
 class ValueSetComposeInclude(BackboneElement):
@@ -32,7 +32,7 @@ class ValueSetComposeInclude(BackboneElement):
 class ValueSetComposeIncludeConcept(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
+    code: str = Field(alias="code", serialization_alias="code")
     designation: PyList[ValueSetComposeIncludeConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
     display: str | None = Field(None, alias="display", serialization_alias="display")
 
@@ -41,14 +41,14 @@ class ValueSetComposeIncludeConceptDesignation(BackboneElement):
     
     language: str | None = Field(None, alias="language", serialization_alias="language")
     use: Coding | None = Field(None, alias="use", serialization_alias="use")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class ValueSetComposeIncludeFilter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    op: Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"] | None = Field(None, alias="op", serialization_alias="op")
-    property: str | None = Field(None, alias="property", serialization_alias="property")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    op: Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"] = Field(alias="op", serialization_alias="op")
+    property: str = Field(alias="property", serialization_alias="property")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class ValueSetExpansion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -57,7 +57,7 @@ class ValueSetExpansion(BackboneElement):
     identifier: str | None = Field(None, alias="identifier", serialization_alias="identifier")
     offset: int | None = Field(None, alias="offset", serialization_alias="offset")
     parameter: PyList[ValueSetExpansionParameter] | None = Field(None, alias="parameter", serialization_alias="parameter")
-    timestamp: str | None = Field(None, alias="timestamp", serialization_alias="timestamp")
+    timestamp: str = Field(alias="timestamp", serialization_alias="timestamp")
     total: int | None = Field(None, alias="total", serialization_alias="total")
 
 class ValueSetExpansionContains(BackboneElement):
@@ -75,7 +75,7 @@ class ValueSetExpansionContains(BackboneElement):
 class ValueSetExpansionParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
     value_code: str | None = Field(None, alias="valueCode", serialization_alias="valueCode")
     value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
@@ -109,7 +109,7 @@ class ValueSet(DomainResource):
     name: str | None = Field(None, alias="name", serialization_alias="name")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     url: str | None = Field(None, alias="url", serialization_alias="url")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")

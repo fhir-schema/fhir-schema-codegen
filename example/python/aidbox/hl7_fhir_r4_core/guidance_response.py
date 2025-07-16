@@ -38,7 +38,7 @@ class GuidanceResponse(DomainResource):
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     request_identifier: Identifier | None = Field(None, alias="requestIdentifier", serialization_alias="requestIdentifier")
     result: Reference | None = Field(None, alias="result", serialization_alias="result")
-    status: Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:

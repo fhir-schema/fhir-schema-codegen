@@ -16,7 +16,7 @@ export interface DocumentManifestRelated extends BackboneElement {
 
 export interface DocumentManifest extends DomainResource {
     author?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
-    content?: Reference<'Resource'>[];
+    content: Reference<'Resource'>[];
     created?: string;
     _created?: Element;
     description?: string;
@@ -27,7 +27,7 @@ export interface DocumentManifest extends DomainResource {
     related?: DocumentManifestRelated[];
     source?: string;
     _source?: Element;
-    status?: 'current' | 'superseded' | 'entered-in-error';
+    status: 'current' | 'superseded' | 'entered-in-error';
     _status?: Element;
     subject?: Reference<'Device' | 'Group' | 'Patient' | 'Practitioner'>;
     type?: CodeableConcept;

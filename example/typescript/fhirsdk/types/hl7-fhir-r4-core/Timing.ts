@@ -18,15 +18,15 @@ export interface TimingRepeat extends BackboneElement {
     dayOfWeek?: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'[];
     duration?: number;
     durationMax?: number;
-    durationUnit?: string;
+    durationUnit?: 's' | 'min' | 'h' | 'd' | 'wk' | 'mo' | 'a';
     frequency?: number;
     frequencyMax?: number;
     offset?: number;
     period?: number;
     periodMax?: number;
-    periodUnit?: string;
+    periodUnit?: 's' | 'min' | 'h' | 'd' | 'wk' | 'mo' | 'a';
     timeOfDay?: string[];
-    when?: 'MORN' | 'MORN.early' | 'MORN.late' | 'NOON' | 'AFT' | 'AFT.early' | 'AFT.late' | 'EVE' | 'EVE.early' | 'EVE.late' | 'NIGHT' | 'PHS' | 'HS' | 'WAKE' | 'C' | 'CM' | 'CD' | 'CV' | 'AC' | 'ACM' | 'ACD' | 'ACV' | 'PC' | 'PCM' | 'PCD' | 'PCV' | 'AC' | 'ACD' | 'ACM' | 'ACV' | 'C' | 'HS' | 'IC' | 'ICD' | 'ICM' | 'ICV' | 'PC' | 'PCD' | 'PCM' | 'PCV' | 'WAKE'[];
+    when?: 'MORN' | 'MORN.early' | 'MORN.late' | 'NOON' | 'AFT' | 'AFT.early' | 'AFT.late' | 'EVE' | 'EVE.early' | 'EVE.late' | 'NIGHT' | 'PHS' | 'HS' | 'WAKE' | 'C' | 'CM' | 'CD' | 'CV' | 'AC' | 'ACM' | 'ACD' | 'ACV' | 'PC' | 'PCM' | 'PCD' | 'PCV'[];
 }
 
 export interface Timing extends BackboneElement {

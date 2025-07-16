@@ -16,7 +16,7 @@ class MedicinalProductContraindicationOtherTherapy(BackboneElement):
     
     medication_codeable_concept: CodeableConcept | None = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
     medication_reference: Reference | None = Field(None, alias="medicationReference", serialization_alias="medicationReference")
-    therapy_relationship_type: CodeableConcept | None = Field(None, alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
+    therapy_relationship_type: CodeableConcept = Field(alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
 
 
 class MedicinalProductContraindication(DomainResource):

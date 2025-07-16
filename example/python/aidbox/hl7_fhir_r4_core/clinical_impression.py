@@ -22,7 +22,7 @@ class ClinicalImpressionFinding(BackboneElement):
 class ClinicalImpressionInvestigation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     item: PyList[Reference] | None = Field(None, alias="item", serialization_alias="item")
 
 
@@ -53,9 +53,9 @@ class ClinicalImpression(DomainResource):
     prognosis_codeable_concept: PyList[CodeableConcept] | None = Field(None, alias="prognosisCodeableConcept", serialization_alias="prognosisCodeableConcept")
     prognosis_reference: PyList[Reference] | None = Field(None, alias="prognosisReference", serialization_alias="prognosisReference")
     protocol: PyList[str] | None = Field(None, alias="protocol", serialization_alias="protocol")
-    status: Literal["in-progress", "completed", "entered-in-error", "preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["in-progress", "completed", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     summary: str | None = Field(None, alias="summary", serialization_alias="summary")
     supporting_info: PyList[Reference] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
     

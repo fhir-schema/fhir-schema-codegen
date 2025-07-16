@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ChargeItemPerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
@@ -32,7 +32,7 @@ class ChargeItem(DomainResource):
     
     account: PyList[Reference] | None = Field(None, alias="account", serialization_alias="account")
     bodysite: PyList[CodeableConcept] | None = Field(None, alias="bodysite", serialization_alias="bodysite")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     context: Reference | None = Field(None, alias="context", serialization_alias="context")
     cost_center: Reference | None = Field(None, alias="costCenter", serialization_alias="costCenter")
     definition_canonical: PyList[str] | None = Field(None, alias="definitionCanonical", serialization_alias="definitionCanonical")
@@ -56,8 +56,8 @@ class ChargeItem(DomainResource):
     reason: PyList[CodeableConcept] | None = Field(None, alias="reason", serialization_alias="reason")
     requesting_organization: Reference | None = Field(None, alias="requestingOrganization", serialization_alias="requestingOrganization")
     service: PyList[Reference] | None = Field(None, alias="service", serialization_alias="service")
-    status: Literal["planned", "billable", "not-billable", "aborted", "billed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    status: Literal["planned", "billable", "not-billable", "aborted", "billed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     supporting_information: PyList[Reference] | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
     
     def to_json(self, indent: int | None = None) -> str:

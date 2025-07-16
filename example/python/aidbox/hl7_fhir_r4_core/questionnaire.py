@@ -24,14 +24,14 @@ class QuestionnaireItem(BackboneElement):
     enable_when: PyList[QuestionnaireItemEnableWhen] | None = Field(None, alias="enableWhen", serialization_alias="enableWhen")
     initial: PyList[QuestionnaireItemInitial] | None = Field(None, alias="initial", serialization_alias="initial")
     item: PyList[QuestionnaireItem] | None = Field(None, alias="item", serialization_alias="item")
-    link_id: str | None = Field(None, alias="linkId", serialization_alias="linkId")
+    link_id: str = Field(alias="linkId", serialization_alias="linkId")
     max_length: int | None = Field(None, alias="maxLength", serialization_alias="maxLength")
     prefix: str | None = Field(None, alias="prefix", serialization_alias="prefix")
     read_only: bool | None = Field(None, alias="readOnly", serialization_alias="readOnly")
     repeats: bool | None = Field(None, alias="repeats", serialization_alias="repeats")
     required: bool | None = Field(None, alias="required", serialization_alias="required")
     text: str | None = Field(None, alias="text", serialization_alias="text")
-    type: Literal["group", "display", "question"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["group", "display", "question", "boolean", "decimal", "integer", "date", "dateTime", "time", "string", "text", "url", "choice", "open-choice", "attachment", "reference", "quantity"] = Field(alias="type", serialization_alias="type")
 
 class QuestionnaireItemAnswerOption(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -57,8 +57,8 @@ class QuestionnaireItemEnableWhen(BackboneElement):
     answer_reference: Reference | None = Field(None, alias="answerReference", serialization_alias="answerReference")
     answer_string: str | None = Field(None, alias="answerString", serialization_alias="answerString")
     answer_time: str | None = Field(None, alias="answerTime", serialization_alias="answerTime")
-    operator: Literal["exists", "=", "!=", ">", "<", ">=", "<="] | None = Field(None, alias="operator", serialization_alias="operator")
-    question: str | None = Field(None, alias="question", serialization_alias="question")
+    operator: Literal["exists", "=", "!=", ">", "<", ">=", "<="] = Field(alias="operator", serialization_alias="operator")
+    question: str = Field(alias="question", serialization_alias="question")
 
 class QuestionnaireItemInitial(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -104,7 +104,7 @@ class Questionnaire(DomainResource):
     name: str | None = Field(None, alias="name", serialization_alias="name")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     subject_type: PyList[Literal["Account", "ActivityDefinition", "AdverseEvent", "AllergyIntolerance", "Appointment", "AppointmentResponse", "AuditEvent", "Basic", "Binary", "BiologicallyDerivedProduct", "BodyStructure", "Bundle", "CapabilityStatement", "CarePlan", "CareTeam", "CatalogEntry", "ChargeItem", "ChargeItemDefinition", "Claim", "ClaimResponse", "ClinicalImpression", "CodeSystem", "Communication", "CommunicationRequest", "CompartmentDefinition", "Composition", "ConceptMap", "Condition", "Consent", "Contract", "Coverage", "CoverageEligibilityRequest", "CoverageEligibilityResponse", "DetectedIssue", "Device", "DeviceDefinition", "DeviceMetric", "DeviceRequest", "DeviceUseStatement", "DiagnosticReport", "DocumentManifest", "DocumentReference", "DomainResource", "EffectEvidenceSynthesis", "Encounter", "Endpoint", "EnrollmentRequest", "EnrollmentResponse", "EpisodeOfCare", "EventDefinition", "Evidence", "EvidenceVariable", "ExampleScenario", "ExplanationOfBenefit", "FamilyMemberHistory", "Flag", "Goal", "GraphDefinition", "Group", "GuidanceResponse", "HealthcareService", "ImagingStudy", "Immunization", "ImmunizationEvaluation", "ImmunizationRecommendation", "ImplementationGuide", "InsurancePlan", "Invoice", "Library", "Linkage", "List", "Location", "Measure", "MeasureReport", "Media", "Medication", "MedicationAdministration", "MedicationDispense", "MedicationKnowledge", "MedicationRequest", "MedicationStatement", "MedicinalProduct", "MedicinalProductAuthorization", "MedicinalProductContraindication", "MedicinalProductIndication", "MedicinalProductIngredient", "MedicinalProductInteraction", "MedicinalProductManufactured", "MedicinalProductPackaged", "MedicinalProductPharmaceutical", "MedicinalProductUndesirableEffect", "MessageDefinition", "MessageHeader", "MolecularSequence", "NamingSystem", "NutritionOrder", "Observation", "ObservationDefinition", "OperationDefinition", "OperationOutcome", "Organization", "OrganizationAffiliation", "Parameters", "Patient", "PaymentNotice", "PaymentReconciliation", "Person", "PlanDefinition", "Practitioner", "PractitionerRole", "Procedure", "Provenance", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "RequestGroup", "ResearchDefinition", "ResearchElementDefinition", "ResearchStudy", "ResearchSubject", "Resource", "RiskAssessment", "RiskEvidenceSynthesis", "Schedule", "SearchParameter", "ServiceRequest", "Slot", "Specimen", "SpecimenDefinition", "StructureDefinition", "StructureMap", "Subscription", "Substance", "SubstanceNucleicAcid", "SubstancePolymer", "SubstanceProtein", "SubstanceReferenceInformation", "SubstanceSourceMaterial", "SubstanceSpecification", "SupplyDelivery", "SupplyRequest", "Task", "TerminologyCapabilities", "TestReport", "TestScript", "ValueSet", "VerificationResult", "VisionPrescription"]] | None = Field(None, alias="subjectType", serialization_alias="subjectType")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     url: str | None = Field(None, alias="url", serialization_alias="url")

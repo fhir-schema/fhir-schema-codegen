@@ -15,7 +15,7 @@ import { Reference } from './Reference';
 
 
 export interface ClaimResponseAddItem extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
+    adjudication: ClaimResponseItemAdjudication[];
     bodySite?: CodeableConcept;
     detail?: ClaimResponseAddItemDetail[];
     detailSequence?: number[];
@@ -27,7 +27,7 @@ export interface ClaimResponseAddItem extends BackboneElement {
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>[];
     quantity?: Quantity;
@@ -39,30 +39,30 @@ export interface ClaimResponseAddItem extends BackboneElement {
 }
 
 export interface ClaimResponseAddItemDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
+    adjudication: ClaimResponseItemAdjudication[];
     factor?: number;
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     quantity?: Quantity;
     subDetail?: ClaimResponseAddItemDetailSubDetail[];
     unitPrice?: Money;
 }
 
 export interface ClaimResponseAddItemDetailSubDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
+    adjudication: ClaimResponseItemAdjudication[];
     factor?: number;
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     quantity?: Quantity;
     unitPrice?: Money;
 }
 
 export interface ClaimResponseError extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     detailSequence?: number;
     itemSequence?: number;
     subDetailSequence?: number;
@@ -71,28 +71,28 @@ export interface ClaimResponseError extends BackboneElement {
 export interface ClaimResponseInsurance extends BackboneElement {
     businessArrangement?: string;
     claimResponse?: Reference<'ClaimResponse'>;
-    coverage?: Reference<'Coverage'>;
-    focal?: boolean;
-    sequence?: number;
+    coverage: Reference<'Coverage'>;
+    focal: boolean;
+    sequence: number;
 }
 
 export interface ClaimResponseItem extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
+    adjudication: ClaimResponseItemAdjudication[];
     detail?: ClaimResponseItemDetail[];
-    itemSequence?: number;
+    itemSequence: number;
     noteNumber?: number[];
 }
 
 export interface ClaimResponseItemAdjudication extends BackboneElement {
     amount?: Money;
-    category?: CodeableConcept;
+    category: CodeableConcept;
     reason?: CodeableConcept;
     value?: number;
 }
 
 export interface ClaimResponseItemDetail extends BackboneElement {
-    adjudication?: ClaimResponseItemAdjudication[];
-    detailSequence?: number;
+    adjudication: ClaimResponseItemAdjudication[];
+    detailSequence: number;
     noteNumber?: number[];
     subDetail?: ClaimResponseItemDetailSubDetail[];
 }
@@ -100,35 +100,35 @@ export interface ClaimResponseItemDetail extends BackboneElement {
 export interface ClaimResponseItemDetailSubDetail extends BackboneElement {
     adjudication?: ClaimResponseItemAdjudication[];
     noteNumber?: number[];
-    subDetailSequence?: number;
+    subDetailSequence: number;
 }
 
 export interface ClaimResponsePayment extends BackboneElement {
     adjustment?: Money;
     adjustmentReason?: CodeableConcept;
-    amount?: Money;
+    amount: Money;
     date?: string;
     identifier?: Identifier;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface ClaimResponseProcessNote extends BackboneElement {
     language?: CodeableConcept;
     number?: number;
-    text?: string;
+    text: string;
     type?: 'display' | 'print' | 'printoper';
 }
 
 export interface ClaimResponseTotal extends BackboneElement {
-    amount?: Money;
-    category?: CodeableConcept;
+    amount: Money;
+    category: CodeableConcept;
 }
 
 export interface ClaimResponse extends DomainResource {
     addItem?: ClaimResponseAddItem[];
     adjudication?: ClaimResponseItemAdjudication[];
     communicationRequest?: Reference<'CommunicationRequest'>[];
-    created?: string;
+    created: string;
     _created?: Element;
     disposition?: string;
     _disposition?: Element;
@@ -138,11 +138,11 @@ export interface ClaimResponse extends DomainResource {
     fundsReserve?: CodeableConcept;
     identifier?: Identifier[];
     insurance?: ClaimResponseInsurance[];
-    insurer?: Reference<'Organization'>;
+    insurer: Reference<'Organization'>;
     item?: ClaimResponseItem[];
-    outcome?: 'queued' | 'complete' | 'error' | 'partial';
+    outcome: 'queued' | 'complete' | 'error' | 'partial';
     _outcome?: Element;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     payeeType?: CodeableConcept;
     payment?: ClaimResponsePayment;
     preAuthPeriod?: Period;
@@ -151,12 +151,12 @@ export interface ClaimResponse extends DomainResource {
     processNote?: ClaimResponseProcessNote[];
     request?: Reference<'Claim'>;
     requestor?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
     subType?: CodeableConcept;
     total?: ClaimResponseTotal[];
-    type?: CodeableConcept;
-    use?: 'claim' | 'preauthorization' | 'predetermination';
+    type: CodeableConcept;
+    use: 'claim' | 'preauthorization' | 'predetermination';
     _use?: Element;
 }
 

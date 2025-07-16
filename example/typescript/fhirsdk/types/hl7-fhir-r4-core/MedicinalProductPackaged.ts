@@ -15,7 +15,7 @@ import { Reference } from './Reference';
 
 export interface MedicinalProductPackagedBatchIdentifier extends BackboneElement {
     immediatePackaging?: Identifier;
-    outerPackaging?: Identifier;
+    outerPackaging: Identifier;
 }
 
 export interface MedicinalProductPackagedPackageItem extends BackboneElement {
@@ -28,9 +28,9 @@ export interface MedicinalProductPackagedPackageItem extends BackboneElement {
     otherCharacteristics?: CodeableConcept[];
     packageItem?: MedicinalProductPackagedPackageItem[];
     physicalCharacteristics?: ProdCharacteristic;
-    quantity?: Quantity;
+    quantity: Quantity;
     shelfLifeStorage?: ProductShelfLife[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface MedicinalProductPackaged extends DomainResource {
@@ -42,7 +42,7 @@ export interface MedicinalProductPackaged extends DomainResource {
     manufacturer?: Reference<'Organization'>[];
     marketingAuthorization?: Reference<'MedicinalProductAuthorization'>;
     marketingStatus?: MarketingStatus[];
-    packageItem?: MedicinalProductPackagedPackageItem[];
+    packageItem: MedicinalProductPackagedPackageItem[];
     subject?: Reference<'MedicinalProduct'>[];
 }
 

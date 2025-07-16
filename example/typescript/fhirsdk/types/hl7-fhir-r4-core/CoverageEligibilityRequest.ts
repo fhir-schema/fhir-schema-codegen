@@ -14,7 +14,7 @@ import { Reference } from './Reference';
 
 export interface CoverageEligibilityRequestInsurance extends BackboneElement {
     businessArrangement?: string;
-    coverage?: Reference<'Coverage'>;
+    coverage: Reference<'Coverage'>;
     focal?: boolean;
 }
 
@@ -38,28 +38,28 @@ export interface CoverageEligibilityRequestItemDiagnosis extends BackboneElement
 
 export interface CoverageEligibilityRequestSupportingInfo extends BackboneElement {
     appliesToAll?: boolean;
-    information?: Reference<'Resource'>;
-    sequence?: number;
+    information: Reference<'Resource'>;
+    sequence: number;
 }
 
 export interface CoverageEligibilityRequest extends DomainResource {
-    created?: string;
+    created: string;
     _created?: Element;
     enterer?: Reference<'Practitioner' | 'PractitionerRole'>;
     facility?: Reference<'Location'>;
     identifier?: Identifier[];
     insurance?: CoverageEligibilityRequestInsurance[];
-    insurer?: Reference<'Organization'>;
+    insurer: Reference<'Organization'>;
     item?: CoverageEligibilityRequestItem[];
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     priority?: CodeableConcept;
     provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    purpose?: 'auth-requirements' | 'benefits' | 'discovery' | 'validation'[];
+    purpose: 'auth-requirements' | 'benefits' | 'discovery' | 'validation'[];
     _purpose?: Element;
     servicedDate?: string;
     _servicedDate?: Element;
     servicedPeriod?: Period;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
     supportingInfo?: CoverageEligibilityRequestSupportingInfo[];
 }

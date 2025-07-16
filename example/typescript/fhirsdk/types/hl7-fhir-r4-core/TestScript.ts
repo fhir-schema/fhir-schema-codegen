@@ -13,43 +13,43 @@ import { UsageContext } from './UsageContext';
 
 
 export interface TestScriptDestination extends BackboneElement {
-    index?: number;
-    profile?: Coding;
+    index: number;
+    profile: Coding;
 }
 
 export interface TestScriptFixture extends BackboneElement {
-    autocreate?: boolean;
-    autodelete?: boolean;
+    autocreate: boolean;
+    autodelete: boolean;
     resource?: Reference<'Resource'>;
 }
 
 export interface TestScriptMetadata extends BackboneElement {
-    capability?: TestScriptMetadataCapability[];
+    capability: TestScriptMetadataCapability[];
     link?: TestScriptMetadataLink[];
 }
 
 export interface TestScriptMetadataCapability extends BackboneElement {
-    capabilities?: string;
+    capabilities: string;
     description?: string;
     destination?: number;
     link?: string[];
     origin?: number[];
-    required?: boolean;
-    validated?: boolean;
+    required: boolean;
+    validated: boolean;
 }
 
 export interface TestScriptMetadataLink extends BackboneElement {
     description?: string;
-    url?: string;
+    url: string;
 }
 
 export interface TestScriptOrigin extends BackboneElement {
-    index?: number;
-    profile?: Coding;
+    index: number;
+    profile: Coding;
 }
 
 export interface TestScriptSetup extends BackboneElement {
-    action?: TestScriptSetupAction[];
+    action: TestScriptSetupAction[];
 }
 
 export interface TestScriptSetupAction extends BackboneElement {
@@ -79,7 +79,7 @@ export interface TestScriptSetupActionAssert extends BackboneElement {
     sourceId?: string;
     validateProfileId?: string;
     value?: string;
-    warningOnly?: boolean;
+    warningOnly: boolean;
 }
 
 export interface TestScriptSetupActionOperation extends BackboneElement {
@@ -87,7 +87,7 @@ export interface TestScriptSetupActionOperation extends BackboneElement {
     contentType?: string;
     description?: string;
     destination?: number;
-    encodeRequestUrl?: boolean;
+    encodeRequestUrl: boolean;
     label?: string;
     method?: 'delete' | 'get' | 'options' | 'patch' | 'post' | 'put' | 'head';
     origin?: number;
@@ -103,20 +103,20 @@ export interface TestScriptSetupActionOperation extends BackboneElement {
 }
 
 export interface TestScriptSetupActionOperationRequestHeader extends BackboneElement {
-    field?: string;
-    value?: string;
+    field: string;
+    value: string;
 }
 
 export interface TestScriptTeardown extends BackboneElement {
-    action?: TestScriptTeardownAction[];
+    action: TestScriptTeardownAction[];
 }
 
 export interface TestScriptTeardownAction extends BackboneElement {
-    operation?: TestScriptSetupActionOperation;
+    operation: TestScriptSetupActionOperation;
 }
 
 export interface TestScriptTest extends BackboneElement {
-    action?: TestScriptTestAction[];
+    action: TestScriptTestAction[];
     description?: string;
     name?: string;
 }
@@ -132,7 +132,7 @@ export interface TestScriptVariable extends BackboneElement {
     expression?: string;
     headerField?: string;
     hint?: string;
-    name?: string;
+    name: string;
     path?: string;
     sourceId?: string;
 }
@@ -152,7 +152,7 @@ export interface TestScript extends DomainResource {
     identifier?: Identifier;
     jurisdiction?: CodeableConcept[];
     metadata?: TestScriptMetadata;
-    name?: string;
+    name: string;
     _name?: Element;
     origin?: TestScriptOrigin[];
     profile?: Reference<'Resource'>[];
@@ -161,13 +161,13 @@ export interface TestScript extends DomainResource {
     purpose?: string;
     _purpose?: Element;
     setup?: TestScriptSetup;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     teardown?: TestScriptTeardown;
     test?: TestScriptTest[];
     title?: string;
     _title?: Element;
-    url?: string;
+    url: string;
     _url?: Element;
     useContext?: UsageContext[];
     variable?: TestScriptVariable[];

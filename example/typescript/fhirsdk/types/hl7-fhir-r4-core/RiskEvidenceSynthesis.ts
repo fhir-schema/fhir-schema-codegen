@@ -72,15 +72,15 @@ export interface RiskEvidenceSynthesis extends DomainResource {
     name?: string;
     _name?: Element;
     note?: Annotation[];
-    outcome?: Reference<'EvidenceVariable'>;
-    population?: Reference<'EvidenceVariable'>;
+    outcome: Reference<'EvidenceVariable'>;
+    population: Reference<'EvidenceVariable'>;
     publisher?: string;
     _publisher?: Element;
     relatedArtifact?: RelatedArtifact[];
     reviewer?: ContactDetail[];
     riskEstimate?: RiskEvidenceSynthesisRiskEstimate;
     sampleSize?: RiskEvidenceSynthesisSampleSize;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     studyType?: CodeableConcept;
     synthesisType?: CodeableConcept;

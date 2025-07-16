@@ -9,7 +9,7 @@ export interface Annotation extends Element {
     authorReference?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'RelatedPerson'>;
     authorString?: string;
     _authorString?: Element;
-    text?: string;
+    text: string;
     _text?: Element;
     time?: string;
     _time?: Element;

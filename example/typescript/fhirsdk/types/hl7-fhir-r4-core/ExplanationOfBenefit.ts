@@ -35,7 +35,7 @@ export interface ExplanationOfBenefitAddItem extends BackboneElement {
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>[];
     quantity?: Quantity;
@@ -52,7 +52,7 @@ export interface ExplanationOfBenefitAddItemDetail extends BackboneElement {
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     quantity?: Quantity;
     subDetail?: ExplanationOfBenefitAddItemDetailSubDetail[];
     unitPrice?: Money;
@@ -64,13 +64,13 @@ export interface ExplanationOfBenefitAddItemDetailSubDetail extends BackboneElem
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     quantity?: Quantity;
     unitPrice?: Money;
 }
 
 export interface ExplanationOfBenefitBenefitBalance extends BackboneElement {
-    category?: CodeableConcept;
+    category: CodeableConcept;
     description?: string;
     excluded?: boolean;
     financial?: ExplanationOfBenefitBenefitBalanceFinancial[];
@@ -84,17 +84,17 @@ export interface ExplanationOfBenefitBenefitBalanceFinancial extends BackboneEle
     allowedMoney?: Money;
     allowedString?: string;
     allowedUnsignedInt?: number;
-    type?: CodeableConcept;
+    type: CodeableConcept;
     usedMoney?: Money;
     usedUnsignedInt?: number;
 }
 
 export interface ExplanationOfBenefitCareTeam extends BackboneElement {
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    provider: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     qualification?: CodeableConcept;
     responsible?: boolean;
     role?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
 }
 
 export interface ExplanationOfBenefitDiagnosis extends BackboneElement {
@@ -102,13 +102,13 @@ export interface ExplanationOfBenefitDiagnosis extends BackboneElement {
     diagnosisReference?: Reference<'Condition'>;
     onAdmission?: CodeableConcept;
     packageCode?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     type?: CodeableConcept[];
 }
 
 export interface ExplanationOfBenefitInsurance extends BackboneElement {
-    coverage?: Reference<'Coverage'>;
-    focal?: boolean;
+    coverage: Reference<'Coverage'>;
+    focal: boolean;
     preAuthRef?: string[];
 }
 
@@ -129,11 +129,11 @@ export interface ExplanationOfBenefitItem extends BackboneElement {
     net?: Money;
     noteNumber?: number[];
     procedureSequence?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     quantity?: Quantity;
     revenue?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     servicedDate?: string;
     servicedPeriod?: Period;
     subSite?: CodeableConcept[];
@@ -143,7 +143,7 @@ export interface ExplanationOfBenefitItem extends BackboneElement {
 
 export interface ExplanationOfBenefitItemAdjudication extends BackboneElement {
     amount?: Money;
-    category?: CodeableConcept;
+    category: CodeableConcept;
     reason?: CodeableConcept;
     value?: number;
 }
@@ -155,11 +155,11 @@ export interface ExplanationOfBenefitItemDetail extends BackboneElement {
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     quantity?: Quantity;
     revenue?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     subDetail?: ExplanationOfBenefitItemDetailSubDetail[];
     udi?: Reference<'Device'>[];
     unitPrice?: Money;
@@ -172,11 +172,11 @@ export interface ExplanationOfBenefitItemDetailSubDetail extends BackboneElement
     modifier?: CodeableConcept[];
     net?: Money;
     noteNumber?: number[];
-    productOrService?: CodeableConcept;
+    productOrService: CodeableConcept;
     programCode?: CodeableConcept[];
     quantity?: Quantity;
     revenue?: CodeableConcept;
-    sequence?: number;
+    sequence: number;
     udi?: Reference<'Device'>[];
     unitPrice?: Money;
 }
@@ -199,7 +199,7 @@ export interface ExplanationOfBenefitProcedure extends BackboneElement {
     date?: string;
     procedureCodeableConcept?: CodeableConcept;
     procedureReference?: Reference<'Procedure'>;
-    sequence?: number;
+    sequence: number;
     type?: CodeableConcept[];
     udi?: Reference<'Device'>[];
 }
@@ -218,10 +218,10 @@ export interface ExplanationOfBenefitRelated extends BackboneElement {
 }
 
 export interface ExplanationOfBenefitSupportingInfo extends BackboneElement {
-    category?: CodeableConcept;
+    category: CodeableConcept;
     code?: CodeableConcept;
     reason?: Coding;
-    sequence?: number;
+    sequence: number;
     timingDate?: string;
     timingPeriod?: Period;
     valueAttachment?: Attachment;
@@ -232,8 +232,8 @@ export interface ExplanationOfBenefitSupportingInfo extends BackboneElement {
 }
 
 export interface ExplanationOfBenefitTotal extends BackboneElement {
-    amount?: Money;
-    category?: CodeableConcept;
+    amount: Money;
+    category: CodeableConcept;
 }
 
 export interface ExplanationOfBenefit extends DomainResource {
@@ -246,7 +246,7 @@ export interface ExplanationOfBenefit extends DomainResource {
     careTeam?: ExplanationOfBenefitCareTeam[];
     claim?: Reference<'Claim'>;
     claimResponse?: Reference<'ClaimResponse'>;
-    created?: string;
+    created: string;
     _created?: Element;
     diagnosis?: ExplanationOfBenefitDiagnosis[];
     disposition?: string;
@@ -258,13 +258,13 @@ export interface ExplanationOfBenefit extends DomainResource {
     fundsReserve?: CodeableConcept;
     fundsReserveRequested?: CodeableConcept;
     identifier?: Identifier[];
-    insurance?: ExplanationOfBenefitInsurance[];
-    insurer?: Reference<'Organization'>;
+    insurance: ExplanationOfBenefitInsurance[];
+    insurer: Reference<'Organization'>;
     item?: ExplanationOfBenefitItem[];
     originalPrescription?: Reference<'MedicationRequest'>;
-    outcome?: 'queued' | 'complete' | 'error' | 'partial';
+    outcome: 'queued' | 'complete' | 'error' | 'partial';
     _outcome?: Element;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     payee?: ExplanationOfBenefitPayee;
     payment?: ExplanationOfBenefitPayment;
     preAuthRef?: string[];
@@ -276,16 +276,16 @@ export interface ExplanationOfBenefit extends DomainResource {
     priority?: CodeableConcept;
     procedure?: ExplanationOfBenefitProcedure[];
     processNote?: ExplanationOfBenefitProcessNote[];
-    provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
+    provider: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     referral?: Reference<'ServiceRequest'>;
     related?: ExplanationOfBenefitRelated[];
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
     subType?: CodeableConcept;
     supportingInfo?: ExplanationOfBenefitSupportingInfo[];
     total?: ExplanationOfBenefitTotal[];
-    type?: CodeableConcept;
-    use?: 'claim' | 'preauthorization' | 'predetermination';
+    type: CodeableConcept;
+    use: 'claim' | 'preauthorization' | 'predetermination';
     _use?: Element;
 }
 

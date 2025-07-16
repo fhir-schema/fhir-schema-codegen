@@ -39,7 +39,7 @@ class Substance(DomainResource):
     )
     
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     ingredient: PyList[SubstanceIngredient] | None = Field(None, alias="ingredient", serialization_alias="ingredient")

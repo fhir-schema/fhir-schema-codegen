@@ -17,7 +17,7 @@ class AllergyIntoleranceReaction(BackboneElement):
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
     exposure_route: CodeableConcept | None = Field(None, alias="exposureRoute", serialization_alias="exposureRoute")
-    manifestation: PyList[CodeableConcept] | None = Field(None, alias="manifestation", serialization_alias="manifestation")
+    manifestation: PyList[CodeableConcept] = Field(alias="manifestation", serialization_alias="manifestation")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     onset: str | None = Field(None, alias="onset", serialization_alias="onset")
     severity: Literal["mild", "moderate", "severe"] | None = Field(None, alias="severity", serialization_alias="severity")
@@ -49,7 +49,7 @@ class AllergyIntolerance(DomainResource):
     onset_period: Period | None = Field(None, alias="onsetPeriod", serialization_alias="onsetPeriod")
     onset_range: Range | None = Field(None, alias="onsetRange", serialization_alias="onsetRange")
     onset_string: str | None = Field(None, alias="onsetString", serialization_alias="onsetString")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     reaction: PyList[AllergyIntoleranceReaction] | None = Field(None, alias="reaction", serialization_alias="reaction")
     recorded_date: str | None = Field(None, alias="recordedDate", serialization_alias="recordedDate")
     recorder: Reference | None = Field(None, alias="recorder", serialization_alias="recorder")

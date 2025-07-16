@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CodeSystemConcept(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
+    code: str = Field(alias="code", serialization_alias="code")
     concept: PyList[CodeSystemConcept] | None = Field(None, alias="concept", serialization_alias="concept")
     definition: str | None = Field(None, alias="definition", serialization_alias="definition")
     designation: PyList[CodeSystemConceptDesignation] | None = Field(None, alias="designation", serialization_alias="designation")
@@ -27,12 +27,12 @@ class CodeSystemConceptDesignation(BackboneElement):
     
     language: str | None = Field(None, alias="language", serialization_alias="language")
     use: Coding | None = Field(None, alias="use", serialization_alias="use")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class CodeSystemConceptProperty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
+    code: str = Field(alias="code", serialization_alias="code")
     value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
     value_code: str | None = Field(None, alias="valueCode", serialization_alias="valueCode")
     value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
@@ -44,17 +44,17 @@ class CodeSystemConceptProperty(BackboneElement):
 class CodeSystemFilter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
+    code: str = Field(alias="code", serialization_alias="code")
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    operator: PyList[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] | None = Field(None, alias="operator", serialization_alias="operator")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    operator: PyList[Literal["=", "is-a", "descendent-of", "is-not-a", "regex", "in", "not-in", "generalizes", "exists"]] = Field(alias="operator", serialization_alias="operator")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class CodeSystemProperty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
+    code: str = Field(alias="code", serialization_alias="code")
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    type: Literal["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["code", "Coding", "string", "integer", "boolean", "dateTime", "decimal"] = Field(alias="type", serialization_alias="type")
     uri: str | None = Field(None, alias="uri", serialization_alias="uri")
 
 
@@ -73,7 +73,7 @@ class CodeSystem(DomainResource):
     compositional: bool | None = Field(None, alias="compositional", serialization_alias="compositional")
     concept: PyList[CodeSystemConcept] | None = Field(None, alias="concept", serialization_alias="concept")
     contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
-    content: Literal["not-present", "example", "fragment", "complete", "supplement"] | None = Field(None, alias="content", serialization_alias="content")
+    content: Literal["not-present", "example", "fragment", "complete", "supplement"] = Field(alias="content", serialization_alias="content")
     copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
     count: int | None = Field(None, alias="count", serialization_alias="count")
     date: str | None = Field(None, alias="date", serialization_alias="date")
@@ -87,7 +87,7 @@ class CodeSystem(DomainResource):
     property: PyList[CodeSystemProperty] | None = Field(None, alias="property", serialization_alias="property")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     supplements: str | None = Field(None, alias="supplements", serialization_alias="supplements")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     url: str | None = Field(None, alias="url", serialization_alias="url")

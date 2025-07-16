@@ -14,10 +14,10 @@ export interface ResearchSubject extends DomainResource {
     _assignedArm?: Element;
     consent?: Reference<'Consent'>;
     identifier?: Identifier[];
-    individual?: Reference<'Patient'>;
+    individual: Reference<'Patient'>;
     period?: Period;
-    status?: 'candidate' | 'eligible' | 'follow-up' | 'ineligible' | 'not-registered' | 'off-study' | 'on-study' | 'on-study-intervention' | 'on-study-observation' | 'pending-on-study' | 'potential-candidate' | 'screening' | 'withdrawn';
+    status: 'candidate' | 'eligible' | 'follow-up' | 'ineligible' | 'not-registered' | 'off-study' | 'on-study' | 'on-study-intervention' | 'on-study-observation' | 'pending-on-study' | 'potential-candidate' | 'screening' | 'withdrawn';
     _status?: Element;
-    study?: Reference<'ResearchStudy'>;
+    study: Reference<'ResearchStudy'>;
 }
 

@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CompositionAttester(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    mode: Literal["personal", "professional", "legal", "official"] | None = Field(None, alias="mode", serialization_alias="mode")
+    mode: Literal["personal", "professional", "legal", "official"] = Field(alias="mode", serialization_alias="mode")
     party: Reference | None = Field(None, alias="party", serialization_alias="party")
     time: str | None = Field(None, alias="time", serialization_alias="time")
 
@@ -29,7 +29,7 @@ class CompositionEvent(BackboneElement):
 class CompositionRelatesTo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
+    code: Literal["replaces", "transforms", "signs", "appends"] = Field(alias="code", serialization_alias="code")
     target_identifier: Identifier | None = Field(None, alias="targetIdentifier", serialization_alias="targetIdentifier")
     target_reference: Reference | None = Field(None, alias="targetReference", serialization_alias="targetReference")
 
@@ -60,20 +60,20 @@ class Composition(DomainResource):
     )
     
     attester: PyList[CompositionAttester] | None = Field(None, alias="attester", serialization_alias="attester")
-    author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
+    author: PyList[Reference] = Field(alias="author", serialization_alias="author")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    confidentiality: Literal["U", "L", "M", "N", "R", "V", "_Confidentiality", "_ConfidentialityByAccessKind", "_ConfidentialityByInfoType", "_ConfidentialityModifiers"] | None = Field(None, alias="confidentiality", serialization_alias="confidentiality")
+    confidentiality: Literal["U", "L", "M", "N", "R", "V"] | None = Field(None, alias="confidentiality", serialization_alias="confidentiality")
     custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
-    date: str | None = Field(None, alias="date", serialization_alias="date")
+    date: str = Field(alias="date", serialization_alias="date")
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     event: PyList[CompositionEvent] | None = Field(None, alias="event", serialization_alias="event")
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
     relates_to: PyList[CompositionRelatesTo] | None = Field(None, alias="relatesTo", serialization_alias="relatesTo")
     section: PyList[CompositionSection] | None = Field(None, alias="section", serialization_alias="section")
-    status: Literal["preliminary", "final", "amended", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["preliminary", "final", "amended", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
-    title: str | None = Field(None, alias="title", serialization_alias="title")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    title: str = Field(alias="title", serialization_alias="title")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

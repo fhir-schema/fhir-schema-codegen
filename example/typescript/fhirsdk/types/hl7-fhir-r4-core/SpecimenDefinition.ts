@@ -16,7 +16,7 @@ export interface SpecimenDefinitionTypeTested extends BackboneElement {
     container?: SpecimenDefinitionTypeTestedContainer;
     handling?: SpecimenDefinitionTypeTestedHandling[];
     isDerived?: boolean;
-    preference?: 'preferred' | 'alternate';
+    preference: 'preferred' | 'alternate';
     rejectionCriterion?: CodeableConcept[];
     requirement?: string;
     retentionTime?: Duration;

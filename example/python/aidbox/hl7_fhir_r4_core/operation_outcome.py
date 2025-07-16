@@ -14,12 +14,12 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class OperationOutcomeIssue(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Literal["invalid", "security", "processing", "transient", "informational"] | None = Field(None, alias="code", serialization_alias="code")
+    code: Literal["invalid", "security", "processing", "transient", "informational", "structure", "required", "value", "invariant", "login", "unknown", "expired", "forbidden", "suppressed", "not-supported", "duplicate", "multiple-matches", "not-found", "too-long", "code-invalid", "extension", "too-costly", "business-rule", "conflict", "deleted", "lock-error", "no-store", "exception", "timeout", "incomplete", "throttled"] = Field(alias="code", serialization_alias="code")
     details: CodeableConcept | None = Field(None, alias="details", serialization_alias="details")
     diagnostics: str | None = Field(None, alias="diagnostics", serialization_alias="diagnostics")
     expression: PyList[str] | None = Field(None, alias="expression", serialization_alias="expression")
     location: PyList[str] | None = Field(None, alias="location", serialization_alias="location")
-    severity: Literal["fatal", "error", "warning", "information"] | None = Field(None, alias="severity", serialization_alias="severity")
+    severity: Literal["fatal", "error", "warning", "information"] = Field(alias="severity", serialization_alias="severity")
 
 
 class OperationOutcome(DomainResource):
@@ -33,7 +33,7 @@ class OperationOutcome(DomainResource):
         pattern='OperationOutcome'
     )
     
-    issue: PyList[OperationOutcomeIssue] | None = Field(None, alias="issue", serialization_alias="issue")
+    issue: PyList[OperationOutcomeIssue] = Field(alias="issue", serialization_alias="issue")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

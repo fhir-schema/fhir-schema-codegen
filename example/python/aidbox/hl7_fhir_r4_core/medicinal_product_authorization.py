@@ -28,7 +28,7 @@ class MedicinalProductAuthorizationProcedure(BackboneElement):
     date_date_time: str | None = Field(None, alias="dateDateTime", serialization_alias="dateDateTime")
     date_period: Period | None = Field(None, alias="datePeriod", serialization_alias="datePeriod")
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 
 class MedicinalProductAuthorization(DomainResource):

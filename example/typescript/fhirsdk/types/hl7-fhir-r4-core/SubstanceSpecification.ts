@@ -36,7 +36,7 @@ export interface SubstanceSpecificationName extends BackboneElement {
     domain?: CodeableConcept[];
     jurisdiction?: CodeableConcept[];
     language?: CodeableConcept[];
-    name?: string;
+    name: string;
     official?: SubstanceSpecificationNameOfficial[];
     preferred?: boolean;
     source?: Reference<'DocumentReference'>[];

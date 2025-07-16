@@ -23,11 +23,11 @@ class AppointmentResponse(DomainResource):
     )
     
     actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
-    appointment: Reference | None = Field(None, alias="appointment", serialization_alias="appointment")
+    appointment: Reference = Field(alias="appointment", serialization_alias="appointment")
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
     end: str | None = Field(None, alias="end", serialization_alias="end")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    participant_status: Literal["accepted", "declined", "tentative", "needs-action"] | None = Field(None, alias="participantStatus", serialization_alias="participantStatus")
+    participant_status: Literal["accepted", "declined", "tentative", "needs-action"] = Field(alias="participantStatus", serialization_alias="participantStatus")
     participant_type: PyList[CodeableConcept] | None = Field(None, alias="participantType", serialization_alias="participantType")
     start: str | None = Field(None, alias="start", serialization_alias="start")
     

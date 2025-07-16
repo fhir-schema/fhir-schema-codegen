@@ -12,12 +12,12 @@ import { Reference } from './Reference';
 
 
 export interface CoverageEligibilityResponseError extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
 }
 
 export interface CoverageEligibilityResponseInsurance extends BackboneElement {
     benefitPeriod?: Period;
-    coverage?: Reference<'Coverage'>;
+    coverage: Reference<'Coverage'>;
     inforce?: boolean;
     item?: CoverageEligibilityResponseInsuranceItem[];
 }
@@ -43,14 +43,14 @@ export interface CoverageEligibilityResponseInsuranceItemBenefit extends Backbon
     allowedMoney?: Money;
     allowedString?: string;
     allowedUnsignedInt?: number;
-    type?: CodeableConcept;
+    type: CodeableConcept;
     usedMoney?: Money;
     usedString?: string;
     usedUnsignedInt?: number;
 }
 
 export interface CoverageEligibilityResponse extends DomainResource {
-    created?: string;
+    created: string;
     _created?: Element;
     disposition?: string;
     _disposition?: Element;
@@ -58,20 +58,20 @@ export interface CoverageEligibilityResponse extends DomainResource {
     form?: CodeableConcept;
     identifier?: Identifier[];
     insurance?: CoverageEligibilityResponseInsurance[];
-    insurer?: Reference<'Organization'>;
-    outcome?: 'queued' | 'complete' | 'error' | 'partial';
+    insurer: Reference<'Organization'>;
+    outcome: 'queued' | 'complete' | 'error' | 'partial';
     _outcome?: Element;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     preAuthRef?: string;
     _preAuthRef?: Element;
-    purpose?: 'auth-requirements' | 'benefits' | 'discovery' | 'validation'[];
+    purpose: 'auth-requirements' | 'benefits' | 'discovery' | 'validation'[];
     _purpose?: Element;
-    request?: Reference<'CoverageEligibilityRequest'>;
+    request: Reference<'CoverageEligibilityRequest'>;
     requestor?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     servicedDate?: string;
     _servicedDate?: Element;
     servicedPeriod?: Period;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
 }
 

@@ -9,7 +9,7 @@ export interface Expression extends Element {
     _description?: Element;
     expression?: string;
     _expression?: Element;
-    language?: string;
+    language: string;
     _language?: Element;
     name?: string;
     _name?: Element;

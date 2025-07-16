@@ -26,12 +26,12 @@ class InvoiceLineItemPriceComponent(BackboneElement):
     amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
-    type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] = Field(alias="type", serialization_alias="type")
 
 class InvoiceParticipant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
 
 
@@ -56,7 +56,7 @@ class Invoice(DomainResource):
     participant: PyList[InvoiceParticipant] | None = Field(None, alias="participant", serialization_alias="participant")
     payment_terms: str | None = Field(None, alias="paymentTerms", serialization_alias="paymentTerms")
     recipient: Reference | None = Field(None, alias="recipient", serialization_alias="recipient")
-    status: Literal["draft", "issued", "balanced", "cancelled", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "issued", "balanced", "cancelled", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     total_gross: Money | None = Field(None, alias="totalGross", serialization_alias="totalGross")
     total_net: Money | None = Field(None, alias="totalNet", serialization_alias="totalNet")

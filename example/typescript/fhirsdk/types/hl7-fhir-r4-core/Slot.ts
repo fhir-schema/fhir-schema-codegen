@@ -11,18 +11,18 @@ export interface Slot extends DomainResource {
     appointmentType?: CodeableConcept;
     comment?: string;
     _comment?: Element;
-    end?: string;
+    end: string;
     _end?: Element;
     identifier?: Identifier[];
     overbooked?: boolean;
     _overbooked?: Element;
-    schedule?: Reference<'Schedule'>;
+    schedule: Reference<'Schedule'>;
     serviceCategory?: CodeableConcept[];
     serviceType?: CodeableConcept[];
     specialty?: CodeableConcept[];
-    start?: string;
+    start: string;
     _start?: Element;
-    status?: 'busy' | 'free' | 'busy-unavailable' | 'busy-tentative' | 'entered-in-error';
+    status: 'busy' | 'free' | 'busy-unavailable' | 'busy-tentative' | 'entered-in-error';
     _status?: Element;
 }
 

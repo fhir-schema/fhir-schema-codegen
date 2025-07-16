@@ -40,37 +40,37 @@ import { UsageContext } from './UsageContext';
 export interface StructureMapGroup extends BackboneElement {
     documentation?: string;
     extends?: string;
-    input?: StructureMapGroupInput[];
-    name?: string;
-    rule?: StructureMapGroupRule[];
-    typeMode?: 'none' | 'types' | 'type-and-types';
+    input: StructureMapGroupInput[];
+    name: string;
+    rule: StructureMapGroupRule[];
+    typeMode: 'none' | 'types' | 'type-and-types';
 }
 
 export interface StructureMapGroupInput extends BackboneElement {
     documentation?: string;
-    mode?: 'source' | 'target';
-    name?: string;
+    mode: 'source' | 'target';
+    name: string;
     type?: string;
 }
 
 export interface StructureMapGroupRule extends BackboneElement {
     dependent?: StructureMapGroupRuleDependent[];
     documentation?: string;
-    name?: string;
+    name: string;
     rule?: StructureMapGroupRule[];
-    source?: StructureMapGroupRuleSource[];
+    source: StructureMapGroupRuleSource[];
     target?: StructureMapGroupRuleTarget[];
 }
 
 export interface StructureMapGroupRuleDependent extends BackboneElement {
-    name?: string;
-    variable?: string[];
+    name: string;
+    variable: string[];
 }
 
 export interface StructureMapGroupRuleSource extends BackboneElement {
     check?: string;
     condition?: string;
-    context?: string;
+    context: string;
     defaultValueAddress?: Address;
     defaultValueAge?: Age;
     defaultValueAnnotation?: Annotation;
@@ -152,8 +152,8 @@ export interface StructureMapGroupRuleTargetParameter extends BackboneElement {
 export interface StructureMapStructure extends BackboneElement {
     alias?: string;
     documentation?: string;
-    mode?: 'source' | 'queried' | 'target' | 'produced';
-    url?: string;
+    mode: 'source' | 'queried' | 'target' | 'produced';
+    url: string;
 }
 
 export interface StructureMap extends DomainResource {
@@ -166,23 +166,23 @@ export interface StructureMap extends DomainResource {
     _description?: Element;
     experimental?: boolean;
     _experimental?: Element;
-    group?: StructureMapGroup[];
+    group: StructureMapGroup[];
     identifier?: Identifier[];
     import?: string[];
     _import?: Element;
     jurisdiction?: CodeableConcept[];
-    name?: string;
+    name: string;
     _name?: Element;
     publisher?: string;
     _publisher?: Element;
     purpose?: string;
     _purpose?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     structure?: StructureMapStructure[];
     title?: string;
     _title?: Element;
-    url?: string;
+    url: string;
     _url?: Element;
     useContext?: UsageContext[];
     version?: string;

@@ -29,8 +29,8 @@ export interface TerminologyCapabilitiesCodeSystemVersion extends BackboneElemen
 }
 
 export interface TerminologyCapabilitiesCodeSystemVersionFilter extends BackboneElement {
-    code?: string;
-    op?: string[];
+    code: string;
+    op: string[];
 }
 
 export interface TerminologyCapabilitiesExpansion extends BackboneElement {
@@ -43,25 +43,25 @@ export interface TerminologyCapabilitiesExpansion extends BackboneElement {
 
 export interface TerminologyCapabilitiesExpansionParameter extends BackboneElement {
     documentation?: string;
-    name?: string;
+    name: string;
 }
 
 export interface TerminologyCapabilitiesImplementation extends BackboneElement {
-    description?: string;
+    description: string;
     url?: string;
 }
 
 export interface TerminologyCapabilitiesSoftware extends BackboneElement {
-    name?: string;
+    name: string;
     version?: string;
 }
 
 export interface TerminologyCapabilitiesTranslation extends BackboneElement {
-    needsMap?: boolean;
+    needsMap: boolean;
 }
 
 export interface TerminologyCapabilitiesValidateCode extends BackboneElement {
-    translations?: boolean;
+    translations: boolean;
 }
 
 export interface TerminologyCapabilities extends DomainResource {
@@ -72,7 +72,7 @@ export interface TerminologyCapabilities extends DomainResource {
     contact?: ContactDetail[];
     copyright?: string;
     _copyright?: Element;
-    date?: string;
+    date: string;
     _date?: Element;
     description?: string;
     _description?: Element;
@@ -81,7 +81,7 @@ export interface TerminologyCapabilities extends DomainResource {
     _experimental?: Element;
     implementation?: TerminologyCapabilitiesImplementation;
     jurisdiction?: CodeableConcept[];
-    kind?: 'instance' | 'capability' | 'requirements';
+    kind: 'instance' | 'capability' | 'requirements';
     _kind?: Element;
     lockedDate?: boolean;
     _lockedDate?: Element;
@@ -92,7 +92,7 @@ export interface TerminologyCapabilities extends DomainResource {
     purpose?: string;
     _purpose?: Element;
     software?: TerminologyCapabilitiesSoftware;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     title?: string;
     _title?: Element;

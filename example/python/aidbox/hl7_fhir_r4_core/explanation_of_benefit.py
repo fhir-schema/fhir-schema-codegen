@@ -35,7 +35,7 @@ class ExplanationOfBenefitAddItem(BackboneElement):
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     provider: PyList[Reference] | None = Field(None, alias="provider", serialization_alias="provider")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
@@ -53,7 +53,7 @@ class ExplanationOfBenefitAddItemDetail(BackboneElement):
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     sub_detail: PyList[ExplanationOfBenefitAddItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
@@ -66,14 +66,14 @@ class ExplanationOfBenefitAddItemDetailSubDetail(BackboneElement):
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
 class ExplanationOfBenefitBenefitBalance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    category: CodeableConcept = Field(alias="category", serialization_alias="category")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     excluded: bool | None = Field(None, alias="excluded", serialization_alias="excluded")
     financial: PyList[ExplanationOfBenefitBenefitBalanceFinancial] | None = Field(None, alias="financial", serialization_alias="financial")
@@ -88,18 +88,18 @@ class ExplanationOfBenefitBenefitBalanceFinancial(BackboneElement):
     allowed_money: Money | None = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
     allowed_string: str | None = Field(None, alias="allowedString", serialization_alias="allowedString")
     allowed_unsigned_int: int | None = Field(None, alias="allowedUnsignedInt", serialization_alias="allowedUnsignedInt")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     used_money: Money | None = Field(None, alias="usedMoney", serialization_alias="usedMoney")
     used_unsigned_int: int | None = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
 
 class ExplanationOfBenefitCareTeam(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    provider: Reference = Field(alias="provider", serialization_alias="provider")
     qualification: CodeableConcept | None = Field(None, alias="qualification", serialization_alias="qualification")
     responsible: bool | None = Field(None, alias="responsible", serialization_alias="responsible")
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
 
 class ExplanationOfBenefitDiagnosis(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -108,14 +108,14 @@ class ExplanationOfBenefitDiagnosis(BackboneElement):
     diagnosis_reference: Reference | None = Field(None, alias="diagnosisReference", serialization_alias="diagnosisReference")
     on_admission: CodeableConcept | None = Field(None, alias="onAdmission", serialization_alias="onAdmission")
     package_code: CodeableConcept | None = Field(None, alias="packageCode", serialization_alias="packageCode")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
 
 class ExplanationOfBenefitInsurance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
-    focal: bool | None = Field(None, alias="focal", serialization_alias="focal")
+    coverage: Reference = Field(alias="coverage", serialization_alias="coverage")
+    focal: bool = Field(alias="focal", serialization_alias="focal")
     pre_auth_ref: PyList[str] | None = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
 
 class ExplanationOfBenefitItem(BackboneElement):
@@ -137,11 +137,11 @@ class ExplanationOfBenefitItem(BackboneElement):
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
     procedure_sequence: PyList[PositiveInt] | None = Field(None, alias="procedureSequence", serialization_alias="procedureSequence")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     revenue: CodeableConcept | None = Field(None, alias="revenue", serialization_alias="revenue")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     serviced_date: str | None = Field(None, alias="servicedDate", serialization_alias="servicedDate")
     serviced_period: Period | None = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
     sub_site: PyList[CodeableConcept] | None = Field(None, alias="subSite", serialization_alias="subSite")
@@ -152,7 +152,7 @@ class ExplanationOfBenefitItemAdjudication(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    category: CodeableConcept = Field(alias="category", serialization_alias="category")
     reason: CodeableConcept | None = Field(None, alias="reason", serialization_alias="reason")
     value: float | None = Field(None, alias="value", serialization_alias="value")
 
@@ -165,11 +165,11 @@ class ExplanationOfBenefitItemDetail(BackboneElement):
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     revenue: CodeableConcept | None = Field(None, alias="revenue", serialization_alias="revenue")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     sub_detail: PyList[ExplanationOfBenefitItemDetailSubDetail] | None = Field(None, alias="subDetail", serialization_alias="subDetail")
     udi: PyList[Reference] | None = Field(None, alias="udi", serialization_alias="udi")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
@@ -183,11 +183,11 @@ class ExplanationOfBenefitItemDetailSubDetail(BackboneElement):
     modifier: PyList[CodeableConcept] | None = Field(None, alias="modifier", serialization_alias="modifier")
     net: Money | None = Field(None, alias="net", serialization_alias="net")
     note_number: PyList[PositiveInt] | None = Field(None, alias="noteNumber", serialization_alias="noteNumber")
-    product_or_service: CodeableConcept | None = Field(None, alias="productOrService", serialization_alias="productOrService")
+    product_or_service: CodeableConcept = Field(alias="productOrService", serialization_alias="productOrService")
     program_code: PyList[CodeableConcept] | None = Field(None, alias="programCode", serialization_alias="programCode")
     quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
     revenue: CodeableConcept | None = Field(None, alias="revenue", serialization_alias="revenue")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     udi: PyList[Reference] | None = Field(None, alias="udi", serialization_alias="udi")
     unit_price: Money | None = Field(None, alias="unitPrice", serialization_alias="unitPrice")
 
@@ -213,7 +213,7 @@ class ExplanationOfBenefitProcedure(BackboneElement):
     date: str | None = Field(None, alias="date", serialization_alias="date")
     procedure_codeable_concept: CodeableConcept | None = Field(None, alias="procedureCodeableConcept", serialization_alias="procedureCodeableConcept")
     procedure_reference: Reference | None = Field(None, alias="procedureReference", serialization_alias="procedureReference")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")
     udi: PyList[Reference] | None = Field(None, alias="udi", serialization_alias="udi")
 
@@ -235,10 +235,10 @@ class ExplanationOfBenefitRelated(BackboneElement):
 class ExplanationOfBenefitSupportingInfo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    category: CodeableConcept = Field(alias="category", serialization_alias="category")
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     reason: Coding | None = Field(None, alias="reason", serialization_alias="reason")
-    sequence: PositiveInt | None = Field(None, alias="sequence", serialization_alias="sequence")
+    sequence: PositiveInt = Field(alias="sequence", serialization_alias="sequence")
     timing_date: str | None = Field(None, alias="timingDate", serialization_alias="timingDate")
     timing_period: Period | None = Field(None, alias="timingPeriod", serialization_alias="timingPeriod")
     value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
@@ -250,8 +250,8 @@ class ExplanationOfBenefitSupportingInfo(BackboneElement):
 class ExplanationOfBenefitTotal(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    amount: Money = Field(alias="amount", serialization_alias="amount")
+    category: CodeableConcept = Field(alias="category", serialization_alias="category")
 
 
 class ExplanationOfBenefit(DomainResource):
@@ -274,7 +274,7 @@ class ExplanationOfBenefit(DomainResource):
     care_team: PyList[ExplanationOfBenefitCareTeam] | None = Field(None, alias="careTeam", serialization_alias="careTeam")
     claim: Reference | None = Field(None, alias="claim", serialization_alias="claim")
     claim_response: Reference | None = Field(None, alias="claimResponse", serialization_alias="claimResponse")
-    created: str | None = Field(None, alias="created", serialization_alias="created")
+    created: str = Field(alias="created", serialization_alias="created")
     diagnosis: PyList[ExplanationOfBenefitDiagnosis] | None = Field(None, alias="diagnosis", serialization_alias="diagnosis")
     disposition: str | None = Field(None, alias="disposition", serialization_alias="disposition")
     enterer: Reference | None = Field(None, alias="enterer", serialization_alias="enterer")
@@ -284,12 +284,12 @@ class ExplanationOfBenefit(DomainResource):
     funds_reserve: CodeableConcept | None = Field(None, alias="fundsReserve", serialization_alias="fundsReserve")
     funds_reserve_requested: CodeableConcept | None = Field(None, alias="fundsReserveRequested", serialization_alias="fundsReserveRequested")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    insurance: PyList[ExplanationOfBenefitInsurance] | None = Field(None, alias="insurance", serialization_alias="insurance")
-    insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
+    insurance: PyList[ExplanationOfBenefitInsurance] = Field(alias="insurance", serialization_alias="insurance")
+    insurer: Reference = Field(alias="insurer", serialization_alias="insurer")
     item: PyList[ExplanationOfBenefitItem] | None = Field(None, alias="item", serialization_alias="item")
     original_prescription: Reference | None = Field(None, alias="originalPrescription", serialization_alias="originalPrescription")
-    outcome: Literal["queued", "complete", "error", "partial"] | None = Field(None, alias="outcome", serialization_alias="outcome")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    outcome: Literal["queued", "complete", "error", "partial"] = Field(alias="outcome", serialization_alias="outcome")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     payee: ExplanationOfBenefitPayee | None = Field(None, alias="payee", serialization_alias="payee")
     payment: ExplanationOfBenefitPayment | None = Field(None, alias="payment", serialization_alias="payment")
     pre_auth_ref: PyList[str] | None = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
@@ -299,15 +299,15 @@ class ExplanationOfBenefit(DomainResource):
     priority: CodeableConcept | None = Field(None, alias="priority", serialization_alias="priority")
     procedure: PyList[ExplanationOfBenefitProcedure] | None = Field(None, alias="procedure", serialization_alias="procedure")
     process_note: PyList[ExplanationOfBenefitProcessNote] | None = Field(None, alias="processNote", serialization_alias="processNote")
-    provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
+    provider: Reference = Field(alias="provider", serialization_alias="provider")
     referral: Reference | None = Field(None, alias="referral", serialization_alias="referral")
     related: PyList[ExplanationOfBenefitRelated] | None = Field(None, alias="related", serialization_alias="related")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     sub_type: CodeableConcept | None = Field(None, alias="subType", serialization_alias="subType")
     supporting_info: PyList[ExplanationOfBenefitSupportingInfo] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
     total: PyList[ExplanationOfBenefitTotal] | None = Field(None, alias="total", serialization_alias="total")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    use: Literal["claim", "preauthorization", "predetermination"] | None = Field(None, alias="use", serialization_alias="use")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
+    use: Literal["claim", "preauthorization", "predetermination"] = Field(alias="use", serialization_alias="use")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MessageHeaderDestination(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    endpoint: str | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    endpoint: str = Field(alias="endpoint", serialization_alias="endpoint")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     receiver: Reference | None = Field(None, alias="receiver", serialization_alias="receiver")
     target: Reference | None = Field(None, alias="target", serialization_alias="target")
@@ -23,15 +23,15 @@ class MessageHeaderDestination(BackboneElement):
 class MessageHeaderResponse(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Literal["ok", "transient-error", "fatal-error"] | None = Field(None, alias="code", serialization_alias="code")
+    code: Literal["ok", "transient-error", "fatal-error"] = Field(alias="code", serialization_alias="code")
     details: Reference | None = Field(None, alias="details", serialization_alias="details")
-    identifier: str | None = Field(None, alias="identifier", serialization_alias="identifier")
+    identifier: str = Field(alias="identifier", serialization_alias="identifier")
 
 class MessageHeaderSource(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     contact: ContactPoint | None = Field(None, alias="contact", serialization_alias="contact")
-    endpoint: str | None = Field(None, alias="endpoint", serialization_alias="endpoint")
+    endpoint: str = Field(alias="endpoint", serialization_alias="endpoint")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     software: str | None = Field(None, alias="software", serialization_alias="software")
     version: str | None = Field(None, alias="version", serialization_alias="version")
@@ -59,7 +59,7 @@ class MessageHeader(DomainResource):
     response: MessageHeaderResponse | None = Field(None, alias="response", serialization_alias="response")
     responsible: Reference | None = Field(None, alias="responsible", serialization_alias="responsible")
     sender: Reference | None = Field(None, alias="sender", serialization_alias="sender")
-    source: MessageHeaderSource | None = Field(None, alias="source", serialization_alias="source")
+    source: MessageHeaderSource = Field(alias="source", serialization_alias="source")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

@@ -17,19 +17,19 @@ export interface ImmunizationEvaluation extends DomainResource {
     _doseNumberPositiveInt?: Element;
     doseNumberString?: string;
     _doseNumberString?: Element;
-    doseStatus?: CodeableConcept;
+    doseStatus: CodeableConcept;
     doseStatusReason?: CodeableConcept[];
     identifier?: Identifier[];
-    immunizationEvent?: Reference<'Immunization'>;
-    patient?: Reference<'Patient'>;
+    immunizationEvent: Reference<'Immunization'>;
+    patient: Reference<'Patient'>;
     series?: string;
     _series?: Element;
     seriesDosesPositiveInt?: number;
     _seriesDosesPositiveInt?: Element;
     seriesDosesString?: string;
     _seriesDosesString?: Element;
-    status?: 'completed' | 'entered-in-error' | 'in-progress' | 'not-done' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'unknown';
+    status: 'completed' | 'entered-in-error';
     _status?: Element;
-    targetDisease?: CodeableConcept;
+    targetDisease: CodeableConcept;
 }
 

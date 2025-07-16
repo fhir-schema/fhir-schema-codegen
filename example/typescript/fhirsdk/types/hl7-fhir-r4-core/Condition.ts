@@ -53,7 +53,7 @@ export interface Condition extends DomainResource {
     recorder?: Reference<'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     severity?: CodeableConcept;
     stage?: ConditionStage[];
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     verificationStatus?: CodeableConcept;
 }
 

@@ -43,7 +43,7 @@ export interface CommunicationRequest extends DomainResource {
     replaces?: Reference<'CommunicationRequest'>[];
     requester?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     sender?: Reference<'Device' | 'HealthcareService' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    status?: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
     statusReason?: CodeableConcept;
     subject?: Reference<'Group' | 'Patient'>;

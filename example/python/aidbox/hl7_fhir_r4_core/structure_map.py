@@ -20,17 +20,17 @@ class StructureMapGroup(BackboneElement):
     
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
     extends: str | None = Field(None, alias="extends", serialization_alias="extends")
-    input: PyList[StructureMapGroupInput] | None = Field(None, alias="input", serialization_alias="input")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    rule: PyList[StructureMapGroupRule] | None = Field(None, alias="rule", serialization_alias="rule")
-    type_mode: Literal["none", "types", "type-and-types"] | None = Field(None, alias="typeMode", serialization_alias="typeMode")
+    input: PyList[StructureMapGroupInput] = Field(alias="input", serialization_alias="input")
+    name: str = Field(alias="name", serialization_alias="name")
+    rule: PyList[StructureMapGroupRule] = Field(alias="rule", serialization_alias="rule")
+    type_mode: Literal["none", "types", "type-and-types"] = Field(alias="typeMode", serialization_alias="typeMode")
 
 class StructureMapGroupInput(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    mode: Literal["source", "target"] | None = Field(None, alias="mode", serialization_alias="mode")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    mode: Literal["source", "target"] = Field(alias="mode", serialization_alias="mode")
+    name: str = Field(alias="name", serialization_alias="name")
     type: str | None = Field(None, alias="type", serialization_alias="type")
 
 class StructureMapGroupRule(BackboneElement):
@@ -38,23 +38,23 @@ class StructureMapGroupRule(BackboneElement):
     
     dependent: PyList[StructureMapGroupRuleDependent] | None = Field(None, alias="dependent", serialization_alias="dependent")
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     rule: PyList[StructureMapGroupRule] | None = Field(None, alias="rule", serialization_alias="rule")
-    source: PyList[StructureMapGroupRuleSource] | None = Field(None, alias="source", serialization_alias="source")
+    source: PyList[StructureMapGroupRuleSource] = Field(alias="source", serialization_alias="source")
     target: PyList[StructureMapGroupRuleTarget] | None = Field(None, alias="target", serialization_alias="target")
 
 class StructureMapGroupRuleDependent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    variable: PyList[str] | None = Field(None, alias="variable", serialization_alias="variable")
+    name: str = Field(alias="name", serialization_alias="name")
+    variable: PyList[str] = Field(alias="variable", serialization_alias="variable")
 
 class StructureMapGroupRuleSource(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     check: str | None = Field(None, alias="check", serialization_alias="check")
     condition: str | None = Field(None, alias="condition", serialization_alias="condition")
-    context: str | None = Field(None, alias="context", serialization_alias="context")
+    context: str = Field(alias="context", serialization_alias="context")
     default_value_address: Address | None = Field(None, alias="defaultValueAddress", serialization_alias="defaultValueAddress")
     default_value_age: Age | None = Field(None, alias="defaultValueAge", serialization_alias="defaultValueAge")
     default_value_annotation: Annotation | None = Field(None, alias="defaultValueAnnotation", serialization_alias="defaultValueAnnotation")
@@ -139,8 +139,8 @@ class StructureMapStructure(BackboneElement):
     
     alias: str | None = Field(None, alias="alias", serialization_alias="alias")
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    mode: Literal["source", "queried", "target", "produced"] | None = Field(None, alias="mode", serialization_alias="mode")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    mode: Literal["source", "queried", "target", "produced"] = Field(alias="mode", serialization_alias="mode")
+    url: str = Field(alias="url", serialization_alias="url")
 
 
 class StructureMap(DomainResource):
@@ -159,17 +159,17 @@ class StructureMap(DomainResource):
     date: str | None = Field(None, alias="date", serialization_alias="date")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
-    group: PyList[StructureMapGroup] | None = Field(None, alias="group", serialization_alias="group")
+    group: PyList[StructureMapGroup] = Field(alias="group", serialization_alias="group")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     import_: PyList[str] | None = Field(None, alias="import", serialization_alias="import")
     jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     structure: PyList[StructureMapStructure] | None = Field(None, alias="structure", serialization_alias="structure")
     title: str | None = Field(None, alias="title", serialization_alias="title")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    url: str = Field(alias="url", serialization_alias="url")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
     version: str | None = Field(None, alias="version", serialization_alias="version")
     

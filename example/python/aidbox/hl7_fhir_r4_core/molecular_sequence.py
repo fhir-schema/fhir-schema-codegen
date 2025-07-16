@@ -29,7 +29,7 @@ class MolecularSequenceQuality(BackboneElement):
     start: int | None = Field(None, alias="start", serialization_alias="start")
     truth_fn: float | None = Field(None, alias="truthFN", serialization_alias="truthFN")
     truth_tp: float | None = Field(None, alias="truthTP", serialization_alias="truthTP")
-    type: Literal["indel", "snp", "unknown"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["indel", "snp", "unknown"] = Field(alias="type", serialization_alias="type")
 
 class MolecularSequenceQualityRoc(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -61,7 +61,7 @@ class MolecularSequenceRepository(BackboneElement):
     dataset_id: str | None = Field(None, alias="datasetId", serialization_alias="datasetId")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     readset_id: str | None = Field(None, alias="readsetId", serialization_alias="readsetId")
-    type: Literal["directlink", "openapi", "login", "oauth", "other"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["directlink", "openapi", "login", "oauth", "other"] = Field(alias="type", serialization_alias="type")
     url: str | None = Field(None, alias="url", serialization_alias="url")
     variantset_id: str | None = Field(None, alias="variantsetId", serialization_alias="variantsetId")
 
@@ -108,7 +108,7 @@ class MolecularSequence(DomainResource):
         pattern='MolecularSequence'
     )
     
-    coordinate_system: int | None = Field(None, alias="coordinateSystem", serialization_alias="coordinateSystem")
+    coordinate_system: int = Field(alias="coordinateSystem", serialization_alias="coordinateSystem")
     device: Reference | None = Field(None, alias="device", serialization_alias="device")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     observed_seq: str | None = Field(None, alias="observedSeq", serialization_alias="observedSeq")

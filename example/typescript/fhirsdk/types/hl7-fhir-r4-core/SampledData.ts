@@ -8,14 +8,14 @@ import { Quantity } from './Quantity';
 export interface SampledData extends Element {
     data?: string;
     _data?: Element;
-    dimensions?: number;
+    dimensions: number;
     _dimensions?: Element;
     factor?: number;
     _factor?: Element;
     lowerLimit?: number;
     _lowerLimit?: Element;
-    origin?: Quantity;
-    period?: number;
+    origin: Quantity;
+    period: number;
     _period?: Element;
     upperLimit?: number;
     _upperLimit?: Element;

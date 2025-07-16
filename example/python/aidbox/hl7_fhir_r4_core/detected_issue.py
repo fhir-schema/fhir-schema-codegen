@@ -21,7 +21,7 @@ class DetectedIssueEvidence(BackboneElement):
 class DetectedIssueMitigation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: CodeableConcept | None = Field(None, alias="action", serialization_alias="action")
+    action: CodeableConcept = Field(alias="action", serialization_alias="action")
     author: Reference | None = Field(None, alias="author", serialization_alias="author")
     date: str | None = Field(None, alias="date", serialization_alias="date")
 
@@ -49,7 +49,7 @@ class DetectedIssue(DomainResource):
     patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
     reference: str | None = Field(None, alias="reference", serialization_alias="reference")
     severity: Literal["high", "moderate", "low"] | None = Field(None, alias="severity", serialization_alias="severity")
-    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown", "corrected"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

@@ -17,24 +17,24 @@ export interface ImagingStudySeries extends BackboneElement {
     endpoint?: Reference<'Endpoint'>[];
     instance?: ImagingStudySeriesInstance[];
     laterality?: Coding;
-    modality?: Coding;
+    modality: Coding;
     number?: number;
     numberOfInstances?: number;
     performer?: ImagingStudySeriesPerformer[];
     specimen?: Reference<'Specimen'>[];
     started?: string;
-    uid?: string;
+    uid: string;
 }
 
 export interface ImagingStudySeriesInstance extends BackboneElement {
     number?: number;
-    sopClass?: Coding;
+    sopClass: Coding;
     title?: string;
-    uid?: string;
+    uid: string;
 }
 
 export interface ImagingStudySeriesPerformer extends BackboneElement {
-    actor?: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    actor: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     function?: CodeableConcept;
 }
 
@@ -61,8 +61,8 @@ export interface ImagingStudy extends DomainResource {
     series?: ImagingStudySeries[];
     started?: string;
     _started?: Element;
-    status?: 'registered' | 'available' | 'cancelled' | 'entered-in-error' | 'unknown';
+    status: 'registered' | 'available' | 'cancelled' | 'entered-in-error' | 'unknown';
     _status?: Element;
-    subject?: Reference<'Device' | 'Group' | 'Patient'>;
+    subject: Reference<'Device' | 'Group' | 'Patient'>;
 }
 

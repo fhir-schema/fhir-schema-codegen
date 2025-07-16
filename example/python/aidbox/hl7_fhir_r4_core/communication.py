@@ -50,7 +50,7 @@ class Communication(DomainResource):
     recipient: PyList[Reference] | None = Field(None, alias="recipient", serialization_alias="recipient")
     sender: Reference | None = Field(None, alias="sender", serialization_alias="sender")
     sent: str | None = Field(None, alias="sent", serialization_alias="sent")
-    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     topic: CodeableConcept | None = Field(None, alias="topic", serialization_alias="topic")

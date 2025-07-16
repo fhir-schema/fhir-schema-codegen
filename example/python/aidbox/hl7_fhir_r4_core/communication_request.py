@@ -51,7 +51,7 @@ class CommunicationRequest(DomainResource):
     replaces: PyList[Reference] | None = Field(None, alias="replaces", serialization_alias="replaces")
     requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
     sender: Reference | None = Field(None, alias="sender", serialization_alias="sender")
-    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     

@@ -15,49 +15,49 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class TestScriptDestination(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    index: int | None = Field(None, alias="index", serialization_alias="index")
-    profile: Coding | None = Field(None, alias="profile", serialization_alias="profile")
+    index: int = Field(alias="index", serialization_alias="index")
+    profile: Coding = Field(alias="profile", serialization_alias="profile")
 
 class TestScriptFixture(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    autocreate: bool | None = Field(None, alias="autocreate", serialization_alias="autocreate")
-    autodelete: bool | None = Field(None, alias="autodelete", serialization_alias="autodelete")
+    autocreate: bool = Field(alias="autocreate", serialization_alias="autocreate")
+    autodelete: bool = Field(alias="autodelete", serialization_alias="autodelete")
     resource: Reference | None = Field(None, alias="resource", serialization_alias="resource")
 
 class TestScriptMetadata(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    capability: PyList[TestScriptMetadataCapability] | None = Field(None, alias="capability", serialization_alias="capability")
+    capability: PyList[TestScriptMetadataCapability] = Field(alias="capability", serialization_alias="capability")
     link: PyList[TestScriptMetadataLink] | None = Field(None, alias="link", serialization_alias="link")
 
 class TestScriptMetadataCapability(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    capabilities: str | None = Field(None, alias="capabilities", serialization_alias="capabilities")
+    capabilities: str = Field(alias="capabilities", serialization_alias="capabilities")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     destination: int | None = Field(None, alias="destination", serialization_alias="destination")
     link: PyList[str] | None = Field(None, alias="link", serialization_alias="link")
     origin: PyList[int] | None = Field(None, alias="origin", serialization_alias="origin")
-    required: bool | None = Field(None, alias="required", serialization_alias="required")
-    validated: bool | None = Field(None, alias="validated", serialization_alias="validated")
+    required: bool = Field(alias="required", serialization_alias="required")
+    validated: bool = Field(alias="validated", serialization_alias="validated")
 
 class TestScriptMetadataLink(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: str | None = Field(None, alias="description", serialization_alias="description")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    url: str = Field(alias="url", serialization_alias="url")
 
 class TestScriptOrigin(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    index: int | None = Field(None, alias="index", serialization_alias="index")
-    profile: Coding | None = Field(None, alias="profile", serialization_alias="profile")
+    index: int = Field(alias="index", serialization_alias="index")
+    profile: Coding = Field(alias="profile", serialization_alias="profile")
 
 class TestScriptSetup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: PyList[TestScriptSetupAction] | None = Field(None, alias="action", serialization_alias="action")
+    action: PyList[TestScriptSetupAction] = Field(alias="action", serialization_alias="action")
 
 class TestScriptSetupAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -89,7 +89,7 @@ class TestScriptSetupActionAssert(BackboneElement):
     source_id: str | None = Field(None, alias="sourceId", serialization_alias="sourceId")
     validate_profile_id: str | None = Field(None, alias="validateProfileId", serialization_alias="validateProfileId")
     value: str | None = Field(None, alias="value", serialization_alias="value")
-    warning_only: bool | None = Field(None, alias="warningOnly", serialization_alias="warningOnly")
+    warning_only: bool = Field(alias="warningOnly", serialization_alias="warningOnly")
 
 class TestScriptSetupActionOperation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -98,7 +98,7 @@ class TestScriptSetupActionOperation(BackboneElement):
     content_type: str | None = Field(None, alias="contentType", serialization_alias="contentType")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     destination: int | None = Field(None, alias="destination", serialization_alias="destination")
-    encode_request_url: bool | None = Field(None, alias="encodeRequestUrl", serialization_alias="encodeRequestUrl")
+    encode_request_url: bool = Field(alias="encodeRequestUrl", serialization_alias="encodeRequestUrl")
     label: str | None = Field(None, alias="label", serialization_alias="label")
     method: Literal["delete", "get", "options", "patch", "post", "put", "head"] | None = Field(None, alias="method", serialization_alias="method")
     origin: int | None = Field(None, alias="origin", serialization_alias="origin")
@@ -115,23 +115,23 @@ class TestScriptSetupActionOperation(BackboneElement):
 class TestScriptSetupActionOperationRequestHeader(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    field: str | None = Field(None, alias="field", serialization_alias="field")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    field: str = Field(alias="field", serialization_alias="field")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class TestScriptTeardown(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: PyList[TestScriptTeardownAction] | None = Field(None, alias="action", serialization_alias="action")
+    action: PyList[TestScriptTeardownAction] = Field(alias="action", serialization_alias="action")
 
 class TestScriptTeardownAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    operation: TestScriptSetupActionOperation | None = Field(None, alias="operation", serialization_alias="operation")
+    operation: TestScriptSetupActionOperation = Field(alias="operation", serialization_alias="operation")
 
 class TestScriptTest(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action: PyList[TestScriptTestAction] | None = Field(None, alias="action", serialization_alias="action")
+    action: PyList[TestScriptTestAction] = Field(alias="action", serialization_alias="action")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     name: str | None = Field(None, alias="name", serialization_alias="name")
 
@@ -149,7 +149,7 @@ class TestScriptVariable(BackboneElement):
     expression: str | None = Field(None, alias="expression", serialization_alias="expression")
     header_field: str | None = Field(None, alias="headerField", serialization_alias="headerField")
     hint: str | None = Field(None, alias="hint", serialization_alias="hint")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     path: str | None = Field(None, alias="path", serialization_alias="path")
     source_id: str | None = Field(None, alias="sourceId", serialization_alias="sourceId")
 
@@ -175,17 +175,17 @@ class TestScript(DomainResource):
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
     jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
     metadata: TestScriptMetadata | None = Field(None, alias="metadata", serialization_alias="metadata")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     origin: PyList[TestScriptOrigin] | None = Field(None, alias="origin", serialization_alias="origin")
     profile: PyList[Reference] | None = Field(None, alias="profile", serialization_alias="profile")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
     setup: TestScriptSetup | None = Field(None, alias="setup", serialization_alias="setup")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     teardown: TestScriptTeardown | None = Field(None, alias="teardown", serialization_alias="teardown")
     test: PyList[TestScriptTest] | None = Field(None, alias="test", serialization_alias="test")
     title: str | None = Field(None, alias="title", serialization_alias="title")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    url: str = Field(alias="url", serialization_alias="url")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
     variable: PyList[TestScriptVariable] | None = Field(None, alias="variable", serialization_alias="variable")
     version: str | None = Field(None, alias="version", serialization_alias="version")

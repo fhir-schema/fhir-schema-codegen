@@ -26,7 +26,7 @@ class MedicationAdministrationDosage(BackboneElement):
 class MedicationAdministrationPerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 
@@ -58,9 +58,9 @@ class MedicationAdministration(DomainResource):
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     request: Reference | None = Field(None, alias="request", serialization_alias="request")
-    status: Literal["in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["in-progress", "not-done", "on-hold", "completed", "entered-in-error", "stopped", "unknown"] = Field(alias="status", serialization_alias="status")
     status_reason: PyList[CodeableConcept] | None = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     supporting_information: PyList[Reference] | None = Field(None, alias="supportingInformation", serialization_alias="supportingInformation")
     
     def to_json(self, indent: int | None = None) -> str:

@@ -16,14 +16,14 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ActivityDefinitionDynamicValue(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
-    path: str | None = Field(None, alias="path", serialization_alias="path")
+    expression: Expression = Field(alias="expression", serialization_alias="expression")
+    path: str = Field(alias="path", serialization_alias="path")
 
 class ActivityDefinitionParticipant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
-    type: Literal["patient", "practitioner", "related-person", "device"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["patient", "practitioner", "related-person", "device"] = Field(alias="type", serialization_alias="type")
 
 
 class ActivityDefinition(DomainResource):
@@ -53,7 +53,7 @@ class ActivityDefinition(DomainResource):
     endorser: PyList[ContactDetail] | None = Field(None, alias="endorser", serialization_alias="endorser")
     experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: Literal["proposal", "plan", "directive", "order", "option", "original-order", "reflex-order", "filler-order", "instance-order"] | None = Field(None, alias="intent", serialization_alias="intent")
     jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
     kind: Literal["Appointment", "AppointmentResponse", "CarePlan", "Claim", "CommunicationRequest", "Contract", "DeviceRequest", "EnrollmentRequest", "ImmunizationRecommendation", "MedicationRequest", "NutritionOrder", "ServiceRequest", "SupplyRequest", "Task", "VisionPrescription"] | None = Field(None, alias="kind", serialization_alias="kind")
     last_review_date: str | None = Field(None, alias="lastReviewDate", serialization_alias="lastReviewDate")
@@ -73,7 +73,7 @@ class ActivityDefinition(DomainResource):
     related_artifact: PyList[RelatedArtifact] | None = Field(None, alias="relatedArtifact", serialization_alias="relatedArtifact")
     reviewer: PyList[ContactDetail] | None = Field(None, alias="reviewer", serialization_alias="reviewer")
     specimen_requirement: PyList[Reference] | None = Field(None, alias="specimenRequirement", serialization_alias="specimenRequirement")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     subject_codeable_concept: CodeableConcept | None = Field(None, alias="subjectCodeableConcept", serialization_alias="subjectCodeableConcept")
     subject_reference: Reference | None = Field(None, alias="subjectReference", serialization_alias="subjectReference")
     subtitle: str | None = Field(None, alias="subtitle", serialization_alias="subtitle")

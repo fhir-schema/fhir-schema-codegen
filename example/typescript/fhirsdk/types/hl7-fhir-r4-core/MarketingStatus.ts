@@ -7,11 +7,11 @@ import { CodeableConcept } from './CodeableConcept';
 import { Period } from './Period';
 
 export interface MarketingStatus extends BackboneElement {
-    country?: CodeableConcept;
-    dateRange?: Period;
+    country: CodeableConcept;
+    dateRange: Period;
     jurisdiction?: CodeableConcept;
     restoreDate?: string;
     _restoreDate?: Element;
-    status?: CodeableConcept;
+    status: CodeableConcept;
 }
 

@@ -23,7 +23,7 @@ class ImmunizationEducation(BackboneElement):
 class ImmunizationPerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
 
 class ImmunizationProtocolApplied(BackboneElement):
@@ -69,7 +69,7 @@ class Immunization(DomainResource):
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
     occurrence_string: str | None = Field(None, alias="occurrenceString", serialization_alias="occurrenceString")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     performer: PyList[ImmunizationPerformer] | None = Field(None, alias="performer", serialization_alias="performer")
     primary_source: bool | None = Field(None, alias="primarySource", serialization_alias="primarySource")
     program_eligibility: PyList[CodeableConcept] | None = Field(None, alias="programEligibility", serialization_alias="programEligibility")
@@ -81,10 +81,10 @@ class Immunization(DomainResource):
     report_origin: CodeableConcept | None = Field(None, alias="reportOrigin", serialization_alias="reportOrigin")
     route: CodeableConcept | None = Field(None, alias="route", serialization_alias="route")
     site: CodeableConcept | None = Field(None, alias="site", serialization_alias="site")
-    status: Literal["completed", "entered-in-error", "not-done", "preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["completed", "entered-in-error", "not-done"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     subpotent_reason: PyList[CodeableConcept] | None = Field(None, alias="subpotentReason", serialization_alias="subpotentReason")
-    vaccine_code: CodeableConcept | None = Field(None, alias="vaccineCode", serialization_alias="vaccineCode")
+    vaccine_code: CodeableConcept = Field(alias="vaccineCode", serialization_alias="vaccineCode")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

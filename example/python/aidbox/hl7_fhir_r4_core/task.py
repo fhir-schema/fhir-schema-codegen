@@ -18,7 +18,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class TaskInput(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     value_address: Address | None = Field(None, alias="valueAddress", serialization_alias="valueAddress")
     value_age: Age | None = Field(None, alias="valueAge", serialization_alias="valueAge")
     value_annotation: Annotation | None = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
@@ -73,7 +73,7 @@ class TaskInput(BackboneElement):
 class TaskOutput(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     value_address: Address | None = Field(None, alias="valueAddress", serialization_alias="valueAddress")
     value_age: Age | None = Field(None, alias="valueAge", serialization_alias="valueAge")
     value_annotation: Annotation | None = Field(None, alias="valueAnnotation", serialization_alias="valueAnnotation")
@@ -159,7 +159,7 @@ class Task(DomainResource):
     instantiates_canonical: str | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
     instantiates_uri: str | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
     insurance: PyList[Reference] | None = Field(None, alias="insurance", serialization_alias="insurance")
-    intent: Literal["unknown", "proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option", "proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: Literal["unknown", "proposal", "plan", "order", "original-order", "reflex-order", "filler-order", "instance-order", "option"] = Field(alias="intent", serialization_alias="intent")
     last_modified: str | None = Field(None, alias="lastModified", serialization_alias="lastModified")
     location: Reference | None = Field(None, alias="location", serialization_alias="location")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
@@ -173,7 +173,7 @@ class Task(DomainResource):
     relevant_history: PyList[Reference] | None = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
     requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
     restriction: TaskRestriction | None = Field(None, alias="restriction", serialization_alias="restriction")
-    status: Literal["draft", "requested", "received", "accepted", "rejected", "ready", "cancelled", "in-progress", "on-hold", "failed", "completed", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "requested", "received", "accepted", "rejected", "ready", "cancelled", "in-progress", "on-hold", "failed", "completed", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     
     def to_json(self, indent: int | None = None) -> str:

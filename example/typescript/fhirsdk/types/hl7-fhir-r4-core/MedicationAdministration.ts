@@ -24,7 +24,7 @@ export interface MedicationAdministrationDosage extends BackboneElement {
 }
 
 export interface MedicationAdministrationPerformer extends BackboneElement {
-    actor?: Reference<'Device' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    actor: Reference<'Device' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     function?: CodeableConcept;
 }
 
@@ -48,10 +48,10 @@ export interface MedicationAdministration extends DomainResource {
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'Observation'>[];
     request?: Reference<'MedicationRequest'>;
-    status?: 'in-progress' | 'not-done' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'unknown';
+    status: 'in-progress' | 'not-done' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'unknown';
     _status?: Element;
     statusReason?: CodeableConcept[];
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     supportingInformation?: Reference<'Resource'>[];
 }
 

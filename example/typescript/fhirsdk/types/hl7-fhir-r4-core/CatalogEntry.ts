@@ -11,8 +11,8 @@ import { Reference } from './Reference';
 
 
 export interface CatalogEntryRelatedEntry extends BackboneElement {
-    item?: Reference<'CatalogEntry'>;
-    relationtype?: 'triggers' | 'is-replaced-by';
+    item: Reference<'CatalogEntry'>;
+    relationtype: 'triggers' | 'is-replaced-by';
 }
 
 export interface CatalogEntry extends DomainResource {
@@ -23,9 +23,9 @@ export interface CatalogEntry extends DomainResource {
     identifier?: Identifier[];
     lastUpdated?: string;
     _lastUpdated?: Element;
-    orderable?: boolean;
+    orderable: boolean;
     _orderable?: Element;
-    referencedItem?: Reference<'ActivityDefinition' | 'Binary' | 'Device' | 'HealthcareService' | 'Medication' | 'ObservationDefinition' | 'Organization' | 'PlanDefinition' | 'Practitioner' | 'PractitionerRole' | 'SpecimenDefinition'>;
+    referencedItem: Reference<'ActivityDefinition' | 'Binary' | 'Device' | 'HealthcareService' | 'Medication' | 'ObservationDefinition' | 'Organization' | 'PlanDefinition' | 'Practitioner' | 'PractitionerRole' | 'SpecimenDefinition'>;
     relatedEntry?: CatalogEntryRelatedEntry[];
     status?: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;

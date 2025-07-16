@@ -9,7 +9,7 @@ import { Reference } from './Reference';
 
 export interface Basic extends DomainResource {
     author?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    code?: CodeableConcept;
+    code: CodeableConcept;
     created?: string;
     _created?: Element;
     identifier?: Identifier[];

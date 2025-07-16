@@ -12,7 +12,7 @@ import { Reference } from './Reference';
 
 
 export interface CompositionAttester extends BackboneElement {
-    mode?: 'personal' | 'professional' | 'legal' | 'official';
+    mode: 'personal' | 'professional' | 'legal' | 'official';
     party?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     time?: string;
 }
@@ -24,7 +24,7 @@ export interface CompositionEvent extends BackboneElement {
 }
 
 export interface CompositionRelatesTo extends BackboneElement {
-    code?: 'replaces' | 'transforms' | 'signs' | 'appends';
+    code: 'replaces' | 'transforms' | 'signs' | 'appends';
     targetIdentifier?: Identifier;
     targetReference?: Reference<'Composition'>;
 }
@@ -44,23 +44,23 @@ export interface CompositionSection extends BackboneElement {
 
 export interface Composition extends DomainResource {
     attester?: CompositionAttester[];
-    author?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
+    author: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
     category?: CodeableConcept[];
-    confidentiality?: 'U' | 'L' | 'M' | 'N' | 'R' | 'V' | '_Confidentiality' | '_ConfidentialityByAccessKind' | '_ConfidentialityByInfoType' | '_ConfidentialityModifiers';
+    confidentiality?: 'U' | 'L' | 'M' | 'N' | 'R' | 'V';
     _confidentiality?: Element;
     custodian?: Reference<'Organization'>;
-    date?: string;
+    date: string;
     _date?: Element;
     encounter?: Reference<'Encounter'>;
     event?: CompositionEvent[];
     identifier?: Identifier;
     relatesTo?: CompositionRelatesTo[];
     section?: CompositionSection[];
-    status?: 'preliminary' | 'final' | 'amended' | 'entered-in-error';
+    status: 'preliminary' | 'final' | 'amended' | 'entered-in-error';
     _status?: Element;
     subject?: Reference<'Resource'>;
-    title?: string;
+    title: string;
     _title?: Element;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 

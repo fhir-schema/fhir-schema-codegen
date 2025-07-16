@@ -13,13 +13,13 @@ import { Reference } from './Reference';
 
 export interface DiagnosticReportMedia extends BackboneElement {
     comment?: string;
-    link?: Reference<'Media'>;
+    link: Reference<'Media'>;
 }
 
 export interface DiagnosticReport extends DomainResource {
     basedOn?: Reference<'CarePlan' | 'ImmunizationRecommendation' | 'MedicationRequest' | 'NutritionOrder' | 'ServiceRequest'>[];
     category?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     conclusion?: string;
     _conclusion?: Element;
     conclusionCode?: CodeableConcept[];
@@ -37,7 +37,7 @@ export interface DiagnosticReport extends DomainResource {
     result?: Reference<'Observation'>[];
     resultsInterpreter?: Reference<'CareTeam' | 'Organization' | 'Practitioner' | 'PractitionerRole'>[];
     specimen?: Reference<'Specimen'>[];
-    status?: 'registered' | 'partial' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown';
+    status: 'registered' | 'partial' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown' | 'preliminary' | 'corrected' | 'appended';
     _status?: Element;
     subject?: Reference<'Device' | 'Group' | 'Location' | 'Patient'>;
 }

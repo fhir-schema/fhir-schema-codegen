@@ -14,7 +14,7 @@ import { Reference } from './Reference';
 
 
 export interface FamilyMemberHistoryCondition extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     contributedToDeath?: boolean;
     note?: Annotation[];
     onsetAge?: Age;
@@ -56,12 +56,12 @@ export interface FamilyMemberHistory extends DomainResource {
     name?: string;
     _name?: Element;
     note?: Annotation[];
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'AllergyIntolerance' | 'Condition' | 'DiagnosticReport' | 'DocumentReference' | 'Observation' | 'QuestionnaireResponse'>[];
-    relationship?: CodeableConcept;
+    relationship: CodeableConcept;
     sex?: CodeableConcept;
-    status?: 'partial' | 'completed' | 'entered-in-error' | 'health-unknown';
+    status: 'partial' | 'completed' | 'entered-in-error' | 'health-unknown';
     _status?: Element;
 }
 

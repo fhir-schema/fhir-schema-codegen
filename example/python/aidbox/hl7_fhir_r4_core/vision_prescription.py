@@ -23,18 +23,18 @@ class VisionPrescriptionLensSpecification(BackboneElement):
     cylinder: float | None = Field(None, alias="cylinder", serialization_alias="cylinder")
     diameter: float | None = Field(None, alias="diameter", serialization_alias="diameter")
     duration: Quantity | None = Field(None, alias="duration", serialization_alias="duration")
-    eye: Literal["right", "left"] | None = Field(None, alias="eye", serialization_alias="eye")
+    eye: Literal["right", "left"] = Field(alias="eye", serialization_alias="eye")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     power: float | None = Field(None, alias="power", serialization_alias="power")
     prism: PyList[VisionPrescriptionLensSpecificationPrism] | None = Field(None, alias="prism", serialization_alias="prism")
-    product: CodeableConcept | None = Field(None, alias="product", serialization_alias="product")
+    product: CodeableConcept = Field(alias="product", serialization_alias="product")
     sphere: float | None = Field(None, alias="sphere", serialization_alias="sphere")
 
 class VisionPrescriptionLensSpecificationPrism(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    amount: float | None = Field(None, alias="amount", serialization_alias="amount")
-    base: Literal["up", "down", "in", "out"] | None = Field(None, alias="base", serialization_alias="base")
+    amount: float = Field(alias="amount", serialization_alias="amount")
+    base: Literal["up", "down", "in", "out"] = Field(alias="base", serialization_alias="base")
 
 
 class VisionPrescription(DomainResource):
@@ -48,14 +48,14 @@ class VisionPrescription(DomainResource):
         pattern='VisionPrescription'
     )
     
-    created: str | None = Field(None, alias="created", serialization_alias="created")
-    date_written: str | None = Field(None, alias="dateWritten", serialization_alias="dateWritten")
+    created: str = Field(alias="created", serialization_alias="created")
+    date_written: str = Field(alias="dateWritten", serialization_alias="dateWritten")
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    lens_specification: PyList[VisionPrescriptionLensSpecification] | None = Field(None, alias="lensSpecification", serialization_alias="lensSpecification")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
-    prescriber: Reference | None = Field(None, alias="prescriber", serialization_alias="prescriber")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    lens_specification: PyList[VisionPrescriptionLensSpecification] = Field(alias="lensSpecification", serialization_alias="lensSpecification")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
+    prescriber: Reference = Field(alias="prescriber", serialization_alias="prescriber")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

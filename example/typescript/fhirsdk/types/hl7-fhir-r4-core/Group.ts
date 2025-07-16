@@ -13,8 +13,8 @@ import { Reference } from './Reference';
 
 
 export interface GroupCharacteristic extends BackboneElement {
-    code?: CodeableConcept;
-    exclude?: boolean;
+    code: CodeableConcept;
+    exclude: boolean;
     period?: Period;
     valueBoolean?: boolean;
     valueCodeableConcept?: CodeableConcept;
@@ -24,7 +24,7 @@ export interface GroupCharacteristic extends BackboneElement {
 }
 
 export interface GroupMember extends BackboneElement {
-    entity?: Reference<'Device' | 'Group' | 'Medication' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'Substance'>;
+    entity: Reference<'Device' | 'Group' | 'Medication' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'Substance'>;
     inactive?: boolean;
     period?: Period;
 }
@@ -32,7 +32,7 @@ export interface GroupMember extends BackboneElement {
 export interface Group extends DomainResource {
     active?: boolean;
     _active?: Element;
-    actual?: boolean;
+    actual: boolean;
     _actual?: Element;
     characteristic?: GroupCharacteristic[];
     code?: CodeableConcept;
@@ -43,7 +43,7 @@ export interface Group extends DomainResource {
     _name?: Element;
     quantity?: number;
     _quantity?: Element;
-    type?: 'person' | 'animal' | 'practitioner' | 'device' | 'medication' | 'substance';
+    type: 'person' | 'animal' | 'practitioner' | 'device' | 'medication' | 'substance';
     _type?: Element;
 }
 

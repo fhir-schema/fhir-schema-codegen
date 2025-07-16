@@ -16,7 +16,7 @@ class PersonLink(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     assurance: Literal["level1", "level2", "level3", "level4"] | None = Field(None, alias="assurance", serialization_alias="assurance")
-    target: Reference | None = Field(None, alias="target", serialization_alias="target")
+    target: Reference = Field(alias="target", serialization_alias="target")
 
 
 class Person(DomainResource):

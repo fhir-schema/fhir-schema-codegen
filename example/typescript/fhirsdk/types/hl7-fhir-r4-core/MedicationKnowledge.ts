@@ -21,8 +21,8 @@ export interface MedicationKnowledgeAdministrationGuidelines extends BackboneEle
 }
 
 export interface MedicationKnowledgeAdministrationGuidelinesDosage extends BackboneElement {
-    dosage?: Dosage[];
-    type?: CodeableConcept;
+    dosage: Dosage[];
+    type: CodeableConcept;
 }
 
 export interface MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics extends BackboneElement {
@@ -32,9 +32,9 @@ export interface MedicationKnowledgeAdministrationGuidelinesPatientCharacteristi
 }
 
 export interface MedicationKnowledgeCost extends BackboneElement {
-    cost?: Money;
+    cost: Money;
     source?: string;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface MedicationKnowledgeDrugCharacteristic extends BackboneElement {
@@ -60,7 +60,7 @@ export interface MedicationKnowledgeKinetics extends BackboneElement {
 
 export interface MedicationKnowledgeMedicineClassification extends BackboneElement {
     classification?: CodeableConcept[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface MedicationKnowledgeMonitoringProgram extends BackboneElement {
@@ -80,28 +80,28 @@ export interface MedicationKnowledgePackaging extends BackboneElement {
 
 export interface MedicationKnowledgeRegulatory extends BackboneElement {
     maxDispense?: MedicationKnowledgeRegulatoryMaxDispense;
-    regulatoryAuthority?: Reference<'Organization'>;
+    regulatoryAuthority: Reference<'Organization'>;
     schedule?: MedicationKnowledgeRegulatorySchedule[];
     substitution?: MedicationKnowledgeRegulatorySubstitution[];
 }
 
 export interface MedicationKnowledgeRegulatoryMaxDispense extends BackboneElement {
     period?: Duration;
-    quantity?: Quantity;
+    quantity: Quantity;
 }
 
 export interface MedicationKnowledgeRegulatorySchedule extends BackboneElement {
-    schedule?: CodeableConcept;
+    schedule: CodeableConcept;
 }
 
 export interface MedicationKnowledgeRegulatorySubstitution extends BackboneElement {
-    allowed?: boolean;
-    type?: CodeableConcept;
+    allowed: boolean;
+    type: CodeableConcept;
 }
 
 export interface MedicationKnowledgeRelatedMedicationKnowledge extends BackboneElement {
-    reference?: Reference<'MedicationKnowledge'>[];
-    type?: CodeableConcept;
+    reference: Reference<'MedicationKnowledge'>[];
+    type: CodeableConcept;
 }
 
 export interface MedicationKnowledge extends DomainResource {

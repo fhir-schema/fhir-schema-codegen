@@ -61,7 +61,7 @@ export interface NutritionOrderSupplement extends BackboneElement {
 
 export interface NutritionOrder extends DomainResource {
     allergyIntolerance?: Reference<'AllergyIntolerance'>[];
-    dateTime?: string;
+    dateTime: string;
     _dateTime?: Element;
     encounter?: Reference<'Encounter'>;
     enteralFormula?: NutritionOrderEnteralFormula;
@@ -74,13 +74,13 @@ export interface NutritionOrder extends DomainResource {
     _instantiatesCanonical?: Element;
     instantiatesUri?: string[];
     _instantiatesUri?: Element;
-    intent?: 'proposal' | 'plan' | 'directive' | 'order' | 'option';
+    intent: 'proposal' | 'plan' | 'directive' | 'order' | 'option' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order';
     _intent?: Element;
     note?: Annotation[];
     oralDiet?: NutritionOrderOralDiet;
     orderer?: Reference<'Practitioner' | 'PractitionerRole'>;
-    patient?: Reference<'Patient'>;
-    status?: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
+    patient: Reference<'Patient'>;
+    status: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
     supplement?: NutritionOrderSupplement[];
 }

@@ -18,7 +18,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 class ParametersParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     part: PyList[ParametersParameter] | None = Field(None, alias="part", serialization_alias="part")
     resource: ResourceFamily | None = Field(None, alias="resource", serialization_alias="resource")
     value_address: Address | None = Field(None, alias="valueAddress", serialization_alias="valueAddress")
