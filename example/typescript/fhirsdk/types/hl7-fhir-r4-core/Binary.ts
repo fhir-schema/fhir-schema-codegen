@@ -6,7 +6,7 @@ import { Reference } from './Reference';
 import { Resource } from './Resource';
 
 export interface Binary extends Resource {
-    contentType?: string;
+    contentType: string;
     _contentType?: Element;
     data?: string;
     _data?: Element;

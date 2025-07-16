@@ -18,6 +18,6 @@ export interface BodyStructure extends DomainResource {
     location?: CodeableConcept;
     locationQualifier?: CodeableConcept[];
     morphology?: CodeableConcept;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
 }
 

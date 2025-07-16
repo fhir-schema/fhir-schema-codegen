@@ -15,13 +15,13 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class EncounterClassHistory(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    class_: Coding | None = Field(None, alias="class", serialization_alias="class")
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    class_: Coding = Field(alias="class", serialization_alias="class")
+    period: Period = Field(alias="period", serialization_alias="period")
 
 class EncounterDiagnosis(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    condition: Reference | None = Field(None, alias="condition", serialization_alias="condition")
+    condition: Reference = Field(alias="condition", serialization_alias="condition")
     rank: PositiveInt | None = Field(None, alias="rank", serialization_alias="rank")
     use: CodeableConcept | None = Field(None, alias="use", serialization_alias="use")
 
@@ -41,7 +41,7 @@ class EncounterHospitalization(BackboneElement):
 class EncounterLocation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    location: Reference | None = Field(None, alias="location", serialization_alias="location")
+    location: Reference = Field(alias="location", serialization_alias="location")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     physical_type: CodeableConcept | None = Field(None, alias="physicalType", serialization_alias="physicalType")
     status: Literal["planned", "active", "reserved", "completed"] | None = Field(None, alias="status", serialization_alias="status")
@@ -56,8 +56,8 @@ class EncounterParticipant(BackboneElement):
 class EncounterStatusHistory(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
-    status: Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    period: Period = Field(alias="period", serialization_alias="period")
+    status: Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
 
 
 class Encounter(DomainResource):
@@ -74,7 +74,7 @@ class Encounter(DomainResource):
     account: PyList[Reference] | None = Field(None, alias="account", serialization_alias="account")
     appointment: PyList[Reference] | None = Field(None, alias="appointment", serialization_alias="appointment")
     based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
-    class_: Coding | None = Field(None, alias="class", serialization_alias="class")
+    class_: Coding = Field(alias="class", serialization_alias="class")
     class_history: PyList[EncounterClassHistory] | None = Field(None, alias="classHistory", serialization_alias="classHistory")
     diagnosis: PyList[EncounterDiagnosis] | None = Field(None, alias="diagnosis", serialization_alias="diagnosis")
     episode_of_care: PyList[Reference] | None = Field(None, alias="episodeOfCare", serialization_alias="episodeOfCare")
@@ -90,7 +90,7 @@ class Encounter(DomainResource):
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     service_provider: Reference | None = Field(None, alias="serviceProvider", serialization_alias="serviceProvider")
     service_type: CodeableConcept | None = Field(None, alias="serviceType", serialization_alias="serviceType")
-    status: Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["planned", "arrived", "triaged", "in-progress", "onleave", "finished", "cancelled", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     status_history: PyList[EncounterStatusHistory] | None = Field(None, alias="statusHistory", serialization_alias="statusHistory")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     type: PyList[CodeableConcept] | None = Field(None, alias="type", serialization_alias="type")

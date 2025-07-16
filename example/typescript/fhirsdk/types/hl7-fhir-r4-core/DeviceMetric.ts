@@ -18,7 +18,7 @@ export interface DeviceMetricCalibration extends BackboneElement {
 
 export interface DeviceMetric extends DomainResource {
     calibration?: DeviceMetricCalibration[];
-    category?: 'measurement' | 'setting' | 'calculation' | 'unspecified';
+    category: 'measurement' | 'setting' | 'calculation' | 'unspecified';
     _category?: Element;
     color?: 'black' | 'red' | 'green' | 'yellow' | 'blue' | 'magenta' | 'cyan' | 'white';
     _color?: Element;
@@ -28,7 +28,7 @@ export interface DeviceMetric extends DomainResource {
     _operationalStatus?: Element;
     parent?: Reference<'Device'>;
     source?: Reference<'Device'>;
-    type?: CodeableConcept;
+    type: CodeableConcept;
     unit?: CodeableConcept;
 }
 

@@ -24,15 +24,15 @@ class Slot(DomainResource):
     
     appointment_type: CodeableConcept | None = Field(None, alias="appointmentType", serialization_alias="appointmentType")
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
-    end: str | None = Field(None, alias="end", serialization_alias="end")
+    end: str = Field(alias="end", serialization_alias="end")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     overbooked: bool | None = Field(None, alias="overbooked", serialization_alias="overbooked")
-    schedule: Reference | None = Field(None, alias="schedule", serialization_alias="schedule")
+    schedule: Reference = Field(alias="schedule", serialization_alias="schedule")
     service_category: PyList[CodeableConcept] | None = Field(None, alias="serviceCategory", serialization_alias="serviceCategory")
     service_type: PyList[CodeableConcept] | None = Field(None, alias="serviceType", serialization_alias="serviceType")
     specialty: PyList[CodeableConcept] | None = Field(None, alias="specialty", serialization_alias="specialty")
-    start: str | None = Field(None, alias="start", serialization_alias="start")
-    status: Literal["busy", "free", "busy-unavailable", "busy-tentative", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    start: str = Field(alias="start", serialization_alias="start")
+    status: Literal["busy", "free", "busy-unavailable", "busy-tentative", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

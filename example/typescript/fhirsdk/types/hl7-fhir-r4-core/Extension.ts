@@ -36,7 +36,7 @@ import { TriggerDefinition } from './TriggerDefinition';
 import { UsageContext } from './UsageContext';
 
 export interface Extension extends Element {
-    url?: string;
+    url: string;
     _url?: Element;
     valueAddress?: Address;
     valueAge?: Age;

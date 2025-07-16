@@ -13,7 +13,7 @@ import { Reference } from './Reference';
 
 
 export interface MedicationDispensePerformer extends BackboneElement {
-    actor?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    actor: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     function?: CodeableConcept;
 }
 
@@ -21,7 +21,7 @@ export interface MedicationDispenseSubstitution extends BackboneElement {
     reason?: CodeableConcept[];
     responsibleParty?: Reference<'Practitioner' | 'PractitionerRole'>[];
     type?: CodeableConcept;
-    wasSubstituted?: boolean;
+    wasSubstituted: boolean;
 }
 
 export interface MedicationDispense extends DomainResource {
@@ -35,14 +35,14 @@ export interface MedicationDispense extends DomainResource {
     eventHistory?: Reference<'Provenance'>[];
     identifier?: Identifier[];
     location?: Reference<'Location'>;
-    medicationCodeableConcept?: CodeableConcept;
-    medicationReference?: Reference<'Medication'>;
+    medicationCodeableConcept: CodeableConcept;
+    medicationReference: Reference<'Medication'>;
     note?: Annotation[];
     partOf?: Reference<'Procedure'>[];
     performer?: MedicationDispensePerformer[];
     quantity?: Quantity;
     receiver?: Reference<'Patient' | 'Practitioner'>[];
-    status?: 'preparation' | 'in-progress' | 'cancelled' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'declined' | 'unknown';
+    status: 'preparation' | 'in-progress' | 'cancelled' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'declined' | 'unknown';
     _status?: Element;
     statusReasonCodeableConcept?: CodeableConcept;
     statusReasonReference?: Reference<'DetectedIssue'>;

@@ -23,7 +23,7 @@ class Schedule(DomainResource):
     )
     
     active: bool | None = Field(None, alias="active", serialization_alias="active")
-    actor: PyList[Reference] | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: PyList[Reference] = Field(alias="actor", serialization_alias="actor")
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     planning_horizon: Period | None = Field(None, alias="planningHorizon", serialization_alias="planningHorizon")

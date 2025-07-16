@@ -27,9 +27,9 @@ class GuidanceResponse(DomainResource):
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     evaluation_message: PyList[Reference] | None = Field(None, alias="evaluationMessage", serialization_alias="evaluationMessage")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    module_canonical: str | None = Field(None, alias="moduleCanonical", serialization_alias="moduleCanonical")
-    module_codeable_concept: CodeableConcept | None = Field(None, alias="moduleCodeableConcept", serialization_alias="moduleCodeableConcept")
-    module_uri: str | None = Field(None, alias="moduleUri", serialization_alias="moduleUri")
+    module_canonical: str = Field(alias="moduleCanonical", serialization_alias="moduleCanonical")
+    module_codeable_concept: CodeableConcept = Field(alias="moduleCodeableConcept", serialization_alias="moduleCodeableConcept")
+    module_uri: str = Field(alias="moduleUri", serialization_alias="moduleUri")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
     output_parameters: Reference | None = Field(None, alias="outputParameters", serialization_alias="outputParameters")
@@ -38,7 +38,7 @@ class GuidanceResponse(DomainResource):
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     request_identifier: Identifier | None = Field(None, alias="requestIdentifier", serialization_alias="requestIdentifier")
     result: Reference | None = Field(None, alias="result", serialization_alias="result")
-    status: Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["success", "data-requested", "data-required", "in-progress", "failure", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:

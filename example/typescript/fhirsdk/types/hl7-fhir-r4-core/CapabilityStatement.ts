@@ -13,13 +13,13 @@ import { UsageContext } from './UsageContext';
 
 export interface CapabilityStatementDocument extends BackboneElement {
     documentation?: string;
-    mode?: 'producer' | 'consumer';
-    profile?: string;
+    mode: 'producer' | 'consumer';
+    profile: string;
 }
 
 export interface CapabilityStatementImplementation extends BackboneElement {
     custodian?: Reference<'Organization'>;
-    description?: string;
+    description: string;
     url?: string;
 }
 
@@ -31,20 +31,20 @@ export interface CapabilityStatementMessaging extends BackboneElement {
 }
 
 export interface CapabilityStatementMessagingEndpoint extends BackboneElement {
-    address?: string;
-    protocol?: Coding;
+    address: string;
+    protocol: Coding;
 }
 
 export interface CapabilityStatementMessagingSupportedMessage extends BackboneElement {
-    definition?: string;
-    mode?: 'sender' | 'receiver';
+    definition: string;
+    mode: 'sender' | 'receiver';
 }
 
 export interface CapabilityStatementRest extends BackboneElement {
     compartment?: string[];
     documentation?: string;
     interaction?: CapabilityStatementRestInteraction[];
-    mode?: 'client' | 'server';
+    mode: 'client' | 'server';
     operation?: CapabilityStatementRestResourceOperation[];
     resource?: CapabilityStatementRestResource[];
     searchParam?: CapabilityStatementRestResourceSearchParam[];
@@ -52,7 +52,7 @@ export interface CapabilityStatementRest extends BackboneElement {
 }
 
 export interface CapabilityStatementRestInteraction extends BackboneElement {
-    code?: 'transaction' | 'batch' | 'search-system' | 'history-system' | 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history' | 'create' | 'search' | 'capabilities' | 'transaction' | 'batch' | 'operation';
+    code: 'transaction' | 'batch' | 'search-system' | 'history-system';
     documentation?: string;
 }
 
@@ -71,27 +71,27 @@ export interface CapabilityStatementRestResource extends BackboneElement {
     searchParam?: CapabilityStatementRestResourceSearchParam[];
     searchRevInclude?: string[];
     supportedProfile?: string[];
-    type?: 'Account' | 'ActivityDefinition' | 'AdverseEvent' | 'AllergyIntolerance' | 'Appointment' | 'AppointmentResponse' | 'AuditEvent' | 'Basic' | 'Binary' | 'BiologicallyDerivedProduct' | 'BodyStructure' | 'Bundle' | 'CapabilityStatement' | 'CarePlan' | 'CareTeam' | 'CatalogEntry' | 'ChargeItem' | 'ChargeItemDefinition' | 'Claim' | 'ClaimResponse' | 'ClinicalImpression' | 'CodeSystem' | 'Communication' | 'CommunicationRequest' | 'CompartmentDefinition' | 'Composition' | 'ConceptMap' | 'Condition' | 'Consent' | 'Contract' | 'Coverage' | 'CoverageEligibilityRequest' | 'CoverageEligibilityResponse' | 'DetectedIssue' | 'Device' | 'DeviceDefinition' | 'DeviceMetric' | 'DeviceRequest' | 'DeviceUseStatement' | 'DiagnosticReport' | 'DocumentManifest' | 'DocumentReference' | 'DomainResource' | 'EffectEvidenceSynthesis' | 'Encounter' | 'Endpoint' | 'EnrollmentRequest' | 'EnrollmentResponse' | 'EpisodeOfCare' | 'EventDefinition' | 'Evidence' | 'EvidenceVariable' | 'ExampleScenario' | 'ExplanationOfBenefit' | 'FamilyMemberHistory' | 'Flag' | 'Goal' | 'GraphDefinition' | 'Group' | 'GuidanceResponse' | 'HealthcareService' | 'ImagingStudy' | 'Immunization' | 'ImmunizationEvaluation' | 'ImmunizationRecommendation' | 'ImplementationGuide' | 'InsurancePlan' | 'Invoice' | 'Library' | 'Linkage' | 'List' | 'Location' | 'Measure' | 'MeasureReport' | 'Media' | 'Medication' | 'MedicationAdministration' | 'MedicationDispense' | 'MedicationKnowledge' | 'MedicationRequest' | 'MedicationStatement' | 'MedicinalProduct' | 'MedicinalProductAuthorization' | 'MedicinalProductContraindication' | 'MedicinalProductIndication' | 'MedicinalProductIngredient' | 'MedicinalProductInteraction' | 'MedicinalProductManufactured' | 'MedicinalProductPackaged' | 'MedicinalProductPharmaceutical' | 'MedicinalProductUndesirableEffect' | 'MessageDefinition' | 'MessageHeader' | 'MolecularSequence' | 'NamingSystem' | 'NutritionOrder' | 'Observation' | 'ObservationDefinition' | 'OperationDefinition' | 'OperationOutcome' | 'Organization' | 'OrganizationAffiliation' | 'Parameters' | 'Patient' | 'PaymentNotice' | 'PaymentReconciliation' | 'Person' | 'PlanDefinition' | 'Practitioner' | 'PractitionerRole' | 'Procedure' | 'Provenance' | 'Questionnaire' | 'QuestionnaireResponse' | 'RelatedPerson' | 'RequestGroup' | 'ResearchDefinition' | 'ResearchElementDefinition' | 'ResearchStudy' | 'ResearchSubject' | 'Resource' | 'RiskAssessment' | 'RiskEvidenceSynthesis' | 'Schedule' | 'SearchParameter' | 'ServiceRequest' | 'Slot' | 'Specimen' | 'SpecimenDefinition' | 'StructureDefinition' | 'StructureMap' | 'Subscription' | 'Substance' | 'SubstanceNucleicAcid' | 'SubstancePolymer' | 'SubstanceProtein' | 'SubstanceReferenceInformation' | 'SubstanceSourceMaterial' | 'SubstanceSpecification' | 'SupplyDelivery' | 'SupplyRequest' | 'Task' | 'TerminologyCapabilities' | 'TestReport' | 'TestScript' | 'ValueSet' | 'VerificationResult' | 'VisionPrescription';
+    type: 'Account' | 'ActivityDefinition' | 'AdverseEvent' | 'AllergyIntolerance' | 'Appointment' | 'AppointmentResponse' | 'AuditEvent' | 'Basic' | 'Binary' | 'BiologicallyDerivedProduct' | 'BodyStructure' | 'Bundle' | 'CapabilityStatement' | 'CarePlan' | 'CareTeam' | 'CatalogEntry' | 'ChargeItem' | 'ChargeItemDefinition' | 'Claim' | 'ClaimResponse' | 'ClinicalImpression' | 'CodeSystem' | 'Communication' | 'CommunicationRequest' | 'CompartmentDefinition' | 'Composition' | 'ConceptMap' | 'Condition' | 'Consent' | 'Contract' | 'Coverage' | 'CoverageEligibilityRequest' | 'CoverageEligibilityResponse' | 'DetectedIssue' | 'Device' | 'DeviceDefinition' | 'DeviceMetric' | 'DeviceRequest' | 'DeviceUseStatement' | 'DiagnosticReport' | 'DocumentManifest' | 'DocumentReference' | 'DomainResource' | 'EffectEvidenceSynthesis' | 'Encounter' | 'Endpoint' | 'EnrollmentRequest' | 'EnrollmentResponse' | 'EpisodeOfCare' | 'EventDefinition' | 'Evidence' | 'EvidenceVariable' | 'ExampleScenario' | 'ExplanationOfBenefit' | 'FamilyMemberHistory' | 'Flag' | 'Goal' | 'GraphDefinition' | 'Group' | 'GuidanceResponse' | 'HealthcareService' | 'ImagingStudy' | 'Immunization' | 'ImmunizationEvaluation' | 'ImmunizationRecommendation' | 'ImplementationGuide' | 'InsurancePlan' | 'Invoice' | 'Library' | 'Linkage' | 'List' | 'Location' | 'Measure' | 'MeasureReport' | 'Media' | 'Medication' | 'MedicationAdministration' | 'MedicationDispense' | 'MedicationKnowledge' | 'MedicationRequest' | 'MedicationStatement' | 'MedicinalProduct' | 'MedicinalProductAuthorization' | 'MedicinalProductContraindication' | 'MedicinalProductIndication' | 'MedicinalProductIngredient' | 'MedicinalProductInteraction' | 'MedicinalProductManufactured' | 'MedicinalProductPackaged' | 'MedicinalProductPharmaceutical' | 'MedicinalProductUndesirableEffect' | 'MessageDefinition' | 'MessageHeader' | 'MolecularSequence' | 'NamingSystem' | 'NutritionOrder' | 'Observation' | 'ObservationDefinition' | 'OperationDefinition' | 'OperationOutcome' | 'Organization' | 'OrganizationAffiliation' | 'Parameters' | 'Patient' | 'PaymentNotice' | 'PaymentReconciliation' | 'Person' | 'PlanDefinition' | 'Practitioner' | 'PractitionerRole' | 'Procedure' | 'Provenance' | 'Questionnaire' | 'QuestionnaireResponse' | 'RelatedPerson' | 'RequestGroup' | 'ResearchDefinition' | 'ResearchElementDefinition' | 'ResearchStudy' | 'ResearchSubject' | 'Resource' | 'RiskAssessment' | 'RiskEvidenceSynthesis' | 'Schedule' | 'SearchParameter' | 'ServiceRequest' | 'Slot' | 'Specimen' | 'SpecimenDefinition' | 'StructureDefinition' | 'StructureMap' | 'Subscription' | 'Substance' | 'SubstanceNucleicAcid' | 'SubstancePolymer' | 'SubstanceProtein' | 'SubstanceReferenceInformation' | 'SubstanceSourceMaterial' | 'SubstanceSpecification' | 'SupplyDelivery' | 'SupplyRequest' | 'Task' | 'TerminologyCapabilities' | 'TestReport' | 'TestScript' | 'ValueSet' | 'VerificationResult' | 'VisionPrescription';
     updateCreate?: boolean;
     versioning?: 'no-version' | 'versioned' | 'versioned-update';
 }
 
 export interface CapabilityStatementRestResourceInteraction extends BackboneElement {
-    code?: 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history-instance' | 'history-type' | 'create' | 'search-type' | 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history' | 'create' | 'search' | 'capabilities' | 'transaction' | 'batch' | 'operation';
+    code: 'read' | 'vread' | 'update' | 'patch' | 'delete' | 'history-instance' | 'history-type' | 'create' | 'search-type';
     documentation?: string;
 }
 
 export interface CapabilityStatementRestResourceOperation extends BackboneElement {
-    definition?: string;
+    definition: string;
     documentation?: string;
-    name?: string;
+    name: string;
 }
 
 export interface CapabilityStatementRestResourceSearchParam extends BackboneElement {
     definition?: string;
     documentation?: string;
-    name?: string;
-    type?: 'number' | 'date' | 'string' | 'token' | 'reference' | 'composite' | 'quantity' | 'uri' | 'special';
+    name: string;
+    type: 'number' | 'date' | 'string' | 'token' | 'reference' | 'composite' | 'quantity' | 'uri' | 'special';
 }
 
 export interface CapabilityStatementRestSecurity extends BackboneElement {
@@ -101,7 +101,7 @@ export interface CapabilityStatementRestSecurity extends BackboneElement {
 }
 
 export interface CapabilityStatementSoftware extends BackboneElement {
-    name?: string;
+    name: string;
     releaseDate?: string;
     version?: string;
 }
@@ -110,16 +110,16 @@ export interface CapabilityStatement extends DomainResource {
     contact?: ContactDetail[];
     copyright?: string;
     _copyright?: Element;
-    date?: string;
+    date: string;
     _date?: Element;
     description?: string;
     _description?: Element;
     document?: CapabilityStatementDocument[];
     experimental?: boolean;
     _experimental?: Element;
-    fhirVersion?: '0.01' | '0.05' | '0.06' | '0.11' | '0.0.80' | '0.0.81' | '0.0.82' | '0.4.0' | '0.5.0' | '1.0.0' | '1.0.1' | '1.0.2' | '1.1.0' | '1.4.0' | '1.6.0' | '1.8.0' | '3.0.0' | '3.0.1' | '3.3.0' | '3.5.0' | '4.0.0' | '4.0.1';
+    fhirVersion: '0.01' | '0.05' | '0.06' | '0.11' | '0.0.80' | '0.0.81' | '0.0.82' | '0.4.0' | '0.5.0' | '1.0.0' | '1.0.1' | '1.0.2' | '1.1.0' | '1.4.0' | '1.6.0' | '1.8.0' | '3.0.0' | '3.0.1' | '3.3.0' | '3.5.0' | '4.0.0' | '4.0.1';
     _fhirVersion?: Element;
-    format?: string[];
+    format: string[];
     _format?: Element;
     implementation?: CapabilityStatementImplementation;
     implementationGuide?: string[];
@@ -129,7 +129,7 @@ export interface CapabilityStatement extends DomainResource {
     instantiates?: string[];
     _instantiates?: Element;
     jurisdiction?: CodeableConcept[];
-    kind?: 'instance' | 'capability' | 'requirements';
+    kind: 'instance' | 'capability' | 'requirements';
     _kind?: Element;
     messaging?: CapabilityStatementMessaging[];
     name?: string;
@@ -142,7 +142,7 @@ export interface CapabilityStatement extends DomainResource {
     _purpose?: Element;
     rest?: CapabilityStatementRest[];
     software?: CapabilityStatementSoftware;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     title?: string;
     _title?: Element;

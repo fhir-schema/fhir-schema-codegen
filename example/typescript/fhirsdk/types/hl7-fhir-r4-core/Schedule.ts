@@ -11,7 +11,7 @@ import { Reference } from './Reference';
 export interface Schedule extends DomainResource {
     active?: boolean;
     _active?: Element;
-    actor?: Reference<'Device' | 'HealthcareService' | 'Location' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
+    actor: Reference<'Device' | 'HealthcareService' | 'Location' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
     comment?: string;
     _comment?: Element;
     identifier?: Identifier[];

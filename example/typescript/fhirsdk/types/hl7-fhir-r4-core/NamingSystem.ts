@@ -14,29 +14,29 @@ export interface NamingSystemUniqueId extends BackboneElement {
     comment?: string;
     period?: Period;
     preferred?: boolean;
-    type?: 'oid' | 'uuid' | 'uri' | 'other';
-    value?: string;
+    type: 'oid' | 'uuid' | 'uri' | 'other';
+    value: string;
 }
 
 export interface NamingSystem extends DomainResource {
     contact?: ContactDetail[];
-    date?: string;
+    date: string;
     _date?: Element;
     description?: string;
     _description?: Element;
     jurisdiction?: CodeableConcept[];
-    kind?: 'codesystem' | 'identifier' | 'root';
+    kind: 'codesystem' | 'identifier' | 'root';
     _kind?: Element;
-    name?: string;
+    name: string;
     _name?: Element;
     publisher?: string;
     _publisher?: Element;
     responsible?: string;
     _responsible?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     type?: CodeableConcept;
-    uniqueId?: NamingSystemUniqueId[];
+    uniqueId: NamingSystemUniqueId[];
     usage?: string;
     _usage?: Element;
     useContext?: UsageContext[];

@@ -27,20 +27,20 @@ class MedicinalProductName(BackboneElement):
     
     country_language: PyList[MedicinalProductNameCountryLanguage] | None = Field(None, alias="countryLanguage", serialization_alias="countryLanguage")
     name_part: PyList[MedicinalProductNameNamePart] | None = Field(None, alias="namePart", serialization_alias="namePart")
-    product_name: str | None = Field(None, alias="productName", serialization_alias="productName")
+    product_name: str = Field(alias="productName", serialization_alias="productName")
 
 class MedicinalProductNameCountryLanguage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    country: CodeableConcept | None = Field(None, alias="country", serialization_alias="country")
+    country: CodeableConcept = Field(alias="country", serialization_alias="country")
     jurisdiction: CodeableConcept | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    language: CodeableConcept | None = Field(None, alias="language", serialization_alias="language")
+    language: CodeableConcept = Field(alias="language", serialization_alias="language")
 
 class MedicinalProductNameNamePart(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    part: str | None = Field(None, alias="part", serialization_alias="part")
-    type: Coding | None = Field(None, alias="type", serialization_alias="type")
+    part: str = Field(alias="part", serialization_alias="part")
+    type: Coding = Field(alias="type", serialization_alias="type")
 
 class MedicinalProductSpecialDesignation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -78,7 +78,7 @@ class MedicinalProduct(DomainResource):
     manufacturing_business_operation: PyList[MedicinalProductManufacturingBusinessOperation] | None = Field(None, alias="manufacturingBusinessOperation", serialization_alias="manufacturingBusinessOperation")
     marketing_status: PyList[MarketingStatus] | None = Field(None, alias="marketingStatus", serialization_alias="marketingStatus")
     master_file: PyList[Reference] | None = Field(None, alias="masterFile", serialization_alias="masterFile")
-    name: PyList[MedicinalProductName] | None = Field(None, alias="name", serialization_alias="name")
+    name: PyList[MedicinalProductName] = Field(alias="name", serialization_alias="name")
     packaged_medicinal_product: PyList[Reference] | None = Field(None, alias="packagedMedicinalProduct", serialization_alias="packagedMedicinalProduct")
     paediatric_use_indicator: CodeableConcept | None = Field(None, alias="paediatricUseIndicator", serialization_alias="paediatricUseIndicator")
     pharmaceutical_product: PyList[Reference] | None = Field(None, alias="pharmaceuticalProduct", serialization_alias="pharmaceuticalProduct")

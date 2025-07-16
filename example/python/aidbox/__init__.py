@@ -310,8 +310,8 @@ from aidbox.hl7_fhir_r4_core.test_script import \
 from aidbox.hl7_fhir_r4_core.supply_request import SupplyRequest, SupplyRequestParameter
 from aidbox.hl7_fhir_r4_core.immunization_evaluation import ImmunizationEvaluation
 
-from aidbox.not_specified.tutor_notification import TutorNotification
-from aidbox.not_specified.tutor_notification_template import TutorNotificationTemplate
+from aidbox.undefined.tutor_notification import TutorNotification
+from aidbox.undefined.tutor_notification_template import TutorNotificationTemplate
 
 Account.model_rebuild()
 AccountCoverage.model_rebuild()

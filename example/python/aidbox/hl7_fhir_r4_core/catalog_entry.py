@@ -15,8 +15,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CatalogEntryRelatedEntry(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    item: Reference | None = Field(None, alias="item", serialization_alias="item")
-    relationtype: Literal["triggers", "is-replaced-by"] | None = Field(None, alias="relationtype", serialization_alias="relationtype")
+    item: Reference = Field(alias="item", serialization_alias="item")
+    relationtype: Literal["triggers", "is-replaced-by"] = Field(alias="relationtype", serialization_alias="relationtype")
 
 
 class CatalogEntry(DomainResource):
@@ -36,8 +36,8 @@ class CatalogEntry(DomainResource):
     classification: PyList[CodeableConcept] | None = Field(None, alias="classification", serialization_alias="classification")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     last_updated: str | None = Field(None, alias="lastUpdated", serialization_alias="lastUpdated")
-    orderable: bool | None = Field(None, alias="orderable", serialization_alias="orderable")
-    referenced_item: Reference | None = Field(None, alias="referencedItem", serialization_alias="referencedItem")
+    orderable: bool = Field(alias="orderable", serialization_alias="orderable")
+    referenced_item: Reference = Field(alias="referencedItem", serialization_alias="referencedItem")
     related_entry: PyList[CatalogEntryRelatedEntry] | None = Field(None, alias="relatedEntry", serialization_alias="relatedEntry")
     status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")

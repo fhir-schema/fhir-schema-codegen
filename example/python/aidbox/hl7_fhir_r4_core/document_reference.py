@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class DocumentReferenceContent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    attachment: Attachment | None = Field(None, alias="attachment", serialization_alias="attachment")
+    attachment: Attachment = Field(alias="attachment", serialization_alias="attachment")
     format: Coding | None = Field(None, alias="format", serialization_alias="format")
 
 class DocumentReferenceContext(BackboneElement):
@@ -32,8 +32,8 @@ class DocumentReferenceContext(BackboneElement):
 class DocumentReferenceRelatesTo(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: Literal["replaces", "transforms", "signs", "appends"] | None = Field(None, alias="code", serialization_alias="code")
-    target: Reference | None = Field(None, alias="target", serialization_alias="target")
+    code: Literal["replaces", "transforms", "signs", "appends"] = Field(alias="code", serialization_alias="code")
+    target: Reference = Field(alias="target", serialization_alias="target")
 
 
 class DocumentReference(DomainResource):
@@ -50,7 +50,7 @@ class DocumentReference(DomainResource):
     authenticator: Reference | None = Field(None, alias="authenticator", serialization_alias="authenticator")
     author: PyList[Reference] | None = Field(None, alias="author", serialization_alias="author")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    content: PyList[DocumentReferenceContent] | None = Field(None, alias="content", serialization_alias="content")
+    content: PyList[DocumentReferenceContent] = Field(alias="content", serialization_alias="content")
     context: DocumentReferenceContext | None = Field(None, alias="context", serialization_alias="context")
     custodian: Reference | None = Field(None, alias="custodian", serialization_alias="custodian")
     date: str | None = Field(None, alias="date", serialization_alias="date")
@@ -60,7 +60,7 @@ class DocumentReference(DomainResource):
     master_identifier: Identifier | None = Field(None, alias="masterIdentifier", serialization_alias="masterIdentifier")
     relates_to: PyList[DocumentReferenceRelatesTo] | None = Field(None, alias="relatesTo", serialization_alias="relatesTo")
     security_label: PyList[CodeableConcept] | None = Field(None, alias="securityLabel", serialization_alias="securityLabel")
-    status: Literal["current", "superseded", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["current", "superseded", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     

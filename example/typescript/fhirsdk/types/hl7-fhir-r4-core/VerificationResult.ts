@@ -34,7 +34,7 @@ export interface VerificationResultPrimarySource extends BackboneElement {
 export interface VerificationResultValidator extends BackboneElement {
     attestationSignature?: Signature;
     identityCertificate?: string;
-    organization?: Reference<'Organization'>;
+    organization: Reference<'Organization'>;
 }
 
 export interface VerificationResult extends DomainResource {
@@ -47,7 +47,7 @@ export interface VerificationResult extends DomainResource {
     nextScheduled?: string;
     _nextScheduled?: Element;
     primarySource?: VerificationResultPrimarySource[];
-    status?: 'attested' | 'validated' | 'in-process' | 'req-revalid' | 'val-fail' | 'reval-fail';
+    status: 'attested' | 'validated' | 'in-process' | 'req-revalid' | 'val-fail' | 'reval-fail';
     _status?: Element;
     statusDate?: string;
     _statusDate?: Element;

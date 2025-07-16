@@ -46,7 +46,7 @@ class ObservationDefinition(DomainResource):
     
     abnormal_coded_value_set: Reference | None = Field(None, alias="abnormalCodedValueSet", serialization_alias="abnormalCodedValueSet")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     critical_coded_value_set: Reference | None = Field(None, alias="criticalCodedValueSet", serialization_alias="criticalCodedValueSet")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     method: CodeableConcept | None = Field(None, alias="method", serialization_alias="method")

@@ -35,15 +35,15 @@ class DeviceRequest(DomainResource):
     
     authored_on: str | None = Field(None, alias="authoredOn", serialization_alias="authoredOn")
     based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
-    code_codeable_concept: CodeableConcept | None = Field(None, alias="codeCodeableConcept", serialization_alias="codeCodeableConcept")
-    code_reference: Reference | None = Field(None, alias="codeReference", serialization_alias="codeReference")
+    code_codeable_concept: CodeableConcept = Field(alias="codeCodeableConcept", serialization_alias="codeCodeableConcept")
+    code_reference: Reference = Field(alias="codeReference", serialization_alias="codeReference")
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     group_identifier: Identifier | None = Field(None, alias="groupIdentifier", serialization_alias="groupIdentifier")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
     instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
     insurance: PyList[Reference] | None = Field(None, alias="insurance", serialization_alias="insurance")
-    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: Literal["proposal", "plan", "directive", "order", "option", "original-order", "reflex-order", "filler-order", "instance-order"] = Field(alias="intent", serialization_alias="intent")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
     occurrence_period: Period | None = Field(None, alias="occurrencePeriod", serialization_alias="occurrencePeriod")
@@ -58,7 +58,7 @@ class DeviceRequest(DomainResource):
     relevant_history: PyList[Reference] | None = Field(None, alias="relevantHistory", serialization_alias="relevantHistory")
     requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
     status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     supporting_info: PyList[Reference] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
     
     def to_json(self, indent: int | None = None) -> str:

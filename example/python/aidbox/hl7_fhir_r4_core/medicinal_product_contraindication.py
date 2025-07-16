@@ -14,9 +14,9 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductContraindicationOtherTherapy(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    medication_codeable_concept: CodeableConcept | None = Field(None, alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
-    medication_reference: Reference | None = Field(None, alias="medicationReference", serialization_alias="medicationReference")
-    therapy_relationship_type: CodeableConcept | None = Field(None, alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
+    medication_codeable_concept: CodeableConcept = Field(alias="medicationCodeableConcept", serialization_alias="medicationCodeableConcept")
+    medication_reference: Reference = Field(alias="medicationReference", serialization_alias="medicationReference")
+    therapy_relationship_type: CodeableConcept = Field(alias="therapyRelationshipType", serialization_alias="therapyRelationshipType")
 
 
 class MedicinalProductContraindication(DomainResource):

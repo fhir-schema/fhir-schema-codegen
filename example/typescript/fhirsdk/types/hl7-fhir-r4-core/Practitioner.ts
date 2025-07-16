@@ -15,7 +15,7 @@ import { Reference } from './Reference';
 
 
 export interface PractitionerQualification extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     identifier?: Identifier[];
     issuer?: Reference<'Organization'>;
     period?: Period;

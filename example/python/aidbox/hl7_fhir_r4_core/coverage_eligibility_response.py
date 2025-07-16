@@ -15,13 +15,13 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CoverageEligibilityResponseError(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
 
 class CoverageEligibilityResponseInsurance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     benefit_period: Period | None = Field(None, alias="benefitPeriod", serialization_alias="benefitPeriod")
-    coverage: Reference | None = Field(None, alias="coverage", serialization_alias="coverage")
+    coverage: Reference = Field(alias="coverage", serialization_alias="coverage")
     inforce: bool | None = Field(None, alias="inforce", serialization_alias="inforce")
     item: PyList[CoverageEligibilityResponseInsuranceItem] | None = Field(None, alias="item", serialization_alias="item")
 
@@ -49,7 +49,7 @@ class CoverageEligibilityResponseInsuranceItemBenefit(BackboneElement):
     allowed_money: Money | None = Field(None, alias="allowedMoney", serialization_alias="allowedMoney")
     allowed_string: str | None = Field(None, alias="allowedString", serialization_alias="allowedString")
     allowed_unsigned_int: int | None = Field(None, alias="allowedUnsignedInt", serialization_alias="allowedUnsignedInt")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     used_money: Money | None = Field(None, alias="usedMoney", serialization_alias="usedMoney")
     used_string: str | None = Field(None, alias="usedString", serialization_alias="usedString")
     used_unsigned_int: int | None = Field(None, alias="usedUnsignedInt", serialization_alias="usedUnsignedInt")
@@ -66,22 +66,22 @@ class CoverageEligibilityResponse(DomainResource):
         pattern='CoverageEligibilityResponse'
     )
     
-    created: str | None = Field(None, alias="created", serialization_alias="created")
+    created: str = Field(alias="created", serialization_alias="created")
     disposition: str | None = Field(None, alias="disposition", serialization_alias="disposition")
     error: PyList[CoverageEligibilityResponseError] | None = Field(None, alias="error", serialization_alias="error")
     form: CodeableConcept | None = Field(None, alias="form", serialization_alias="form")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     insurance: PyList[CoverageEligibilityResponseInsurance] | None = Field(None, alias="insurance", serialization_alias="insurance")
-    insurer: Reference | None = Field(None, alias="insurer", serialization_alias="insurer")
-    outcome: Literal["queued", "complete", "error", "partial"] | None = Field(None, alias="outcome", serialization_alias="outcome")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    insurer: Reference = Field(alias="insurer", serialization_alias="insurer")
+    outcome: Literal["queued", "complete", "error", "partial"] = Field(alias="outcome", serialization_alias="outcome")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     pre_auth_ref: str | None = Field(None, alias="preAuthRef", serialization_alias="preAuthRef")
-    purpose: PyList[Literal["auth-requirements", "benefits", "discovery", "validation"]] | None = Field(None, alias="purpose", serialization_alias="purpose")
-    request: Reference | None = Field(None, alias="request", serialization_alias="request")
+    purpose: PyList[Literal["auth-requirements", "benefits", "discovery", "validation"]] = Field(alias="purpose", serialization_alias="purpose")
+    request: Reference = Field(alias="request", serialization_alias="request")
     requestor: Reference | None = Field(None, alias="requestor", serialization_alias="requestor")
     serviced_date: str | None = Field(None, alias="servicedDate", serialization_alias="servicedDate")
     serviced_period: Period | None = Field(None, alias="servicedPeriod", serialization_alias="servicedPeriod")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

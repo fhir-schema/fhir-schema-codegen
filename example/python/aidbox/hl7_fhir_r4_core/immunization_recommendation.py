@@ -20,7 +20,7 @@ class ImmunizationRecommendationRecommendation(BackboneElement):
     dose_number_positive_int: PositiveInt | None = Field(None, alias="doseNumberPositiveInt", serialization_alias="doseNumberPositiveInt")
     dose_number_string: str | None = Field(None, alias="doseNumberString", serialization_alias="doseNumberString")
     forecast_reason: PyList[CodeableConcept] | None = Field(None, alias="forecastReason", serialization_alias="forecastReason")
-    forecast_status: CodeableConcept | None = Field(None, alias="forecastStatus", serialization_alias="forecastStatus")
+    forecast_status: CodeableConcept = Field(alias="forecastStatus", serialization_alias="forecastStatus")
     series: str | None = Field(None, alias="series", serialization_alias="series")
     series_doses_positive_int: PositiveInt | None = Field(None, alias="seriesDosesPositiveInt", serialization_alias="seriesDosesPositiveInt")
     series_doses_string: str | None = Field(None, alias="seriesDosesString", serialization_alias="seriesDosesString")
@@ -32,8 +32,8 @@ class ImmunizationRecommendationRecommendation(BackboneElement):
 class ImmunizationRecommendationRecommendationDateCriterion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
+    value: str = Field(alias="value", serialization_alias="value")
 
 
 class ImmunizationRecommendation(DomainResource):
@@ -48,10 +48,10 @@ class ImmunizationRecommendation(DomainResource):
     )
     
     authority: Reference | None = Field(None, alias="authority", serialization_alias="authority")
-    date: str | None = Field(None, alias="date", serialization_alias="date")
+    date: str = Field(alias="date", serialization_alias="date")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
-    recommendation: PyList[ImmunizationRecommendationRecommendation] | None = Field(None, alias="recommendation", serialization_alias="recommendation")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
+    recommendation: PyList[ImmunizationRecommendationRecommendation] = Field(alias="recommendation", serialization_alias="recommendation")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

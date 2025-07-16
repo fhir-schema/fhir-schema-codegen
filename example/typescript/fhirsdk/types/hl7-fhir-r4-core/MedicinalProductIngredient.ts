@@ -11,9 +11,9 @@ import { Reference } from './Reference';
 
 
 export interface MedicinalProductIngredientSpecifiedSubstance extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     confidentiality?: CodeableConcept;
-    group?: CodeableConcept;
+    group: CodeableConcept;
     strength?: MedicinalProductIngredientSpecifiedSubstanceStrength[];
 }
 
@@ -22,7 +22,7 @@ export interface MedicinalProductIngredientSpecifiedSubstanceStrength extends Ba
     concentrationLowLimit?: Ratio;
     country?: CodeableConcept[];
     measurementPoint?: string;
-    presentation?: Ratio;
+    presentation: Ratio;
     presentationLowLimit?: Ratio;
     referenceStrength?: MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength[];
 }
@@ -30,13 +30,13 @@ export interface MedicinalProductIngredientSpecifiedSubstanceStrength extends Ba
 export interface MedicinalProductIngredientSpecifiedSubstanceStrengthReferenceStrength extends BackboneElement {
     country?: CodeableConcept[];
     measurementPoint?: string;
-    strength?: Ratio;
+    strength: Ratio;
     strengthLowLimit?: Ratio;
     substance?: CodeableConcept;
 }
 
 export interface MedicinalProductIngredientSubstance extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     strength?: MedicinalProductIngredientSpecifiedSubstanceStrength[];
 }
 
@@ -45,7 +45,7 @@ export interface MedicinalProductIngredient extends DomainResource {
     _allergenicIndicator?: Element;
     identifier?: Identifier;
     manufacturer?: Reference<'Organization'>[];
-    role?: CodeableConcept;
+    role: CodeableConcept;
     specifiedSubstance?: MedicinalProductIngredientSpecifiedSubstance[];
     substance?: MedicinalProductIngredientSubstance;
 }

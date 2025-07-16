@@ -60,7 +60,7 @@ class Condition(DomainResource):
     recorder: Reference | None = Field(None, alias="recorder", serialization_alias="recorder")
     severity: CodeableConcept | None = Field(None, alias="severity", serialization_alias="severity")
     stage: PyList[ConditionStage] | None = Field(None, alias="stage", serialization_alias="stage")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     verification_status: CodeableConcept | None = Field(None, alias="verificationStatus", serialization_alias="verificationStatus")
     
     def to_json(self, indent: int | None = None) -> str:

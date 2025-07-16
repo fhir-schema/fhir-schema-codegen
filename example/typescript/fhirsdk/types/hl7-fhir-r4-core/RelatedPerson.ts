@@ -15,7 +15,7 @@ import { Reference } from './Reference';
 
 
 export interface RelatedPersonCommunication extends BackboneElement {
-    language?: CodeableConcept;
+    language: CodeableConcept;
     preferred?: boolean;
 }
 
@@ -30,7 +30,7 @@ export interface RelatedPerson extends DomainResource {
     _gender?: Element;
     identifier?: Identifier[];
     name?: HumanName[];
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     period?: Period;
     photo?: Attachment[];
     relationship?: CodeableConcept[];

@@ -15,7 +15,7 @@ import { RelatedArtifact } from './RelatedArtifact';
 
 export interface ResearchStudyArm extends BackboneElement {
     description?: string;
-    name?: string;
+    name: string;
     type?: CodeableConcept;
 }
 
@@ -48,7 +48,7 @@ export interface ResearchStudy extends DomainResource {
     relatedArtifact?: RelatedArtifact[];
     site?: Reference<'Location'>[];
     sponsor?: Reference<'Organization'>;
-    status?: 'active' | 'administratively-completed' | 'approved' | 'closed-to-accrual' | 'closed-to-accrual-and-intervention' | 'completed' | 'disapproved' | 'in-review' | 'temporarily-closed-to-accrual' | 'temporarily-closed-to-accrual-and-intervention' | 'withdrawn';
+    status: 'active' | 'administratively-completed' | 'approved' | 'closed-to-accrual' | 'closed-to-accrual-and-intervention' | 'completed' | 'disapproved' | 'in-review' | 'temporarily-closed-to-accrual' | 'temporarily-closed-to-accrual-and-intervention' | 'withdrawn';
     _status?: Element;
     title?: string;
     _title?: Element;

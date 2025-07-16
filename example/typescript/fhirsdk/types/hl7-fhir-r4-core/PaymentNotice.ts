@@ -9,20 +9,20 @@ import { Money } from './Money';
 import { Reference } from './Reference';
 
 export interface PaymentNotice extends DomainResource {
-    amount?: Money;
-    created?: string;
+    amount: Money;
+    created: string;
     _created?: Element;
     identifier?: Identifier[];
     payee?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    payment?: Reference<'PaymentReconciliation'>;
+    payment: Reference<'PaymentReconciliation'>;
     paymentDate?: string;
     _paymentDate?: Element;
     paymentStatus?: CodeableConcept;
     provider?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    recipient?: Reference<'Organization'>;
+    recipient: Reference<'Organization'>;
     request?: Reference<'Resource'>;
     response?: Reference<'Resource'>;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
 }
 

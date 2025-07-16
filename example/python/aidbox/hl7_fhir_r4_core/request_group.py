@@ -45,15 +45,15 @@ class RequestGroupActionCondition(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     expression: Expression | None = Field(None, alias="expression", serialization_alias="expression")
-    kind: Literal["applicability", "start", "stop"] | None = Field(None, alias="kind", serialization_alias="kind")
+    kind: Literal["applicability", "start", "stop"] = Field(alias="kind", serialization_alias="kind")
 
 class RequestGroupActionRelatedAction(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    action_id: str | None = Field(None, alias="actionId", serialization_alias="actionId")
+    action_id: str = Field(alias="actionId", serialization_alias="actionId")
     offset_duration: Duration | None = Field(None, alias="offsetDuration", serialization_alias="offsetDuration")
     offset_range: Range | None = Field(None, alias="offsetRange", serialization_alias="offsetRange")
-    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] | None = Field(None, alias="relationship", serialization_alias="relationship")
+    relationship: Literal["before-start", "before", "before-end", "concurrent-with-start", "concurrent", "concurrent-with-end", "after-start", "after", "after-end"] = Field(alias="relationship", serialization_alias="relationship")
 
 
 class RequestGroup(DomainResource):
@@ -77,13 +77,13 @@ class RequestGroup(DomainResource):
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
     instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
-    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: Literal["proposal", "plan", "directive", "order", "option", "original-order", "reflex-order", "filler-order", "instance-order"] = Field(alias="intent", serialization_alias="intent")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     priority: Literal["routine", "urgent", "asap", "stat"] | None = Field(None, alias="priority", serialization_alias="priority")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     replaces: PyList[Reference] | None = Field(None, alias="replaces", serialization_alias="replaces")
-    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:

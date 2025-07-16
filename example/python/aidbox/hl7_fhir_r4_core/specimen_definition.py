@@ -18,7 +18,7 @@ class SpecimenDefinitionTypeTested(BackboneElement):
     container: SpecimenDefinitionTypeTestedContainer | None = Field(None, alias="container", serialization_alias="container")
     handling: PyList[SpecimenDefinitionTypeTestedHandling] | None = Field(None, alias="handling", serialization_alias="handling")
     is_derived: bool | None = Field(None, alias="isDerived", serialization_alias="isDerived")
-    preference: Literal["preferred", "alternate"] | None = Field(None, alias="preference", serialization_alias="preference")
+    preference: Literal["preferred", "alternate"] = Field(alias="preference", serialization_alias="preference")
     rejection_criterion: PyList[CodeableConcept] | None = Field(None, alias="rejectionCriterion", serialization_alias="rejectionCriterion")
     requirement: str | None = Field(None, alias="requirement", serialization_alias="requirement")
     retention_time: Duration | None = Field(None, alias="retentionTime", serialization_alias="retentionTime")
@@ -40,8 +40,8 @@ class SpecimenDefinitionTypeTestedContainer(BackboneElement):
 class SpecimenDefinitionTypeTestedContainerAdditive(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    additive_codeable_concept: CodeableConcept | None = Field(None, alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
-    additive_reference: Reference | None = Field(None, alias="additiveReference", serialization_alias="additiveReference")
+    additive_codeable_concept: CodeableConcept = Field(alias="additiveCodeableConcept", serialization_alias="additiveCodeableConcept")
+    additive_reference: Reference = Field(alias="additiveReference", serialization_alias="additiveReference")
 
 class SpecimenDefinitionTypeTestedHandling(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")

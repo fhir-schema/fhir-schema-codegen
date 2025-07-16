@@ -10,11 +10,11 @@ import { Reference } from './Reference';
 
 export interface MedicinalProductManufactured extends DomainResource {
     ingredient?: Reference<'MedicinalProductIngredient'>[];
-    manufacturedDoseForm?: CodeableConcept;
+    manufacturedDoseForm: CodeableConcept;
     manufacturer?: Reference<'Organization'>[];
     otherCharacteristics?: CodeableConcept[];
     physicalCharacteristics?: ProdCharacteristic;
-    quantity?: Quantity;
+    quantity: Quantity;
     unitOfPresentation?: CodeableConcept;
 }
 

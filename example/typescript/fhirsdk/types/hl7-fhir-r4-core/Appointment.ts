@@ -14,7 +14,7 @@ export interface AppointmentParticipant extends BackboneElement {
     actor?: Reference<'Device' | 'HealthcareService' | 'Location' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     period?: Period;
     required?: 'required' | 'optional' | 'information-only';
-    status?: 'accepted' | 'declined' | 'tentative' | 'needs-action';
+    status: 'accepted' | 'declined' | 'tentative' | 'needs-action';
     type?: CodeableConcept[];
 }
 
@@ -33,7 +33,7 @@ export interface Appointment extends DomainResource {
     identifier?: Identifier[];
     minutesDuration?: number;
     _minutesDuration?: Element;
-    participant?: AppointmentParticipant[];
+    participant: AppointmentParticipant[];
     patientInstruction?: string;
     _patientInstruction?: Element;
     priority?: number;
@@ -47,7 +47,7 @@ export interface Appointment extends DomainResource {
     specialty?: CodeableConcept[];
     start?: string;
     _start?: Element;
-    status?: 'proposed' | 'pending' | 'booked' | 'arrived' | 'fulfilled' | 'cancelled' | 'noshow' | 'entered-in-error' | 'checked-in' | 'waitlist';
+    status: 'proposed' | 'pending' | 'booked' | 'arrived' | 'fulfilled' | 'cancelled' | 'noshow' | 'entered-in-error' | 'checked-in' | 'waitlist';
     _status?: Element;
     supportingInformation?: Reference<'Resource'>[];
 }

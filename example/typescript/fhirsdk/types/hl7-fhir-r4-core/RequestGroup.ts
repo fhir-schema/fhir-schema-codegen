@@ -46,14 +46,14 @@ export interface RequestGroupAction extends BackboneElement {
 
 export interface RequestGroupActionCondition extends BackboneElement {
     expression?: Expression;
-    kind?: 'applicability' | 'start' | 'stop';
+    kind: 'applicability' | 'start' | 'stop';
 }
 
 export interface RequestGroupActionRelatedAction extends BackboneElement {
-    actionId?: string;
+    actionId: string;
     offsetDuration?: Duration;
     offsetRange?: Range;
-    relationship?: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
+    relationship: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
 }
 
 export interface RequestGroup extends DomainResource {
@@ -70,7 +70,7 @@ export interface RequestGroup extends DomainResource {
     _instantiatesCanonical?: Element;
     instantiatesUri?: string[];
     _instantiatesUri?: Element;
-    intent?: 'proposal' | 'plan' | 'directive' | 'order' | 'option';
+    intent: 'proposal' | 'plan' | 'directive' | 'order' | 'option' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order';
     _intent?: Element;
     note?: Annotation[];
     priority?: 'routine' | 'urgent' | 'asap' | 'stat';
@@ -78,7 +78,7 @@ export interface RequestGroup extends DomainResource {
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'DocumentReference' | 'Observation'>[];
     replaces?: Reference<'Resource'>[];
-    status?: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'draft' | 'active' | 'on-hold' | 'revoked' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
     subject?: Reference<'Group' | 'Patient'>;
 }

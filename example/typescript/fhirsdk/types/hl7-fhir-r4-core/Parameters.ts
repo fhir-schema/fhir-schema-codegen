@@ -38,7 +38,7 @@ import { UsageContext } from './UsageContext';
 
 
 export interface ParametersParameter extends BackboneElement {
-    name?: string;
+    name: string;
     part?: ParametersParameter[];
     resource?: Resource;
     valueAddress?: Address;

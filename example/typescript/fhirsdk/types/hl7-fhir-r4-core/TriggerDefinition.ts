@@ -19,7 +19,7 @@ export interface TriggerDefinition extends Element {
     _timingDateTime?: Element;
     timingReference?: Reference<'Schedule'>;
     timingTiming?: Timing;
-    type?: 'named-event' | 'periodic' | 'data-changed' | 'data-accessed' | 'data-access-ended';
+    type: 'named-event' | 'periodic' | 'data-changed' | 'data-accessed' | 'data-access-ended' | 'data-added' | 'data-modified' | 'data-removed';
     _type?: Element;
 }
 

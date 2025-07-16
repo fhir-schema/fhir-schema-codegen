@@ -16,7 +16,7 @@ export interface DetectedIssueEvidence extends BackboneElement {
 }
 
 export interface DetectedIssueMitigation extends BackboneElement {
-    action?: CodeableConcept;
+    action: CodeableConcept;
     author?: Reference<'Practitioner' | 'PractitionerRole'>;
     date?: string;
 }
@@ -38,7 +38,7 @@ export interface DetectedIssue extends DomainResource {
     _reference?: Element;
     severity?: 'high' | 'moderate' | 'low';
     _severity?: Element;
-    status?: 'registered' | 'preliminary' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown';
+    status: 'registered' | 'preliminary' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown' | 'corrected';
     _status?: Element;
 }
 

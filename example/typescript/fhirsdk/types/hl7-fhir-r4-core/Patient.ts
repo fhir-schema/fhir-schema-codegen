@@ -15,7 +15,7 @@ import { Reference } from './Reference';
 
 
 export interface PatientCommunication extends BackboneElement {
-    language?: CodeableConcept;
+    language: CodeableConcept;
     preferred?: boolean;
 }
 
@@ -30,8 +30,8 @@ export interface PatientContact extends BackboneElement {
 }
 
 export interface PatientLink extends BackboneElement {
-    other?: Reference<'Patient' | 'RelatedPerson'>;
-    type?: 'replaced-by' | 'replaces' | 'refer' | 'seealso';
+    other: Reference<'Patient' | 'RelatedPerson'>;
+    type: 'replaced-by' | 'replaces' | 'refer' | 'seealso';
 }
 
 export interface Patient extends DomainResource {

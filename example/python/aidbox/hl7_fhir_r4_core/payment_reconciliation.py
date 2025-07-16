@@ -24,7 +24,7 @@ class PaymentReconciliationDetail(BackboneElement):
     response: Reference | None = Field(None, alias="response", serialization_alias="response")
     responsible: Reference | None = Field(None, alias="responsible", serialization_alias="responsible")
     submitter: Reference | None = Field(None, alias="submitter", serialization_alias="submitter")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class PaymentReconciliationProcessNote(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -44,21 +44,21 @@ class PaymentReconciliation(DomainResource):
         pattern='PaymentReconciliation'
     )
     
-    created: str | None = Field(None, alias="created", serialization_alias="created")
+    created: str = Field(alias="created", serialization_alias="created")
     detail: PyList[PaymentReconciliationDetail] | None = Field(None, alias="detail", serialization_alias="detail")
     disposition: str | None = Field(None, alias="disposition", serialization_alias="disposition")
     form_code: CodeableConcept | None = Field(None, alias="formCode", serialization_alias="formCode")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     outcome: Literal["queued", "complete", "error", "partial"] | None = Field(None, alias="outcome", serialization_alias="outcome")
-    payment_amount: Money | None = Field(None, alias="paymentAmount", serialization_alias="paymentAmount")
-    payment_date: str | None = Field(None, alias="paymentDate", serialization_alias="paymentDate")
+    payment_amount: Money = Field(alias="paymentAmount", serialization_alias="paymentAmount")
+    payment_date: str = Field(alias="paymentDate", serialization_alias="paymentDate")
     payment_identifier: Identifier | None = Field(None, alias="paymentIdentifier", serialization_alias="paymentIdentifier")
     payment_issuer: Reference | None = Field(None, alias="paymentIssuer", serialization_alias="paymentIssuer")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     process_note: PyList[PaymentReconciliationProcessNote] | None = Field(None, alias="processNote", serialization_alias="processNote")
     request: Reference | None = Field(None, alias="request", serialization_alias="request")
     requestor: Reference | None = Field(None, alias="requestor", serialization_alias="requestor")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

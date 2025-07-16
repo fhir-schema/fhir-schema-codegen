@@ -32,14 +32,14 @@ class DeviceMetric(DomainResource):
     )
     
     calibration: PyList[DeviceMetricCalibration] | None = Field(None, alias="calibration", serialization_alias="calibration")
-    category: Literal["measurement", "setting", "calculation", "unspecified"] | None = Field(None, alias="category", serialization_alias="category")
+    category: Literal["measurement", "setting", "calculation", "unspecified"] = Field(alias="category", serialization_alias="category")
     color: Literal["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"] | None = Field(None, alias="color", serialization_alias="color")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     measurement_period: Timing | None = Field(None, alias="measurementPeriod", serialization_alias="measurementPeriod")
     operational_status: Literal["on", "off", "standby", "entered-in-error"] | None = Field(None, alias="operationalStatus", serialization_alias="operationalStatus")
     parent: Reference | None = Field(None, alias="parent", serialization_alias="parent")
     source: Reference | None = Field(None, alias="source", serialization_alias="source")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     unit: CodeableConcept | None = Field(None, alias="unit", serialization_alias="unit")
     
     def to_json(self, indent: int | None = None) -> str:

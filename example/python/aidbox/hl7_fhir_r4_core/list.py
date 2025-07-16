@@ -18,7 +18,7 @@ class ListEntry(BackboneElement):
     date: str | None = Field(None, alias="date", serialization_alias="date")
     deleted: bool | None = Field(None, alias="deleted", serialization_alias="deleted")
     flag: CodeableConcept | None = Field(None, alias="flag", serialization_alias="flag")
-    item: Reference | None = Field(None, alias="item", serialization_alias="item")
+    item: Reference = Field(alias="item", serialization_alias="item")
 
 
 class List(DomainResource):
@@ -38,11 +38,11 @@ class List(DomainResource):
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     entry: PyList[ListEntry] | None = Field(None, alias="entry", serialization_alias="entry")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    mode: Literal["working", "snapshot", "changes"] | None = Field(None, alias="mode", serialization_alias="mode")
+    mode: Literal["working", "snapshot", "changes"] = Field(alias="mode", serialization_alias="mode")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     ordered_by: CodeableConcept | None = Field(None, alias="orderedBy", serialization_alias="orderedBy")
     source: Reference | None = Field(None, alias="source", serialization_alias="source")
-    status: Literal["current", "retired", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["current", "retired", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     

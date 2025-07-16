@@ -15,14 +15,14 @@ import { Timing } from './Timing';
 
 
 export interface ChargeItemPerformer extends BackboneElement {
-    actor?: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    actor: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     function?: CodeableConcept;
 }
 
 export interface ChargeItem extends DomainResource {
     account?: Reference<'Account'>[];
     bodysite?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     context?: Reference<'Encounter' | 'EpisodeOfCare'>;
     costCenter?: Reference<'Organization'>;
     definitionCanonical?: string[];
@@ -52,9 +52,9 @@ export interface ChargeItem extends DomainResource {
     reason?: CodeableConcept[];
     requestingOrganization?: Reference<'Organization'>;
     service?: Reference<'DiagnosticReport' | 'ImagingStudy' | 'Immunization' | 'MedicationAdministration' | 'MedicationDispense' | 'Observation' | 'Procedure' | 'SupplyDelivery'>[];
-    status?: 'planned' | 'billable' | 'not-billable' | 'aborted' | 'billed' | 'entered-in-error' | 'unknown';
+    status: 'planned' | 'billable' | 'not-billable' | 'aborted' | 'billed' | 'entered-in-error' | 'unknown';
     _status?: Element;
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     supportingInformation?: Reference<'Resource'>[];
 }
 

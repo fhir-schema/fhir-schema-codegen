@@ -22,8 +22,8 @@ export interface BundleEntryRequest extends BackboneElement {
     ifModifiedSince?: string;
     ifNoneExist?: string;
     ifNoneMatch?: string;
-    method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-    url?: string;
+    method: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+    url: string;
 }
 
 export interface BundleEntryResponse extends BackboneElement {
@@ -31,7 +31,7 @@ export interface BundleEntryResponse extends BackboneElement {
     lastModified?: string;
     location?: string;
     outcome?: Resource;
-    status?: string;
+    status: string;
 }
 
 export interface BundleEntrySearch extends BackboneElement {
@@ -40,8 +40,8 @@ export interface BundleEntrySearch extends BackboneElement {
 }
 
 export interface BundleLink extends BackboneElement {
-    relation?: string;
-    url?: string;
+    relation: string;
+    url: string;
 }
 
 export interface Bundle extends Resource {
@@ -53,7 +53,7 @@ export interface Bundle extends Resource {
     _timestamp?: Element;
     total?: number;
     _total?: Element;
-    type?: 'document' | 'message' | 'transaction' | 'transaction-response' | 'batch' | 'batch-response' | 'history' | 'searchset' | 'collection';
+    type: 'document' | 'message' | 'transaction' | 'transaction-response' | 'batch' | 'batch-response' | 'history' | 'searchset' | 'collection';
     _type?: Element;
 }
 

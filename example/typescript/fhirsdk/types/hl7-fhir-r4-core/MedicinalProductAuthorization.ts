@@ -23,7 +23,7 @@ export interface MedicinalProductAuthorizationProcedure extends BackboneElement 
     dateDateTime?: string;
     datePeriod?: Period;
     identifier?: Identifier;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface MedicinalProductAuthorization extends DomainResource {

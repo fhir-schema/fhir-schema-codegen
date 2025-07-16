@@ -25,7 +25,7 @@ class Media(DomainResource):
     
     based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
     body_site: CodeableConcept | None = Field(None, alias="bodySite", serialization_alias="bodySite")
-    content: Attachment | None = Field(None, alias="content", serialization_alias="content")
+    content: Attachment = Field(alias="content", serialization_alias="content")
     created_date_time: str | None = Field(None, alias="createdDateTime", serialization_alias="createdDateTime")
     created_period: Period | None = Field(None, alias="createdPeriod", serialization_alias="createdPeriod")
     device: Reference | None = Field(None, alias="device", serialization_alias="device")
@@ -41,7 +41,7 @@ class Media(DomainResource):
     operator: Reference | None = Field(None, alias="operator", serialization_alias="operator")
     part_of: PyList[Reference] | None = Field(None, alias="partOf", serialization_alias="partOf")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
-    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
     view: CodeableConcept | None = Field(None, alias="view", serialization_alias="view")

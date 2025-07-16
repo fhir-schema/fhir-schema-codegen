@@ -24,7 +24,7 @@ export interface MedicationAdministrationDosage extends BackboneElement {
 }
 
 export interface MedicationAdministrationPerformer extends BackboneElement {
-    actor?: Reference<'Device' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    actor: Reference<'Device' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     function?: CodeableConcept;
 }
 
@@ -33,25 +33,25 @@ export interface MedicationAdministration extends DomainResource {
     context?: Reference<'Encounter' | 'EpisodeOfCare'>;
     device?: Reference<'Device'>[];
     dosage?: MedicationAdministrationDosage;
-    effectiveDateTime?: string;
+    effectiveDateTime: string;
     _effectiveDateTime?: Element;
-    effectivePeriod?: Period;
+    effectivePeriod: Period;
     eventHistory?: Reference<'Provenance'>[];
     identifier?: Identifier[];
     instantiates?: string[];
     _instantiates?: Element;
-    medicationCodeableConcept?: CodeableConcept;
-    medicationReference?: Reference<'Medication'>;
+    medicationCodeableConcept: CodeableConcept;
+    medicationReference: Reference<'Medication'>;
     note?: Annotation[];
     partOf?: Reference<'MedicationAdministration' | 'Procedure'>[];
     performer?: MedicationAdministrationPerformer[];
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'Observation'>[];
     request?: Reference<'MedicationRequest'>;
-    status?: 'in-progress' | 'not-done' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'unknown';
+    status: 'in-progress' | 'not-done' | 'on-hold' | 'completed' | 'entered-in-error' | 'stopped' | 'unknown';
     _status?: Element;
     statusReason?: CodeableConcept[];
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     supportingInformation?: Reference<'Resource'>[];
 }
 

@@ -21,7 +21,7 @@ export interface PaymentReconciliationDetail extends BackboneElement {
     response?: Reference<'Resource'>;
     responsible?: Reference<'PractitionerRole'>;
     submitter?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface PaymentReconciliationProcessNote extends BackboneElement {
@@ -30,7 +30,7 @@ export interface PaymentReconciliationProcessNote extends BackboneElement {
 }
 
 export interface PaymentReconciliation extends DomainResource {
-    created?: string;
+    created: string;
     _created?: Element;
     detail?: PaymentReconciliationDetail[];
     disposition?: string;
@@ -39,8 +39,8 @@ export interface PaymentReconciliation extends DomainResource {
     identifier?: Identifier[];
     outcome?: 'queued' | 'complete' | 'error' | 'partial';
     _outcome?: Element;
-    paymentAmount?: Money;
-    paymentDate?: string;
+    paymentAmount: Money;
+    paymentDate: string;
     _paymentDate?: Element;
     paymentIdentifier?: Identifier;
     paymentIssuer?: Reference<'Organization'>;
@@ -48,7 +48,7 @@ export interface PaymentReconciliation extends DomainResource {
     processNote?: PaymentReconciliationProcessNote[];
     request?: Reference<'Task'>;
     requestor?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
 }
 

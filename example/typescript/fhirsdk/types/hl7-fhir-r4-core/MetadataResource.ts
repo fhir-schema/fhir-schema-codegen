@@ -15,7 +15,7 @@ export interface MetadataResource extends DomainResource {
     jurisdiction?: CodeableConcept[];
     name?: string;
     publisher?: string;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     title?: string;
     url?: string;
     useContext?: UsageContext[];

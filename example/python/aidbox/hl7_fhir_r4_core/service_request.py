@@ -36,7 +36,7 @@ class ServiceRequest(DomainResource):
     instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
     instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
     insurance: PyList[Reference] | None = Field(None, alias="insurance", serialization_alias="insurance")
-    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: Literal["proposal", "plan", "directive", "order", "option", "original-order", "reflex-order", "filler-order", "instance-order"] = Field(alias="intent", serialization_alias="intent")
     location_code: PyList[CodeableConcept] | None = Field(None, alias="locationCode", serialization_alias="locationCode")
     location_reference: PyList[Reference] | None = Field(None, alias="locationReference", serialization_alias="locationReference")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
@@ -58,8 +58,8 @@ class ServiceRequest(DomainResource):
     requester: Reference | None = Field(None, alias="requester", serialization_alias="requester")
     requisition: Identifier | None = Field(None, alias="requisition", serialization_alias="requisition")
     specimen: PyList[Reference] | None = Field(None, alias="specimen", serialization_alias="specimen")
-    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     supporting_info: PyList[Reference] | None = Field(None, alias="supportingInfo", serialization_alias="supportingInfo")
     
     def to_json(self, indent: int | None = None) -> str:

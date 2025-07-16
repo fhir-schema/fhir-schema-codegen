@@ -52,8 +52,8 @@ class RiskAssessment(DomainResource):
     prediction: PyList[RiskAssessmentPrediction] | None = Field(None, alias="prediction", serialization_alias="prediction")
     reason_code: PyList[CodeableConcept] | None = Field(None, alias="reasonCode", serialization_alias="reasonCode")
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
-    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    status: Literal["registered", "preliminary", "final", "amended", "cancelled", "entered-in-error", "unknown", "corrected"] = Field(alias="status", serialization_alias="status")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

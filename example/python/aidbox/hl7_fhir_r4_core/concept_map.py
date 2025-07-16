@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class ConceptMapGroup(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    element: PyList[ConceptMapGroupElement] | None = Field(None, alias="element", serialization_alias="element")
+    element: PyList[ConceptMapGroupElement] = Field(alias="element", serialization_alias="element")
     source: str | None = Field(None, alias="source", serialization_alias="source")
     source_version: str | None = Field(None, alias="sourceVersion", serialization_alias="sourceVersion")
     target: str | None = Field(None, alias="target", serialization_alias="target")
@@ -36,23 +36,23 @@ class ConceptMapGroupElementTarget(BackboneElement):
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
     depends_on: PyList[ConceptMapGroupElementTargetDependsOn] | None = Field(None, alias="dependsOn", serialization_alias="dependsOn")
     display: str | None = Field(None, alias="display", serialization_alias="display")
-    equivalence: Literal["relatedto", "unmatched"] | None = Field(None, alias="equivalence", serialization_alias="equivalence")
+    equivalence: Literal["relatedto", "unmatched", "equivalent", "wider", "subsumes", "narrower", "specializes", "inexact", "equal", "disjoint"] = Field(alias="equivalence", serialization_alias="equivalence")
     product: PyList[ConceptMapGroupElementTargetDependsOn] | None = Field(None, alias="product", serialization_alias="product")
 
 class ConceptMapGroupElementTargetDependsOn(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     display: str | None = Field(None, alias="display", serialization_alias="display")
-    property: str | None = Field(None, alias="property", serialization_alias="property")
+    property: str = Field(alias="property", serialization_alias="property")
     system: str | None = Field(None, alias="system", serialization_alias="system")
-    value: str | None = Field(None, alias="value", serialization_alias="value")
+    value: str = Field(alias="value", serialization_alias="value")
 
 class ConceptMapGroupUnmapped(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     code: str | None = Field(None, alias="code", serialization_alias="code")
     display: str | None = Field(None, alias="display", serialization_alias="display")
-    mode: Literal["provided", "fixed", "other-map"] | None = Field(None, alias="mode", serialization_alias="mode")
+    mode: Literal["provided", "fixed", "other-map"] = Field(alias="mode", serialization_alias="mode")
     url: str | None = Field(None, alias="url", serialization_alias="url")
 
 
@@ -80,7 +80,7 @@ class ConceptMap(DomainResource):
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
     source_canonical: str | None = Field(None, alias="sourceCanonical", serialization_alias="sourceCanonical")
     source_uri: str | None = Field(None, alias="sourceUri", serialization_alias="sourceUri")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     target_canonical: str | None = Field(None, alias="targetCanonical", serialization_alias="targetCanonical")
     target_uri: str | None = Field(None, alias="targetUri", serialization_alias="targetUri")
     title: str | None = Field(None, alias="title", serialization_alias="title")

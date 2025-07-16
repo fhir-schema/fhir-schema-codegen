@@ -37,8 +37,8 @@ class TerminologyCapabilitiesCodeSystemVersion(BackboneElement):
 class TerminologyCapabilitiesCodeSystemVersionFilter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: str | None = Field(None, alias="code", serialization_alias="code")
-    op: PyList[str] | None = Field(None, alias="op", serialization_alias="op")
+    code: str = Field(alias="code", serialization_alias="code")
+    op: PyList[str] = Field(alias="op", serialization_alias="op")
 
 class TerminologyCapabilitiesExpansion(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -53,29 +53,29 @@ class TerminologyCapabilitiesExpansionParameter(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     documentation: str | None = Field(None, alias="documentation", serialization_alias="documentation")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
 
 class TerminologyCapabilitiesImplementation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    description: str | None = Field(None, alias="description", serialization_alias="description")
+    description: str = Field(alias="description", serialization_alias="description")
     url: str | None = Field(None, alias="url", serialization_alias="url")
 
 class TerminologyCapabilitiesSoftware(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class TerminologyCapabilitiesTranslation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    needs_map: bool | None = Field(None, alias="needsMap", serialization_alias="needsMap")
+    needs_map: bool = Field(alias="needsMap", serialization_alias="needsMap")
 
 class TerminologyCapabilitiesValidateCode(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    translations: bool | None = Field(None, alias="translations", serialization_alias="translations")
+    translations: bool = Field(alias="translations", serialization_alias="translations")
 
 
 class TerminologyCapabilities(DomainResource):
@@ -94,19 +94,19 @@ class TerminologyCapabilities(DomainResource):
     code_system: PyList[TerminologyCapabilitiesCodeSystem] | None = Field(None, alias="codeSystem", serialization_alias="codeSystem")
     contact: PyList[ContactDetail] | None = Field(None, alias="contact", serialization_alias="contact")
     copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
-    date: str | None = Field(None, alias="date", serialization_alias="date")
+    date: str = Field(alias="date", serialization_alias="date")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     expansion: TerminologyCapabilitiesExpansion | None = Field(None, alias="expansion", serialization_alias="expansion")
     experimental: bool | None = Field(None, alias="experimental", serialization_alias="experimental")
     implementation: TerminologyCapabilitiesImplementation | None = Field(None, alias="implementation", serialization_alias="implementation")
     jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
-    kind: Literal["instance", "capability", "requirements"] | None = Field(None, alias="kind", serialization_alias="kind")
+    kind: Literal["instance", "capability", "requirements"] = Field(alias="kind", serialization_alias="kind")
     locked_date: bool | None = Field(None, alias="lockedDate", serialization_alias="lockedDate")
     name: str | None = Field(None, alias="name", serialization_alias="name")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     purpose: str | None = Field(None, alias="purpose", serialization_alias="purpose")
     software: TerminologyCapabilitiesSoftware | None = Field(None, alias="software", serialization_alias="software")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     title: str | None = Field(None, alias="title", serialization_alias="title")
     translation: TerminologyCapabilitiesTranslation | None = Field(None, alias="translation", serialization_alias="translation")
     url: str | None = Field(None, alias="url", serialization_alias="url")

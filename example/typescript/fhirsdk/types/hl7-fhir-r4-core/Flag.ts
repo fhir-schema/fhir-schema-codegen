@@ -11,12 +11,12 @@ import { Reference } from './Reference';
 export interface Flag extends DomainResource {
     author?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole'>;
     category?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     encounter?: Reference<'Encounter'>;
     identifier?: Identifier[];
     period?: Period;
-    status?: 'active' | 'inactive' | 'entered-in-error';
+    status: 'active' | 'inactive' | 'entered-in-error';
     _status?: Element;
-    subject?: Reference<'Group' | 'Location' | 'Medication' | 'Organization' | 'Patient' | 'PlanDefinition' | 'Practitioner' | 'Procedure'>;
+    subject: Reference<'Group' | 'Location' | 'Medication' | 'Organization' | 'Patient' | 'PlanDefinition' | 'Practitioner' | 'Procedure'>;
 }
 

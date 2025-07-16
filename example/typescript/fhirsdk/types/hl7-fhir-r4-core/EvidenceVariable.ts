@@ -20,12 +20,12 @@ import { UsageContext } from './UsageContext';
 
 
 export interface EvidenceVariableCharacteristic extends BackboneElement {
-    definitionCanonical?: string;
-    definitionCodeableConcept?: CodeableConcept;
-    definitionDataRequirement?: DataRequirement;
-    definitionExpression?: Expression;
-    definitionReference?: Reference<'Group'>;
-    definitionTriggerDefinition?: TriggerDefinition;
+    definitionCanonical: string;
+    definitionCodeableConcept: CodeableConcept;
+    definitionDataRequirement: DataRequirement;
+    definitionExpression: Expression;
+    definitionReference: Reference<'Group'>;
+    definitionTriggerDefinition: TriggerDefinition;
     description?: string;
     exclude?: boolean;
     groupMeasure?: 'mean' | 'median' | 'mean-of-mean' | 'mean-of-median' | 'median-of-mean' | 'median-of-median';
@@ -41,7 +41,7 @@ export interface EvidenceVariable extends DomainResource {
     approvalDate?: string;
     _approvalDate?: Element;
     author?: ContactDetail[];
-    characteristic?: EvidenceVariableCharacteristic[];
+    characteristic: EvidenceVariableCharacteristic[];
     contact?: ContactDetail[];
     copyright?: string;
     _copyright?: Element;
@@ -65,7 +65,7 @@ export interface EvidenceVariable extends DomainResource {
     reviewer?: ContactDetail[];
     shortTitle?: string;
     _shortTitle?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subtitle?: string;
     _subtitle?: Element;

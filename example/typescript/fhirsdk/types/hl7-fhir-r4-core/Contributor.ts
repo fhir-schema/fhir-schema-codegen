@@ -7,9 +7,9 @@ import { Element } from './Element';
 
 export interface Contributor extends Element {
     contact?: ContactDetail[];
-    name?: string;
+    name: string;
     _name?: Element;
-    type?: 'author' | 'editor' | 'reviewer' | 'endorser';
+    type: 'author' | 'editor' | 'reviewer' | 'endorser';
     _type?: Element;
 }
 

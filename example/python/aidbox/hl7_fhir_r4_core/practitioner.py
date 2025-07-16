@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class PractitionerQualification(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     issuer: Reference | None = Field(None, alias="issuer", serialization_alias="issuer")
     period: Period | None = Field(None, alias="period", serialization_alias="period")

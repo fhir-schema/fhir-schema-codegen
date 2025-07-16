@@ -18,14 +18,14 @@ class ProvenanceAgent(BackboneElement):
     on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
     role: PyList[CodeableConcept] | None = Field(None, alias="role", serialization_alias="role")
     type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
-    who: Reference | None = Field(None, alias="who", serialization_alias="who")
+    who: Reference = Field(alias="who", serialization_alias="who")
 
 class ProvenanceEntity(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     agent: PyList[ProvenanceAgent] | None = Field(None, alias="agent", serialization_alias="agent")
-    role: Literal["derivation"] | None = Field(None, alias="role", serialization_alias="role")
-    what: Reference | None = Field(None, alias="what", serialization_alias="what")
+    role: Literal["derivation", "revision", "quotation", "source", "removal"] = Field(alias="role", serialization_alias="role")
+    what: Reference = Field(alias="what", serialization_alias="what")
 
 
 class Provenance(DomainResource):
@@ -40,16 +40,16 @@ class Provenance(DomainResource):
     )
     
     activity: CodeableConcept | None = Field(None, alias="activity", serialization_alias="activity")
-    agent: PyList[ProvenanceAgent] | None = Field(None, alias="agent", serialization_alias="agent")
+    agent: PyList[ProvenanceAgent] = Field(alias="agent", serialization_alias="agent")
     entity: PyList[ProvenanceEntity] | None = Field(None, alias="entity", serialization_alias="entity")
     location: Reference | None = Field(None, alias="location", serialization_alias="location")
     occurred_date_time: str | None = Field(None, alias="occurredDateTime", serialization_alias="occurredDateTime")
     occurred_period: Period | None = Field(None, alias="occurredPeriod", serialization_alias="occurredPeriod")
     policy: PyList[str] | None = Field(None, alias="policy", serialization_alias="policy")
     reason: PyList[CodeableConcept] | None = Field(None, alias="reason", serialization_alias="reason")
-    recorded: str | None = Field(None, alias="recorded", serialization_alias="recorded")
+    recorded: str = Field(alias="recorded", serialization_alias="recorded")
     signature: PyList[Signature] | None = Field(None, alias="signature", serialization_alias="signature")
-    target: PyList[Reference] | None = Field(None, alias="target", serialization_alias="target")
+    target: PyList[Reference] = Field(alias="target", serialization_alias="target")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

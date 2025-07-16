@@ -24,12 +24,12 @@ class Flag(DomainResource):
     
     author: Reference | None = Field(None, alias="author", serialization_alias="author")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
-    status: Literal["active", "inactive", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    status: Literal["active", "inactive", "entered-in-error"] = Field(alias="status", serialization_alias="status")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

@@ -21,7 +21,7 @@ class TutorNotificationTemplate(DomainResource):
         pattern='TutorNotificationTemplate'
     )
     
-    template: str | None = Field(None, alias="template", serialization_alias="template")
+    template: str = Field(alias="template", serialization_alias="template")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

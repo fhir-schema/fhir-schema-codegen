@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class PatientCommunication(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    language: CodeableConcept | None = Field(None, alias="language", serialization_alias="language")
+    language: CodeableConcept = Field(alias="language", serialization_alias="language")
     preferred: bool | None = Field(None, alias="preferred", serialization_alias="preferred")
 
 class PatientContact(BackboneElement):
@@ -32,8 +32,8 @@ class PatientContact(BackboneElement):
 class PatientLink(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    other: Reference | None = Field(None, alias="other", serialization_alias="other")
-    type: Literal["replaced-by", "replaces", "refer", "seealso"] | None = Field(None, alias="type", serialization_alias="type")
+    other: Reference = Field(alias="other", serialization_alias="other")
+    type: Literal["replaced-by", "replaces", "refer", "seealso"] = Field(alias="type", serialization_alias="type")
 
 
 class Patient(DomainResource):

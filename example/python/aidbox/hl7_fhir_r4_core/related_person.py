@@ -15,7 +15,7 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class RelatedPersonCommunication(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    language: CodeableConcept | None = Field(None, alias="language", serialization_alias="language")
+    language: CodeableConcept = Field(alias="language", serialization_alias="language")
     preferred: bool | None = Field(None, alias="preferred", serialization_alias="preferred")
 
 
@@ -37,7 +37,7 @@ class RelatedPerson(DomainResource):
     gender: Literal["male", "female", "other", "unknown"] | None = Field(None, alias="gender", serialization_alias="gender")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     name: PyList[HumanName] | None = Field(None, alias="name", serialization_alias="name")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
     period: Period | None = Field(None, alias="period", serialization_alias="period")
     photo: PyList[Attachment] | None = Field(None, alias="photo", serialization_alias="photo")
     relationship: PyList[CodeableConcept] | None = Field(None, alias="relationship", serialization_alias="relationship")

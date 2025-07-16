@@ -14,7 +14,7 @@ import { UsageContext } from './UsageContext';
 export interface ValueSetCompose extends BackboneElement {
     exclude?: ValueSetComposeInclude[];
     inactive?: boolean;
-    include?: ValueSetComposeInclude[];
+    include: ValueSetComposeInclude[];
     lockedDate?: string;
 }
 
@@ -27,7 +27,7 @@ export interface ValueSetComposeInclude extends BackboneElement {
 }
 
 export interface ValueSetComposeIncludeConcept extends BackboneElement {
-    code?: string;
+    code: string;
     designation?: ValueSetComposeIncludeConceptDesignation[];
     display?: string;
 }
@@ -35,13 +35,13 @@ export interface ValueSetComposeIncludeConcept extends BackboneElement {
 export interface ValueSetComposeIncludeConceptDesignation extends BackboneElement {
     language?: string;
     use?: Coding;
-    value?: string;
+    value: string;
 }
 
 export interface ValueSetComposeIncludeFilter extends BackboneElement {
-    op?: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists';
-    property?: string;
-    value?: string;
+    op: '=' | 'is-a' | 'descendent-of' | 'is-not-a' | 'regex' | 'in' | 'not-in' | 'generalizes' | 'exists';
+    property: string;
+    value: string;
 }
 
 export interface ValueSetExpansion extends BackboneElement {
@@ -49,7 +49,7 @@ export interface ValueSetExpansion extends BackboneElement {
     identifier?: string;
     offset?: number;
     parameter?: ValueSetExpansionParameter[];
-    timestamp?: string;
+    timestamp: string;
     total?: number;
 }
 
@@ -65,7 +65,7 @@ export interface ValueSetExpansionContains extends BackboneElement {
 }
 
 export interface ValueSetExpansionParameter extends BackboneElement {
-    name?: string;
+    name: string;
     valueBoolean?: boolean;
     valueCode?: string;
     valueDateTime?: string;
@@ -97,7 +97,7 @@ export interface ValueSet extends DomainResource {
     _publisher?: Element;
     purpose?: string;
     _purpose?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     title?: string;
     _title?: Element;

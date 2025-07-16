@@ -17,7 +17,7 @@ import { Timing } from './Timing';
 
 
 export interface ObservationComponent extends BackboneElement {
-    code?: CodeableConcept;
+    code: CodeableConcept;
     dataAbsentReason?: CodeableConcept;
     interpretation?: CodeableConcept[];
     referenceRange?: ObservationReferenceRange[];
@@ -47,7 +47,7 @@ export interface Observation extends DomainResource {
     basedOn?: Reference<'CarePlan' | 'DeviceRequest' | 'ImmunizationRecommendation' | 'MedicationRequest' | 'NutritionOrder' | 'ServiceRequest'>[];
     bodySite?: CodeableConcept;
     category?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     component?: ObservationComponent[];
     dataAbsentReason?: CodeableConcept;
     derivedFrom?: Reference<'DocumentReference' | 'ImagingStudy' | 'Media' | 'MolecularSequence' | 'Observation' | 'QuestionnaireResponse'>[];
@@ -71,7 +71,7 @@ export interface Observation extends DomainResource {
     performer?: Reference<'CareTeam' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>[];
     referenceRange?: ObservationReferenceRange[];
     specimen?: Reference<'Specimen'>;
-    status?: 'registered' | 'preliminary' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown';
+    status: 'registered' | 'preliminary' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown' | 'corrected';
     _status?: Element;
     subject?: Reference<'Device' | 'Group' | 'Location' | 'Patient'>;
     valueBoolean?: boolean;

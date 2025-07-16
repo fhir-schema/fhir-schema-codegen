@@ -22,18 +22,18 @@ class PaymentNotice(DomainResource):
         pattern='PaymentNotice'
     )
     
-    amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
-    created: str | None = Field(None, alias="created", serialization_alias="created")
+    amount: Money = Field(alias="amount", serialization_alias="amount")
+    created: str = Field(alias="created", serialization_alias="created")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     payee: Reference | None = Field(None, alias="payee", serialization_alias="payee")
-    payment: Reference | None = Field(None, alias="payment", serialization_alias="payment")
+    payment: Reference = Field(alias="payment", serialization_alias="payment")
     payment_date: str | None = Field(None, alias="paymentDate", serialization_alias="paymentDate")
     payment_status: CodeableConcept | None = Field(None, alias="paymentStatus", serialization_alias="paymentStatus")
     provider: Reference | None = Field(None, alias="provider", serialization_alias="provider")
-    recipient: Reference | None = Field(None, alias="recipient", serialization_alias="recipient")
+    recipient: Reference = Field(alias="recipient", serialization_alias="recipient")
     request: Reference | None = Field(None, alias="request", serialization_alias="request")
     response: Reference | None = Field(None, alias="response", serialization_alias="response")
-    status: Literal["active", "cancelled", "draft", "entered-in-error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["active", "cancelled", "draft", "entered-in-error"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

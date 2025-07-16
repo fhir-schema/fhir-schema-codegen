@@ -32,23 +32,23 @@ export interface ConsentProvision extends BackboneElement {
 }
 
 export interface ConsentProvisionActor extends BackboneElement {
-    reference?: Reference<'CareTeam' | 'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    role?: CodeableConcept;
+    reference: Reference<'CareTeam' | 'Device' | 'Group' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    role: CodeableConcept;
 }
 
 export interface ConsentProvisionData extends BackboneElement {
-    meaning?: 'instance' | 'related' | 'dependents' | 'authoredby';
-    reference?: Reference<'Resource'>;
+    meaning: 'instance' | 'related' | 'dependents' | 'authoredby';
+    reference: Reference<'Resource'>;
 }
 
 export interface ConsentVerification extends BackboneElement {
     verificationDate?: string;
-    verified?: boolean;
+    verified: boolean;
     verifiedWith?: Reference<'Patient' | 'RelatedPerson'>;
 }
 
 export interface Consent extends DomainResource {
-    category?: CodeableConcept[];
+    category: CodeableConcept[];
     dateTime?: string;
     _dateTime?: Element;
     identifier?: Identifier[];
@@ -58,10 +58,10 @@ export interface Consent extends DomainResource {
     policy?: ConsentPolicy[];
     policyRule?: CodeableConcept;
     provision?: ConsentProvision;
-    scope?: CodeableConcept;
+    scope: CodeableConcept;
     sourceAttachment?: Attachment;
     sourceReference?: Reference<'Consent' | 'Contract' | 'DocumentReference' | 'QuestionnaireResponse'>;
-    status?: 'draft' | 'proposed' | 'active' | 'rejected' | 'inactive' | 'entered-in-error';
+    status: 'draft' | 'proposed' | 'active' | 'rejected' | 'inactive' | 'entered-in-error';
     _status?: Element;
     verification?: ConsentVerification[];
 }

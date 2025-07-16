@@ -41,10 +41,10 @@ class Goal(DomainResource):
     achievement_status: CodeableConcept | None = Field(None, alias="achievementStatus", serialization_alias="achievementStatus")
     addresses: PyList[Reference] | None = Field(None, alias="addresses", serialization_alias="addresses")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    description: CodeableConcept | None = Field(None, alias="description", serialization_alias="description")
+    description: CodeableConcept = Field(alias="description", serialization_alias="description")
     expressed_by: Reference | None = Field(None, alias="expressedBy", serialization_alias="expressedBy")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
-    lifecycle_status: Literal["proposed", "planned", "accepted", "cancelled", "entered-in-error", "rejected"] | None = Field(None, alias="lifecycleStatus", serialization_alias="lifecycleStatus")
+    lifecycle_status: Literal["proposed", "planned", "accepted", "cancelled", "entered-in-error", "rejected", "active", "on-hold", "completed"] = Field(alias="lifecycleStatus", serialization_alias="lifecycleStatus")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     outcome_code: PyList[CodeableConcept] | None = Field(None, alias="outcomeCode", serialization_alias="outcomeCode")
     outcome_reference: PyList[Reference] | None = Field(None, alias="outcomeReference", serialization_alias="outcomeReference")
@@ -53,7 +53,7 @@ class Goal(DomainResource):
     start_date: str | None = Field(None, alias="startDate", serialization_alias="startDate")
     status_date: str | None = Field(None, alias="statusDate", serialization_alias="statusDate")
     status_reason: str | None = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     target: PyList[GoalTarget] | None = Field(None, alias="target", serialization_alias="target")
     
     def to_json(self, indent: int | None = None) -> str:

@@ -13,18 +13,18 @@ import { Reference } from './Reference';
 
 
 export interface DeviceDeviceName extends BackboneElement {
-    name?: string;
-    type?: 'udi-label-name' | 'user-friendly-name' | 'patient-reported-name' | 'manufacturer-name' | 'model-name' | 'other';
+    name: string;
+    type: 'udi-label-name' | 'user-friendly-name' | 'patient-reported-name' | 'manufacturer-name' | 'model-name' | 'other';
 }
 
 export interface DeviceProperty extends BackboneElement {
-    type?: CodeableConcept;
+    type: CodeableConcept;
     valueCode?: CodeableConcept[];
     valueQuantity?: Quantity[];
 }
 
 export interface DeviceSpecialization extends BackboneElement {
-    systemType?: CodeableConcept;
+    systemType: CodeableConcept;
     version?: string;
 }
 
@@ -40,7 +40,7 @@ export interface DeviceUdiCarrier extends BackboneElement {
 export interface DeviceVersion extends BackboneElement {
     component?: Identifier;
     type?: CodeableConcept;
-    value?: string;
+    value: string;
 }
 
 export interface Device extends DomainResource {

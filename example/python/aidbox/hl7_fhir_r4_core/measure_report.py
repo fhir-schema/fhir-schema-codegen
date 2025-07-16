@@ -44,8 +44,8 @@ class MeasureReportGroupStratifierStratum(BackboneElement):
 class MeasureReportGroupStratifierStratumComponent(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
-    value: CodeableConcept | None = Field(None, alias="value", serialization_alias="value")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
+    value: CodeableConcept = Field(alias="value", serialization_alias="value")
 
 class MeasureReportGroupStratifierStratumPopulation(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -71,12 +71,12 @@ class MeasureReport(DomainResource):
     group: PyList[MeasureReportGroup] | None = Field(None, alias="group", serialization_alias="group")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     improvement_notation: CodeableConcept | None = Field(None, alias="improvementNotation", serialization_alias="improvementNotation")
-    measure: str | None = Field(None, alias="measure", serialization_alias="measure")
-    period: Period | None = Field(None, alias="period", serialization_alias="period")
+    measure: str = Field(alias="measure", serialization_alias="measure")
+    period: Period = Field(alias="period", serialization_alias="period")
     reporter: Reference | None = Field(None, alias="reporter", serialization_alias="reporter")
-    status: Literal["complete", "pending", "error"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["complete", "pending", "error"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
-    type: Literal["individual", "subject-list", "summary", "data-collection"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["individual", "subject-list", "summary", "data-collection"] = Field(alias="type", serialization_alias="type")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

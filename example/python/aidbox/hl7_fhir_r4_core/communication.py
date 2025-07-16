@@ -15,9 +15,9 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class CommunicationPayload(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    content_attachment: Attachment | None = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
-    content_reference: Reference | None = Field(None, alias="contentReference", serialization_alias="contentReference")
-    content_string: str | None = Field(None, alias="contentString", serialization_alias="contentString")
+    content_attachment: Attachment = Field(alias="contentAttachment", serialization_alias="contentAttachment")
+    content_reference: Reference = Field(alias="contentReference", serialization_alias="contentReference")
+    content_string: str = Field(alias="contentString", serialization_alias="contentString")
 
 
 class Communication(DomainResource):
@@ -50,7 +50,7 @@ class Communication(DomainResource):
     recipient: PyList[Reference] | None = Field(None, alias="recipient", serialization_alias="recipient")
     sender: Reference | None = Field(None, alias="sender", serialization_alias="sender")
     sent: str | None = Field(None, alias="sent", serialization_alias="sent")
-    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     topic: CodeableConcept | None = Field(None, alias="topic", serialization_alias="topic")

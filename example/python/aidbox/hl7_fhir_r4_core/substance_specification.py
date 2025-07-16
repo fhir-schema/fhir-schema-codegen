@@ -39,7 +39,7 @@ class SubstanceSpecificationName(BackboneElement):
     domain: PyList[CodeableConcept] | None = Field(None, alias="domain", serialization_alias="domain")
     jurisdiction: PyList[CodeableConcept] | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
     language: PyList[CodeableConcept] | None = Field(None, alias="language", serialization_alias="language")
-    name: str | None = Field(None, alias="name", serialization_alias="name")
+    name: str = Field(alias="name", serialization_alias="name")
     official: PyList[SubstanceSpecificationNameOfficial] | None = Field(None, alias="official", serialization_alias="official")
     preferred: bool | None = Field(None, alias="preferred", serialization_alias="preferred")
     source: PyList[Reference] | None = Field(None, alias="source", serialization_alias="source")

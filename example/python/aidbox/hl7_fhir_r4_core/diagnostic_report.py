@@ -16,7 +16,7 @@ class DiagnosticReportMedia(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     comment: str | None = Field(None, alias="comment", serialization_alias="comment")
-    link: Reference | None = Field(None, alias="link", serialization_alias="link")
+    link: Reference = Field(alias="link", serialization_alias="link")
 
 
 class DiagnosticReport(DomainResource):
@@ -32,7 +32,7 @@ class DiagnosticReport(DomainResource):
     
     based_on: PyList[Reference] | None = Field(None, alias="basedOn", serialization_alias="basedOn")
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     conclusion: str | None = Field(None, alias="conclusion", serialization_alias="conclusion")
     conclusion_code: PyList[CodeableConcept] | None = Field(None, alias="conclusionCode", serialization_alias="conclusionCode")
     effective_date_time: str | None = Field(None, alias="effectiveDateTime", serialization_alias="effectiveDateTime")
@@ -47,7 +47,7 @@ class DiagnosticReport(DomainResource):
     result: PyList[Reference] | None = Field(None, alias="result", serialization_alias="result")
     results_interpreter: PyList[Reference] | None = Field(None, alias="resultsInterpreter", serialization_alias="resultsInterpreter")
     specimen: PyList[Reference] | None = Field(None, alias="specimen", serialization_alias="specimen")
-    status: Literal["registered", "partial", "final", "amended", "cancelled", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["registered", "partial", "final", "amended", "cancelled", "entered-in-error", "unknown", "preliminary", "corrected", "appended"] = Field(alias="status", serialization_alias="status")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:

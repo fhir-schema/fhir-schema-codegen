@@ -17,7 +17,7 @@ class MedicinalProductPackagedBatchIdentifier(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     immediate_packaging: Identifier | None = Field(None, alias="immediatePackaging", serialization_alias="immediatePackaging")
-    outer_packaging: Identifier | None = Field(None, alias="outerPackaging", serialization_alias="outerPackaging")
+    outer_packaging: Identifier = Field(alias="outerPackaging", serialization_alias="outerPackaging")
 
 class MedicinalProductPackagedPackageItem(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -31,9 +31,9 @@ class MedicinalProductPackagedPackageItem(BackboneElement):
     other_characteristics: PyList[CodeableConcept] | None = Field(None, alias="otherCharacteristics", serialization_alias="otherCharacteristics")
     package_item: PyList[MedicinalProductPackagedPackageItem] | None = Field(None, alias="packageItem", serialization_alias="packageItem")
     physical_characteristics: ProdCharacteristic | None = Field(None, alias="physicalCharacteristics", serialization_alias="physicalCharacteristics")
-    quantity: Quantity | None = Field(None, alias="quantity", serialization_alias="quantity")
+    quantity: Quantity = Field(alias="quantity", serialization_alias="quantity")
     shelf_life_storage: PyList[ProductShelfLife] | None = Field(None, alias="shelfLifeStorage", serialization_alias="shelfLifeStorage")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 
 class MedicinalProductPackaged(DomainResource):
@@ -54,7 +54,7 @@ class MedicinalProductPackaged(DomainResource):
     manufacturer: PyList[Reference] | None = Field(None, alias="manufacturer", serialization_alias="manufacturer")
     marketing_authorization: Reference | None = Field(None, alias="marketingAuthorization", serialization_alias="marketingAuthorization")
     marketing_status: PyList[MarketingStatus] | None = Field(None, alias="marketingStatus", serialization_alias="marketingStatus")
-    package_item: PyList[MedicinalProductPackagedPackageItem] | None = Field(None, alias="packageItem", serialization_alias="packageItem")
+    package_item: PyList[MedicinalProductPackagedPackageItem] = Field(alias="packageItem", serialization_alias="packageItem")
     subject: PyList[Reference] | None = Field(None, alias="subject", serialization_alias="subject")
     
     def to_json(self, indent: int | None = None) -> str:

@@ -16,7 +16,7 @@ export interface SpecimenDefinitionTypeTested extends BackboneElement {
     container?: SpecimenDefinitionTypeTestedContainer;
     handling?: SpecimenDefinitionTypeTestedHandling[];
     isDerived?: boolean;
-    preference?: 'preferred' | 'alternate';
+    preference: 'preferred' | 'alternate';
     rejectionCriterion?: CodeableConcept[];
     requirement?: string;
     retentionTime?: Duration;
@@ -36,8 +36,8 @@ export interface SpecimenDefinitionTypeTestedContainer extends BackboneElement {
 }
 
 export interface SpecimenDefinitionTypeTestedContainerAdditive extends BackboneElement {
-    additiveCodeableConcept?: CodeableConcept;
-    additiveReference?: Reference<'Substance'>;
+    additiveCodeableConcept: CodeableConcept;
+    additiveReference: Reference<'Substance'>;
 }
 
 export interface SpecimenDefinitionTypeTestedHandling extends BackboneElement {

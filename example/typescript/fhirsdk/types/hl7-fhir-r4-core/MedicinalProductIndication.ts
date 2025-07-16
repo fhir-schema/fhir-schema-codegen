@@ -11,9 +11,9 @@ import { Reference } from './Reference';
 
 
 export interface MedicinalProductIndicationOtherTherapy extends BackboneElement {
-    medicationCodeableConcept?: CodeableConcept;
-    medicationReference?: Reference<'Medication' | 'MedicinalProduct' | 'Substance' | 'SubstanceSpecification'>;
-    therapyRelationshipType?: CodeableConcept;
+    medicationCodeableConcept: CodeableConcept;
+    medicationReference: Reference<'Medication' | 'MedicinalProduct' | 'Substance' | 'SubstanceSpecification'>;
+    therapyRelationshipType: CodeableConcept;
 }
 
 export interface MedicinalProductIndication extends DomainResource {

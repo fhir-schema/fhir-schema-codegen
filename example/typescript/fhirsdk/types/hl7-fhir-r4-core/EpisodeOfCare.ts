@@ -11,14 +11,14 @@ import { Reference } from './Reference';
 
 
 export interface EpisodeOfCareDiagnosis extends BackboneElement {
-    condition?: Reference<'Condition'>;
+    condition: Reference<'Condition'>;
     rank?: number;
     role?: CodeableConcept;
 }
 
 export interface EpisodeOfCareStatusHistory extends BackboneElement {
-    period?: Period;
-    status?: 'planned' | 'waitlist' | 'active' | 'onhold' | 'finished' | 'cancelled' | 'entered-in-error';
+    period: Period;
+    status: 'planned' | 'waitlist' | 'active' | 'onhold' | 'finished' | 'cancelled' | 'entered-in-error';
 }
 
 export interface EpisodeOfCare extends DomainResource {
@@ -27,10 +27,10 @@ export interface EpisodeOfCare extends DomainResource {
     diagnosis?: EpisodeOfCareDiagnosis[];
     identifier?: Identifier[];
     managingOrganization?: Reference<'Organization'>;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     period?: Period;
     referralRequest?: Reference<'ServiceRequest'>[];
-    status?: 'planned' | 'waitlist' | 'active' | 'onhold' | 'finished' | 'cancelled' | 'entered-in-error';
+    status: 'planned' | 'waitlist' | 'active' | 'onhold' | 'finished' | 'cancelled' | 'entered-in-error';
     _status?: Element;
     statusHistory?: EpisodeOfCareStatusHistory[];
     team?: Reference<'CareTeam'>[];

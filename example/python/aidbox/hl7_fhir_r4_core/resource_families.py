@@ -92,7 +92,7 @@ if TYPE_CHECKING:
     from aidbox.hl7_fhir_r4_core.medicinal_product import MedicinalProduct
     from aidbox.hl7_fhir_r4_core.capability_statement import CapabilityStatement
     from aidbox.hl7_fhir_r4_core.care_plan import CarePlan
-    from aidbox.not_specified.tutor_notification import TutorNotification
+    from aidbox.undefined.tutor_notification import TutorNotification
     from aidbox.hl7_fhir_r4_core.observation_definition import ObservationDefinition
     from aidbox.hl7_fhir_r4_core.questionnaire_response import QuestionnaireResponse
     from aidbox.hl7_fhir_r4_core.medicinal_product_ingredient import MedicinalProductIngredient
@@ -147,7 +147,7 @@ if TYPE_CHECKING:
     from aidbox.hl7_fhir_r4_core.evidence_variable import EvidenceVariable
     from aidbox.hl7_fhir_r4_core.coverage_eligibility_request import CoverageEligibilityRequest
     from aidbox.hl7_fhir_r4_core.medicinal_product_indication import MedicinalProductIndication
-    from aidbox.not_specified.tutor_notification_template import TutorNotificationTemplate
+    from aidbox.undefined.tutor_notification_template import TutorNotificationTemplate
     from aidbox.hl7_fhir_r4_core.test_script import TestScript
     from aidbox.hl7_fhir_r4_core.supply_request import SupplyRequest
     from aidbox.hl7_fhir_r4_core.immunization_evaluation import ImmunizationEvaluation
@@ -242,7 +242,7 @@ if TYPE_CHECKING:
     from aidbox.hl7_fhir_r4_core.medicinal_product import MedicinalProduct
     from aidbox.hl7_fhir_r4_core.capability_statement import CapabilityStatement
     from aidbox.hl7_fhir_r4_core.care_plan import CarePlan
-    from aidbox.not_specified.tutor_notification import TutorNotification
+    from aidbox.undefined.tutor_notification import TutorNotification
     from aidbox.hl7_fhir_r4_core.observation_definition import ObservationDefinition
     from aidbox.hl7_fhir_r4_core.questionnaire_response import QuestionnaireResponse
     from aidbox.hl7_fhir_r4_core.medicinal_product_ingredient import MedicinalProductIngredient
@@ -297,7 +297,7 @@ if TYPE_CHECKING:
     from aidbox.hl7_fhir_r4_core.evidence_variable import EvidenceVariable
     from aidbox.hl7_fhir_r4_core.coverage_eligibility_request import CoverageEligibilityRequest
     from aidbox.hl7_fhir_r4_core.medicinal_product_indication import MedicinalProductIndication
-    from aidbox.not_specified.tutor_notification_template import TutorNotificationTemplate
+    from aidbox.undefined.tutor_notification_template import TutorNotificationTemplate
     from aidbox.hl7_fhir_r4_core.test_script import TestScript
     from aidbox.hl7_fhir_r4_core.supply_request import SupplyRequest
     from aidbox.hl7_fhir_r4_core.immunization_evaluation import ImmunizationEvaluation

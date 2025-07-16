@@ -25,7 +25,7 @@ export interface HealthcareServiceEligibility extends BackboneElement {
 }
 
 export interface HealthcareServiceNotAvailable extends BackboneElement {
-    description?: string;
+    description: string;
     during?: Period;
 }
 

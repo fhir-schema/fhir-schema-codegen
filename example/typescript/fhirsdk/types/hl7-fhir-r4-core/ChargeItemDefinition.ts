@@ -28,7 +28,7 @@ export interface ChargeItemDefinitionPropertyGroupPriceComponent extends Backbon
     amount?: Money;
     code?: CodeableConcept;
     factor?: number;
-    type?: 'base' | 'surcharge' | 'deduction' | 'discount' | 'tax' | 'informational';
+    type: 'base' | 'surcharge' | 'deduction' | 'discount' | 'tax' | 'informational';
 }
 
 export interface ChargeItemDefinition extends DomainResource {
@@ -60,11 +60,11 @@ export interface ChargeItemDefinition extends DomainResource {
     _publisher?: Element;
     replaces?: string[];
     _replaces?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     title?: string;
     _title?: Element;
-    url?: string;
+    url: string;
     _url?: Element;
     useContext?: UsageContext[];
     version?: string;

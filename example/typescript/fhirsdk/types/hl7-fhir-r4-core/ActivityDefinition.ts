@@ -21,13 +21,13 @@ import { UsageContext } from './UsageContext';
 
 
 export interface ActivityDefinitionDynamicValue extends BackboneElement {
-    expression?: Expression;
-    path?: string;
+    expression: Expression;
+    path: string;
 }
 
 export interface ActivityDefinitionParticipant extends BackboneElement {
     role?: CodeableConcept;
-    type?: 'patient' | 'practitioner' | 'related-person' | 'device';
+    type: 'patient' | 'practitioner' | 'related-person' | 'device';
 }
 
 export interface ActivityDefinition extends DomainResource {
@@ -53,7 +53,7 @@ export interface ActivityDefinition extends DomainResource {
     experimental?: boolean;
     _experimental?: Element;
     identifier?: Identifier[];
-    intent?: 'proposal' | 'plan' | 'directive' | 'order' | 'option';
+    intent?: 'proposal' | 'plan' | 'directive' | 'order' | 'option' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order';
     _intent?: Element;
     jurisdiction?: CodeableConcept[];
     kind?: 'Appointment' | 'AppointmentResponse' | 'CarePlan' | 'Claim' | 'CommunicationRequest' | 'Contract' | 'DeviceRequest' | 'EnrollmentRequest' | 'ImmunizationRecommendation' | 'MedicationRequest' | 'NutritionOrder' | 'ServiceRequest' | 'SupplyRequest' | 'Task' | 'VisionPrescription';
@@ -82,7 +82,7 @@ export interface ActivityDefinition extends DomainResource {
     relatedArtifact?: RelatedArtifact[];
     reviewer?: ContactDetail[];
     specimenRequirement?: Reference<'SpecimenDefinition'>[];
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subjectCodeableConcept?: CodeableConcept;
     subjectReference?: Reference<'Group'>;

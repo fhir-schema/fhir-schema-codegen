@@ -11,13 +11,13 @@ import { Reference } from './Reference';
 
 
 export interface AccountCoverage extends BackboneElement {
-    coverage?: Reference<'Coverage'>;
+    coverage: Reference<'Coverage'>;
     priority?: number;
 }
 
 export interface AccountGuarantor extends BackboneElement {
     onHold?: boolean;
-    party?: Reference<'Organization' | 'Patient' | 'RelatedPerson'>;
+    party: Reference<'Organization' | 'Patient' | 'RelatedPerson'>;
     period?: Period;
 }
 
@@ -32,7 +32,7 @@ export interface Account extends DomainResource {
     owner?: Reference<'Organization'>;
     partOf?: Reference<'Account'>;
     servicePeriod?: Period;
-    status?: 'active' | 'inactive' | 'entered-in-error' | 'on-hold' | 'unknown';
+    status: 'active' | 'inactive' | 'entered-in-error' | 'on-hold' | 'unknown';
     _status?: Element;
     subject?: Reference<'Device' | 'HealthcareService' | 'Location' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole'>[];
     type?: CodeableConcept;

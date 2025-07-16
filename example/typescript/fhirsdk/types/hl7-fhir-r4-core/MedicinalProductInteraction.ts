@@ -9,8 +9,8 @@ import { Reference } from './Reference';
 
 
 export interface MedicinalProductInteractionInteractant extends BackboneElement {
-    itemCodeableConcept?: CodeableConcept;
-    itemReference?: Reference<'Medication' | 'MedicinalProduct' | 'ObservationDefinition' | 'Substance'>;
+    itemCodeableConcept: CodeableConcept;
+    itemReference: Reference<'Medication' | 'MedicinalProduct' | 'ObservationDefinition' | 'Substance'>;
 }
 
 export interface MedicinalProductInteraction extends DomainResource {

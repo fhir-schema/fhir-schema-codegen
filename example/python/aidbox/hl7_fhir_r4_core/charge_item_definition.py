@@ -31,7 +31,7 @@ class ChargeItemDefinitionPropertyGroupPriceComponent(BackboneElement):
     amount: Money | None = Field(None, alias="amount", serialization_alias="amount")
     code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
     factor: float | None = Field(None, alias="factor", serialization_alias="factor")
-    type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["base", "surcharge", "deduction", "discount", "tax", "informational"] = Field(alias="type", serialization_alias="type")
 
 
 class ChargeItemDefinition(DomainResource):
@@ -63,9 +63,9 @@ class ChargeItemDefinition(DomainResource):
     property_group: PyList[ChargeItemDefinitionPropertyGroup] | None = Field(None, alias="propertyGroup", serialization_alias="propertyGroup")
     publisher: str | None = Field(None, alias="publisher", serialization_alias="publisher")
     replaces: PyList[str] | None = Field(None, alias="replaces", serialization_alias="replaces")
-    status: Literal["draft", "active", "retired", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["draft", "active", "retired", "unknown"] = Field(alias="status", serialization_alias="status")
     title: str | None = Field(None, alias="title", serialization_alias="title")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    url: str = Field(alias="url", serialization_alias="url")
     use_context: PyList[UsageContext] | None = Field(None, alias="useContext", serialization_alias="useContext")
     version: str | None = Field(None, alias="version", serialization_alias="version")
     

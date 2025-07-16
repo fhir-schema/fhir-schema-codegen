@@ -14,7 +14,7 @@ import { Reference } from './Reference';
 
 export interface PersonLink extends BackboneElement {
     assurance?: 'level1' | 'level2' | 'level3' | 'level4';
-    target?: Reference<'Patient' | 'Person' | 'Practitioner' | 'RelatedPerson'>;
+    target: Reference<'Patient' | 'Person' | 'Practitioner' | 'RelatedPerson'>;
 }
 
 export interface Person extends DomainResource {

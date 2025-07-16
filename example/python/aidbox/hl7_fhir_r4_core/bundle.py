@@ -28,8 +28,8 @@ class BundleEntryRequest(BackboneElement):
     if_modified_since: str | None = Field(None, alias="ifModifiedSince", serialization_alias="ifModifiedSince")
     if_none_exist: str | None = Field(None, alias="ifNoneExist", serialization_alias="ifNoneExist")
     if_none_match: str | None = Field(None, alias="ifNoneMatch", serialization_alias="ifNoneMatch")
-    method: Literal["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"] | None = Field(None, alias="method", serialization_alias="method")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    method: Literal["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"] = Field(alias="method", serialization_alias="method")
+    url: str = Field(alias="url", serialization_alias="url")
 
 class BundleEntryResponse(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -38,7 +38,7 @@ class BundleEntryResponse(BackboneElement):
     last_modified: str | None = Field(None, alias="lastModified", serialization_alias="lastModified")
     location: str | None = Field(None, alias="location", serialization_alias="location")
     outcome: ResourceFamily | None = Field(None, alias="outcome", serialization_alias="outcome")
-    status: str | None = Field(None, alias="status", serialization_alias="status")
+    status: str = Field(alias="status", serialization_alias="status")
 
 class BundleEntrySearch(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -49,8 +49,8 @@ class BundleEntrySearch(BackboneElement):
 class BundleLink(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    relation: str | None = Field(None, alias="relation", serialization_alias="relation")
-    url: str | None = Field(None, alias="url", serialization_alias="url")
+    relation: str = Field(alias="relation", serialization_alias="relation")
+    url: str = Field(alias="url", serialization_alias="url")
 
 
 class Bundle(Resource):
@@ -70,7 +70,7 @@ class Bundle(Resource):
     signature: Signature | None = Field(None, alias="signature", serialization_alias="signature")
     timestamp: str | None = Field(None, alias="timestamp", serialization_alias="timestamp")
     total: int | None = Field(None, alias="total", serialization_alias="total")
-    type: Literal["document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection"] = Field(alias="type", serialization_alias="type")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

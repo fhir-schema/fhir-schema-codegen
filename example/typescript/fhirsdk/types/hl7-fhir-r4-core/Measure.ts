@@ -23,7 +23,7 @@ export interface MeasureGroup extends BackboneElement {
 
 export interface MeasureGroupPopulation extends BackboneElement {
     code?: CodeableConcept;
-    criteria?: Expression;
+    criteria: Expression;
     description?: string;
 }
 
@@ -36,13 +36,13 @@ export interface MeasureGroupStratifier extends BackboneElement {
 
 export interface MeasureGroupStratifierComponent extends BackboneElement {
     code?: CodeableConcept;
-    criteria?: Expression;
+    criteria: Expression;
     description?: string;
 }
 
 export interface MeasureSupplementalData extends BackboneElement {
     code?: CodeableConcept;
-    criteria?: Expression;
+    criteria: Expression;
     description?: string;
     usage?: CodeableConcept[];
 }
@@ -95,7 +95,7 @@ export interface Measure extends DomainResource {
     riskAdjustment?: string;
     _riskAdjustment?: Element;
     scoring?: CodeableConcept;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subjectCodeableConcept?: CodeableConcept;
     subjectReference?: Reference<'Group'>;

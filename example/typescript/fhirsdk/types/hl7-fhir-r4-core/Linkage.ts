@@ -8,14 +8,14 @@ import { Reference } from './Reference';
 
 
 export interface LinkageItem extends BackboneElement {
-    resource?: Reference<'Resource'>;
-    type?: 'source' | 'alternate' | 'historical';
+    resource: Reference<'Resource'>;
+    type: 'source' | 'alternate' | 'historical';
 }
 
 export interface Linkage extends DomainResource {
     active?: boolean;
     _active?: Element;
     author?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    item?: LinkageItem[];
+    item: LinkageItem[];
 }
 

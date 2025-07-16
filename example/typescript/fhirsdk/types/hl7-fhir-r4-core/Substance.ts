@@ -13,8 +13,8 @@ import { Reference } from './Reference';
 
 export interface SubstanceIngredient extends BackboneElement {
     quantity?: Ratio;
-    substanceCodeableConcept?: CodeableConcept;
-    substanceReference?: Reference<'Substance'>;
+    substanceCodeableConcept: CodeableConcept;
+    substanceReference: Reference<'Substance'>;
 }
 
 export interface SubstanceInstance extends BackboneElement {
@@ -25,7 +25,7 @@ export interface SubstanceInstance extends BackboneElement {
 
 export interface Substance extends DomainResource {
     category?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     description?: string;
     _description?: Element;
     identifier?: Identifier[];

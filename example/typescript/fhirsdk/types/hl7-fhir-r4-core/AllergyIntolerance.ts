@@ -16,7 +16,7 @@ import { Reference } from './Reference';
 export interface AllergyIntoleranceReaction extends BackboneElement {
     description?: string;
     exposureRoute?: CodeableConcept;
-    manifestation?: CodeableConcept[];
+    manifestation: CodeableConcept[];
     note?: Annotation[];
     onset?: string;
     severity?: 'mild' | 'moderate' | 'severe';
@@ -43,7 +43,7 @@ export interface AllergyIntolerance extends DomainResource {
     onsetRange?: Range;
     onsetString?: string;
     _onsetString?: Element;
-    patient?: Reference<'Patient'>;
+    patient: Reference<'Patient'>;
     reaction?: AllergyIntoleranceReaction[];
     recordedDate?: string;
     _recordedDate?: Element;

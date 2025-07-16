@@ -16,12 +16,12 @@ class ProcedureFocalDevice(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     action: CodeableConcept | None = Field(None, alias="action", serialization_alias="action")
-    manipulated: Reference | None = Field(None, alias="manipulated", serialization_alias="manipulated")
+    manipulated: Reference = Field(alias="manipulated", serialization_alias="manipulated")
 
 class ProcedurePerformer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    actor: Reference | None = Field(None, alias="actor", serialization_alias="actor")
+    actor: Reference = Field(alias="actor", serialization_alias="actor")
     function: CodeableConcept | None = Field(None, alias="function", serialization_alias="function")
     on_behalf_of: Reference | None = Field(None, alias="onBehalfOf", serialization_alias="onBehalfOf")
 
@@ -64,9 +64,9 @@ class Procedure(DomainResource):
     reason_reference: PyList[Reference] | None = Field(None, alias="reasonReference", serialization_alias="reasonReference")
     recorder: Reference | None = Field(None, alias="recorder", serialization_alias="recorder")
     report: PyList[Reference] | None = Field(None, alias="report", serialization_alias="report")
-    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    status: Literal["preparation", "in-progress", "not-done", "on-hold", "stopped", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     status_reason: CodeableConcept | None = Field(None, alias="statusReason", serialization_alias="statusReason")
-    subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")
+    subject: Reference = Field(alias="subject", serialization_alias="subject")
     used_code: PyList[CodeableConcept] | None = Field(None, alias="usedCode", serialization_alias="usedCode")
     used_reference: PyList[Reference] | None = Field(None, alias="usedReference", serialization_alias="usedReference")
     

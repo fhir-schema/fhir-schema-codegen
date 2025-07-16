@@ -37,103 +37,103 @@ import { UsageContext } from './UsageContext';
 
 
 export interface ElementDefinitionBase extends BackboneElement {
-    max?: string;
-    min?: number;
-    path?: string;
+    max: string;
+    min: number;
+    path: string;
 }
 
 export interface ElementDefinitionBinding extends BackboneElement {
     description?: string;
-    strength?: 'required' | 'extensible' | 'preferred' | 'example';
+    strength: 'required' | 'extensible' | 'preferred' | 'example';
     valueSet?: string;
 }
 
 export interface ElementDefinitionConstraint extends BackboneElement {
     expression?: string;
-    human?: string;
-    key?: string;
+    human: string;
+    key: string;
     requirements?: string;
-    severity?: 'error' | 'warning';
+    severity: 'error' | 'warning';
     source?: string;
     xpath?: string;
 }
 
 export interface ElementDefinitionExample extends BackboneElement {
-    label?: string;
-    valueAddress?: Address;
-    valueAge?: Age;
-    valueAnnotation?: Annotation;
-    valueAttachment?: Attachment;
-    valueBase64Binary?: string;
-    valueBoolean?: boolean;
-    valueCanonical?: string;
-    valueCode?: string;
-    valueCodeableConcept?: CodeableConcept;
-    valueCoding?: Coding;
-    valueContactDetail?: ContactDetail;
-    valueContactPoint?: ContactPoint;
-    valueContributor?: Contributor;
-    valueCount?: Count;
-    valueDataRequirement?: DataRequirement;
-    valueDate?: string;
-    valueDateTime?: string;
-    valueDecimal?: number;
-    valueDistance?: Distance;
-    valueDosage?: Dosage;
-    valueDuration?: Duration;
-    valueExpression?: Expression;
-    valueHumanName?: HumanName;
-    valueId?: string;
-    valueIdentifier?: Identifier;
-    valueInstant?: string;
-    valueInteger?: number;
-    valueMarkdown?: string;
-    valueMeta?: Meta;
-    valueMoney?: Money;
-    valueOid?: string;
-    valueParameterDefinition?: ParameterDefinition;
-    valuePeriod?: Period;
-    valuePositiveInt?: number;
-    valueQuantity?: Quantity;
-    valueRange?: Range;
-    valueRatio?: Ratio;
-    valueReference?: Reference;
-    valueRelatedArtifact?: RelatedArtifact;
-    valueSampledData?: SampledData;
-    valueSignature?: Signature;
-    valueString?: string;
-    valueTime?: string;
-    valueTiming?: Timing;
-    valueTriggerDefinition?: TriggerDefinition;
-    valueUnsignedInt?: number;
-    valueUri?: string;
-    valueUrl?: string;
-    valueUsageContext?: UsageContext;
-    valueUuid?: string;
+    label: string;
+    valueAddress: Address;
+    valueAge: Age;
+    valueAnnotation: Annotation;
+    valueAttachment: Attachment;
+    valueBase64Binary: string;
+    valueBoolean: boolean;
+    valueCanonical: string;
+    valueCode: string;
+    valueCodeableConcept: CodeableConcept;
+    valueCoding: Coding;
+    valueContactDetail: ContactDetail;
+    valueContactPoint: ContactPoint;
+    valueContributor: Contributor;
+    valueCount: Count;
+    valueDataRequirement: DataRequirement;
+    valueDate: string;
+    valueDateTime: string;
+    valueDecimal: number;
+    valueDistance: Distance;
+    valueDosage: Dosage;
+    valueDuration: Duration;
+    valueExpression: Expression;
+    valueHumanName: HumanName;
+    valueId: string;
+    valueIdentifier: Identifier;
+    valueInstant: string;
+    valueInteger: number;
+    valueMarkdown: string;
+    valueMeta: Meta;
+    valueMoney: Money;
+    valueOid: string;
+    valueParameterDefinition: ParameterDefinition;
+    valuePeriod: Period;
+    valuePositiveInt: number;
+    valueQuantity: Quantity;
+    valueRange: Range;
+    valueRatio: Ratio;
+    valueReference: Reference;
+    valueRelatedArtifact: RelatedArtifact;
+    valueSampledData: SampledData;
+    valueSignature: Signature;
+    valueString: string;
+    valueTime: string;
+    valueTiming: Timing;
+    valueTriggerDefinition: TriggerDefinition;
+    valueUnsignedInt: number;
+    valueUri: string;
+    valueUrl: string;
+    valueUsageContext: UsageContext;
+    valueUuid: string;
 }
 
 export interface ElementDefinitionMapping extends BackboneElement {
     comment?: string;
-    identity?: string;
+    identity: string;
     language?: string;
-    map?: string;
+    map: string;
 }
 
 export interface ElementDefinitionSlicing extends BackboneElement {
     description?: string;
     discriminator?: ElementDefinitionSlicingDiscriminator[];
     ordered?: boolean;
-    rules?: 'closed' | 'open' | 'openAtEnd';
+    rules: 'closed' | 'open' | 'openAtEnd';
 }
 
 export interface ElementDefinitionSlicingDiscriminator extends BackboneElement {
-    path?: string;
-    type?: 'value' | 'exists' | 'pattern' | 'type' | 'profile';
+    path: string;
+    type: 'value' | 'exists' | 'pattern' | 'type' | 'profile';
 }
 
 export interface ElementDefinitionType extends BackboneElement {
-    aggregation?: 'contained' | 'referenced'[];
-    code?: string;
+    aggregation?: 'contained' | 'referenced' | 'bundled'[];
+    code: string;
     profile?: string[];
     targetProfile?: string[];
     versioning?: 'either' | 'independent' | 'specific';
@@ -348,7 +348,7 @@ export interface ElementDefinition extends BackboneElement {
     _mustSupport?: Element;
     orderMeaning?: string;
     _orderMeaning?: Element;
-    path?: string;
+    path: string;
     _path?: Element;
     patternAddress?: Address;
     patternAge?: Age;

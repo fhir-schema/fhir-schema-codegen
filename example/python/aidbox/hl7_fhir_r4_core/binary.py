@@ -22,7 +22,7 @@ class Binary(Resource):
         pattern='Binary'
     )
     
-    content_type: str | None = Field(None, alias="contentType", serialization_alias="contentType")
+    content_type: str = Field(alias="contentType", serialization_alias="contentType")
     data: str | None = Field(None, alias="data", serialization_alias="data")
     security_context: Reference | None = Field(None, alias="securityContext", serialization_alias="securityContext")
     

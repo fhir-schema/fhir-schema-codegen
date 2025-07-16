@@ -10,10 +10,10 @@ import { Range } from './Range';
 import { Reference } from './Reference';
 
 export interface UsageContext extends Element {
-    code?: Coding;
-    valueCodeableConcept?: CodeableConcept;
-    valueQuantity?: Quantity;
-    valueRange?: Range;
-    valueReference?: Reference<'Group' | 'HealthcareService' | 'InsurancePlan' | 'Location' | 'Organization' | 'PlanDefinition' | 'ResearchStudy'>;
+    code: Coding;
+    valueCodeableConcept: CodeableConcept;
+    valueQuantity: Quantity;
+    valueRange: Range;
+    valueReference: Reference<'Group' | 'HealthcareService' | 'InsurancePlan' | 'Location' | 'Organization' | 'PlanDefinition' | 'ResearchStudy'>;
 }
 

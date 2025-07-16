@@ -14,18 +14,18 @@ export interface ProvenanceAgent extends BackboneElement {
     onBehalfOf?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     role?: CodeableConcept[];
     type?: CodeableConcept;
-    who?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    who: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
 }
 
 export interface ProvenanceEntity extends BackboneElement {
     agent?: ProvenanceAgent[];
-    role?: 'derivation';
-    what?: Reference<'Resource'>;
+    role: 'derivation' | 'revision' | 'quotation' | 'source' | 'removal';
+    what: Reference<'Resource'>;
 }
 
 export interface Provenance extends DomainResource {
     activity?: CodeableConcept;
-    agent?: ProvenanceAgent[];
+    agent: ProvenanceAgent[];
     entity?: ProvenanceEntity[];
     location?: Reference<'Location'>;
     occurredDateTime?: string;
@@ -34,9 +34,9 @@ export interface Provenance extends DomainResource {
     policy?: string[];
     _policy?: Element;
     reason?: CodeableConcept[];
-    recorded?: string;
+    recorded: string;
     _recorded?: Element;
     signature?: Signature[];
-    target?: Reference<'Resource'>[];
+    target: Reference<'Resource'>[];
 }
 

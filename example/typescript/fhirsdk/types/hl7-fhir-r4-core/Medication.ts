@@ -17,8 +17,8 @@ export interface MedicationBatch extends BackboneElement {
 
 export interface MedicationIngredient extends BackboneElement {
     isActive?: boolean;
-    itemCodeableConcept?: CodeableConcept;
-    itemReference?: Reference<'Medication' | 'Substance'>;
+    itemCodeableConcept: CodeableConcept;
+    itemReference: Reference<'Medication' | 'Substance'>;
     strength?: Ratio;
 }
 

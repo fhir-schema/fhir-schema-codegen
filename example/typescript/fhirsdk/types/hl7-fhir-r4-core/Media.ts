@@ -13,7 +13,7 @@ import { Reference } from './Reference';
 export interface Media extends DomainResource {
     basedOn?: Reference<'CarePlan' | 'ServiceRequest'>[];
     bodySite?: CodeableConcept;
-    content?: Attachment;
+    content: Attachment;
     createdDateTime?: string;
     _createdDateTime?: Element;
     createdPeriod?: Period;
@@ -35,7 +35,7 @@ export interface Media extends DomainResource {
     operator?: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     partOf?: Reference<'Resource'>[];
     reasonCode?: CodeableConcept[];
-    status?: 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
     subject?: Reference<'Device' | 'Group' | 'Location' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'Specimen'>;
     type?: CodeableConcept;

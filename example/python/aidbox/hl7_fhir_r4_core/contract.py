@@ -18,35 +18,35 @@ class ContractContentDefinition(BackboneElement):
     
     copyright: str | None = Field(None, alias="copyright", serialization_alias="copyright")
     publication_date: str | None = Field(None, alias="publicationDate", serialization_alias="publicationDate")
-    publication_status: Literal["amended", "appended", "cancelled", "disputed", "entered-in-error", "executable", "executed", "negotiable", "offered", "policy", "rejected", "renewed", "revoked", "resolved", "terminated"] | None = Field(None, alias="publicationStatus", serialization_alias="publicationStatus")
+    publication_status: Literal["amended", "appended", "cancelled", "disputed", "entered-in-error", "executable", "executed", "negotiable", "offered", "policy", "rejected", "renewed", "revoked", "resolved", "terminated"] = Field(alias="publicationStatus", serialization_alias="publicationStatus")
     publisher: Reference | None = Field(None, alias="publisher", serialization_alias="publisher")
     sub_type: CodeableConcept | None = Field(None, alias="subType", serialization_alias="subType")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class ContractFriendly(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    content_attachment: Attachment | None = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
-    content_reference: Reference | None = Field(None, alias="contentReference", serialization_alias="contentReference")
+    content_attachment: Attachment = Field(alias="contentAttachment", serialization_alias="contentAttachment")
+    content_reference: Reference = Field(alias="contentReference", serialization_alias="contentReference")
 
 class ContractLegal(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    content_attachment: Attachment | None = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
-    content_reference: Reference | None = Field(None, alias="contentReference", serialization_alias="contentReference")
+    content_attachment: Attachment = Field(alias="contentAttachment", serialization_alias="contentAttachment")
+    content_reference: Reference = Field(alias="contentReference", serialization_alias="contentReference")
 
 class ContractRule(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    content_attachment: Attachment | None = Field(None, alias="contentAttachment", serialization_alias="contentAttachment")
-    content_reference: Reference | None = Field(None, alias="contentReference", serialization_alias="contentReference")
+    content_attachment: Attachment = Field(alias="contentAttachment", serialization_alias="contentAttachment")
+    content_reference: Reference = Field(alias="contentReference", serialization_alias="contentReference")
 
 class ContractSigner(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    party: Reference | None = Field(None, alias="party", serialization_alias="party")
-    signature: PyList[Signature] | None = Field(None, alias="signature", serialization_alias="signature")
-    type: Coding | None = Field(None, alias="type", serialization_alias="type")
+    party: Reference = Field(alias="party", serialization_alias="party")
+    signature: PyList[Signature] = Field(alias="signature", serialization_alias="signature")
+    type: Coding = Field(alias="type", serialization_alias="type")
 
 class ContractTerm(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -57,7 +57,7 @@ class ContractTerm(BackboneElement):
     group: PyList[ContractTerm] | None = Field(None, alias="group", serialization_alias="group")
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
     issued: str | None = Field(None, alias="issued", serialization_alias="issued")
-    offer: ContractTermOffer | None = Field(None, alias="offer", serialization_alias="offer")
+    offer: ContractTermOffer = Field(alias="offer", serialization_alias="offer")
     security_label: PyList[ContractTermSecurityLabel] | None = Field(None, alias="securityLabel", serialization_alias="securityLabel")
     sub_type: CodeableConcept | None = Field(None, alias="subType", serialization_alias="subType")
     text: str | None = Field(None, alias="text", serialization_alias="text")
@@ -71,7 +71,7 @@ class ContractTermAction(BackboneElement):
     context: Reference | None = Field(None, alias="context", serialization_alias="context")
     context_link_id: PyList[str] | None = Field(None, alias="contextLinkId", serialization_alias="contextLinkId")
     do_not_perform: bool | None = Field(None, alias="doNotPerform", serialization_alias="doNotPerform")
-    intent: CodeableConcept | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: CodeableConcept = Field(alias="intent", serialization_alias="intent")
     link_id: PyList[str] | None = Field(None, alias="linkId", serialization_alias="linkId")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     occurrence_date_time: str | None = Field(None, alias="occurrenceDateTime", serialization_alias="occurrenceDateTime")
@@ -88,14 +88,14 @@ class ContractTermAction(BackboneElement):
     requester: PyList[Reference] | None = Field(None, alias="requester", serialization_alias="requester")
     requester_link_id: PyList[str] | None = Field(None, alias="requesterLinkId", serialization_alias="requesterLinkId")
     security_label_number: PyList[int] | None = Field(None, alias="securityLabelNumber", serialization_alias="securityLabelNumber")
-    status: CodeableConcept | None = Field(None, alias="status", serialization_alias="status")
+    status: CodeableConcept = Field(alias="status", serialization_alias="status")
     subject: PyList[ContractTermActionSubject] | None = Field(None, alias="subject", serialization_alias="subject")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class ContractTermActionSubject(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    reference: PyList[Reference] | None = Field(None, alias="reference", serialization_alias="reference")
+    reference: PyList[Reference] = Field(alias="reference", serialization_alias="reference")
     role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
 
 class ContractTermAsset(BackboneElement):
@@ -160,30 +160,30 @@ class ContractTermOffer(BackboneElement):
 class ContractTermOfferAnswer(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    value_attachment: Attachment | None = Field(None, alias="valueAttachment", serialization_alias="valueAttachment")
-    value_boolean: bool | None = Field(None, alias="valueBoolean", serialization_alias="valueBoolean")
-    value_coding: Coding | None = Field(None, alias="valueCoding", serialization_alias="valueCoding")
-    value_date: str | None = Field(None, alias="valueDate", serialization_alias="valueDate")
-    value_date_time: str | None = Field(None, alias="valueDateTime", serialization_alias="valueDateTime")
-    value_decimal: float | None = Field(None, alias="valueDecimal", serialization_alias="valueDecimal")
-    value_integer: int | None = Field(None, alias="valueInteger", serialization_alias="valueInteger")
-    value_quantity: Quantity | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
-    value_reference: Reference | None = Field(None, alias="valueReference", serialization_alias="valueReference")
-    value_string: str | None = Field(None, alias="valueString", serialization_alias="valueString")
-    value_time: str | None = Field(None, alias="valueTime", serialization_alias="valueTime")
-    value_uri: str | None = Field(None, alias="valueUri", serialization_alias="valueUri")
+    value_attachment: Attachment = Field(alias="valueAttachment", serialization_alias="valueAttachment")
+    value_boolean: bool = Field(alias="valueBoolean", serialization_alias="valueBoolean")
+    value_coding: Coding = Field(alias="valueCoding", serialization_alias="valueCoding")
+    value_date: str = Field(alias="valueDate", serialization_alias="valueDate")
+    value_date_time: str = Field(alias="valueDateTime", serialization_alias="valueDateTime")
+    value_decimal: float = Field(alias="valueDecimal", serialization_alias="valueDecimal")
+    value_integer: int = Field(alias="valueInteger", serialization_alias="valueInteger")
+    value_quantity: Quantity = Field(alias="valueQuantity", serialization_alias="valueQuantity")
+    value_reference: Reference = Field(alias="valueReference", serialization_alias="valueReference")
+    value_string: str = Field(alias="valueString", serialization_alias="valueString")
+    value_time: str = Field(alias="valueTime", serialization_alias="valueTime")
+    value_uri: str = Field(alias="valueUri", serialization_alias="valueUri")
 
 class ContractTermOfferParty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    reference: PyList[Reference] | None = Field(None, alias="reference", serialization_alias="reference")
-    role: CodeableConcept | None = Field(None, alias="role", serialization_alias="role")
+    reference: PyList[Reference] = Field(alias="reference", serialization_alias="reference")
+    role: CodeableConcept = Field(alias="role", serialization_alias="role")
 
 class ContractTermSecurityLabel(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     category: PyList[Coding] | None = Field(None, alias="category", serialization_alias="category")
-    classification: Coding | None = Field(None, alias="classification", serialization_alias="classification")
+    classification: Coding = Field(alias="classification", serialization_alias="classification")
     control: PyList[Coding] | None = Field(None, alias="control", serialization_alias="control")
     number: PyList[int] | None = Field(None, alias="number", serialization_alias="number")
 

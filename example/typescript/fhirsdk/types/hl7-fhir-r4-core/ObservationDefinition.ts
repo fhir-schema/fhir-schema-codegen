@@ -31,7 +31,7 @@ export interface ObservationDefinitionQuantitativeDetails extends BackboneElemen
 export interface ObservationDefinition extends DomainResource {
     abnormalCodedValueSet?: Reference<'ValueSet'>;
     category?: CodeableConcept[];
-    code?: CodeableConcept;
+    code: CodeableConcept;
     criticalCodedValueSet?: Reference<'ValueSet'>;
     identifier?: Identifier[];
     method?: CodeableConcept;

@@ -24,16 +24,16 @@ class InsurancePlanContact(BackboneElement):
 class InsurancePlanCoverage(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    benefit: PyList[InsurancePlanCoverageBenefit] | None = Field(None, alias="benefit", serialization_alias="benefit")
+    benefit: PyList[InsurancePlanCoverageBenefit] = Field(alias="benefit", serialization_alias="benefit")
     network: PyList[Reference] | None = Field(None, alias="network", serialization_alias="network")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class InsurancePlanCoverageBenefit(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     limit: PyList[InsurancePlanCoverageBenefitLimit] | None = Field(None, alias="limit", serialization_alias="limit")
     requirement: str | None = Field(None, alias="requirement", serialization_alias="requirement")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class InsurancePlanCoverageBenefitLimit(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -63,20 +63,20 @@ class InsurancePlanPlanSpecificCost(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     benefit: PyList[InsurancePlanPlanSpecificCostBenefit] | None = Field(None, alias="benefit", serialization_alias="benefit")
-    category: CodeableConcept | None = Field(None, alias="category", serialization_alias="category")
+    category: CodeableConcept = Field(alias="category", serialization_alias="category")
 
 class InsurancePlanPlanSpecificCostBenefit(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     cost: PyList[InsurancePlanPlanSpecificCostBenefitCost] | None = Field(None, alias="cost", serialization_alias="cost")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class InsurancePlanPlanSpecificCostBenefitCost(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     applicability: CodeableConcept | None = Field(None, alias="applicability", serialization_alias="applicability")
     qualifiers: PyList[CodeableConcept] | None = Field(None, alias="qualifiers", serialization_alias="qualifiers")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     value: Quantity | None = Field(None, alias="value", serialization_alias="value")
 
 

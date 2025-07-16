@@ -15,11 +15,11 @@ import { Reference } from './Reference';
 
 export interface ProcedureFocalDevice extends BackboneElement {
     action?: CodeableConcept;
-    manipulated?: Reference<'Device'>;
+    manipulated: Reference<'Device'>;
 }
 
 export interface ProcedurePerformer extends BackboneElement {
-    actor?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
+    actor: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     function?: CodeableConcept;
     onBehalfOf?: Reference<'Organization'>;
 }
@@ -56,10 +56,10 @@ export interface Procedure extends DomainResource {
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'DocumentReference' | 'Observation' | 'Procedure'>[];
     recorder?: Reference<'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     report?: Reference<'Composition' | 'DiagnosticReport' | 'DocumentReference'>[];
-    status?: 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
+    status: 'preparation' | 'in-progress' | 'not-done' | 'on-hold' | 'stopped' | 'completed' | 'entered-in-error' | 'unknown';
     _status?: Element;
     statusReason?: CodeableConcept;
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     usedCode?: CodeableConcept[];
     usedReference?: Reference<'Device' | 'Medication' | 'Substance'>[];
 }

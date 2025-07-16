@@ -23,7 +23,7 @@ class Basic(DomainResource):
     )
     
     author: Reference | None = Field(None, alias="author", serialization_alias="author")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     created: str | None = Field(None, alias="created", serialization_alias="created")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     subject: Reference | None = Field(None, alias="subject", serialization_alias="subject")

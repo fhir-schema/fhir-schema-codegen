@@ -30,8 +30,8 @@ export interface MedicationRequestDispenseRequestInitialFill extends BackboneEle
 }
 
 export interface MedicationRequestSubstitution extends BackboneElement {
-    allowedBoolean?: boolean;
-    allowedCodeableConcept?: CodeableConcept;
+    allowedBoolean: boolean;
+    allowedCodeableConcept: CodeableConcept;
     reason?: CodeableConcept;
 }
 
@@ -55,10 +55,10 @@ export interface MedicationRequest extends DomainResource {
     instantiatesUri?: string[];
     _instantiatesUri?: Element;
     insurance?: Reference<'ClaimResponse' | 'Coverage'>[];
-    intent?: 'proposal' | 'plan' | 'order' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order' | 'option';
+    intent: 'proposal' | 'plan' | 'order' | 'original-order' | 'reflex-order' | 'filler-order' | 'instance-order' | 'option';
     _intent?: Element;
-    medicationCodeableConcept?: CodeableConcept;
-    medicationReference?: Reference<'Medication'>;
+    medicationCodeableConcept: CodeableConcept;
+    medicationReference: Reference<'Medication'>;
     note?: Annotation[];
     performer?: Reference<'CareTeam' | 'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     performerType?: CodeableConcept;
@@ -72,10 +72,10 @@ export interface MedicationRequest extends DomainResource {
     _reportedBoolean?: Element;
     reportedReference?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     requester?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    status?: 'active' | 'on-hold' | 'cancelled' | 'completed' | 'entered-in-error' | 'stopped' | 'draft' | 'unknown';
+    status: 'active' | 'on-hold' | 'cancelled' | 'completed' | 'entered-in-error' | 'stopped' | 'draft' | 'unknown';
     _status?: Element;
     statusReason?: CodeableConcept;
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     substitution?: MedicationRequestSubstitution;
     supportingInformation?: Reference<'Resource'>[];
 }

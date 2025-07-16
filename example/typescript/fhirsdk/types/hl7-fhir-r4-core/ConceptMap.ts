@@ -11,7 +11,7 @@ import { UsageContext } from './UsageContext';
 
 
 export interface ConceptMapGroup extends BackboneElement {
-    element?: ConceptMapGroupElement[];
+    element: ConceptMapGroupElement[];
     source?: string;
     sourceVersion?: string;
     target?: string;
@@ -30,21 +30,21 @@ export interface ConceptMapGroupElementTarget extends BackboneElement {
     comment?: string;
     dependsOn?: ConceptMapGroupElementTargetDependsOn[];
     display?: string;
-    equivalence?: 'relatedto' | 'unmatched';
+    equivalence: 'relatedto' | 'unmatched' | 'equivalent' | 'wider' | 'subsumes' | 'narrower' | 'specializes' | 'inexact' | 'equal' | 'disjoint';
     product?: ConceptMapGroupElementTargetDependsOn[];
 }
 
 export interface ConceptMapGroupElementTargetDependsOn extends BackboneElement {
     display?: string;
-    property?: string;
+    property: string;
     system?: string;
-    value?: string;
+    value: string;
 }
 
 export interface ConceptMapGroupUnmapped extends BackboneElement {
     code?: string;
     display?: string;
-    mode?: 'provided' | 'fixed' | 'other-map';
+    mode: 'provided' | 'fixed' | 'other-map';
     url?: string;
 }
 
@@ -71,7 +71,7 @@ export interface ConceptMap extends DomainResource {
     _sourceCanonical?: Element;
     sourceUri?: string;
     _sourceUri?: Element;
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     targetCanonical?: string;
     _targetCanonical?: Element;

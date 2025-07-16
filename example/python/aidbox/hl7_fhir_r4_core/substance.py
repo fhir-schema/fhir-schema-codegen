@@ -16,8 +16,8 @@ class SubstanceIngredient(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     quantity: Ratio | None = Field(None, alias="quantity", serialization_alias="quantity")
-    substance_codeable_concept: CodeableConcept | None = Field(None, alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
-    substance_reference: Reference | None = Field(None, alias="substanceReference", serialization_alias="substanceReference")
+    substance_codeable_concept: CodeableConcept = Field(alias="substanceCodeableConcept", serialization_alias="substanceCodeableConcept")
+    substance_reference: Reference = Field(alias="substanceReference", serialization_alias="substanceReference")
 
 class SubstanceInstance(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
@@ -39,7 +39,7 @@ class Substance(DomainResource):
     )
     
     category: PyList[CodeableConcept] | None = Field(None, alias="category", serialization_alias="category")
-    code: CodeableConcept | None = Field(None, alias="code", serialization_alias="code")
+    code: CodeableConcept = Field(alias="code", serialization_alias="code")
     description: str | None = Field(None, alias="description", serialization_alias="description")
     identifier: PyList[Identifier] | None = Field(None, alias="identifier", serialization_alias="identifier")
     ingredient: PyList[SubstanceIngredient] | None = Field(None, alias="ingredient", serialization_alias="ingredient")

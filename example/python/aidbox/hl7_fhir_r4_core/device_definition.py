@@ -17,40 +17,40 @@ class DeviceDefinitionCapability(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     description: PyList[CodeableConcept] | None = Field(None, alias="description", serialization_alias="description")
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
 
 class DeviceDefinitionDeviceName(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    name: str | None = Field(None, alias="name", serialization_alias="name")
-    type: Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"] | None = Field(None, alias="type", serialization_alias="type")
+    name: str = Field(alias="name", serialization_alias="name")
+    type: Literal["udi-label-name", "user-friendly-name", "patient-reported-name", "manufacturer-name", "model-name", "other"] = Field(alias="type", serialization_alias="type")
 
 class DeviceDefinitionMaterial(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     allergenic_indicator: bool | None = Field(None, alias="allergenicIndicator", serialization_alias="allergenicIndicator")
     alternate: bool | None = Field(None, alias="alternate", serialization_alias="alternate")
-    substance: CodeableConcept | None = Field(None, alias="substance", serialization_alias="substance")
+    substance: CodeableConcept = Field(alias="substance", serialization_alias="substance")
 
 class DeviceDefinitionProperty(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    type: CodeableConcept | None = Field(None, alias="type", serialization_alias="type")
+    type: CodeableConcept = Field(alias="type", serialization_alias="type")
     value_code: PyList[CodeableConcept] | None = Field(None, alias="valueCode", serialization_alias="valueCode")
     value_quantity: PyList[Quantity] | None = Field(None, alias="valueQuantity", serialization_alias="valueQuantity")
 
 class DeviceDefinitionSpecialization(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    system_type: str | None = Field(None, alias="systemType", serialization_alias="systemType")
+    system_type: str = Field(alias="systemType", serialization_alias="systemType")
     version: str | None = Field(None, alias="version", serialization_alias="version")
 
 class DeviceDefinitionUdiDeviceIdentifier(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    device_identifier: str | None = Field(None, alias="deviceIdentifier", serialization_alias="deviceIdentifier")
-    issuer: str | None = Field(None, alias="issuer", serialization_alias="issuer")
-    jurisdiction: str | None = Field(None, alias="jurisdiction", serialization_alias="jurisdiction")
+    device_identifier: str = Field(alias="deviceIdentifier", serialization_alias="deviceIdentifier")
+    issuer: str = Field(alias="issuer", serialization_alias="issuer")
+    jurisdiction: str = Field(alias="jurisdiction", serialization_alias="jurisdiction")
 
 
 class DeviceDefinition(DomainResource):

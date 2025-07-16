@@ -5,9 +5,9 @@
 import { Element } from './Element';
 
 export interface Narrative extends Element {
-    div?: string;
+    div: string;
     _div?: Element;
-    status?: 'generated' | 'extensions' | 'additional' | 'empty';
+    status: 'generated' | 'extensions' | 'additional' | 'empty';
     _status?: Element;
 }
 

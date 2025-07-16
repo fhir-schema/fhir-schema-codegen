@@ -13,12 +13,12 @@ import { Reference } from './Reference';
 
 
 export interface EncounterClassHistory extends BackboneElement {
-    class?: Coding;
-    period?: Period;
+    class: Coding;
+    period: Period;
 }
 
 export interface EncounterDiagnosis extends BackboneElement {
-    condition?: Reference<'Condition' | 'Procedure'>;
+    condition: Reference<'Condition' | 'Procedure'>;
     rank?: number;
     use?: CodeableConcept;
 }
@@ -36,7 +36,7 @@ export interface EncounterHospitalization extends BackboneElement {
 }
 
 export interface EncounterLocation extends BackboneElement {
-    location?: Reference<'Location'>;
+    location: Reference<'Location'>;
     period?: Period;
     physicalType?: CodeableConcept;
     status?: 'planned' | 'active' | 'reserved' | 'completed';
@@ -49,15 +49,15 @@ export interface EncounterParticipant extends BackboneElement {
 }
 
 export interface EncounterStatusHistory extends BackboneElement {
-    period?: Period;
-    status?: 'planned' | 'arrived' | 'triaged' | 'in-progress' | 'onleave' | 'finished' | 'cancelled' | 'entered-in-error' | 'unknown';
+    period: Period;
+    status: 'planned' | 'arrived' | 'triaged' | 'in-progress' | 'onleave' | 'finished' | 'cancelled' | 'entered-in-error' | 'unknown';
 }
 
 export interface Encounter extends DomainResource {
     account?: Reference<'Account'>[];
     appointment?: Reference<'Appointment'>[];
     basedOn?: Reference<'ServiceRequest'>[];
-    class?: Coding;
+    class: Coding;
     classHistory?: EncounterClassHistory[];
     diagnosis?: EncounterDiagnosis[];
     episodeOfCare?: Reference<'EpisodeOfCare'>[];
@@ -73,7 +73,7 @@ export interface Encounter extends DomainResource {
     reasonReference?: Reference<'Condition' | 'ImmunizationRecommendation' | 'Observation' | 'Procedure'>[];
     serviceProvider?: Reference<'Organization'>;
     serviceType?: CodeableConcept;
-    status?: 'planned' | 'arrived' | 'triaged' | 'in-progress' | 'onleave' | 'finished' | 'cancelled' | 'entered-in-error' | 'unknown';
+    status: 'planned' | 'arrived' | 'triaged' | 'in-progress' | 'onleave' | 'finished' | 'cancelled' | 'entered-in-error' | 'unknown';
     _status?: Element;
     statusHistory?: EncounterStatusHistory[];
     subject?: Reference<'Group' | 'Patient'>;

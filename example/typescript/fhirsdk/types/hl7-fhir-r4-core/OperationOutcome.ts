@@ -8,15 +8,15 @@ import { DomainResource } from './DomainResource';
 
 
 export interface OperationOutcomeIssue extends BackboneElement {
-    code?: 'invalid' | 'security' | 'processing' | 'transient' | 'informational';
+    code: 'invalid' | 'security' | 'processing' | 'transient' | 'informational' | 'structure' | 'required' | 'value' | 'invariant' | 'login' | 'unknown' | 'expired' | 'forbidden' | 'suppressed' | 'not-supported' | 'duplicate' | 'multiple-matches' | 'not-found' | 'too-long' | 'code-invalid' | 'extension' | 'too-costly' | 'business-rule' | 'conflict' | 'deleted' | 'lock-error' | 'no-store' | 'exception' | 'timeout' | 'incomplete' | 'throttled';
     details?: CodeableConcept;
     diagnostics?: string;
     expression?: string[];
     location?: string[];
-    severity?: 'fatal' | 'error' | 'warning' | 'information';
+    severity: 'fatal' | 'error' | 'warning' | 'information';
 }
 
 export interface OperationOutcome extends DomainResource {
-    issue?: OperationOutcomeIssue[];
+    issue: OperationOutcomeIssue[];
 }
 

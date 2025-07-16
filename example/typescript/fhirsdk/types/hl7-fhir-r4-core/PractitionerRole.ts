@@ -19,7 +19,7 @@ export interface PractitionerRoleAvailableTime extends BackboneElement {
 }
 
 export interface PractitionerRoleNotAvailable extends BackboneElement {
-    description?: string;
+    description: string;
     during?: Period;
 }
 

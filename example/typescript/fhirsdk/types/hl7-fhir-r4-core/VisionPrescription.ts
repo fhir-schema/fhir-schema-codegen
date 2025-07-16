@@ -20,30 +20,30 @@ export interface VisionPrescriptionLensSpecification extends BackboneElement {
     cylinder?: number;
     diameter?: number;
     duration?: Quantity;
-    eye?: 'right' | 'left';
+    eye: 'right' | 'left';
     note?: Annotation[];
     power?: number;
     prism?: VisionPrescriptionLensSpecificationPrism[];
-    product?: CodeableConcept;
+    product: CodeableConcept;
     sphere?: number;
 }
 
 export interface VisionPrescriptionLensSpecificationPrism extends BackboneElement {
-    amount?: number;
-    base?: 'up' | 'down' | 'in' | 'out';
+    amount: number;
+    base: 'up' | 'down' | 'in' | 'out';
 }
 
 export interface VisionPrescription extends DomainResource {
-    created?: string;
+    created: string;
     _created?: Element;
-    dateWritten?: string;
+    dateWritten: string;
     _dateWritten?: Element;
     encounter?: Reference<'Encounter'>;
     identifier?: Identifier[];
-    lensSpecification?: VisionPrescriptionLensSpecification[];
-    patient?: Reference<'Patient'>;
-    prescriber?: Reference<'Practitioner' | 'PractitionerRole'>;
-    status?: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
+    lensSpecification: VisionPrescriptionLensSpecification[];
+    patient: Reference<'Patient'>;
+    prescriber: Reference<'Practitioner' | 'PractitionerRole'>;
+    status: 'active' | 'cancelled' | 'draft' | 'entered-in-error';
     _status?: Element;
 }
 

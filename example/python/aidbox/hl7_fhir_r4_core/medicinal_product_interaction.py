@@ -14,8 +14,8 @@ from aidbox.hl7_fhir_r4_core.resource_families import DomainResourceFamily
 class MedicinalProductInteractionInteractant(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
-    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
+    item_codeable_concept: CodeableConcept = Field(alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference = Field(alias="itemReference", serialization_alias="itemReference")
 
 
 class MedicinalProductInteraction(DomainResource):

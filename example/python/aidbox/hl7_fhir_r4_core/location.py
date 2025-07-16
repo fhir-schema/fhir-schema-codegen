@@ -24,8 +24,8 @@ class LocationPosition(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     altitude: float | None = Field(None, alias="altitude", serialization_alias="altitude")
-    latitude: float | None = Field(None, alias="latitude", serialization_alias="latitude")
-    longitude: float | None = Field(None, alias="longitude", serialization_alias="longitude")
+    latitude: float = Field(alias="latitude", serialization_alias="latitude")
+    longitude: float = Field(alias="longitude", serialization_alias="longitude")
 
 
 class Location(DomainResource):

@@ -14,7 +14,7 @@ export interface DeviceUseStatement extends DomainResource {
     basedOn?: Reference<'ServiceRequest'>[];
     bodySite?: CodeableConcept;
     derivedFrom?: Reference<'Claim' | 'DocumentReference' | 'Observation' | 'Procedure' | 'QuestionnaireResponse' | 'ServiceRequest'>[];
-    device?: Reference<'Device'>;
+    device: Reference<'Device'>;
     identifier?: Identifier[];
     note?: Annotation[];
     reasonCode?: CodeableConcept[];
@@ -22,9 +22,9 @@ export interface DeviceUseStatement extends DomainResource {
     recordedOn?: string;
     _recordedOn?: Element;
     source?: Reference<'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    status?: 'active' | 'completed' | 'entered-in-error' | 'intended' | 'stopped' | 'on-hold';
+    status: 'active' | 'completed' | 'entered-in-error' | 'intended' | 'stopped' | 'on-hold';
     _status?: Element;
-    subject?: Reference<'Group' | 'Patient'>;
+    subject: Reference<'Group' | 'Patient'>;
     timingDateTime?: string;
     _timingDateTime?: Element;
     timingPeriod?: Period;

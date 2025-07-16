@@ -28,8 +28,8 @@ export interface SupplyRequest extends DomainResource {
     deliverFrom?: Reference<'Location' | 'Organization'>;
     deliverTo?: Reference<'Location' | 'Organization' | 'Patient'>;
     identifier?: Identifier[];
-    itemCodeableConcept?: CodeableConcept;
-    itemReference?: Reference<'Device' | 'Medication' | 'Substance'>;
+    itemCodeableConcept: CodeableConcept;
+    itemReference: Reference<'Device' | 'Medication' | 'Substance'>;
     occurrenceDateTime?: string;
     _occurrenceDateTime?: Element;
     occurrencePeriod?: Period;
@@ -37,7 +37,7 @@ export interface SupplyRequest extends DomainResource {
     parameter?: SupplyRequestParameter[];
     priority?: 'routine' | 'urgent' | 'asap' | 'stat';
     _priority?: Element;
-    quantity?: Quantity;
+    quantity: Quantity;
     reasonCode?: CodeableConcept[];
     reasonReference?: Reference<'Condition' | 'DiagnosticReport' | 'DocumentReference' | 'Observation'>[];
     requester?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;

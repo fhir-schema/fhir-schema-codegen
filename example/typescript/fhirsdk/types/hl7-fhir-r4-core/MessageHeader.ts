@@ -11,21 +11,21 @@ import { Reference } from './Reference';
 
 
 export interface MessageHeaderDestination extends BackboneElement {
-    endpoint?: string;
+    endpoint: string;
     name?: string;
     receiver?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     target?: Reference<'Device'>;
 }
 
 export interface MessageHeaderResponse extends BackboneElement {
-    code?: 'ok' | 'transient-error' | 'fatal-error';
+    code: 'ok' | 'transient-error' | 'fatal-error';
     details?: Reference<'OperationOutcome'>;
-    identifier?: string;
+    identifier: string;
 }
 
 export interface MessageHeaderSource extends BackboneElement {
     contact?: ContactPoint;
-    endpoint?: string;
+    endpoint: string;
     name?: string;
     software?: string;
     version?: string;
@@ -37,14 +37,14 @@ export interface MessageHeader extends DomainResource {
     _definition?: Element;
     destination?: MessageHeaderDestination[];
     enterer?: Reference<'Practitioner' | 'PractitionerRole'>;
-    eventCoding?: Coding;
-    eventUri?: string;
+    eventCoding: Coding;
+    eventUri: string;
     _eventUri?: Element;
     focus?: Reference<'Resource'>[];
     reason?: CodeableConcept;
     response?: MessageHeaderResponse;
     responsible?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
     sender?: Reference<'Organization' | 'Practitioner' | 'PractitionerRole'>;
-    source?: MessageHeaderSource;
+    source: MessageHeaderSource;
 }
 

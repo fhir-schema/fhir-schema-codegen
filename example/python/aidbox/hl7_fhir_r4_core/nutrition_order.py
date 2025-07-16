@@ -77,7 +77,7 @@ class NutritionOrder(DomainResource):
     )
     
     allergy_intolerance: PyList[Reference] | None = Field(None, alias="allergyIntolerance", serialization_alias="allergyIntolerance")
-    date_time: str | None = Field(None, alias="dateTime", serialization_alias="dateTime")
+    date_time: str = Field(alias="dateTime", serialization_alias="dateTime")
     encounter: Reference | None = Field(None, alias="encounter", serialization_alias="encounter")
     enteral_formula: NutritionOrderEnteralFormula | None = Field(None, alias="enteralFormula", serialization_alias="enteralFormula")
     exclude_food_modifier: PyList[CodeableConcept] | None = Field(None, alias="excludeFoodModifier", serialization_alias="excludeFoodModifier")
@@ -86,12 +86,12 @@ class NutritionOrder(DomainResource):
     instantiates: PyList[str] | None = Field(None, alias="instantiates", serialization_alias="instantiates")
     instantiates_canonical: PyList[str] | None = Field(None, alias="instantiatesCanonical", serialization_alias="instantiatesCanonical")
     instantiates_uri: PyList[str] | None = Field(None, alias="instantiatesUri", serialization_alias="instantiatesUri")
-    intent: Literal["proposal", "plan", "directive", "order", "option"] | None = Field(None, alias="intent", serialization_alias="intent")
+    intent: Literal["proposal", "plan", "directive", "order", "option", "original-order", "reflex-order", "filler-order", "instance-order"] = Field(alias="intent", serialization_alias="intent")
     note: PyList[Annotation] | None = Field(None, alias="note", serialization_alias="note")
     oral_diet: NutritionOrderOralDiet | None = Field(None, alias="oralDiet", serialization_alias="oralDiet")
     orderer: Reference | None = Field(None, alias="orderer", serialization_alias="orderer")
-    patient: Reference | None = Field(None, alias="patient", serialization_alias="patient")
-    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] | None = Field(None, alias="status", serialization_alias="status")
+    patient: Reference = Field(alias="patient", serialization_alias="patient")
+    status: Literal["draft", "active", "on-hold", "revoked", "completed", "entered-in-error", "unknown"] = Field(alias="status", serialization_alias="status")
     supplement: PyList[NutritionOrderSupplement] | None = Field(None, alias="supplement", serialization_alias="supplement")
     
     def to_json(self, indent: int | None = None) -> str:

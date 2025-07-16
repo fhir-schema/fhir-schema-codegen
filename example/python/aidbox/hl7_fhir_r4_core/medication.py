@@ -22,8 +22,8 @@ class MedicationIngredient(BackboneElement):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     is_active: bool | None = Field(None, alias="isActive", serialization_alias="isActive")
-    item_codeable_concept: CodeableConcept | None = Field(None, alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
-    item_reference: Reference | None = Field(None, alias="itemReference", serialization_alias="itemReference")
+    item_codeable_concept: CodeableConcept = Field(alias="itemCodeableConcept", serialization_alias="itemCodeableConcept")
+    item_reference: Reference = Field(alias="itemReference", serialization_alias="itemReference")
     strength: Ratio | None = Field(None, alias="strength", serialization_alias="strength")
 
 

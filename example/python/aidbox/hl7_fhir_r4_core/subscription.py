@@ -17,7 +17,7 @@ class SubscriptionChannel(BackboneElement):
     endpoint: str | None = Field(None, alias="endpoint", serialization_alias="endpoint")
     header: PyList[str] | None = Field(None, alias="header", serialization_alias="header")
     payload: str | None = Field(None, alias="payload", serialization_alias="payload")
-    type: Literal["rest-hook", "websocket", "email", "sms", "message"] | None = Field(None, alias="type", serialization_alias="type")
+    type: Literal["rest-hook", "websocket", "email", "sms", "message"] = Field(alias="type", serialization_alias="type")
 
 
 class Subscription(DomainResource):
@@ -31,13 +31,13 @@ class Subscription(DomainResource):
         pattern='Subscription'
     )
     
-    channel: SubscriptionChannel | None = Field(None, alias="channel", serialization_alias="channel")
+    channel: SubscriptionChannel = Field(alias="channel", serialization_alias="channel")
     contact: PyList[ContactPoint] | None = Field(None, alias="contact", serialization_alias="contact")
-    criteria: str | None = Field(None, alias="criteria", serialization_alias="criteria")
+    criteria: str = Field(alias="criteria", serialization_alias="criteria")
     end: str | None = Field(None, alias="end", serialization_alias="end")
     error: str | None = Field(None, alias="error", serialization_alias="error")
-    reason: str | None = Field(None, alias="reason", serialization_alias="reason")
-    status: Literal["requested", "active", "error", "off"] | None = Field(None, alias="status", serialization_alias="status")
+    reason: str = Field(alias="reason", serialization_alias="reason")
+    status: Literal["requested", "active", "error", "off"] = Field(alias="status", serialization_alias="status")
     
     def to_json(self, indent: int | None = None) -> str:
         return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)

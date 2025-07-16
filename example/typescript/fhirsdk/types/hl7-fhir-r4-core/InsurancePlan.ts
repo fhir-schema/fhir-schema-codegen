@@ -23,15 +23,15 @@ export interface InsurancePlanContact extends BackboneElement {
 }
 
 export interface InsurancePlanCoverage extends BackboneElement {
-    benefit?: InsurancePlanCoverageBenefit[];
+    benefit: InsurancePlanCoverageBenefit[];
     network?: Reference<'Organization'>[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface InsurancePlanCoverageBenefit extends BackboneElement {
     limit?: InsurancePlanCoverageBenefitLimit[];
     requirement?: string;
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface InsurancePlanCoverageBenefitLimit extends BackboneElement {
@@ -57,18 +57,18 @@ export interface InsurancePlanPlanGeneralCost extends BackboneElement {
 
 export interface InsurancePlanPlanSpecificCost extends BackboneElement {
     benefit?: InsurancePlanPlanSpecificCostBenefit[];
-    category?: CodeableConcept;
+    category: CodeableConcept;
 }
 
 export interface InsurancePlanPlanSpecificCostBenefit extends BackboneElement {
     cost?: InsurancePlanPlanSpecificCostBenefitCost[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
 }
 
 export interface InsurancePlanPlanSpecificCostBenefitCost extends BackboneElement {
     applicability?: CodeableConcept;
     qualifiers?: CodeableConcept[];
-    type?: CodeableConcept;
+    type: CodeableConcept;
     value?: Quantity;
 }
 

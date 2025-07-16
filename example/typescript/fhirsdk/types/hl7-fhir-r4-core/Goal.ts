@@ -31,10 +31,10 @@ export interface Goal extends DomainResource {
     achievementStatus?: CodeableConcept;
     addresses?: Reference<'Condition' | 'MedicationStatement' | 'NutritionOrder' | 'Observation' | 'RiskAssessment' | 'ServiceRequest'>[];
     category?: CodeableConcept[];
-    description?: CodeableConcept;
+    description: CodeableConcept;
     expressedBy?: Reference<'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
     identifier?: Identifier[];
-    lifecycleStatus?: 'proposed' | 'planned' | 'accepted' | 'cancelled' | 'entered-in-error' | 'rejected';
+    lifecycleStatus: 'proposed' | 'planned' | 'accepted' | 'cancelled' | 'entered-in-error' | 'rejected' | 'active' | 'on-hold' | 'completed';
     _lifecycleStatus?: Element;
     note?: Annotation[];
     outcomeCode?: CodeableConcept[];
@@ -47,7 +47,7 @@ export interface Goal extends DomainResource {
     _statusDate?: Element;
     statusReason?: string;
     _statusReason?: Element;
-    subject?: Reference<'Group' | 'Organization' | 'Patient'>;
+    subject: Reference<'Group' | 'Organization' | 'Patient'>;
     target?: GoalTarget[];
 }
 

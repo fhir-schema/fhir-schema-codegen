@@ -9,13 +9,13 @@ import { Reference } from './Reference';
 
 export interface AppointmentResponse extends DomainResource {
     actor?: Reference<'Device' | 'HealthcareService' | 'Location' | 'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
-    appointment?: Reference<'Appointment'>;
+    appointment: Reference<'Appointment'>;
     comment?: string;
     _comment?: Element;
     end?: string;
     _end?: Element;
     identifier?: Identifier[];
-    participantStatus?: 'accepted' | 'declined' | 'tentative' | 'needs-action';
+    participantStatus: 'accepted' | 'declined' | 'tentative' | 'needs-action';
     _participantStatus?: Element;
     participantType?: CodeableConcept[];
     start?: string;

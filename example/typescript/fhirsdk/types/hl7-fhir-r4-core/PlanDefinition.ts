@@ -60,7 +60,7 @@ export interface PlanDefinitionAction extends BackboneElement {
 
 export interface PlanDefinitionActionCondition extends BackboneElement {
     expression?: Expression;
-    kind?: 'applicability' | 'start' | 'stop';
+    kind: 'applicability' | 'start' | 'stop';
 }
 
 export interface PlanDefinitionActionDynamicValue extends BackboneElement {
@@ -70,20 +70,20 @@ export interface PlanDefinitionActionDynamicValue extends BackboneElement {
 
 export interface PlanDefinitionActionParticipant extends BackboneElement {
     role?: CodeableConcept;
-    type?: 'patient' | 'practitioner' | 'related-person' | 'device';
+    type: 'patient' | 'practitioner' | 'related-person' | 'device';
 }
 
 export interface PlanDefinitionActionRelatedAction extends BackboneElement {
-    actionId?: string;
+    actionId: string;
     offsetDuration?: Duration;
     offsetRange?: Range;
-    relationship?: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
+    relationship: 'before-start' | 'before' | 'before-end' | 'concurrent-with-start' | 'concurrent' | 'concurrent-with-end' | 'after-start' | 'after' | 'after-end';
 }
 
 export interface PlanDefinitionGoal extends BackboneElement {
     addresses?: CodeableConcept[];
     category?: CodeableConcept;
-    description?: CodeableConcept;
+    description: CodeableConcept;
     documentation?: RelatedArtifact[];
     priority?: CodeableConcept;
     start?: CodeableConcept;
@@ -130,7 +130,7 @@ export interface PlanDefinition extends DomainResource {
     _purpose?: Element;
     relatedArtifact?: RelatedArtifact[];
     reviewer?: ContactDetail[];
-    status?: 'draft' | 'active' | 'retired' | 'unknown';
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     _status?: Element;
     subjectCodeableConcept?: CodeableConcept;
     subjectReference?: Reference<'Group'>;
