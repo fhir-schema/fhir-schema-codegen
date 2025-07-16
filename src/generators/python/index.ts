@@ -229,7 +229,7 @@ export class PythonGenerator extends Generator {
                     defaultValue = ` = Field(None, alias="${fieldName}", serialization_alias="${fieldName}")`;
                 } else {
                     defaultValue =
-                        ' = Field(alias="${fieldName}", serialization_alias="${fieldName}")';
+                        ` = Field(alias="${fieldName}", serialization_alias="${fieldName}")`;
                 }
 
                 const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
