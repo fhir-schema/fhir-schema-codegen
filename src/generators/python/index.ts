@@ -251,19 +251,9 @@ export class PythonGenerator extends Generator {
     }
 
     defaultImports() {
-        this.line('from __future__ import annotations');
-        this.line(
-            'from',
-            'pydantic',
-            'import',
-            ['BaseModel', 'ConfigDict', 'Field', 'PositiveInt'].join(', '),
-        );
-        this.line(
-            'from',
-            'typing',
-            'import',
-            ['List as PyList', 'Literal', 'ForwardRef'].join(', '),
-        );
+        this.pyImportFrom('__future__', 'annotations');
+        this.pyImportFrom('pydantic', 'BaseModel', 'ConfigDict', 'Field', 'PositiveInt');
+        this.pyImportFrom('typing', 'List as PyList', 'Literal');
     }
 
     generateNestedTypes(schema: TypeSchema) {
