@@ -2,7 +2,11 @@
 
 AIDBOX_LICENSE ?=
 TYPE_SCHEMA ?=
+
 ADDITIONAL_FLAGS =
+ifdef TYPE_SCHEMA
+ADDITIONAL_FLAGS = --type-schema-exec 'java -jar $(TYPE_SCHEMA)'
+endif
 
 all: format lint-fix test build
 
@@ -27,9 +31,6 @@ lint-fix-unsafe:
 test:
 	npm run test
 
-ifdef TYPE_SCHEMA
-generate-examples: ADDITIONAL_FLAGS = --type-schema-exec 'java -jar $(TYPE_SCHEMA)'
-endif
 generate-examples: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
 		$(ADDITIONAL_FLAGS)
@@ -77,12 +78,14 @@ test-python-sdk-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 	                --fhir-schema example/custom_resources/TutorNotification.fs.json \
 					--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
-					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE)
+					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
+					$(ADDITIONAL_FLAGS)
 	make test-python-sdk-no-regen
 
 test-python-sdk-extra-fields-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
-					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) --py-allow-extra-fields
+					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) --py-allow-extra-fields \
+					$(ADDITIONAL_FLAGS)
 	make test-python-sdk-no-regen
 
 test-python-sdk-no-regen:
@@ -110,7 +113,8 @@ test-typescript-sdk: prepare-aidbox-runme
 	docker compose -f example/docker-compose.yaml down
 
 test-typescript-sdk-no-start-service: build
-	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk
+	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
+		$(ADDITIONAL_FLAGS)
 
 	@if [ ! -d "$(TYPESCRIPT_SDK_EXAMPLE)/node_modules" ]; then \
 		cd $(TYPESCRIPT_SDK_EXAMPLE) && \
