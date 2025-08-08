@@ -102,3 +102,8 @@ export const groupedByPackage = (schemas: TypeSchema[]): Record<string, TypeSche
 
     return result;
 };
+
+export const canonicalToName = (canonical: string | undefined) => {
+    if (!canonical) return undefined;
+    return canonical.split('/').pop();
+};

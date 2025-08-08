@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { Generator, type GeneratorOptions } from '../generator';
 import { type ClassField, type NestedTypeSchema, TypeSchema } from '../../typeschema';
-import { groupedByPackage, kebabCase, pascalCase, removeConstraints } from '../../utils/code';
+import { groupedByPackage, kebabCase, pascalCase, canonicalToName } from '../../utils/code';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -116,6 +116,16 @@ const keywords = new Set([
     'while',
 ]);
 
+const fmap =
+    <T>(f: (x: T) => T) =>
+    (x: T | undefined): T | undefined => {
+        return x === undefined ? undefined : f(x);
+    };
+
+const normalizeName = (n: string): string => {
+    return n.replace(/-/g, '_');
+};
+
 class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
@@ -126,6 +136,10 @@ class TypeScriptGenerator extends Generator {
         });
     }
 
+    tsImportFrom(tsPackage: string, ...entities: string[]) {
+        this.lineSM(`import { ${entities.join(', ')} } from '${tsPackage}'`);
+    }
+
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
             const deps = schema.dependencies
@@ -133,9 +147,7 @@ class TypeScriptGenerator extends Generator {
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             for (const dep of deps) {
-                this.lineSM(
-                    `import { ${this.uppercaseFirstLetter(dep.name)} } from './${pascalCase(dep.name)}'`,
-                );
+                this.tsImportFrom(`./${pascalCase(dep.name)}`, this.uppercaseFirstLetter(dep.name));
             }
         }
     }
@@ -160,22 +172,15 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateType(schema: TypeSchema | NestedTypeSchema) {
-        let name = '';
-        if (schema instanceof TypeSchema) {
-            if (schema.identifier.name === 'Reference') {
-                name = 'Reference<T extends string = string>';
-            } else {
-                name = this.normilizeName(schema.identifier.name);
-            }
-        } else {
-            name = this.deriveNestedSchemaName(schema.identifier.url, true);
-        }
-        name = this.normilizeName(name);
+        const name =
+            schema.identifier.name === 'Reference'
+                ? 'Reference<T extends string = string>'
+                : schema instanceof TypeSchema
+                  ? normalizeName(schema.identifier.name)
+                  : // NestedTypeSchema
+                    normalizeName(this.deriveNestedSchemaName(schema.identifier.url, true));
 
-        let parent = this.canonicalToName(schema.base?.url);
-        if (parent) {
-            parent = this.normilizeName(parent);
-        }
+        let parent = fmap(normalizeName)(canonicalToName(schema.base?.url));
         const extendsClause = parent && `extends ${parent}`;
 
         this.curlyBlock(['export', 'interface', name, extendsClause], () => {
@@ -250,8 +255,12 @@ class TypeScriptGenerator extends Generator {
         this.file('index.ts', () => {
             const names = schemas.map((schema) => schema.identifier.name);
 
-            names.forEach((n) => this.lineSM(`import { ${n} } from './${n}'`));
+            for (const name of names) {
+                this.tsImportFrom('./' + pascalCase(name), name);
+            }
             this.lineSM(`export { ${names.join(', ')} }`);
+
+            this.line('');
 
             this.curlyBlock(['export type ResourceTypeMap = '], () => {
                 this.lineSM('User: Record<string, any>');
@@ -265,43 +274,30 @@ class TypeScriptGenerator extends Generator {
         });
     }
 
-    normilizeName(n: string): string {
-        return n.replace(/-/g, '_');
-    }
-
     generate() {
         const typesOnly = (this.opts as TypeScriptGeneratorOptions).typesOnly || false;
-        const typesPath = typesOnly ? '' : 'types';
+        const typePath = typesOnly ? '' : 'types';
 
-        const generateTypes = () => {
-            const typesToGenerate = removeConstraints([
-                ...this.loader.complexTypes(),
-                ...this.loader.resources(),
-                ...this.loader.logicalModels(),
-            ]).sort((a, b) => a.identifier.name.localeCompare(b.identifier.name));
+        const typesToGenerate = [
+            ...this.loader.complexTypes(),
+            ...this.loader.resources(),
+            ...this.loader.logicalModels(),
+        ].sort((a, b) => a.identifier.name.localeCompare(b.identifier.name));
+
+        this.dir(typePath, async () => {
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
-
             for (const [packageName, packageSchemas] of Object.entries(groupedComplexTypes)) {
-                const packagePath = typesOnly
-                    ? kebabCase(packageName)
-                    : path.join('types', kebabCase(packageName));
+                const packagePath = path.join(typePath, kebabCase(packageName));
 
                 this.dir(packagePath, () => {
-                    this.generateIndexFile(packageSchemas);
-
                     for (const schema of packageSchemas) {
                         this.generateResourceModule(schema);
                     }
+                    this.generateIndexFile(packageSchemas);
                 });
             }
-        };
-
-        if (typesOnly) {
-            generateTypes();
-        } else {
-            this.dir('types', async () => {
-                generateTypes();
-            });
+        });
+        if (!typesOnly) {
             this.copyStaticFiles();
         }
     }
