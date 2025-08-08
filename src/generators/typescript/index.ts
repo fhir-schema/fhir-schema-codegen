@@ -278,7 +278,7 @@ class TypeScriptGenerator extends Generator {
                 ...this.loader.complexTypes(),
                 ...this.loader.resources(),
                 ...this.loader.logicalModels(),
-            ]);
+            ]).sort((a, b) => a.identifier.name.localeCompare(b.identifier.name));
             const groupedComplexTypes = groupedByPackage(typesToGenerate);
 
             for (const [packageName, packageSchemas] of Object.entries(groupedComplexTypes)) {
