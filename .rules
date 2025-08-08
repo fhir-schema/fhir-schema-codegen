@@ -1,0 +1,7 @@
+# TypeScript Development Guidelinesff
+
+- Don't write comments.
+- Update `--help` output in `/README.md`.
+- On any change: `make format format-python test`.
+- On change in `src/generators/typescript/index.ts` do `make test-typescript-sdk-without-service`.
+- On change in `src/generators/python/index.ts` do `make test-python-sdk-without-service`.

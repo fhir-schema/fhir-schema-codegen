@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import { TypeSchema } from './typeschema';
+import { TypeSchema, type TypeRef } from './typeschema';
 import { logger } from './logger';
 
 export type { ITypeSchema } from './typeschema';
@@ -57,8 +57,8 @@ export interface LoaderOptions {
 }
 
 export class SchemaLoader {
-    private opts: LoaderOptions;
-    private canonicalResources: { [key: string]: any } = {};
+    protected opts: LoaderOptions;
+    protected canonicalResources: { [key: string]: any } = {};
 
     constructor(opts: LoaderOptions = { files: [], dirs: [] }) {
         this.opts = opts;
@@ -150,5 +150,11 @@ export class SchemaLoader {
 
     valueSets(): TypeSchema[] {
         return [];
+    }
+
+    resolveTypeIdentifier(typeRef: TypeRef): TypeSchema | undefined {
+        return this.canonicalResources.package.find(
+            (res: TypeSchema) => res.identifier === typeRef,
+        );
     }
 }
