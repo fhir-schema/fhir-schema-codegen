@@ -15,7 +15,7 @@ interface TypeScriptGeneratorOptions extends GeneratorOptions {
     typesOnly?: boolean;
 }
 
-const typeMap = {
+const primitiveType2tsType = {
     boolean: 'boolean',
     instant: 'string',
     time: 'string',
@@ -130,7 +130,7 @@ class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
             ...opts,
-            typeMap,
+            typeMap: primitiveType2tsType,
             keywords,
             staticDir: path.resolve(__dirname, 'static'),
         });
@@ -212,7 +212,10 @@ class TypeScriptGenerator extends Generator {
                 }
 
                 if (field.type.kind === 'primitive-type') {
-                    type = typeMap[field.type.name as keyof typeof typeMap] ?? 'string';
+                    type =
+                        primitiveType2tsType[
+                            field.type.name as keyof typeof primitiveType2tsType
+                        ] ?? 'string';
                 }
 
                 if (schema.identifier.name === 'Reference' && fieldNameFixed === 'reference') {

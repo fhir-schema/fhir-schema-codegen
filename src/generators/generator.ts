@@ -220,11 +220,6 @@ export class Generator {
     token(...tokens: string[]) {}
 
     getFieldName(name: string) {
-        // const keywords = this.opts.keywords ?? new Set();
-        // if (keywords.has(name)) {
-        //     return name + '_';
-        // }
-
         return name.replace(/-/g, '_');
     }
 

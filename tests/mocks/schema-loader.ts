@@ -1,4 +1,4 @@
-import { TypeSchema, type TypeRef } from '../../src/typeschema';
+import type { TypeSchema, TypeRef } from '../../src/typeschema';
 import { SchemaLoader } from '../../src/loader';
 
 export class MockSchemaLoader extends SchemaLoader {

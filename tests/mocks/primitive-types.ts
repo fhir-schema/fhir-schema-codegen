@@ -1,4 +1,4 @@
-import { TypeRef } from '../../src/typeschema';
+import type { TypeRef } from '../../src/typeschema';
 
 export const stringType: TypeRef = {
     name: 'string',
