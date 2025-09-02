@@ -11,7 +11,7 @@ namespace csharp
     {
         private const string FhirServerUrl = "http://localhost:8080/fhir";
         private const string Username = "root";
-        private const string Password = "mNZq6yJaRi"; // get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
+        private const string Password = "<SECRET>"; // get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
 
         private Client? _client;
         private Patient? _createdPatient;
