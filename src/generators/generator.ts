@@ -139,8 +139,11 @@ export class Generator {
         return '//';
     }
 
-    commentLine(line: string) {
-        this.line(`${this.commentSymbol()} ${line}`);
+    commentLine(text: string) {
+        const lines = text.split('\n');
+        for (const line of lines) {
+            this.line(`${this.commentSymbol()} ${line}`);
+        }
     }
 
     curlyBlock(tokens: Array<string | undefined>, gencontent: () => void) {
