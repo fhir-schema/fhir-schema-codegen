@@ -4,20 +4,21 @@
 
 from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
-from typing import List as PyList, Literal
+from typing import List as PyList, Literal, Generic, TypeVar
 
 from aidbox.hl7_fhir_r4_core.base import BackboneElement, Identifier, Signature
 from aidbox.hl7_fhir_r4_core.resource import Resource
 from aidbox.hl7_fhir_r4_core.resource_families import ResourceFamily
 
+T = TypeVar("T", bound=Resource)
 
-class BundleEntry(BackboneElement):
+class BundleEntry(BackboneElement, Generic[T]):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
     
     full_url: str | None = Field(None, alias="fullUrl", serialization_alias="fullUrl")
     link: PyList[BundleLink] | None = Field(None, alias="link", serialization_alias="link")
     request: BundleEntryRequest | None = Field(None, alias="request", serialization_alias="request")
-    resource: ResourceFamily | None = Field(None, alias="resource", serialization_alias="resource")
+    resource: T | None = Field(None, alias="resource", serialization_alias="resource")
     response: BundleEntryResponse | None = Field(None, alias="response", serialization_alias="response")
     search: BundleEntrySearch | None = Field(None, alias="search", serialization_alias="search")
 
@@ -53,9 +54,9 @@ class BundleLink(BackboneElement):
     url: str = Field(alias="url", serialization_alias="url")
 
 
-class Bundle(Resource):
+class Bundle(Resource, Generic[T]):
     model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="forbid")
-    
+
     resource_type: str = Field(
         default='Bundle',
         alias='resourceType',
@@ -64,7 +65,7 @@ class Bundle(Resource):
         pattern='Bundle'
     )
     
-    entry: PyList[BundleEntry] | None = Field(None, alias="entry", serialization_alias="entry")
+    entry: PyList[BundleEntry[T]] | None = Field(None, alias="entry", serialization_alias="entry")
     identifier: Identifier | None = Field(None, alias="identifier", serialization_alias="identifier")
     link: PyList[BundleLink] | None = Field(None, alias="link", serialization_alias="link")
     signature: Signature | None = Field(None, alias="signature", serialization_alias="signature")

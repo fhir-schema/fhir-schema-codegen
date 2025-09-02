@@ -1,15 +1,19 @@
 import pytest
-from typing import Iterator
-from aidbox.hl7_fhir_r4_core import Patient, HumanName
+from typing import Iterator, Dict, Any, TypeVar, Type
+from aidbox.hl7_fhir_r4_core.patient import Patient
+from aidbox.hl7_fhir_r4_core.base import HumanName
+from aidbox.hl7_fhir_r4_core.bundle import Bundle
+from aidbox.hl7_fhir_r4_core.resource import Resource
+
 from aidbox.client import Client, Auth, AuthCredentials
 
+T = TypeVar("T")
 
 FHIR_SERVER_URL = "http://localhost:8080/fhir"
 USERNAME = "root"
 PASSWORD = (
     "<SECRET>"  # get actual value from docker-compose.yaml: BOX_ROOT_CLIENT_SECRET
 )
-
 
 @pytest.fixture(scope="module")
 def client() -> Client:
@@ -24,6 +28,16 @@ def client() -> Client:
         ),
     )
 
+def search_test(client,
+                resource_class_name: str,
+                response_type: Type[T],
+                params: Dict[str, Any] | None = None) \
+        -> Bundle:
+    """Search for resources"""
+    url = f"{client.base_url}/{resource_class_name}"
+    response = client.session.get(url, params=params)
+    response.raise_for_status()
+    return Bundle[response_type].model_validate(response.json())
 
 @pytest.fixture
 def created_patient(client: Client) -> Iterator[Patient]:
@@ -114,12 +128,25 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
     found = False
     for entry in result_bundle.entry or []:
         assert entry.resource is not None
-        print(entry.resource.id, created_patient.id)
+        # print(entry.resource.id, created_patient.id)
         if entry.resource.id == created_patient.id:
             found = True
             break
 
     assert found, f"Patient with ID {created_patient.id} not found in search results"
+
+def test_search_patient_as_resource(client: Client, created_patient: Patient) -> None:
+    search_params = {"name": "Patient"}
+    result_bundle = search_test(client, "Patient", Resource, search_params)
+    # resource is validated successfully
+    assert result_bundle is not None
+    assert result_bundle.entry is not None
+    entries = [e for e in result_bundle.entry if e.resource.id == created_patient.id]
+    assert len(entries) is not 0
+    entry = entries[0]
+    assert entry is not None
+
+
 
 
 def test_delete_patient(client: Client) -> None:

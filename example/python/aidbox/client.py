@@ -14,7 +14,6 @@ from aidbox.hl7_fhir_r4_core import DomainResource, Bundle
 
 T = TypeVar("T", bound=DomainResource)
 
-
 class AuthCredentials(BaseModel):
     username: str
     password: str
@@ -109,4 +108,4 @@ class Client:
         url = f"{self.base_url}/{resource_type}"
         response = self.session.get(url, params=params)
         response.raise_for_status()
-        return Bundle.model_validate(response.json())
+        return Bundle[resource_class].model_validate(response.json())

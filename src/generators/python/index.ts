@@ -1,6 +1,6 @@
 import * as Path from 'node:path';
 import { Generator, type GeneratorOptions } from '../generator';
-import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { ClassField, type NestedTypeSchema, type TypeRef, TypeSchema} from '../../typeschema';
 import {
     groupedByPackage,
     pascalCase,
@@ -158,94 +158,123 @@ export class PythonGenerator extends Generator {
         return `Literal[${s}]`;
     }
 
-    generateType(schema: TypeSchema | NestedTypeSchema) {
-        let name = '';
+    genericAnnotation() {
+        this.line('from typing import TypeVar, Generic');
+        this.line('T = TypeVar(\'T\', bound=\'Resource\')');
+        this.line();
+    }
 
-        if (schema instanceof TypeSchema) {
-            name = schema.identifier.name;
-        } else {
-            name = this.deriveNestedSchemaName(schema.identifier.url, true);
-        }
+    genType_deriveClassName(schema: TypeSchema | NestedTypeSchema): string {
+        return schema instanceof TypeSchema
+            ? schema.identifier.name
+            : this.deriveNestedSchemaName(schema.identifier.url, true);
+    }
 
+    genType_produceClassDefinition(name: string,
+                                   schema: TypeSchema | NestedTypeSchema,
+                                   containsResourceRef: boolean): string {
         const superClasses = [
             ...(schema.base ? [schema.base.name] : []),
             ...injectSuperClasses(schema.identifier.name),
         ];
-        const classDefinition = `class ${name}(${superClasses.join(', ')})`;
+        return containsResourceRef
+            ? `class ${name}(${superClasses.join(', ')}, Generic[T])`
+            : `class ${name}(${superClasses.join(', ')})`;
+    }
+
+    genType_modelConfigGeneration(isFamily: boolean): void {
+        const extraMode = this.allowExtraFields ? 'allow' : 'forbid';
+        this.line(`model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="${isFamily ? 'allow' : extraMode}")`);
+        this.line();
+    }
+
+    genType_resourceFamilyClassGeneration(schema: TypeSchema | NestedTypeSchema,
+                                          family: TypeRef[] | null): void {
+        this.line('resource_type: str = Field(');
+        this.indentBlock(() => {
+            this.line(`default='${schema.identifier.name}',`);
+            this.line(`alias='resourceType',`);
+            this.line(`serialization_alias='resourceType',`);
+            this.line('frozen=True,');
+            if (!!family)
+                this.line(`pattern='${family.map((e) => `(${e.name})`).join('|')}'`)
+            else
+                this.line(`pattern='${schema.identifier.name}'`)
+        });
+        this.line(')');
+        this.line();
+    }
+
+    genType_handleFields(fields: [string, ClassField][]) :void {
+        for (const [fieldName, field] of fields) {
+            if ('choices' in field) continue;
+
+            let fieldType = field.type.name;
+            switch(field.type.kind){
+                case 'resource':
+                    fieldType = this.childrenOf(field.type).length > 0 ? 'T' : field.type.name;
+                    break;
+                case 'nested':
+                    fieldType = this.deriveNestedSchemaName(field.type.url, true);
+                    break;
+                case 'primitive-type':
+                    fieldType = typeMap[field.type.name] ?? 'str';
+                    break
+            }
+            if (field.enum) fieldType = this.wrapLiteral(field.enum.map((e) => `"${e}"`).join(', '));
+            if (field.array) fieldType = this.wrapList(fieldType);
+            if (!field.required) fieldType = this.wrapOptional(fieldType);
+
+            const defaultValue = !field.required
+                ? ` = Field(None, alias="${fieldName}", serialization_alias="${fieldName}")`
+                : ` = Field(alias="${fieldName}", serialization_alias="${fieldName}")`;
+
+            const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
+            this.line(fieldDecl);
+        }
+    }
+
+    genType_onResourceRef(name: string) :void {
+        this.line();
+        this.line('def to_json(self, indent: int | None = None) -> str:');
+        this.line(
+            '    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)',
+        );
+        this.line();
+        this.line('@classmethod');
+        this.line(`def from_json(cls, json: str) -> ${name}:`);
+        this.line('    return cls.model_validate_json(json)');
+    }
+
+    generateType(schema: TypeSchema | NestedTypeSchema,
+                 resourceFamilies: Record<string, TypeRef[]> | null,
+                 containsResourceRef: boolean) {
+
+        const name = this.genType_deriveClassName(schema);
+        const resourceFamiliesExist = !!resourceFamilies;
+        const family = resourceFamiliesExist ? resourceFamilies[schema.identifier.name] : null;
+        const classDefinition = this.genType_produceClassDefinition(name, schema, containsResourceRef);
 
         this.curlyBlock([classDefinition], () => {
-            const extraMode = this.allowExtraFields ? 'allow' : 'forbid';
-            this.line(
-                `model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="${extraMode}")`,
-            );
-            this.line();
+            this.genType_modelConfigGeneration(!!family);
+
             if (!schema.fields) {
                 this.line('pass');
                 return;
             }
 
-            if (schema.identifier.kind === 'resource') {
-                this.line('resource_type: str = Field(');
-                this.indentBlock(() => {
-                    this.line(`default='${schema.identifier.name}',`);
-                    this.line(`alias='resourceType',`);
-                    this.line(`serialization_alias='resourceType',`);
-                    this.line('frozen=True,');
-                    this.line(`pattern='${schema.identifier.name}'`);
-                });
-                this.line(')');
-                this.line();
-            }
+            if (resourceFamiliesExist && schema.identifier.kind === 'resource')
+                this.genType_resourceFamilyClassGeneration(schema, family);
 
-            const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
+            const fields =
+                Object.entries(schema.fields).sort((a, b) =>
+                    a[0].localeCompare(b[0]));
 
-            for (const [fieldName, field] of fields) {
-                if ('choices' in field) continue;
+            this.genType_handleFields(fields);
 
-                let fieldType = field.type.name;
-                if (field.type.kind === 'resource' && this.childrenOf(field.type).length > 0) {
-                    fieldType = `${fieldType}Family`;
-                }
+            if (schema.identifier.kind === 'resource')
+                this.genType_onResourceRef(name)
 
-                if (field.type.kind === 'nested') {
-                    fieldType = this.deriveNestedSchemaName(field.type.url, true);
-                }
-
-                if (field.type.kind === 'primitive-type') {
-                    fieldType = typeMap[field.type.name] ?? 'str';
-                }
-
-                if (field.enum) {
-                    fieldType = this.wrapLiteral(field.enum.map((e) => `"${e}"`).join(', '));
-                }
-
-                if (field.array) {
-                    fieldType = this.wrapList(fieldType);
-                }
-
-                let defaultValue = '';
-                if (!field.required) {
-                    fieldType = this.wrapOptional(fieldType);
-                    defaultValue = ` = Field(None, alias="${fieldName}", serialization_alias="${fieldName}")`;
-                } else {
-                    defaultValue = ` = Field(alias="${fieldName}", serialization_alias="${fieldName}")`;
-                }
-
-                const fieldDecl = `${fixReservedWords(snakeCase(fieldName))}: ${fieldType}${defaultValue}`;
-                this.line(fieldDecl);
-            }
-
-            if (schema.identifier.kind === 'resource') {
-                this.line();
-                this.line('def to_json(self, indent: int | None = None) -> str:');
-                this.line(
-                    '    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)',
-                );
-                this.line();
-                this.line('@classmethod');
-                this.line(`def from_json(cls, json: str) -> ${name}:`);
-                this.line('    return cls.model_validate_json(json)');
-            }
         });
     }
 
@@ -255,11 +284,13 @@ export class PythonGenerator extends Generator {
         this.pyImportFrom('typing', 'List as PyList', 'Literal');
     }
 
-    generateNestedTypes(schema: TypeSchema) {
+    generateNestedTypes(schema: TypeSchema,
+                        resourceFamilies: Record<string, TypeRef[]> | null,
+                        containsResourceRefParent: boolean) {
         if (schema.nested) {
             this.line();
             for (const subtype of schema.nested) {
-                this.generateType(subtype);
+                this.generateType(subtype, resourceFamilies, containsResourceRefParent);
             }
         }
     }
@@ -344,12 +375,6 @@ export class PythonGenerator extends Generator {
         const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
         for (const dep of resourceDeps) {
             this.pyImportType(dep);
-            if (this.childrenOf(dep).length > 0) {
-                this.pyImportFrom(
-                    `${this.pyFhirPackage(dep)}.resource_families`,
-                    `${pascalCase(dep.name)}Family`,
-                );
-            }
         }
     }
 
@@ -360,9 +385,9 @@ export class PythonGenerator extends Generator {
             this.line();
 
             for (const schema of sortSchemasByDeps(removeConstraints(packageComplexTypes))) {
-                this.generateNestedTypes(schema);
+                this.generateNestedTypes(schema, null, false);
                 this.line();
-                this.generateType(schema);
+                this.generateType(schema, null, false);
             }
 
             this.line();
@@ -397,11 +422,7 @@ export class PythonGenerator extends Generator {
                 if (
                     resource.identifier.kind === 'resource' &&
                     this.childrenOf(resource.identifier).length > 0
-                ) {
-                    const familyName = `${resource.identifier.name}Family`;
-                    this.pyImportFrom(`${fullPyPackageName}.resource_families`, familyName);
-                    names.push(familyName);
-                }
+                )
                 allResourceNames.push(...names);
             }
             this.line();
@@ -416,7 +437,33 @@ export class PythonGenerator extends Generator {
         });
     }
 
-    generateResourceModule(schema: TypeSchema) {
+
+    findAllResources(packageResources: TypeSchema[]) {
+        const resourceFamilies: Record<string, TypeRef[]> = {};
+        packageResources.forEach(resource => {
+            const children = this.childrenOf(resource.identifier);
+            if (children.length > 0) {
+                const familyName = `${resource.identifier.name}`;
+                resourceFamilies[familyName] = [resource.identifier, ...children];
+            }
+        })
+        return resourceFamilies
+    }
+
+
+    containsResourceRef(schema: TypeSchema) : boolean {
+        const nested = schema.nested;
+        if(!nested)
+            return !!schema.fields && Object.values(schema.fields).some((item, _) =>
+                    !!item.type && item.type.kind === 'resource');
+        return nested.some(nestedSchema =>
+            !!nestedSchema.fields && Object.values(nestedSchema.fields).some((item, _) =>
+                !!item.type && item.type.kind === 'resource'));
+    }
+
+    generateResourceModule(schema: TypeSchema, packageResources: TypeSchema[]) {
+        const containsResourceRef = this.containsResourceRef(schema);
+        const families = this.findAllResources(packageResources)
         this.file(`${snakeCase(schema.identifier.name)}.py`, () => {
             this.generateDisclaimer();
             this.defaultImports();
@@ -425,10 +472,14 @@ export class PythonGenerator extends Generator {
             this.generateDependenciesImports(schema);
             this.line();
 
-            this.generateNestedTypes(schema);
+            if (containsResourceRef) {
+                this.genericAnnotation()
+            }
+
+            this.generateNestedTypes(schema, families, containsResourceRef);
 
             this.line();
-            this.generateType(schema);
+            this.generateType(schema, families, containsResourceRef);
         });
     }
 
@@ -512,10 +563,10 @@ export class PythonGenerator extends Generator {
                                 ...importNames,
                             );
 
-                            if (this.childrenOf(resource.identifier).length > 0) {
-                                const familyName = `${resource.identifier.name}Family`;
-                                this.pyImportFrom(`${pyPackageName}.resource_families`, familyName);
-                            }
+                            // if (this.childrenOf(resource.identifier).length > 0) {
+                            //     const familyName = `${resource.identifier.name}Family`;
+                            //     this.pyImportFrom(`${pyPackageName}.resource_families`, familyName);
+                            // }
                         }
                         this.line();
                     }
@@ -534,7 +585,6 @@ export class PythonGenerator extends Generator {
             const groupedComplexTypes = groupedByPackage(this.loader.complexTypes());
             for (const [packageName, packageComplexTypes] of Object.entries(groupedComplexTypes)) {
                 this.inRelDir(snakeCase(packageName), () => {
-                    this.file('__init__.py', () => {});
                     this.generateBasePy(packageComplexTypes);
                 });
             }
@@ -554,9 +604,9 @@ export class PythonGenerator extends Generator {
                         packageResources,
                         packageComplexTypes,
                     );
-                    this.generateResourceFamilies(packageResources);
+                    // this.generateResourceFamilies(packageResources);
                     for (const schema of packageResources) {
-                        this.generateResourceModule(schema);
+                        this.generateResourceModule(schema, packageResources);
                     }
                 });
             }
@@ -585,43 +635,6 @@ export class PythonGenerator extends Generator {
                 }
             });
         }
-    }
-
-    generateResourceFamilies(packageResources: TypeSchema[]) {
-        const importList: TypeRef[] = [];
-        const familyDefinition: Record<string, TypeRef[]> = {};
-        const exportList: string[] = [];
-
-        for (const resource of packageResources) {
-            const childrens = this.childrenOf(resource.identifier);
-            if (childrens.length > 0) {
-                const familyName = `${resource.identifier.name}Family`;
-                importList.push(resource.identifier, ...childrens);
-                familyDefinition[familyName] = [resource.identifier, ...childrens];
-                exportList.push(familyName);
-            }
-        }
-        if (exportList.length === 0) return;
-        this.file('resource_families.py', () => {
-            this.generateDisclaimer();
-            this.pyImportFrom('typing', 'TYPE_CHECKING');
-            this.line();
-            this.line('if TYPE_CHECKING:');
-            this.indentBlock(() => {
-                for (const res of importList) {
-                    this.pyImportType(res);
-                }
-            });
-            this.line();
-
-            for (const [familyName, resources] of Object.entries(familyDefinition)) {
-                this.line(
-                    `type ${familyName} = '${resources.map((e) => `${e.name}`).join(' | ')}'`,
-                );
-                this.line();
-            }
-            this.line(`__all__ = [${exportList.map((e) => `'${e}'`).join(', ')}]`);
-        });
     }
 }
 
