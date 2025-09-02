@@ -24,6 +24,8 @@ export interface GeneratorOptions {
     tabSize?: number;
     /** Generate only type definitions directly in the output directory */
     typesOnly?: boolean;
+    /** Enable debug comments in generated code */
+    withDebugComment?: boolean;
 }
 
 export class Generator {
@@ -143,6 +145,12 @@ export class Generator {
         const lines = text.split('\n');
         for (const line of lines) {
             this.line(`${this.commentSymbol()} ${line}`);
+        }
+    }
+
+    debugComment(text: string) {
+        if (this.opts.withDebugComment) {
+            this.commentLine(text);
         }
     }
 

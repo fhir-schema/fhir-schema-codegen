@@ -58,6 +58,7 @@ Options:
 - `-p, --packages <packages...>` - Available published FHIR IGs
 - `-f, --files <files...>` - TypeSchema source *.ndjson files
 - `--custom-generator <path>` - Path to your custom generator template
+- `--with-debug-comment` - Enable debug comments in generated code
 
 Example:
 
@@ -116,6 +117,9 @@ const patient: Patient = {
 Generate TypeScript SDK:
 ```bash
 fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1
+
+# With debug comments:
+fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1 --with-debug-comment
 ```
 
 ### C# Generator
