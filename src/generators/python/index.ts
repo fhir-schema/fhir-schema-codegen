@@ -438,11 +438,11 @@ export class PythonGenerator extends Generator {
                 }
                 this.pyImportFrom(moduleName, ...importNames);
                 const names: string[] = [...importNames];
-                if (
-                    resource.identifier.kind === 'resource' &&
-                    this.childrenOf(resource.identifier).length > 0
-                )
-                    allResourceNames.push(...names);
+                // if (
+                //     resource.identifier.kind === 'resource' &&
+                //     this.childrenOf(resource.identifier).length > 0
+                // )
+                allResourceNames.push(...names);
             }
             this.line();
             this.squareBlock(['__all__', '='], () => {
