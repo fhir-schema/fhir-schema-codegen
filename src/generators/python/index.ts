@@ -1,7 +1,13 @@
 import * as Path from 'node:path';
-import {Generator, type GeneratorOptions} from '../generator';
-import {ClassField, type NestedTypeSchema, type TypeRef, TypeSchema} from '../../typeschema';
-import {groupedByPackage, pascalCase, removeConstraints, snakeCase, sortSchemasByDeps,} from '../../utils/code';
+import { Generator, type GeneratorOptions } from '../generator';
+import { ClassField, type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import {
+    groupedByPackage,
+    pascalCase,
+    removeConstraints,
+    snakeCase,
+    sortSchemasByDeps,
+} from '../../utils/code';
 
 // Naming conventions
 // directory naming: snake_case
@@ -154,10 +160,9 @@ export class PythonGenerator extends Generator {
 
     genericAnnotation() {
         this.line('from typing import TypeVar, Generic, Type');
-        this.line('T = TypeVar(\'T\', bound=\'Resource\')');
+        this.line("T = TypeVar('T', bound='Resource')");
         this.line();
     }
-
 
     genType_deriveClassName(schema: TypeSchema | NestedTypeSchema): string {
         return schema instanceof TypeSchema
@@ -165,9 +170,11 @@ export class PythonGenerator extends Generator {
             : this.deriveNestedSchemaName(schema.identifier.url, true);
     }
 
-    genType_produceClassDefinition(name: string,
-                                   schema: TypeSchema | NestedTypeSchema,
-                                   containsResourceRef: boolean): string {
+    genType_produceClassDefinition(
+        name: string,
+        schema: TypeSchema | NestedTypeSchema,
+        containsResourceRef: boolean,
+    ): string {
         const superClasses = [
             ...(schema.base ? [schema.base.name] : []),
             ...injectSuperClasses(schema.identifier.name),
@@ -179,33 +186,35 @@ export class PythonGenerator extends Generator {
 
     genType_modelConfigGeneration(isFamily: boolean): void {
         const extraMode = this.allowExtraFields ? 'allow' : 'forbid';
-        this.line(`model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="${isFamily ? 'allow' : extraMode}")`);
+        this.line(
+            `model_config = ConfigDict(validate_by_name=True, serialize_by_alias=True, extra="${isFamily ? 'allow' : extraMode}")`,
+        );
         this.line();
     }
 
-    genType_resourceFamilyClassGeneration(schema: TypeSchema | NestedTypeSchema,
-                                          family: TypeRef[] | null): void {
+    genType_resourceFamilyClassGeneration(
+        schema: TypeSchema | NestedTypeSchema,
+        family: TypeRef[] | null,
+    ): void {
         this.line('resource_type: str = Field(');
         this.indentBlock(() => {
             this.line(`default='${schema.identifier.name}',`);
             this.line(`alias='resourceType',`);
             this.line(`serialization_alias='resourceType',`);
             this.line('frozen=True,');
-            if (!!family)
-                this.line(`pattern='${family.map((e) => `(${e.name})`).join('|')}'`)
-            else
-                this.line(`pattern='${schema.identifier.name}'`)
+            if (!!family) this.line(`pattern='${family.map((e) => `(${e.name})`).join('|')}'`);
+            else this.line(`pattern='${schema.identifier.name}'`);
         });
         this.line(')');
         this.line();
     }
 
-    genType_handleFields(fields: [string, ClassField][]) :void {
+    genType_handleFields(fields: [string, ClassField][]): void {
         for (const [fieldName, field] of fields) {
             if ('choices' in field) continue;
 
             let fieldType = field.type.name;
-            switch(field.type.kind){
+            switch (field.type.kind) {
                 case 'resource':
                     fieldType = this.childrenOf(field.type).length > 0 ? 'T' : field.type.name;
                     break;
@@ -214,9 +223,10 @@ export class PythonGenerator extends Generator {
                     break;
                 case 'primitive-type':
                     fieldType = typeMap[field.type.name] ?? 'str';
-                    break
+                    break;
             }
-            if (field.enum) fieldType = this.wrapLiteral(field.enum.map((e) => `"${e}"`).join(', '));
+            if (field.enum)
+                fieldType = this.wrapLiteral(field.enum.map((e) => `"${e}"`).join(', '));
             if (field.array) fieldType = this.wrapList(fieldType);
             if (!field.required) fieldType = this.wrapOptional(fieldType);
 
@@ -229,8 +239,8 @@ export class PythonGenerator extends Generator {
         }
     }
 
-    genType_onResourceRef(name: string, includeDowncast: boolean) :void {
-        if (includeDowncast){
+    genType_onResourceRef(name: string, includeDowncast: boolean): void {
+        if (includeDowncast) {
             this.line();
             this.line('def downcast_to(self, cls: Type[T]) -> T | None:');
             this.line('    try:');
@@ -241,7 +251,9 @@ export class PythonGenerator extends Generator {
 
         this.line();
         this.line('def to_json(self, indent: int | None = None) -> str:');
-        this.line('    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)');
+        this.line(
+            '    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)',
+        );
 
         this.line();
         this.line('@classmethod');
@@ -249,15 +261,20 @@ export class PythonGenerator extends Generator {
         this.line('    return cls.model_validate_json(json)');
     }
 
-    generateType(schema: TypeSchema | NestedTypeSchema,
-                 resourceFamilies: Record<string, TypeRef[]> | null,
-                 containsResourceRef: boolean) {
-
+    generateType(
+        schema: TypeSchema | NestedTypeSchema,
+        resourceFamilies: Record<string, TypeRef[]> | null,
+        containsResourceRef: boolean,
+    ) {
         const name = this.genType_deriveClassName(schema);
         const resourceFamiliesExist = !!resourceFamilies;
         const family = // the associated resource family if there is one
             resourceFamiliesExist ? resourceFamilies[schema.identifier.name] : null;
-        const classDefinition = this.genType_produceClassDefinition(name, schema, containsResourceRef);
+        const classDefinition = this.genType_produceClassDefinition(
+            name,
+            schema,
+            containsResourceRef,
+        );
 
         this.curlyBlock([classDefinition], () => {
             this.genType_modelConfigGeneration(!!family);
@@ -270,15 +287,11 @@ export class PythonGenerator extends Generator {
             if (resourceFamiliesExist && schema.identifier.kind === 'resource')
                 this.genType_resourceFamilyClassGeneration(schema, family);
 
-            const fields =
-                Object.entries(schema.fields).sort((a, b) =>
-                    a[0].localeCompare(b[0]));
+            const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
 
             this.genType_handleFields(fields);
 
-            if (schema.identifier.kind === 'resource')
-                this.genType_onResourceRef(name, !!family)
-
+            if (schema.identifier.kind === 'resource') this.genType_onResourceRef(name, !!family);
         });
     }
 
@@ -288,9 +301,11 @@ export class PythonGenerator extends Generator {
         this.pyImportFrom('typing', 'List as PyList', 'Literal');
     }
 
-    generateNestedTypes(schema: TypeSchema,
-                        resourceFamilies: Record<string, TypeRef[]> | null,
-                        containsResourceRefParent: boolean) {
+    generateNestedTypes(
+        schema: TypeSchema,
+        resourceFamilies: Record<string, TypeRef[]> | null,
+        containsResourceRefParent: boolean,
+    ) {
         if (schema.nested) {
             this.line();
             for (const subtype of schema.nested) {
@@ -427,7 +442,7 @@ export class PythonGenerator extends Generator {
                     resource.identifier.kind === 'resource' &&
                     this.childrenOf(resource.identifier).length > 0
                 )
-                allResourceNames.push(...names);
+                    allResourceNames.push(...names);
             }
             this.line();
             this.squareBlock(['__all__', '='], () => {
@@ -441,32 +456,39 @@ export class PythonGenerator extends Generator {
         });
     }
 
-
     findAllResources(packageResources: TypeSchema[]) {
         const resourceFamilies: Record<string, TypeRef[]> = {};
-        packageResources.forEach(resource => {
+        packageResources.forEach((resource) => {
             const children = this.childrenOf(resource.identifier);
             if (children.length > 0) {
                 const familyName = `${resource.identifier.name}`;
                 resourceFamilies[familyName] = [resource.identifier, ...children];
             }
-        })
-        return resourceFamilies
+        });
+        return resourceFamilies;
     }
 
-    containsResourceRef(schema: TypeSchema) : boolean {
+    containsResourceRef(schema: TypeSchema): boolean {
         const nested = schema.nested;
-        if(!nested)
-            return !!schema.fields && Object.values(schema.fields).some((item, _) =>
-                    !!item.type && item.type.kind === 'resource');
-        return nested.some(nestedSchema =>
-            !!nestedSchema.fields && Object.values(nestedSchema.fields).some((item, _) =>
-                !!item.type && item.type.kind === 'resource'));
+        if (!nested)
+            return (
+                !!schema.fields &&
+                Object.values(schema.fields).some(
+                    (item, _) => !!item.type && item.type.kind === 'resource',
+                )
+            );
+        return nested.some(
+            (nestedSchema) =>
+                !!nestedSchema.fields &&
+                Object.values(nestedSchema.fields).some(
+                    (item, _) => !!item.type && item.type.kind === 'resource',
+                ),
+        );
     }
 
     generateResourceModule(schema: TypeSchema, packageResources: TypeSchema[]) {
         const containsResourceRef = this.containsResourceRef(schema);
-        const families = this.findAllResources(packageResources)
+        const families = this.findAllResources(packageResources);
         this.file(`${snakeCase(schema.identifier.name)}.py`, () => {
             this.generateDisclaimer();
             this.defaultImports();
@@ -475,7 +497,7 @@ export class PythonGenerator extends Generator {
             this.generateDependenciesImports(schema);
             this.line();
 
-            if (containsResourceRef || schema.identifier.name in families) this.genericAnnotation()
+            if (containsResourceRef || schema.identifier.name in families) this.genericAnnotation();
 
             this.generateNestedTypes(schema, families, containsResourceRef);
 
