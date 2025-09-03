@@ -1,13 +1,7 @@
 import * as Path from 'node:path';
-import { Generator, type GeneratorOptions } from '../generator';
-import { ClassField, type NestedTypeSchema, type TypeRef, TypeSchema} from '../../typeschema';
-import {
-    groupedByPackage,
-    pascalCase,
-    removeConstraints,
-    snakeCase,
-    sortSchemasByDeps,
-} from '../../utils/code';
+import {Generator, type GeneratorOptions} from '../generator';
+import {ClassField, type NestedTypeSchema, type TypeRef, TypeSchema} from '../../typeschema';
+import {groupedByPackage, pascalCase, removeConstraints, snakeCase, sortSchemasByDeps,} from '../../utils/code';
 
 // Naming conventions
 // directory naming: snake_case
@@ -159,10 +153,11 @@ export class PythonGenerator extends Generator {
     }
 
     genericAnnotation() {
-        this.line('from typing import TypeVar, Generic');
+        this.line('from typing import TypeVar, Generic, Type');
         this.line('T = TypeVar(\'T\', bound=\'Resource\')');
         this.line();
     }
+
 
     genType_deriveClassName(schema: TypeSchema | NestedTypeSchema): string {
         return schema instanceof TypeSchema
@@ -234,12 +229,20 @@ export class PythonGenerator extends Generator {
         }
     }
 
-    genType_onResourceRef(name: string) :void {
+    genType_onResourceRef(name: string, includeDowncast: boolean) :void {
+        if (includeDowncast){
+            this.line();
+            this.line('def downcast_to(self, cls: Type[T]) -> T | None:');
+            this.line('    try:');
+            this.line('        return cls(**self.model_extra)');
+            this.line('    except:');
+            this.line('        return None');
+        }
+
         this.line();
         this.line('def to_json(self, indent: int | None = None) -> str:');
-        this.line(
-            '    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)',
-        );
+        this.line('    return self.model_dump_json(exclude_unset=True, exclude_none=True, indent=indent)');
+
         this.line();
         this.line('@classmethod');
         this.line(`def from_json(cls, json: str) -> ${name}:`);
@@ -252,7 +255,8 @@ export class PythonGenerator extends Generator {
 
         const name = this.genType_deriveClassName(schema);
         const resourceFamiliesExist = !!resourceFamilies;
-        const family = resourceFamiliesExist ? resourceFamilies[schema.identifier.name] : null;
+        const family = // the associated resource family if there is one
+            resourceFamiliesExist ? resourceFamilies[schema.identifier.name] : null;
         const classDefinition = this.genType_produceClassDefinition(name, schema, containsResourceRef);
 
         this.curlyBlock([classDefinition], () => {
@@ -273,7 +277,7 @@ export class PythonGenerator extends Generator {
             this.genType_handleFields(fields);
 
             if (schema.identifier.kind === 'resource')
-                this.genType_onResourceRef(name)
+                this.genType_onResourceRef(name, !!family)
 
         });
     }
@@ -450,7 +454,6 @@ export class PythonGenerator extends Generator {
         return resourceFamilies
     }
 
-
     containsResourceRef(schema: TypeSchema) : boolean {
         const nested = schema.nested;
         if(!nested)
@@ -472,9 +475,7 @@ export class PythonGenerator extends Generator {
             this.generateDependenciesImports(schema);
             this.line();
 
-            if (containsResourceRef) {
-                this.genericAnnotation()
-            }
+            if (containsResourceRef || schema.identifier.name in families) this.genericAnnotation()
 
             this.generateNestedTypes(schema, families, containsResourceRef);
 
@@ -491,11 +492,10 @@ export class PythonGenerator extends Generator {
         const destPath = this.getCurrentDir();
 
         this.copyStaticFile(srcPath, destPath, 'client.py', (content: string) => {
-            const updatedContent = content.replace(
+            return content.replace(
                 /from DOMAIN_RESOURCE_PACKAGE/g,
                 `from ${this.rootPackage}.hl7_fhir_r4_core`,
             );
-            return updatedContent;
         });
         this.copyStaticFile(srcPath, destPath, 'requirements.txt');
     }

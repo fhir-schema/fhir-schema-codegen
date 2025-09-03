@@ -135,6 +135,7 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
 
     assert found, f"Patient with ID {created_patient.id} not found in search results"
 
+
 def test_search_patient_as_resource(client: Client, created_patient: Patient) -> None:
     search_params = {"name": "Patient"}
     result_bundle = search_test(client, "Patient", Resource, search_params)
@@ -145,8 +146,9 @@ def test_search_patient_as_resource(client: Client, created_patient: Patient) ->
     assert len(entries) is not 0
     entry = entries[0]
     assert entry is not None
-
-
+    assert entry.resource is not None
+    assert type(entry.resource.downcast_to(Patient)) is Patient
+    assert entry.resource.downcast_to(HumanName) is None
 
 
 def test_delete_patient(client: Client) -> None:
