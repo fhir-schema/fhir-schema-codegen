@@ -6,6 +6,7 @@ from aidbox.hl7_fhir_r4_core.bundle import Bundle
 from aidbox.hl7_fhir_r4_core.resource import Resource
 
 from aidbox.client import Client, Auth, AuthCredentials
+from aidbox.hl7_fhir_r4_core.appointment import Appointment
 
 T = TypeVar("T")
 
@@ -148,7 +149,7 @@ def test_search_patient_as_resource(client: Client, created_patient: Patient) ->
     assert entry is not None
     assert entry.resource is not None
     assert type(entry.resource.downcast_to(Patient)) is Patient
-    assert entry.resource.downcast_to(HumanName) is None
+    assert entry.resource.downcast_to(Appointment) is None
 
 
 def test_delete_patient(client: Client) -> None:
