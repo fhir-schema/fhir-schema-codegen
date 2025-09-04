@@ -1,0 +1,441 @@
+{
+  "url": "http://aidbox.app/StructureDefinition/Client",
+  "ALLOW_FHIR_SCHEMA_FHIR_INCOMPATIBLE_EXTENSIONS": true,
+  "id": "Client",
+  "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+  "name": "Client",
+  "kind": "resource",
+  "type": "Client",
+  "version": "0.0.1",
+  "resourceType": "FHIRSchema",
+  "elements": {
+    "first_party": {
+      "scalar": true,
+      "desc": "Indicates whether this is a first-party client.",
+      "type": "boolean"
+    },
+    "auth": {
+      "scalar": true,
+      "desc": "Authentication configuration for different OAuth flows.",
+      "type": "BackboneElement",
+      "elements": {
+        "token_exchange": {
+          "scalar": true,
+          "desc": "Configuration for the token exchange grant type.",
+          "type": "BackboneElement",
+          "elements": {
+            "token_format": {
+              "scalar": true,
+              "constraints": {
+                "enum-1557": {
+                  "expression": "%context.subsetOf('jwt')",
+                  "severity": "error"
+                }
+              },
+              "desc": "Format of the access token.",
+              "type": "string"
+            },
+            "refresh_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for refresh tokens in seconds.",
+              "type": "integer"
+            },
+            "access_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for access tokens in seconds.",
+              "type": "integer"
+            },
+            "refresh_token": {
+              "scalar": true,
+              "desc": "Whether to issue refresh tokens with this grant type.",
+              "type": "boolean"
+            },
+            "audience": {
+              "desc": "Intended audience for issued tokens.",
+              "type": "string",
+              "array": true
+            }
+          }
+        },
+        "implicit": {
+          "scalar": true,
+          "desc": "Configuration for the implicit grant type.",
+          "type": "BackboneElement",
+          "elements": {
+            "token_format": {
+              "scalar": true,
+              "constraints": {
+                "enum-1154": {
+                  "expression": "%context.subsetOf('jwt')",
+                  "severity": "error"
+                }
+              },
+              "desc": "Format of the access token.",
+              "type": "string"
+            },
+            "access_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for access tokens in seconds.",
+              "type": "integer"
+            },
+            "audience": {
+              "desc": "Intended audience for issued tokens.",
+              "type": "string",
+              "array": true
+            },
+            "redirect_uri": {
+              "scalar": true,
+              "desc": "Redirect URI for the implicit flow.",
+              "type": "url",
+              "isRequired": true
+            }
+          }
+        },
+        "client_credentials": {
+          "scalar": true,
+          "desc": "Configuration for the client credentials grant type.",
+          "type": "BackboneElement",
+          "elements": {
+            "token_format": {
+              "scalar": true,
+              "constraints": {
+                "enum-client_credentials_token_format": {
+                  "expression": "%context.subsetOf('jwt')",
+                  "severity": "error"
+                }
+              },
+              "desc": "Format of the access token.",
+              "type": "string"
+            },
+            "client_assertion_types": {
+              "constraints": {
+                "enum-1153": {
+                  "expression": "%context.subsetOf('urn:ietf:params:oauth:client-assertion-type:jwt-bearer')",
+                  "severity": "error"
+                }
+              },
+              "desc": "Supported client assertion types.",
+              "type": "string",
+              "array": true
+            },
+            "refresh_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for refresh tokens in seconds.",
+              "type": "integer"
+            },
+            "access_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for access tokens in seconds.",
+              "type": "integer"
+            },
+            "refresh_token": {
+              "scalar": true,
+              "desc": "Whether to issue refresh tokens with this grant type.",
+              "type": "boolean"
+            },
+            "audience": {
+              "desc": "Intended audience for issued tokens. Shows what resource server access is intended for. Aidbox compares the audience of the Client to the audience it receives within aJWT and decides if the access should be granted. The audience attribute can be defined in 2 ways: As a plain string, e.g. https://cmpl.aidbox.app/smart As a Regex. In that case, the audience value should start with the # symbol. For example, #https://cmpl.aidbox.app/tenant/[^\\]/smart That validation of the audience happens when SMART on FHIR app launches",
+              "type": "string",
+              "array": true
+            }
+          }
+        },
+        "authorization_code": {
+          "scalar": true,
+          "desc": "Configuration for the authorization code grant type.",
+          "type": "BackboneElement",
+          "elements": {
+            "token_format": {
+              "scalar": true,
+              "constraints": {
+                "enum-1556": {
+                  "expression": "%context.subsetOf('jwt')",
+                  "severity": "error"
+                }
+              },
+              "desc": "Format of the access token.",
+              "type": "string"
+            },
+            "refresh_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for refresh tokens in seconds.",
+              "type": "integer"
+            },
+            "pkce": {
+              "scalar": true,
+              "desc": "Whether PKCE (Proof Key for Code Exchange) is required.",
+              "type": "boolean"
+            },
+            "access_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for access tokens in seconds.",
+              "type": "integer"
+            },
+            "secret_required": {
+              "scalar": true,
+              "desc": "Whether client secret is required for token exchange.",
+              "type": "boolean"
+            },
+            "refresh_token": {
+              "scalar": true,
+              "desc": "Whether to issue refresh tokens with this grant type.",
+              "type": "boolean"
+            },
+            "default_identity_provider": {
+              "refers": [
+                "http://aidbox.app/StructureDefinition/IdentityProvider"
+              ],
+              "scalar": true,
+              "desc": "Default IdentityProvider that will be used instead of Aidbox login.",
+              "type": "Reference"
+            },
+            "audience": {
+              "desc": "Intended audience for issued tokens.",
+              "type": "string",
+              "array": true
+            },
+            "redirect_uri": {
+              "scalar": true,
+              "desc": "Redirect URI for the authorization code flow.",
+              "type": "url",
+              "isRequired": true
+            }
+          }
+        },
+        "password": {
+          "scalar": true,
+          "desc": "Configuration for the password grant type.",
+          "type": "BackboneElement",
+          "elements": {
+            "token_format": {
+              "scalar": true,
+              "constraints": {
+                "enum-1155": {
+                  "expression": "%context.subsetOf('jwt')",
+                  "severity": "error"
+                }
+              },
+              "desc": "Format of the access token.",
+              "type": "string"
+            },
+            "refresh_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for refresh tokens in seconds.",
+              "type": "integer"
+            },
+            "access_token_expiration": {
+              "scalar": true,
+              "desc": "Expiration time for access tokens in seconds.",
+              "type": "integer"
+            },
+            "secret_required": {
+              "scalar": true,
+              "desc": "Whether client secret is required for password grant.",
+              "type": "boolean"
+            },
+            "refresh_token": {
+              "scalar": true,
+              "desc": "Whether to issue refresh tokens with this grant type.",
+              "type": "boolean"
+            },
+            "audience": {
+              "desc": "Intended audience for issued tokens.",
+              "type": "string",
+              "array": true
+            },
+            "redirect_uri": {
+              "scalar": true,
+              "desc": "If present, turn on redirect protection",
+              "type": "url"
+            }
+          }
+        }
+      }
+    },
+    "trusted": {
+      "scalar": true,
+      "desc": "Indicates whether this client is trusted and given special privileges.",
+      "type": "boolean"
+    },
+    "allowed_origins": {
+      "desc": "Allowed Origins are URLs that will be allowed to make requests.",
+      "type": "uri",
+      "array": true
+    },
+    "grant_types": {
+      "constraints": {
+        "enum-1152": {
+          "expression": "%context.subsetOf('basic' | 'authorization_code' | 'code' | 'password' | 'client_credentials' | 'implicit' | 'refresh_token' | 'urn:ietf:params:oauth:grant-type:token-exchange')",
+          "severity": "error"
+        }
+      },
+      "desc": "OAuth 2.0 grant types this client is authorized to use.",
+      "type": "string",
+      "array": true
+    },
+    "name": {
+      "scalar": true,
+      "desc": "Human-readable name of the client application.",
+      "type": "string"
+    },
+    "_source": {
+      "desc": "System Property. DO NOT USE IT.",
+      "type": "string"
+    },
+    "jwks": {
+      "desc": "JSON Web Key Set for client authentication and/or verification.",
+      "type": "BackboneElement",
+      "array": true,
+      "elements": {
+        "n": {
+          "scalar": true,
+          "desc": "Modulus value for RSA key.",
+          "type": "string"
+        },
+        "e": {
+          "scalar": true,
+          "desc": "Exponent value for RSA key.",
+          "type": "string"
+        },
+        "kty": {
+          "scalar": true,
+          "constraints": {
+            "enum-1150": {
+              "expression": "%context.subsetOf('RSA')",
+              "severity": "error"
+            }
+          },
+          "desc": "Key type.",
+          "type": "string"
+        },
+        "alg": {
+          "scalar": true,
+          "constraints": {
+            "enum-1151": {
+              "expression": "%context.subsetOf('RS384')",
+              "severity": "error"
+            }
+          },
+          "desc": "Algorithm used with this key.",
+          "type": "string"
+        },
+        "kid": {
+          "scalar": true,
+          "desc": "Key ID that identifies this key.",
+          "type": "string"
+        },
+        "use": {
+          "scalar": true,
+          "constraints": {
+            "enum-1149": {
+              "expression": "%context.subsetOf('sig')",
+              "severity": "error"
+            }
+          },
+          "desc": "Key usage.",
+          "type": "string"
+        }
+      }
+    },
+    "scopes": {
+      "desc": "Detailed scope configurations with associated policies.",
+      "type": "BackboneElement",
+      "array": true,
+      "elements": {
+        "policy": {
+          "refers": [
+            "http://aidbox.app/StructureDefinition/AccessPolicy"
+          ],
+          "scalar": true,
+          "desc": "Reference to an AccessPolicy resource for this scope.",
+          "type": "Reference"
+        },
+        "parameters": {
+          "scalar": true,
+          "desc": "Parameters to be applied with the scope's policy.",
+          "additionalProperties": {
+            "any": true
+          }
+        }
+      }
+    },
+    "fhir-base-url": {
+      "scalar": true,
+      "desc": "Base URL of the FHIR server this client interacts with.",
+      "type": "string"
+    },
+    "allowed-scopes": {
+      "refers": [
+        "http://aidbox.app/StructureDefinition/Scope"
+      ],
+      "desc": "References to specific Scope resources this client is allowed to request.",
+      "type": "Reference",
+      "array": true
+    },
+    "scope": {
+      "desc": "List of scopes this client is authorized to request.",
+      "type": "string",
+      "array": true
+    },
+    "allowedIssuers": {
+      "desc": "List of authorized token issuers for this client.",
+      "type": "string",
+      "array": true
+    },
+    "type": {
+      "scalar": true,
+      "desc": "The type of client application.",
+      "type": "string"
+    },
+    "secret": {
+      "scalar": true,
+      "desc": "Hashed client secret for authentication.",
+      "type": "sha256Hash"
+    },
+    "details": {
+      "scalar": true,
+      "desc": "Additional client details or configuration options.",
+      "additionalProperties": {
+        "any": true
+      }
+    },
+    "active": {
+      "scalar": true,
+      "desc": "Indicates whether this client is active and can be used for authentication.",
+      "type": "boolean"
+    },
+    "jwks_uri": {
+      "scalar": true,
+      "desc": "URI where the client's JSON Web Key Set can be retrieved.",
+      "type": "url"
+    },
+    "smart": {
+      "scalar": true,
+      "desc": "SMART on FHIR configuration for this client.",
+      "type": "BackboneElement",
+      "elements": {
+        "launch_uri": {
+          "scalar": true,
+          "desc": "URI to launch the SMART app.",
+          "type": "string"
+        },
+        "name": {
+          "scalar": true,
+          "desc": "Name of the SMART app.",
+          "type": "string"
+        },
+        "description": {
+          "scalar": true,
+          "desc": "Description of the SMART app.",
+          "type": "string"
+        }
+      }
+    },
+    "description": {
+      "scalar": true,
+      "desc": "A description of the client application for administrative purposes.",
+      "type": "string"
+    }
+  },
+  "derivation": "specialization"
+}
