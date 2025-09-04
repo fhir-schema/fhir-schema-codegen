@@ -148,9 +148,13 @@ export class Generator {
         }
     }
 
-    debugComment(text: string) {
+    debugComment(dt: string | any) {
         if (this.opts.withDebugComment) {
-            this.commentLine(text);
+            if (typeof dt === 'string') {
+                this.commentLine(dt);
+            } else {
+                this.commentLine(JSON.stringify(dt));
+            }
         }
     }
 
