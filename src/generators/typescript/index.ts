@@ -123,7 +123,10 @@ const fmap =
     };
 
 const normalizeName = (n: string): string => {
-    return n.replace(/-/g, '_');
+    if (n === 'extends') {
+        return 'extends_';
+    }
+    return n.replace(/[- ]/g, '_');
 };
 
 class TypeScriptGenerator extends Generator {
