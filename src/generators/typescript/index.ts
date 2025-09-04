@@ -150,6 +150,17 @@ class TypeScriptGenerator extends Generator {
                 const packageName = `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`;
                 this.tsImportFrom(packageName, this.uppercaseFirstLetter(dep.name));
             }
+
+            // NOTE: for primitive type extensions
+            const element = this.loader.complexTypes().find((e) => e.identifier.name === 'Element');
+            if (
+                element &&
+                deps.find((e) => e.name === 'Element') === undefined &&
+                // FIXME: don't import if fields and nested fields don't have primitive types
+                schema.identifier.name !== 'Element'
+            ) {
+                this.tsImportFrom(`../${kebabCase(element.identifier.package)}/Element`, 'Element');
+            }
         }
     }
 
