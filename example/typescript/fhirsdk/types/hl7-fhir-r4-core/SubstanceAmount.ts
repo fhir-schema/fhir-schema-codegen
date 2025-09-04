@@ -2,10 +2,11 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { CodeableConcept } from './CodeableConcept';
-import { Quantity } from './Quantity';
-import { Range } from './Range';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { Quantity } from '../hl7-fhir-r4-core/Quantity';
+import { Range } from '../hl7-fhir-r4-core/Range';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface SubstanceAmountReferenceRange extends BackboneElement {

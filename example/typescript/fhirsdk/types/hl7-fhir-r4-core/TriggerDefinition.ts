@@ -2,11 +2,11 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { DataRequirement } from './DataRequirement';
-import { Element } from './Element';
-import { Expression } from './Expression';
-import { Reference } from './Reference';
-import { Timing } from './Timing';
+import { DataRequirement } from '../hl7-fhir-r4-core/DataRequirement';
+import { Element } from '../hl7-fhir-r4-core/Element';
+import { Expression } from '../hl7-fhir-r4-core/Expression';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Timing } from '../hl7-fhir-r4-core/Timing';
 
 export interface TriggerDefinition extends Element {
     condition?: Expression;

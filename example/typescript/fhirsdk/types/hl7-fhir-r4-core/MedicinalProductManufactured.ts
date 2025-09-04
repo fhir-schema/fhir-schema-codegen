@@ -2,11 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { CodeableConcept } from './CodeableConcept';
-import { DomainResource } from './DomainResource';
-import { ProdCharacteristic } from './ProdCharacteristic';
-import { Quantity } from './Quantity';
-import { Reference } from './Reference';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { ProdCharacteristic } from '../hl7-fhir-r4-core/ProdCharacteristic';
+import { Quantity } from '../hl7-fhir-r4-core/Quantity';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface MedicinalProductManufactured extends DomainResource {
     ingredient?: Reference<'MedicinalProductIngredient'>[];

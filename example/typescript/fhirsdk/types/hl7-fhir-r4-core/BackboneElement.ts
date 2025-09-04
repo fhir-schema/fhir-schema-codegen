@@ -2,8 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Element } from './Element';
-import { Extension } from './Extension';
+import { Element } from '../hl7-fhir-r4-core/Element';
+import { Extension } from '../hl7-fhir-r4-core/Extension';
 
 export interface BackboneElement extends Element {
     modifierExtension?: Extension[];

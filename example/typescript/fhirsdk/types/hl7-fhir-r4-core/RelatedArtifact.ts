@@ -2,8 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Attachment } from './Attachment';
-import { Element } from './Element';
+import { Attachment } from '../hl7-fhir-r4-core/Attachment';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface RelatedArtifact extends Element {
     citation?: string;

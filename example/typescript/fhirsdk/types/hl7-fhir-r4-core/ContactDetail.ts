@@ -2,8 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { ContactPoint } from './ContactPoint';
-import { Element } from './Element';
+import { ContactPoint } from '../hl7-fhir-r4-core/ContactPoint';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface ContactDetail extends Element {
     name?: string;

@@ -2,8 +2,9 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Reference } from './Reference';
-import { Resource } from './Resource';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Resource } from '../hl7-fhir-r4-core/Resource';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Binary extends Resource {
     contentType: string;

@@ -2,11 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { CodeableConcept } from './CodeableConcept';
-import { DomainResource } from './DomainResource';
-import { Identifier } from './Identifier';
-import { Money } from './Money';
-import { Reference } from './Reference';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Money } from '../hl7-fhir-r4-core/Money';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface PaymentNotice extends DomainResource {
     amount: Money;

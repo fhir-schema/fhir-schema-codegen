@@ -2,8 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Coding } from './Coding';
-import { Element } from './Element';
+import { Coding } from '../hl7-fhir-r4-core/Coding';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface CodeableConcept extends Element {
     coding?: Coding[];

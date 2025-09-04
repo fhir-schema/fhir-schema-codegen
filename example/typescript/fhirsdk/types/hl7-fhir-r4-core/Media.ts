@@ -2,13 +2,14 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Annotation } from './Annotation';
-import { Attachment } from './Attachment';
-import { CodeableConcept } from './CodeableConcept';
-import { DomainResource } from './DomainResource';
-import { Identifier } from './Identifier';
-import { Period } from './Period';
-import { Reference } from './Reference';
+import { Annotation } from '../hl7-fhir-r4-core/Annotation';
+import { Attachment } from '../hl7-fhir-r4-core/Attachment';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Period } from '../hl7-fhir-r4-core/Period';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Media extends DomainResource {
     basedOn?: Reference<'CarePlan' | 'ServiceRequest'>[];

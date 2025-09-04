@@ -2,8 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Element } from './Element';
-import { Identifier } from './Identifier';
+import { Element } from '../hl7-fhir-r4-core/Element';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
 
 export interface Reference<T extends string = string> extends Element {
     display?: string;

@@ -2,12 +2,13 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Annotation } from './Annotation';
-import { CodeableConcept } from './CodeableConcept';
-import { DataRequirement } from './DataRequirement';
-import { DomainResource } from './DomainResource';
-import { Identifier } from './Identifier';
-import { Reference } from './Reference';
+import { Annotation } from '../hl7-fhir-r4-core/Annotation';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { DataRequirement } from '../hl7-fhir-r4-core/DataRequirement';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface GuidanceResponse extends DomainResource {
     dataRequirement?: DataRequirement[];

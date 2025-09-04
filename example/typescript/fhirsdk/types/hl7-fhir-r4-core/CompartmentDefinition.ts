@@ -2,10 +2,11 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { ContactDetail } from './ContactDetail';
-import { DomainResource } from './DomainResource';
-import { UsageContext } from './UsageContext';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { ContactDetail } from '../hl7-fhir-r4-core/ContactDetail';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { UsageContext } from '../hl7-fhir-r4-core/UsageContext';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface CompartmentDefinitionResource extends BackboneElement {

@@ -2,7 +2,7 @@ import { TypeSchema } from './typeschema';
 import type { SchemaLoader } from './loader';
 
 export const hierarchy = (loader: SchemaLoader, schema: TypeSchema): TypeSchema[] => {
-    let res: TypeSchema[] = [];
+    const res: TypeSchema[] = [];
     let cur: TypeSchema | undefined = schema;
 
     while (cur) {

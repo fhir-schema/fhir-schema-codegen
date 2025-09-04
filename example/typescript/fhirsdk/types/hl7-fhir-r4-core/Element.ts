@@ -2,7 +2,7 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Extension } from './Extension';
+import { Extension } from '../hl7-fhir-r4-core/Extension';
 
 export interface Element {
     extension?: Extension[];

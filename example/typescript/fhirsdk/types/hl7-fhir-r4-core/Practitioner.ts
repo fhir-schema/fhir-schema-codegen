@@ -2,16 +2,17 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Address } from './Address';
-import { Attachment } from './Attachment';
-import { BackboneElement } from './BackboneElement';
-import { CodeableConcept } from './CodeableConcept';
-import { ContactPoint } from './ContactPoint';
-import { DomainResource } from './DomainResource';
-import { HumanName } from './HumanName';
-import { Identifier } from './Identifier';
-import { Period } from './Period';
-import { Reference } from './Reference';
+import { Address } from '../hl7-fhir-r4-core/Address';
+import { Attachment } from '../hl7-fhir-r4-core/Attachment';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { ContactPoint } from '../hl7-fhir-r4-core/ContactPoint';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { HumanName } from '../hl7-fhir-r4-core/HumanName';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Period } from '../hl7-fhir-r4-core/Period';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface PractitionerQualification extends BackboneElement {

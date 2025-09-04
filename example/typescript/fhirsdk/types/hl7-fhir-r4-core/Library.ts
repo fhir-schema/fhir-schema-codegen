@@ -2,17 +2,18 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Attachment } from './Attachment';
-import { CodeableConcept } from './CodeableConcept';
-import { ContactDetail } from './ContactDetail';
-import { DataRequirement } from './DataRequirement';
-import { DomainResource } from './DomainResource';
-import { Identifier } from './Identifier';
-import { ParameterDefinition } from './ParameterDefinition';
-import { Period } from './Period';
-import { Reference } from './Reference';
-import { RelatedArtifact } from './RelatedArtifact';
-import { UsageContext } from './UsageContext';
+import { Attachment } from '../hl7-fhir-r4-core/Attachment';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { ContactDetail } from '../hl7-fhir-r4-core/ContactDetail';
+import { DataRequirement } from '../hl7-fhir-r4-core/DataRequirement';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { ParameterDefinition } from '../hl7-fhir-r4-core/ParameterDefinition';
+import { Period } from '../hl7-fhir-r4-core/Period';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { RelatedArtifact } from '../hl7-fhir-r4-core/RelatedArtifact';
+import { UsageContext } from '../hl7-fhir-r4-core/UsageContext';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Library extends DomainResource {
     approvalDate?: string;

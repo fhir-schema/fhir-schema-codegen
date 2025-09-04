@@ -2,16 +2,17 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { CodeableConcept } from './CodeableConcept';
-import { ContactDetail } from './ContactDetail';
-import { DomainResource } from './DomainResource';
-import { Expression } from './Expression';
-import { Identifier } from './Identifier';
-import { Period } from './Period';
-import { Reference } from './Reference';
-import { RelatedArtifact } from './RelatedArtifact';
-import { UsageContext } from './UsageContext';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { ContactDetail } from '../hl7-fhir-r4-core/ContactDetail';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Expression } from '../hl7-fhir-r4-core/Expression';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Period } from '../hl7-fhir-r4-core/Period';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { RelatedArtifact } from '../hl7-fhir-r4-core/RelatedArtifact';
+import { UsageContext } from '../hl7-fhir-r4-core/UsageContext';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface MeasureGroup extends BackboneElement {

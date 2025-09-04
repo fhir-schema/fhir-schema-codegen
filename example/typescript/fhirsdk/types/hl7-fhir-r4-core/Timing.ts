@@ -2,11 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { CodeableConcept } from './CodeableConcept';
-import { Duration } from './Duration';
-import { Period } from './Period';
-import { Range } from './Range';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { Duration } from '../hl7-fhir-r4-core/Duration';
+import { Period } from '../hl7-fhir-r4-core/Period';
+import { Range } from '../hl7-fhir-r4-core/Range';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface TimingRepeat extends BackboneElement {

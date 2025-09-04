@@ -2,7 +2,7 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Element } from './Element';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Narrative extends Element {
     div: string;

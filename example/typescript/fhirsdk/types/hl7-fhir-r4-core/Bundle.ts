@@ -2,10 +2,11 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { Identifier } from './Identifier';
-import { Resource } from './Resource';
-import { Signature } from './Signature';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Resource } from '../hl7-fhir-r4-core/Resource';
+import { Signature } from '../hl7-fhir-r4-core/Signature';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface BundleEntry extends BackboneElement {

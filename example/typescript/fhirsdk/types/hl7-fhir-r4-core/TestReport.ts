@@ -2,10 +2,11 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { DomainResource } from './DomainResource';
-import { Identifier } from './Identifier';
-import { Reference } from './Reference';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface TestReportParticipant extends BackboneElement {

@@ -2,18 +2,19 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Annotation } from './Annotation';
-import { BackboneElement } from './BackboneElement';
-import { CodeableConcept } from './CodeableConcept';
-import { DomainResource } from './DomainResource';
-import { Identifier } from './Identifier';
-import { Period } from './Period';
-import { Quantity } from './Quantity';
-import { Range } from './Range';
-import { Ratio } from './Ratio';
-import { Reference } from './Reference';
-import { SampledData } from './SampledData';
-import { Timing } from './Timing';
+import { Annotation } from '../hl7-fhir-r4-core/Annotation';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { Period } from '../hl7-fhir-r4-core/Period';
+import { Quantity } from '../hl7-fhir-r4-core/Quantity';
+import { Range } from '../hl7-fhir-r4-core/Range';
+import { Ratio } from '../hl7-fhir-r4-core/Ratio';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { SampledData } from '../hl7-fhir-r4-core/SampledData';
+import { Timing } from '../hl7-fhir-r4-core/Timing';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface ObservationComponent extends BackboneElement {

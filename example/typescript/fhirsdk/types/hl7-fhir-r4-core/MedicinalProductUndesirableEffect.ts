@@ -2,10 +2,11 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { CodeableConcept } from './CodeableConcept';
-import { DomainResource } from './DomainResource';
-import { Population } from './Population';
-import { Reference } from './Reference';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { Population } from '../hl7-fhir-r4-core/Population';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface MedicinalProductUndesirableEffect extends DomainResource {
     classification?: CodeableConcept;

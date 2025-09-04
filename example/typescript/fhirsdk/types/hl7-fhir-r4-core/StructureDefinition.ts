@@ -2,14 +2,15 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { BackboneElement } from './BackboneElement';
-import { CodeableConcept } from './CodeableConcept';
-import { Coding } from './Coding';
-import { ContactDetail } from './ContactDetail';
-import { DomainResource } from './DomainResource';
-import { ElementDefinition } from './ElementDefinition';
-import { Identifier } from './Identifier';
-import { UsageContext } from './UsageContext';
+import { BackboneElement } from '../hl7-fhir-r4-core/BackboneElement';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { Coding } from '../hl7-fhir-r4-core/Coding';
+import { ContactDetail } from '../hl7-fhir-r4-core/ContactDetail';
+import { DomainResource } from '../hl7-fhir-r4-core/DomainResource';
+import { ElementDefinition } from '../hl7-fhir-r4-core/ElementDefinition';
+import { Identifier } from '../hl7-fhir-r4-core/Identifier';
+import { UsageContext } from '../hl7-fhir-r4-core/UsageContext';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 
 export interface StructureDefinitionContext extends BackboneElement {

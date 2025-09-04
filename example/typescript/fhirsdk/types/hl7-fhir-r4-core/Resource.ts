@@ -2,7 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { Meta } from './Meta';
+import { Meta } from '../hl7-fhir-r4-core/Meta';
+import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Resource {
     id?: string;

@@ -2,12 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-import { CodeableConcept } from './CodeableConcept';
-import { Coding } from './Coding';
-import { Element } from './Element';
-import { Quantity } from './Quantity';
-import { Range } from './Range';
-import { Reference } from './Reference';
+import { CodeableConcept } from '../hl7-fhir-r4-core/CodeableConcept';
+import { Coding } from '../hl7-fhir-r4-core/Coding';
+import { Element } from '../hl7-fhir-r4-core/Element';
+import { Quantity } from '../hl7-fhir-r4-core/Quantity';
+import { Range } from '../hl7-fhir-r4-core/Range';
+import { Reference } from '../hl7-fhir-r4-core/Reference';
 
 export interface UsageContext extends Element {
     code: Coding;
