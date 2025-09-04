@@ -147,7 +147,8 @@ class TypeScriptGenerator extends Generator {
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             for (const dep of deps) {
-                this.tsImportFrom(`./${pascalCase(dep.name)}`, this.uppercaseFirstLetter(dep.name));
+                const packageName = `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`;
+                this.tsImportFrom(packageName, this.uppercaseFirstLetter(dep.name));
             }
         }
     }
@@ -180,7 +181,7 @@ class TypeScriptGenerator extends Generator {
                   : // NestedTypeSchema
                     normalizeName(this.deriveNestedSchemaName(schema.identifier.url, true));
 
-        let parent = fmap(normalizeName)(canonicalToName(schema.base?.url));
+        const parent = fmap(normalizeName)(canonicalToName(schema.base?.url));
         const extendsClause = parent && `extends ${parent}`;
 
         this.curlyBlock(['export', 'interface', name, extendsClause], () => {
@@ -259,7 +260,7 @@ class TypeScriptGenerator extends Generator {
             const names = schemas.map((schema) => schema.identifier.name);
 
             for (const name of names) {
-                this.tsImportFrom('./' + pascalCase(name), name);
+                this.tsImportFrom(`./${pascalCase(name)}`, name);
             }
             this.lineSM(`export { ${names.join(', ')} }`);
 
