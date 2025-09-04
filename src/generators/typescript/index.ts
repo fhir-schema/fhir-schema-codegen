@@ -164,7 +164,7 @@ class TypeScriptGenerator extends Generator {
 
     addFieldExtension(fieldName: string, field: ClassField): void {
         if (field.type.kind === 'primitive-type') {
-            this.lineSM(`_${fieldName}?: Element`);
+            this.lineSM(`_${this.getFieldName(fieldName)}?: Element`);
         }
     }
 
@@ -198,6 +198,8 @@ class TypeScriptGenerator extends Generator {
 
             for (const [fieldName, field] of fields) {
                 if ('choices' in field) continue;
+
+                this.debugComment(`${fieldName} ${JSON.stringify(field)}`);
 
                 const fieldNameFixed = this.getFieldName(fieldName);
                 const optionalSymbol = field.required ? '' : '?';
