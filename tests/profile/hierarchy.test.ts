@@ -137,7 +137,7 @@ describe('hierarchy', () => {
         loader.addSchema(bSchema);
 
         expect(() => hierarchy(loader, bSchema)).toThrow(
-            'Failed to resolve base type: A in package test',
+            'Failed to resolve base type: {"name":"A","package":"test","kind":"resource","version":"1.0.0","url":"http://example.org/StructureDefinition/A"}',
         );
     });
 

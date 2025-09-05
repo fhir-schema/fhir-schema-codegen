@@ -153,8 +153,13 @@ export class SchemaLoader {
     }
 
     resolveTypeIdentifier(typeRef: TypeRef): TypeSchema | undefined {
-        return this.canonicalResources.package.find(
-            (res: TypeSchema) => res.identifier === typeRef,
-        );
+        return this.canonicalResources.package.find((res: TypeSchema) => {
+            return (
+                res.identifier.url === typeRef.url &&
+                res.identifier.name === typeRef.name &&
+                res.identifier.package === typeRef.package &&
+                res.identifier.version === typeRef.version
+            );
+        });
     }
 }

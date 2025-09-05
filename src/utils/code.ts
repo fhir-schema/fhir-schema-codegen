@@ -105,5 +105,9 @@ export const groupedByPackage = (schemas: TypeSchema[]): Record<string, TypeSche
 
 export const canonicalToName = (canonical: string | undefined) => {
     if (!canonical) return undefined;
-    return canonical.split('/').pop();
+    const localName = canonical.split('/').pop();
+    if (localName?.includes('#')) {
+        return localName.split('#')[0];
+    }
+    return localName;
 };

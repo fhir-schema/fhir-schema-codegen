@@ -3,6 +3,8 @@ import path from 'node:path';
 import { Generator, type GeneratorOptions } from '../generator';
 import { type ClassField, type NestedTypeSchema, TypeSchema } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, canonicalToName } from '../../utils/code';
+import { assert } from 'node:console';
+import * as profile from '../../profile';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -145,13 +147,22 @@ class TypeScriptGenerator extends Generator {
 
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
-            const deps = schema.dependencies
-                .filter((dep) => ['complex-type', 'resource', 'logical'].includes(dep.kind))
-                .sort((a, b) => a.name.localeCompare(b.name));
-
+            const deps = [
+                ...schema.dependencies
+                    .filter((dep) => ['complex-type', 'resource', 'logical'].includes(dep.kind))
+                    .map((dep) => ({
+                        tsPackage: `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`,
+                        name: this.uppercaseFirstLetter(dep.name),
+                    })),
+                ...schema.dependencies
+                    .filter((dep) => ['nested'].includes(dep.kind))
+                    .map((dep) => ({
+                        tsPackage: `../${kebabCase(dep.package)}/${pascalCase(canonicalToName(dep.url) ?? '')}`,
+                        name: this.deriveNestedSchemaName(dep.url, true),
+                    })),
+            ].sort((a, b) => a.name.localeCompare(b.name));
             for (const dep of deps) {
-                const packageName = `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`;
-                this.tsImportFrom(packageName, this.uppercaseFirstLetter(dep.name));
+                this.tsImportFrom(dep.tsPackage, dep.name);
             }
 
             // NOTE: for primitive type extensions
@@ -259,21 +270,66 @@ class TypeScriptGenerator extends Generator {
         this.line();
     }
 
+    generateProfileType(schema: TypeSchema) {
+        const name = normalizeName(schema.identifier.name);
+        this.curlyBlock(['export', 'interface', name], () => {
+            this.lineSM(`profileType: '${schema.identifier.name}'`);
+            this.line();
+
+            for (const [fieldName, field] of Object.entries(schema.fields ?? {})) {
+                this.debugComment(JSON.stringify(field, null, 2));
+
+                if ('choices' in field) continue;
+
+                const tsName = this.getFieldName(fieldName);
+                let tsType: string;
+                if (field.type.kind === 'nested') {
+                    tsType = this.deriveNestedSchemaName(field.type.url, true);
+                } else {
+                    tsType = primitiveType2tsType[field.type.name] ?? field.type.name;
+                }
+
+                this.lineSM(
+                    `${tsName}${!field.required ? '?' : ''}: ${tsType}${field.array ? '[]' : ''}`,
+                );
+            }
+        });
+
+        this.line();
+    }
+
+    generateProfile(schema: TypeSchema) {
+        assert(schema.identifier.kind === 'constraint');
+        const flatProfile = profile.flatProfile(this.loader, schema);
+        this.generateDependenciesImports(flatProfile);
+        this.line();
+        this.generateProfileType(flatProfile);
+    }
+
     generateResourceModule(schema: TypeSchema) {
         this.file(`${pascalCase(schema.identifier.name)}.ts`, () => {
             this.generateDisclaimer();
 
-            this.generateDependenciesImports(schema);
-            this.line();
-
-            this.generateNestedTypes(schema);
-            this.generateType(schema);
+            if (
+                ['complex-type', 'resource', 'logical', 'nested'].includes(schema.identifier.kind)
+            ) {
+                this.generateDependenciesImports(schema);
+                this.line();
+                this.generateNestedTypes(schema);
+                this.generateType(schema);
+            } else if (schema.identifier.kind === 'constraint') {
+                this.generateProfile(schema);
+            } else {
+                throw new Error(
+                    `Profile generation not implemented for kind: ${schema.identifier.kind}`,
+                );
+            }
         });
     }
 
     generateIndexFile(schemas: TypeSchema[]) {
         this.file('index.ts', () => {
-            const names = schemas.map((schema) => schema.identifier.name);
+            const names = schemas.map((schema) => normalizeName(schema.identifier.name));
 
             for (const name of names) {
                 this.tsImportFrom(`./${pascalCase(name)}`, name);
@@ -302,6 +358,7 @@ class TypeScriptGenerator extends Generator {
             ...this.loader.complexTypes(),
             ...this.loader.resources(),
             ...this.loader.logicalModels(),
+            ...this.loader.profiles(),
         ].sort((a, b) => a.identifier.name.localeCompare(b.identifier.name));
 
         this.dir(typePath, async () => {
