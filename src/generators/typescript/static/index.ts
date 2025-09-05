@@ -623,7 +623,6 @@ export class Client<T extends BasicAuthorization | ResourceOwnerAuthorization> {
     throw new Error('');
   }
 
-  // переделать на reduce и добавить полей
   HTTPClient = () => ({
     get: request(this.client.get),
     post: request(this.client.post),
