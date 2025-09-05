@@ -26,6 +26,8 @@ export interface GeneratorOptions {
     typesOnly?: boolean;
     /** Enable debug comments in generated code */
     withDebugComment?: boolean;
+    /** Enable profile generation */
+    profile?: boolean;
 }
 
 export class Generator {

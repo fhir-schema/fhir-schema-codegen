@@ -112,6 +112,7 @@ test-typescript-sdk: prepare-aidbox-runme
 test-typescript-sdk-no-start-service: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
 	    --fhir-schema example/custom_resources/Client.fs.json \
+		--profile \
 		$(FSCF_FLAGS)
 
 	@if [ ! -d "$(TYPESCRIPT_SDK_EXAMPLE)/node_modules" ]; then \

@@ -392,7 +392,7 @@ class TypeScriptGenerator extends Generator {
             ...this.loader.complexTypes(),
             ...this.loader.resources(),
             ...this.loader.logicalModels(),
-            ...this.loader.profiles(),
+            ...(this.opts.profile ? this.loader.profiles() : []),
         ].sort((a, b) => a.identifier.name.localeCompare(b.identifier.name));
 
         this.dir(typePath, async () => {

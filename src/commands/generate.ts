@@ -55,6 +55,7 @@ export class GenerateCommand extends BaseCommand {
                 '--py-allow-extra-fields',
                 'Allow extra fields in Python resource models without validation (default: false, extra fields are forbidden)',
             )
+            .option('--profile', 'Enable profile generation')
             .option('--with-debug-comment', 'Enable debug comments in generated code')
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
@@ -135,6 +136,7 @@ export class GenerateCommand extends BaseCommand {
                                     jsonDocuments: typeSchemaNdJson,
                                     typesOnly: options.typesOnly,
                                     withDebugComment: options.withDebugComment,
+                                    profile: options.profile,
                                     ...(options.generator === 'python'
                                         ? {
                                               sdkPackage: options.pySdkPackage,
@@ -166,6 +168,7 @@ export class GenerateCommand extends BaseCommand {
                                 files: options.files,
                                 typesOnly: options.typesOnly,
                                 withDebugComment: options.withDebugComment,
+                                profile: options.profile,
                                 ...(options.generator === 'python'
                                     ? {
                                           sdkPackage: options.pySdkPackage,
