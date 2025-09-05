@@ -1,11 +1,14 @@
 .PHONY: all format lint lint-fix test format-check release
 
 AIDBOX_LICENSE ?=
+TYPE_SCHEMA ?=
 
-# --type-schema-exec 'java -jar /Users/samurai/src/fhir-clj/type-schema/target/type-schema.jar'
-FSCF_FLAGS =
+ADDITIONAL_FLAGS =
+ifdef TYPE_SCHEMA
+ADDITIONAL_FLAGS = --type-schema-exec 'java -jar $(TYPE_SCHEMA)'
+endif
 
-all: format lint-fix-unsafe test build
+all: format lint-fix test build
 
 build:
 	npm run build
@@ -30,12 +33,14 @@ test:
 
 generate-examples: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
-		$(FSCF_FLAGS)
+		$(ADDITIONAL_FLAGS)
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 		--fhir-schema example/custom_resources/TutorNotification.fs.json \
 		--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
 		--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
-		$(FSCF_FLAGS)
+		$(ADDITIONAL_FLAGS)
+	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE) \
+		$(ADDITIONAL_FLAGS)
 
 ###########################################################
 # SDK Test Env
@@ -76,13 +81,13 @@ test-python-sdk-no-start-service: build
 	                --fhir-schema example/custom_resources/TutorNotification.fs.json \
 					--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
-					$(FSCF_FLAGS)
+					$(ADDITIONAL_FLAGS)
 	make test-python-sdk-no-regen
 
 test-python-sdk-extra-fields-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) --py-allow-extra-fields \
-					$(FSCF_FLAGS)
+					$(ADDITIONAL_FLAGS)
 	make test-python-sdk-no-regen
 
 test-python-sdk-no-regen:
@@ -111,9 +116,7 @@ test-typescript-sdk: prepare-aidbox-runme
 
 test-typescript-sdk-no-start-service: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
-	    --fhir-schema example/custom_resources/Client.fs.json \
-		--profile \
-		$(FSCF_FLAGS)
+		$(ADDITIONAL_FLAGS)
 
 	@if [ ! -d "$(TYPESCRIPT_SDK_EXAMPLE)/node_modules" ]; then \
 		cd $(TYPESCRIPT_SDK_EXAMPLE) && \
@@ -123,6 +126,33 @@ test-typescript-sdk-no-start-service: build
 	cd $(TYPESCRIPT_SDK_EXAMPLE) && \
         npm run test && \
 	    npm run type-check
+
+###########################################################
+# C# SDK
+
+DOTNET=dotnet
+CSHARP_SDK_EXAMPLE=./example/csharp
+
+csharp: test-csharp-sdk-no-start-service
+
+test-csharp-sdk: prepare-aidbox-runme
+	docker compose -f example/docker-compose.yaml up --wait
+	make test-csharp-sdk-no-start-service
+	docker compose -f example/docker-compose.yaml down
+
+test-csharp-sdk-no-start-service: build
+	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox && \
+	make test-csharp-sdk-no-regen \
+
+
+test-csharp-sdk-no-regen:
+	@if [ ! -f "$(CSHARP_SDK_EXAMPLE)/obj/project.assets.json" ]; then \
+		cd $(CSHARP_SDK_EXAMPLE) && \
+		$(DOTNET) restore; \
+	fi
+
+	cd $(CSHARP_SDK_EXAMPLE) && \
+		$(DOTNET) test --no-restore --verbosity normal
 
 ###########################################################
 # Release
