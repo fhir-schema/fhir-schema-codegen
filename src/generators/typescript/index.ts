@@ -1,8 +1,10 @@
 import path from 'node:path';
 
 import { Generator, type GeneratorOptions } from '../generator';
-import { type ClassField, type NestedTypeSchema, TypeSchema } from '../../typeschema';
+import { type ClassField, type NestedTypeSchema, TypeSchema, type TypeRef } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, canonicalToName } from '../../utils/code';
+import { assert } from 'node:console';
+import * as profile from '../../profile';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -123,7 +125,24 @@ const fmap =
     };
 
 const normalizeName = (n: string): string => {
-    return n.replace(/-/g, '_');
+    if (n === 'extends') {
+        return 'extends_';
+    }
+    return n.replace(/[- ]/g, '_');
+};
+
+const resourceName = (id: TypeRef): string => {
+    if (id.kind === 'constraint') return pascalCase(canonicalToName(id.url) ?? '');
+    return normalizeName(id.name);
+};
+
+const fileNameStem = (id: TypeRef): string => {
+    if (id.kind === 'constraint') return `${pascalCase(canonicalToName(id.url) ?? '')}_profile`;
+    return pascalCase(id.name);
+};
+
+const fileName = (id: TypeRef): string => {
+    return `${fileNameStem(id)}.ts`;
 };
 
 class TypeScriptGenerator extends Generator {
@@ -142,13 +161,22 @@ class TypeScriptGenerator extends Generator {
 
     generateDependenciesImports(schema: TypeSchema) {
         if (schema.dependencies) {
-            const deps = schema.dependencies
-                .filter((dep) => ['complex-type', 'resource', 'logical'].includes(dep.kind))
-                .sort((a, b) => a.name.localeCompare(b.name));
-
+            const deps = [
+                ...schema.dependencies
+                    .filter((dep) => ['complex-type', 'resource', 'logical'].includes(dep.kind))
+                    .map((dep) => ({
+                        tsPackage: `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`,
+                        name: this.uppercaseFirstLetter(dep.name),
+                    })),
+                ...schema.dependencies
+                    .filter((dep) => ['nested'].includes(dep.kind))
+                    .map((dep) => ({
+                        tsPackage: `../${kebabCase(dep.package)}/${pascalCase(canonicalToName(dep.url) ?? '')}`,
+                        name: this.deriveNestedSchemaName(dep.url, true),
+                    })),
+            ].sort((a, b) => a.name.localeCompare(b.name));
             for (const dep of deps) {
-                const packageName = `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`;
-                this.tsImportFrom(packageName, this.uppercaseFirstLetter(dep.name));
+                this.tsImportFrom(dep.tsPackage, dep.name);
             }
 
             // NOTE: for primitive type extensions
@@ -195,6 +223,7 @@ class TypeScriptGenerator extends Generator {
         const parent = fmap(normalizeName)(canonicalToName(schema.base?.url));
         const extendsClause = parent && `extends ${parent}`;
 
+        this.debugComment(JSON.stringify(schema.identifier));
         this.curlyBlock(['export', 'interface', name, extendsClause], () => {
             if (!schema.fields) {
                 return;
@@ -256,37 +285,101 @@ class TypeScriptGenerator extends Generator {
         this.line();
     }
 
-    generateResourceModule(schema: TypeSchema) {
-        this.file(`${pascalCase(schema.identifier.name)}.ts`, () => {
-            this.generateDisclaimer();
-
-            this.generateDependenciesImports(schema);
+    generateProfileType(schema: TypeSchema) {
+        const name = resourceName(schema.identifier);
+        this.debugComment(schema.identifier);
+        this.curlyBlock(['export', 'interface', name], () => {
+            this.lineSM(`profileType: '${schema.identifier.name}'`);
             this.line();
 
-            this.generateNestedTypes(schema);
-            this.generateType(schema);
+            for (const [fieldName, field] of Object.entries(schema.fields ?? {})) {
+                this.debugComment(JSON.stringify(field, null, 2));
+
+                if ('choices' in field) continue;
+
+                const tsName = this.getFieldName(fieldName);
+                let tsType: string;
+                if (field.type.kind === 'nested') {
+                    tsType = this.deriveNestedSchemaName(field.type.url, true);
+                } else {
+                    tsType = primitiveType2tsType[field.type.name] ?? field.type.name;
+                }
+
+                this.lineSM(
+                    `${tsName}${!field.required ? '?' : ''}: ${tsType}${field.array ? '[]' : ''}`,
+                );
+            }
+        });
+
+        this.line();
+    }
+
+    generateProfile(schema: TypeSchema) {
+        assert(schema.identifier.kind === 'constraint');
+        const flatProfile = profile.flatProfile(this.loader, schema);
+        this.generateDependenciesImports(flatProfile);
+        this.line();
+        this.generateProfileType(flatProfile);
+    }
+
+    generateResourceModule(schema: TypeSchema) {
+        this.file(`${fileName(schema.identifier)}`, () => {
+            this.generateDisclaimer();
+
+            if (
+                ['complex-type', 'resource', 'logical', 'nested'].includes(schema.identifier.kind)
+            ) {
+                this.generateDependenciesImports(schema);
+                this.line();
+                this.generateNestedTypes(schema);
+                this.generateType(schema);
+            } else if (schema.identifier.kind === 'constraint') {
+                this.generateProfile(schema);
+            } else {
+                throw new Error(
+                    `Profile generation not implemented for kind: ${schema.identifier.kind}`,
+                );
+            }
         });
     }
 
     generateIndexFile(schemas: TypeSchema[]) {
         this.file('index.ts', () => {
-            const names = schemas.map((schema) => schema.identifier.name);
+            let exports = schemas
+                .map((schema) => ({
+                    identifier: schema.identifier,
+                    fileName: fileNameStem(schema.identifier),
+                    name: resourceName(schema.identifier),
+                }))
+                .sort((a, b) => a.name.localeCompare(b.name));
 
-            for (const name of names) {
-                this.tsImportFrom(`./${pascalCase(name)}`, name);
+            // FIXME: actually, duplication means internal error...
+            exports = Array.from(
+                new Map(exports.map((exp) => [exp.name.toLowerCase(), exp])).values(),
+            ).sort((a, b) => a.name.localeCompare(b.name));
+
+            for (const exp of exports) {
+                this.debugComment(exp.identifier);
+                this.tsImportFrom(`./${exp.fileName}`, exp.name);
             }
-            this.lineSM(`export { ${names.join(', ')} }`);
+            this.lineSM(`export { ${exports.map((e) => e.name).join(', ')} }`);
 
             this.line('');
 
             this.curlyBlock(['export type ResourceTypeMap = '], () => {
                 this.lineSM('User: Record<string, any>');
-                names.forEach((name) => this.lineSM(`${name}: ${name}`));
+                exports.forEach((exp) => {
+                    this.debugComment(exp.identifier);
+                    this.lineSM(`${exp.name}: ${exp.name}`);
+                });
             });
             this.lineSM('export type ResourceType = keyof ResourceTypeMap');
 
             this.squareBlock(['export const resourceList: readonly ResourceType[] = '], () => {
-                names.forEach((n) => this.line(`'${n}', `));
+                exports.forEach((exp) => {
+                    this.debugComment(exp.identifier);
+                    this.line(`'${exp.name}', `);
+                });
             });
         });
     }
@@ -299,6 +392,7 @@ class TypeScriptGenerator extends Generator {
             ...this.loader.complexTypes(),
             ...this.loader.resources(),
             ...this.loader.logicalModels(),
+            ...this.loader.profiles(),
         ].sort((a, b) => a.identifier.name.localeCompare(b.identifier.name));
 
         this.dir(typePath, async () => {

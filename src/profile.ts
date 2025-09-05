@@ -1,4 +1,4 @@
-import { TypeSchema } from './typeschema';
+import { TypeSchema, type TypeRef } from './typeschema';
 import type { SchemaLoader } from './loader';
 
 export const hierarchy = (loader: SchemaLoader, schema: TypeSchema): TypeSchema[] => {
@@ -11,9 +11,7 @@ export const hierarchy = (loader: SchemaLoader, schema: TypeSchema): TypeSchema[
 
         const resolved = loader.resolveTypeIdentifier(cur.base);
         if (!resolved) {
-            throw new Error(
-                `Failed to resolve base type: ${cur.base.name} in package ${cur.base.package}`,
-            );
+            throw new Error(`Failed to resolve base type: ${JSON.stringify(cur.base)}`);
         }
         cur = resolved;
     }
@@ -22,6 +20,13 @@ export const hierarchy = (loader: SchemaLoader, schema: TypeSchema): TypeSchema[
 
 export const flatProfile = (loader: SchemaLoader, schema: TypeSchema): TypeSchema => {
     const hierarchySchemas = hierarchy(loader, schema);
+    // if (schema.identifier.name === "observation-vitalsigns") {
+    //     for (const s of hierarchySchemas) {
+    //         console.log(JSON.stringify(s.identifier))
+    //     }
+    //     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    //     console.log(JSON.stringify(hierarchySchemas, null, 2));
+    // }
 
     const constraintSchemas = hierarchySchemas.filter((s) => s.identifier.kind === 'constraint');
     const nonConstraintSchema = hierarchySchemas.find((s) => s.identifier.kind !== 'constraint');
@@ -32,7 +37,7 @@ export const flatProfile = (loader: SchemaLoader, schema: TypeSchema): TypeSchem
         );
     }
 
-    const mergedFields = { ...(nonConstraintSchema.fields || {}) };
+    const mergedFields = {};
     for (const schema of constraintSchemas.slice().reverse()) {
         if (!schema.fields) continue;
 
@@ -45,9 +50,17 @@ export const flatProfile = (loader: SchemaLoader, schema: TypeSchema): TypeSchem
         }
     }
 
+    const deps: { [url: string]: TypeRef } = {};
+    for (const e of constraintSchemas.flatMap((e) => e.dependencies ?? [])) {
+        deps[e.url] = e;
+    }
+
+    const dependencies = Object.values(deps);
+
     return new TypeSchema({
         ...schema,
         base: nonConstraintSchema.identifier,
         fields: mergedFields,
+        dependencies: dependencies,
     });
 };
