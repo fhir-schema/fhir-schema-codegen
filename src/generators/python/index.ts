@@ -1,4 +1,5 @@
 import * as Path from 'node:path';
+import * as fs from 'node:fs';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
@@ -587,41 +588,74 @@ export class PythonGenerator extends Generator {
         }
     }
 
-    generateResourceFamilies(packageResources: TypeSchema[]) {
-        const importList: TypeRef[] = [];
-        const familyDefinition: Record<string, TypeRef[]> = {};
-        const exportList: string[] = [];
+    includeResourceFamilyValidator() {
+        const srcPath = `${this.opts.staticDir}/resource_family_validator.py`;
+        if (!srcPath) return;
+        const content = fs.readFileSync(srcPath, 'utf-8');
+        if (content) this.line(content);
+    }
 
+    getPackages(packageResources: TypeSchema[]): string[] {
+        const packages: string[] = [];
         for (const resource of packageResources) {
-            const childrens = this.childrenOf(resource.identifier);
-            if (childrens.length > 0) {
+            const resource_name: string = `${this.rootPackage}.${resource.identifier.package.replaceAll('.', '_')}`;
+            if (!packages.includes(resource_name)) packages.push(resource_name);
+        }
+        return packages;
+    }
+
+    getFamilies(packageResources: TypeSchema[]) {
+        const families: Record<string, string[]> = {};
+        for (const resource of packageResources) {
+            const resources: string[] = this.childrenOf(resource.identifier).map(
+                (c: { name: string }) => c.name,
+            );
+            if (resources.length > 0) {
                 const familyName = `${resource.identifier.name}Family`;
-                importList.push(resource.identifier, ...childrens);
-                familyDefinition[familyName] = [resource.identifier, ...childrens];
-                exportList.push(familyName);
+                families[familyName] = resources;
             }
         }
-        if (exportList.length === 0) return;
+        return families;
+    }
+
+    buildResourceFamiliesFile(
+        packages: string[],
+        families: Record<string, string[]>,
+        exportList: string[],
+    ) {
         this.file('resource_families.py', () => {
             this.generateDisclaimer();
-            this.pyImportFrom('typing', 'TYPE_CHECKING');
-            this.line();
-            this.line('if TYPE_CHECKING:');
-            this.indentBlock(() => {
-                for (const res of importList) {
-                    this.pyImportType(res);
-                }
-            });
+            this.includeResourceFamilyValidator();
             this.line();
 
-            for (const [familyName, resources] of Object.entries(familyDefinition)) {
+            this.line(`packages = [${packages.map((p) => `'${p}'`).join(', ')}]`);
+            this.line();
+
+            for (const [familyName, resources] of Object.entries(families)) {
+                const list_name = `${familyName}_resources`;
+                this.line(`${list_name} = [${resources.map((r) => `'${r}'`).join(', ')}]`);
+                this.line();
+
+                this.line(`def validate_and_downcast_${familyName}(v: Any) -> Any:`);
+                this.line(`   return validate_and_downcast(v, packages, ${list_name})`);
+                this.line();
+
                 this.line(
-                    `type ${familyName} = '${resources.map((e) => `${e.name}`).join(' | ')}'`,
+                    `type ${familyName} = Annotated[Any, BeforeValidator(validate_and_downcast_${familyName})]`,
                 );
                 this.line();
             }
             this.line(`__all__ = [${exportList.map((e) => `'${e}'`).join(', ')}]`);
         });
+    }
+
+    generateResourceFamilies(packageResources: TypeSchema[]) {
+        const packages: string[] = this.getPackages(packageResources);
+        const families: Record<string, string[]> = this.getFamilies(packageResources);
+        const exportList: string[] = Object.keys(families);
+
+        if (exportList.length === 0) return;
+        this.buildResourceFamiliesFile(packages, families, exportList);
     }
 }
 
