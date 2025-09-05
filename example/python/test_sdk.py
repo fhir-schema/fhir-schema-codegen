@@ -1,6 +1,7 @@
 import pytest
 from typing import Iterator
-from aidbox.hl7_fhir_r4_core import Patient, HumanName
+from aidbox.hl7_fhir_r4_core.patient import Patient
+from aidbox.hl7_fhir_r4_core.base import HumanName
 from aidbox.client import Client, Auth, AuthCredentials
 
 
@@ -112,14 +113,17 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
 
     assert result_bundle.entry is not None
     found = False
+    foundResource = None
     for entry in result_bundle.entry or []:
         assert entry.resource is not None
-        print(entry.resource.id, created_patient.id)
+        #print(entry.resource.id, created_patient.id)
         if entry.resource.id == created_patient.id:
+            foundResource = entry.resource
             found = True
             break
-
     assert found, f"Patient with ID {created_patient.id} not found in search results"
+    assert type(foundResource) is Patient
+    assert foundResource.gender == created_patient.gender
 
 
 def test_delete_patient(client: Client) -> None:
