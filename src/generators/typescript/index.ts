@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 import { Generator, type GeneratorOptions } from '../generator';
-import { type ClassField, type NestedTypeSchema, TypeSchema } from '../../typeschema';
+import { type ClassField, type NestedTypeSchema, TypeSchema, type TypeRef } from '../../typeschema';
 import { groupedByPackage, kebabCase, pascalCase, canonicalToName } from '../../utils/code';
 import { assert } from 'node:console';
 import * as profile from '../../profile';
@@ -131,6 +131,20 @@ const normalizeName = (n: string): string => {
     return n.replace(/[- ]/g, '_');
 };
 
+const resourceName = (id: TypeRef): string => {
+    if (id.kind === 'constraint') return pascalCase(canonicalToName(id.url) ?? '');
+    return normalizeName(id.name);
+};
+
+const fileNameStem = (id: TypeRef): string => {
+    if (id.kind === 'constraint') return `${pascalCase(canonicalToName(id.url) ?? '')}_profile`;
+    return pascalCase(id.name);
+};
+
+const fileName = (id: TypeRef): string => {
+    return `${fileNameStem(id)}.ts`;
+};
+
 class TypeScriptGenerator extends Generator {
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
@@ -209,6 +223,7 @@ class TypeScriptGenerator extends Generator {
         const parent = fmap(normalizeName)(canonicalToName(schema.base?.url));
         const extendsClause = parent && `extends ${parent}`;
 
+        this.debugComment(JSON.stringify(schema.identifier));
         this.curlyBlock(['export', 'interface', name, extendsClause], () => {
             if (!schema.fields) {
                 return;
@@ -271,7 +286,8 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateProfileType(schema: TypeSchema) {
-        const name = normalizeName(schema.identifier.name);
+        const name = resourceName(schema.identifier);
+        this.debugComment(schema.identifier);
         this.curlyBlock(['export', 'interface', name], () => {
             this.lineSM(`profileType: '${schema.identifier.name}'`);
             this.line();
@@ -307,7 +323,7 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateResourceModule(schema: TypeSchema) {
-        this.file(`${pascalCase(schema.identifier.name)}.ts`, () => {
+        this.file(`${fileName(schema.identifier)}`, () => {
             this.generateDisclaimer();
 
             if (
@@ -329,23 +345,41 @@ class TypeScriptGenerator extends Generator {
 
     generateIndexFile(schemas: TypeSchema[]) {
         this.file('index.ts', () => {
-            const names = schemas.map((schema) => normalizeName(schema.identifier.name));
+            let exports = schemas
+                .map((schema) => ({
+                    identifier: schema.identifier,
+                    fileName: fileNameStem(schema.identifier),
+                    name: resourceName(schema.identifier),
+                }))
+                .sort((a, b) => a.name.localeCompare(b.name));
 
-            for (const name of names) {
-                this.tsImportFrom(`./${pascalCase(name)}`, name);
+            // FIXME: actually, duplication means internal error...
+            exports = Array.from(
+                new Map(exports.map((exp) => [exp.name.toLowerCase(), exp])).values(),
+            ).sort((a, b) => a.name.localeCompare(b.name));
+
+            for (const exp of exports) {
+                this.debugComment(exp.identifier);
+                this.tsImportFrom(`./${exp.fileName}`, exp.name);
             }
-            this.lineSM(`export { ${names.join(', ')} }`);
+            this.lineSM(`export { ${exports.map((e) => e.name).join(', ')} }`);
 
             this.line('');
 
             this.curlyBlock(['export type ResourceTypeMap = '], () => {
                 this.lineSM('User: Record<string, any>');
-                names.forEach((name) => this.lineSM(`${name}: ${name}`));
+                exports.forEach((exp) => {
+                    this.debugComment(exp.identifier);
+                    this.lineSM(`${exp.name}: ${exp.name}`);
+                });
             });
             this.lineSM('export type ResourceType = keyof ResourceTypeMap');
 
             this.squareBlock(['export const resourceList: readonly ResourceType[] = '], () => {
-                names.forEach((n) => this.line(`'${n}', `));
+                exports.forEach((exp) => {
+                    this.debugComment(exp.identifier);
+                    this.line(`'${exp.name}', `);
+                });
             });
         });
     }
