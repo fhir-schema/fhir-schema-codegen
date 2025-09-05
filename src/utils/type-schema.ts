@@ -9,7 +9,7 @@ import { spawn } from 'node:child_process';
 
 const execAsync = promisify(exec);
 
-export const TYPE_SCHEMA_VERSION = '0.0.13';
+export const TYPE_SCHEMA_VERSION = '0.0.14';
 const BIN_DIR = 'tmp/bin';
 
 interface BinaryInfo {
