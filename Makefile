@@ -145,7 +145,7 @@ test-csharp-sdk-no-start-service: build
 test-csharp-sdk-no-regen:
 	@if [ ! -f "$(CSHARP_SDK_EXAMPLE)/obj/project.assets.json" ]; then \
 		cd $(CSHARP_SDK_EXAMPLE) && \
-		$(DOTNET) restore && $(DOTNET) build && $(DOTNET) run; \
+		$(DOTNET) restore && $(DOTNET) build && $(DOTNET) test --no-restore --verbosity normal; \
 	fi
 
 	cd $(CSHARP_SDK_EXAMPLE) && \
