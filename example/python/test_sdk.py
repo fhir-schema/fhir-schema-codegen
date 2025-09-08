@@ -6,7 +6,7 @@ from pydantic import ValidationError
 from aidbox.hl7_fhir_r4_core.patient import Patient
 from aidbox.hl7_fhir_r4_core import HumanName
 from aidbox.client import Client, Auth, AuthCredentials
-from example.python.aidbox.hl7_fhir_r4_core.bundle import Bundle
+from aidbox.hl7_fhir_r4_core.bundle import Bundle
 
 FHIR_SERVER_URL = "http://localhost:8080/fhir"
 USERNAME = "root"
@@ -115,15 +115,15 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
     assert result_bundle.total > 0, "No patients found in search"
 
     assert result_bundle.entry is not None
-    found = False
     foundResource = None
     for entry in result_bundle.entry or []:
         assert entry.resource is not None
         if entry.resource.id == created_patient.id:
             foundResource = entry.resource
-            found = True
             break
-    assert found, f"Patient with ID {created_patient.id} not found in search results"
+    assert foundResource is not None, (
+        f"Patient with ID {created_patient.id} not found in search results"
+    )
     assert type(foundResource) is Patient
     assert foundResource.gender == created_patient.gender
 
