@@ -71,7 +71,7 @@ cd fhir-schema-codegen
 
 npm run build
 
-node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox  --packages hl7.fhir.r4.core@4.0.1
+node dist/cli.js generate --generator csharp --output ./example/csharp/aidbox --packages hl7.fhir.r4.core@4.0.1
 ```
 
 This will:
@@ -98,10 +98,8 @@ example/csharp/
 ## Development
 
 ### Requirements
-- .NET 7.0+
-- Visual Studio 2022 or JetBrains Rider
 
-- .NET 7.0 or later
+- .NET 8
 - Node.js (for generation)
 
 ### Local Development

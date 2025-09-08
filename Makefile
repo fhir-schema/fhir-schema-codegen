@@ -125,6 +125,32 @@ test-typescript-sdk-no-start-service: build
 	    npm run type-check
 
 ###########################################################
+# C# SDK
+
+DOTNET=dotnet
+CSHARP_SDK_EXAMPLE=./example/csharp
+
+csharp: test-csharp-sdk-no-start-service
+
+test-csharp-sdk: prepare-aidbox-runme
+	docker compose -f example/docker-compose.yaml up --wait
+	make test-csharp-sdk-no-start-service
+	docker compose -f example/docker-compose.yaml down
+
+test-csharp-sdk-no-start-service: build
+	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox $(FSCF_FLAGS)
+	make test-csharp-sdk-no-regen
+
+test-csharp-sdk-no-regen:
+	@if [ ! -f "$(CSHARP_SDK_EXAMPLE)/obj/project.assets.json" ]; then \
+		cd $(CSHARP_SDK_EXAMPLE) && \
+		$(DOTNET) restore && $(DOTNET) build && $(DOTNET) run; \
+	fi
+
+	cd $(CSHARP_SDK_EXAMPLE) && \
+		$(DOTNET) test --no-restore --verbosity normal
+
+###########################################################
 # Release
 
 release: lint test format-check
