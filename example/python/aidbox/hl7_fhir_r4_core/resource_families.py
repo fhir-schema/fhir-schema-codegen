@@ -2,12 +2,18 @@
 # https://github.com/fhir-schema/fhir-schema-codegen
 # Any manual changes made to this file may be overwritten.
 
+import re
 import importlib
 import importlib.util
 from typing import Any, Annotated, List
 
 from pydantic import BeforeValidator, BaseModel, ValidationError
 from pydantic_core import ValidationError as PydanticCoreValidationError
+
+def to_snake_case(name: str) -> str:
+    # Insert underscore before each capital letter (except the first one)
+    s = re.sub(r'(?<!^)(?=[A-Z])', '_', name)
+    return s.lower()
 
 def module_exists(name: str) -> bool:
     """Checks if a module exists without importing it"""
@@ -48,26 +54,18 @@ def import_and_create_module_if_exists(module_name: str, class_name: str) -> Any
     else:
         return None
 
-def validate_and_downcast(v: Any, package_list: List[str], family: List[str]) -> Any:
+def validate_and_downcast(resource_data: dict, package_list: List[str], family: List[str]) -> Any:
     """
         Validates and downcasts ResourceFamily to the appropriate FHIR resource class
 
         Args:
-            v: Input value (dict or BaseModel)
+            resource_data: Input value (dict or BaseModel)
             package_list: List of package names to search for resource classes
             family: List of valid resource types (e.g., 'Group' or 'Patient')
 
         Returns:
             Instance of the appropriate FHIR resource class
     """
-
-    # Handle different input types
-    if isinstance(v, dict):
-        resource_data = v
-    elif isinstance(v, BaseModel):
-        resource_data = v.model_dump()
-    else:
-        raise ValueError(f"Expected dict or BaseModel, got {type(v)}")
 
     # Extract and validate resource type
     resource_type = resource_data.get('resourceType')
@@ -80,7 +78,7 @@ def validate_and_downcast(v: Any, package_list: List[str], family: List[str]) ->
     # Dynamically import and instantiate the appropriate class
     target_class = None
     for package in package_list:
-        package_name = package + '.' + resource_type.lower()
+        package_name = package + '.' + to_snake_case(resource_type)
         target_class = import_and_create_module_if_exists(package_name, resource_type)
         if target_class is not None:
             break
@@ -89,10 +87,7 @@ def validate_and_downcast(v: Any, package_list: List[str], family: List[str]) ->
 
     # Validate and downcast to the target class
     try:
-        if isinstance(v, BaseModel) and isinstance(v, target_class):
-            return v
-        else:
-            return target_class.model_validate(resource_data)
+        return target_class.model_validate(resource_data)
 
     except (ValidationError, PydanticCoreValidationError) as e:
         raise ValueError(f"Failed to validate {resource_type}: {str(e)}")

@@ -1,9 +1,12 @@
 import pytest
 from typing import Iterator
-from aidbox.hl7_fhir_r4_core.patient import Patient
-from aidbox.hl7_fhir_r4_core.base import HumanName
-from aidbox.client import Client, Auth, AuthCredentials
 
+from pydantic import ValidationError
+
+from aidbox.hl7_fhir_r4_core.patient import Patient
+from aidbox.hl7_fhir_r4_core import HumanName
+from aidbox.client import Client, Auth, AuthCredentials
+from example.python.aidbox.hl7_fhir_r4_core.bundle import Bundle
 
 FHIR_SERVER_URL = "http://localhost:8080/fhir"
 USERNAME = "root"
@@ -116,7 +119,6 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
     foundResource = None
     for entry in result_bundle.entry or []:
         assert entry.resource is not None
-        #print(entry.resource.id, created_patient.id)
         if entry.resource.id == created_patient.id:
             foundResource = entry.resource
             found = True
@@ -124,6 +126,73 @@ def test_search_patient(client: Client, created_patient: Patient) -> None:
     assert found, f"Patient with ID {created_patient.id} not found in search results"
     assert type(foundResource) is Patient
     assert foundResource.gender == created_patient.gender
+
+
+def test_wrong_resource_type() -> None:
+    json = """
+    {
+      "resourceType" : "Bundle",
+      "id" : "bundle-example",
+      "type" : "searchset",
+      "total" : 3,
+      "link" : [{
+        "relation" : "self",
+        "url" : "https://example.com/base/MedicationRequest?patient=347&_include=MedicationRequest.medication&_count=2"
+      },
+      {
+        "relation" : "next",
+        "url" : "https://example.com/base/MedicationRequest?patient=347&searchId=ff15fd40-ff71-4b48-b366-09c706bed9d0&page=2"
+      }],
+      "entry" : [{
+        "fullUrl" : "https://example.com/base/MedicationRequest/3123",
+        "resource" : {
+          "resourceType" : "Weird_Patient",
+          "id" : "3123"
+        },
+        "search" : {
+          "mode" : "match",
+          "score" : 1
+        }
+      }
+      ]
+    }
+    """
+    with pytest.raises(ValidationError):
+        Bundle.from_json(json)
+
+
+def test_wrong_fields() -> None:
+    json = """
+    {
+      "resourceType" : "Bundle",
+      "id" : "bundle-example",
+      "type" : "searchset",
+      "total" : 3,
+      "link" : [{
+        "relation" : "self",
+        "url" : "https://example.com/base/MedicationRequest?patient=347&_include=MedicationRequest.medication&_count=2"
+      },
+      {
+        "relation" : "next",
+        "url" : "https://example.com/base/MedicationRequest?patient=347&searchId=ff15fd40-ff71-4b48-b366-09c706bed9d0&page=2"
+      }],
+      "entry" : [{
+        "fullUrl" : "https://example.com/base/MedicationRequest/3123",
+        "resource" : {
+          "resourceType" : "Patient",
+          "id" : "3123"
+          "very_wrong_field" : "WRONG"
+        },
+        "search" : {
+          "mode" : "match",
+          "score" : 1
+        }
+      }
+      ]
+    }
+    """
+    with pytest.raises(ValidationError):
+        Bundle.from_json(json)
 
 
 def test_delete_patient(client: Client) -> None:

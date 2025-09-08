@@ -1,5 +1,5 @@
-import * as Path from 'node:path';
 import * as fs from 'node:fs';
+import * as Path from 'node:path';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
