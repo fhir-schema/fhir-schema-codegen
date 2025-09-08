@@ -36,6 +36,7 @@ generate-examples: build
 		--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
 		--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
 		$(FSCF_FLAGS)
+	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox $(FSCF_FLAGS)
 
 ###########################################################
 # SDK Test Env
