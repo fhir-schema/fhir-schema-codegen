@@ -238,7 +238,7 @@ namespace csharp
 
             Console.WriteLine(" Search completed!");
             Console.WriteLine($"   Total results: {resultBundle.Total}");
-            Console.WriteLine($"   Entry count: {resultBundle.Entry?.Count() ?? 0}");
+            Console.WriteLine($"   Entry count: {resultBundle.Entry?.Length ?? 0}");
 
             Assert.That(resultBundle, Is.Not.Null);
             Assert.That(resultBundle.Total, Is.Not.Null);
@@ -259,6 +259,7 @@ namespace csharp
                 if (entry.Resource.Id == _createdPatient.Id)
                 {
                     Console.WriteLine("    Found target patient!");
+                    Console.WriteLine(entry.Resource.ToString());
                     found = true;
                     break;
                 }
@@ -326,6 +327,7 @@ namespace csharp
             
             var patient = new Patient
             {
+                Id = "123",
                 Name =
                 [
                     new HumanName
@@ -346,7 +348,7 @@ namespace csharp
                 Console.WriteLine($"   Gender: {patient.Gender}");
                 Console.WriteLine($"   Birth Date: {patient.BirthDate}");
 
-                var json = JsonSerializer.Serialize(patient, Aidbox.Config.JsonSerializerOptions);
+                var json = patient.ToString();
                 Console.WriteLine("\nSerialized JSON:");
                 Console.WriteLine(json);
 

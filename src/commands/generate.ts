@@ -1,6 +1,6 @@
-import { type Command as Commander, Option } from 'commander';
 import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
+import { type Command as Commander, Option } from 'commander';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
 import { executeTypeSchema, TYPE_SCHEMA_VERSION } from '../utils/type-schema';

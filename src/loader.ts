@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
-import { TypeSchema, type TypeRef } from './typeschema';
 import { logger } from './logger';
+import { type TypeRef, TypeSchema } from './typeschema';
 
 export type { ITypeSchema } from './typeschema';
 

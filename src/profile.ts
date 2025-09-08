@@ -1,5 +1,5 @@
-import { TypeSchema, type TypeRef } from './typeschema';
 import type { SchemaLoader } from './loader';
+import { type TypeRef, TypeSchema } from './typeschema';
 
 export const hierarchy = (loader: SchemaLoader, schema: TypeSchema): TypeSchema[] => {
     const res: TypeSchema[] = [];

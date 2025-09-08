@@ -1,11 +1,11 @@
 import { exec } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import fs, { existsSync } from 'node:fs';
 import { mkdir } from 'node:fs';
 import { arch, platform } from 'node:os';
-import { logger } from '../logger';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
-import { spawn } from 'node:child_process';
+import { logger } from '../logger';
 
 const execAsync = promisify(exec);
 

@@ -1,5 +1,4 @@
 import * as Path from 'node:path';
-import { Generator, type GeneratorOptions } from '../generator';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
@@ -8,6 +7,7 @@ import {
     snakeCase,
     sortSchemasByDeps,
 } from '../../utils/code';
+import { Generator, type GeneratorOptions } from '../generator';
 
 // Naming conventions
 // directory naming: snake_case

@@ -1,6 +1,6 @@
-import type { Command as Commander } from 'commander';
 import fs from 'node:fs';
 import path from 'node:path';
+import type { Command as Commander } from 'commander';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
 import { BaseCommand } from './command';

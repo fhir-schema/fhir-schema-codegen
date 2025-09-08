@@ -1,7 +1,7 @@
-import { type Command as Commander, Argument } from 'commander';
+import { Argument, type Command as Commander } from 'commander';
+import { logger } from '../logger';
 import { ensureBinaryExists, TYPE_SCHEMA_VERSION } from '../utils/type-schema';
 import { BaseCommand } from './command';
-import { logger } from '../logger';
 
 export class InstallTypeSchemaCommand extends BaseCommand {
     register(program: Commander): void {
