@@ -1,0 +1,49 @@
+name: csharp-sdk
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-csharp-sdk:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        dotnet-version: [8.0.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Setup .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test csharp-sdk
+        run: |
+          export AIDBOX_LICENSE_ID="${{ secrets.AIDBOX_LICENSE_ID }}"
+          make test-csharp-sdk
+
+      - name: Repository contains actual csharp-sdk version
+        run: |
+          diff_result=$(git diff --exit-code --name-only example/csharp/aidbox || true)
+
+          if [ -z "$diff_result" ]; then
+            echo "✅ Generated SDK is identical to the one stored in repository."
+          else
+            echo "❌ Generated SDK differs from the one stored in repository."
+            echo "Differences:"
+            git diff example/csharp/aidbox
+            exit 1
+          fi
