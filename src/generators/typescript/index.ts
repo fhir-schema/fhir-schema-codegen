@@ -206,10 +206,6 @@ class TypeScriptGenerator extends Generator {
         }
     }
 
-    addResourceTypeField(schema: TypeSchema): void {
-        this.lineSM(`resourceType: '${schema.identifier.name}'`);
-    }
-
     generateType(schema: TypeSchema | NestedTypeSchema) {
         const name =
             schema.identifier.name === 'Reference'
@@ -228,10 +224,11 @@ class TypeScriptGenerator extends Generator {
                 return;
             }
 
-            // we have to provide utility field name called resourceType
-            if (schema.identifier.kind === 'resource') {
-                // this.addResourceTypeField(schema);
-            }
+            // FIXME: comment out because require type family processing.
+            // if (schema.identifier.kind === 'resource') {
+            //     this.lineSM(`resourceType: '${schema.identifier.name}'`);
+            //     this.line()
+            // }
 
             const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
 
