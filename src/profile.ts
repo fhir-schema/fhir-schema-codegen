@@ -18,16 +18,23 @@ export const hierarchy = (loader: SchemaLoader, schema: TypeSchema): TypeSchema[
     return res;
 };
 
+export const findSpecialization = (loader: SchemaLoader, typeRef: TypeRef): TypeRef => {
+    const schema = loader.resolveTypeIdentifier(typeRef);
+    if (!schema) {
+        return typeRef;
+    }
+
+    const nonConstraintSchema = hierarchy(loader, schema).find(
+        (s) => s.identifier.kind !== 'constraint',
+    );
+    if (!nonConstraintSchema) {
+        throw new Error(`No non-constraint schema found in hierarchy for ${typeRef.name}`);
+    }
+    return nonConstraintSchema.identifier;
+};
+
 export const flatProfile = (loader: SchemaLoader, schema: TypeSchema): TypeSchema => {
     const hierarchySchemas = hierarchy(loader, schema);
-    // if (schema.identifier.name === "observation-vitalsigns") {
-    //     for (const s of hierarchySchemas) {
-    //         console.log(JSON.stringify(s.identifier))
-    //     }
-    //     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    //     console.log(JSON.stringify(hierarchySchemas, null, 2));
-    // }
-
     const constraintSchemas = hierarchySchemas.filter((s) => s.identifier.kind === 'constraint');
     const nonConstraintSchema = hierarchySchemas.find((s) => s.identifier.kind !== 'constraint');
 
