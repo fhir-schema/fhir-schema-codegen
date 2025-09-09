@@ -1,5 +1,4 @@
 import * as Path from 'node:path';
-import { Helper } from '../helper';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
@@ -9,6 +8,8 @@ import {
     sortSchemasByDeps,
 } from '../../utils/code';
 import { Generator, type GeneratorOptions } from '../generator';
+
+import { Helper } from '../helper';
 import fs from 'node:fs';
 
 // Naming conventions
