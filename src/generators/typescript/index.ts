@@ -297,6 +297,8 @@ class TypeScriptGenerator extends Generator {
                 let tsType: string;
                 if (field.type.kind === 'nested') {
                     tsType = this.deriveNestedSchemaName(field.type.url, true);
+                } else if (field.enum) {
+                    tsType = field.enum.map((e) => `'${e}'`).join(' | ');
                 } else if (field.reference?.length) {
                     const references = field.reference
                         .map((ref) => {
