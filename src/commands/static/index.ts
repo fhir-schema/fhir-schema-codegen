@@ -1,5 +1,5 @@
-import { Generator, type GeneratorOptions, type TypeSchema } from '@fhirschema/codegen';
 import path from 'node:path';
+import { Generator, type GeneratorOptions, type TypeSchema } from '@fhirschema/codegen';
 
 export interface CustomGeneratorOptions extends GeneratorOptions {
     // Add custom options here

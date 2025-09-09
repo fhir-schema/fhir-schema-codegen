@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { Generator, type GeneratorOptions } from '../generator';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { Generator, type GeneratorOptions } from '../generator';
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;
@@ -69,6 +69,12 @@ export class CSharpGenerator extends Generator {
         return [s[0].toUpperCase(), ...s.slice(1)].join('');
     }
 
+    includeHelperMethods() {
+        this.line('public override string ToString() => ');
+        this.line('    JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);');
+        this.line();
+    }
+
     generateType(schema: TypeSchema | NestedTypeSchema) {
         let name = '';
 
@@ -125,6 +131,9 @@ export class CSharpGenerator extends Generator {
                     this.generateType(subtype);
                 }
             }
+
+            this.line();
+            this.includeHelperMethods();
         });
         this.line();
     }
@@ -132,6 +141,8 @@ export class CSharpGenerator extends Generator {
     generate() {
         this.dir('hl7_fhir_r4_core', async () => {
             this.file('base.cs', () => {
+                this.generateDisclaimer();
+
                 this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
 
                 for (const schema of this.loader.complexTypes()) {
@@ -141,17 +152,18 @@ export class CSharpGenerator extends Generator {
 
             for (const schema of this.loader.resources()) {
                 this.file(`${schema.identifier.name}.cs`, () => {
-                    if (schema.dependencies) {
-                        if (schema.dependencies.filter((d) => d.kind === 'complex-type').length) {
-                            // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
-                        }
+                    this.generateDisclaimer();
 
-                        if (schema.dependencies.filter((d) => d.kind === 'resource').length) {
-                            // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
-                        }
-                    }
+                    // if (schema.dependencies) {
+                    //     if (schema.dependencies.filter((d) => d.kind === 'complex-type').length) {
+                    //         // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
+                    //     }
+                    //
+                    //     if (schema.dependencies.filter((d) => d.kind === 'resource').length) {
+                    //         // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
+                    //     }
+                    // }
 
-                    this.line();
                     this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
                     this.line();
 

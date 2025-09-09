@@ -1,10 +1,9 @@
-import path from 'node:path';
-
-import { Generator, type GeneratorOptions } from '../generator';
-import { type ClassField, type NestedTypeSchema, TypeSchema, type TypeRef } from '../../typeschema';
-import { groupedByPackage, kebabCase, pascalCase, canonicalToName } from '../../utils/code';
 import { assert } from 'node:console';
+import path from 'node:path';
 import * as profile from '../../profile';
+import { type ClassField, type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
+import { canonicalToName, groupedByPackage, kebabCase, pascalCase } from '../../utils/code';
+import { Generator, type GeneratorOptions } from '../generator';
 
 // Naming conventions
 // directory naming: kebab-case
