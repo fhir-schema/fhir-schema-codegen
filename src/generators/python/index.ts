@@ -1,5 +1,5 @@
-import * as fs from 'node:fs';
 import * as Path from 'node:path';
+import { Helper } from '../helper';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import {
     groupedByPackage,
@@ -9,6 +9,7 @@ import {
     sortSchemasByDeps,
 } from '../../utils/code';
 import { Generator, type GeneratorOptions } from '../generator';
+import fs from 'node:fs';
 
 // Naming conventions
 // directory naming: snake_case
@@ -109,7 +110,7 @@ export class PythonGenerator extends Generator {
     private rootPackage: string;
     private rootPackagePath: string[];
     private allowExtraFields: boolean;
-    private resourceHierarchy: { parent: TypeRef; child: TypeRef }[] | null = [];
+    private helper: Helper = new Helper(this);
 
     constructor(opts: PythonGeneratorOptions) {
         super({
@@ -120,7 +121,6 @@ export class PythonGenerator extends Generator {
         this.rootPackage = opts.sdkPackage || 'fhirsdk';
         this.rootPackagePath = this.rootPackage.split('.');
         this.allowExtraFields = opts.allowExtraFields || false;
-        this.resourceHierarchy = null;
     }
 
     modulePrefix() {
@@ -204,7 +204,10 @@ export class PythonGenerator extends Generator {
                 if ('choices' in field) continue;
 
                 let fieldType = field.type.name;
-                if (field.type.kind === 'resource' && this.childrenOf(field.type).length > 0) {
+                if (
+                    field.type.kind === 'resource' &&
+                    this.helper.childrenOf(field.type).length > 0
+                ) {
                     fieldType = `${fieldType}Family`;
                 }
 
@@ -345,7 +348,7 @@ export class PythonGenerator extends Generator {
         const resourceDeps = schema.dependencies.filter((deps) => deps.kind === 'resource');
         for (const dep of resourceDeps) {
             this.pyImportType(dep);
-            if (this.childrenOf(dep).length > 0) {
+            if (this.helper.childrenOf(dep).length > 0) {
                 this.pyImportFrom(
                     `${this.pyFhirPackage(dep)}.resource_families`,
                     `${pascalCase(dep.name)}Family`,
@@ -397,7 +400,7 @@ export class PythonGenerator extends Generator {
                 const names: string[] = [...importNames];
                 if (
                     resource.identifier.kind === 'resource' &&
-                    this.childrenOf(resource.identifier).length > 0
+                    this.helper.childrenOf(resource.identifier).length > 0
                 ) {
                     const familyName = `${resource.identifier.name}Family`;
                     this.pyImportFrom(`${fullPyPackageName}.resource_families`, familyName);
@@ -450,28 +453,6 @@ export class PythonGenerator extends Generator {
         this.copyStaticFile(srcPath, destPath, 'requirements.txt');
     }
 
-    evaluateResourceHierarchy() {
-        const resources = this.loader.resources();
-        const pairs: { parent: TypeRef; child: TypeRef }[] = [];
-        for (const schema of resources) {
-            if (schema.base) {
-                pairs.push({ parent: schema.base, child: schema.identifier });
-            }
-        }
-        return pairs;
-    }
-
-    childrenOf(schemaRef: TypeRef) {
-        if (!this.resourceHierarchy) {
-            this.resourceHierarchy = this.evaluateResourceHierarchy();
-        }
-        const childrens = this.resourceHierarchy
-            .filter((pair) => pair.parent.name === schemaRef.name)
-            .map((pair) => pair.child);
-        const subChildrens = childrens.flatMap((child) => this.childrenOf(child));
-        return [...[...childrens].map((child) => child), ...subChildrens];
-    }
-
     generate() {
         // Prepare root package path
         let destPackagePath = '.';
@@ -513,7 +494,7 @@ export class PythonGenerator extends Generator {
                                 ...importNames,
                             );
 
-                            if (this.childrenOf(resource.identifier).length > 0) {
+                            if (this.helper.childrenOf(resource.identifier).length > 0) {
                                 const familyName = `${resource.identifier.name}Family`;
                                 this.pyImportFrom(`${pyPackageName}.resource_families`, familyName);
                             }
@@ -589,33 +570,11 @@ export class PythonGenerator extends Generator {
     }
 
     includeResourceFamilyValidator() {
-        const srcPath = `${this.opts.staticDir}/resource_family_validator.py`;
-        if (!srcPath) return;
-        const content = fs.readFileSync(srcPath, 'utf-8');
-        if (content) this.line(content);
-    }
-
-    getPackages(packageResources: TypeSchema[]): string[] {
-        const packages: string[] = [];
-        for (const resource of packageResources) {
-            const resource_name: string = `${this.rootPackage}.${resource.identifier.package.replaceAll('.', '_')}`;
-            if (!packages.includes(resource_name)) packages.push(resource_name);
-        }
-        return packages;
-    }
-
-    getFamilies(packageResources: TypeSchema[]) {
-        const families: Record<string, string[]> = {};
-        for (const resource of packageResources) {
-            const resources: string[] = this.childrenOf(resource.identifier).map(
-                (c: { name: string }) => c.name,
-            );
-            if (resources.length > 0) {
-                const familyName = `${resource.identifier.name}Family`;
-                families[familyName] = resources;
-            }
-        }
-        return families;
+        const srcPath = this.opts.staticDir
+            ? `${this.opts.staticDir}/resource_family_validator.py`
+            : '';
+        if (srcPath.length === 0) return '';
+        this.line(fs.readFileSync(srcPath, 'utf-8'));
     }
 
     buildResourceFamiliesFile(
@@ -625,6 +584,7 @@ export class PythonGenerator extends Generator {
     ) {
         this.file('resource_families.py', () => {
             this.generateDisclaimer();
+
             this.includeResourceFamilyValidator();
             this.line();
 
@@ -650,8 +610,8 @@ export class PythonGenerator extends Generator {
     }
 
     generateResourceFamilies(packageResources: TypeSchema[]) {
-        const packages: string[] = this.getPackages(packageResources);
-        const families: Record<string, string[]> = this.getFamilies(packageResources);
+        const packages: string[] = this.helper.getPackages(packageResources, this.rootPackage);
+        const families: Record<string, string[]> = this.helper.getFamilies(packageResources);
         const exportList: string[] = Object.keys(families);
 
         if (exportList.length === 0) return;
