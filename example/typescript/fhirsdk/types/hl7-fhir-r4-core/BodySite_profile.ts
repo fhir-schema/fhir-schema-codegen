@@ -11,6 +11,6 @@ export interface BodySite {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'BodyStructure'>;
 }
 

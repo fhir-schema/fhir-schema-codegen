@@ -11,6 +11,6 @@ export interface RequestReplaces {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Resource'>;
 }
 

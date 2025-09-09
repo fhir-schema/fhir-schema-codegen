@@ -11,6 +11,6 @@ export interface WorkflowEpisodeOfCare {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'EpisodeOfCare'>;
 }
 

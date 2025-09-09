@@ -11,6 +11,6 @@ export interface CommunicationrequestInitiatingLocation {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Location'>;
 }
 

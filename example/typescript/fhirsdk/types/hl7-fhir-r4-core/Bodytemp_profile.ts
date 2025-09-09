@@ -18,8 +18,8 @@ export interface Bodytemp {
     profileType: 'observation-bodytemp';
     
     category: CodeableConcept[];
-    hasMember?: Reference[];
-    derivedFrom?: Reference[];
+    hasMember?: Reference<'MolecularSequence' | 'QuestionnaireResponse' | 'observation-vitalsigns'>[];
+    derivedFrom?: Reference<'DocumentReference' | 'ImagingStudy' | 'Media' | 'MolecularSequence' | 'QuestionnaireResponse' | 'observation-vitalsigns'>[];
     valueTime?: string;
     valueQuantity?: Quantity;
     valueString?: string;
@@ -35,7 +35,7 @@ export interface Bodytemp {
     valuePeriod?: Period;
     valueRange?: Range;
     valueInteger?: number;
-    subject: Reference;
+    subject: Reference<'Patient'>;
     dataAbsentReason?: CodeableConcept;
     effectivePeriod?: Period;
 }

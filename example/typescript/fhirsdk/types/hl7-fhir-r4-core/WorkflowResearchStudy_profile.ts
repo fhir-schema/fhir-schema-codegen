@@ -11,6 +11,6 @@ export interface WorkflowResearchStudy {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'ResearchStudy'>;
 }
 

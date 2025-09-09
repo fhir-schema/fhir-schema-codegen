@@ -11,6 +11,6 @@ export interface TaskReplaces {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Task'>;
 }
 

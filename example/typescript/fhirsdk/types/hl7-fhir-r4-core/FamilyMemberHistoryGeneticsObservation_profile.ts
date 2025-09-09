@@ -11,6 +11,6 @@ export interface FamilyMemberHistoryGeneticsObservation {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Observation'>;
 }
 

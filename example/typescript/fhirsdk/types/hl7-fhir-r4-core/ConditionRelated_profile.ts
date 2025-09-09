@@ -11,6 +11,6 @@ export interface ConditionRelated {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Condition'>;
 }
 

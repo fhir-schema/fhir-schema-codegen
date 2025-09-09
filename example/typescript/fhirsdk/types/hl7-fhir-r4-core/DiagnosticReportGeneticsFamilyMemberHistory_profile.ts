@@ -11,6 +11,6 @@ export interface DiagnosticReportGeneticsFamilyMemberHistory {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'FamilyMemberHistory'>;
 }
 

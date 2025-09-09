@@ -18,7 +18,7 @@ export interface Synthesis {
     publisher?: string;
     approvalDate?: string;
     copyright?: string;
-    outcome: Reference[];
+    outcome: Reference<'EvidenceVariable'>[];
     title?: string;
     note?: Annotation[];
     author?: ContactDetail[];
@@ -33,7 +33,7 @@ export interface Synthesis {
     version?: string;
     relatedArtifact?: RelatedArtifact[];
     contact?: ContactDetail[];
-    exposureBackground: Reference;
-    exposureVariant: Reference[];
+    exposureBackground: Reference<'EvidenceVariable'>;
+    exposureVariant: Reference<'EvidenceVariable'>[];
 }
 

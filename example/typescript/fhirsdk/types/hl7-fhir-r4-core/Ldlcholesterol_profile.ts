@@ -19,7 +19,7 @@ export interface Ldlcholesterol {
     interpretation?: CodeableConcept[];
     note?: Annotation[];
     referenceRange?: ObservationReferenceRange[];
-    hasMember?: Reference[];
-    derivedFrom?: Reference[];
+    hasMember?: Reference<'MolecularSequence' | 'Observation' | 'QuestionnaireResponse'>[];
+    derivedFrom?: Reference<'DocumentReference' | 'ImagingStudy' | 'Media' | 'MolecularSequence' | 'Observation' | 'QuestionnaireResponse'>[];
 }
 

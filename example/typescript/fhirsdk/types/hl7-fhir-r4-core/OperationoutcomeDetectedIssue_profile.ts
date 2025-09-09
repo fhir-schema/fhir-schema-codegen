@@ -11,6 +11,6 @@ export interface OperationoutcomeDetectedIssue {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'DetectedIssue'>;
 }
 

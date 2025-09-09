@@ -12,7 +12,7 @@ export interface Lipidprofile {
     profileType: 'Example Lipid Profile';
     
     code: CodeableConcept;
-    result?: Reference[];
+    result?: Reference<'Observation'>[];
     conclusion?: string;
     conclusionCode?: CodeableConcept[];
 }

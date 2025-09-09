@@ -11,6 +11,6 @@ export interface ResourcePertainsToGoal {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Goal'>;
 }
 

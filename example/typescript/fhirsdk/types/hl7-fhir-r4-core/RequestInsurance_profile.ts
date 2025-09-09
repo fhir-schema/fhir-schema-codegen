@@ -11,6 +11,6 @@ export interface RequestInsurance {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'ClaimResponse' | 'Coverage'>;
 }
 

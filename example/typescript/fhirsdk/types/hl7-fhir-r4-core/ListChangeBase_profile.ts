@@ -11,6 +11,6 @@ export interface ListChangeBase {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'List'>;
 }
 

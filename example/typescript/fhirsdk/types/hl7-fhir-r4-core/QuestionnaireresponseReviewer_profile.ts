@@ -11,6 +11,6 @@ export interface QuestionnaireresponseReviewer {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Practitioner'>;
 }
 

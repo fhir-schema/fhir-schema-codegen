@@ -20,13 +20,13 @@ export interface Devicemetricobservation {
     profileType: 'Device Metric Observation Profile';
     
     referenceRange?: ObservationReferenceRange[];
-    hasMember?: Reference[];
-    derivedFrom?: Reference[];
+    hasMember?: Reference<'Observation'>[];
+    derivedFrom?: Reference<'Observation'>[];
     interpretation?: CodeableConcept[];
-    encounter?: Reference;
+    encounter?: Reference<'Encounter'>;
     method?: CodeableConcept;
     valueTime?: string;
-    specimen?: Reference;
+    specimen?: Reference<'Specimen'>;
     valueQuantity?: Quantity;
     valueString?: string;
     valueRatio?: Ratio;
@@ -41,9 +41,9 @@ export interface Devicemetricobservation {
     bodySite?: CodeableConcept;
     issued?: string;
     valuePeriod?: Period;
-    device: Reference;
+    device: Reference<'DeviceMetric'>;
     valueRange?: Range;
-    subject: Reference;
+    subject: Reference<'Device' | 'Patient'>;
     dataAbsentReason?: CodeableConcept;
 }
 

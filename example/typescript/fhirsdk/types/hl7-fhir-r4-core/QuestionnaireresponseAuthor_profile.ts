@@ -11,6 +11,6 @@ export interface QuestionnaireresponseAuthor {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Device' | 'Patient' | 'Practitioner' | 'RelatedPerson'>;
 }
 

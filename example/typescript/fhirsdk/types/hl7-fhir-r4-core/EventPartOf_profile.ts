@@ -11,6 +11,6 @@ export interface EventPartOf {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Resource'>;
 }
 

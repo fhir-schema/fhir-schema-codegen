@@ -11,6 +11,6 @@ export interface ServicerequestQuestionnaireRequest {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Questionnaire'>;
 }
 

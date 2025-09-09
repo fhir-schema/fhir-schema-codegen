@@ -11,6 +11,6 @@ export interface DiagnosticReportLocationPerformed {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Location'>;
 }
 

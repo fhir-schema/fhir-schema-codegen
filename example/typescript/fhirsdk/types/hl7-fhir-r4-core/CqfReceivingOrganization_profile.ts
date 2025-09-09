@@ -11,6 +11,6 @@ export interface CqfReceivingOrganization {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Organization'>;
 }
 

@@ -18,7 +18,7 @@ export interface Catalog {
     extension?: Extension[];
     type: CodeableConcept;
     category: CodeableConcept[];
-    subject?: Reference;
+    subject?: Reference<'Resource'>;
     date: string;
     section?: CompositionSection[];
 }

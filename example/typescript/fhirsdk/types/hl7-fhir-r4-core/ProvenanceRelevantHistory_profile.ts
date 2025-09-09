@@ -12,7 +12,7 @@ import { Element } from '../hl7-fhir-r4-core/Element';
 export interface ProvenanceRelevantHistory {
     profileType: 'Provenance Relevant History';
     
-    target: Reference[];
+    target: Reference<'Resource'>[];
     occurredDateTime?: string;
     reason?: CodeableConcept[];
     activity: CodeableConcept;

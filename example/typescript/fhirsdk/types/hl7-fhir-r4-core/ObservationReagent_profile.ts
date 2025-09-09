@@ -11,6 +11,6 @@ export interface ObservationReagent {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Substance'>;
 }
 

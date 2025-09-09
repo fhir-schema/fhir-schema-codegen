@@ -11,6 +11,6 @@ export interface ConditionRuledOut {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Condition'>;
 }
 

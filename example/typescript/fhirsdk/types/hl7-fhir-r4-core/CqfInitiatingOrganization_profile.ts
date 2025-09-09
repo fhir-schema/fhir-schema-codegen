@@ -11,6 +11,6 @@ export interface CqfInitiatingOrganization {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Organization'>;
 }
 

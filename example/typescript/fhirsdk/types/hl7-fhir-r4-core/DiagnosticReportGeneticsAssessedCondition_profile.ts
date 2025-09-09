@@ -11,6 +11,6 @@ export interface DiagnosticReportGeneticsAssessedCondition {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Condition'>;
 }
 

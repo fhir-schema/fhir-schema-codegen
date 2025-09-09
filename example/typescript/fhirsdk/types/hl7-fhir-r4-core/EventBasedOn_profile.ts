@@ -11,6 +11,6 @@ export interface EventBasedOn {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Resource'>;
 }
 

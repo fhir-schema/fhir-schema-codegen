@@ -11,6 +11,6 @@ export interface CqfReceivingPerson {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Patient' | 'Person' | 'Practitioner' | 'RelatedPerson'>;
 }
 

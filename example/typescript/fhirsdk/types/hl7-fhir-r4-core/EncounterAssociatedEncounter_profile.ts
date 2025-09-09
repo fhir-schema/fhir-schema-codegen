@@ -11,6 +11,6 @@ export interface EncounterAssociatedEncounter {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Encounter'>;
 }
 

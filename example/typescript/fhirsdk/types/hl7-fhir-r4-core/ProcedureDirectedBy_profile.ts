@@ -13,6 +13,6 @@ export interface ProcedureDirectedBy {
     extension?: Extension[];
     url: string;
     valueCodeableConcept?: CodeableConcept;
-    valueReference?: Reference;
+    valueReference?: Reference<'Patient' | 'Practitioner' | 'PractitionerRole' | 'RelatedPerson'>;
 }
 

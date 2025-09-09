@@ -11,6 +11,6 @@ export interface OpenEhrCareplan {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'CarePlan'>;
 }
 

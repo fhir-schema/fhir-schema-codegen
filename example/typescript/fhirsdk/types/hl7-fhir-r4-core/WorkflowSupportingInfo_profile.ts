@@ -11,6 +11,6 @@ export interface WorkflowSupportingInfo {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Resource'>;
 }
 

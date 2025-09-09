@@ -13,6 +13,6 @@ export interface ConditionDueTo {
     extension?: Extension[];
     url: string;
     valueCodeableConcept?: CodeableConcept;
-    valueReference?: Reference;
+    valueReference?: Reference<'Condition' | 'Immunization' | 'MedicationAdministration' | 'MedicationStatement' | 'Procedure'>;
 }
 

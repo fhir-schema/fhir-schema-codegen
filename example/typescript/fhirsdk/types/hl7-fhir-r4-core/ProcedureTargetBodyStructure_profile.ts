@@ -11,6 +11,6 @@ export interface ProcedureTargetBodyStructure {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'BodyStructure'>;
 }
 

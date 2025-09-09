@@ -11,6 +11,6 @@ export interface ProcedureCausedBy {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'AllergyIntolerance' | 'DiagnosticReport' | 'FamilyMemberHistory' | 'ImagingStudy' | 'Immunization' | 'ImmunizationRecommendation' | 'MedicationAdministration' | 'MedicationRequest' | 'MedicationStatement' | 'Observation' | 'Procedure'>;
 }
 

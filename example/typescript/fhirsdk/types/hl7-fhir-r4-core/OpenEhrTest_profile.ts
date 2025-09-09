@@ -11,6 +11,6 @@ export interface OpenEhrTest {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'DiagnosticReport' | 'Observation'>;
 }
 

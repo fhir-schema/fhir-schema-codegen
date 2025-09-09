@@ -11,6 +11,6 @@ export interface OpenEhrAdministration {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'MedicationAdministration'>;
 }
 

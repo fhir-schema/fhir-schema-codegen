@@ -11,6 +11,6 @@ export interface DiagnosticReportExtends {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'DiagnosticReport'>;
 }
 

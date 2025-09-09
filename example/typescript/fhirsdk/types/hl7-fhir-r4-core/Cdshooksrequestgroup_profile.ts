@@ -16,9 +16,9 @@ export interface Cdshooksrequestgroup {
     identifier: Identifier[];
     instantiatesUri: string[];
     priority?: string;
-    subject?: Reference;
+    subject?: Reference<'Group' | 'Patient'>;
     authoredOn?: string;
-    author?: Reference;
+    author?: Reference<'Device' | 'Practitioner' | 'PractitionerRole'>;
     action?: RequestGroupAction[];
 }
 

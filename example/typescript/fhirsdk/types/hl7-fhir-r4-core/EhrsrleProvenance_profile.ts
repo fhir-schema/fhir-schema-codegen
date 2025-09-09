@@ -21,8 +21,8 @@ export interface EhrsrleProvenance {
     policy?: string[];
     reason?: CodeableConcept[];
     activity?: CodeableConcept;
-    target: Reference[];
-    location?: Reference;
+    target: Reference<'Resource'>[];
+    location?: Reference<'Location'>;
     occurredPeriod?: Period;
 }
 

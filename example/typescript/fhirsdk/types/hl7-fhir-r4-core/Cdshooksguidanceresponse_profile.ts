@@ -15,9 +15,9 @@ export interface Cdshooksguidanceresponse {
     requestIdentifier: Identifier;
     identifier: Identifier[];
     moduleUri: string;
-    subject?: Reference;
+    subject?: Reference<'Group' | 'Patient'>;
     occurrenceDateTime?: string;
-    performer?: Reference;
-    result?: Reference;
+    performer?: Reference<'Device'>;
+    result?: Reference<'CarePlan' | 'RequestGroup'>;
 }
 

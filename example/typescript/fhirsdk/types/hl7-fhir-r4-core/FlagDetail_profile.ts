@@ -11,6 +11,6 @@ export interface FlagDetail {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Resource'>;
 }
 

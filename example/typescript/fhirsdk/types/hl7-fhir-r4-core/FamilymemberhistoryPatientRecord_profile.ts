@@ -11,6 +11,6 @@ export interface FamilymemberhistoryPatientRecord {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Patient'>;
 }
 

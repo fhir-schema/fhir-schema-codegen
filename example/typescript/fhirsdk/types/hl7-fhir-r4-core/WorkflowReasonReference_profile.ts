@@ -11,6 +11,6 @@ export interface WorkflowReasonReference {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Condition' | 'DiagnosticReport' | 'DocumentReference' | 'Media' | 'Observation'>;
 }
 

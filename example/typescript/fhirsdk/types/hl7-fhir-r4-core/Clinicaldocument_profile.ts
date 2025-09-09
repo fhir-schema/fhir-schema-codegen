@@ -15,6 +15,6 @@ export interface Clinicaldocument {
     profileType: 'Clinical Document';
     
     extension?: Extension[];
-    subject?: Reference;
+    subject?: Reference<'Device' | 'Group' | 'Location' | 'Patient' | 'Practitioner'>;
 }
 

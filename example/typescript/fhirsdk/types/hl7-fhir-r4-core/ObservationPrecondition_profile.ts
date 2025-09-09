@@ -11,6 +11,6 @@ export interface ObservationPrecondition {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Observation'>;
 }
 

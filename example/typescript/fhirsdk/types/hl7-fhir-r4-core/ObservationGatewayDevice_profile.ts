@@ -11,6 +11,6 @@ export interface ObservationGatewayDevice {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Device'>;
 }
 

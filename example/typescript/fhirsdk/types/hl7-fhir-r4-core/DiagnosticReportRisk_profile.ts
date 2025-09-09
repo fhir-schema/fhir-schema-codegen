@@ -11,6 +11,6 @@ export interface DiagnosticReportRisk {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'RiskAssessment'>;
 }
 

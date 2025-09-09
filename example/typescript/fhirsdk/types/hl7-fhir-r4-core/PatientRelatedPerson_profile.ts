@@ -11,6 +11,6 @@ export interface PatientRelatedPerson {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'RelatedPerson'>;
 }
 

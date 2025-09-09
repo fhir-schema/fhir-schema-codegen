@@ -11,6 +11,6 @@ export interface ConsentWitness {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Organization' | 'Patient' | 'Practitioner' | 'RelatedPerson'>;
 }
 

@@ -11,6 +11,6 @@ export interface TaskCandidateList {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Device' | 'Organization' | 'Patient' | 'Practitioner' | 'RelatedPerson'>;
 }
 

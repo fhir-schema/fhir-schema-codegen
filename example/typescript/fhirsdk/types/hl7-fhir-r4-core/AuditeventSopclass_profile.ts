@@ -11,6 +11,6 @@ export interface AuditeventSopclass {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'ImagingStudy'>;
 }
 

@@ -11,6 +11,6 @@ export interface RequestRelevantHistory {
     
     extension?: Extension[];
     url: string;
-    valueReference?: Reference;
+    valueReference?: Reference<'Provenance'>;
 }
 
