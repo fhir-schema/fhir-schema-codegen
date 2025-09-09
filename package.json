@@ -1,6 +1,6 @@
 {
     "name": "@fhirschema/codegen",
-    "version": "0.0.23",
+    "version": "0.0.24",
     "author": "niquola",
     "license": "ISC",
     "main": "dist/cli.js",
