@@ -285,7 +285,7 @@ class TypeScriptGenerator extends Generator {
         const name = resourceName(schema.identifier);
         this.debugComment(schema.identifier);
         this.curlyBlock(['export', 'interface', name], () => {
-            this.lineSM(`profileType: '${schema.identifier.name}'`);
+            this.lineSM(`__profileUrl: '${schema.identifier.url}'`);
             this.line();
 
             for (const [fieldName, field] of Object.entries(schema.fields ?? {})) {
