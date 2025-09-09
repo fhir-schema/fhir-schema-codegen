@@ -126,8 +126,8 @@ test-typescript-sdk-no-regen:
 	fi
 
 	cd $(TYPESCRIPT_SDK_EXAMPLE) && \
-        npm run test && \
-	    npm run type-check
+        npm run type-check && \
+	    npm run test
 
 ###########################################################
 # C# SDK
