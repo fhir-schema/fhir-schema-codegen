@@ -3,7 +3,8 @@
 AIDBOX_LICENSE ?=
 
 # --type-schema-exec 'java -jar /Users/samurai/src/fhir-clj/type-schema/target/type-schema.jar'
-FSCF_FLAGS =
+# --with-debug-comment
+FSCG_FLAGS =
 
 all: format lint-fix-unsafe test build
 
@@ -30,13 +31,13 @@ test:
 
 generate-examples: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
-		$(FSCF_FLAGS)
+		$(FSCG_FLAGS)
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 		--fhir-schema example/custom_resources/TutorNotification.fs.json \
 		--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
 		--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
-		$(FSCF_FLAGS)
-	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox $(FSCF_FLAGS)
+		$(FSCG_FLAGS)
+	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox $(FSCG_FLAGS)
 
 ###########################################################
 # SDK Test Env
@@ -77,13 +78,13 @@ test-python-sdk-no-start-service: build
 	                --fhir-schema example/custom_resources/TutorNotification.fs.json \
 					--fhir-schema example/custom_resources/TutorNotificationTemplate.fs.json \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) \
-					$(FSCF_FLAGS)
+					$(FSCG_FLAGS)
 	make test-python-sdk-no-regen
 
 test-python-sdk-extra-fields-no-start-service: build
 	npx fscg generate -g python -p hl7.fhir.r4.core@4.0.1 \
 					--py-sdk-package aidbox -o $(PYTHON_SDK_EXAMPLE) --py-allow-extra-fields \
-					$(FSCF_FLAGS)
+					$(FSCG_FLAGS)
 	make test-python-sdk-no-regen
 
 test-python-sdk-no-regen:
@@ -114,7 +115,7 @@ test-typescript-sdk-no-start-service: build
 	npx fscg generate -g typescript -p hl7.fhir.r4.core@4.0.1 -o $(TYPESCRIPT_SDK_EXAMPLE)/fhirsdk \
 	    --fhir-schema example/custom_resources/Client.fs.json \
 		--profile \
-		$(FSCF_FLAGS)
+		$(FSCG_FLAGS)
 
 	make test-typescript-sdk-no-regen
 
@@ -142,7 +143,7 @@ test-csharp-sdk: prepare-aidbox-runme
 	docker compose -f example/docker-compose.yaml down
 
 test-csharp-sdk-no-start-service: build
-	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox $(FSCF_FLAGS)
+	npx fscg generate -g csharp -p hl7.fhir.r4.core@4.0.1 -o $(CSHARP_SDK_EXAMPLE)/aidbox $(FSCG_FLAGS)
 	make test-csharp-sdk-no-regen
 
 test-csharp-sdk-no-regen:
