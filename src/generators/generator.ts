@@ -160,12 +160,16 @@ export class Generator {
         }
     }
 
-    curlyBlock(tokens: Array<string | undefined>, gencontent: () => void) {
+    curlyBlock(
+        tokens: Array<string | undefined>,
+        gencontent: () => void,
+        endTokens?: Array<string>,
+    ) {
         this.line(`${tokens.filter(Boolean).join(' ')} {`);
         this.ident();
         gencontent();
         this.deident();
-        this.line('}');
+        this.line(`}${endTokens?.filter(Boolean).join(' ') ?? ''}`);
     }
 
     squareBlock(tokens: string[], gencontent: () => void) {
