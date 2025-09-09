@@ -116,6 +116,9 @@ test-typescript-sdk-no-start-service: build
 		--profile \
 		$(FSCF_FLAGS)
 
+	make test-typescript-sdk-no-regen
+
+test-typescript-sdk-no-regen:
 	@if [ ! -d "$(TYPESCRIPT_SDK_EXAMPLE)/node_modules" ]; then \
 		cd $(TYPESCRIPT_SDK_EXAMPLE) && \
 		npm install; \
