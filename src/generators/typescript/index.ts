@@ -300,6 +300,9 @@ class TypeScriptGenerator extends Generator {
                 let tsType: string;
                 if (field.type.kind === 'nested') {
                     tsType = this.deriveNestedSchemaName(field.type.url, true);
+                } else if (field.reference?.length) {
+                    const references = field.reference.map((ref) => `'${ref.name}'`).join(' | ');
+                    tsType = `Reference<${references}>`;
                 } else {
                     tsType = primitiveType2tsType[field.type.name] ?? field.type.name;
                 }
