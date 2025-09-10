@@ -23,11 +23,21 @@ public class PractitionerRole : DomainResource
     
     public class PractitionerRoleAvailableTime : BackboneElement
     {
-        public string[]? DaysOfWeek { get; set; }
+        public DaysOfWeekEnum[]? DaysOfWeek { get; set; }
         public bool? AllDay { get; set; }
         public string? AvailableStartTime { get; set; }
         public string? AvailableEndTime { get; set; }
         
+        public enum DaysOfWeekEnum
+        {
+            Mon ,
+            Tue ,
+            Wed ,
+            Thu ,
+            Fri ,
+            Sat ,
+            Sun ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

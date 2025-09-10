@@ -9,13 +9,13 @@ public class DocumentReference : DomainResource
     public string? Description { get; set; }
     public CodeableConcept[]? Category { get; set; }
     public string? Date { get; set; }
-    public string? DocStatus { get; set; }
+    public DocStatusEnum? DocStatus { get; set; }
     public required DocumentReferenceContent[] Content { get; set; }
     public CodeableConcept? Type { get; set; }
     public ResourceReference[]? Author { get; set; }
     public Identifier? MasterIdentifier { get; set; }
     public ResourceReference? Custodian { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public DocumentReferenceRelatesTo[]? RelatesTo { get; set; }
     public DocumentReferenceContext? Context { get; set; }
@@ -50,15 +50,35 @@ public class DocumentReference : DomainResource
     
     public class DocumentReferenceRelatesTo : BackboneElement
     {
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public required ResourceReference Target { get; set; }
         
+        public enum CodeEnum
+        {
+            Replaces ,
+            Transforms ,
+            Signs ,
+            Appends ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum DocStatusEnum
+    {
+        Preliminary ,
+        Final ,
+        Amended ,
+        EnteredDashInDashError ,
+    }
+    public enum StatusEnum
+    {
+        Current ,
+        Superseded ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

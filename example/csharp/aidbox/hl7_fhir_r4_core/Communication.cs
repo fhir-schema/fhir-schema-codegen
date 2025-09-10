@@ -19,8 +19,8 @@ public class Communication : DomainResource
     public CodeableConcept? Topic { get; set; }
     public string? Sent { get; set; }
     public Annotation[]? Note { get; set; }
-    public string? Priority { get; set; }
-    public required string Status { get; set; }
+    public PriorityEnum? Priority { get; set; }
+    public required StatusEnum Status { get; set; }
     public ResourceReference? Sender { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? InResponseTo { get; set; }
@@ -42,6 +42,24 @@ public class Communication : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Preparation ,
+        InDashProgress ,
+        NotDashDone ,
+        OnDashHold ,
+        Stopped ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

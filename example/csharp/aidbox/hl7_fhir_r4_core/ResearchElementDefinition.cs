@@ -11,14 +11,14 @@ public class ResearchElementDefinition : DomainResource
     public ContactDetail[]? Endorser { get; set; }
     public string? Publisher { get; set; }
     public string? ApprovalDate { get; set; }
-    public string? VariableType { get; set; }
+    public VariableTypeEnum? VariableType { get; set; }
     public CodeableConcept[]? Jurisdiction { get; set; }
     public string? Purpose { get; set; }
     public CodeableConcept? SubjectCodeableConcept { get; set; }
     public string? Name { get; set; }
     public UsageContext[]? UseContext { get; set; }
     public string? Copyright { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public bool? Experimental { get; set; }
     public CodeableConcept[]? Topic { get; set; }
     public string? Title { get; set; }
@@ -26,7 +26,7 @@ public class ResearchElementDefinition : DomainResource
     public ContactDetail[]? Author { get; set; }
     public required ResearchElementDefinitionCharacteristic[] Characteristic { get; set; }
     public string? Usage { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string[]? Comment { get; set; }
     public string? Url { get; set; }
@@ -50,9 +50,9 @@ public class ResearchElementDefinition : DomainResource
         public Duration? StudyEffectiveDuration { get; set; }
         public DataRequirement? DefinitionDataRequirement { get; set; }
         public string? DefinitionCanonical { get; set; }
-        public string? StudyEffectiveGroupMeasure { get; set; }
+        public StudyEffectiveGroupMeasureEnum? StudyEffectiveGroupMeasure { get; set; }
         public Timing? ParticipantEffectiveTiming { get; set; }
-        public string? ParticipantEffectiveGroupMeasure { get; set; }
+        public ParticipantEffectiveGroupMeasureEnum? ParticipantEffectiveGroupMeasure { get; set; }
         public string? StudyEffectiveDescription { get; set; }
         public string? ParticipantEffectiveDateTime { get; set; }
         public Duration? StudyEffectiveTimeFromStart { get; set; }
@@ -65,12 +65,49 @@ public class ResearchElementDefinition : DomainResource
         public Duration? ParticipantEffectiveTimeFromStart { get; set; }
         public string? StudyEffectiveDateTime { get; set; }
         
+        public enum StudyEffectiveGroupMeasureEnum
+        {
+            Mean ,
+            Median ,
+            MeanDashOfDashMean ,
+            MeanDashOfDashMedian ,
+            MedianDashOfDashMean ,
+            MedianDashOfDashMedian ,
+        }
+        public enum ParticipantEffectiveGroupMeasureEnum
+        {
+            Mean ,
+            Median ,
+            MeanDashOfDashMean ,
+            MeanDashOfDashMedian ,
+            MedianDashOfDashMean ,
+            MedianDashOfDashMedian ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum VariableTypeEnum
+    {
+        Dichotomous ,
+        Continuous ,
+        Descriptive ,
+    }
+    public enum TypeEnum
+    {
+        Population ,
+        Exposure ,
+        Outcome ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

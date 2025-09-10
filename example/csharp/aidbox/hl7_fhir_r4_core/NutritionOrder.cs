@@ -16,10 +16,10 @@ public class NutritionOrder : DomainResource
     public required string DateTime { get; set; }
     public NutritionOrderEnteralFormula? EnteralFormula { get; set; }
     public CodeableConcept[]? FoodPreferenceModifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CodeableConcept[]? ExcludeFoodModifier { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference? Orderer { get; set; }
     public NutritionOrderSupplement[]? Supplement { get; set; }
     public ResourceReference[]? AllergyIntolerance { get; set; }
@@ -101,6 +101,28 @@ public class NutritionOrder : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        OnDashHold ,
+        Revoked ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Directive ,
+        Order ,
+        Option ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

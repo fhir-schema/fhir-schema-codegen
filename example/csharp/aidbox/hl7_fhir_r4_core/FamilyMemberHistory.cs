@@ -19,7 +19,7 @@ public class FamilyMemberHistory : DomainResource
     public required CodeableConcept Relationship { get; set; }
     public CodeableConcept[]? ReasonCode { get; set; }
     public Annotation[]? Note { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public FamilyMemberHistoryCondition[]? Condition { get; set; }
     public Identifier[]? Identifier { get; set; }
     public string? AgeString { get; set; }
@@ -50,6 +50,13 @@ public class FamilyMemberHistory : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Partial ,
+        Completed ,
+        EnteredDashInDashError ,
+        HealthDashUnknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -18,7 +18,7 @@ public class ResearchStudy : DomainResource
     public string? Title { get; set; }
     public Annotation[]? Note { get; set; }
     public CodeableConcept[]? Keyword { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CodeableConcept[]? Condition { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? PrimaryPurposeType { get; set; }
@@ -53,6 +53,20 @@ public class ResearchStudy : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        AdministrativelyDashCompleted ,
+        Approved ,
+        ClosedDashToDashAccrual ,
+        ClosedDashToDashAccrualDashAndDashIntervention ,
+        Completed ,
+        Disapproved ,
+        InDashReview ,
+        TemporarilyDashClosedDashToDashAccrual ,
+        TemporarilyDashClosedDashToDashAccrualDashAndDashIntervention ,
+        Withdrawn ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

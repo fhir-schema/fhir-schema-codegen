@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import { Generator, type GeneratorOptions } from '../generator';
+import * as formatHelper from './format-helper';
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;
@@ -75,6 +76,16 @@ export class CSharpGenerator extends Generator {
         this.line();
     }
 
+    writeEnum(enums: Record<string, string[]>) {
+        for (const name in enums) {
+            this.curlyBlock(['public', 'enum', name], () =>
+                enums[name].forEach((entry) =>
+                    this.lineSM(formatHelper.formatEnumEntry(entry), ','),
+                ),
+            );
+        }
+    }
+
     generateType(schema: TypeSchema | NestedTypeSchema) {
         let name = '';
 
@@ -90,6 +101,7 @@ export class CSharpGenerator extends Generator {
 
         const base = schema.base ? `: ${schema.base.name}` : '';
         this.curlyBlock(['public', 'class', this.uppercaseFirstLetter(name), base], () => {
+            const enums: Record<string, string[]> = {};
             if (schema.fields) {
                 for (const [fieldName, field] of Object.entries(schema.fields)) {
                     if ('choices' in field) continue;
@@ -115,9 +127,11 @@ export class CSharpGenerator extends Generator {
                         t = `Resource${t}`;
                     }
 
-                    // if (field.enum) {
-                    //     t = field.enum.map((e) => `'${e}'`).join(' | ');
-                    // }
+                    if (field.enum) {
+                        const fieldName_ = formatHelper.formatName(fieldName);
+                        t = `${fieldName_}Enum`;
+                        enums[t] = field.enum;
+                    }
 
                     const fieldType = baseNamespacePrefix + t + arraySpecifier + nullable;
                     const fieldSymbol = this.pascalCase(fieldName);
@@ -133,6 +147,7 @@ export class CSharpGenerator extends Generator {
             }
 
             this.line();
+            if (Object.keys(enums).length > 0) this.writeEnum(enums);
             this.includeHelperMethods();
         });
         this.line();

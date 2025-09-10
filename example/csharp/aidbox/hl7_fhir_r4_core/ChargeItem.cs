@@ -21,7 +21,7 @@ public class ChargeItem : DomainResource
     public CodeableConcept[]? Reason { get; set; }
     public ResourceReference[]? SupportingInformation { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Context { get; set; }
@@ -47,6 +47,16 @@ public class ChargeItem : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Planned ,
+        Billable ,
+        NotDashBillable ,
+        Aborted ,
+        Billed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

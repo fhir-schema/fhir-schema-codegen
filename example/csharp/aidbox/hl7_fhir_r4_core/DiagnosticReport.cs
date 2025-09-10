@@ -13,7 +13,7 @@ public class DiagnosticReport : DomainResource
     public ResourceReference[]? Specimen { get; set; }
     public string? EffectiveDateTime { get; set; }
     public ResourceReference[]? ResultsInterpreter { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ResourceReference[]? Result { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -37,6 +37,19 @@ public class DiagnosticReport : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Registered ,
+        Partial ,
+        Final ,
+        Amended ,
+        Cancelled ,
+        EnteredDashInDashError ,
+        Unknown ,
+        Preliminary ,
+        Corrected ,
+        Appended ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

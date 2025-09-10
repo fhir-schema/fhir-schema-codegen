@@ -11,12 +11,12 @@ public class CoverageEligibilityResponse : DomainResource
     public CoverageEligibilityResponseInsurance[]? Insurance { get; set; }
     public required ResourceReference Request { get; set; }
     public string? PreAuthRef { get; set; }
-    public required string[] Purpose { get; set; }
+    public required PurposeEnum[] Purpose { get; set; }
     public required string Created { get; set; }
-    public required string Outcome { get; set; }
+    public required OutcomeEnum Outcome { get; set; }
     public string? Disposition { get; set; }
     public required ResourceReference Insurer { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? ServicedDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CoverageEligibilityResponseError[]? Error { get; set; }
@@ -82,6 +82,27 @@ public class CoverageEligibilityResponse : DomainResource
     }
     
     
+    public enum PurposeEnum
+    {
+        AuthDashRequirements ,
+        Benefits ,
+        Discovery ,
+        Validation ,
+    }
+    public enum OutcomeEnum
+    {
+        Queued ,
+        Complete ,
+        Error ,
+        Partial ,
+    }
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

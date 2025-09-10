@@ -11,7 +11,7 @@ public class InsurancePlan : DomainResource
     public InsurancePlanCoverage[]? Coverage { get; set; }
     public CodeableConcept[]? Type { get; set; }
     public string[]? Alias { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? AdministeredBy { get; set; }
     public ResourceReference? OwnedBy { get; set; }
@@ -124,6 +124,13 @@ public class InsurancePlan : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

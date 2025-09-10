@@ -12,12 +12,20 @@ public class Slot : DomainResource
     public required string Start { get; set; }
     public CodeableConcept[]? ServiceType { get; set; }
     public CodeableConcept? AppointmentType { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Comment { get; set; }
     public Identifier[]? Identifier { get; set; }
     public required string End { get; set; }
     public bool? Overbooked { get; set; }
     
+    public enum StatusEnum
+    {
+        Busy ,
+        Free ,
+        BusyDashUnavailable ,
+        BusyDashTentative ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

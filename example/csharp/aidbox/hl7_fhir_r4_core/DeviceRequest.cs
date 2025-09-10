@@ -20,13 +20,13 @@ public class DeviceRequest : DomainResource
     public Annotation[]? Note { get; set; }
     public ResourceReference? CodeReference { get; set; }
     public ResourceReference? Requester { get; set; }
-    public string? Priority { get; set; }
+    public PriorityEnum? Priority { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public CodeableConcept? CodeCodeableConcept { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public string? OccurrenceDateTime { get; set; }
     public required ResourceReference Subject { get; set; }
@@ -48,6 +48,35 @@ public class DeviceRequest : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        OnDashHold ,
+        Revoked ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Directive ,
+        Order ,
+        Option ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

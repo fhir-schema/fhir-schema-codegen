@@ -18,7 +18,7 @@ public class ValueSet : DomainResource
     public bool? Experimental { get; set; }
     public ValueSetExpansion? Expansion { get; set; }
     public string? Title { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public bool? Immutable { get; set; }
@@ -75,9 +75,21 @@ public class ValueSet : DomainResource
     public class ValueSetComposeIncludeFilter : BackboneElement
     {
         public required string Property { get; set; }
-        public required string Op { get; set; }
+        public required OpEnum Op { get; set; }
         public required string Value { get; set; }
         
+        public enum OpEnum
+        {
+            Equal ,
+            IsDashA ,
+            DescendentDashOf ,
+            IsDashNotDashA ,
+            Regex ,
+            In ,
+            NotDashIn ,
+            Generalizes ,
+            Exists ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -130,6 +142,13 @@ public class ValueSet : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

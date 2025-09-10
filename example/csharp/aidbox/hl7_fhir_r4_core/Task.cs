@@ -24,12 +24,12 @@ public class Task : DomainResource
     public ResourceReference? For { get; set; }
     public ResourceReference? Requester { get; set; }
     public string? LastModified { get; set; }
-    public string? Priority { get; set; }
-    public required string Status { get; set; }
+    public PriorityEnum? Priority { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference? Focus { get; set; }
     public TaskInput[]? Input { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
@@ -168,6 +168,40 @@ public class Task : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Requested ,
+        Received ,
+        Accepted ,
+        Rejected ,
+        Ready ,
+        Cancelled ,
+        InDashProgress ,
+        OnDashHold ,
+        Failed ,
+        Completed ,
+        EnteredDashInDashError ,
+    }
+    public enum IntentEnum
+    {
+        Unknown ,
+        Proposal ,
+        Plan ,
+        Order ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+        Option ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -23,7 +23,7 @@ public class RiskEvidenceSynthesis : DomainResource
     public Annotation[]? Note { get; set; }
     public ContactDetail[]? Author { get; set; }
     public CodeableConcept? SynthesisType { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required ResourceReference Population { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -99,6 +99,13 @@ public class RiskEvidenceSynthesis : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

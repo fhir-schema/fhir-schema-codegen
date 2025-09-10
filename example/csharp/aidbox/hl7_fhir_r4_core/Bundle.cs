@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class Bundle : Resource
 {
     public Identifier? Identifier { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? Timestamp { get; set; }
     public long? Total { get; set; }
     public BundleLink[]? Link { get; set; }
@@ -30,13 +30,22 @@ public class Bundle : Resource
     
     public class BundleEntryRequest : BackboneElement
     {
-        public required string Method { get; set; }
+        public required MethodEnum Method { get; set; }
         public required string Url { get; set; }
         public string? IfNoneMatch { get; set; }
         public string? IfModifiedSince { get; set; }
         public string? IfMatch { get; set; }
         public string? IfNoneExist { get; set; }
         
+        public enum MethodEnum
+        {
+            GET ,
+            HEAD ,
+            POST ,
+            PUT ,
+            DELETE ,
+            PATCH ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -57,9 +66,15 @@ public class Bundle : Resource
     
     public class BundleEntrySearch : BackboneElement
     {
-        public string? Mode { get; set; }
+        public ModeEnum? Mode { get; set; }
         public decimal? Score { get; set; }
         
+        public enum ModeEnum
+        {
+            Match ,
+            Include ,
+            Outcome ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -76,6 +91,18 @@ public class Bundle : Resource
     }
     
     
+    public enum TypeEnum
+    {
+        Document ,
+        Message ,
+        Transaction ,
+        TransactionDashResponse ,
+        Batch ,
+        BatchDashResponse ,
+        History ,
+        Searchset ,
+        Collection ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

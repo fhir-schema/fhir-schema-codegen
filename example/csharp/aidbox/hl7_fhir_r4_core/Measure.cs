@@ -31,7 +31,7 @@ public class Measure : DomainResource
     public ContactDetail[]? Author { get; set; }
     public string? Usage { get; set; }
     public string? Rationale { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -108,6 +108,13 @@ public class Measure : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

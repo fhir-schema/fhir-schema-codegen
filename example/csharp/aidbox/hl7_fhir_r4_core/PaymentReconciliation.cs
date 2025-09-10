@@ -11,10 +11,10 @@ public class PaymentReconciliation : DomainResource
     public required Money PaymentAmount { get; set; }
     public PaymentReconciliationProcessNote[]? ProcessNote { get; set; }
     public required string Created { get; set; }
-    public string? Outcome { get; set; }
+    public OutcomeEnum? Outcome { get; set; }
     public string? Disposition { get; set; }
     public Identifier? PaymentIdentifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string PaymentDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Period? Period { get; set; }
@@ -42,15 +42,35 @@ public class PaymentReconciliation : DomainResource
     
     public class PaymentReconciliationProcessNote : BackboneElement
     {
-        public string? Type { get; set; }
+        public TypeEnum? Type { get; set; }
         public string? Text { get; set; }
         
+        public enum TypeEnum
+        {
+            Display ,
+            Print ,
+            Printoper ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum OutcomeEnum
+    {
+        Queued ,
+        Complete ,
+        Error ,
+        Partial ,
+    }
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

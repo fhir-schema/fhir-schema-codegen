@@ -21,7 +21,7 @@ public class Patient : DomainResource
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
     public ResourceReference[]? GeneralPractitioner { get; set; }
-    public string? Gender { get; set; }
+    public GenderEnum? Gender { get; set; }
     public CodeableConcept? MaritalStatus { get; set; }
     public PatientContact[]? Contact { get; set; }
     
@@ -41,10 +41,17 @@ public class Patient : DomainResource
         public HumanName? Name { get; set; }
         public ContactPoint[]? Telecom { get; set; }
         public Address? Address { get; set; }
-        public string? Gender { get; set; }
+        public GenderEnum? Gender { get; set; }
         public ResourceReference? Organization { get; set; }
         public Period? Period { get; set; }
         
+        public enum GenderEnum
+        {
+            Male ,
+            Female ,
+            Other ,
+            Unknown ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -53,14 +60,28 @@ public class Patient : DomainResource
     public class PatientLink : BackboneElement
     {
         public required ResourceReference Other { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         
+        public enum TypeEnum
+        {
+            ReplacedDashBy ,
+            Replaces ,
+            Refer ,
+            Seealso ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum GenderEnum
+    {
+        Male ,
+        Female ,
+        Other ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -20,9 +20,9 @@ public class CarePlan : DomainResource
     public ResourceReference? Author { get; set; }
     public CarePlanActivity[]? Activity { get; set; }
     public ResourceReference[]? Contributor { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference[]? Replaces { get; set; }
     public Period? Period { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
@@ -57,8 +57,8 @@ public class CarePlan : DomainResource
         public Timing? ScheduledTiming { get; set; }
         public Quantity? DailyAmount { get; set; }
         public string? ScheduledString { get; set; }
-        public required string Status { get; set; }
-        public string? Kind { get; set; }
+        public required StatusEnum Status { get; set; }
+        public KindEnum? Kind { get; set; }
         public CodeableConcept? Code { get; set; }
         public bool? DoNotPerform { get; set; }
         public Quantity? Quantity { get; set; }
@@ -66,12 +66,52 @@ public class CarePlan : DomainResource
         public ResourceReference[]? Performer { get; set; }
         public ResourceReference[]? ReasonReference { get; set; }
         
+        public enum StatusEnum
+        {
+            NotDashStarted ,
+            Scheduled ,
+            InDashProgress ,
+            OnDashHold ,
+            Completed ,
+            Cancelled ,
+            Unknown ,
+            EnteredDashInDashError ,
+            Stopped ,
+        }
+        public enum KindEnum
+        {
+            Appointment ,
+            CommunicationRequest ,
+            DeviceRequest ,
+            MedicationRequest ,
+            NutritionOrder ,
+            Task ,
+            ServiceRequest ,
+            VisionPrescription ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        OnDashHold ,
+        Revoked ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Order ,
+        Option ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

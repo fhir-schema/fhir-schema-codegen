@@ -12,9 +12,16 @@ public class AppointmentResponse : DomainResource
     public string? End { get; set; }
     public CodeableConcept[]? ParticipantType { get; set; }
     public ResourceReference? Actor { get; set; }
-    public required string ParticipantStatus { get; set; }
+    public required ParticipantStatusEnum ParticipantStatus { get; set; }
     public string? Comment { get; set; }
     
+    public enum ParticipantStatusEnum
+    {
+        Accepted ,
+        Declined ,
+        Tentative ,
+        NeedsDashAction ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

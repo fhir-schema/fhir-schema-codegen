@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class VisionPrescription : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Created { get; set; }
     public required ResourceReference Patient { get; set; }
     public ResourceReference? Encounter { get; set; }
@@ -19,7 +19,7 @@ public class VisionPrescription : DomainResource
     {
         public decimal? Sphere { get; set; }
         public string? Color { get; set; }
-        public required string Eye { get; set; }
+        public required EyeEnum Eye { get; set; }
         public decimal? Diameter { get; set; }
         public Quantity? Duration { get; set; }
         public string? Brand { get; set; }
@@ -32,6 +32,11 @@ public class VisionPrescription : DomainResource
         public decimal? Add { get; set; }
         public decimal? BackCurve { get; set; }
         
+        public enum EyeEnum
+        {
+            Right ,
+            Left ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -40,14 +45,28 @@ public class VisionPrescription : DomainResource
     public class VisionPrescriptionLensSpecificationPrism : BackboneElement
     {
         public required decimal Amount { get; set; }
-        public required string Base { get; set; }
+        public required BaseEnum Base { get; set; }
         
+        public enum BaseEnum
+        {
+            Up ,
+            Down ,
+            In ,
+            Out ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

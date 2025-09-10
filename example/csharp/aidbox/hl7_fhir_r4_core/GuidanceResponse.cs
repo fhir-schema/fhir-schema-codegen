@@ -14,7 +14,7 @@ public class GuidanceResponse : DomainResource
     public ResourceReference[]? EvaluationMessage { get; set; }
     public Identifier? RequestIdentifier { get; set; }
     public Annotation[]? Note { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ResourceReference? Result { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? ModuleCodeableConcept { get; set; }
@@ -24,6 +24,15 @@ public class GuidanceResponse : DomainResource
     public ResourceReference? Performer { get; set; }
     public ResourceReference[]? ReasonReference { get; set; }
     
+    public enum StatusEnum
+    {
+        Success ,
+        DataDashRequested ,
+        DataDashRequired ,
+        InDashProgress ,
+        Failure ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

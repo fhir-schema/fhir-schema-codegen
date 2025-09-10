@@ -17,7 +17,7 @@ public class Media : DomainResource
     public decimal? Duration { get; set; }
     public Annotation[]? Note { get; set; }
     public Period? CreatedPeriod { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Operator { get; set; }
     public CodeableConcept? BodySite { get; set; }
@@ -30,6 +30,17 @@ public class Media : DomainResource
     public CodeableConcept? View { get; set; }
     public long? Height { get; set; }
     
+    public enum StatusEnum
+    {
+        Preparation ,
+        InDashProgress ,
+        NotDashDone ,
+        OnDashHold ,
+        Stopped ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -15,13 +15,13 @@ public class EvidenceVariable : DomainResource
     public string? Name { get; set; }
     public UsageContext[]? UseContext { get; set; }
     public string? Copyright { get; set; }
-    public string? Type { get; set; }
+    public TypeEnum? Type { get; set; }
     public CodeableConcept[]? Topic { get; set; }
     public string? Title { get; set; }
     public Annotation[]? Note { get; set; }
     public ContactDetail[]? Author { get; set; }
     public required EvidenceVariableCharacteristic[] Characteristic { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -38,7 +38,7 @@ public class EvidenceVariable : DomainResource
     {
         public string? Description { get; set; }
         public bool? Exclude { get; set; }
-        public string? GroupMeasure { get; set; }
+        public GroupMeasureEnum? GroupMeasure { get; set; }
         public ResourceExpression? DefinitionExpression { get; set; }
         public Duration? TimeFromStart { get; set; }
         public Duration? ParticipantEffectiveDuration { get; set; }
@@ -52,12 +52,34 @@ public class EvidenceVariable : DomainResource
         public CodeableConcept? DefinitionCodeableConcept { get; set; }
         public UsageContext[]? UsageContext { get; set; }
         
+        public enum GroupMeasureEnum
+        {
+            Mean ,
+            Median ,
+            MeanDashOfDashMean ,
+            MeanDashOfDashMedian ,
+            MedianDashOfDashMean ,
+            MedianDashOfDashMedian ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum TypeEnum
+    {
+        Dichotomous ,
+        Continuous ,
+        Descriptive ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

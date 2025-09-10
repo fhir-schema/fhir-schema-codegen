@@ -18,7 +18,7 @@ public class StructureMap : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public StructureMapStructure[]? Structure { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public string? Version { get; set; }
@@ -29,11 +29,17 @@ public class StructureMap : DomainResource
     {
         public required string Name { get; set; }
         public string? Extends { get; set; }
-        public required string TypeMode { get; set; }
+        public required TypeModeEnum TypeMode { get; set; }
         public string? Documentation { get; set; }
         public required StructureMapGroupInput[] Input { get; set; }
         public required StructureMapGroupRule[] Rule { get; set; }
         
+        public enum TypeModeEnum
+        {
+            None ,
+            Types ,
+            TypeDashAndDashTypes ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -43,9 +49,14 @@ public class StructureMap : DomainResource
     {
         public required string Name { get; set; }
         public string? Type { get; set; }
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Documentation { get; set; }
         
+        public enum ModeEnum
+        {
+            Source ,
+            Target ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -128,7 +139,7 @@ public class StructureMap : DomainResource
         public Age? DefaultValueAge { get; set; }
         public string? DefaultValueOid { get; set; }
         public UsageContext? DefaultValueUsageContext { get; set; }
-        public string? ListMode { get; set; }
+        public ListModeEnum? ListMode { get; set; }
         public ParameterDefinition? DefaultValueParameterDefinition { get; set; }
         public string? DefaultValueDateTime { get; set; }
         public long? DefaultValuePositiveInt { get; set; }
@@ -138,6 +149,14 @@ public class StructureMap : DomainResource
         public Identifier? DefaultValueIdentifier { get; set; }
         public CodeableConcept? DefaultValueCodeableConcept { get; set; }
         
+        public enum ListModeEnum
+        {
+            First ,
+            Not_first ,
+            Last ,
+            Not_last ,
+            Only_one ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -146,14 +165,46 @@ public class StructureMap : DomainResource
     public class StructureMapGroupRuleTarget : BackboneElement
     {
         public string? Context { get; set; }
-        public string? ContextType { get; set; }
+        public ContextTypeEnum? ContextType { get; set; }
         public string? Element { get; set; }
         public string? Variable { get; set; }
-        public string[]? ListMode { get; set; }
+        public ListModeEnum[]? ListMode { get; set; }
         public string? ListRuleId { get; set; }
-        public string? Transform { get; set; }
+        public TransformEnum? Transform { get; set; }
         public StructureMapGroupRuleTargetParameter[]? Parameter { get; set; }
         
+        public enum ContextTypeEnum
+        {
+            Type ,
+            Variable ,
+        }
+        public enum ListModeEnum
+        {
+            First ,
+            Share ,
+            Last ,
+            Collate ,
+        }
+        public enum TransformEnum
+        {
+            Create ,
+            Copy ,
+            Truncate ,
+            Escape ,
+            Cast ,
+            Append ,
+            Translate ,
+            Reference ,
+            DateOp ,
+            Uuid ,
+            Pointer ,
+            Evaluate ,
+            Cc ,
+            C ,
+            Qty ,
+            Id ,
+            Cp ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -175,16 +226,30 @@ public class StructureMap : DomainResource
     public class StructureMapStructure : BackboneElement
     {
         public required string Url { get; set; }
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Alias { get; set; }
         public string? Documentation { get; set; }
         
+        public enum ModeEnum
+        {
+            Source ,
+            Queried ,
+            Target ,
+            Produced ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

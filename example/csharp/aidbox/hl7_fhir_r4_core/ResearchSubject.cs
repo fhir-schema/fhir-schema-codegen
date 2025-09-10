@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class ResearchSubject : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Period? Period { get; set; }
     public required ResourceReference Study { get; set; }
     public required ResourceReference Individual { get; set; }
@@ -15,6 +15,22 @@ public class ResearchSubject : DomainResource
     public string? ActualArm { get; set; }
     public ResourceReference? Consent { get; set; }
     
+    public enum StatusEnum
+    {
+        Candidate ,
+        Eligible ,
+        FollowDashUp ,
+        Ineligible ,
+        NotDashRegistered ,
+        OffDashStudy ,
+        OnDashStudy ,
+        OnDashStudyDashIntervention ,
+        OnDashStudyDashObservation ,
+        PendingDashOnDashStudy ,
+        PotentialDashCandidate ,
+        Screening ,
+        Withdrawn ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

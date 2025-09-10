@@ -8,7 +8,7 @@ public class Medication : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? Code { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public ResourceReference? Manufacturer { get; set; }
     public CodeableConcept? Form { get; set; }
     public Ratio? Amount { get; set; }
@@ -38,6 +38,12 @@ public class Medication : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        Inactive ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

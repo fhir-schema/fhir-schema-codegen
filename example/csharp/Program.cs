@@ -18,7 +18,7 @@ var patient = new Patient
 {
     Identifier = [new Identifier { System = "http://hl7.org/fhir/us/CodeSystem/identity", Value = "0000-0000" }],
     Name = [new HumanName { Given = ["John"], Family = "Doe" }],
-    Gender = "male",
+    Gender = Patient.GenderEnum.Male,
     BirthDate = "1990-01-01",
 };
 
@@ -27,7 +27,7 @@ var (result, error) = await client.Create(patient);
 System.Diagnostics.Debug.Assert(error == null, $"Error occurred: {error}");
 
 Console.WriteLine(
-    System.Text.Json.JsonSerializer.Serialize(
+    JsonSerializer.Serialize(
         result,
         Config.JsonSerializerOptions
     )

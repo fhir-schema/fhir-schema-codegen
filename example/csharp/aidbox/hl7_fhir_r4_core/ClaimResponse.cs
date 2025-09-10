@@ -14,19 +14,19 @@ public class ClaimResponse : DomainResource
     public ClaimResponseProcessNote[]? ProcessNote { get; set; }
     public string? PreAuthRef { get; set; }
     public ClaimResponseItemAdjudication[]? Adjudication { get; set; }
-    public required string Use { get; set; }
+    public required UseEnum Use { get; set; }
     public ClaimResponsePayment? Payment { get; set; }
     public ClaimResponseItem[]? Item { get; set; }
     public required CodeableConcept Type { get; set; }
     public required string Created { get; set; }
     public Period? PreAuthPeriod { get; set; }
-    public required string Outcome { get; set; }
+    public required OutcomeEnum Outcome { get; set; }
     public string? Disposition { get; set; }
     public ResourceReference[]? CommunicationRequest { get; set; }
     public ClaimResponseTotal[]? Total { get; set; }
     public required ResourceReference Insurer { get; set; }
     public CodeableConcept? FundsReserve { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ClaimResponseError[]? Error { get; set; }
     public Attachment? Form { get; set; }
@@ -185,10 +185,16 @@ public class ClaimResponse : DomainResource
     public class ClaimResponseProcessNote : BackboneElement
     {
         public long? Number { get; set; }
-        public string? Type { get; set; }
+        public TypeEnum? Type { get; set; }
         public required string Text { get; set; }
         public CodeableConcept? Language { get; set; }
         
+        public enum TypeEnum
+        {
+            Display ,
+            Print ,
+            Printoper ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -205,6 +211,26 @@ public class ClaimResponse : DomainResource
     }
     
     
+    public enum UseEnum
+    {
+        Claim ,
+        Preauthorization ,
+        Predetermination ,
+    }
+    public enum OutcomeEnum
+    {
+        Queued ,
+        Complete ,
+        Error ,
+        Partial ,
+    }
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

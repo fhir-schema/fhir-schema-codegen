@@ -21,7 +21,7 @@ public class MedicationKnowledge : DomainResource
     public MedicationKnowledgeIngredient[]? Ingredient { get; set; }
     public MedicationKnowledgeMonitoringProgram[]? MonitoringProgram { get; set; }
     public ResourceReference[]? Contraindication { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public CodeableConcept[]? ProductType { get; set; }
     public string[]? Synonym { get; set; }
     public CodeableConcept? Code { get; set; }
@@ -201,6 +201,12 @@ public class MedicationKnowledge : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        Inactive ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

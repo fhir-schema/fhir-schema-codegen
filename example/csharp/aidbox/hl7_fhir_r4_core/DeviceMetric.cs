@@ -6,29 +6,68 @@ namespace Aidbox.FHIR.R4.Core;
 
 public class DeviceMetric : DomainResource
 {
-    public required string Category { get; set; }
+    public required CategoryEnum Category { get; set; }
     public Timing? MeasurementPeriod { get; set; }
-    public string? Color { get; set; }
+    public ColorEnum? Color { get; set; }
     public ResourceReference? Parent { get; set; }
     public CodeableConcept? Unit { get; set; }
     public required CodeableConcept Type { get; set; }
     public ResourceReference? Source { get; set; }
     public Identifier[]? Identifier { get; set; }
     public DeviceMetricCalibration[]? Calibration { get; set; }
-    public string? OperationalStatus { get; set; }
+    public OperationalStatusEnum? OperationalStatus { get; set; }
     
     public class DeviceMetricCalibration : BackboneElement
     {
-        public string? Type { get; set; }
-        public string? State { get; set; }
+        public TypeEnum? Type { get; set; }
+        public StateEnum? State { get; set; }
         public string? Time { get; set; }
         
+        public enum TypeEnum
+        {
+            Unspecified ,
+            Offset ,
+            Gain ,
+            TwoDashPoint ,
+        }
+        public enum StateEnum
+        {
+            NotDashCalibrated ,
+            CalibrationDashRequired ,
+            Calibrated ,
+            Unspecified ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum CategoryEnum
+    {
+        Measurement ,
+        Setting ,
+        Calculation ,
+        Unspecified ,
+    }
+    public enum ColorEnum
+    {
+        Black ,
+        Red ,
+        Green ,
+        Yellow ,
+        Blue ,
+        Magenta ,
+        Cyan ,
+        White ,
+    }
+    public enum OperationalStatusEnum
+    {
+        On ,
+        Off ,
+        Standby ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

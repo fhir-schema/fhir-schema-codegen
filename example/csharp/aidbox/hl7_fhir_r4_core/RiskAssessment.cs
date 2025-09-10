@@ -15,7 +15,7 @@ public class RiskAssessment : DomainResource
     public string? Mitigation { get; set; }
     public Annotation[]? Note { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ResourceReference? Condition { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -42,6 +42,17 @@ public class RiskAssessment : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Registered ,
+        Preliminary ,
+        Final ,
+        Amended ,
+        Cancelled ,
+        EnteredDashInDashError ,
+        Unknown ,
+        Corrected ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

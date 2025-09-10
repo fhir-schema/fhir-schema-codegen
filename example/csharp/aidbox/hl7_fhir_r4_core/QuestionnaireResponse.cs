@@ -11,7 +11,7 @@ public class QuestionnaireResponse : DomainResource
     public QuestionnaireResponseItem[]? Item { get; set; }
     public ResourceReference? Source { get; set; }
     public ResourceReference? Author { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier? Identifier { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public string? Authored { get; set; }
@@ -53,6 +53,14 @@ public class QuestionnaireResponse : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        InDashProgress ,
+        Completed ,
+        Amended ,
+        EnteredDashInDashError ,
+        Stopped ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

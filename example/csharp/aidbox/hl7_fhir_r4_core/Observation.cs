@@ -24,7 +24,7 @@ public class Observation : DomainResource
     public Annotation[]? Note { get; set; }
     public SampledData? ValueSampledData { get; set; }
     public string? EffectiveDateTime { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Timing? EffectiveTiming { get; set; }
@@ -82,6 +82,17 @@ public class Observation : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Registered ,
+        Preliminary ,
+        Final ,
+        Amended ,
+        Cancelled ,
+        EnteredDashInDashError ,
+        Unknown ,
+        Corrected ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

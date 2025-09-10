@@ -24,15 +24,15 @@ public class ServiceRequest : DomainResource
     public Identifier? Requisition { get; set; }
     public ResourceReference[]? LocationReference { get; set; }
     public ResourceReference? Requester { get; set; }
-    public string? Priority { get; set; }
+    public PriorityEnum? Priority { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Ratio? QuantityRatio { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public bool? DoNotPerform { get; set; }
     public CodeableConcept[]? BodySite { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public Range? QuantityRange { get; set; }
     public Quantity? QuantityQuantity { get; set; }
     public ResourceReference[]? Replaces { get; set; }
@@ -45,6 +45,35 @@ public class ServiceRequest : DomainResource
     public ResourceReference[]? Performer { get; set; }
     public ResourceReference[]? ReasonReference { get; set; }
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        OnDashHold ,
+        Revoked ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Directive ,
+        Order ,
+        Option ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

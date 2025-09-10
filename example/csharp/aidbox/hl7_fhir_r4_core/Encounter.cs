@@ -17,7 +17,7 @@ public class Encounter : DomainResource
     public ResourceReference[]? Account { get; set; }
     public EncounterClassHistory[]? ClassHistory { get; set; }
     public CodeableConcept? Priority { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required Coding Class { get; set; }
     public Duration? Length { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -71,10 +71,17 @@ public class Encounter : DomainResource
     public class EncounterLocation : BackboneElement
     {
         public required ResourceReference Location { get; set; }
-        public string? Status { get; set; }
+        public StatusEnum? Status { get; set; }
         public CodeableConcept? PhysicalType { get; set; }
         public Period? Period { get; set; }
         
+        public enum StatusEnum
+        {
+            Planned ,
+            Active ,
+            Reserved ,
+            Completed ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -93,15 +100,39 @@ public class Encounter : DomainResource
     
     public class EncounterStatusHistory : BackboneElement
     {
-        public required string Status { get; set; }
+        public required StatusEnum Status { get; set; }
         public required Period Period { get; set; }
         
+        public enum StatusEnum
+        {
+            Planned ,
+            Arrived ,
+            Triaged ,
+            InDashProgress ,
+            Onleave ,
+            Finished ,
+            Cancelled ,
+            EnteredDashInDashError ,
+            Unknown ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Planned ,
+        Arrived ,
+        Triaged ,
+        InDashProgress ,
+        Onleave ,
+        Finished ,
+        Cancelled ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

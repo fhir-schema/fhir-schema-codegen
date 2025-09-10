@@ -15,7 +15,7 @@ public class DocumentManifest : DomainResource
     public string? Source { get; set; }
     public ResourceReference[]? Author { get; set; }
     public Identifier? MasterIdentifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Subject { get; set; }
     
@@ -30,6 +30,12 @@ public class DocumentManifest : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Current ,
+        Superseded ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

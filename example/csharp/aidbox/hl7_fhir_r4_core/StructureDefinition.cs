@@ -8,10 +8,10 @@ public class StructureDefinition : DomainResource
 {
     public string? Description { get; set; }
     public string? Date { get; set; }
-    public string? Derivation { get; set; }
+    public DerivationEnum? Derivation { get; set; }
     public string? Publisher { get; set; }
     public string[]? ContextInvariant { get; set; }
-    public string? FhirVersion { get; set; }
+    public FhirVersionEnum? FhirVersion { get; set; }
     public CodeableConcept[]? Jurisdiction { get; set; }
     public string? Purpose { get; set; }
     public required string Name { get; set; }
@@ -24,8 +24,8 @@ public class StructureDefinition : DomainResource
     public string? Title { get; set; }
     public StructureDefinitionSnapshot? Snapshot { get; set; }
     public Coding[]? Keyword { get; set; }
-    public required string Status { get; set; }
-    public required string Kind { get; set; }
+    public required StatusEnum Status { get; set; }
+    public required KindEnum Kind { get; set; }
     public required string Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public StructureDefinitionContext[]? Context { get; set; }
@@ -36,9 +36,15 @@ public class StructureDefinition : DomainResource
     
     public class StructureDefinitionContext : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public required string Expression { get; set; }
         
+        public enum TypeEnum
+        {
+            Fhirpath ,
+            Element ,
+            Extension ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -75,6 +81,50 @@ public class StructureDefinition : DomainResource
     }
     
     
+    public enum DerivationEnum
+    {
+        Specialization ,
+        Constraint ,
+    }
+    public enum FhirVersionEnum
+    {
+        _0Dot01 ,
+        _0Dot05 ,
+        _0Dot06 ,
+        _0Dot11 ,
+        _0Dot0Dot80 ,
+        _0Dot0Dot81 ,
+        _0Dot0Dot82 ,
+        _0Dot4Dot0 ,
+        _0Dot5Dot0 ,
+        _1Dot0Dot0 ,
+        _1Dot0Dot1 ,
+        _1Dot0Dot2 ,
+        _1Dot1Dot0 ,
+        _1Dot4Dot0 ,
+        _1Dot6Dot0 ,
+        _1Dot8Dot0 ,
+        _3Dot0Dot0 ,
+        _3Dot0Dot1 ,
+        _3Dot3Dot0 ,
+        _3Dot5Dot0 ,
+        _4Dot0Dot0 ,
+        _4Dot0Dot1 ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
+    public enum KindEnum
+    {
+        PrimitiveDashType ,
+        ComplexDashType ,
+        Resource ,
+        Logical ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

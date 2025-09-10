@@ -13,11 +13,20 @@ public class Endpoint : DomainResource
     public string[]? PayloadMimeType { get; set; }
     public required CodeableConcept[] PayloadType { get; set; }
     public string[]? Header { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Period? Period { get; set; }
     public ContactPoint[]? Contact { get; set; }
     
+    public enum StatusEnum
+    {
+        Active ,
+        Suspended ,
+        Error ,
+        Off ,
+        EnteredDashInDashError ,
+        Test ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -15,7 +15,7 @@ public class VerificationResult : DomainResource
     public string? NextScheduled { get; set; }
     public VerificationResultPrimarySource[]? PrimarySource { get; set; }
     public VerificationResultAttestation? Attestation { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CodeableConcept[]? ValidationProcess { get; set; }
     public string? StatusDate { get; set; }
     public ResourceReference[]? Target { get; set; }
@@ -64,6 +64,15 @@ public class VerificationResult : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Attested ,
+        Validated ,
+        InDashProcess ,
+        ReqDashRevalid ,
+        ValDashFail ,
+        RevalDashFail ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class AdverseEvent : DomainResource
 {
     public CodeableConcept[]? Category { get; set; }
-    public required string Actuality { get; set; }
+    public required ActualityEnum Actuality { get; set; }
     public string? Date { get; set; }
     public ResourceReference[]? Study { get; set; }
     public ResourceReference? Encounter { get; set; }
@@ -50,6 +50,11 @@ public class AdverseEvent : DomainResource
     }
     
     
+    public enum ActualityEnum
+    {
+        Actual ,
+        Potential ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

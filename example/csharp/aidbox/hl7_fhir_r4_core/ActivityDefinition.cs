@@ -35,10 +35,10 @@ public class ActivityDefinition : DomainResource
     public Timing? TimingTiming { get; set; }
     public string? Usage { get; set; }
     public Duration? TimingDuration { get; set; }
-    public string? Priority { get; set; }
-    public required string Status { get; set; }
+    public PriorityEnum? Priority { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
-    public string? Kind { get; set; }
+    public KindEnum? Kind { get; set; }
     public ActivityDefinitionDynamicValue[]? DynamicValue { get; set; }
     public string? Url { get; set; }
     public CodeableConcept? Code { get; set; }
@@ -48,7 +48,7 @@ public class ActivityDefinition : DomainResource
     public bool? DoNotPerform { get; set; }
     public CodeableConcept[]? BodySite { get; set; }
     public Age? TimingAge { get; set; }
-    public string? Intent { get; set; }
+    public IntentEnum? Intent { get; set; }
     public ResourceReference[]? SpecimenRequirement { get; set; }
     public ContactDetail[]? Reviewer { get; set; }
     public Quantity? Quantity { get; set; }
@@ -72,15 +72,66 @@ public class ActivityDefinition : DomainResource
     
     public class ActivityDefinitionParticipant : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public CodeableConcept? Role { get; set; }
         
+        public enum TypeEnum
+        {
+            Patient ,
+            Practitioner ,
+            RelatedDashPerson ,
+            Device ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
+    public enum KindEnum
+    {
+        Appointment ,
+        AppointmentResponse ,
+        CarePlan ,
+        Claim ,
+        CommunicationRequest ,
+        Contract ,
+        DeviceRequest ,
+        EnrollmentRequest ,
+        ImmunizationRecommendation ,
+        MedicationRequest ,
+        NutritionOrder ,
+        ServiceRequest ,
+        SupplyRequest ,
+        Task ,
+        VisionPrescription ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Directive ,
+        Order ,
+        Option ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

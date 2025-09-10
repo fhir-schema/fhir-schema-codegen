@@ -32,10 +32,18 @@ public class Provenance : DomainResource
     
     public class ProvenanceEntity : BackboneElement
     {
-        public required string Role { get; set; }
+        public required RoleEnum Role { get; set; }
         public required ResourceReference What { get; set; }
         public ProvenanceAgent[]? Agent { get; set; }
         
+        public enum RoleEnum
+        {
+            Derivation ,
+            Revision ,
+            Quotation ,
+            Source ,
+            Removal ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class MessageDefinition : DomainResource
 {
     public string? Description { get; set; }
-    public string? Category { get; set; }
+    public CategoryEnum? Category { get; set; }
     public required string Date { get; set; }
     public string? Publisher { get; set; }
     public string[]? Parent { get; set; }
@@ -18,14 +18,14 @@ public class MessageDefinition : DomainResource
     public string? Copyright { get; set; }
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public MessageDefinitionAllowedResponse[]? AllowedResponse { get; set; }
     public string[]? Graph { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public MessageDefinitionFocus[]? Focus { get; set; }
     public string[]? Replaces { get; set; }
-    public string? ResponseRequired { get; set; }
+    public ResponseRequiredEnum? ResponseRequired { get; set; }
     public string? Base { get; set; }
     public string? Version { get; set; }
     public ContactDetail[]? Contact { get; set; }
@@ -44,17 +44,188 @@ public class MessageDefinition : DomainResource
     
     public class MessageDefinitionFocus : BackboneElement
     {
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public string? Profile { get; set; }
         public required long Min { get; set; }
         public string? Max { get; set; }
         
+        public enum CodeEnum
+        {
+            Account ,
+            ActivityDefinition ,
+            AdverseEvent ,
+            AllergyIntolerance ,
+            Appointment ,
+            AppointmentResponse ,
+            AuditEvent ,
+            Basic ,
+            Binary ,
+            BiologicallyDerivedProduct ,
+            BodyStructure ,
+            Bundle ,
+            CapabilityStatement ,
+            CarePlan ,
+            CareTeam ,
+            CatalogEntry ,
+            ChargeItem ,
+            ChargeItemDefinition ,
+            Claim ,
+            ClaimResponse ,
+            ClinicalImpression ,
+            CodeSystem ,
+            Communication ,
+            CommunicationRequest ,
+            CompartmentDefinition ,
+            Composition ,
+            ConceptMap ,
+            Condition ,
+            Consent ,
+            Contract ,
+            Coverage ,
+            CoverageEligibilityRequest ,
+            CoverageEligibilityResponse ,
+            DetectedIssue ,
+            Device ,
+            DeviceDefinition ,
+            DeviceMetric ,
+            DeviceRequest ,
+            DeviceUseStatement ,
+            DiagnosticReport ,
+            DocumentManifest ,
+            DocumentReference ,
+            DomainResource ,
+            EffectEvidenceSynthesis ,
+            Encounter ,
+            Endpoint ,
+            EnrollmentRequest ,
+            EnrollmentResponse ,
+            EpisodeOfCare ,
+            EventDefinition ,
+            Evidence ,
+            EvidenceVariable ,
+            ExampleScenario ,
+            ExplanationOfBenefit ,
+            FamilyMemberHistory ,
+            Flag ,
+            Goal ,
+            GraphDefinition ,
+            Group ,
+            GuidanceResponse ,
+            HealthcareService ,
+            ImagingStudy ,
+            Immunization ,
+            ImmunizationEvaluation ,
+            ImmunizationRecommendation ,
+            ImplementationGuide ,
+            InsurancePlan ,
+            Invoice ,
+            Library ,
+            Linkage ,
+            List ,
+            Location ,
+            Measure ,
+            MeasureReport ,
+            Media ,
+            Medication ,
+            MedicationAdministration ,
+            MedicationDispense ,
+            MedicationKnowledge ,
+            MedicationRequest ,
+            MedicationStatement ,
+            MedicinalProduct ,
+            MedicinalProductAuthorization ,
+            MedicinalProductContraindication ,
+            MedicinalProductIndication ,
+            MedicinalProductIngredient ,
+            MedicinalProductInteraction ,
+            MedicinalProductManufactured ,
+            MedicinalProductPackaged ,
+            MedicinalProductPharmaceutical ,
+            MedicinalProductUndesirableEffect ,
+            MessageDefinition ,
+            MessageHeader ,
+            MolecularSequence ,
+            NamingSystem ,
+            NutritionOrder ,
+            Observation ,
+            ObservationDefinition ,
+            OperationDefinition ,
+            OperationOutcome ,
+            Organization ,
+            OrganizationAffiliation ,
+            Parameters ,
+            Patient ,
+            PaymentNotice ,
+            PaymentReconciliation ,
+            Person ,
+            PlanDefinition ,
+            Practitioner ,
+            PractitionerRole ,
+            Procedure ,
+            Provenance ,
+            Questionnaire ,
+            QuestionnaireResponse ,
+            RelatedPerson ,
+            RequestGroup ,
+            ResearchDefinition ,
+            ResearchElementDefinition ,
+            ResearchStudy ,
+            ResearchSubject ,
+            Resource ,
+            RiskAssessment ,
+            RiskEvidenceSynthesis ,
+            Schedule ,
+            SearchParameter ,
+            ServiceRequest ,
+            Slot ,
+            Specimen ,
+            SpecimenDefinition ,
+            StructureDefinition ,
+            StructureMap ,
+            Subscription ,
+            Substance ,
+            SubstanceNucleicAcid ,
+            SubstancePolymer ,
+            SubstanceProtein ,
+            SubstanceReferenceInformation ,
+            SubstanceSourceMaterial ,
+            SubstanceSpecification ,
+            SupplyDelivery ,
+            SupplyRequest ,
+            Task ,
+            TerminologyCapabilities ,
+            TestReport ,
+            TestScript ,
+            ValueSet ,
+            VerificationResult ,
+            VisionPrescription ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum CategoryEnum
+    {
+        Consequence ,
+        Currency ,
+        Notification ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
+    public enum ResponseRequiredEnum
+    {
+        Always ,
+        OnDashError ,
+        Never ,
+        OnDashSuccess ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
