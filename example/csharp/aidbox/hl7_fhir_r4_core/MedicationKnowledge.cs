@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MedicationKnowledge : DomainResource
@@ -203,8 +205,11 @@ public class MedicationKnowledge : DomainResource
     
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("inactive")]
         Inactive ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

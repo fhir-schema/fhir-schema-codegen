@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Communication : DomainResource
@@ -44,20 +46,32 @@ public class Communication : DomainResource
     
     public enum PriorityEnum
     {
+        [Description("routine")]
         Routine ,
+        [Description("urgent")]
         Urgent ,
+        [Description("asap")]
         Asap ,
+        [Description("stat")]
         Stat ,
     }
     public enum StatusEnum
     {
+        [Description("preparation")]
         Preparation ,
+        [Description("in-progress")]
         InDashProgress ,
+        [Description("not-done")]
         NotDashDone ,
+        [Description("on-hold")]
         OnDashHold ,
+        [Description("stopped")]
         Stopped ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

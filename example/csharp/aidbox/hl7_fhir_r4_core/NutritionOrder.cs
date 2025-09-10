@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class NutritionOrder : DomainResource
@@ -103,24 +105,40 @@ public class NutritionOrder : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("on-hold")]
         OnDashHold ,
+        [Description("revoked")]
         Revoked ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum IntentEnum
     {
+        [Description("proposal")]
         Proposal ,
+        [Description("plan")]
         Plan ,
+        [Description("directive")]
         Directive ,
+        [Description("order")]
         Order ,
+        [Description("option")]
         Option ,
+        [Description("original-order")]
         OriginalDashOrder ,
+        [Description("reflex-order")]
         ReflexDashOrder ,
+        [Description("filler-order")]
         FillerDashOrder ,
+        [Description("instance-order")]
         InstanceDashOrder ,
     }
     public override string ToString() => 

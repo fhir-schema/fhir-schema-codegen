@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Immunization : DomainResource
@@ -87,8 +89,11 @@ public class Immunization : DomainResource
     
     public enum StatusEnum
     {
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("not-done")]
         NotDashDone ,
     }
     public override string ToString() => 

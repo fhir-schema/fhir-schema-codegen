@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class CarePlan : DomainResource
@@ -68,25 +70,42 @@ public class CarePlan : DomainResource
         
         public enum StatusEnum
         {
+            [Description("not-started")]
             NotDashStarted ,
+            [Description("scheduled")]
             Scheduled ,
+            [Description("in-progress")]
             InDashProgress ,
+            [Description("on-hold")]
             OnDashHold ,
+            [Description("completed")]
             Completed ,
+            [Description("cancelled")]
             Cancelled ,
+            [Description("unknown")]
             Unknown ,
+            [Description("entered-in-error")]
             EnteredDashInDashError ,
+            [Description("stopped")]
             Stopped ,
         }
         public enum KindEnum
         {
+            [Description("Appointment")]
             Appointment ,
+            [Description("CommunicationRequest")]
             CommunicationRequest ,
+            [Description("DeviceRequest")]
             DeviceRequest ,
+            [Description("MedicationRequest")]
             MedicationRequest ,
+            [Description("NutritionOrder")]
             NutritionOrder ,
+            [Description("Task")]
             Task ,
+            [Description("ServiceRequest")]
             ServiceRequest ,
+            [Description("VisionPrescription")]
             VisionPrescription ,
         }
         public override string ToString() => 
@@ -97,19 +116,30 @@ public class CarePlan : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("on-hold")]
         OnDashHold ,
+        [Description("revoked")]
         Revoked ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum IntentEnum
     {
+        [Description("proposal")]
         Proposal ,
+        [Description("plan")]
         Plan ,
+        [Description("order")]
         Order ,
+        [Description("option")]
         Option ,
     }
     public override string ToString() => 

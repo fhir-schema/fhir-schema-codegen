@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Practitioner : DomainResource
@@ -32,9 +34,13 @@ public class Practitioner : DomainResource
     
     public enum GenderEnum
     {
+        [Description("male")]
         Male ,
+        [Description("female")]
         Female ,
+        [Description("other")]
         Other ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

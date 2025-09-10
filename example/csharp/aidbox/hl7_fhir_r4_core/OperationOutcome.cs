@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class OperationOutcome : DomainResource
@@ -19,43 +21,78 @@ public class OperationOutcome : DomainResource
         
         public enum SeverityEnum
         {
+            [Description("fatal")]
             Fatal ,
+            [Description("error")]
             Error ,
+            [Description("warning")]
             Warning ,
+            [Description("information")]
             Information ,
         }
         public enum CodeEnum
         {
+            [Description("invalid")]
             Invalid ,
+            [Description("security")]
             Security ,
+            [Description("processing")]
             Processing ,
+            [Description("transient")]
             Transient ,
+            [Description("informational")]
             Informational ,
+            [Description("structure")]
             Structure ,
+            [Description("required")]
             Required ,
+            [Description("value")]
             Value ,
+            [Description("invariant")]
             Invariant ,
+            [Description("login")]
             Login ,
+            [Description("unknown")]
             Unknown ,
+            [Description("expired")]
             Expired ,
+            [Description("forbidden")]
             Forbidden ,
+            [Description("suppressed")]
             Suppressed ,
+            [Description("not-supported")]
             NotDashSupported ,
+            [Description("duplicate")]
             Duplicate ,
+            [Description("multiple-matches")]
             MultipleDashMatches ,
+            [Description("not-found")]
             NotDashFound ,
+            [Description("too-long")]
             TooDashLong ,
+            [Description("code-invalid")]
             CodeDashInvalid ,
+            [Description("extension")]
             Extension ,
+            [Description("too-costly")]
             TooDashCostly ,
+            [Description("business-rule")]
             BusinessDashRule ,
+            [Description("conflict")]
             Conflict ,
+            [Description("deleted")]
             Deleted ,
+            [Description("lock-error")]
             LockDashError ,
+            [Description("no-store")]
             NoDashStore ,
+            [Description("exception")]
             Exception ,
+            [Description("timeout")]
             Timeout ,
+            [Description("incomplete")]
             Incomplete ,
+            [Description("throttled")]
             Throttled ,
         }
         public override string ToString() => 

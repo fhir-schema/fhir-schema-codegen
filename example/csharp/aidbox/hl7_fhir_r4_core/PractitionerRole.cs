@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class PractitionerRole : DomainResource
@@ -30,12 +32,19 @@ public class PractitionerRole : DomainResource
         
         public enum DaysOfWeekEnum
         {
+            [Description("mon")]
             Mon ,
+            [Description("tue")]
             Tue ,
+            [Description("wed")]
             Wed ,
+            [Description("thu")]
             Thu ,
+            [Description("fri")]
             Fri ,
+            [Description("sat")]
             Sat ,
+            [Description("sun")]
             Sun ,
         }
         public override string ToString() => 

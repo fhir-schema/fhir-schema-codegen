@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ObservationDefinition : DomainResource
@@ -33,15 +35,22 @@ public class ObservationDefinition : DomainResource
         
         public enum CategoryEnum
         {
+            [Description("reference")]
             Reference ,
+            [Description("critical")]
             Critical ,
+            [Description("absolute")]
             Absolute ,
         }
         public enum GenderEnum
         {
+            [Description("male")]
             Male ,
+            [Description("female")]
             Female ,
+            [Description("other")]
             Other ,
+            [Description("unknown")]
             Unknown ,
         }
         public override string ToString() => 
@@ -64,16 +73,27 @@ public class ObservationDefinition : DomainResource
     
     public enum PermittedDataTypeEnum
     {
+        [Description("Quantity")]
         Quantity ,
+        [Description("CodeableConcept")]
         CodeableConcept ,
+        [Description("string")]
         String ,
+        [Description("boolean")]
         Boolean ,
+        [Description("integer")]
         Integer ,
+        [Description("Range")]
         Range ,
+        [Description("Ratio")]
         Ratio ,
+        [Description("SampledData")]
         SampledData ,
+        [Description("time")]
         Time ,
+        [Description("dateTime")]
         DateTime ,
+        [Description("Period")]
         Period ,
     }
     public override string ToString() => 

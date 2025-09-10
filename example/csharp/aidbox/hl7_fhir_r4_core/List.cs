@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class List : DomainResource
@@ -35,14 +37,20 @@ public class List : DomainResource
     
     public enum ModeEnum
     {
+        [Description("working")]
         Working ,
+        [Description("snapshot")]
         Snapshot ,
+        [Description("changes")]
         Changes ,
     }
     public enum StatusEnum
     {
+        [Description("current")]
         Current ,
+        [Description("retired")]
         Retired ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

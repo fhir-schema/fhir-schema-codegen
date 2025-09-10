@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class EvidenceVariable : DomainResource
@@ -54,11 +56,17 @@ public class EvidenceVariable : DomainResource
         
         public enum GroupMeasureEnum
         {
+            [Description("mean")]
             Mean ,
+            [Description("median")]
             Median ,
+            [Description("mean-of-mean")]
             MeanDashOfDashMean ,
+            [Description("mean-of-median")]
             MeanDashOfDashMedian ,
+            [Description("median-of-mean")]
             MedianDashOfDashMean ,
+            [Description("median-of-median")]
             MedianDashOfDashMedian ,
         }
         public override string ToString() => 
@@ -69,15 +77,22 @@ public class EvidenceVariable : DomainResource
     
     public enum TypeEnum
     {
+        [Description("dichotomous")]
         Dichotomous ,
+        [Description("continuous")]
         Continuous ,
+        [Description("descriptive")]
         Descriptive ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

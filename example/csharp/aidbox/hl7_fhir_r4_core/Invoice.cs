@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Invoice : DomainResource
@@ -44,11 +46,17 @@ public class Invoice : DomainResource
         
         public enum TypeEnum
         {
+            [Description("base")]
             Base ,
+            [Description("surcharge")]
             Surcharge ,
+            [Description("deduction")]
             Deduction ,
+            [Description("discount")]
             Discount ,
+            [Description("tax")]
             Tax ,
+            [Description("informational")]
             Informational ,
         }
         public override string ToString() => 
@@ -69,10 +77,15 @@ public class Invoice : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("issued")]
         Issued ,
+        [Description("balanced")]
         Balanced ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

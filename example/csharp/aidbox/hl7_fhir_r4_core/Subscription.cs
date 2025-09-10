@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Subscription : DomainResource
@@ -23,10 +25,15 @@ public class Subscription : DomainResource
         
         public enum TypeEnum
         {
+            [Description("rest-hook")]
             RestDashHook ,
+            [Description("websocket")]
             Websocket ,
+            [Description("email")]
             Email ,
+            [Description("sms")]
             Sms ,
+            [Description("message")]
             Message ,
         }
         public override string ToString() => 
@@ -37,9 +44,13 @@ public class Subscription : DomainResource
     
     public enum StatusEnum
     {
+        [Description("requested")]
         Requested ,
+        [Description("active")]
         Active ,
+        [Description("error")]
         Error ,
+        [Description("off")]
         Off ,
     }
     public override string ToString() => 

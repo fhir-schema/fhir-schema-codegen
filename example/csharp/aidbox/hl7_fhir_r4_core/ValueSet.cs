@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ValueSet : DomainResource
@@ -80,14 +82,23 @@ public class ValueSet : DomainResource
         
         public enum OpEnum
         {
+            [Description("=")]
             Equal ,
+            [Description("is-a")]
             IsDashA ,
+            [Description("descendent-of")]
             DescendentDashOf ,
+            [Description("is-not-a")]
             IsDashNotDashA ,
+            [Description("regex")]
             Regex ,
+            [Description("in")]
             In ,
+            [Description("not-in")]
             NotDashIn ,
+            [Description("generalizes")]
             Generalizes ,
+            [Description("exists")]
             Exists ,
         }
         public override string ToString() => 
@@ -144,9 +155,13 @@ public class ValueSet : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

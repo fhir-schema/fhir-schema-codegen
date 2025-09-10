@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ActivityDefinition : DomainResource
@@ -77,9 +79,13 @@ public class ActivityDefinition : DomainResource
         
         public enum TypeEnum
         {
+            [Description("patient")]
             Patient ,
+            [Description("practitioner")]
             Practitioner ,
+            [Description("related-person")]
             RelatedDashPerson ,
+            [Description("device")]
             Device ,
         }
         public override string ToString() => 
@@ -90,46 +96,78 @@ public class ActivityDefinition : DomainResource
     
     public enum PriorityEnum
     {
+        [Description("routine")]
         Routine ,
+        [Description("urgent")]
         Urgent ,
+        [Description("asap")]
         Asap ,
+        [Description("stat")]
         Stat ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum KindEnum
     {
+        [Description("Appointment")]
         Appointment ,
+        [Description("AppointmentResponse")]
         AppointmentResponse ,
+        [Description("CarePlan")]
         CarePlan ,
+        [Description("Claim")]
         Claim ,
+        [Description("CommunicationRequest")]
         CommunicationRequest ,
+        [Description("Contract")]
         Contract ,
+        [Description("DeviceRequest")]
         DeviceRequest ,
+        [Description("EnrollmentRequest")]
         EnrollmentRequest ,
+        [Description("ImmunizationRecommendation")]
         ImmunizationRecommendation ,
+        [Description("MedicationRequest")]
         MedicationRequest ,
+        [Description("NutritionOrder")]
         NutritionOrder ,
+        [Description("ServiceRequest")]
         ServiceRequest ,
+        [Description("SupplyRequest")]
         SupplyRequest ,
+        [Description("Task")]
         Task ,
+        [Description("VisionPrescription")]
         VisionPrescription ,
     }
     public enum IntentEnum
     {
+        [Description("proposal")]
         Proposal ,
+        [Description("plan")]
         Plan ,
+        [Description("directive")]
         Directive ,
+        [Description("order")]
         Order ,
+        [Description("option")]
         Option ,
+        [Description("original-order")]
         OriginalDashOrder ,
+        [Description("reflex-order")]
         ReflexDashOrder ,
+        [Description("filler-order")]
         FillerDashOrder ,
+        [Description("instance-order")]
         InstanceDashOrder ,
     }
     public override string ToString() => 

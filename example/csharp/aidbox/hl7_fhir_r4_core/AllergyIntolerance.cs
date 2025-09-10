@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class AllergyIntolerance : DomainResource
@@ -39,8 +41,11 @@ public class AllergyIntolerance : DomainResource
         
         public enum SeverityEnum
         {
+            [Description("mild")]
             Mild ,
+            [Description("moderate")]
             Moderate ,
+            [Description("severe")]
             Severe ,
         }
         public override string ToString() => 
@@ -51,20 +56,29 @@ public class AllergyIntolerance : DomainResource
     
     public enum CategoryEnum
     {
+        [Description("food")]
         Food ,
+        [Description("medication")]
         Medication ,
+        [Description("environment")]
         Environment ,
+        [Description("biologic")]
         Biologic ,
     }
     public enum CriticalityEnum
     {
+        [Description("low")]
         Low ,
+        [Description("high")]
         High ,
+        [Description("unable-to-assess")]
         UnableDashToDashAssess ,
     }
     public enum TypeEnum
     {
+        [Description("allergy")]
         Allergy ,
+        [Description("intolerance")]
         Intolerance ,
     }
     public override string ToString() => 

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class EpisodeOfCare : DomainResource
@@ -37,12 +39,19 @@ public class EpisodeOfCare : DomainResource
         
         public enum StatusEnum
         {
+            [Description("planned")]
             Planned ,
+            [Description("waitlist")]
             Waitlist ,
+            [Description("active")]
             Active ,
+            [Description("onhold")]
             Onhold ,
+            [Description("finished")]
             Finished ,
+            [Description("cancelled")]
             Cancelled ,
+            [Description("entered-in-error")]
             EnteredDashInDashError ,
         }
         public override string ToString() => 
@@ -53,12 +62,19 @@ public class EpisodeOfCare : DomainResource
     
     public enum StatusEnum
     {
+        [Description("planned")]
         Planned ,
+        [Description("waitlist")]
         Waitlist ,
+        [Description("active")]
         Active ,
+        [Description("onhold")]
         Onhold ,
+        [Description("finished")]
         Finished ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

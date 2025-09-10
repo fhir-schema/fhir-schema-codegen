@@ -79,8 +79,10 @@ export class CSharpGenerator extends Generator {
     writeEnum(enums: Record<string, string[]>) {
         for (const name in enums) {
             this.curlyBlock(['public', 'enum', name], () =>
-                enums[name].forEach((entry) =>
-                    this.lineSM(formatHelper.formatEnumEntry(entry), ','),
+                enums[name].forEach((entry) => {
+                    this.line(`[Description("${entry}")]`)
+                    this.lineSM(formatHelper.formatEnumEntry(entry), ',');
+                    }
                 ),
             );
         }
@@ -158,6 +160,8 @@ export class CSharpGenerator extends Generator {
             this.file('base.cs', () => {
                 this.generateDisclaimer();
 
+                this.lineSM('using', 'System.ComponentModel;');
+                this.line();
                 this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
 
                 for (const schema of this.loader.complexTypes()) {
@@ -178,7 +182,8 @@ export class CSharpGenerator extends Generator {
                     //         // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
                     //     }
                     // }
-
+                    this.lineSM('using', 'System.ComponentModel;');
+                    this.line();
                     this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
                     this.line();
 
