@@ -21,7 +21,7 @@ public class Immunization : DomainResource
     public CodeableConcept[]? ProgramEligibility { get; set; }
     public Annotation[]? Note { get; set; }
     public bool? PrimarySource { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? LotNumber { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Manufacturer { get; set; }
@@ -85,6 +85,12 @@ public class Immunization : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Completed ,
+        EnteredDashInDashError ,
+        NotDashDone ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

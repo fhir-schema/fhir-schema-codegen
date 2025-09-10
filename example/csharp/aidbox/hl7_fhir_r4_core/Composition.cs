@@ -16,18 +16,25 @@ public class Composition : DomainResource
     public required ResourceReference[] Author { get; set; }
     public CompositionEvent[]? Event { get; set; }
     public ResourceReference? Custodian { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier? Identifier { get; set; }
     public CompositionRelatesTo[]? RelatesTo { get; set; }
     public ResourceReference? Subject { get; set; }
-    public string? Confidentiality { get; set; }
+    public ConfidentialityEnum? Confidentiality { get; set; }
     
     public class CompositionAttester : BackboneElement
     {
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Time { get; set; }
         public ResourceReference? Party { get; set; }
         
+        public enum ModeEnum
+        {
+            Personal ,
+            Professional ,
+            Legal ,
+            Official ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -46,10 +53,17 @@ public class Composition : DomainResource
     
     public class CompositionRelatesTo : BackboneElement
     {
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public Identifier? TargetIdentifier { get; set; }
         public ResourceReference? TargetReference { get; set; }
         
+        public enum CodeEnum
+        {
+            Replaces ,
+            Transforms ,
+            Signs ,
+            Appends ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -59,7 +73,7 @@ public class Composition : DomainResource
     {
         public CodeableConcept? OrderedBy { get; set; }
         public CompositionSection[]? Section { get; set; }
-        public string? Mode { get; set; }
+        public ModeEnum? Mode { get; set; }
         public string? Title { get; set; }
         public CodeableConcept? EmptyReason { get; set; }
         public ResourceReference[]? Author { get; set; }
@@ -68,12 +82,34 @@ public class Composition : DomainResource
         public ResourceReference[]? Entry { get; set; }
         public Narrative? Text { get; set; }
         
+        public enum ModeEnum
+        {
+            Working ,
+            Snapshot ,
+            Changes ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Preliminary ,
+        Final ,
+        Amended ,
+        EnteredDashInDashError ,
+    }
+    public enum ConfidentialityEnum
+    {
+        U ,
+        L ,
+        M ,
+        N ,
+        R ,
+        V ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

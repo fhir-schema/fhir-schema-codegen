@@ -20,7 +20,7 @@ public class ConceptMap : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public string? TargetCanonical { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? SourceUri { get; set; }
     public string? Url { get; set; }
     public Identifier? Identifier { get; set; }
@@ -56,11 +56,24 @@ public class ConceptMap : DomainResource
     {
         public string? Code { get; set; }
         public string? Display { get; set; }
-        public required string Equivalence { get; set; }
+        public required EquivalenceEnum Equivalence { get; set; }
         public string? Comment { get; set; }
         public ConceptMapGroupElementTargetDependsOn[]? DependsOn { get; set; }
         public ConceptMapGroupElementTargetDependsOn[]? Product { get; set; }
         
+        public enum EquivalenceEnum
+        {
+            Relatedto ,
+            Unmatched ,
+            Equivalent ,
+            Wider ,
+            Subsumes ,
+            Narrower ,
+            Specializes ,
+            Inexact ,
+            Equal ,
+            Disjoint ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -80,17 +93,30 @@ public class ConceptMap : DomainResource
     
     public class ConceptMapGroupUnmapped : BackboneElement
     {
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Code { get; set; }
         public string? Display { get; set; }
         public string? Url { get; set; }
         
+        public enum ModeEnum
+        {
+            Provided ,
+            Fixed ,
+            OtherDashMap ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

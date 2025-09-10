@@ -9,12 +9,12 @@ public class BiologicallyDerivedProduct : DomainResource
     public ResourceReference[]? Request { get; set; }
     public BiologicallyDerivedProductProcessing[]? Processing { get; set; }
     public ResourceReference[]? Parent { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? ProductCode { get; set; }
     public BiologicallyDerivedProductStorage[]? Storage { get; set; }
     public int? Quantity { get; set; }
-    public string? ProductCategory { get; set; }
+    public ProductCategoryEnum? ProductCategory { get; set; }
     public BiologicallyDerivedProductManipulation? Manipulation { get; set; }
     public BiologicallyDerivedProductCollection? Collection { get; set; }
     
@@ -58,15 +58,34 @@ public class BiologicallyDerivedProduct : DomainResource
     {
         public string? Description { get; set; }
         public decimal? Temperature { get; set; }
-        public string? Scale { get; set; }
+        public ScaleEnum? Scale { get; set; }
         public Period? Duration { get; set; }
         
+        public enum ScaleEnum
+        {
+            Farenheit ,
+            Celsius ,
+            Kelvin ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Available ,
+        Unavailable ,
+    }
+    public enum ProductCategoryEnum
+    {
+        Organ ,
+        Tissue ,
+        Fluid ,
+        Cells ,
+        BiologicalAgent ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

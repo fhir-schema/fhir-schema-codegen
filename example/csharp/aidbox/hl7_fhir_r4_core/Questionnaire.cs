@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class Questionnaire : DomainResource
 {
     public string? Description { get; set; }
-    public string[]? SubjectType { get; set; }
+    public SubjectTypeEnum[]? SubjectType { get; set; }
     public string? Date { get; set; }
     public string? Publisher { get; set; }
     public string? ApprovalDate { get; set; }
@@ -20,7 +20,7 @@ public class Questionnaire : DomainResource
     public string? Copyright { get; set; }
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Url { get; set; }
     public Coding[]? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -31,12 +31,12 @@ public class Questionnaire : DomainResource
     
     public class QuestionnaireItem : BackboneElement
     {
-        public string? EnableBehavior { get; set; }
+        public EnableBehaviorEnum? EnableBehavior { get; set; }
         public string? Definition { get; set; }
         public required string LinkId { get; set; }
         public bool? Repeats { get; set; }
         public QuestionnaireItem[]? Item { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public QuestionnaireItemEnableWhen[]? EnableWhen { get; set; }
         public QuestionnaireItemAnswerOption[]? AnswerOption { get; set; }
         public string? Prefix { get; set; }
@@ -48,6 +48,31 @@ public class Questionnaire : DomainResource
         public bool? Required { get; set; }
         public string? Text { get; set; }
         
+        public enum EnableBehaviorEnum
+        {
+            All ,
+            Any ,
+        }
+        public enum TypeEnum
+        {
+            Group ,
+            Display ,
+            Question ,
+            Boolean ,
+            Decimal ,
+            Integer ,
+            Date ,
+            DateTime ,
+            Time ,
+            String ,
+            Text ,
+            Url ,
+            Choice ,
+            OpenDashChoice ,
+            Attachment ,
+            Reference ,
+            Quantity ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -78,11 +103,21 @@ public class Questionnaire : DomainResource
         public required string Question { get; set; }
         public string? AnswerDateTime { get; set; }
         public string? AnswerString { get; set; }
-        public required string Operator { get; set; }
+        public required OperatorEnum Operator { get; set; }
         public bool? AnswerBoolean { get; set; }
         public Coding? AnswerCoding { get; set; }
         public string? AnswerTime { get; set; }
         
+        public enum OperatorEnum
+        {
+            Exists ,
+            Equal ,
+            NotEqual ,
+            Greater ,
+            Less ,
+            GreaterOrEqual ,
+            LessOrEqual ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -109,6 +144,164 @@ public class Questionnaire : DomainResource
     }
     
     
+    public enum SubjectTypeEnum
+    {
+        Account ,
+        ActivityDefinition ,
+        AdverseEvent ,
+        AllergyIntolerance ,
+        Appointment ,
+        AppointmentResponse ,
+        AuditEvent ,
+        Basic ,
+        Binary ,
+        BiologicallyDerivedProduct ,
+        BodyStructure ,
+        Bundle ,
+        CapabilityStatement ,
+        CarePlan ,
+        CareTeam ,
+        CatalogEntry ,
+        ChargeItem ,
+        ChargeItemDefinition ,
+        Claim ,
+        ClaimResponse ,
+        ClinicalImpression ,
+        CodeSystem ,
+        Communication ,
+        CommunicationRequest ,
+        CompartmentDefinition ,
+        Composition ,
+        ConceptMap ,
+        Condition ,
+        Consent ,
+        Contract ,
+        Coverage ,
+        CoverageEligibilityRequest ,
+        CoverageEligibilityResponse ,
+        DetectedIssue ,
+        Device ,
+        DeviceDefinition ,
+        DeviceMetric ,
+        DeviceRequest ,
+        DeviceUseStatement ,
+        DiagnosticReport ,
+        DocumentManifest ,
+        DocumentReference ,
+        DomainResource ,
+        EffectEvidenceSynthesis ,
+        Encounter ,
+        Endpoint ,
+        EnrollmentRequest ,
+        EnrollmentResponse ,
+        EpisodeOfCare ,
+        EventDefinition ,
+        Evidence ,
+        EvidenceVariable ,
+        ExampleScenario ,
+        ExplanationOfBenefit ,
+        FamilyMemberHistory ,
+        Flag ,
+        Goal ,
+        GraphDefinition ,
+        Group ,
+        GuidanceResponse ,
+        HealthcareService ,
+        ImagingStudy ,
+        Immunization ,
+        ImmunizationEvaluation ,
+        ImmunizationRecommendation ,
+        ImplementationGuide ,
+        InsurancePlan ,
+        Invoice ,
+        Library ,
+        Linkage ,
+        List ,
+        Location ,
+        Measure ,
+        MeasureReport ,
+        Media ,
+        Medication ,
+        MedicationAdministration ,
+        MedicationDispense ,
+        MedicationKnowledge ,
+        MedicationRequest ,
+        MedicationStatement ,
+        MedicinalProduct ,
+        MedicinalProductAuthorization ,
+        MedicinalProductContraindication ,
+        MedicinalProductIndication ,
+        MedicinalProductIngredient ,
+        MedicinalProductInteraction ,
+        MedicinalProductManufactured ,
+        MedicinalProductPackaged ,
+        MedicinalProductPharmaceutical ,
+        MedicinalProductUndesirableEffect ,
+        MessageDefinition ,
+        MessageHeader ,
+        MolecularSequence ,
+        NamingSystem ,
+        NutritionOrder ,
+        Observation ,
+        ObservationDefinition ,
+        OperationDefinition ,
+        OperationOutcome ,
+        Organization ,
+        OrganizationAffiliation ,
+        Parameters ,
+        Patient ,
+        PaymentNotice ,
+        PaymentReconciliation ,
+        Person ,
+        PlanDefinition ,
+        Practitioner ,
+        PractitionerRole ,
+        Procedure ,
+        Provenance ,
+        Questionnaire ,
+        QuestionnaireResponse ,
+        RelatedPerson ,
+        RequestGroup ,
+        ResearchDefinition ,
+        ResearchElementDefinition ,
+        ResearchStudy ,
+        ResearchSubject ,
+        Resource ,
+        RiskAssessment ,
+        RiskEvidenceSynthesis ,
+        Schedule ,
+        SearchParameter ,
+        ServiceRequest ,
+        Slot ,
+        Specimen ,
+        SpecimenDefinition ,
+        StructureDefinition ,
+        StructureMap ,
+        Subscription ,
+        Substance ,
+        SubstanceNucleicAcid ,
+        SubstancePolymer ,
+        SubstanceProtein ,
+        SubstanceReferenceInformation ,
+        SubstanceSourceMaterial ,
+        SubstanceSpecification ,
+        SupplyDelivery ,
+        SupplyRequest ,
+        Task ,
+        TerminologyCapabilities ,
+        TestReport ,
+        TestScript ,
+        ValueSet ,
+        VerificationResult ,
+        VisionPrescription ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

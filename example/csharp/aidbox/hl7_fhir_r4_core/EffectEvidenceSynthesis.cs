@@ -25,7 +25,7 @@ public class EffectEvidenceSynthesis : DomainResource
     public Annotation[]? Note { get; set; }
     public ContactDetail[]? Author { get; set; }
     public CodeableConcept? SynthesisType { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required ResourceReference Population { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -91,10 +91,15 @@ public class EffectEvidenceSynthesis : DomainResource
     public class EffectEvidenceSynthesisResultsByExposure : BackboneElement
     {
         public string? Description { get; set; }
-        public string? ExposureState { get; set; }
+        public ExposureStateEnum? ExposureState { get; set; }
         public CodeableConcept? VariantState { get; set; }
         public required ResourceReference RiskEvidenceSynthesis { get; set; }
         
+        public enum ExposureStateEnum
+        {
+            Exposure ,
+            ExposureDashAlternative ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -112,6 +117,13 @@ public class EffectEvidenceSynthesis : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

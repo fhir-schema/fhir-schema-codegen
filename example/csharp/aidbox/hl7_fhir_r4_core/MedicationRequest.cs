@@ -24,15 +24,15 @@ public class MedicationRequest : DomainResource
     public ResourceReference? Requester { get; set; }
     public ResourceReference[]? SupportingInformation { get; set; }
     public ResourceReference? ReportedReference { get; set; }
-    public string? Priority { get; set; }
-    public required string Status { get; set; }
+    public PriorityEnum? Priority { get; set; }
+    public required StatusEnum Status { get; set; }
     public Dosage[]? DosageInstruction { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public ResourceReference? Recorder { get; set; }
     public bool? ReportedBoolean { get; set; }
     public Identifier[]? Identifier { get; set; }
     public bool? DoNotPerform { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public ResourceReference? PriorPrescription { get; set; }
     public ResourceReference? MedicationReference { get; set; }
@@ -78,6 +78,35 @@ public class MedicationRequest : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Active ,
+        OnDashHold ,
+        Cancelled ,
+        Completed ,
+        EnteredDashInDashError ,
+        Stopped ,
+        Draft ,
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Order ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+        Option ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

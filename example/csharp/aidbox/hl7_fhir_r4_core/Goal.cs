@@ -22,7 +22,7 @@ public class Goal : DomainResource
     public GoalTarget[]? Target { get; set; }
     public ResourceReference[]? OutcomeReference { get; set; }
     public required ResourceReference Subject { get; set; }
-    public required string LifecycleStatus { get; set; }
+    public required LifecycleStatusEnum LifecycleStatus { get; set; }
     
     public class GoalTarget : BackboneElement
     {
@@ -43,6 +43,18 @@ public class Goal : DomainResource
     }
     
     
+    public enum LifecycleStatusEnum
+    {
+        Proposed ,
+        Planned ,
+        Accepted ,
+        Cancelled ,
+        EnteredDashInDashError ,
+        Rejected ,
+        Active ,
+        OnDashHold ,
+        Completed ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

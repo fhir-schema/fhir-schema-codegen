@@ -15,7 +15,7 @@ public class Practitioner : DomainResource
     public Identifier[]? Identifier { get; set; }
     public PractitionerQualification[]? Qualification { get; set; }
     public ContactPoint[]? Telecom { get; set; }
-    public string? Gender { get; set; }
+    public GenderEnum? Gender { get; set; }
     
     public class PractitionerQualification : BackboneElement
     {
@@ -30,6 +30,13 @@ public class Practitioner : DomainResource
     }
     
     
+    public enum GenderEnum
+    {
+        Male ,
+        Female ,
+        Other ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

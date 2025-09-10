@@ -19,7 +19,7 @@ public class Device : DomainResource
     public DeviceSpecialization[]? Specialization { get; set; }
     public string? DistinctIdentifier { get; set; }
     public Annotation[]? Note { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public CodeableConcept[]? Safety { get; set; }
     public string? LotNumber { get; set; }
     public string? Url { get; set; }
@@ -36,8 +36,17 @@ public class Device : DomainResource
     public class DeviceDeviceName : BackboneElement
     {
         public required string Name { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         
+        public enum TypeEnum
+        {
+            UdiDashLabelDashName ,
+            UserDashFriendlyDashName ,
+            PatientDashReportedDashName ,
+            ManufacturerDashName ,
+            ModelDashName ,
+            Other ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -71,8 +80,17 @@ public class Device : DomainResource
         public string? Jurisdiction { get; set; }
         public string? CarrierAIDC { get; set; }
         public string? CarrierHRF { get; set; }
-        public string? EntryType { get; set; }
+        public EntryTypeEnum? EntryType { get; set; }
         
+        public enum EntryTypeEnum
+        {
+            Barcode ,
+            Rfid ,
+            Manual ,
+            Card ,
+            SelfDashReported ,
+            Unknown ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -90,6 +108,13 @@ public class Device : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        Inactive ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

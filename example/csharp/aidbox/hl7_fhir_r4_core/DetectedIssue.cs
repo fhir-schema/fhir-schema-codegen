@@ -12,8 +12,8 @@ public class DetectedIssue : DomainResource
     public ResourceReference? Author { get; set; }
     public string? IdentifiedDateTime { get; set; }
     public string? Reference { get; set; }
-    public required string Status { get; set; }
-    public string? Severity { get; set; }
+    public required StatusEnum Status { get; set; }
+    public SeverityEnum? Severity { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? Implicated { get; set; }
@@ -42,6 +42,23 @@ public class DetectedIssue : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Registered ,
+        Preliminary ,
+        Final ,
+        Amended ,
+        Cancelled ,
+        EnteredDashInDashError ,
+        Unknown ,
+        Corrected ,
+    }
+    public enum SeverityEnum
+    {
+        High ,
+        Moderate ,
+        Low ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

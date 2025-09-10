@@ -15,7 +15,7 @@ public class Coverage : DomainResource
     public bool? Subrogation { get; set; }
     public ResourceReference? Subscriber { get; set; }
     public required ResourceReference[] Payor { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CoverageClass[]? Class { get; set; }
     public Identifier[]? Identifier { get; set; }
     public long? Order { get; set; }
@@ -58,6 +58,13 @@ public class Coverage : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -12,7 +12,7 @@ public class SupplyDelivery : DomainResource
     public CodeableConcept? Type { get; set; }
     public Timing? OccurrenceTiming { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public ResourceReference[]? PartOf { get; set; }
@@ -32,6 +32,13 @@ public class SupplyDelivery : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        InDashProgress ,
+        Completed ,
+        Abandoned ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

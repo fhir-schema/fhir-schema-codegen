@@ -15,19 +15,33 @@ public class Person : DomainResource
     public bool? Active { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
-    public string? Gender { get; set; }
+    public GenderEnum? Gender { get; set; }
     
     public class PersonLink : BackboneElement
     {
         public required ResourceReference Target { get; set; }
-        public string? Assurance { get; set; }
+        public AssuranceEnum? Assurance { get; set; }
         
+        public enum AssuranceEnum
+        {
+            Level1 ,
+            Level2 ,
+            Level3 ,
+            Level4 ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum GenderEnum
+    {
+        Male ,
+        Female ,
+        Other ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

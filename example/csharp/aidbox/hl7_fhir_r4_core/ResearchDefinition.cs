@@ -25,7 +25,7 @@ public class ResearchDefinition : DomainResource
     public string[]? Library { get; set; }
     public ContactDetail[]? Author { get; set; }
     public string? Usage { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public required ResourceReference Population { get; set; }
     public string[]? Comment { get; set; }
@@ -42,6 +42,13 @@ public class ResearchDefinition : DomainResource
     public ResourceReference? SubjectReference { get; set; }
     public Period? EffectivePeriod { get; set; }
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

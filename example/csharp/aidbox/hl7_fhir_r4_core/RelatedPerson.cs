@@ -16,7 +16,7 @@ public class RelatedPerson : DomainResource
     public RelatedPersonCommunication[]? Communication { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
-    public string? Gender { get; set; }
+    public GenderEnum? Gender { get; set; }
     public Period? Period { get; set; }
     
     public class RelatedPersonCommunication : BackboneElement
@@ -30,6 +30,13 @@ public class RelatedPerson : DomainResource
     }
     
     
+    public enum GenderEnum
+    {
+        Male ,
+        Female ,
+        Other ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

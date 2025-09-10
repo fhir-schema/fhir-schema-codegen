@@ -14,7 +14,7 @@ public class ObservationDefinition : DomainResource
     public ResourceReference? AbnormalCodedValueSet { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public string[]? PermittedDataType { get; set; }
+    public PermittedDataTypeEnum[]? PermittedDataType { get; set; }
     public bool? MultipleResultsAllowed { get; set; }
     public ResourceReference? NormalCodedValueSet { get; set; }
     public string? PreferredReportName { get; set; }
@@ -22,15 +22,28 @@ public class ObservationDefinition : DomainResource
     
     public class ObservationDefinitionQualifiedInterval : BackboneElement
     {
-        public string? Category { get; set; }
+        public CategoryEnum? Category { get; set; }
         public Range? Range { get; set; }
         public CodeableConcept? Context { get; set; }
         public CodeableConcept[]? AppliesTo { get; set; }
-        public string? Gender { get; set; }
+        public GenderEnum? Gender { get; set; }
         public Range? Age { get; set; }
         public Range? GestationalAge { get; set; }
         public string? Condition { get; set; }
         
+        public enum CategoryEnum
+        {
+            Reference ,
+            Critical ,
+            Absolute ,
+        }
+        public enum GenderEnum
+        {
+            Male ,
+            Female ,
+            Other ,
+            Unknown ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -49,6 +62,20 @@ public class ObservationDefinition : DomainResource
     }
     
     
+    public enum PermittedDataTypeEnum
+    {
+        Quantity ,
+        CodeableConcept ,
+        String ,
+        Boolean ,
+        Integer ,
+        Range ,
+        Ratio ,
+        SampledData ,
+        Time ,
+        DateTime ,
+        Period ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

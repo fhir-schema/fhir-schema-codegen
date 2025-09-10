@@ -34,9 +34,15 @@ public class MessageHeader : DomainResource
     public class MessageHeaderResponse : BackboneElement
     {
         public required string Identifier { get; set; }
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public ResourceReference? Details { get; set; }
         
+        public enum CodeEnum
+        {
+            Ok ,
+            TransientDashError ,
+            FatalDashError ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

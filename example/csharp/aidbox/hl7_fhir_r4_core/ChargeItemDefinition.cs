@@ -18,7 +18,7 @@ public class ChargeItemDefinition : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public string[]? DerivedFromUri { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Url { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -53,17 +53,33 @@ public class ChargeItemDefinition : DomainResource
     
     public class ChargeItemDefinitionPropertyGroupPriceComponent : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public CodeableConcept? Code { get; set; }
         public decimal? Factor { get; set; }
         public Money? Amount { get; set; }
         
+        public enum TypeEnum
+        {
+            Base ,
+            Surcharge ,
+            Deduction ,
+            Discount ,
+            Tax ,
+            Informational ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class Group : DomainResource
 {
     public string? Name { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public GroupMember[]? Member { get; set; }
     public GroupCharacteristic[]? Characteristic { get; set; }
     public bool? Active { get; set; }
@@ -45,6 +45,15 @@ public class Group : DomainResource
     }
     
     
+    public enum TypeEnum
+    {
+        Person ,
+        Animal ,
+        Practitioner ,
+        Device ,
+        Medication ,
+        Substance ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

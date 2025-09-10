@@ -17,7 +17,7 @@ public class MedicationAdministration : DomainResource
     public Annotation[]? Note { get; set; }
     public ResourceReference[]? SupportingInformation { get; set; }
     public string? EffectiveDateTime { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Context { get; set; }
     public ResourceReference[]? Device { get; set; }
@@ -54,6 +54,16 @@ public class MedicationAdministration : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        InDashProgress ,
+        NotDashDone ,
+        OnDashHold ,
+        Completed ,
+        EnteredDashInDashError ,
+        Stopped ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

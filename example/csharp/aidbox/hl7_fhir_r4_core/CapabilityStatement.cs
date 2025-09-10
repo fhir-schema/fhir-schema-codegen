@@ -11,7 +11,7 @@ public class CapabilityStatement : DomainResource
     public required string Date { get; set; }
     public string? Publisher { get; set; }
     public string[]? PatchFormat { get; set; }
-    public required string FhirVersion { get; set; }
+    public required FhirVersionEnum FhirVersion { get; set; }
     public CodeableConcept[]? Jurisdiction { get; set; }
     public string[]? Instantiates { get; set; }
     public string? Purpose { get; set; }
@@ -22,9 +22,9 @@ public class CapabilityStatement : DomainResource
     public string[]? Imports { get; set; }
     public string? Title { get; set; }
     public CapabilityStatementDocument[]? Document { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CapabilityStatementMessaging[]? Messaging { get; set; }
-    public required string Kind { get; set; }
+    public required KindEnum Kind { get; set; }
     public string[]? ImplementationGuide { get; set; }
     public string? Url { get; set; }
     public CapabilityStatementSoftware? Software { get; set; }
@@ -35,10 +35,15 @@ public class CapabilityStatement : DomainResource
     
     public class CapabilityStatementDocument : BackboneElement
     {
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Documentation { get; set; }
         public required string Profile { get; set; }
         
+        public enum ModeEnum
+        {
+            Producer ,
+            Consumer ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -79,9 +84,14 @@ public class CapabilityStatement : DomainResource
     
     public class CapabilityStatementMessagingSupportedMessage : BackboneElement
     {
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public required string Definition { get; set; }
         
+        public enum ModeEnum
+        {
+            Sender ,
+            Receiver ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -89,7 +99,7 @@ public class CapabilityStatement : DomainResource
     
     public class CapabilityStatementRest : BackboneElement
     {
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Documentation { get; set; }
         public CapabilityStatementRestSecurity? Security { get; set; }
         public CapabilityStatementRestResource[]? Resource { get; set; }
@@ -98,6 +108,11 @@ public class CapabilityStatement : DomainResource
         public CapabilityStatementRestResourceOperation[]? Operation { get; set; }
         public string[]? Compartment { get; set; }
         
+        public enum ModeEnum
+        {
+            Client ,
+            Server ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -105,9 +120,16 @@ public class CapabilityStatement : DomainResource
     
     public class CapabilityStatementRestInteraction : BackboneElement
     {
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public string? Documentation { get; set; }
         
+        public enum CodeEnum
+        {
+            Transaction ,
+            Batch ,
+            SearchDashSystem ,
+            HistoryDashSystem ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -118,21 +140,199 @@ public class CapabilityStatement : DomainResource
         public string[]? SearchRevInclude { get; set; }
         public CapabilityStatementRestResourceSearchParam[]? SearchParam { get; set; }
         public bool? ConditionalUpdate { get; set; }
-        public string? ConditionalRead { get; set; }
+        public ConditionalReadEnum? ConditionalRead { get; set; }
         public CapabilityStatementRestResourceOperation[]? Operation { get; set; }
-        public string[]? ReferencePolicy { get; set; }
+        public ReferencePolicyEnum[]? ReferencePolicy { get; set; }
         public bool? ReadHistory { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public CapabilityStatementRestResourceInteraction[]? Interaction { get; set; }
         public string? Documentation { get; set; }
         public bool? UpdateCreate { get; set; }
         public bool? ConditionalCreate { get; set; }
         public string[]? SupportedProfile { get; set; }
         public string[]? SearchInclude { get; set; }
-        public string? Versioning { get; set; }
+        public VersioningEnum? Versioning { get; set; }
         public string? Profile { get; set; }
-        public string? ConditionalDelete { get; set; }
+        public ConditionalDeleteEnum? ConditionalDelete { get; set; }
         
+        public enum ConditionalReadEnum
+        {
+            NotDashSupported ,
+            ModifiedDashSince ,
+            NotDashMatch ,
+            FullDashSupport ,
+        }
+        public enum ReferencePolicyEnum
+        {
+            Literal ,
+            Logical ,
+            Resolves ,
+            Enforced ,
+            Local ,
+        }
+        public enum TypeEnum
+        {
+            Account ,
+            ActivityDefinition ,
+            AdverseEvent ,
+            AllergyIntolerance ,
+            Appointment ,
+            AppointmentResponse ,
+            AuditEvent ,
+            Basic ,
+            Binary ,
+            BiologicallyDerivedProduct ,
+            BodyStructure ,
+            Bundle ,
+            CapabilityStatement ,
+            CarePlan ,
+            CareTeam ,
+            CatalogEntry ,
+            ChargeItem ,
+            ChargeItemDefinition ,
+            Claim ,
+            ClaimResponse ,
+            ClinicalImpression ,
+            CodeSystem ,
+            Communication ,
+            CommunicationRequest ,
+            CompartmentDefinition ,
+            Composition ,
+            ConceptMap ,
+            Condition ,
+            Consent ,
+            Contract ,
+            Coverage ,
+            CoverageEligibilityRequest ,
+            CoverageEligibilityResponse ,
+            DetectedIssue ,
+            Device ,
+            DeviceDefinition ,
+            DeviceMetric ,
+            DeviceRequest ,
+            DeviceUseStatement ,
+            DiagnosticReport ,
+            DocumentManifest ,
+            DocumentReference ,
+            DomainResource ,
+            EffectEvidenceSynthesis ,
+            Encounter ,
+            Endpoint ,
+            EnrollmentRequest ,
+            EnrollmentResponse ,
+            EpisodeOfCare ,
+            EventDefinition ,
+            Evidence ,
+            EvidenceVariable ,
+            ExampleScenario ,
+            ExplanationOfBenefit ,
+            FamilyMemberHistory ,
+            Flag ,
+            Goal ,
+            GraphDefinition ,
+            Group ,
+            GuidanceResponse ,
+            HealthcareService ,
+            ImagingStudy ,
+            Immunization ,
+            ImmunizationEvaluation ,
+            ImmunizationRecommendation ,
+            ImplementationGuide ,
+            InsurancePlan ,
+            Invoice ,
+            Library ,
+            Linkage ,
+            List ,
+            Location ,
+            Measure ,
+            MeasureReport ,
+            Media ,
+            Medication ,
+            MedicationAdministration ,
+            MedicationDispense ,
+            MedicationKnowledge ,
+            MedicationRequest ,
+            MedicationStatement ,
+            MedicinalProduct ,
+            MedicinalProductAuthorization ,
+            MedicinalProductContraindication ,
+            MedicinalProductIndication ,
+            MedicinalProductIngredient ,
+            MedicinalProductInteraction ,
+            MedicinalProductManufactured ,
+            MedicinalProductPackaged ,
+            MedicinalProductPharmaceutical ,
+            MedicinalProductUndesirableEffect ,
+            MessageDefinition ,
+            MessageHeader ,
+            MolecularSequence ,
+            NamingSystem ,
+            NutritionOrder ,
+            Observation ,
+            ObservationDefinition ,
+            OperationDefinition ,
+            OperationOutcome ,
+            Organization ,
+            OrganizationAffiliation ,
+            Parameters ,
+            Patient ,
+            PaymentNotice ,
+            PaymentReconciliation ,
+            Person ,
+            PlanDefinition ,
+            Practitioner ,
+            PractitionerRole ,
+            Procedure ,
+            Provenance ,
+            Questionnaire ,
+            QuestionnaireResponse ,
+            RelatedPerson ,
+            RequestGroup ,
+            ResearchDefinition ,
+            ResearchElementDefinition ,
+            ResearchStudy ,
+            ResearchSubject ,
+            Resource ,
+            RiskAssessment ,
+            RiskEvidenceSynthesis ,
+            Schedule ,
+            SearchParameter ,
+            ServiceRequest ,
+            Slot ,
+            Specimen ,
+            SpecimenDefinition ,
+            StructureDefinition ,
+            StructureMap ,
+            Subscription ,
+            Substance ,
+            SubstanceNucleicAcid ,
+            SubstancePolymer ,
+            SubstanceProtein ,
+            SubstanceReferenceInformation ,
+            SubstanceSourceMaterial ,
+            SubstanceSpecification ,
+            SupplyDelivery ,
+            SupplyRequest ,
+            Task ,
+            TerminologyCapabilities ,
+            TestReport ,
+            TestScript ,
+            ValueSet ,
+            VerificationResult ,
+            VisionPrescription ,
+        }
+        public enum VersioningEnum
+        {
+            NoDashVersion ,
+            Versioned ,
+            VersionedDashUpdate ,
+        }
+        public enum ConditionalDeleteEnum
+        {
+            NotDashSupported ,
+            Single ,
+            Multiple ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -140,9 +340,21 @@ public class CapabilityStatement : DomainResource
     
     public class CapabilityStatementRestResourceInteraction : BackboneElement
     {
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public string? Documentation { get; set; }
         
+        public enum CodeEnum
+        {
+            Read ,
+            Vread ,
+            Update ,
+            Patch ,
+            Delete ,
+            HistoryDashInstance ,
+            HistoryDashType ,
+            Create ,
+            SearchDashType ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -163,9 +375,21 @@ public class CapabilityStatement : DomainResource
     {
         public required string Name { get; set; }
         public string? Definition { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public string? Documentation { get; set; }
         
+        public enum TypeEnum
+        {
+            Number ,
+            Date ,
+            String ,
+            Token ,
+            Reference ,
+            Composite ,
+            Quantity ,
+            Uri ,
+            Special ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -194,6 +418,44 @@ public class CapabilityStatement : DomainResource
     }
     
     
+    public enum FhirVersionEnum
+    {
+        _0Dot01 ,
+        _0Dot05 ,
+        _0Dot06 ,
+        _0Dot11 ,
+        _0Dot0Dot80 ,
+        _0Dot0Dot81 ,
+        _0Dot0Dot82 ,
+        _0Dot4Dot0 ,
+        _0Dot5Dot0 ,
+        _1Dot0Dot0 ,
+        _1Dot0Dot1 ,
+        _1Dot0Dot2 ,
+        _1Dot1Dot0 ,
+        _1Dot4Dot0 ,
+        _1Dot6Dot0 ,
+        _1Dot8Dot0 ,
+        _3Dot0Dot0 ,
+        _3Dot0Dot1 ,
+        _3Dot3Dot0 ,
+        _3Dot5Dot0 ,
+        _4Dot0Dot0 ,
+        _4Dot0Dot1 ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
+    public enum KindEnum
+    {
+        Instance ,
+        Capability ,
+        Requirements ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

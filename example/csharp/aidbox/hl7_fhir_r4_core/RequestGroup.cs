@@ -13,12 +13,12 @@ public class RequestGroup : DomainResource
     public string? AuthoredOn { get; set; }
     public Annotation[]? Note { get; set; }
     public ResourceReference? Author { get; set; }
-    public string? Priority { get; set; }
-    public required string Status { get; set; }
+    public PriorityEnum? Priority { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public RequestGroupAction[]? Action { get; set; }
     public ResourceReference[]? Replaces { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
@@ -37,21 +37,59 @@ public class RequestGroup : DomainResource
         public string? Title { get; set; }
         public RelatedArtifact[]? Documentation { get; set; }
         public string? Prefix { get; set; }
-        public string? SelectionBehavior { get; set; }
+        public SelectionBehaviorEnum? SelectionBehavior { get; set; }
         public string? TimingDateTime { get; set; }
         public Timing? TimingTiming { get; set; }
         public Duration? TimingDuration { get; set; }
-        public string? Priority { get; set; }
-        public string? RequiredBehavior { get; set; }
+        public PriorityEnum? Priority { get; set; }
+        public RequiredBehaviorEnum? RequiredBehavior { get; set; }
         public RequestGroupActionCondition[]? Condition { get; set; }
         public ResourceReference? Resource { get; set; }
-        public string? GroupingBehavior { get; set; }
+        public GroupingBehaviorEnum? GroupingBehavior { get; set; }
         public CodeableConcept[]? Code { get; set; }
         public Age? TimingAge { get; set; }
         public RequestGroupAction[]? Action { get; set; }
-        public string? PrecheckBehavior { get; set; }
-        public string? CardinalityBehavior { get; set; }
+        public PrecheckBehaviorEnum? PrecheckBehavior { get; set; }
+        public CardinalityBehaviorEnum? CardinalityBehavior { get; set; }
         
+        public enum SelectionBehaviorEnum
+        {
+            Any ,
+            All ,
+            AllDashOrDashNone ,
+            ExactlyDashOne ,
+            AtDashMostDashOne ,
+            OneDashOrDashMore ,
+        }
+        public enum PriorityEnum
+        {
+            Routine ,
+            Urgent ,
+            Asap ,
+            Stat ,
+        }
+        public enum RequiredBehaviorEnum
+        {
+            Must ,
+            Could ,
+            MustDashUnlessDashDocumented ,
+        }
+        public enum GroupingBehaviorEnum
+        {
+            VisualDashGroup ,
+            LogicalDashGroup ,
+            SentenceDashGroup ,
+        }
+        public enum PrecheckBehaviorEnum
+        {
+            Yes ,
+            No ,
+        }
+        public enum CardinalityBehaviorEnum
+        {
+            Single ,
+            Multiple ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -59,9 +97,15 @@ public class RequestGroup : DomainResource
     
     public class RequestGroupActionCondition : BackboneElement
     {
-        public required string Kind { get; set; }
+        public required KindEnum Kind { get; set; }
         public ResourceExpression? Expression { get; set; }
         
+        public enum KindEnum
+        {
+            Applicability ,
+            Start ,
+            Stop ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -70,16 +114,57 @@ public class RequestGroup : DomainResource
     public class RequestGroupActionRelatedAction : BackboneElement
     {
         public required string ActionId { get; set; }
-        public required string Relationship { get; set; }
+        public required RelationshipEnum Relationship { get; set; }
         public Duration? OffsetDuration { get; set; }
         public Range? OffsetRange { get; set; }
         
+        public enum RelationshipEnum
+        {
+            BeforeDashStart ,
+            Before ,
+            BeforeDashEnd ,
+            ConcurrentDashWithDashStart ,
+            Concurrent ,
+            ConcurrentDashWithDashEnd ,
+            AfterDashStart ,
+            After ,
+            AfterDashEnd ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        OnDashHold ,
+        Revoked ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        Proposal ,
+        Plan ,
+        Directive ,
+        Order ,
+        Option ,
+        OriginalDashOrder ,
+        ReflexDashOrder ,
+        FillerDashOrder ,
+        InstanceDashOrder ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

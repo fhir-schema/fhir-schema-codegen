@@ -9,10 +9,10 @@ public class MeasureReport : DomainResource
     public ResourceReference[]? EvaluatedResource { get; set; }
     public string? Date { get; set; }
     public MeasureReportGroup[]? Group { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public required string Measure { get; set; }
     public ResourceReference? Reporter { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public required Period Period { get; set; }
     public CodeableConcept? ImprovementNotation { get; set; }
@@ -85,6 +85,19 @@ public class MeasureReport : DomainResource
     }
     
     
+    public enum TypeEnum
+    {
+        Individual ,
+        SubjectDashList ,
+        Summary ,
+        DataDashCollection ,
+    }
+    public enum StatusEnum
+    {
+        Complete ,
+        Pending ,
+        Error ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

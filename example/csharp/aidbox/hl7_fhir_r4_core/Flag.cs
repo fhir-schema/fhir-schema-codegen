@@ -7,7 +7,7 @@ namespace Aidbox.FHIR.R4.Core;
 public class Flag : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CodeableConcept[]? Category { get; set; }
     public required CodeableConcept Code { get; set; }
     public required ResourceReference Subject { get; set; }
@@ -15,6 +15,12 @@ public class Flag : DomainResource
     public ResourceReference? Encounter { get; set; }
     public ResourceReference? Author { get; set; }
     
+    public enum StatusEnum
+    {
+        Active ,
+        Inactive ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

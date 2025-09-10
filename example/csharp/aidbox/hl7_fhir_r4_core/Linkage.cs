@@ -12,9 +12,15 @@ public class Linkage : DomainResource
     
     public class LinkageItem : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public required ResourceReference Resource { get; set; }
         
+        public enum TypeEnum
+        {
+            Source ,
+            Alternate ,
+            Historical ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

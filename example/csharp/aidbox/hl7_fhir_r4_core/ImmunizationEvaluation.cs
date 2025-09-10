@@ -17,11 +17,16 @@ public class ImmunizationEvaluation : DomainResource
     public string? SeriesDosesString { get; set; }
     public CodeableConcept[]? DoseStatusReason { get; set; }
     public required ResourceReference ImmunizationEvent { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public required CodeableConcept TargetDisease { get; set; }
     public required CodeableConcept DoseStatus { get; set; }
     
+    public enum StatusEnum
+    {
+        Completed ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -24,7 +24,7 @@ public class Procedure : DomainResource
     public Annotation[]? Note { get; set; }
     public Range? PerformedRange { get; set; }
     public CodeableConcept[]? Complication { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? PerformedDateTime { get; set; }
     public ResourceReference? Recorder { get; set; }
     public CodeableConcept? Code { get; set; }
@@ -61,6 +61,17 @@ public class Procedure : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Preparation ,
+        InDashProgress ,
+        NotDashDone ,
+        OnDashHold ,
+        Stopped ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -12,7 +12,7 @@ public class Account : DomainResource
     public AccountCoverage[]? Coverage { get; set; }
     public CodeableConcept? Type { get; set; }
     public AccountGuarantor[]? Guarantor { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? PartOf { get; set; }
     public ResourceReference[]? Subject { get; set; }
@@ -40,6 +40,14 @@ public class Account : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Active ,
+        Inactive ,
+        EnteredDashInDashError ,
+        OnDashHold ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

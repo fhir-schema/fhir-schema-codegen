@@ -13,7 +13,7 @@ public class DeviceUseStatement : DomainResource
     public Annotation[]? Note { get; set; }
     public string? TimingDateTime { get; set; }
     public Timing? TimingTiming { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? RecordedOn { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? BodySite { get; set; }
@@ -22,6 +22,15 @@ public class DeviceUseStatement : DomainResource
     public required ResourceReference Subject { get; set; }
     public ResourceReference[]? ReasonReference { get; set; }
     
+    public enum StatusEnum
+    {
+        Active ,
+        Completed ,
+        EnteredDashInDashError ,
+        Intended ,
+        Stopped ,
+        OnDashHold ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

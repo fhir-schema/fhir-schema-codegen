@@ -17,13 +17,18 @@ public class SpecimenDefinition : DomainResource
     {
         public bool? IsDerived { get; set; }
         public CodeableConcept? Type { get; set; }
-        public required string Preference { get; set; }
+        public required PreferenceEnum Preference { get; set; }
         public SpecimenDefinitionTypeTestedContainer? Container { get; set; }
         public string? Requirement { get; set; }
         public Duration? RetentionTime { get; set; }
         public CodeableConcept[]? RejectionCriterion { get; set; }
         public SpecimenDefinitionTypeTestedHandling[]? Handling { get; set; }
         
+        public enum PreferenceEnum
+        {
+            Preferred ,
+            Alternate ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

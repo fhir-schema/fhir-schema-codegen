@@ -22,7 +22,7 @@ public class EventDefinition : DomainResource
     public string? Title { get; set; }
     public ContactDetail[]? Author { get; set; }
     public string? Usage { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -36,6 +36,13 @@ public class EventDefinition : DomainResource
     public ResourceReference? SubjectReference { get; set; }
     public Period? EffectivePeriod { get; set; }
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

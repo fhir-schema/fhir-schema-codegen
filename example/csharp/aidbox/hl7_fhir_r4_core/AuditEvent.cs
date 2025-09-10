@@ -8,12 +8,12 @@ public class AuditEvent : DomainResource
 {
     public string? OutcomeDesc { get; set; }
     public required Coding Type { get; set; }
-    public string? Outcome { get; set; }
+    public OutcomeEnum? Outcome { get; set; }
     public required AuditEventSource Source { get; set; }
     public required string Recorded { get; set; }
     public required AuditEventAgent[] Agent { get; set; }
     public CodeableConcept[]? PurposeOfEvent { get; set; }
-    public string? Action { get; set; }
+    public ActionEnum? Action { get; set; }
     public Period? Period { get; set; }
     public AuditEventEntity[]? Entity { get; set; }
     public Coding[]? Subtype { get; set; }
@@ -40,8 +40,16 @@ public class AuditEvent : DomainResource
     public class AuditEventAgentNetwork : BackboneElement
     {
         public string? Address { get; set; }
-        public string? Type { get; set; }
+        public TypeEnum? Type { get; set; }
         
+        public enum TypeEnum
+        {
+            _1 ,
+            _2 ,
+            _3 ,
+            _4 ,
+            _5 ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -87,6 +95,21 @@ public class AuditEvent : DomainResource
     }
     
     
+    public enum OutcomeEnum
+    {
+        _0 ,
+        _4 ,
+        _8 ,
+        _12 ,
+    }
+    public enum ActionEnum
+    {
+        C ,
+        R ,
+        U ,
+        D ,
+        E ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

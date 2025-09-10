@@ -15,9 +15,9 @@ public class SupplyRequest : DomainResource
     public Timing? OccurrenceTiming { get; set; }
     public ResourceReference? DeliverFrom { get; set; }
     public ResourceReference? Requester { get; set; }
-    public string? Priority { get; set; }
+    public PriorityEnum? Priority { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? ItemCodeableConcept { get; set; }
     public required Quantity Quantity { get; set; }
@@ -39,6 +39,23 @@ public class SupplyRequest : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Suspended ,
+        Cancelled ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

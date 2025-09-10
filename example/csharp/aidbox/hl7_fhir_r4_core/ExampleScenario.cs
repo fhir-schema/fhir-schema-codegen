@@ -17,7 +17,7 @@ public class ExampleScenario : DomainResource
     public string? Copyright { get; set; }
     public bool? Experimental { get; set; }
     public string[]? Workflow { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public string? Version { get; set; }
@@ -27,10 +27,15 @@ public class ExampleScenario : DomainResource
     public class ExampleScenarioActor : BackboneElement
     {
         public required string ActorId { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         
+        public enum TypeEnum
+        {
+            Person ,
+            Entity ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -39,12 +44,163 @@ public class ExampleScenario : DomainResource
     public class ExampleScenarioInstance : BackboneElement
     {
         public required string ResourceId { get; set; }
-        public required string ResourceType { get; set; }
+        public required ResourceTypeEnum ResourceType { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public ExampleScenarioInstanceVersion[]? Version { get; set; }
         public ExampleScenarioInstanceContainedInstance[]? ContainedInstance { get; set; }
         
+        public enum ResourceTypeEnum
+        {
+            Account ,
+            ActivityDefinition ,
+            AdverseEvent ,
+            AllergyIntolerance ,
+            Appointment ,
+            AppointmentResponse ,
+            AuditEvent ,
+            Basic ,
+            Binary ,
+            BiologicallyDerivedProduct ,
+            BodyStructure ,
+            Bundle ,
+            CapabilityStatement ,
+            CarePlan ,
+            CareTeam ,
+            CatalogEntry ,
+            ChargeItem ,
+            ChargeItemDefinition ,
+            Claim ,
+            ClaimResponse ,
+            ClinicalImpression ,
+            CodeSystem ,
+            Communication ,
+            CommunicationRequest ,
+            CompartmentDefinition ,
+            Composition ,
+            ConceptMap ,
+            Condition ,
+            Consent ,
+            Contract ,
+            Coverage ,
+            CoverageEligibilityRequest ,
+            CoverageEligibilityResponse ,
+            DetectedIssue ,
+            Device ,
+            DeviceDefinition ,
+            DeviceMetric ,
+            DeviceRequest ,
+            DeviceUseStatement ,
+            DiagnosticReport ,
+            DocumentManifest ,
+            DocumentReference ,
+            DomainResource ,
+            EffectEvidenceSynthesis ,
+            Encounter ,
+            Endpoint ,
+            EnrollmentRequest ,
+            EnrollmentResponse ,
+            EpisodeOfCare ,
+            EventDefinition ,
+            Evidence ,
+            EvidenceVariable ,
+            ExampleScenario ,
+            ExplanationOfBenefit ,
+            FamilyMemberHistory ,
+            Flag ,
+            Goal ,
+            GraphDefinition ,
+            Group ,
+            GuidanceResponse ,
+            HealthcareService ,
+            ImagingStudy ,
+            Immunization ,
+            ImmunizationEvaluation ,
+            ImmunizationRecommendation ,
+            ImplementationGuide ,
+            InsurancePlan ,
+            Invoice ,
+            Library ,
+            Linkage ,
+            List ,
+            Location ,
+            Measure ,
+            MeasureReport ,
+            Media ,
+            Medication ,
+            MedicationAdministration ,
+            MedicationDispense ,
+            MedicationKnowledge ,
+            MedicationRequest ,
+            MedicationStatement ,
+            MedicinalProduct ,
+            MedicinalProductAuthorization ,
+            MedicinalProductContraindication ,
+            MedicinalProductIndication ,
+            MedicinalProductIngredient ,
+            MedicinalProductInteraction ,
+            MedicinalProductManufactured ,
+            MedicinalProductPackaged ,
+            MedicinalProductPharmaceutical ,
+            MedicinalProductUndesirableEffect ,
+            MessageDefinition ,
+            MessageHeader ,
+            MolecularSequence ,
+            NamingSystem ,
+            NutritionOrder ,
+            Observation ,
+            ObservationDefinition ,
+            OperationDefinition ,
+            OperationOutcome ,
+            Organization ,
+            OrganizationAffiliation ,
+            Parameters ,
+            Patient ,
+            PaymentNotice ,
+            PaymentReconciliation ,
+            Person ,
+            PlanDefinition ,
+            Practitioner ,
+            PractitionerRole ,
+            Procedure ,
+            Provenance ,
+            Questionnaire ,
+            QuestionnaireResponse ,
+            RelatedPerson ,
+            RequestGroup ,
+            ResearchDefinition ,
+            ResearchElementDefinition ,
+            ResearchStudy ,
+            ResearchSubject ,
+            Resource ,
+            RiskAssessment ,
+            RiskEvidenceSynthesis ,
+            Schedule ,
+            SearchParameter ,
+            ServiceRequest ,
+            Slot ,
+            Specimen ,
+            SpecimenDefinition ,
+            StructureDefinition ,
+            StructureMap ,
+            Subscription ,
+            Substance ,
+            SubstanceNucleicAcid ,
+            SubstancePolymer ,
+            SubstanceProtein ,
+            SubstanceReferenceInformation ,
+            SubstanceSourceMaterial ,
+            SubstanceSpecification ,
+            SupplyDelivery ,
+            SupplyRequest ,
+            Task ,
+            TerminologyCapabilities ,
+            TestReport ,
+            TestScript ,
+            ValueSet ,
+            VerificationResult ,
+            VisionPrescription ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -125,6 +281,13 @@ public class ExampleScenario : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

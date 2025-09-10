@@ -43,8 +43,17 @@ public class DeviceDefinition : DomainResource
     public class DeviceDefinitionDeviceName : BackboneElement
     {
         public required string Name { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         
+        public enum TypeEnum
+        {
+            UdiDashLabelDashName ,
+            UserDashFriendlyDashName ,
+            PatientDashReportedDashName ,
+            ManufacturerDashName ,
+            ModelDashName ,
+            Other ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

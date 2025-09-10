@@ -11,12 +11,12 @@ public class CoverageEligibilityRequest : DomainResource
     public ResourceReference? Facility { get; set; }
     public ResourceReference? Enterer { get; set; }
     public CoverageEligibilityRequestSupportingInfo[]? SupportingInfo { get; set; }
-    public required string[] Purpose { get; set; }
+    public required PurposeEnum[] Purpose { get; set; }
     public CoverageEligibilityRequestItem[]? Item { get; set; }
     public required string Created { get; set; }
     public required ResourceReference Insurer { get; set; }
     public CodeableConcept? Priority { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? ServicedDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Provider { get; set; }
@@ -73,6 +73,20 @@ public class CoverageEligibilityRequest : DomainResource
     }
     
     
+    public enum PurposeEnum
+    {
+        AuthDashRequirements ,
+        Benefits ,
+        Discovery ,
+        Validation ,
+    }
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

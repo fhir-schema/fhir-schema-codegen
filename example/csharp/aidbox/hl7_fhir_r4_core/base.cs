@@ -195,13 +195,234 @@ public class Count : Quantity
 public class ParameterDefinition : Element
 {
     public string? Name { get; set; }
-    public required string Use { get; set; }
+    public required UseEnum Use { get; set; }
     public int? Min { get; set; }
     public string? Max { get; set; }
     public string? Documentation { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? Profile { get; set; }
     
+    public enum UseEnum
+    {
+        In ,
+        Out ,
+    }
+    public enum TypeEnum
+    {
+        Address ,
+        Age ,
+        Annotation ,
+        Attachment ,
+        BackboneElement ,
+        CodeableConcept ,
+        Coding ,
+        ContactDetail ,
+        ContactPoint ,
+        Contributor ,
+        Count ,
+        DataRequirement ,
+        Distance ,
+        Dosage ,
+        Duration ,
+        Element ,
+        ElementDefinition ,
+        Expression ,
+        Extension ,
+        HumanName ,
+        Identifier ,
+        MarketingStatus ,
+        Meta ,
+        Money ,
+        MoneyQuantity ,
+        Narrative ,
+        ParameterDefinition ,
+        Period ,
+        Population ,
+        ProdCharacteristic ,
+        ProductShelfLife ,
+        Quantity ,
+        Range ,
+        Ratio ,
+        Reference ,
+        RelatedArtifact ,
+        SampledData ,
+        Signature ,
+        SimpleQuantity ,
+        SubstanceAmount ,
+        Timing ,
+        TriggerDefinition ,
+        UsageContext ,
+        Base64Binary ,
+        Boolean ,
+        Canonical ,
+        Code ,
+        Date ,
+        DateTime ,
+        Decimal ,
+        Id ,
+        Instant ,
+        Integer ,
+        Markdown ,
+        Oid ,
+        PositiveInt ,
+        String ,
+        Time ,
+        UnsignedInt ,
+        Uri ,
+        Url ,
+        Uuid ,
+        Xhtml ,
+        Account ,
+        ActivityDefinition ,
+        AdverseEvent ,
+        AllergyIntolerance ,
+        Appointment ,
+        AppointmentResponse ,
+        AuditEvent ,
+        Basic ,
+        Binary ,
+        BiologicallyDerivedProduct ,
+        BodyStructure ,
+        Bundle ,
+        CapabilityStatement ,
+        CarePlan ,
+        CareTeam ,
+        CatalogEntry ,
+        ChargeItem ,
+        ChargeItemDefinition ,
+        Claim ,
+        ClaimResponse ,
+        ClinicalImpression ,
+        CodeSystem ,
+        Communication ,
+        CommunicationRequest ,
+        CompartmentDefinition ,
+        Composition ,
+        ConceptMap ,
+        Condition ,
+        Consent ,
+        Contract ,
+        Coverage ,
+        CoverageEligibilityRequest ,
+        CoverageEligibilityResponse ,
+        DetectedIssue ,
+        Device ,
+        DeviceDefinition ,
+        DeviceMetric ,
+        DeviceRequest ,
+        DeviceUseStatement ,
+        DiagnosticReport ,
+        DocumentManifest ,
+        DocumentReference ,
+        DomainResource ,
+        EffectEvidenceSynthesis ,
+        Encounter ,
+        Endpoint ,
+        EnrollmentRequest ,
+        EnrollmentResponse ,
+        EpisodeOfCare ,
+        EventDefinition ,
+        Evidence ,
+        EvidenceVariable ,
+        ExampleScenario ,
+        ExplanationOfBenefit ,
+        FamilyMemberHistory ,
+        Flag ,
+        Goal ,
+        GraphDefinition ,
+        Group ,
+        GuidanceResponse ,
+        HealthcareService ,
+        ImagingStudy ,
+        Immunization ,
+        ImmunizationEvaluation ,
+        ImmunizationRecommendation ,
+        ImplementationGuide ,
+        InsurancePlan ,
+        Invoice ,
+        Library ,
+        Linkage ,
+        List ,
+        Location ,
+        Measure ,
+        MeasureReport ,
+        Media ,
+        Medication ,
+        MedicationAdministration ,
+        MedicationDispense ,
+        MedicationKnowledge ,
+        MedicationRequest ,
+        MedicationStatement ,
+        MedicinalProduct ,
+        MedicinalProductAuthorization ,
+        MedicinalProductContraindication ,
+        MedicinalProductIndication ,
+        MedicinalProductIngredient ,
+        MedicinalProductInteraction ,
+        MedicinalProductManufactured ,
+        MedicinalProductPackaged ,
+        MedicinalProductPharmaceutical ,
+        MedicinalProductUndesirableEffect ,
+        MessageDefinition ,
+        MessageHeader ,
+        MolecularSequence ,
+        NamingSystem ,
+        NutritionOrder ,
+        Observation ,
+        ObservationDefinition ,
+        OperationDefinition ,
+        OperationOutcome ,
+        Organization ,
+        OrganizationAffiliation ,
+        Parameters ,
+        Patient ,
+        PaymentNotice ,
+        PaymentReconciliation ,
+        Person ,
+        PlanDefinition ,
+        Practitioner ,
+        PractitionerRole ,
+        Procedure ,
+        Provenance ,
+        Questionnaire ,
+        QuestionnaireResponse ,
+        RelatedPerson ,
+        RequestGroup ,
+        ResearchDefinition ,
+        ResearchElementDefinition ,
+        ResearchStudy ,
+        ResearchSubject ,
+        Resource ,
+        RiskAssessment ,
+        RiskEvidenceSynthesis ,
+        Schedule ,
+        SearchParameter ,
+        ServiceRequest ,
+        Slot ,
+        Specimen ,
+        SpecimenDefinition ,
+        StructureDefinition ,
+        StructureMap ,
+        Subscription ,
+        Substance ,
+        SubstanceNucleicAcid ,
+        SubstancePolymer ,
+        SubstanceProtein ,
+        SubstanceReferenceInformation ,
+        SubstanceSourceMaterial ,
+        SubstanceSpecification ,
+        SupplyDelivery ,
+        SupplyRequest ,
+        Task ,
+        TerminologyCapabilities ,
+        TestReport ,
+        TestScript ,
+        ValueSet ,
+        VerificationResult ,
+        VisionPrescription ,
+        Type ,
+        Any ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -219,9 +440,9 @@ public class ContactDetail : Element
 
 public class Address : Element
 {
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public string? City { get; set; }
-    public string? Type { get; set; }
+    public TypeEnum? Type { get; set; }
     public string? State { get; set; }
     public string[]? Line { get; set; }
     public string? PostalCode { get; set; }
@@ -230,6 +451,20 @@ public class Address : Element
     public string? District { get; set; }
     public string? Text { get; set; }
     
+    public enum UseEnum
+    {
+        Home ,
+        Work ,
+        Temp ,
+        Old ,
+        Billing ,
+    }
+    public enum TypeEnum
+    {
+        Postal ,
+        Physical ,
+        Both ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -373,7 +608,7 @@ public class ElementDefinition : BackboneElement
     public long? DefaultValueUnsignedInt { get; set; }
     public Age? PatternAge { get; set; }
     public Signature? FixedSignature { get; set; }
-    public string[]? Representation { get; set; }
+    public RepresentationEnum[]? Representation { get; set; }
     public ParameterDefinition? PatternParameterDefinition { get; set; }
     public string? FixedId { get; set; }
     public string? FixedUrl { get; set; }
@@ -473,10 +708,17 @@ public class ElementDefinition : BackboneElement
     
     public class ElementDefinitionBinding : BackboneElement
     {
-        public required string Strength { get; set; }
+        public required StrengthEnum Strength { get; set; }
         public string? Description { get; set; }
         public string? ValueSet { get; set; }
         
+        public enum StrengthEnum
+        {
+            Required ,
+            Extensible ,
+            Preferred ,
+            Example ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -486,12 +728,17 @@ public class ElementDefinition : BackboneElement
     {
         public required string Key { get; set; }
         public string? Requirements { get; set; }
-        public required string Severity { get; set; }
+        public required SeverityEnum Severity { get; set; }
         public required string Human { get; set; }
         public string? Expression { get; set; }
         public string? Xpath { get; set; }
         public string? Source { get; set; }
         
+        public enum SeverityEnum
+        {
+            Error ,
+            Warning ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -573,8 +820,14 @@ public class ElementDefinition : BackboneElement
         public ElementDefinitionSlicingDiscriminator[]? Discriminator { get; set; }
         public string? Description { get; set; }
         public bool? Ordered { get; set; }
-        public required string Rules { get; set; }
+        public required RulesEnum Rules { get; set; }
         
+        public enum RulesEnum
+        {
+            Closed ,
+            Open ,
+            OpenAtEnd ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -582,9 +835,17 @@ public class ElementDefinition : BackboneElement
     
     public class ElementDefinitionSlicingDiscriminator : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public required string Path { get; set; }
         
+        public enum TypeEnum
+        {
+            Value ,
+            Exists ,
+            Pattern ,
+            Type ,
+            Profile ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -595,15 +856,35 @@ public class ElementDefinition : BackboneElement
         public required string Code { get; set; }
         public string[]? Profile { get; set; }
         public string[]? TargetProfile { get; set; }
-        public string[]? Aggregation { get; set; }
-        public string? Versioning { get; set; }
+        public AggregationEnum[]? Aggregation { get; set; }
+        public VersioningEnum? Versioning { get; set; }
         
+        public enum AggregationEnum
+        {
+            Contained ,
+            Referenced ,
+            Bundled ,
+        }
+        public enum VersioningEnum
+        {
+            Either ,
+            Independent ,
+            Specific ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum RepresentationEnum
+    {
+        XmlAttr ,
+        XmlText ,
+        TypeAttr ,
+        CdaText ,
+        Xhtml ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -621,7 +902,7 @@ public class Period : Element
 
 public class HumanName : Element
 {
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public string? Text { get; set; }
     public string? Family { get; set; }
     public string[]? Given { get; set; }
@@ -629,6 +910,16 @@ public class HumanName : Element
     public string[]? Suffix { get; set; }
     public Period? Period { get; set; }
     
+    public enum UseEnum
+    {
+        Usual ,
+        Official ,
+        Temp ,
+        Nickname ,
+        Anonymous ,
+        Old ,
+        Maiden ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -636,7 +927,7 @@ public class HumanName : Element
 
 public class RelatedArtifact : Element
 {
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? Label { get; set; }
     public string? Display { get; set; }
     public string? Citation { get; set; }
@@ -644,6 +935,17 @@ public class RelatedArtifact : Element
     public Attachment? Document { get; set; }
     public string? Resource { get; set; }
     
+    public enum TypeEnum
+    {
+        Documentation ,
+        Justification ,
+        Citation ,
+        Predecessor ,
+        Successor ,
+        DerivedDashFrom ,
+        DependsDashOn ,
+        ComposedDashOf ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -717,10 +1019,17 @@ public class SubstanceAmount : BackboneElement
 
 public class Contributor : Element
 {
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public required string Name { get; set; }
     public ContactDetail[]? Contact { get; set; }
     
+    public enum TypeEnum
+    {
+        Author ,
+        Editor ,
+        Reviewer ,
+        Endorser ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -764,11 +1073,18 @@ public class Distance : Quantity
 public class Quantity : Element
 {
     public decimal? Value { get; set; }
-    public string? Comparator { get; set; }
+    public ComparatorEnum? Comparator { get; set; }
     public string? Unit { get; set; }
     public string? System { get; set; }
     public string? Code { get; set; }
     
+    public enum ComparatorEnum
+    {
+        Less ,
+        LessOrEqual ,
+        GreaterOrEqual ,
+        Greater ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -776,12 +1092,30 @@ public class Quantity : Element
 
 public class ContactPoint : Element
 {
-    public string? System { get; set; }
+    public SystemEnum? System { get; set; }
     public string? Value { get; set; }
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public long? Rank { get; set; }
     public Period? Period { get; set; }
     
+    public enum SystemEnum
+    {
+        Phone ,
+        Fax ,
+        Email ,
+        Pager ,
+        Url ,
+        Sms ,
+        Other ,
+    }
+    public enum UseEnum
+    {
+        Home ,
+        Work ,
+        Temp ,
+        Old ,
+        Mobile ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -827,9 +1161,16 @@ public class Element
 
 public class Narrative : Element
 {
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Div { get; set; }
     
+    public enum StatusEnum
+    {
+        Generated ,
+        Extensions ,
+        Additional ,
+        Empty ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -839,13 +1180,24 @@ public class TriggerDefinition : Element
 {
     public ResourceReference? TimingReference { get; set; }
     public string? Name { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? TimingDateTime { get; set; }
     public Timing? TimingTiming { get; set; }
     public ResourceExpression? Condition { get; set; }
     public string? TimingDate { get; set; }
     public DataRequirement[]? Data { get; set; }
     
+    public enum TypeEnum
+    {
+        NamedDashEvent ,
+        Periodic ,
+        DataDashChanged ,
+        DataDashAccessed ,
+        DataDashAccessDashEnded ,
+        DataDashAdded ,
+        DataDashModified ,
+        DataDashRemoved ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -884,7 +1236,7 @@ public class DataRequirement : Element
 {
     public long? Limit { get; set; }
     public CodeableConcept? SubjectCodeableConcept { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string[]? MustSupport { get; set; }
     public DataRequirementCodeFilter[]? CodeFilter { get; set; }
     public ResourceReference? SubjectReference { get; set; }
@@ -920,14 +1272,235 @@ public class DataRequirement : Element
     public class DataRequirementSort : BackboneElement
     {
         public required string Path { get; set; }
-        public required string Direction { get; set; }
+        public required DirectionEnum Direction { get; set; }
         
+        public enum DirectionEnum
+        {
+            Ascending ,
+            Descending ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum TypeEnum
+    {
+        Address ,
+        Age ,
+        Annotation ,
+        Attachment ,
+        BackboneElement ,
+        CodeableConcept ,
+        Coding ,
+        ContactDetail ,
+        ContactPoint ,
+        Contributor ,
+        Count ,
+        DataRequirement ,
+        Distance ,
+        Dosage ,
+        Duration ,
+        Element ,
+        ElementDefinition ,
+        Expression ,
+        Extension ,
+        HumanName ,
+        Identifier ,
+        MarketingStatus ,
+        Meta ,
+        Money ,
+        MoneyQuantity ,
+        Narrative ,
+        ParameterDefinition ,
+        Period ,
+        Population ,
+        ProdCharacteristic ,
+        ProductShelfLife ,
+        Quantity ,
+        Range ,
+        Ratio ,
+        Reference ,
+        RelatedArtifact ,
+        SampledData ,
+        Signature ,
+        SimpleQuantity ,
+        SubstanceAmount ,
+        Timing ,
+        TriggerDefinition ,
+        UsageContext ,
+        Base64Binary ,
+        Boolean ,
+        Canonical ,
+        Code ,
+        Date ,
+        DateTime ,
+        Decimal ,
+        Id ,
+        Instant ,
+        Integer ,
+        Markdown ,
+        Oid ,
+        PositiveInt ,
+        String ,
+        Time ,
+        UnsignedInt ,
+        Uri ,
+        Url ,
+        Uuid ,
+        Xhtml ,
+        Account ,
+        ActivityDefinition ,
+        AdverseEvent ,
+        AllergyIntolerance ,
+        Appointment ,
+        AppointmentResponse ,
+        AuditEvent ,
+        Basic ,
+        Binary ,
+        BiologicallyDerivedProduct ,
+        BodyStructure ,
+        Bundle ,
+        CapabilityStatement ,
+        CarePlan ,
+        CareTeam ,
+        CatalogEntry ,
+        ChargeItem ,
+        ChargeItemDefinition ,
+        Claim ,
+        ClaimResponse ,
+        ClinicalImpression ,
+        CodeSystem ,
+        Communication ,
+        CommunicationRequest ,
+        CompartmentDefinition ,
+        Composition ,
+        ConceptMap ,
+        Condition ,
+        Consent ,
+        Contract ,
+        Coverage ,
+        CoverageEligibilityRequest ,
+        CoverageEligibilityResponse ,
+        DetectedIssue ,
+        Device ,
+        DeviceDefinition ,
+        DeviceMetric ,
+        DeviceRequest ,
+        DeviceUseStatement ,
+        DiagnosticReport ,
+        DocumentManifest ,
+        DocumentReference ,
+        DomainResource ,
+        EffectEvidenceSynthesis ,
+        Encounter ,
+        Endpoint ,
+        EnrollmentRequest ,
+        EnrollmentResponse ,
+        EpisodeOfCare ,
+        EventDefinition ,
+        Evidence ,
+        EvidenceVariable ,
+        ExampleScenario ,
+        ExplanationOfBenefit ,
+        FamilyMemberHistory ,
+        Flag ,
+        Goal ,
+        GraphDefinition ,
+        Group ,
+        GuidanceResponse ,
+        HealthcareService ,
+        ImagingStudy ,
+        Immunization ,
+        ImmunizationEvaluation ,
+        ImmunizationRecommendation ,
+        ImplementationGuide ,
+        InsurancePlan ,
+        Invoice ,
+        Library ,
+        Linkage ,
+        List ,
+        Location ,
+        Measure ,
+        MeasureReport ,
+        Media ,
+        Medication ,
+        MedicationAdministration ,
+        MedicationDispense ,
+        MedicationKnowledge ,
+        MedicationRequest ,
+        MedicationStatement ,
+        MedicinalProduct ,
+        MedicinalProductAuthorization ,
+        MedicinalProductContraindication ,
+        MedicinalProductIndication ,
+        MedicinalProductIngredient ,
+        MedicinalProductInteraction ,
+        MedicinalProductManufactured ,
+        MedicinalProductPackaged ,
+        MedicinalProductPharmaceutical ,
+        MedicinalProductUndesirableEffect ,
+        MessageDefinition ,
+        MessageHeader ,
+        MolecularSequence ,
+        NamingSystem ,
+        NutritionOrder ,
+        Observation ,
+        ObservationDefinition ,
+        OperationDefinition ,
+        OperationOutcome ,
+        Organization ,
+        OrganizationAffiliation ,
+        Parameters ,
+        Patient ,
+        PaymentNotice ,
+        PaymentReconciliation ,
+        Person ,
+        PlanDefinition ,
+        Practitioner ,
+        PractitionerRole ,
+        Procedure ,
+        Provenance ,
+        Questionnaire ,
+        QuestionnaireResponse ,
+        RelatedPerson ,
+        RequestGroup ,
+        ResearchDefinition ,
+        ResearchElementDefinition ,
+        ResearchStudy ,
+        ResearchSubject ,
+        Resource ,
+        RiskAssessment ,
+        RiskEvidenceSynthesis ,
+        Schedule ,
+        SearchParameter ,
+        ServiceRequest ,
+        Slot ,
+        Specimen ,
+        SpecimenDefinition ,
+        StructureDefinition ,
+        StructureMap ,
+        Subscription ,
+        Substance ,
+        SubstanceNucleicAcid ,
+        SubstancePolymer ,
+        SubstanceProtein ,
+        SubstanceReferenceInformation ,
+        SubstanceSourceMaterial ,
+        SubstanceSpecification ,
+        SupplyDelivery ,
+        SupplyRequest ,
+        Task ,
+        TerminologyCapabilities ,
+        TestReport ,
+        TestScript ,
+        ValueSet ,
+        VerificationResult ,
+        VisionPrescription ,
+        Type ,
+        Any ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -945,13 +1518,21 @@ public class Money : Element
 
 public class Identifier : Element
 {
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public CodeableConcept? Type { get; set; }
     public string? System { get; set; }
     public string? Value { get; set; }
     public Period? Period { get; set; }
     public ResourceReference? Assigner { get; set; }
     
+    public enum UseEnum
+    {
+        Usual ,
+        Official ,
+        Temp ,
+        Secondary ,
+        Old ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -968,21 +1549,80 @@ public class Timing : BackboneElement
         public Range? BoundsRange { get; set; }
         public long? FrequencyMax { get; set; }
         public Period? BoundsPeriod { get; set; }
-        public string[]? When { get; set; }
+        public WhenEnum[]? When { get; set; }
         public long? Offset { get; set; }
-        public string? PeriodUnit { get; set; }
+        public PeriodUnitEnum? PeriodUnit { get; set; }
         public long? Frequency { get; set; }
         public decimal? DurationMax { get; set; }
         public decimal? Duration { get; set; }
         public Duration? BoundsDuration { get; set; }
-        public string? DurationUnit { get; set; }
-        public string[]? DayOfWeek { get; set; }
+        public DurationUnitEnum? DurationUnit { get; set; }
+        public DayOfWeekEnum[]? DayOfWeek { get; set; }
         public long? Count { get; set; }
         public decimal? PeriodMax { get; set; }
         public decimal? Period { get; set; }
         public long? CountMax { get; set; }
         public string[]? TimeOfDay { get; set; }
         
+        public enum WhenEnum
+        {
+            MORN ,
+            MORNDotearly ,
+            MORNDotlate ,
+            NOON ,
+            AFT ,
+            AFTDotearly ,
+            AFTDotlate ,
+            EVE ,
+            EVEDotearly ,
+            EVEDotlate ,
+            NIGHT ,
+            PHS ,
+            HS ,
+            WAKE ,
+            C ,
+            CM ,
+            CD ,
+            CV ,
+            AC ,
+            ACM ,
+            ACD ,
+            ACV ,
+            PC ,
+            PCM ,
+            PCD ,
+            PCV ,
+        }
+        public enum PeriodUnitEnum
+        {
+            S ,
+            Min ,
+            H ,
+            D ,
+            Wk ,
+            Mo ,
+            A ,
+        }
+        public enum DurationUnitEnum
+        {
+            S ,
+            Min ,
+            H ,
+            D ,
+            Wk ,
+            Mo ,
+            A ,
+        }
+        public enum DayOfWeekEnum
+        {
+            Mon ,
+            Tue ,
+            Wed ,
+            Thu ,
+            Fri ,
+            Sat ,
+            Sun ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

@@ -15,25 +15,45 @@ public class NamingSystem : DomainResource
     public CodeableConcept? Type { get; set; }
     public string? Responsible { get; set; }
     public string? Usage { get; set; }
-    public required string Status { get; set; }
-    public required string Kind { get; set; }
+    public required StatusEnum Status { get; set; }
+    public required KindEnum Kind { get; set; }
     public required NamingSystemUniqueId[] UniqueId { get; set; }
     public ContactDetail[]? Contact { get; set; }
     
     public class NamingSystemUniqueId : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public required string Value { get; set; }
         public bool? Preferred { get; set; }
         public string? Comment { get; set; }
         public Period? Period { get; set; }
         
+        public enum TypeEnum
+        {
+            Oid ,
+            Uuid ,
+            Uri ,
+            Other ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
+    public enum KindEnum
+    {
+        Codesystem ,
+        Identifier ,
+        Root ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

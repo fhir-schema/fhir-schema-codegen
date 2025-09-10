@@ -6,7 +6,7 @@ namespace Aidbox.FHIR.R4.Core;
 
 public class Subscription : DomainResource
 {
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ContactPoint[]? Contact { get; set; }
     public string? End { get; set; }
     public required string Reason { get; set; }
@@ -16,17 +16,32 @@ public class Subscription : DomainResource
     
     public class SubscriptionChannel : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public string? Endpoint { get; set; }
         public string? Payload { get; set; }
         public string[]? Header { get; set; }
         
+        public enum TypeEnum
+        {
+            RestDashHook ,
+            Websocket ,
+            Email ,
+            Sms ,
+            Message ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Requested ,
+        Active ,
+        Error ,
+        Off ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

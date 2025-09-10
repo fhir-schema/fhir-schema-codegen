@@ -10,10 +10,10 @@ public class Location : DomainResource
     public Address? Address { get; set; }
     public ResourceReference? ManagingOrganization { get; set; }
     public string? Name { get; set; }
-    public string? Mode { get; set; }
+    public ModeEnum? Mode { get; set; }
     public CodeableConcept[]? Type { get; set; }
     public string[]? Alias { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public LocationHoursOfOperation[]? HoursOfOperation { get; set; }
     public string? AvailabilityExceptions { get; set; }
@@ -26,11 +26,21 @@ public class Location : DomainResource
     
     public class LocationHoursOfOperation : BackboneElement
     {
-        public string[]? DaysOfWeek { get; set; }
+        public DaysOfWeekEnum[]? DaysOfWeek { get; set; }
         public bool? AllDay { get; set; }
         public string? OpeningTime { get; set; }
         public string? ClosingTime { get; set; }
         
+        public enum DaysOfWeekEnum
+        {
+            Mon ,
+            Tue ,
+            Wed ,
+            Thu ,
+            Fri ,
+            Sat ,
+            Sun ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -48,6 +58,17 @@ public class Location : DomainResource
     }
     
     
+    public enum ModeEnum
+    {
+        Instance ,
+        Kind ,
+    }
+    public enum StatusEnum
+    {
+        Active ,
+        Suspended ,
+        Inactive ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

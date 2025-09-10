@@ -21,7 +21,7 @@ public class Appointment : DomainResource
     public ResourceReference[]? SupportingInformation { get; set; }
     public long? Priority { get; set; }
     public CodeableConcept? AppointmentType { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Comment { get; set; }
     public long? MinutesDuration { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -33,16 +33,42 @@ public class Appointment : DomainResource
     {
         public CodeableConcept[]? Type { get; set; }
         public ResourceReference? Actor { get; set; }
-        public string? Required { get; set; }
-        public required string Status { get; set; }
+        public RequiredEnum? Required { get; set; }
+        public required StatusEnum Status { get; set; }
         public Period? Period { get; set; }
         
+        public enum RequiredEnum
+        {
+            Required ,
+            Optional ,
+            InformationDashOnly ,
+        }
+        public enum StatusEnum
+        {
+            Accepted ,
+            Declined ,
+            Tentative ,
+            NeedsDashAction ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Proposed ,
+        Pending ,
+        Booked ,
+        Arrived ,
+        Fulfilled ,
+        Cancelled ,
+        Noshow ,
+        EnteredDashInDashError ,
+        CheckedDashIn ,
+        Waitlist ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

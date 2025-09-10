@@ -30,7 +30,7 @@ public class Contract : DomainResource
     public ContractTerm[]? Term { get; set; }
     public ContractFriendly[]? Friendly { get; set; }
     public string[]? Alias { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public string? Subtitle { get; set; }
     public ResourceReference? TopicReference { get; set; }
     public string? Url { get; set; }
@@ -48,9 +48,27 @@ public class Contract : DomainResource
         public CodeableConcept? SubType { get; set; }
         public ResourceReference? Publisher { get; set; }
         public string? PublicationDate { get; set; }
-        public required string PublicationStatus { get; set; }
+        public required PublicationStatusEnum PublicationStatus { get; set; }
         public string? Copyright { get; set; }
         
+        public enum PublicationStatusEnum
+        {
+            Amended ,
+            Appended ,
+            Cancelled ,
+            Disputed ,
+            EnteredDashInDashError ,
+            Executable ,
+            Executed ,
+            Negotiable ,
+            Offered ,
+            Policy ,
+            Rejected ,
+            Renewed ,
+            Revoked ,
+            Resolved ,
+            Terminated ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -277,6 +295,24 @@ public class Contract : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Amended ,
+        Appended ,
+        Cancelled ,
+        Disputed ,
+        EnteredDashInDashError ,
+        Executable ,
+        Executed ,
+        Negotiable ,
+        Offered ,
+        Policy ,
+        Rejected ,
+        Renewed ,
+        Revoked ,
+        Resolved ,
+        Terminated ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

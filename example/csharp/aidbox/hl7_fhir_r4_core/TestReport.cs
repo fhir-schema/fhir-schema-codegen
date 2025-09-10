@@ -11,8 +11,8 @@ public class TestReport : DomainResource
     public required ResourceReference TestScript { get; set; }
     public TestReportParticipant[]? Participant { get; set; }
     public TestReportSetup? Setup { get; set; }
-    public required string Status { get; set; }
-    public required string Result { get; set; }
+    public required StatusEnum Status { get; set; }
+    public required ResultEnum Result { get; set; }
     public decimal? Score { get; set; }
     public Identifier? Identifier { get; set; }
     public string? Issued { get; set; }
@@ -21,10 +21,16 @@ public class TestReport : DomainResource
     
     public class TestReportParticipant : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public required string Uri { get; set; }
         public string? Display { get; set; }
         
+        public enum TypeEnum
+        {
+            TestDashEngine ,
+            Client ,
+            Server ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -51,10 +57,18 @@ public class TestReport : DomainResource
     
     public class TestReportSetupActionAssert : BackboneElement
     {
-        public required string Result { get; set; }
+        public required ResultEnum Result { get; set; }
         public string? Message { get; set; }
         public string? Detail { get; set; }
         
+        public enum ResultEnum
+        {
+            Pass ,
+            Skip ,
+            Fail ,
+            Warning ,
+            Error ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -62,10 +76,18 @@ public class TestReport : DomainResource
     
     public class TestReportSetupActionOperation : BackboneElement
     {
-        public required string Result { get; set; }
+        public required ResultEnum Result { get; set; }
         public string? Message { get; set; }
         public string? Detail { get; set; }
         
+        public enum ResultEnum
+        {
+            Pass ,
+            Skip ,
+            Fail ,
+            Warning ,
+            Error ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -111,6 +133,20 @@ public class TestReport : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Completed ,
+        InDashProgress ,
+        Waiting ,
+        Stopped ,
+        EnteredDashInDashError ,
+    }
+    public enum ResultEnum
+    {
+        Pass ,
+        Fail ,
+        Pending ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

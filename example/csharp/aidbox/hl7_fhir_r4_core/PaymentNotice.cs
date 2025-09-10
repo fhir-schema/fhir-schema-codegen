@@ -13,12 +13,19 @@ public class PaymentNotice : DomainResource
     public required ResourceReference Recipient { get; set; }
     public required string Created { get; set; }
     public CodeableConcept? PaymentStatus { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ResourceReference? Payee { get; set; }
     public string? PaymentDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Provider { get; set; }
     
+    public enum StatusEnum
+    {
+        Active ,
+        Cancelled ,
+        Draft ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

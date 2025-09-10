@@ -13,7 +13,7 @@ public class CareTeam : DomainResource
     public CodeableConcept[]? ReasonCode { get; set; }
     public CareTeamParticipant[]? Participant { get; set; }
     public Annotation[]? Note { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
     public Period? Period { get; set; }
@@ -33,6 +33,14 @@ public class CareTeam : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Proposed ,
+        Active ,
+        Suspended ,
+        Inactive ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

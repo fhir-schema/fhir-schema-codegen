@@ -16,9 +16,9 @@ public class CommunicationRequest : DomainResource
     public string? AuthoredOn { get; set; }
     public Annotation[]? Note { get; set; }
     public ResourceReference? Requester { get; set; }
-    public string? Priority { get; set; }
+    public PriorityEnum? Priority { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public ResourceReference? Sender { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -42,6 +42,23 @@ public class CommunicationRequest : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        Routine ,
+        Urgent ,
+        Asap ,
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        OnDashHold ,
+        Revoked ,
+        Completed ,
+        EnteredDashInDashError ,
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

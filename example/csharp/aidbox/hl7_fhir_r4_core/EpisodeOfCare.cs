@@ -13,7 +13,7 @@ public class EpisodeOfCare : DomainResource
     public ResourceReference[]? Account { get; set; }
     public ResourceReference[]? ReferralRequest { get; set; }
     public ResourceReference[]? Team { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Period? Period { get; set; }
     public ResourceReference? CareManager { get; set; }
@@ -32,15 +32,35 @@ public class EpisodeOfCare : DomainResource
     
     public class EpisodeOfCareStatusHistory : BackboneElement
     {
-        public required string Status { get; set; }
+        public required StatusEnum Status { get; set; }
         public required Period Period { get; set; }
         
+        public enum StatusEnum
+        {
+            Planned ,
+            Waitlist ,
+            Active ,
+            Onhold ,
+            Finished ,
+            Cancelled ,
+            EnteredDashInDashError ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        Planned ,
+        Waitlist ,
+        Active ,
+        Onhold ,
+        Finished ,
+        Cancelled ,
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

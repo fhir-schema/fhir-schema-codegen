@@ -10,13 +10,54 @@ public class OperationOutcome : DomainResource
     
     public class OperationOutcomeIssue : BackboneElement
     {
-        public required string Severity { get; set; }
-        public required string Code { get; set; }
+        public required SeverityEnum Severity { get; set; }
+        public required CodeEnum Code { get; set; }
         public CodeableConcept? Details { get; set; }
         public string? Diagnostics { get; set; }
         public string[]? Location { get; set; }
         public string[]? Expression { get; set; }
         
+        public enum SeverityEnum
+        {
+            Fatal ,
+            Error ,
+            Warning ,
+            Information ,
+        }
+        public enum CodeEnum
+        {
+            Invalid ,
+            Security ,
+            Processing ,
+            Transient ,
+            Informational ,
+            Structure ,
+            Required ,
+            Value ,
+            Invariant ,
+            Login ,
+            Unknown ,
+            Expired ,
+            Forbidden ,
+            Suppressed ,
+            NotDashSupported ,
+            Duplicate ,
+            MultipleDashMatches ,
+            NotDashFound ,
+            TooDashLong ,
+            CodeDashInvalid ,
+            Extension ,
+            TooDashCostly ,
+            BusinessDashRule ,
+            Conflict ,
+            Deleted ,
+            LockDashError ,
+            NoDashStore ,
+            Exception ,
+            Timeout ,
+            Incomplete ,
+            Throttled ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

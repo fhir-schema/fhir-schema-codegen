@@ -17,9 +17,9 @@ public class TerminologyCapabilities : DomainResource
     public bool? Experimental { get; set; }
     public TerminologyCapabilitiesExpansion? Expansion { get; set; }
     public string? Title { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public TerminologyCapabilitiesValidateCode? ValidateCode { get; set; }
-    public required string Kind { get; set; }
+    public required KindEnum Kind { get; set; }
     public TerminologyCapabilitiesTranslation? Translation { get; set; }
     public string? Url { get; set; }
     public TerminologyCapabilitiesCodeSystem[]? CodeSystem { get; set; }
@@ -27,7 +27,7 @@ public class TerminologyCapabilities : DomainResource
     public string? Version { get; set; }
     public ContactDetail[]? Contact { get; set; }
     public TerminologyCapabilitiesImplementation? Implementation { get; set; }
-    public string? CodeSearch { get; set; }
+    public CodeSearchEnum? CodeSearch { get; set; }
     public bool? LockedDate { get; set; }
     public TerminologyCapabilitiesClosure? Closure { get; set; }
     
@@ -137,6 +137,24 @@ public class TerminologyCapabilities : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        Draft ,
+        Active ,
+        Retired ,
+        Unknown ,
+    }
+    public enum KindEnum
+    {
+        Instance ,
+        Capability ,
+        Requirements ,
+    }
+    public enum CodeSearchEnum
+    {
+        Explicit ,
+        All ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
