@@ -9,7 +9,7 @@ import { logger } from '../logger';
 
 const execAsync = promisify(exec);
 
-export const TYPE_SCHEMA_VERSION = '0.0.14';
+export const TYPE_SCHEMA_VERSION = '0.0.15';
 const BIN_DIR = 'tmp/bin';
 
 interface BinaryInfo {
