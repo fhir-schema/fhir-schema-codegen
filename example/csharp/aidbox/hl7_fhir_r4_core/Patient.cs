@@ -71,7 +71,7 @@ public class Patient : DomainResource
         public enum TypeEnum
         {
             [Description("replaced-by")]
-            ReplacedDashBy,
+            ReplacedDashBy ,
             [Description("replaces")]
             Replaces ,
             [Description("refer")]
