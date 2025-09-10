@@ -80,10 +80,9 @@ export class CSharpGenerator extends Generator {
         for (const name in enums) {
             this.curlyBlock(['public', 'enum', name], () =>
                 enums[name].forEach((entry) => {
-                    this.line(`[Description("${entry}")]`)
+                    this.line(`[Description("${entry}")]`);
                     this.lineSM(formatHelper.formatEnumEntry(entry), ',');
-                    }
-                ),
+                }),
             );
         }
     }
