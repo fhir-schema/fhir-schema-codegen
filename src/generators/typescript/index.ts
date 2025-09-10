@@ -300,6 +300,14 @@ class TypeScriptGenerator extends Generator {
                 } else if (field.enum) {
                     tsType = field.enum.map((e) => `'${e}'`).join(' | ');
                 } else if (field.reference?.length) {
+                    const specializationId = profile.findSpecialization(
+                        this.loader,
+                        schema.identifier,
+                    );
+                    const sField = this.loader.resolveTypeIdentifier(specializationId)?.fields?.[
+                        fieldName
+                    ] ?? { reference: [] };
+                    const sRefs = (sField.reference ?? []).map((e) => e.name);
                     const references = field.reference
                         .map((ref) => {
                             const resRef = profile.findSpecialization(this.loader, ref);
@@ -309,7 +317,16 @@ class TypeScriptGenerator extends Generator {
                             return `'${ref.name}'`;
                         })
                         .join(' | ');
-                    tsType = `Reference<${references}>`;
+                    if (
+                        sRefs.length === 1 &&
+                        sRefs[0] === 'Resource' &&
+                        references !== "'Resource'"
+                    ) {
+                        // FIXME: should be generilized to type families
+                        tsType = `Reference<'Resource' /* ${references} */ >`;
+                    } else {
+                        tsType = `Reference<${references}>`;
+                    }
                 } else {
                     tsType = primitiveType2tsType[field.type.name] ?? field.type.name;
                 }
@@ -323,12 +340,50 @@ class TypeScriptGenerator extends Generator {
         this.line();
     }
 
+    generateAttachProfile(flatProfile: TypeSchema) {
+        if (flatProfile.base === undefined) {
+            throw new Error(
+                'Profile must have a base type to generate profile-to-resource mapping:' +
+                    JSON.stringify(flatProfile.identifier),
+            );
+        }
+        const resName = resourceName(flatProfile.base);
+        const profName = resourceName(flatProfile.identifier);
+        const profileFields = Object.entries(flatProfile.fields || {})
+            .filter(([_fieldName, field]) => {
+                return field && field.type !== undefined;
+            })
+            .map(([fieldName]) => fieldName);
+
+        this.curlyBlock(
+            [
+                `export const attach_${profName} =`,
+                `(resource: ${resName}, profile: ${profName}): ${resName}`,
+                '=>',
+            ],
+            () => {
+                this.curlyBlock(['return'], () => {
+                    this.line('...resource,');
+                    // FIXME: don't rewrite all profiles
+                    this.curlyBlock(['meta:'], () => {
+                        this.line(`profile: ['${flatProfile.identifier.url}']`);
+                    }, [',']);
+                    profileFields.forEach((fieldName, index) => {
+                        const isLast = index === profileFields.length - 1;
+                        this.line(`${fieldName}:`, `profile.${fieldName},`);
+                    });
+                });
+            },
+        );
+    }
+
     generateProfile(schema: TypeSchema) {
         assert(schema.identifier.kind === 'constraint');
         const flatProfile = profile.flatProfile(this.loader, schema);
         this.generateDependenciesImports(flatProfile);
         this.line();
         this.generateProfileType(flatProfile);
+        this.generateAttachProfile(flatProfile);
     }
 
     generateResourceModule(schema: TypeSchema) {
