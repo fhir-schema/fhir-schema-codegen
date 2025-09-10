@@ -11,7 +11,7 @@ import { RelatedArtifact } from '../hl7-fhir-r4-core/RelatedArtifact';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Synthesis {
-    profileType: 'Evidence Synthesis Profile';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/synthesis';
     
     description?: string;
     date?: string;
@@ -22,7 +22,7 @@ export interface Synthesis {
     title?: string;
     note?: Annotation[];
     author?: ContactDetail[];
-    status: string;
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     subtitle?: string;
     url?: string;
     identifier?: Identifier[];
@@ -37,3 +37,33 @@ export interface Synthesis {
     exposureVariant: Reference<'EvidenceVariable'>[];
 }
 
+export const attach_Synthesis = (resource: Evidence, profile: Synthesis): Evidence => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/synthesis']
+        },
+        description: profile.description,
+        date: profile.date,
+        publisher: profile.publisher,
+        approvalDate: profile.approvalDate,
+        copyright: profile.copyright,
+        outcome: profile.outcome,
+        title: profile.title,
+        note: profile.note,
+        author: profile.author,
+        status: profile.status,
+        subtitle: profile.subtitle,
+        url: profile.url,
+        identifier: profile.identifier,
+        lastReviewDate: profile.lastReviewDate,
+        editor: profile.editor,
+        reviewer: profile.reviewer,
+        shortTitle: profile.shortTitle,
+        version: profile.version,
+        relatedArtifact: profile.relatedArtifact,
+        contact: profile.contact,
+        exposureBackground: profile.exposureBackground,
+        exposureVariant: profile.exposureVariant,
+    }
+}

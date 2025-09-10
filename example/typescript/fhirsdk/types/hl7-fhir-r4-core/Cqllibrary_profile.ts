@@ -9,10 +9,21 @@ import { ParameterDefinition } from '../hl7-fhir-r4-core/ParameterDefinition';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Cqllibrary {
-    profileType: 'CQL Library';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cqllibrary';
     
     type: CodeableConcept;
     parameter?: ParameterDefinition[];
     dataRequirement?: DataRequirement[];
 }
 
+export const attach_Cqllibrary = (resource: Library, profile: Cqllibrary): Library => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/cqllibrary']
+        },
+        type: profile.type,
+        parameter: profile.parameter,
+        dataRequirement: profile.dataRequirement,
+    }
+}

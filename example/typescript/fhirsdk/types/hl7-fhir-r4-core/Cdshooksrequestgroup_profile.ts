@@ -11,14 +11,29 @@ import { RequestGroupActionRelatedAction } from '../hl7-fhir-r4-core/RequestGrou
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Cdshooksrequestgroup {
-    profileType: 'CDS Hooks RequestGroup';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cdshooksrequestgroup';
     
     identifier: Identifier[];
     instantiatesUri: string[];
-    priority?: string;
+    priority?: 'routine' | 'urgent' | 'asap' | 'stat';
     subject?: Reference<'Group' | 'Patient'>;
     authoredOn?: string;
     author?: Reference<'Device' | 'Practitioner' | 'PractitionerRole'>;
     action?: RequestGroupAction[];
 }
 
+export const attach_Cdshooksrequestgroup = (resource: RequestGroup, profile: Cdshooksrequestgroup): RequestGroup => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/cdshooksrequestgroup']
+        },
+        identifier: profile.identifier,
+        instantiatesUri: profile.instantiatesUri,
+        priority: profile.priority,
+        subject: profile.subject,
+        authoredOn: profile.authoredOn,
+        author: profile.author,
+        action: profile.action,
+    }
+}

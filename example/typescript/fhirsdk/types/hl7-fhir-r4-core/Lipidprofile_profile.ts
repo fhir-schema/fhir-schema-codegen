@@ -9,7 +9,7 @@ import { Reference } from '../hl7-fhir-r4-core/Reference';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Lipidprofile {
-    profileType: 'Example Lipid Profile';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/lipidprofile';
     
     code: CodeableConcept;
     result?: Reference<'Observation'>[];
@@ -17,3 +17,15 @@ export interface Lipidprofile {
     conclusionCode?: CodeableConcept[];
 }
 
+export const attach_Lipidprofile = (resource: DiagnosticReport, profile: Lipidprofile): DiagnosticReport => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/lipidprofile']
+        },
+        code: profile.code,
+        result: profile.result,
+        conclusion: profile.conclusion,
+        conclusionCode: profile.conclusionCode,
+    }
+}

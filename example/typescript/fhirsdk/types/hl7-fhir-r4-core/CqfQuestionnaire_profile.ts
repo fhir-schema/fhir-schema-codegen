@@ -11,8 +11,17 @@ import { QuestionnaireItemInitial } from '../hl7-fhir-r4-core/Questionnaire';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface CqfQuestionnaire {
-    profileType: 'CQF-Questionnaire';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cqf-questionnaire';
     
     extension?: Extension[];
 }
 
+export const attach_CqfQuestionnaire = (resource: Questionnaire, profile: CqfQuestionnaire): Questionnaire => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/cqf-questionnaire']
+        },
+        extension: profile.extension,
+    }
+}

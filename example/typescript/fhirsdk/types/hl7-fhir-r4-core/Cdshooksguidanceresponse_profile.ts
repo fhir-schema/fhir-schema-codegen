@@ -9,7 +9,7 @@ import { Reference } from '../hl7-fhir-r4-core/Reference';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Cdshooksguidanceresponse {
-    profileType: 'CDS Hooks GuidanceResponse';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cdshooksguidanceresponse';
     
     extension?: Extension[];
     requestIdentifier: Identifier;
@@ -21,3 +21,19 @@ export interface Cdshooksguidanceresponse {
     result?: Reference<'CarePlan' | 'RequestGroup'>;
 }
 
+export const attach_Cdshooksguidanceresponse = (resource: GuidanceResponse, profile: Cdshooksguidanceresponse): GuidanceResponse => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/cdshooksguidanceresponse']
+        },
+        extension: profile.extension,
+        requestIdentifier: profile.requestIdentifier,
+        identifier: profile.identifier,
+        moduleUri: profile.moduleUri,
+        subject: profile.subject,
+        occurrenceDateTime: profile.occurrenceDateTime,
+        performer: profile.performer,
+        result: profile.result,
+    }
+}

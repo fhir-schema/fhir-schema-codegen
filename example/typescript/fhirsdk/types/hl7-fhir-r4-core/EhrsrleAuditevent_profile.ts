@@ -13,11 +13,11 @@ import { Coding } from '../hl7-fhir-r4-core/Coding';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface EhrsrleAuditevent {
-    profileType: 'EHRS FM Record Lifecycle Event - Audit Event';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent';
     
     type: Coding;
     subtype?: Coding[];
-    action?: string;
+    action?: 'C' | 'R' | 'U' | 'D' | 'E';
     recorded: string;
     purposeOfEvent?: CodeableConcept[];
     agent: AuditEventAgent[];
@@ -25,3 +25,19 @@ export interface EhrsrleAuditevent {
     entity?: AuditEventEntity[];
 }
 
+export const attach_EhrsrleAuditevent = (resource: AuditEvent, profile: EhrsrleAuditevent): AuditEvent => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent']
+        },
+        type: profile.type,
+        subtype: profile.subtype,
+        action: profile.action,
+        recorded: profile.recorded,
+        purposeOfEvent: profile.purposeOfEvent,
+        agent: profile.agent,
+        source: profile.source,
+        entity: profile.entity,
+    }
+}

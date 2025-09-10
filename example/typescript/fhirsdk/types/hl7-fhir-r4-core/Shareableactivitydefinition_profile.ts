@@ -12,7 +12,7 @@ import { UsageContext } from '../hl7-fhir-r4-core/UsageContext';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Shareableactivitydefinition {
-    profileType: 'Shareable ActivityDefinition';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareableactivitydefinition';
     
     description: string;
     date?: string;
@@ -28,3 +28,23 @@ export interface Shareableactivitydefinition {
     contact?: ContactDetail[];
 }
 
+export const attach_Shareableactivitydefinition = (resource: ActivityDefinition, profile: Shareableactivitydefinition): ActivityDefinition => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/shareableactivitydefinition']
+        },
+        description: profile.description,
+        date: profile.date,
+        publisher: profile.publisher,
+        jurisdiction: profile.jurisdiction,
+        name: profile.name,
+        useContext: profile.useContext,
+        experimental: profile.experimental,
+        title: profile.title,
+        url: profile.url,
+        identifier: profile.identifier,
+        version: profile.version,
+        contact: profile.contact,
+    }
+}

@@ -12,7 +12,7 @@ import { Signature } from '../hl7-fhir-r4-core/Signature';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface EhrsrleProvenance {
-    profileType: 'EHRS FM Record Lifecycle Event - Provenance';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/ehrsrle-provenance';
     
     signature?: Signature[];
     occurredDateTime?: string;
@@ -26,3 +26,21 @@ export interface EhrsrleProvenance {
     occurredPeriod?: Period;
 }
 
+export const attach_EhrsrleProvenance = (resource: Provenance, profile: EhrsrleProvenance): Provenance => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/ehrsrle-provenance']
+        },
+        signature: profile.signature,
+        occurredDateTime: profile.occurredDateTime,
+        recorded: profile.recorded,
+        agent: profile.agent,
+        policy: profile.policy,
+        reason: profile.reason,
+        activity: profile.activity,
+        target: profile.target,
+        location: profile.location,
+        occurredPeriod: profile.occurredPeriod,
+    }
+}

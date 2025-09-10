@@ -9,9 +9,19 @@ import { Extension } from '../hl7-fhir-r4-core/Extension';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface DiagnosticreportGenetics {
-    profileType: 'DiagnosticReport-Genetics';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/diagnosticreport-genetics';
     
     extension?: Extension[];
     conclusionCode?: CodeableConcept[];
 }
 
+export const attach_DiagnosticreportGenetics = (resource: DiagnosticReport, profile: DiagnosticreportGenetics): DiagnosticReport => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/diagnosticreport-genetics']
+        },
+        extension: profile.extension,
+        conclusionCode: profile.conclusionCode,
+    }
+}

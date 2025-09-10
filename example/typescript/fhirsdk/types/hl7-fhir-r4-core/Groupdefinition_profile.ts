@@ -8,9 +8,19 @@ import { GroupMember } from '../hl7-fhir-r4-core/Group';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Groupdefinition {
-    profileType: 'Group Definition';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/groupdefinition';
     
     actual: boolean;
     member?: GroupMember[];
 }
 
+export const attach_Groupdefinition = (resource: Group, profile: Groupdefinition): Group => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/groupdefinition']
+        },
+        actual: profile.actual,
+        member: profile.member,
+    }
+}

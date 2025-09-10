@@ -14,9 +14,19 @@ import { PlanDefinitionGoalTarget } from '../hl7-fhir-r4-core/PlanDefinition';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Cdshooksserviceplandefinition {
-    profileType: 'CDS Hooks Service PlanDefinition';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cdshooksserviceplandefinition';
     
     extension?: Extension[];
     action?: PlanDefinitionAction[];
 }
 
+export const attach_Cdshooksserviceplandefinition = (resource: PlanDefinition, profile: Cdshooksserviceplandefinition): PlanDefinition => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/cdshooksserviceplandefinition']
+        },
+        extension: profile.extension,
+        action: profile.action,
+    }
+}

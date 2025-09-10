@@ -9,8 +9,17 @@ import { ObservationReferenceRange } from '../hl7-fhir-r4-core/Observation';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface ObservationGenetics {
-    profileType: 'Observation-genetics';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/observation-genetics';
     
     extension?: Extension[];
 }
 
+export const attach_ObservationGenetics = (resource: Observation, profile: ObservationGenetics): Observation => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/observation-genetics']
+        },
+        extension: profile.extension,
+    }
+}

@@ -13,7 +13,7 @@ import { Reference } from '../hl7-fhir-r4-core/Reference';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Catalog {
-    profileType: 'Profile for Catalog';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/catalog';
     
     extension?: Extension[];
     type: CodeableConcept;
@@ -23,3 +23,17 @@ export interface Catalog {
     section?: CompositionSection[];
 }
 
+export const attach_Catalog = (resource: Composition, profile: Catalog): Composition => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/catalog']
+        },
+        extension: profile.extension,
+        type: profile.type,
+        category: profile.category,
+        subject: profile.subject,
+        date: profile.date,
+        section: profile.section,
+    }
+}

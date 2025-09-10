@@ -8,9 +8,19 @@ import { GroupMember } from '../hl7-fhir-r4-core/Group';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Actualgroup {
-    profileType: 'Actual Group';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/actualgroup';
     
     actual: boolean;
     characteristic?: GroupCharacteristic[];
 }
 
+export const attach_Actualgroup = (resource: Group, profile: Actualgroup): Group => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/actualgroup']
+        },
+        actual: profile.actual,
+        characteristic: profile.characteristic,
+    }
+}

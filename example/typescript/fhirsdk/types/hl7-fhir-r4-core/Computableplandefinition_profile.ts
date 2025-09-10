@@ -13,8 +13,17 @@ import { PlanDefinitionGoalTarget } from '../hl7-fhir-r4-core/PlanDefinition';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Computableplandefinition {
-    profileType: 'Computable PlanDefinition';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/computableplandefinition';
     
     library: string[];
 }
 
+export const attach_Computableplandefinition = (resource: PlanDefinition, profile: Computableplandefinition): PlanDefinition => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/computableplandefinition']
+        },
+        library: profile.library,
+    }
+}

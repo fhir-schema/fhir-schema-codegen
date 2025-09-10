@@ -8,8 +8,17 @@ import { Extension } from '../hl7-fhir-r4-core/Extension';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Hlaresult {
-    profileType: 'Profile for HLA Genotyping Results';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/hlaresult';
     
     extension?: Extension[];
 }
 
+export const attach_Hlaresult = (resource: DiagnosticReport, profile: Hlaresult): DiagnosticReport => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/hlaresult']
+        },
+        extension: profile.extension,
+    }
+}

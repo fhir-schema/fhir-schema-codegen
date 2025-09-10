@@ -12,7 +12,7 @@ import { Range } from '../hl7-fhir-r4-core/Range';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface FamilymemberhistoryGenetic {
-    profileType: 'Family member history for genetics analysis';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/familymemberhistory-genetic';
     
     deceasedAge?: Age;
     sex?: CodeableConcept;
@@ -31,3 +31,26 @@ export interface FamilymemberhistoryGenetic {
     bornDate?: string;
 }
 
+export const attach_FamilymemberhistoryGenetic = (resource: FamilyMemberHistory, profile: FamilymemberhistoryGenetic): FamilyMemberHistory => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/familymemberhistory-genetic']
+        },
+        deceasedAge: profile.deceasedAge,
+        sex: profile.sex,
+        ageRange: profile.ageRange,
+        bornString: profile.bornString,
+        deceasedBoolean: profile.deceasedBoolean,
+        relationship: profile.relationship,
+        extension: profile.extension,
+        condition: profile.condition,
+        ageString: profile.ageString,
+        deceasedRange: profile.deceasedRange,
+        deceasedDate: profile.deceasedDate,
+        bornPeriod: profile.bornPeriod,
+        deceasedString: profile.deceasedString,
+        ageAge: profile.ageAge,
+        bornDate: profile.bornDate,
+    }
+}

@@ -11,16 +11,33 @@ import { CodeSystemProperty } from '../hl7-fhir-r4-core/CodeSystem';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Shareablecodesystem {
-    profileType: 'Shareable CodeSystem';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareablecodesystem';
     
     description: string;
     publisher: string;
     name: string;
     experimental: boolean;
-    status: string;
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     url: string;
     concept?: CodeSystemConcept[];
     caseSensitive?: boolean;
     version: string;
 }
 
+export const attach_Shareablecodesystem = (resource: CodeSystem, profile: Shareablecodesystem): CodeSystem => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/shareablecodesystem']
+        },
+        description: profile.description,
+        publisher: profile.publisher,
+        name: profile.name,
+        experimental: profile.experimental,
+        status: profile.status,
+        url: profile.url,
+        concept: profile.concept,
+        caseSensitive: profile.caseSensitive,
+        version: profile.version,
+    }
+}

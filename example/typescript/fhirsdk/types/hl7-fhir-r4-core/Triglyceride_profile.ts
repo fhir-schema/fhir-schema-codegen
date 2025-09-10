@@ -12,7 +12,7 @@ import { Reference } from '../hl7-fhir-r4-core/Reference';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Triglyceride {
-    profileType: 'Example Lipid Profile';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/triglyceride';
     
     code: CodeableConcept;
     valueQuantity?: Quantity;
@@ -23,3 +23,18 @@ export interface Triglyceride {
     derivedFrom?: Reference<'DocumentReference' | 'ImagingStudy' | 'Media' | 'MolecularSequence' | 'Observation' | 'QuestionnaireResponse'>[];
 }
 
+export const attach_Triglyceride = (resource: Observation, profile: Triglyceride): Observation => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/triglyceride']
+        },
+        code: profile.code,
+        valueQuantity: profile.valueQuantity,
+        interpretation: profile.interpretation,
+        note: profile.note,
+        referenceRange: profile.referenceRange,
+        hasMember: profile.hasMember,
+        derivedFrom: profile.derivedFrom,
+    }
+}

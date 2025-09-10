@@ -9,7 +9,7 @@ import { Identifier } from '../hl7-fhir-r4-core/Identifier';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Picoelement {
-    profileType: 'PICO Element Profile';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/picoelement';
     
     identifier?: Identifier[];
     title?: string;
@@ -17,7 +17,23 @@ export interface Picoelement {
     date?: string;
     description?: string;
     note?: Annotation[];
-    type?: string;
+    type?: 'dichotomous' | 'continuous' | 'descriptive';
     characteristic: EvidenceVariableCharacteristic[];
 }
 
+export const attach_Picoelement = (resource: EvidenceVariable, profile: Picoelement): EvidenceVariable => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/picoelement']
+        },
+        identifier: profile.identifier,
+        title: profile.title,
+        shortTitle: profile.shortTitle,
+        date: profile.date,
+        description: profile.description,
+        note: profile.note,
+        type: profile.type,
+        characteristic: profile.characteristic,
+    }
+}

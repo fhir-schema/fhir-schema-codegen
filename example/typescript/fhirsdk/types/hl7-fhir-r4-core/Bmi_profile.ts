@@ -15,11 +15,11 @@ import { SampledData } from '../hl7-fhir-r4-core/SampledData';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Bmi {
-    profileType: 'observation-bmi';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/bmi';
     
     category: CodeableConcept[];
-    hasMember?: Reference<'MolecularSequence' | 'QuestionnaireResponse' | 'observation-vitalsigns'>[];
-    derivedFrom?: Reference<'DocumentReference' | 'ImagingStudy' | 'Media' | 'MolecularSequence' | 'QuestionnaireResponse' | 'observation-vitalsigns'>[];
+    hasMember?: Reference<'MolecularSequence' | 'QuestionnaireResponse' | 'Observation'/*observation-vitalsigns*/>[];
+    derivedFrom?: Reference<'DocumentReference' | 'ImagingStudy' | 'Media' | 'MolecularSequence' | 'QuestionnaireResponse' | 'Observation'/*observation-vitalsigns*/>[];
     valueTime?: string;
     valueQuantity: Quantity;
     valueString?: string;
@@ -29,7 +29,7 @@ export interface Bmi {
     component?: ObservationComponent[];
     valueSampledData?: SampledData;
     effectiveDateTime?: string;
-    status: string;
+    status: 'registered' | 'preliminary' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown' | 'corrected';
     code: CodeableConcept;
     valueCodeableConcept?: CodeableConcept;
     valuePeriod?: Period;
@@ -40,3 +40,32 @@ export interface Bmi {
     effectivePeriod?: Period;
 }
 
+export const attach_Bmi = (resource: Observation, profile: Bmi): Observation => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/bmi']
+        },
+        category: profile.category,
+        hasMember: profile.hasMember,
+        derivedFrom: profile.derivedFrom,
+        valueTime: profile.valueTime,
+        valueQuantity: profile.valueQuantity,
+        valueString: profile.valueString,
+        valueRatio: profile.valueRatio,
+        valueBoolean: profile.valueBoolean,
+        valueDateTime: profile.valueDateTime,
+        component: profile.component,
+        valueSampledData: profile.valueSampledData,
+        effectiveDateTime: profile.effectiveDateTime,
+        status: profile.status,
+        code: profile.code,
+        valueCodeableConcept: profile.valueCodeableConcept,
+        valuePeriod: profile.valuePeriod,
+        valueRange: profile.valueRange,
+        valueInteger: profile.valueInteger,
+        subject: profile.subject,
+        dataAbsentReason: profile.dataAbsentReason,
+        effectivePeriod: profile.effectivePeriod,
+    }
+}

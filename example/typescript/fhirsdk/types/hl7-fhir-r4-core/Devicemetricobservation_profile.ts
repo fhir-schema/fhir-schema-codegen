@@ -17,7 +17,7 @@ import { SampledData } from '../hl7-fhir-r4-core/SampledData';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Devicemetricobservation {
-    profileType: 'Device Metric Observation Profile';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/devicemetricobservation';
     
     referenceRange?: ObservationReferenceRange[];
     hasMember?: Reference<'Observation'>[];
@@ -34,7 +34,7 @@ export interface Devicemetricobservation {
     note?: Annotation[];
     valueSampledData?: SampledData;
     effectiveDateTime: string;
-    status: string;
+    status: 'registered' | 'preliminary' | 'final' | 'amended' | 'cancelled' | 'entered-in-error' | 'unknown' | 'corrected';
     code: CodeableConcept;
     identifier?: Identifier[];
     valueCodeableConcept?: CodeableConcept;
@@ -47,3 +47,37 @@ export interface Devicemetricobservation {
     dataAbsentReason?: CodeableConcept;
 }
 
+export const attach_Devicemetricobservation = (resource: Observation, profile: Devicemetricobservation): Observation => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/devicemetricobservation']
+        },
+        referenceRange: profile.referenceRange,
+        hasMember: profile.hasMember,
+        derivedFrom: profile.derivedFrom,
+        interpretation: profile.interpretation,
+        encounter: profile.encounter,
+        method: profile.method,
+        valueTime: profile.valueTime,
+        specimen: profile.specimen,
+        valueQuantity: profile.valueQuantity,
+        valueString: profile.valueString,
+        valueRatio: profile.valueRatio,
+        valueDateTime: profile.valueDateTime,
+        note: profile.note,
+        valueSampledData: profile.valueSampledData,
+        effectiveDateTime: profile.effectiveDateTime,
+        status: profile.status,
+        code: profile.code,
+        identifier: profile.identifier,
+        valueCodeableConcept: profile.valueCodeableConcept,
+        bodySite: profile.bodySite,
+        issued: profile.issued,
+        valuePeriod: profile.valuePeriod,
+        device: profile.device,
+        valueRange: profile.valueRange,
+        subject: profile.subject,
+        dataAbsentReason: profile.dataAbsentReason,
+    }
+}

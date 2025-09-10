@@ -14,14 +14,29 @@ import { ValueSetExpansionParameter } from '../hl7-fhir-r4-core/ValueSet';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Shareablevalueset {
-    profileType: 'Shareable ValueSet';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareablevalueset';
     
     url: string;
     version: string;
     name: string;
-    status: string;
+    status: 'draft' | 'active' | 'retired' | 'unknown';
     experimental: boolean;
     publisher: string;
     description: string;
 }
 
+export const attach_Shareablevalueset = (resource: ValueSet, profile: Shareablevalueset): ValueSet => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/shareablevalueset']
+        },
+        url: profile.url,
+        version: profile.version,
+        name: profile.name,
+        status: profile.status,
+        experimental: profile.experimental,
+        publisher: profile.publisher,
+        description: profile.description,
+    }
+}

@@ -10,7 +10,7 @@ import { Reference } from '../hl7-fhir-r4-core/Reference';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface ProvenanceRelevantHistory {
-    profileType: 'Provenance Relevant History';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/provenance-relevant-history';
     
     target: Reference<'Resource'>[];
     occurredDateTime?: string;
@@ -19,3 +19,16 @@ export interface ProvenanceRelevantHistory {
     agent: ProvenanceAgent[];
 }
 
+export const attach_ProvenanceRelevantHistory = (resource: Provenance, profile: ProvenanceRelevantHistory): Provenance => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/provenance-relevant-history']
+        },
+        target: profile.target,
+        occurredDateTime: profile.occurredDateTime,
+        reason: profile.reason,
+        activity: profile.activity,
+        agent: profile.agent,
+    }
+}

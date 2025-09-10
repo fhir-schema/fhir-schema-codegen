@@ -15,7 +15,7 @@ import { UsageContext } from '../hl7-fhir-r4-core/UsageContext';
 import { Element } from '../hl7-fhir-r4-core/Element';
 
 export interface Shareablemeasure {
-    profileType: 'Shareable Measure';
+    __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareablemeasure';
     
     description: string;
     date?: string;
@@ -31,3 +31,23 @@ export interface Shareablemeasure {
     contact?: ContactDetail[];
 }
 
+export const attach_Shareablemeasure = (resource: Measure, profile: Shareablemeasure): Measure => {
+    return {
+        ...resource,
+        meta: {
+            profile: ['http://hl7.org/fhir/StructureDefinition/shareablemeasure']
+        },
+        description: profile.description,
+        date: profile.date,
+        publisher: profile.publisher,
+        jurisdiction: profile.jurisdiction,
+        name: profile.name,
+        useContext: profile.useContext,
+        experimental: profile.experimental,
+        title: profile.title,
+        url: profile.url,
+        identifier: profile.identifier,
+        version: profile.version,
+        contact: profile.contact,
+    }
+}
