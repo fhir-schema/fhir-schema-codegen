@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Composition : DomainResource
@@ -30,9 +32,13 @@ public class Composition : DomainResource
         
         public enum ModeEnum
         {
+            [Description("personal")]
             Personal ,
+            [Description("professional")]
             Professional ,
+            [Description("legal")]
             Legal ,
+            [Description("official")]
             Official ,
         }
         public override string ToString() => 
@@ -59,9 +65,13 @@ public class Composition : DomainResource
         
         public enum CodeEnum
         {
+            [Description("replaces")]
             Replaces ,
+            [Description("transforms")]
             Transforms ,
+            [Description("signs")]
             Signs ,
+            [Description("appends")]
             Appends ,
         }
         public override string ToString() => 
@@ -84,8 +94,11 @@ public class Composition : DomainResource
         
         public enum ModeEnum
         {
+            [Description("working")]
             Working ,
+            [Description("snapshot")]
             Snapshot ,
+            [Description("changes")]
             Changes ,
         }
         public override string ToString() => 
@@ -96,18 +109,28 @@ public class Composition : DomainResource
     
     public enum StatusEnum
     {
+        [Description("preliminary")]
         Preliminary ,
+        [Description("final")]
         Final ,
+        [Description("amended")]
         Amended ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public enum ConfidentialityEnum
     {
+        [Description("U")]
         U ,
+        [Description("L")]
         L ,
+        [Description("M")]
         M ,
+        [Description("N")]
         N ,
+        [Description("R")]
         R ,
+        [Description("V")]
         V ,
     }
     public override string ToString() => 

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class StructureMap : DomainResource
@@ -36,8 +38,11 @@ public class StructureMap : DomainResource
         
         public enum TypeModeEnum
         {
+            [Description("none")]
             None ,
+            [Description("types")]
             Types ,
+            [Description("type-and-types")]
             TypeDashAndDashTypes ,
         }
         public override string ToString() => 
@@ -54,7 +59,9 @@ public class StructureMap : DomainResource
         
         public enum ModeEnum
         {
+            [Description("source")]
             Source ,
+            [Description("target")]
             Target ,
         }
         public override string ToString() => 
@@ -151,10 +158,15 @@ public class StructureMap : DomainResource
         
         public enum ListModeEnum
         {
+            [Description("first")]
             First ,
+            [Description("not_first")]
             Not_first ,
+            [Description("last")]
             Last ,
+            [Description("not_last")]
             Not_last ,
+            [Description("only_one")]
             Only_one ,
         }
         public override string ToString() => 
@@ -175,34 +187,57 @@ public class StructureMap : DomainResource
         
         public enum ContextTypeEnum
         {
+            [Description("type")]
             Type ,
+            [Description("variable")]
             Variable ,
         }
         public enum ListModeEnum
         {
+            [Description("first")]
             First ,
+            [Description("share")]
             Share ,
+            [Description("last")]
             Last ,
+            [Description("collate")]
             Collate ,
         }
         public enum TransformEnum
         {
+            [Description("create")]
             Create ,
+            [Description("copy")]
             Copy ,
+            [Description("truncate")]
             Truncate ,
+            [Description("escape")]
             Escape ,
+            [Description("cast")]
             Cast ,
+            [Description("append")]
             Append ,
+            [Description("translate")]
             Translate ,
+            [Description("reference")]
             Reference ,
+            [Description("dateOp")]
             DateOp ,
+            [Description("uuid")]
             Uuid ,
+            [Description("pointer")]
             Pointer ,
+            [Description("evaluate")]
             Evaluate ,
+            [Description("cc")]
             Cc ,
+            [Description("c")]
             C ,
+            [Description("qty")]
             Qty ,
+            [Description("id")]
             Id ,
+            [Description("cp")]
             Cp ,
         }
         public override string ToString() => 
@@ -232,9 +267,13 @@ public class StructureMap : DomainResource
         
         public enum ModeEnum
         {
+            [Description("source")]
             Source ,
+            [Description("queried")]
             Queried ,
+            [Description("target")]
             Target ,
+            [Description("produced")]
             Produced ,
         }
         public override string ToString() => 
@@ -245,9 +284,13 @@ public class StructureMap : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

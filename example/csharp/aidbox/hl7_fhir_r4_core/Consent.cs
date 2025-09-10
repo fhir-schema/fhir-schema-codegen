@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Consent : DomainResource
@@ -47,7 +49,9 @@ public class Consent : DomainResource
         
         public enum TypeEnum
         {
+            [Description("deny")]
             Deny ,
+            [Description("permit")]
             Permit ,
         }
         public override string ToString() => 
@@ -72,9 +76,13 @@ public class Consent : DomainResource
         
         public enum MeaningEnum
         {
+            [Description("instance")]
             Instance ,
+            [Description("related")]
             Related ,
+            [Description("dependents")]
             Dependents ,
+            [Description("authoredby")]
             Authoredby ,
         }
         public override string ToString() => 
@@ -96,11 +104,17 @@ public class Consent : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("proposed")]
         Proposed ,
+        [Description("active")]
         Active ,
+        [Description("rejected")]
         Rejected ,
+        [Description("inactive")]
         Inactive ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Location : DomainResource
@@ -33,12 +35,19 @@ public class Location : DomainResource
         
         public enum DaysOfWeekEnum
         {
+            [Description("mon")]
             Mon ,
+            [Description("tue")]
             Tue ,
+            [Description("wed")]
             Wed ,
+            [Description("thu")]
             Thu ,
+            [Description("fri")]
             Fri ,
+            [Description("sat")]
             Sat ,
+            [Description("sun")]
             Sun ,
         }
         public override string ToString() => 
@@ -60,13 +69,18 @@ public class Location : DomainResource
     
     public enum ModeEnum
     {
+        [Description("instance")]
         Instance ,
+        [Description("kind")]
         Kind ,
     }
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("suspended")]
         Suspended ,
+        [Description("inactive")]
         Inactive ,
     }
     public override string ToString() => 

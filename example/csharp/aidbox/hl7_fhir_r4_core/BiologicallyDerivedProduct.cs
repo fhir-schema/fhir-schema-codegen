@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class BiologicallyDerivedProduct : DomainResource
@@ -63,8 +65,11 @@ public class BiologicallyDerivedProduct : DomainResource
         
         public enum ScaleEnum
         {
+            [Description("farenheit")]
             Farenheit ,
+            [Description("celsius")]
             Celsius ,
+            [Description("kelvin")]
             Kelvin ,
         }
         public override string ToString() => 
@@ -75,15 +80,22 @@ public class BiologicallyDerivedProduct : DomainResource
     
     public enum StatusEnum
     {
+        [Description("available")]
         Available ,
+        [Description("unavailable")]
         Unavailable ,
     }
     public enum ProductCategoryEnum
     {
+        [Description("organ")]
         Organ ,
+        [Description("tissue")]
         Tissue ,
+        [Description("fluid")]
         Fluid ,
+        [Description("cells")]
         Cells ,
+        [Description("biologicalAgent")]
         BiologicalAgent ,
     }
     public override string ToString() => 

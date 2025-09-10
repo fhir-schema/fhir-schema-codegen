@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class DeviceUseStatement : DomainResource
@@ -24,11 +26,17 @@ public class DeviceUseStatement : DomainResource
     
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("intended")]
         Intended ,
+        [Description("stopped")]
         Stopped ,
+        [Description("on-hold")]
         OnDashHold ,
     }
     public override string ToString() => 

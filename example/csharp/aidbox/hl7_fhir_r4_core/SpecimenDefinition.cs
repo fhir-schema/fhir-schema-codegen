@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class SpecimenDefinition : DomainResource
@@ -26,7 +28,9 @@ public class SpecimenDefinition : DomainResource
         
         public enum PreferenceEnum
         {
+            [Description("preferred")]
             Preferred ,
+            [Description("alternate")]
             Alternate ,
         }
         public override string ToString() => 

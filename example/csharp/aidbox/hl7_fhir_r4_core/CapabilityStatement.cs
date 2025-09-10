@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class CapabilityStatement : DomainResource
@@ -41,7 +43,9 @@ public class CapabilityStatement : DomainResource
         
         public enum ModeEnum
         {
+            [Description("producer")]
             Producer ,
+            [Description("consumer")]
             Consumer ,
         }
         public override string ToString() => 
@@ -89,7 +93,9 @@ public class CapabilityStatement : DomainResource
         
         public enum ModeEnum
         {
+            [Description("sender")]
             Sender ,
+            [Description("receiver")]
             Receiver ,
         }
         public override string ToString() => 
@@ -110,7 +116,9 @@ public class CapabilityStatement : DomainResource
         
         public enum ModeEnum
         {
+            [Description("client")]
             Client ,
+            [Description("server")]
             Server ,
         }
         public override string ToString() => 
@@ -125,9 +133,13 @@ public class CapabilityStatement : DomainResource
         
         public enum CodeEnum
         {
+            [Description("transaction")]
             Transaction ,
+            [Description("batch")]
             Batch ,
+            [Description("search-system")]
             SearchDashSystem ,
+            [Description("history-system")]
             HistoryDashSystem ,
         }
         public override string ToString() => 
@@ -157,180 +169,343 @@ public class CapabilityStatement : DomainResource
         
         public enum ConditionalReadEnum
         {
+            [Description("not-supported")]
             NotDashSupported ,
+            [Description("modified-since")]
             ModifiedDashSince ,
+            [Description("not-match")]
             NotDashMatch ,
+            [Description("full-support")]
             FullDashSupport ,
         }
         public enum ReferencePolicyEnum
         {
+            [Description("literal")]
             Literal ,
+            [Description("logical")]
             Logical ,
+            [Description("resolves")]
             Resolves ,
+            [Description("enforced")]
             Enforced ,
+            [Description("local")]
             Local ,
         }
         public enum TypeEnum
         {
+            [Description("Account")]
             Account ,
+            [Description("ActivityDefinition")]
             ActivityDefinition ,
+            [Description("AdverseEvent")]
             AdverseEvent ,
+            [Description("AllergyIntolerance")]
             AllergyIntolerance ,
+            [Description("Appointment")]
             Appointment ,
+            [Description("AppointmentResponse")]
             AppointmentResponse ,
+            [Description("AuditEvent")]
             AuditEvent ,
+            [Description("Basic")]
             Basic ,
+            [Description("Binary")]
             Binary ,
+            [Description("BiologicallyDerivedProduct")]
             BiologicallyDerivedProduct ,
+            [Description("BodyStructure")]
             BodyStructure ,
+            [Description("Bundle")]
             Bundle ,
+            [Description("CapabilityStatement")]
             CapabilityStatement ,
+            [Description("CarePlan")]
             CarePlan ,
+            [Description("CareTeam")]
             CareTeam ,
+            [Description("CatalogEntry")]
             CatalogEntry ,
+            [Description("ChargeItem")]
             ChargeItem ,
+            [Description("ChargeItemDefinition")]
             ChargeItemDefinition ,
+            [Description("Claim")]
             Claim ,
+            [Description("ClaimResponse")]
             ClaimResponse ,
+            [Description("ClinicalImpression")]
             ClinicalImpression ,
+            [Description("CodeSystem")]
             CodeSystem ,
+            [Description("Communication")]
             Communication ,
+            [Description("CommunicationRequest")]
             CommunicationRequest ,
+            [Description("CompartmentDefinition")]
             CompartmentDefinition ,
+            [Description("Composition")]
             Composition ,
+            [Description("ConceptMap")]
             ConceptMap ,
+            [Description("Condition")]
             Condition ,
+            [Description("Consent")]
             Consent ,
+            [Description("Contract")]
             Contract ,
+            [Description("Coverage")]
             Coverage ,
+            [Description("CoverageEligibilityRequest")]
             CoverageEligibilityRequest ,
+            [Description("CoverageEligibilityResponse")]
             CoverageEligibilityResponse ,
+            [Description("DetectedIssue")]
             DetectedIssue ,
+            [Description("Device")]
             Device ,
+            [Description("DeviceDefinition")]
             DeviceDefinition ,
+            [Description("DeviceMetric")]
             DeviceMetric ,
+            [Description("DeviceRequest")]
             DeviceRequest ,
+            [Description("DeviceUseStatement")]
             DeviceUseStatement ,
+            [Description("DiagnosticReport")]
             DiagnosticReport ,
+            [Description("DocumentManifest")]
             DocumentManifest ,
+            [Description("DocumentReference")]
             DocumentReference ,
+            [Description("DomainResource")]
             DomainResource ,
+            [Description("EffectEvidenceSynthesis")]
             EffectEvidenceSynthesis ,
+            [Description("Encounter")]
             Encounter ,
+            [Description("Endpoint")]
             Endpoint ,
+            [Description("EnrollmentRequest")]
             EnrollmentRequest ,
+            [Description("EnrollmentResponse")]
             EnrollmentResponse ,
+            [Description("EpisodeOfCare")]
             EpisodeOfCare ,
+            [Description("EventDefinition")]
             EventDefinition ,
+            [Description("Evidence")]
             Evidence ,
+            [Description("EvidenceVariable")]
             EvidenceVariable ,
+            [Description("ExampleScenario")]
             ExampleScenario ,
+            [Description("ExplanationOfBenefit")]
             ExplanationOfBenefit ,
+            [Description("FamilyMemberHistory")]
             FamilyMemberHistory ,
+            [Description("Flag")]
             Flag ,
+            [Description("Goal")]
             Goal ,
+            [Description("GraphDefinition")]
             GraphDefinition ,
+            [Description("Group")]
             Group ,
+            [Description("GuidanceResponse")]
             GuidanceResponse ,
+            [Description("HealthcareService")]
             HealthcareService ,
+            [Description("ImagingStudy")]
             ImagingStudy ,
+            [Description("Immunization")]
             Immunization ,
+            [Description("ImmunizationEvaluation")]
             ImmunizationEvaluation ,
+            [Description("ImmunizationRecommendation")]
             ImmunizationRecommendation ,
+            [Description("ImplementationGuide")]
             ImplementationGuide ,
+            [Description("InsurancePlan")]
             InsurancePlan ,
+            [Description("Invoice")]
             Invoice ,
+            [Description("Library")]
             Library ,
+            [Description("Linkage")]
             Linkage ,
+            [Description("List")]
             List ,
+            [Description("Location")]
             Location ,
+            [Description("Measure")]
             Measure ,
+            [Description("MeasureReport")]
             MeasureReport ,
+            [Description("Media")]
             Media ,
+            [Description("Medication")]
             Medication ,
+            [Description("MedicationAdministration")]
             MedicationAdministration ,
+            [Description("MedicationDispense")]
             MedicationDispense ,
+            [Description("MedicationKnowledge")]
             MedicationKnowledge ,
+            [Description("MedicationRequest")]
             MedicationRequest ,
+            [Description("MedicationStatement")]
             MedicationStatement ,
+            [Description("MedicinalProduct")]
             MedicinalProduct ,
+            [Description("MedicinalProductAuthorization")]
             MedicinalProductAuthorization ,
+            [Description("MedicinalProductContraindication")]
             MedicinalProductContraindication ,
+            [Description("MedicinalProductIndication")]
             MedicinalProductIndication ,
+            [Description("MedicinalProductIngredient")]
             MedicinalProductIngredient ,
+            [Description("MedicinalProductInteraction")]
             MedicinalProductInteraction ,
+            [Description("MedicinalProductManufactured")]
             MedicinalProductManufactured ,
+            [Description("MedicinalProductPackaged")]
             MedicinalProductPackaged ,
+            [Description("MedicinalProductPharmaceutical")]
             MedicinalProductPharmaceutical ,
+            [Description("MedicinalProductUndesirableEffect")]
             MedicinalProductUndesirableEffect ,
+            [Description("MessageDefinition")]
             MessageDefinition ,
+            [Description("MessageHeader")]
             MessageHeader ,
+            [Description("MolecularSequence")]
             MolecularSequence ,
+            [Description("NamingSystem")]
             NamingSystem ,
+            [Description("NutritionOrder")]
             NutritionOrder ,
+            [Description("Observation")]
             Observation ,
+            [Description("ObservationDefinition")]
             ObservationDefinition ,
+            [Description("OperationDefinition")]
             OperationDefinition ,
+            [Description("OperationOutcome")]
             OperationOutcome ,
+            [Description("Organization")]
             Organization ,
+            [Description("OrganizationAffiliation")]
             OrganizationAffiliation ,
+            [Description("Parameters")]
             Parameters ,
+            [Description("Patient")]
             Patient ,
+            [Description("PaymentNotice")]
             PaymentNotice ,
+            [Description("PaymentReconciliation")]
             PaymentReconciliation ,
+            [Description("Person")]
             Person ,
+            [Description("PlanDefinition")]
             PlanDefinition ,
+            [Description("Practitioner")]
             Practitioner ,
+            [Description("PractitionerRole")]
             PractitionerRole ,
+            [Description("Procedure")]
             Procedure ,
+            [Description("Provenance")]
             Provenance ,
+            [Description("Questionnaire")]
             Questionnaire ,
+            [Description("QuestionnaireResponse")]
             QuestionnaireResponse ,
+            [Description("RelatedPerson")]
             RelatedPerson ,
+            [Description("RequestGroup")]
             RequestGroup ,
+            [Description("ResearchDefinition")]
             ResearchDefinition ,
+            [Description("ResearchElementDefinition")]
             ResearchElementDefinition ,
+            [Description("ResearchStudy")]
             ResearchStudy ,
+            [Description("ResearchSubject")]
             ResearchSubject ,
+            [Description("Resource")]
             Resource ,
+            [Description("RiskAssessment")]
             RiskAssessment ,
+            [Description("RiskEvidenceSynthesis")]
             RiskEvidenceSynthesis ,
+            [Description("Schedule")]
             Schedule ,
+            [Description("SearchParameter")]
             SearchParameter ,
+            [Description("ServiceRequest")]
             ServiceRequest ,
+            [Description("Slot")]
             Slot ,
+            [Description("Specimen")]
             Specimen ,
+            [Description("SpecimenDefinition")]
             SpecimenDefinition ,
+            [Description("StructureDefinition")]
             StructureDefinition ,
+            [Description("StructureMap")]
             StructureMap ,
+            [Description("Subscription")]
             Subscription ,
+            [Description("Substance")]
             Substance ,
+            [Description("SubstanceNucleicAcid")]
             SubstanceNucleicAcid ,
+            [Description("SubstancePolymer")]
             SubstancePolymer ,
+            [Description("SubstanceProtein")]
             SubstanceProtein ,
+            [Description("SubstanceReferenceInformation")]
             SubstanceReferenceInformation ,
+            [Description("SubstanceSourceMaterial")]
             SubstanceSourceMaterial ,
+            [Description("SubstanceSpecification")]
             SubstanceSpecification ,
+            [Description("SupplyDelivery")]
             SupplyDelivery ,
+            [Description("SupplyRequest")]
             SupplyRequest ,
+            [Description("Task")]
             Task ,
+            [Description("TerminologyCapabilities")]
             TerminologyCapabilities ,
+            [Description("TestReport")]
             TestReport ,
+            [Description("TestScript")]
             TestScript ,
+            [Description("ValueSet")]
             ValueSet ,
+            [Description("VerificationResult")]
             VerificationResult ,
+            [Description("VisionPrescription")]
             VisionPrescription ,
         }
         public enum VersioningEnum
         {
+            [Description("no-version")]
             NoDashVersion ,
+            [Description("versioned")]
             Versioned ,
+            [Description("versioned-update")]
             VersionedDashUpdate ,
         }
         public enum ConditionalDeleteEnum
         {
+            [Description("not-supported")]
             NotDashSupported ,
+            [Description("single")]
             Single ,
+            [Description("multiple")]
             Multiple ,
         }
         public override string ToString() => 
@@ -345,14 +520,23 @@ public class CapabilityStatement : DomainResource
         
         public enum CodeEnum
         {
+            [Description("read")]
             Read ,
+            [Description("vread")]
             Vread ,
+            [Description("update")]
             Update ,
+            [Description("patch")]
             Patch ,
+            [Description("delete")]
             Delete ,
+            [Description("history-instance")]
             HistoryDashInstance ,
+            [Description("history-type")]
             HistoryDashType ,
+            [Description("create")]
             Create ,
+            [Description("search-type")]
             SearchDashType ,
         }
         public override string ToString() => 
@@ -380,14 +564,23 @@ public class CapabilityStatement : DomainResource
         
         public enum TypeEnum
         {
+            [Description("number")]
             Number ,
+            [Description("date")]
             Date ,
+            [Description("string")]
             String ,
+            [Description("token")]
             Token ,
+            [Description("reference")]
             Reference ,
+            [Description("composite")]
             Composite ,
+            [Description("quantity")]
             Quantity ,
+            [Description("uri")]
             Uri ,
+            [Description("special")]
             Special ,
         }
         public override string ToString() => 
@@ -420,40 +613,69 @@ public class CapabilityStatement : DomainResource
     
     public enum FhirVersionEnum
     {
+        [Description("0.01")]
         _0Dot01 ,
+        [Description("0.05")]
         _0Dot05 ,
+        [Description("0.06")]
         _0Dot06 ,
+        [Description("0.11")]
         _0Dot11 ,
+        [Description("0.0.80")]
         _0Dot0Dot80 ,
+        [Description("0.0.81")]
         _0Dot0Dot81 ,
+        [Description("0.0.82")]
         _0Dot0Dot82 ,
+        [Description("0.4.0")]
         _0Dot4Dot0 ,
+        [Description("0.5.0")]
         _0Dot5Dot0 ,
+        [Description("1.0.0")]
         _1Dot0Dot0 ,
+        [Description("1.0.1")]
         _1Dot0Dot1 ,
+        [Description("1.0.2")]
         _1Dot0Dot2 ,
+        [Description("1.1.0")]
         _1Dot1Dot0 ,
+        [Description("1.4.0")]
         _1Dot4Dot0 ,
+        [Description("1.6.0")]
         _1Dot6Dot0 ,
+        [Description("1.8.0")]
         _1Dot8Dot0 ,
+        [Description("3.0.0")]
         _3Dot0Dot0 ,
+        [Description("3.0.1")]
         _3Dot0Dot1 ,
+        [Description("3.3.0")]
         _3Dot3Dot0 ,
+        [Description("3.5.0")]
         _3Dot5Dot0 ,
+        [Description("4.0.0")]
         _4Dot0Dot0 ,
+        [Description("4.0.1")]
         _4Dot0Dot1 ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum KindEnum
     {
+        [Description("instance")]
         Instance ,
+        [Description("capability")]
         Capability ,
+        [Description("requirements")]
         Requirements ,
     }
     public override string ToString() => 

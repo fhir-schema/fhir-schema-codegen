@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class StructureDefinition : DomainResource
@@ -41,8 +43,11 @@ public class StructureDefinition : DomainResource
         
         public enum TypeEnum
         {
+            [Description("fhirpath")]
             Fhirpath ,
+            [Description("element")]
             Element ,
+            [Description("extension")]
             Extension ,
         }
         public override string ToString() => 
@@ -83,46 +88,78 @@ public class StructureDefinition : DomainResource
     
     public enum DerivationEnum
     {
+        [Description("specialization")]
         Specialization ,
+        [Description("constraint")]
         Constraint ,
     }
     public enum FhirVersionEnum
     {
+        [Description("0.01")]
         _0Dot01 ,
+        [Description("0.05")]
         _0Dot05 ,
+        [Description("0.06")]
         _0Dot06 ,
+        [Description("0.11")]
         _0Dot11 ,
+        [Description("0.0.80")]
         _0Dot0Dot80 ,
+        [Description("0.0.81")]
         _0Dot0Dot81 ,
+        [Description("0.0.82")]
         _0Dot0Dot82 ,
+        [Description("0.4.0")]
         _0Dot4Dot0 ,
+        [Description("0.5.0")]
         _0Dot5Dot0 ,
+        [Description("1.0.0")]
         _1Dot0Dot0 ,
+        [Description("1.0.1")]
         _1Dot0Dot1 ,
+        [Description("1.0.2")]
         _1Dot0Dot2 ,
+        [Description("1.1.0")]
         _1Dot1Dot0 ,
+        [Description("1.4.0")]
         _1Dot4Dot0 ,
+        [Description("1.6.0")]
         _1Dot6Dot0 ,
+        [Description("1.8.0")]
         _1Dot8Dot0 ,
+        [Description("3.0.0")]
         _3Dot0Dot0 ,
+        [Description("3.0.1")]
         _3Dot0Dot1 ,
+        [Description("3.3.0")]
         _3Dot3Dot0 ,
+        [Description("3.5.0")]
         _3Dot5Dot0 ,
+        [Description("4.0.0")]
         _4Dot0Dot0 ,
+        [Description("4.0.1")]
         _4Dot0Dot1 ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum KindEnum
     {
+        [Description("primitive-type")]
         PrimitiveDashType ,
+        [Description("complex-type")]
         ComplexDashType ,
+        [Description("resource")]
         Resource ,
+        [Description("logical")]
         Logical ,
     }
     public override string ToString() => 

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Observation : DomainResource
@@ -84,13 +86,21 @@ public class Observation : DomainResource
     
     public enum StatusEnum
     {
+        [Description("registered")]
         Registered ,
+        [Description("preliminary")]
         Preliminary ,
+        [Description("final")]
         Final ,
+        [Description("amended")]
         Amended ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
+        [Description("corrected")]
         Corrected ,
     }
     public override string ToString() => 

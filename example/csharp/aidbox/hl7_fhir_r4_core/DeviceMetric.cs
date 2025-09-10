@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class DeviceMetric : DomainResource
@@ -25,16 +27,24 @@ public class DeviceMetric : DomainResource
         
         public enum TypeEnum
         {
+            [Description("unspecified")]
             Unspecified ,
+            [Description("offset")]
             Offset ,
+            [Description("gain")]
             Gain ,
+            [Description("two-point")]
             TwoDashPoint ,
         }
         public enum StateEnum
         {
+            [Description("not-calibrated")]
             NotDashCalibrated ,
+            [Description("calibration-required")]
             CalibrationDashRequired ,
+            [Description("calibrated")]
             Calibrated ,
+            [Description("unspecified")]
             Unspecified ,
         }
         public override string ToString() => 
@@ -45,27 +55,43 @@ public class DeviceMetric : DomainResource
     
     public enum CategoryEnum
     {
+        [Description("measurement")]
         Measurement ,
+        [Description("setting")]
         Setting ,
+        [Description("calculation")]
         Calculation ,
+        [Description("unspecified")]
         Unspecified ,
     }
     public enum ColorEnum
     {
+        [Description("black")]
         Black ,
+        [Description("red")]
         Red ,
+        [Description("green")]
         Green ,
+        [Description("yellow")]
         Yellow ,
+        [Description("blue")]
         Blue ,
+        [Description("magenta")]
         Magenta ,
+        [Description("cyan")]
         Cyan ,
+        [Description("white")]
         White ,
     }
     public enum OperationalStatusEnum
     {
+        [Description("on")]
         On ,
+        [Description("off")]
         Off ,
+        [Description("standby")]
         Standby ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

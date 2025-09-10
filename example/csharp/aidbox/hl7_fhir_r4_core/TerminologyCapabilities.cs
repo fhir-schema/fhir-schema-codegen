@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class TerminologyCapabilities : DomainResource
@@ -139,20 +141,29 @@ public class TerminologyCapabilities : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum KindEnum
     {
+        [Description("instance")]
         Instance ,
+        [Description("capability")]
         Capability ,
+        [Description("requirements")]
         Requirements ,
     }
     public enum CodeSearchEnum
     {
+        [Description("explicit")]
         Explicit ,
+        [Description("all")]
         All ,
     }
     public override string ToString() => 

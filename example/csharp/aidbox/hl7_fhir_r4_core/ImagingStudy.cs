@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ImagingStudy : DomainResource
@@ -72,10 +74,15 @@ public class ImagingStudy : DomainResource
     
     public enum StatusEnum
     {
+        [Description("registered")]
         Registered ,
+        [Description("available")]
         Available ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

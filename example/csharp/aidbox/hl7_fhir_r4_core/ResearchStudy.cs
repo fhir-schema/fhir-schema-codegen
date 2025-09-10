@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ResearchStudy : DomainResource
@@ -55,16 +57,27 @@ public class ResearchStudy : DomainResource
     
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("administratively-completed")]
         AdministrativelyDashCompleted ,
+        [Description("approved")]
         Approved ,
+        [Description("closed-to-accrual")]
         ClosedDashToDashAccrual ,
+        [Description("closed-to-accrual-and-intervention")]
         ClosedDashToDashAccrualDashAndDashIntervention ,
+        [Description("completed")]
         Completed ,
+        [Description("disapproved")]
         Disapproved ,
+        [Description("in-review")]
         InDashReview ,
+        [Description("temporarily-closed-to-accrual")]
         TemporarilyDashClosedDashToDashAccrual ,
+        [Description("temporarily-closed-to-accrual-and-intervention")]
         TemporarilyDashClosedDashToDashAccrualDashAndDashIntervention ,
+        [Description("withdrawn")]
         Withdrawn ,
     }
     public override string ToString() => 

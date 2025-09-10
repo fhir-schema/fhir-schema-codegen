@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Device : DomainResource
@@ -40,11 +42,17 @@ public class Device : DomainResource
         
         public enum TypeEnum
         {
+            [Description("udi-label-name")]
             UdiDashLabelDashName ,
+            [Description("user-friendly-name")]
             UserDashFriendlyDashName ,
+            [Description("patient-reported-name")]
             PatientDashReportedDashName ,
+            [Description("manufacturer-name")]
             ManufacturerDashName ,
+            [Description("model-name")]
             ModelDashName ,
+            [Description("other")]
             Other ,
         }
         public override string ToString() => 
@@ -84,11 +92,17 @@ public class Device : DomainResource
         
         public enum EntryTypeEnum
         {
+            [Description("barcode")]
             Barcode ,
+            [Description("rfid")]
             Rfid ,
+            [Description("manual")]
             Manual ,
+            [Description("card")]
             Card ,
+            [Description("self-reported")]
             SelfDashReported ,
+            [Description("unknown")]
             Unknown ,
         }
         public override string ToString() => 
@@ -110,9 +124,13 @@ public class Device : DomainResource
     
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("inactive")]
         Inactive ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

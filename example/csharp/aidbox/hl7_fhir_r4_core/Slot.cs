@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Slot : DomainResource
@@ -20,10 +22,15 @@ public class Slot : DomainResource
     
     public enum StatusEnum
     {
+        [Description("busy")]
         Busy ,
+        [Description("free")]
         Free ,
+        [Description("busy-unavailable")]
         BusyDashUnavailable ,
+        [Description("busy-tentative")]
         BusyDashTentative ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

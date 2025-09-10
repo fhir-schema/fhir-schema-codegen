@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class DocumentReference : DomainResource
@@ -55,9 +57,13 @@ public class DocumentReference : DomainResource
         
         public enum CodeEnum
         {
+            [Description("replaces")]
             Replaces ,
+            [Description("transforms")]
             Transforms ,
+            [Description("signs")]
             Signs ,
+            [Description("appends")]
             Appends ,
         }
         public override string ToString() => 
@@ -68,15 +74,22 @@ public class DocumentReference : DomainResource
     
     public enum DocStatusEnum
     {
+        [Description("preliminary")]
         Preliminary ,
+        [Description("final")]
         Final ,
+        [Description("amended")]
         Amended ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public enum StatusEnum
     {
+        [Description("current")]
         Current ,
+        [Description("superseded")]
         Superseded ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

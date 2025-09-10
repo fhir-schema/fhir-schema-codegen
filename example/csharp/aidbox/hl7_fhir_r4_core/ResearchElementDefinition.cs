@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ResearchElementDefinition : DomainResource
@@ -67,20 +69,32 @@ public class ResearchElementDefinition : DomainResource
         
         public enum StudyEffectiveGroupMeasureEnum
         {
+            [Description("mean")]
             Mean ,
+            [Description("median")]
             Median ,
+            [Description("mean-of-mean")]
             MeanDashOfDashMean ,
+            [Description("mean-of-median")]
             MeanDashOfDashMedian ,
+            [Description("median-of-mean")]
             MedianDashOfDashMean ,
+            [Description("median-of-median")]
             MedianDashOfDashMedian ,
         }
         public enum ParticipantEffectiveGroupMeasureEnum
         {
+            [Description("mean")]
             Mean ,
+            [Description("median")]
             Median ,
+            [Description("mean-of-mean")]
             MeanDashOfDashMean ,
+            [Description("mean-of-median")]
             MeanDashOfDashMedian ,
+            [Description("median-of-mean")]
             MedianDashOfDashMean ,
+            [Description("median-of-median")]
             MedianDashOfDashMedian ,
         }
         public override string ToString() => 
@@ -91,21 +105,31 @@ public class ResearchElementDefinition : DomainResource
     
     public enum VariableTypeEnum
     {
+        [Description("dichotomous")]
         Dichotomous ,
+        [Description("continuous")]
         Continuous ,
+        [Description("descriptive")]
         Descriptive ,
     }
     public enum TypeEnum
     {
+        [Description("population")]
         Population ,
+        [Description("exposure")]
         Exposure ,
+        [Description("outcome")]
         Outcome ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Appointment : DomainResource
@@ -39,15 +41,22 @@ public class Appointment : DomainResource
         
         public enum RequiredEnum
         {
+            [Description("required")]
             Required ,
+            [Description("optional")]
             Optional ,
+            [Description("information-only")]
             InformationDashOnly ,
         }
         public enum StatusEnum
         {
+            [Description("accepted")]
             Accepted ,
+            [Description("declined")]
             Declined ,
+            [Description("tentative")]
             Tentative ,
+            [Description("needs-action")]
             NeedsDashAction ,
         }
         public override string ToString() => 
@@ -58,15 +67,25 @@ public class Appointment : DomainResource
     
     public enum StatusEnum
     {
+        [Description("proposed")]
         Proposed ,
+        [Description("pending")]
         Pending ,
+        [Description("booked")]
         Booked ,
+        [Description("arrived")]
         Arrived ,
+        [Description("fulfilled")]
         Fulfilled ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("noshow")]
         Noshow ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("checked-in")]
         CheckedDashIn ,
+        [Description("waitlist")]
         Waitlist ,
     }
     public override string ToString() => 

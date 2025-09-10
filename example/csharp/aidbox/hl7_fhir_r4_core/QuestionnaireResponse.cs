@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class QuestionnaireResponse : DomainResource
@@ -55,10 +57,15 @@ public class QuestionnaireResponse : DomainResource
     
     public enum StatusEnum
     {
+        [Description("in-progress")]
         InDashProgress ,
+        [Description("completed")]
         Completed ,
+        [Description("amended")]
         Amended ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("stopped")]
         Stopped ,
     }
     public override string ToString() => 

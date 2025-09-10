@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Endpoint : DomainResource
@@ -20,11 +22,17 @@ public class Endpoint : DomainResource
     
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("suspended")]
         Suspended ,
+        [Description("error")]
         Error ,
+        [Description("off")]
         Off ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("test")]
         Test ,
     }
     public override string ToString() => 

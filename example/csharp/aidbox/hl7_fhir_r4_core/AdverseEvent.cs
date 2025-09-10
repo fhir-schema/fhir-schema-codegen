@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class AdverseEvent : DomainResource
@@ -52,7 +54,9 @@ public class AdverseEvent : DomainResource
     
     public enum ActualityEnum
     {
+        [Description("actual")]
         Actual ,
+        [Description("potential")]
         Potential ,
     }
     public override string ToString() => 

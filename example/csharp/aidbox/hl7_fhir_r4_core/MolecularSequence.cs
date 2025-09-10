@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MolecularSequence : DomainResource
@@ -43,8 +45,11 @@ public class MolecularSequence : DomainResource
         
         public enum TypeEnum
         {
+            [Description("indel")]
             Indel ,
+            [Description("snp")]
             Snp ,
+            [Description("unknown")]
             Unknown ,
         }
         public override string ToString() => 
@@ -81,12 +86,16 @@ public class MolecularSequence : DomainResource
         
         public enum StrandEnum
         {
+            [Description("watson")]
             Watson ,
+            [Description("crick")]
             Crick ,
         }
         public enum OrientationEnum
         {
+            [Description("sense")]
             Sense ,
+            [Description("antisense")]
             Antisense ,
         }
         public override string ToString() => 
@@ -105,10 +114,15 @@ public class MolecularSequence : DomainResource
         
         public enum TypeEnum
         {
+            [Description("directlink")]
             Directlink ,
+            [Description("openapi")]
             Openapi ,
+            [Description("login")]
             Login ,
+            [Description("oauth")]
             Oauth ,
+            [Description("other")]
             Other ,
         }
         public override string ToString() => 
@@ -166,8 +180,11 @@ public class MolecularSequence : DomainResource
     
     public enum TypeEnum
     {
+        [Description("aa")]
         Aa ,
+        [Description("dna")]
         Dna ,
+        [Description("rna")]
         Rna ,
     }
     public override string ToString() => 

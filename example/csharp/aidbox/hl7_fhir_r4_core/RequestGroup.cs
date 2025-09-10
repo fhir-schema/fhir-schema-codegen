@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class RequestGroup : DomainResource
@@ -54,40 +56,60 @@ public class RequestGroup : DomainResource
         
         public enum SelectionBehaviorEnum
         {
+            [Description("any")]
             Any ,
+            [Description("all")]
             All ,
+            [Description("all-or-none")]
             AllDashOrDashNone ,
+            [Description("exactly-one")]
             ExactlyDashOne ,
+            [Description("at-most-one")]
             AtDashMostDashOne ,
+            [Description("one-or-more")]
             OneDashOrDashMore ,
         }
         public enum PriorityEnum
         {
+            [Description("routine")]
             Routine ,
+            [Description("urgent")]
             Urgent ,
+            [Description("asap")]
             Asap ,
+            [Description("stat")]
             Stat ,
         }
         public enum RequiredBehaviorEnum
         {
+            [Description("must")]
             Must ,
+            [Description("could")]
             Could ,
+            [Description("must-unless-documented")]
             MustDashUnlessDashDocumented ,
         }
         public enum GroupingBehaviorEnum
         {
+            [Description("visual-group")]
             VisualDashGroup ,
+            [Description("logical-group")]
             LogicalDashGroup ,
+            [Description("sentence-group")]
             SentenceDashGroup ,
         }
         public enum PrecheckBehaviorEnum
         {
+            [Description("yes")]
             Yes ,
+            [Description("no")]
             No ,
         }
         public enum CardinalityBehaviorEnum
         {
+            [Description("single")]
             Single ,
+            [Description("multiple")]
             Multiple ,
         }
         public override string ToString() => 
@@ -102,8 +124,11 @@ public class RequestGroup : DomainResource
         
         public enum KindEnum
         {
+            [Description("applicability")]
             Applicability ,
+            [Description("start")]
             Start ,
+            [Description("stop")]
             Stop ,
         }
         public override string ToString() => 
@@ -120,14 +145,23 @@ public class RequestGroup : DomainResource
         
         public enum RelationshipEnum
         {
+            [Description("before-start")]
             BeforeDashStart ,
+            [Description("before")]
             Before ,
+            [Description("before-end")]
             BeforeDashEnd ,
+            [Description("concurrent-with-start")]
             ConcurrentDashWithDashStart ,
+            [Description("concurrent")]
             Concurrent ,
+            [Description("concurrent-with-end")]
             ConcurrentDashWithDashEnd ,
+            [Description("after-start")]
             AfterDashStart ,
+            [Description("after")]
             After ,
+            [Description("after-end")]
             AfterDashEnd ,
         }
         public override string ToString() => 
@@ -138,31 +172,51 @@ public class RequestGroup : DomainResource
     
     public enum PriorityEnum
     {
+        [Description("routine")]
         Routine ,
+        [Description("urgent")]
         Urgent ,
+        [Description("asap")]
         Asap ,
+        [Description("stat")]
         Stat ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("on-hold")]
         OnDashHold ,
+        [Description("revoked")]
         Revoked ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum IntentEnum
     {
+        [Description("proposal")]
         Proposal ,
+        [Description("plan")]
         Plan ,
+        [Description("directive")]
         Directive ,
+        [Description("order")]
         Order ,
+        [Description("option")]
         Option ,
+        [Description("original-order")]
         OriginalDashOrder ,
+        [Description("reflex-order")]
         ReflexDashOrder ,
+        [Description("filler-order")]
         FillerDashOrder ,
+        [Description("instance-order")]
         InstanceDashOrder ,
     }
     public override string ToString() => 

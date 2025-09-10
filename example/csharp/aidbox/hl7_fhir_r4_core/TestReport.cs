@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class TestReport : DomainResource
@@ -27,8 +29,11 @@ public class TestReport : DomainResource
         
         public enum TypeEnum
         {
+            [Description("test-engine")]
             TestDashEngine ,
+            [Description("client")]
             Client ,
+            [Description("server")]
             Server ,
         }
         public override string ToString() => 
@@ -63,10 +68,15 @@ public class TestReport : DomainResource
         
         public enum ResultEnum
         {
+            [Description("pass")]
             Pass ,
+            [Description("skip")]
             Skip ,
+            [Description("fail")]
             Fail ,
+            [Description("warning")]
             Warning ,
+            [Description("error")]
             Error ,
         }
         public override string ToString() => 
@@ -82,10 +92,15 @@ public class TestReport : DomainResource
         
         public enum ResultEnum
         {
+            [Description("pass")]
             Pass ,
+            [Description("skip")]
             Skip ,
+            [Description("fail")]
             Fail ,
+            [Description("warning")]
             Warning ,
+            [Description("error")]
             Error ,
         }
         public override string ToString() => 
@@ -135,16 +150,24 @@ public class TestReport : DomainResource
     
     public enum StatusEnum
     {
+        [Description("completed")]
         Completed ,
+        [Description("in-progress")]
         InDashProgress ,
+        [Description("waiting")]
         Waiting ,
+        [Description("stopped")]
         Stopped ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public enum ResultEnum
     {
+        [Description("pass")]
         Pass ,
+        [Description("fail")]
         Fail ,
+        [Description("pending")]
         Pending ,
     }
     public override string ToString() => 

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Patient : DomainResource
@@ -47,9 +49,13 @@ public class Patient : DomainResource
         
         public enum GenderEnum
         {
+            [Description("male")]
             Male ,
+            [Description("female")]
             Female ,
+            [Description("other")]
             Other ,
+            [Description("unknown")]
             Unknown ,
         }
         public override string ToString() => 
@@ -64,9 +70,13 @@ public class Patient : DomainResource
         
         public enum TypeEnum
         {
-            ReplacedDashBy ,
+            [Description("replaced-by")]
+            ReplacedDashBy,
+            [Description("replaces")]
             Replaces ,
+            [Description("refer")]
             Refer ,
+            [Description("seealso")]
             Seealso ,
         }
         public override string ToString() => 
@@ -77,9 +87,13 @@ public class Patient : DomainResource
     
     public enum GenderEnum
     {
+        [Description("male")]
         Male ,
+        [Description("female")]
         Female ,
+        [Description("other")]
         Other ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

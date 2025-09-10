@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Group : DomainResource
@@ -47,11 +49,17 @@ public class Group : DomainResource
     
     public enum TypeEnum
     {
+        [Description("person")]
         Person ,
+        [Description("animal")]
         Animal ,
+        [Description("practitioner")]
         Practitioner ,
+        [Description("device")]
         Device ,
+        [Description("medication")]
         Medication ,
+        [Description("substance")]
         Substance ,
     }
     public override string ToString() => 

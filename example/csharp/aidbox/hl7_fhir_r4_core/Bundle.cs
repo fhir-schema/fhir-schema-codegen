@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Bundle : Resource
@@ -39,11 +41,17 @@ public class Bundle : Resource
         
         public enum MethodEnum
         {
+            [Description("GET")]
             GET ,
+            [Description("HEAD")]
             HEAD ,
+            [Description("POST")]
             POST ,
+            [Description("PUT")]
             PUT ,
+            [Description("DELETE")]
             DELETE ,
+            [Description("PATCH")]
             PATCH ,
         }
         public override string ToString() => 
@@ -71,8 +79,11 @@ public class Bundle : Resource
         
         public enum ModeEnum
         {
+            [Description("match")]
             Match ,
+            [Description("include")]
             Include ,
+            [Description("outcome")]
             Outcome ,
         }
         public override string ToString() => 
@@ -93,14 +104,23 @@ public class Bundle : Resource
     
     public enum TypeEnum
     {
+        [Description("document")]
         Document ,
+        [Description("message")]
         Message ,
+        [Description("transaction")]
         Transaction ,
+        [Description("transaction-response")]
         TransactionDashResponse ,
+        [Description("batch")]
         Batch ,
+        [Description("batch-response")]
         BatchDashResponse ,
+        [Description("history")]
         History ,
+        [Description("searchset")]
         Searchset ,
+        [Description("collection")]
         Collection ,
     }
     public override string ToString() => 

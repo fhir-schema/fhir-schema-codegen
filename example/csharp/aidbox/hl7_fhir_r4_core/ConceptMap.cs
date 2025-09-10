@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ConceptMap : DomainResource
@@ -63,15 +65,25 @@ public class ConceptMap : DomainResource
         
         public enum EquivalenceEnum
         {
+            [Description("relatedto")]
             Relatedto ,
+            [Description("unmatched")]
             Unmatched ,
+            [Description("equivalent")]
             Equivalent ,
+            [Description("wider")]
             Wider ,
+            [Description("subsumes")]
             Subsumes ,
+            [Description("narrower")]
             Narrower ,
+            [Description("specializes")]
             Specializes ,
+            [Description("inexact")]
             Inexact ,
+            [Description("equal")]
             Equal ,
+            [Description("disjoint")]
             Disjoint ,
         }
         public override string ToString() => 
@@ -100,8 +112,11 @@ public class ConceptMap : DomainResource
         
         public enum ModeEnum
         {
+            [Description("provided")]
             Provided ,
+            [Description("fixed")]
             Fixed ,
+            [Description("other-map")]
             OtherDashMap ,
         }
         public override string ToString() => 
@@ -112,9 +127,13 @@ public class ConceptMap : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

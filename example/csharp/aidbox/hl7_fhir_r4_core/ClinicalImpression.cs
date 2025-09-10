@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ClinicalImpression : DomainResource
@@ -52,8 +54,11 @@ public class ClinicalImpression : DomainResource
     
     public enum StatusEnum
     {
+        [Description("in-progress")]
         InDashProgress ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

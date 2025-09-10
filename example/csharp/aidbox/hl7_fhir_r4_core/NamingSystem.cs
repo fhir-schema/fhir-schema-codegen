@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class NamingSystem : DomainResource
@@ -30,9 +32,13 @@ public class NamingSystem : DomainResource
         
         public enum TypeEnum
         {
+            [Description("oid")]
             Oid ,
+            [Description("uuid")]
             Uuid ,
+            [Description("uri")]
             Uri ,
+            [Description("other")]
             Other ,
         }
         public override string ToString() => 
@@ -43,15 +49,22 @@ public class NamingSystem : DomainResource
     
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum KindEnum
     {
+        [Description("codesystem")]
         Codesystem ,
+        [Description("identifier")]
         Identifier ,
+        [Description("root")]
         Root ,
     }
     public override string ToString() => 

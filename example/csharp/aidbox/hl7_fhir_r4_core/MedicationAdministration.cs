@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MedicationAdministration : DomainResource
@@ -56,12 +58,19 @@ public class MedicationAdministration : DomainResource
     
     public enum StatusEnum
     {
+        [Description("in-progress")]
         InDashProgress ,
+        [Description("not-done")]
         NotDashDone ,
+        [Description("on-hold")]
         OnDashHold ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("stopped")]
         Stopped ,
+        [Description("unknown")]
         Unknown ,
     }
     public override string ToString() => 

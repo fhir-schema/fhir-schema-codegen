@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class VisionPrescription : DomainResource
@@ -34,7 +36,9 @@ public class VisionPrescription : DomainResource
         
         public enum EyeEnum
         {
+            [Description("right")]
             Right ,
+            [Description("left")]
             Left ,
         }
         public override string ToString() => 
@@ -49,9 +53,13 @@ public class VisionPrescription : DomainResource
         
         public enum BaseEnum
         {
+            [Description("up")]
             Up ,
+            [Description("down")]
             Down ,
+            [Description("in")]
             In ,
+            [Description("out")]
             Out ,
         }
         public override string ToString() => 
@@ -62,9 +70,13 @@ public class VisionPrescription : DomainResource
     
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("draft")]
         Draft ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

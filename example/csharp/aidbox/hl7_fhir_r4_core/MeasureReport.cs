@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MeasureReport : DomainResource
@@ -87,15 +89,22 @@ public class MeasureReport : DomainResource
     
     public enum TypeEnum
     {
+        [Description("individual")]
         Individual ,
+        [Description("subject-list")]
         SubjectDashList ,
+        [Description("summary")]
         Summary ,
+        [Description("data-collection")]
         DataDashCollection ,
     }
     public enum StatusEnum
     {
+        [Description("complete")]
         Complete ,
+        [Description("pending")]
         Pending ,
+        [Description("error")]
         Error ,
     }
     public override string ToString() => 

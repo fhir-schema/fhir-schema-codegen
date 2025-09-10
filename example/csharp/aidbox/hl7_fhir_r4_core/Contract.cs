@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Contract : DomainResource
@@ -53,20 +55,35 @@ public class Contract : DomainResource
         
         public enum PublicationStatusEnum
         {
+            [Description("amended")]
             Amended ,
+            [Description("appended")]
             Appended ,
+            [Description("cancelled")]
             Cancelled ,
+            [Description("disputed")]
             Disputed ,
+            [Description("entered-in-error")]
             EnteredDashInDashError ,
+            [Description("executable")]
             Executable ,
+            [Description("executed")]
             Executed ,
+            [Description("negotiable")]
             Negotiable ,
+            [Description("offered")]
             Offered ,
+            [Description("policy")]
             Policy ,
+            [Description("rejected")]
             Rejected ,
+            [Description("renewed")]
             Renewed ,
+            [Description("revoked")]
             Revoked ,
+            [Description("resolved")]
             Resolved ,
+            [Description("terminated")]
             Terminated ,
         }
         public override string ToString() => 
@@ -297,20 +314,35 @@ public class Contract : DomainResource
     
     public enum StatusEnum
     {
+        [Description("amended")]
         Amended ,
+        [Description("appended")]
         Appended ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("disputed")]
         Disputed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
+        [Description("executable")]
         Executable ,
+        [Description("executed")]
         Executed ,
+        [Description("negotiable")]
         Negotiable ,
+        [Description("offered")]
         Offered ,
+        [Description("policy")]
         Policy ,
+        [Description("rejected")]
         Rejected ,
+        [Description("renewed")]
         Renewed ,
+        [Description("revoked")]
         Revoked ,
+        [Description("resolved")]
         Resolved ,
+        [Description("terminated")]
         Terminated ,
     }
     public override string ToString() => 

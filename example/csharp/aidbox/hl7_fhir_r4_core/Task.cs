@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Task : DomainResource
@@ -170,36 +172,61 @@ public class Task : DomainResource
     
     public enum PriorityEnum
     {
+        [Description("routine")]
         Routine ,
+        [Description("urgent")]
         Urgent ,
+        [Description("asap")]
         Asap ,
+        [Description("stat")]
         Stat ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("requested")]
         Requested ,
+        [Description("received")]
         Received ,
+        [Description("accepted")]
         Accepted ,
+        [Description("rejected")]
         Rejected ,
+        [Description("ready")]
         Ready ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("in-progress")]
         InDashProgress ,
+        [Description("on-hold")]
         OnDashHold ,
+        [Description("failed")]
         Failed ,
+        [Description("completed")]
         Completed ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public enum IntentEnum
     {
+        [Description("unknown")]
         Unknown ,
+        [Description("proposal")]
         Proposal ,
+        [Description("plan")]
         Plan ,
+        [Description("order")]
         Order ,
+        [Description("original-order")]
         OriginalDashOrder ,
+        [Description("reflex-order")]
         ReflexDashOrder ,
+        [Description("filler-order")]
         FillerDashOrder ,
+        [Description("instance-order")]
         InstanceDashOrder ,
+        [Description("option")]
         Option ,
     }
     public override string ToString() => 

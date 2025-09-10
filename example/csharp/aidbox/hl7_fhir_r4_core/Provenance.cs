@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Provenance : DomainResource
@@ -38,10 +40,15 @@ public class Provenance : DomainResource
         
         public enum RoleEnum
         {
+            [Description("derivation")]
             Derivation ,
+            [Description("revision")]
             Revision ,
+            [Description("quotation")]
             Quotation ,
+            [Description("source")]
             Source ,
+            [Description("removal")]
             Removal ,
         }
         public override string ToString() => 

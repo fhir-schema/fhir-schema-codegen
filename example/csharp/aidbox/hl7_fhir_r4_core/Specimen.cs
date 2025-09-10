@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Specimen : DomainResource
@@ -68,9 +70,13 @@ public class Specimen : DomainResource
     
     public enum StatusEnum
     {
+        [Description("available")]
         Available ,
+        [Description("unavailable")]
         Unavailable ,
+        [Description("unsatisfactory")]
         Unsatisfactory ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

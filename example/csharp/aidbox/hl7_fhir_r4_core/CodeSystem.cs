@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class CodeSystem : DomainResource
@@ -83,14 +85,23 @@ public class CodeSystem : DomainResource
         
         public enum OperatorEnum
         {
+            [Description("=")]
             Equal ,
+            [Description("is-a")]
             IsDashA ,
+            [Description("descendent-of")]
             DescendentDashOf ,
+            [Description("is-not-a")]
             IsDashNotDashA ,
+            [Description("regex")]
             Regex ,
+            [Description("in")]
             In ,
+            [Description("not-in")]
             NotDashIn ,
+            [Description("generalizes")]
             Generalizes ,
+            [Description("exists")]
             Exists ,
         }
         public override string ToString() => 
@@ -107,12 +118,19 @@ public class CodeSystem : DomainResource
         
         public enum TypeEnum
         {
+            [Description("code")]
             Code ,
+            [Description("Coding")]
             Coding ,
+            [Description("string")]
             String ,
+            [Description("integer")]
             Integer ,
+            [Description("boolean")]
             Boolean ,
+            [Description("dateTime")]
             DateTime ,
+            [Description("decimal")]
             Decimal ,
         }
         public override string ToString() => 
@@ -123,24 +141,37 @@ public class CodeSystem : DomainResource
     
     public enum ContentEnum
     {
+        [Description("not-present")]
         NotDashPresent ,
+        [Description("example")]
         Example ,
+        [Description("fragment")]
         Fragment ,
+        [Description("complete")]
         Complete ,
+        [Description("supplement")]
         Supplement ,
     }
     public enum StatusEnum
     {
+        [Description("draft")]
         Draft ,
+        [Description("active")]
         Active ,
+        [Description("retired")]
         Retired ,
+        [Description("unknown")]
         Unknown ,
     }
     public enum HierarchyMeaningEnum
     {
+        [Description("grouped-by")]
         GroupedDashBy ,
+        [Description("is-a")]
         IsDashA ,
+        [Description("part-of")]
         PartDashOf ,
+        [Description("classified-with")]
         ClassifiedDashWith ,
     }
     public override string ToString() => 

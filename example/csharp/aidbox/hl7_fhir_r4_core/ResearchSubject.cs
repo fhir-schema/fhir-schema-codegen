@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ResearchSubject : DomainResource
@@ -17,18 +19,31 @@ public class ResearchSubject : DomainResource
     
     public enum StatusEnum
     {
+        [Description("candidate")]
         Candidate ,
+        [Description("eligible")]
         Eligible ,
+        [Description("follow-up")]
         FollowDashUp ,
+        [Description("ineligible")]
         Ineligible ,
+        [Description("not-registered")]
         NotDashRegistered ,
+        [Description("off-study")]
         OffDashStudy ,
+        [Description("on-study")]
         OnDashStudy ,
+        [Description("on-study-intervention")]
         OnDashStudyDashIntervention ,
+        [Description("on-study-observation")]
         OnDashStudyDashObservation ,
+        [Description("pending-on-study")]
         PendingDashOnDashStudy ,
+        [Description("potential-candidate")]
         PotentialDashCandidate ,
+        [Description("screening")]
         Screening ,
+        [Description("withdrawn")]
         Withdrawn ,
     }
     public override string ToString() => 

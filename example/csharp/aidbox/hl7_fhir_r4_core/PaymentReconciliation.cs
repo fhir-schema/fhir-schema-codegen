@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class PaymentReconciliation : DomainResource
@@ -47,8 +49,11 @@ public class PaymentReconciliation : DomainResource
         
         public enum TypeEnum
         {
+            [Description("display")]
             Display ,
+            [Description("print")]
             Print ,
+            [Description("printoper")]
             Printoper ,
         }
         public override string ToString() => 
@@ -59,16 +64,24 @@ public class PaymentReconciliation : DomainResource
     
     public enum OutcomeEnum
     {
+        [Description("queued")]
         Queued ,
+        [Description("complete")]
         Complete ,
+        [Description("error")]
         Error ,
+        [Description("partial")]
         Partial ,
     }
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("draft")]
         Draft ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 

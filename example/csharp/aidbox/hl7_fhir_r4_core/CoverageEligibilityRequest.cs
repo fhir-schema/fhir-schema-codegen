@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class CoverageEligibilityRequest : DomainResource
@@ -75,16 +77,24 @@ public class CoverageEligibilityRequest : DomainResource
     
     public enum PurposeEnum
     {
+        [Description("auth-requirements")]
         AuthDashRequirements ,
+        [Description("benefits")]
         Benefits ,
+        [Description("discovery")]
         Discovery ,
+        [Description("validation")]
         Validation ,
     }
     public enum StatusEnum
     {
+        [Description("active")]
         Active ,
+        [Description("cancelled")]
         Cancelled ,
+        [Description("draft")]
         Draft ,
+        [Description("entered-in-error")]
         EnteredDashInDashError ,
     }
     public override string ToString() => 
