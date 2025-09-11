@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class FamilyMemberHistory : DomainResource
@@ -19,7 +21,7 @@ public class FamilyMemberHistory : DomainResource
     public required CodeableConcept Relationship { get; set; }
     public CodeableConcept[]? ReasonCode { get; set; }
     public Annotation[]? Note { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public FamilyMemberHistoryCondition[]? Condition { get; set; }
     public Identifier[]? Identifier { get; set; }
     public string? AgeString { get; set; }
@@ -50,6 +52,17 @@ public class FamilyMemberHistory : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("partial")]
+        Partial ,
+        [Description("completed")]
+        Completed ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("health-unknown")]
+        HealthDashUnknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

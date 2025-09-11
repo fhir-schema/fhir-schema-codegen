@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class VerificationResult : DomainResource
@@ -15,7 +17,7 @@ public class VerificationResult : DomainResource
     public string? NextScheduled { get; set; }
     public VerificationResultPrimarySource[]? PrimarySource { get; set; }
     public VerificationResultAttestation? Attestation { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CodeableConcept[]? ValidationProcess { get; set; }
     public string? StatusDate { get; set; }
     public ResourceReference[]? Target { get; set; }
@@ -64,6 +66,21 @@ public class VerificationResult : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("attested")]
+        Attested ,
+        [Description("validated")]
+        Validated ,
+        [Description("in-process")]
+        InDashProcess ,
+        [Description("req-revalid")]
+        ReqDashRevalid ,
+        [Description("val-fail")]
+        ValDashFail ,
+        [Description("reval-fail")]
+        RevalDashFail ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

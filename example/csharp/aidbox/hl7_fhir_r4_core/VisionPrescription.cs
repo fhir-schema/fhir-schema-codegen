@@ -2,12 +2,14 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class VisionPrescription : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Created { get; set; }
     public required ResourceReference Patient { get; set; }
     public ResourceReference? Encounter { get; set; }
@@ -19,7 +21,7 @@ public class VisionPrescription : DomainResource
     {
         public decimal? Sphere { get; set; }
         public string? Color { get; set; }
-        public required string Eye { get; set; }
+        public required EyeEnum Eye { get; set; }
         public decimal? Diameter { get; set; }
         public Quantity? Duration { get; set; }
         public string? Brand { get; set; }
@@ -32,6 +34,13 @@ public class VisionPrescription : DomainResource
         public decimal? Add { get; set; }
         public decimal? BackCurve { get; set; }
         
+        public enum EyeEnum
+        {
+            [Description("right")]
+            Right ,
+            [Description("left")]
+            Left ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -40,14 +49,36 @@ public class VisionPrescription : DomainResource
     public class VisionPrescriptionLensSpecificationPrism : BackboneElement
     {
         public required decimal Amount { get; set; }
-        public required string Base { get; set; }
+        public required BaseEnum Base { get; set; }
         
+        public enum BaseEnum
+        {
+            [Description("up")]
+            Up ,
+            [Description("down")]
+            Down ,
+            [Description("in")]
+            In ,
+            [Description("out")]
+            Out ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("draft")]
+        Draft ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

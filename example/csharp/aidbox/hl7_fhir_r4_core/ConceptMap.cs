@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ConceptMap : DomainResource
@@ -20,7 +22,7 @@ public class ConceptMap : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public string? TargetCanonical { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? SourceUri { get; set; }
     public string? Url { get; set; }
     public Identifier? Identifier { get; set; }
@@ -56,11 +58,34 @@ public class ConceptMap : DomainResource
     {
         public string? Code { get; set; }
         public string? Display { get; set; }
-        public required string Equivalence { get; set; }
+        public required EquivalenceEnum Equivalence { get; set; }
         public string? Comment { get; set; }
         public ConceptMapGroupElementTargetDependsOn[]? DependsOn { get; set; }
         public ConceptMapGroupElementTargetDependsOn[]? Product { get; set; }
         
+        public enum EquivalenceEnum
+        {
+            [Description("relatedto")]
+            Relatedto ,
+            [Description("unmatched")]
+            Unmatched ,
+            [Description("equivalent")]
+            Equivalent ,
+            [Description("wider")]
+            Wider ,
+            [Description("subsumes")]
+            Subsumes ,
+            [Description("narrower")]
+            Narrower ,
+            [Description("specializes")]
+            Specializes ,
+            [Description("inexact")]
+            Inexact ,
+            [Description("equal")]
+            Equal ,
+            [Description("disjoint")]
+            Disjoint ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -80,17 +105,37 @@ public class ConceptMap : DomainResource
     
     public class ConceptMapGroupUnmapped : BackboneElement
     {
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Code { get; set; }
         public string? Display { get; set; }
         public string? Url { get; set; }
         
+        public enum ModeEnum
+        {
+            [Description("provided")]
+            Provided ,
+            [Description("fixed")]
+            Fixed ,
+            [Description("other-map")]
+            OtherDashMap ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("draft")]
+        Draft ,
+        [Description("active")]
+        Active ,
+        [Description("retired")]
+        Retired ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

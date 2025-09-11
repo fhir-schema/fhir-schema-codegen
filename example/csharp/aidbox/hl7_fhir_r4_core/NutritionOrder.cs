@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class NutritionOrder : DomainResource
@@ -16,10 +18,10 @@ public class NutritionOrder : DomainResource
     public required string DateTime { get; set; }
     public NutritionOrderEnteralFormula? EnteralFormula { get; set; }
     public CodeableConcept[]? FoodPreferenceModifier { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public CodeableConcept[]? ExcludeFoodModifier { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference? Orderer { get; set; }
     public NutritionOrderSupplement[]? Supplement { get; set; }
     public ResourceReference[]? AllergyIntolerance { get; set; }
@@ -101,6 +103,44 @@ public class NutritionOrder : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("draft")]
+        Draft ,
+        [Description("active")]
+        Active ,
+        [Description("on-hold")]
+        OnDashHold ,
+        [Description("revoked")]
+        Revoked ,
+        [Description("completed")]
+        Completed ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("unknown")]
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        [Description("proposal")]
+        Proposal ,
+        [Description("plan")]
+        Plan ,
+        [Description("directive")]
+        Directive ,
+        [Description("order")]
+        Order ,
+        [Description("option")]
+        Option ,
+        [Description("original-order")]
+        OriginalDashOrder ,
+        [Description("reflex-order")]
+        ReflexDashOrder ,
+        [Description("filler-order")]
+        FillerDashOrder ,
+        [Description("instance-order")]
+        InstanceDashOrder ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

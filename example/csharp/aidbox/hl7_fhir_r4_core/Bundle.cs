@@ -2,12 +2,14 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Bundle : Resource
 {
     public Identifier? Identifier { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? Timestamp { get; set; }
     public long? Total { get; set; }
     public BundleLink[]? Link { get; set; }
@@ -30,13 +32,28 @@ public class Bundle : Resource
     
     public class BundleEntryRequest : BackboneElement
     {
-        public required string Method { get; set; }
+        public required MethodEnum Method { get; set; }
         public required string Url { get; set; }
         public string? IfNoneMatch { get; set; }
         public string? IfModifiedSince { get; set; }
         public string? IfMatch { get; set; }
         public string? IfNoneExist { get; set; }
         
+        public enum MethodEnum
+        {
+            [Description("GET")]
+            GET ,
+            [Description("HEAD")]
+            HEAD ,
+            [Description("POST")]
+            POST ,
+            [Description("PUT")]
+            PUT ,
+            [Description("DELETE")]
+            DELETE ,
+            [Description("PATCH")]
+            PATCH ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -57,9 +74,18 @@ public class Bundle : Resource
     
     public class BundleEntrySearch : BackboneElement
     {
-        public string? Mode { get; set; }
+        public ModeEnum? Mode { get; set; }
         public decimal? Score { get; set; }
         
+        public enum ModeEnum
+        {
+            [Description("match")]
+            Match ,
+            [Description("include")]
+            Include ,
+            [Description("outcome")]
+            Outcome ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -76,6 +102,27 @@ public class Bundle : Resource
     }
     
     
+    public enum TypeEnum
+    {
+        [Description("document")]
+        Document ,
+        [Description("message")]
+        Message ,
+        [Description("transaction")]
+        Transaction ,
+        [Description("transaction-response")]
+        TransactionDashResponse ,
+        [Description("batch")]
+        Batch ,
+        [Description("batch-response")]
+        BatchDashResponse ,
+        [Description("history")]
+        History ,
+        [Description("searchset")]
+        Searchset ,
+        [Description("collection")]
+        Collection ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class StructureMap : DomainResource
@@ -18,7 +20,7 @@ public class StructureMap : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public StructureMapStructure[]? Structure { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public string? Version { get; set; }
@@ -29,11 +31,20 @@ public class StructureMap : DomainResource
     {
         public required string Name { get; set; }
         public string? Extends { get; set; }
-        public required string TypeMode { get; set; }
+        public required TypeModeEnum TypeMode { get; set; }
         public string? Documentation { get; set; }
         public required StructureMapGroupInput[] Input { get; set; }
         public required StructureMapGroupRule[] Rule { get; set; }
         
+        public enum TypeModeEnum
+        {
+            [Description("none")]
+            None ,
+            [Description("types")]
+            Types ,
+            [Description("type-and-types")]
+            TypeDashAndDashTypes ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -43,9 +54,16 @@ public class StructureMap : DomainResource
     {
         public required string Name { get; set; }
         public string? Type { get; set; }
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Documentation { get; set; }
         
+        public enum ModeEnum
+        {
+            [Description("source")]
+            Source ,
+            [Description("target")]
+            Target ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -128,7 +146,7 @@ public class StructureMap : DomainResource
         public Age? DefaultValueAge { get; set; }
         public string? DefaultValueOid { get; set; }
         public UsageContext? DefaultValueUsageContext { get; set; }
-        public string? ListMode { get; set; }
+        public ListModeEnum? ListMode { get; set; }
         public ParameterDefinition? DefaultValueParameterDefinition { get; set; }
         public string? DefaultValueDateTime { get; set; }
         public long? DefaultValuePositiveInt { get; set; }
@@ -138,6 +156,19 @@ public class StructureMap : DomainResource
         public Identifier? DefaultValueIdentifier { get; set; }
         public CodeableConcept? DefaultValueCodeableConcept { get; set; }
         
+        public enum ListModeEnum
+        {
+            [Description("first")]
+            First ,
+            [Description("not_first")]
+            Not_first ,
+            [Description("last")]
+            Last ,
+            [Description("not_last")]
+            Not_last ,
+            [Description("only_one")]
+            Only_one ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -146,14 +177,69 @@ public class StructureMap : DomainResource
     public class StructureMapGroupRuleTarget : BackboneElement
     {
         public string? Context { get; set; }
-        public string? ContextType { get; set; }
+        public ContextTypeEnum? ContextType { get; set; }
         public string? Element { get; set; }
         public string? Variable { get; set; }
-        public string[]? ListMode { get; set; }
+        public ListModeEnum[]? ListMode { get; set; }
         public string? ListRuleId { get; set; }
-        public string? Transform { get; set; }
+        public TransformEnum? Transform { get; set; }
         public StructureMapGroupRuleTargetParameter[]? Parameter { get; set; }
         
+        public enum ContextTypeEnum
+        {
+            [Description("type")]
+            Type ,
+            [Description("variable")]
+            Variable ,
+        }
+        public enum ListModeEnum
+        {
+            [Description("first")]
+            First ,
+            [Description("share")]
+            Share ,
+            [Description("last")]
+            Last ,
+            [Description("collate")]
+            Collate ,
+        }
+        public enum TransformEnum
+        {
+            [Description("create")]
+            Create ,
+            [Description("copy")]
+            Copy ,
+            [Description("truncate")]
+            Truncate ,
+            [Description("escape")]
+            Escape ,
+            [Description("cast")]
+            Cast ,
+            [Description("append")]
+            Append ,
+            [Description("translate")]
+            Translate ,
+            [Description("reference")]
+            Reference ,
+            [Description("dateOp")]
+            DateOp ,
+            [Description("uuid")]
+            Uuid ,
+            [Description("pointer")]
+            Pointer ,
+            [Description("evaluate")]
+            Evaluate ,
+            [Description("cc")]
+            Cc ,
+            [Description("c")]
+            C ,
+            [Description("qty")]
+            Qty ,
+            [Description("id")]
+            Id ,
+            [Description("cp")]
+            Cp ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -175,16 +261,38 @@ public class StructureMap : DomainResource
     public class StructureMapStructure : BackboneElement
     {
         public required string Url { get; set; }
-        public required string Mode { get; set; }
+        public required ModeEnum Mode { get; set; }
         public string? Alias { get; set; }
         public string? Documentation { get; set; }
         
+        public enum ModeEnum
+        {
+            [Description("source")]
+            Source ,
+            [Description("queried")]
+            Queried ,
+            [Description("target")]
+            Target ,
+            [Description("produced")]
+            Produced ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("draft")]
+        Draft ,
+        [Description("active")]
+        Active ,
+        [Description("retired")]
+        Retired ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Contract : DomainResource
@@ -30,7 +32,7 @@ public class Contract : DomainResource
     public ContractTerm[]? Term { get; set; }
     public ContractFriendly[]? Friendly { get; set; }
     public string[]? Alias { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public string? Subtitle { get; set; }
     public ResourceReference? TopicReference { get; set; }
     public string? Url { get; set; }
@@ -48,9 +50,42 @@ public class Contract : DomainResource
         public CodeableConcept? SubType { get; set; }
         public ResourceReference? Publisher { get; set; }
         public string? PublicationDate { get; set; }
-        public required string PublicationStatus { get; set; }
+        public required PublicationStatusEnum PublicationStatus { get; set; }
         public string? Copyright { get; set; }
         
+        public enum PublicationStatusEnum
+        {
+            [Description("amended")]
+            Amended ,
+            [Description("appended")]
+            Appended ,
+            [Description("cancelled")]
+            Cancelled ,
+            [Description("disputed")]
+            Disputed ,
+            [Description("entered-in-error")]
+            EnteredDashInDashError ,
+            [Description("executable")]
+            Executable ,
+            [Description("executed")]
+            Executed ,
+            [Description("negotiable")]
+            Negotiable ,
+            [Description("offered")]
+            Offered ,
+            [Description("policy")]
+            Policy ,
+            [Description("rejected")]
+            Rejected ,
+            [Description("renewed")]
+            Renewed ,
+            [Description("revoked")]
+            Revoked ,
+            [Description("resolved")]
+            Resolved ,
+            [Description("terminated")]
+            Terminated ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -277,6 +312,39 @@ public class Contract : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("amended")]
+        Amended ,
+        [Description("appended")]
+        Appended ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("disputed")]
+        Disputed ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("executable")]
+        Executable ,
+        [Description("executed")]
+        Executed ,
+        [Description("negotiable")]
+        Negotiable ,
+        [Description("offered")]
+        Offered ,
+        [Description("policy")]
+        Policy ,
+        [Description("rejected")]
+        Rejected ,
+        [Description("renewed")]
+        Renewed ,
+        [Description("revoked")]
+        Revoked ,
+        [Description("resolved")]
+        Resolved ,
+        [Description("terminated")]
+        Terminated ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

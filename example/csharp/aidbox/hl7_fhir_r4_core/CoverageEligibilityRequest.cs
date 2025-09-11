@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class CoverageEligibilityRequest : DomainResource
@@ -11,12 +13,12 @@ public class CoverageEligibilityRequest : DomainResource
     public ResourceReference? Facility { get; set; }
     public ResourceReference? Enterer { get; set; }
     public CoverageEligibilityRequestSupportingInfo[]? SupportingInfo { get; set; }
-    public required string[] Purpose { get; set; }
+    public required PurposeEnum[] Purpose { get; set; }
     public CoverageEligibilityRequestItem[]? Item { get; set; }
     public required string Created { get; set; }
     public required ResourceReference Insurer { get; set; }
     public CodeableConcept? Priority { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? ServicedDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Provider { get; set; }
@@ -73,6 +75,28 @@ public class CoverageEligibilityRequest : DomainResource
     }
     
     
+    public enum PurposeEnum
+    {
+        [Description("auth-requirements")]
+        AuthDashRequirements ,
+        [Description("benefits")]
+        Benefits ,
+        [Description("discovery")]
+        Discovery ,
+        [Description("validation")]
+        Validation ,
+    }
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("draft")]
+        Draft ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

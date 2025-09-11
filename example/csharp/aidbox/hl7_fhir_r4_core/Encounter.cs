@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Encounter : DomainResource
@@ -17,7 +19,7 @@ public class Encounter : DomainResource
     public ResourceReference[]? Account { get; set; }
     public EncounterClassHistory[]? ClassHistory { get; set; }
     public CodeableConcept? Priority { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required Coding Class { get; set; }
     public Duration? Length { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -71,10 +73,21 @@ public class Encounter : DomainResource
     public class EncounterLocation : BackboneElement
     {
         public required ResourceReference Location { get; set; }
-        public string? Status { get; set; }
+        public StatusEnum? Status { get; set; }
         public CodeableConcept? PhysicalType { get; set; }
         public Period? Period { get; set; }
         
+        public enum StatusEnum
+        {
+            [Description("planned")]
+            Planned ,
+            [Description("active")]
+            Active ,
+            [Description("reserved")]
+            Reserved ,
+            [Description("completed")]
+            Completed ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -93,15 +106,57 @@ public class Encounter : DomainResource
     
     public class EncounterStatusHistory : BackboneElement
     {
-        public required string Status { get; set; }
+        public required StatusEnum Status { get; set; }
         public required Period Period { get; set; }
         
+        public enum StatusEnum
+        {
+            [Description("planned")]
+            Planned ,
+            [Description("arrived")]
+            Arrived ,
+            [Description("triaged")]
+            Triaged ,
+            [Description("in-progress")]
+            InDashProgress ,
+            [Description("onleave")]
+            Onleave ,
+            [Description("finished")]
+            Finished ,
+            [Description("cancelled")]
+            Cancelled ,
+            [Description("entered-in-error")]
+            EnteredDashInDashError ,
+            [Description("unknown")]
+            Unknown ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("planned")]
+        Planned ,
+        [Description("arrived")]
+        Arrived ,
+        [Description("triaged")]
+        Triaged ,
+        [Description("in-progress")]
+        InDashProgress ,
+        [Description("onleave")]
+        Onleave ,
+        [Description("finished")]
+        Finished ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

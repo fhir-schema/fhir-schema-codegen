@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Claim : DomainResource
@@ -12,7 +14,7 @@ public class Claim : DomainResource
     public ClaimDiagnosis[]? Diagnosis { get; set; }
     public ResourceReference? Enterer { get; set; }
     public ClaimSupportingInfo[]? SupportingInfo { get; set; }
-    public required string Use { get; set; }
+    public required UseEnum Use { get; set; }
     public ClaimItem[]? Item { get; set; }
     public required CodeableConcept Type { get; set; }
     public required string Created { get; set; }
@@ -24,7 +26,7 @@ public class Claim : DomainResource
     public CodeableConcept? FundsReserve { get; set; }
     public required CodeableConcept Priority { get; set; }
     public ClaimAccident? Accident { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ClaimPayee? Payee { get; set; }
     public ResourceReference? Prescription { get; set; }
     public Period? BillablePeriod { get; set; }
@@ -214,6 +216,26 @@ public class Claim : DomainResource
     }
     
     
+    public enum UseEnum
+    {
+        [Description("claim")]
+        Claim ,
+        [Description("preauthorization")]
+        Preauthorization ,
+        [Description("predetermination")]
+        Predetermination ,
+    }
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("draft")]
+        Draft ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

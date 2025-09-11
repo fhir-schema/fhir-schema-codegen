@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Procedure : DomainResource
@@ -24,7 +26,7 @@ public class Procedure : DomainResource
     public Annotation[]? Note { get; set; }
     public Range? PerformedRange { get; set; }
     public CodeableConcept[]? Complication { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? PerformedDateTime { get; set; }
     public ResourceReference? Recorder { get; set; }
     public CodeableConcept? Code { get; set; }
@@ -61,6 +63,25 @@ public class Procedure : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("preparation")]
+        Preparation ,
+        [Description("in-progress")]
+        InDashProgress ,
+        [Description("not-done")]
+        NotDashDone ,
+        [Description("on-hold")]
+        OnDashHold ,
+        [Description("stopped")]
+        Stopped ,
+        [Description("completed")]
+        Completed ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

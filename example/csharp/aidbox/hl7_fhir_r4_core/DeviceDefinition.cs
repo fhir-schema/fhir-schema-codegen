@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class DeviceDefinition : DomainResource
@@ -43,8 +45,23 @@ public class DeviceDefinition : DomainResource
     public class DeviceDefinitionDeviceName : BackboneElement
     {
         public required string Name { get; set; }
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         
+        public enum TypeEnum
+        {
+            [Description("udi-label-name")]
+            UdiDashLabelDashName ,
+            [Description("user-friendly-name")]
+            UserDashFriendlyDashName ,
+            [Description("patient-reported-name")]
+            PatientDashReportedDashName ,
+            [Description("manufacturer-name")]
+            ManufacturerDashName ,
+            [Description("model-name")]
+            ModelDashName ,
+            [Description("other")]
+            Other ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

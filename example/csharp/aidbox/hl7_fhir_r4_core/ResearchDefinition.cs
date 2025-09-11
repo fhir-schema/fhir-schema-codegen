@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ResearchDefinition : DomainResource
@@ -25,7 +27,7 @@ public class ResearchDefinition : DomainResource
     public string[]? Library { get; set; }
     public ContactDetail[]? Author { get; set; }
     public string? Usage { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public required ResourceReference Population { get; set; }
     public string[]? Comment { get; set; }
@@ -42,6 +44,17 @@ public class ResearchDefinition : DomainResource
     public ResourceReference? SubjectReference { get; set; }
     public Period? EffectivePeriod { get; set; }
     
+    public enum StatusEnum
+    {
+        [Description("draft")]
+        Draft ,
+        [Description("active")]
+        Active ,
+        [Description("retired")]
+        Retired ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

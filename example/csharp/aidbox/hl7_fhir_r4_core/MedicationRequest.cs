@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MedicationRequest : DomainResource
@@ -24,15 +26,15 @@ public class MedicationRequest : DomainResource
     public ResourceReference? Requester { get; set; }
     public ResourceReference[]? SupportingInformation { get; set; }
     public ResourceReference? ReportedReference { get; set; }
-    public string? Priority { get; set; }
-    public required string Status { get; set; }
+    public PriorityEnum? Priority { get; set; }
+    public required StatusEnum Status { get; set; }
     public Dosage[]? DosageInstruction { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public ResourceReference? Recorder { get; set; }
     public bool? ReportedBoolean { get; set; }
     public Identifier[]? Identifier { get; set; }
     public bool? DoNotPerform { get; set; }
-    public required string Intent { get; set; }
+    public required IntentEnum Intent { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public ResourceReference? PriorPrescription { get; set; }
     public ResourceReference? MedicationReference { get; set; }
@@ -78,6 +80,55 @@ public class MedicationRequest : DomainResource
     }
     
     
+    public enum PriorityEnum
+    {
+        [Description("routine")]
+        Routine ,
+        [Description("urgent")]
+        Urgent ,
+        [Description("asap")]
+        Asap ,
+        [Description("stat")]
+        Stat ,
+    }
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("on-hold")]
+        OnDashHold ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("completed")]
+        Completed ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("stopped")]
+        Stopped ,
+        [Description("draft")]
+        Draft ,
+        [Description("unknown")]
+        Unknown ,
+    }
+    public enum IntentEnum
+    {
+        [Description("proposal")]
+        Proposal ,
+        [Description("plan")]
+        Plan ,
+        [Description("order")]
+        Order ,
+        [Description("original-order")]
+        OriginalDashOrder ,
+        [Description("reflex-order")]
+        ReflexDashOrder ,
+        [Description("filler-order")]
+        FillerDashOrder ,
+        [Description("instance-order")]
+        InstanceDashOrder ,
+        [Description("option")]
+        Option ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

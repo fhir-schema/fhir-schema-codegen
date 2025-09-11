@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MessageHeader : DomainResource
@@ -34,9 +36,18 @@ public class MessageHeader : DomainResource
     public class MessageHeaderResponse : BackboneElement
     {
         public required string Identifier { get; set; }
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public ResourceReference? Details { get; set; }
         
+        public enum CodeEnum
+        {
+            [Description("ok")]
+            Ok ,
+            [Description("transient-error")]
+            TransientDashError ,
+            [Description("fatal-error")]
+            FatalDashError ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

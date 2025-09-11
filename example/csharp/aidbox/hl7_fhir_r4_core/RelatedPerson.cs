@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class RelatedPerson : DomainResource
@@ -16,7 +18,7 @@ public class RelatedPerson : DomainResource
     public RelatedPersonCommunication[]? Communication { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
-    public string? Gender { get; set; }
+    public GenderEnum? Gender { get; set; }
     public Period? Period { get; set; }
     
     public class RelatedPersonCommunication : BackboneElement
@@ -30,6 +32,17 @@ public class RelatedPerson : DomainResource
     }
     
     
+    public enum GenderEnum
+    {
+        [Description("male")]
+        Male ,
+        [Description("female")]
+        Female ,
+        [Description("other")]
+        Other ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

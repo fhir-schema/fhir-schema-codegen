@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class QuestionnaireResponse : DomainResource
@@ -11,7 +13,7 @@ public class QuestionnaireResponse : DomainResource
     public QuestionnaireResponseItem[]? Item { get; set; }
     public ResourceReference? Source { get; set; }
     public ResourceReference? Author { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier? Identifier { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public string? Authored { get; set; }
@@ -53,6 +55,19 @@ public class QuestionnaireResponse : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("in-progress")]
+        InDashProgress ,
+        [Description("completed")]
+        Completed ,
+        [Description("amended")]
+        Amended ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("stopped")]
+        Stopped ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

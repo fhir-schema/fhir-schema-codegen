@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Invoice : DomainResource
@@ -15,7 +17,7 @@ public class Invoice : DomainResource
     public InvoiceParticipant[]? Participant { get; set; }
     public Annotation[]? Note { get; set; }
     public ResourceReference? Account { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public InvoiceLineItem[]? LineItem { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Issuer { get; set; }
@@ -37,11 +39,26 @@ public class Invoice : DomainResource
     
     public class InvoiceLineItemPriceComponent : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public CodeableConcept? Code { get; set; }
         public decimal? Factor { get; set; }
         public Money? Amount { get; set; }
         
+        public enum TypeEnum
+        {
+            [Description("base")]
+            Base ,
+            [Description("surcharge")]
+            Surcharge ,
+            [Description("deduction")]
+            Deduction ,
+            [Description("discount")]
+            Discount ,
+            [Description("tax")]
+            Tax ,
+            [Description("informational")]
+            Informational ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -58,6 +75,19 @@ public class Invoice : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("draft")]
+        Draft ,
+        [Description("issued")]
+        Issued ,
+        [Description("balanced")]
+        Balanced ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

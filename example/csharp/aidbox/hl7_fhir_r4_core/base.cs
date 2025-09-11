@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 public class Age : Quantity
 {
@@ -195,13 +197,449 @@ public class Count : Quantity
 public class ParameterDefinition : Element
 {
     public string? Name { get; set; }
-    public required string Use { get; set; }
+    public required UseEnum Use { get; set; }
     public int? Min { get; set; }
     public string? Max { get; set; }
     public string? Documentation { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? Profile { get; set; }
     
+    public enum UseEnum
+    {
+        [Description("in")]
+        In ,
+        [Description("out")]
+        Out ,
+    }
+    public enum TypeEnum
+    {
+        [Description("Address")]
+        Address ,
+        [Description("Age")]
+        Age ,
+        [Description("Annotation")]
+        Annotation ,
+        [Description("Attachment")]
+        Attachment ,
+        [Description("BackboneElement")]
+        BackboneElement ,
+        [Description("CodeableConcept")]
+        CodeableConcept ,
+        [Description("Coding")]
+        Coding ,
+        [Description("ContactDetail")]
+        ContactDetail ,
+        [Description("ContactPoint")]
+        ContactPoint ,
+        [Description("Contributor")]
+        Contributor ,
+        [Description("Count")]
+        Count ,
+        [Description("DataRequirement")]
+        DataRequirement ,
+        [Description("Distance")]
+        Distance ,
+        [Description("Dosage")]
+        Dosage ,
+        [Description("Duration")]
+        Duration ,
+        [Description("Element")]
+        Element ,
+        [Description("ElementDefinition")]
+        ElementDefinition ,
+        [Description("Expression")]
+        Expression ,
+        [Description("Extension")]
+        Extension ,
+        [Description("HumanName")]
+        HumanName ,
+        [Description("Identifier")]
+        Identifier ,
+        [Description("MarketingStatus")]
+        MarketingStatus ,
+        [Description("Meta")]
+        Meta ,
+        [Description("Money")]
+        Money ,
+        [Description("MoneyQuantity")]
+        MoneyQuantity ,
+        [Description("Narrative")]
+        Narrative ,
+        [Description("ParameterDefinition")]
+        ParameterDefinition ,
+        [Description("Period")]
+        Period ,
+        [Description("Population")]
+        Population ,
+        [Description("ProdCharacteristic")]
+        ProdCharacteristic ,
+        [Description("ProductShelfLife")]
+        ProductShelfLife ,
+        [Description("Quantity")]
+        Quantity ,
+        [Description("Range")]
+        Range ,
+        [Description("Ratio")]
+        Ratio ,
+        [Description("Reference")]
+        Reference ,
+        [Description("RelatedArtifact")]
+        RelatedArtifact ,
+        [Description("SampledData")]
+        SampledData ,
+        [Description("Signature")]
+        Signature ,
+        [Description("SimpleQuantity")]
+        SimpleQuantity ,
+        [Description("SubstanceAmount")]
+        SubstanceAmount ,
+        [Description("Timing")]
+        Timing ,
+        [Description("TriggerDefinition")]
+        TriggerDefinition ,
+        [Description("UsageContext")]
+        UsageContext ,
+        [Description("base64Binary")]
+        Base64Binary ,
+        [Description("boolean")]
+        Boolean ,
+        [Description("canonical")]
+        Canonical ,
+        [Description("code")]
+        Code ,
+        [Description("date")]
+        Date ,
+        [Description("dateTime")]
+        DateTime ,
+        [Description("decimal")]
+        Decimal ,
+        [Description("id")]
+        Id ,
+        [Description("instant")]
+        Instant ,
+        [Description("integer")]
+        Integer ,
+        [Description("markdown")]
+        Markdown ,
+        [Description("oid")]
+        Oid ,
+        [Description("positiveInt")]
+        PositiveInt ,
+        [Description("string")]
+        String ,
+        [Description("time")]
+        Time ,
+        [Description("unsignedInt")]
+        UnsignedInt ,
+        [Description("uri")]
+        Uri ,
+        [Description("url")]
+        Url ,
+        [Description("uuid")]
+        Uuid ,
+        [Description("xhtml")]
+        Xhtml ,
+        [Description("Account")]
+        Account ,
+        [Description("ActivityDefinition")]
+        ActivityDefinition ,
+        [Description("AdverseEvent")]
+        AdverseEvent ,
+        [Description("AllergyIntolerance")]
+        AllergyIntolerance ,
+        [Description("Appointment")]
+        Appointment ,
+        [Description("AppointmentResponse")]
+        AppointmentResponse ,
+        [Description("AuditEvent")]
+        AuditEvent ,
+        [Description("Basic")]
+        Basic ,
+        [Description("Binary")]
+        Binary ,
+        [Description("BiologicallyDerivedProduct")]
+        BiologicallyDerivedProduct ,
+        [Description("BodyStructure")]
+        BodyStructure ,
+        [Description("Bundle")]
+        Bundle ,
+        [Description("CapabilityStatement")]
+        CapabilityStatement ,
+        [Description("CarePlan")]
+        CarePlan ,
+        [Description("CareTeam")]
+        CareTeam ,
+        [Description("CatalogEntry")]
+        CatalogEntry ,
+        [Description("ChargeItem")]
+        ChargeItem ,
+        [Description("ChargeItemDefinition")]
+        ChargeItemDefinition ,
+        [Description("Claim")]
+        Claim ,
+        [Description("ClaimResponse")]
+        ClaimResponse ,
+        [Description("ClinicalImpression")]
+        ClinicalImpression ,
+        [Description("CodeSystem")]
+        CodeSystem ,
+        [Description("Communication")]
+        Communication ,
+        [Description("CommunicationRequest")]
+        CommunicationRequest ,
+        [Description("CompartmentDefinition")]
+        CompartmentDefinition ,
+        [Description("Composition")]
+        Composition ,
+        [Description("ConceptMap")]
+        ConceptMap ,
+        [Description("Condition")]
+        Condition ,
+        [Description("Consent")]
+        Consent ,
+        [Description("Contract")]
+        Contract ,
+        [Description("Coverage")]
+        Coverage ,
+        [Description("CoverageEligibilityRequest")]
+        CoverageEligibilityRequest ,
+        [Description("CoverageEligibilityResponse")]
+        CoverageEligibilityResponse ,
+        [Description("DetectedIssue")]
+        DetectedIssue ,
+        [Description("Device")]
+        Device ,
+        [Description("DeviceDefinition")]
+        DeviceDefinition ,
+        [Description("DeviceMetric")]
+        DeviceMetric ,
+        [Description("DeviceRequest")]
+        DeviceRequest ,
+        [Description("DeviceUseStatement")]
+        DeviceUseStatement ,
+        [Description("DiagnosticReport")]
+        DiagnosticReport ,
+        [Description("DocumentManifest")]
+        DocumentManifest ,
+        [Description("DocumentReference")]
+        DocumentReference ,
+        [Description("DomainResource")]
+        DomainResource ,
+        [Description("EffectEvidenceSynthesis")]
+        EffectEvidenceSynthesis ,
+        [Description("Encounter")]
+        Encounter ,
+        [Description("Endpoint")]
+        Endpoint ,
+        [Description("EnrollmentRequest")]
+        EnrollmentRequest ,
+        [Description("EnrollmentResponse")]
+        EnrollmentResponse ,
+        [Description("EpisodeOfCare")]
+        EpisodeOfCare ,
+        [Description("EventDefinition")]
+        EventDefinition ,
+        [Description("Evidence")]
+        Evidence ,
+        [Description("EvidenceVariable")]
+        EvidenceVariable ,
+        [Description("ExampleScenario")]
+        ExampleScenario ,
+        [Description("ExplanationOfBenefit")]
+        ExplanationOfBenefit ,
+        [Description("FamilyMemberHistory")]
+        FamilyMemberHistory ,
+        [Description("Flag")]
+        Flag ,
+        [Description("Goal")]
+        Goal ,
+        [Description("GraphDefinition")]
+        GraphDefinition ,
+        [Description("Group")]
+        Group ,
+        [Description("GuidanceResponse")]
+        GuidanceResponse ,
+        [Description("HealthcareService")]
+        HealthcareService ,
+        [Description("ImagingStudy")]
+        ImagingStudy ,
+        [Description("Immunization")]
+        Immunization ,
+        [Description("ImmunizationEvaluation")]
+        ImmunizationEvaluation ,
+        [Description("ImmunizationRecommendation")]
+        ImmunizationRecommendation ,
+        [Description("ImplementationGuide")]
+        ImplementationGuide ,
+        [Description("InsurancePlan")]
+        InsurancePlan ,
+        [Description("Invoice")]
+        Invoice ,
+        [Description("Library")]
+        Library ,
+        [Description("Linkage")]
+        Linkage ,
+        [Description("List")]
+        List ,
+        [Description("Location")]
+        Location ,
+        [Description("Measure")]
+        Measure ,
+        [Description("MeasureReport")]
+        MeasureReport ,
+        [Description("Media")]
+        Media ,
+        [Description("Medication")]
+        Medication ,
+        [Description("MedicationAdministration")]
+        MedicationAdministration ,
+        [Description("MedicationDispense")]
+        MedicationDispense ,
+        [Description("MedicationKnowledge")]
+        MedicationKnowledge ,
+        [Description("MedicationRequest")]
+        MedicationRequest ,
+        [Description("MedicationStatement")]
+        MedicationStatement ,
+        [Description("MedicinalProduct")]
+        MedicinalProduct ,
+        [Description("MedicinalProductAuthorization")]
+        MedicinalProductAuthorization ,
+        [Description("MedicinalProductContraindication")]
+        MedicinalProductContraindication ,
+        [Description("MedicinalProductIndication")]
+        MedicinalProductIndication ,
+        [Description("MedicinalProductIngredient")]
+        MedicinalProductIngredient ,
+        [Description("MedicinalProductInteraction")]
+        MedicinalProductInteraction ,
+        [Description("MedicinalProductManufactured")]
+        MedicinalProductManufactured ,
+        [Description("MedicinalProductPackaged")]
+        MedicinalProductPackaged ,
+        [Description("MedicinalProductPharmaceutical")]
+        MedicinalProductPharmaceutical ,
+        [Description("MedicinalProductUndesirableEffect")]
+        MedicinalProductUndesirableEffect ,
+        [Description("MessageDefinition")]
+        MessageDefinition ,
+        [Description("MessageHeader")]
+        MessageHeader ,
+        [Description("MolecularSequence")]
+        MolecularSequence ,
+        [Description("NamingSystem")]
+        NamingSystem ,
+        [Description("NutritionOrder")]
+        NutritionOrder ,
+        [Description("Observation")]
+        Observation ,
+        [Description("ObservationDefinition")]
+        ObservationDefinition ,
+        [Description("OperationDefinition")]
+        OperationDefinition ,
+        [Description("OperationOutcome")]
+        OperationOutcome ,
+        [Description("Organization")]
+        Organization ,
+        [Description("OrganizationAffiliation")]
+        OrganizationAffiliation ,
+        [Description("Parameters")]
+        Parameters ,
+        [Description("Patient")]
+        Patient ,
+        [Description("PaymentNotice")]
+        PaymentNotice ,
+        [Description("PaymentReconciliation")]
+        PaymentReconciliation ,
+        [Description("Person")]
+        Person ,
+        [Description("PlanDefinition")]
+        PlanDefinition ,
+        [Description("Practitioner")]
+        Practitioner ,
+        [Description("PractitionerRole")]
+        PractitionerRole ,
+        [Description("Procedure")]
+        Procedure ,
+        [Description("Provenance")]
+        Provenance ,
+        [Description("Questionnaire")]
+        Questionnaire ,
+        [Description("QuestionnaireResponse")]
+        QuestionnaireResponse ,
+        [Description("RelatedPerson")]
+        RelatedPerson ,
+        [Description("RequestGroup")]
+        RequestGroup ,
+        [Description("ResearchDefinition")]
+        ResearchDefinition ,
+        [Description("ResearchElementDefinition")]
+        ResearchElementDefinition ,
+        [Description("ResearchStudy")]
+        ResearchStudy ,
+        [Description("ResearchSubject")]
+        ResearchSubject ,
+        [Description("Resource")]
+        Resource ,
+        [Description("RiskAssessment")]
+        RiskAssessment ,
+        [Description("RiskEvidenceSynthesis")]
+        RiskEvidenceSynthesis ,
+        [Description("Schedule")]
+        Schedule ,
+        [Description("SearchParameter")]
+        SearchParameter ,
+        [Description("ServiceRequest")]
+        ServiceRequest ,
+        [Description("Slot")]
+        Slot ,
+        [Description("Specimen")]
+        Specimen ,
+        [Description("SpecimenDefinition")]
+        SpecimenDefinition ,
+        [Description("StructureDefinition")]
+        StructureDefinition ,
+        [Description("StructureMap")]
+        StructureMap ,
+        [Description("Subscription")]
+        Subscription ,
+        [Description("Substance")]
+        Substance ,
+        [Description("SubstanceNucleicAcid")]
+        SubstanceNucleicAcid ,
+        [Description("SubstancePolymer")]
+        SubstancePolymer ,
+        [Description("SubstanceProtein")]
+        SubstanceProtein ,
+        [Description("SubstanceReferenceInformation")]
+        SubstanceReferenceInformation ,
+        [Description("SubstanceSourceMaterial")]
+        SubstanceSourceMaterial ,
+        [Description("SubstanceSpecification")]
+        SubstanceSpecification ,
+        [Description("SupplyDelivery")]
+        SupplyDelivery ,
+        [Description("SupplyRequest")]
+        SupplyRequest ,
+        [Description("Task")]
+        Task ,
+        [Description("TerminologyCapabilities")]
+        TerminologyCapabilities ,
+        [Description("TestReport")]
+        TestReport ,
+        [Description("TestScript")]
+        TestScript ,
+        [Description("ValueSet")]
+        ValueSet ,
+        [Description("VerificationResult")]
+        VerificationResult ,
+        [Description("VisionPrescription")]
+        VisionPrescription ,
+        [Description("Type")]
+        Type ,
+        [Description("Any")]
+        Any ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -219,9 +657,9 @@ public class ContactDetail : Element
 
 public class Address : Element
 {
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public string? City { get; set; }
-    public string? Type { get; set; }
+    public TypeEnum? Type { get; set; }
     public string? State { get; set; }
     public string[]? Line { get; set; }
     public string? PostalCode { get; set; }
@@ -230,6 +668,28 @@ public class Address : Element
     public string? District { get; set; }
     public string? Text { get; set; }
     
+    public enum UseEnum
+    {
+        [Description("home")]
+        Home ,
+        [Description("work")]
+        Work ,
+        [Description("temp")]
+        Temp ,
+        [Description("old")]
+        Old ,
+        [Description("billing")]
+        Billing ,
+    }
+    public enum TypeEnum
+    {
+        [Description("postal")]
+        Postal ,
+        [Description("physical")]
+        Physical ,
+        [Description("both")]
+        Both ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -373,7 +833,7 @@ public class ElementDefinition : BackboneElement
     public long? DefaultValueUnsignedInt { get; set; }
     public Age? PatternAge { get; set; }
     public Signature? FixedSignature { get; set; }
-    public string[]? Representation { get; set; }
+    public RepresentationEnum[]? Representation { get; set; }
     public ParameterDefinition? PatternParameterDefinition { get; set; }
     public string? FixedId { get; set; }
     public string? FixedUrl { get; set; }
@@ -473,10 +933,21 @@ public class ElementDefinition : BackboneElement
     
     public class ElementDefinitionBinding : BackboneElement
     {
-        public required string Strength { get; set; }
+        public required StrengthEnum Strength { get; set; }
         public string? Description { get; set; }
         public string? ValueSet { get; set; }
         
+        public enum StrengthEnum
+        {
+            [Description("required")]
+            Required ,
+            [Description("extensible")]
+            Extensible ,
+            [Description("preferred")]
+            Preferred ,
+            [Description("example")]
+            Example ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -486,12 +957,19 @@ public class ElementDefinition : BackboneElement
     {
         public required string Key { get; set; }
         public string? Requirements { get; set; }
-        public required string Severity { get; set; }
+        public required SeverityEnum Severity { get; set; }
         public required string Human { get; set; }
         public string? Expression { get; set; }
         public string? Xpath { get; set; }
         public string? Source { get; set; }
         
+        public enum SeverityEnum
+        {
+            [Description("error")]
+            Error ,
+            [Description("warning")]
+            Warning ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -573,8 +1051,17 @@ public class ElementDefinition : BackboneElement
         public ElementDefinitionSlicingDiscriminator[]? Discriminator { get; set; }
         public string? Description { get; set; }
         public bool? Ordered { get; set; }
-        public required string Rules { get; set; }
+        public required RulesEnum Rules { get; set; }
         
+        public enum RulesEnum
+        {
+            [Description("closed")]
+            Closed ,
+            [Description("open")]
+            Open ,
+            [Description("openAtEnd")]
+            OpenAtEnd ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -582,9 +1069,22 @@ public class ElementDefinition : BackboneElement
     
     public class ElementDefinitionSlicingDiscriminator : BackboneElement
     {
-        public required string Type { get; set; }
+        public required TypeEnum Type { get; set; }
         public required string Path { get; set; }
         
+        public enum TypeEnum
+        {
+            [Description("value")]
+            Value ,
+            [Description("exists")]
+            Exists ,
+            [Description("pattern")]
+            Pattern ,
+            [Description("type")]
+            Type ,
+            [Description("profile")]
+            Profile ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -595,15 +1095,46 @@ public class ElementDefinition : BackboneElement
         public required string Code { get; set; }
         public string[]? Profile { get; set; }
         public string[]? TargetProfile { get; set; }
-        public string[]? Aggregation { get; set; }
-        public string? Versioning { get; set; }
+        public AggregationEnum[]? Aggregation { get; set; }
+        public VersioningEnum? Versioning { get; set; }
         
+        public enum AggregationEnum
+        {
+            [Description("contained")]
+            Contained ,
+            [Description("referenced")]
+            Referenced ,
+            [Description("bundled")]
+            Bundled ,
+        }
+        public enum VersioningEnum
+        {
+            [Description("either")]
+            Either ,
+            [Description("independent")]
+            Independent ,
+            [Description("specific")]
+            Specific ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum RepresentationEnum
+    {
+        [Description("xmlAttr")]
+        XmlAttr ,
+        [Description("xmlText")]
+        XmlText ,
+        [Description("typeAttr")]
+        TypeAttr ,
+        [Description("cdaText")]
+        CdaText ,
+        [Description("xhtml")]
+        Xhtml ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -621,7 +1152,7 @@ public class Period : Element
 
 public class HumanName : Element
 {
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public string? Text { get; set; }
     public string? Family { get; set; }
     public string[]? Given { get; set; }
@@ -629,6 +1160,23 @@ public class HumanName : Element
     public string[]? Suffix { get; set; }
     public Period? Period { get; set; }
     
+    public enum UseEnum
+    {
+        [Description("usual")]
+        Usual ,
+        [Description("official")]
+        Official ,
+        [Description("temp")]
+        Temp ,
+        [Description("nickname")]
+        Nickname ,
+        [Description("anonymous")]
+        Anonymous ,
+        [Description("old")]
+        Old ,
+        [Description("maiden")]
+        Maiden ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -636,7 +1184,7 @@ public class HumanName : Element
 
 public class RelatedArtifact : Element
 {
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? Label { get; set; }
     public string? Display { get; set; }
     public string? Citation { get; set; }
@@ -644,6 +1192,25 @@ public class RelatedArtifact : Element
     public Attachment? Document { get; set; }
     public string? Resource { get; set; }
     
+    public enum TypeEnum
+    {
+        [Description("documentation")]
+        Documentation ,
+        [Description("justification")]
+        Justification ,
+        [Description("citation")]
+        Citation ,
+        [Description("predecessor")]
+        Predecessor ,
+        [Description("successor")]
+        Successor ,
+        [Description("derived-from")]
+        DerivedDashFrom ,
+        [Description("depends-on")]
+        DependsDashOn ,
+        [Description("composed-of")]
+        ComposedDashOf ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -717,10 +1284,21 @@ public class SubstanceAmount : BackboneElement
 
 public class Contributor : Element
 {
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public required string Name { get; set; }
     public ContactDetail[]? Contact { get; set; }
     
+    public enum TypeEnum
+    {
+        [Description("author")]
+        Author ,
+        [Description("editor")]
+        Editor ,
+        [Description("reviewer")]
+        Reviewer ,
+        [Description("endorser")]
+        Endorser ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -764,11 +1342,22 @@ public class Distance : Quantity
 public class Quantity : Element
 {
     public decimal? Value { get; set; }
-    public string? Comparator { get; set; }
+    public ComparatorEnum? Comparator { get; set; }
     public string? Unit { get; set; }
     public string? System { get; set; }
     public string? Code { get; set; }
     
+    public enum ComparatorEnum
+    {
+        [Description("<")]
+        Less ,
+        [Description("<=")]
+        LessOrEqual ,
+        [Description(">=")]
+        GreaterOrEqual ,
+        [Description(">")]
+        Greater ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -776,12 +1365,42 @@ public class Quantity : Element
 
 public class ContactPoint : Element
 {
-    public string? System { get; set; }
+    public SystemEnum? System { get; set; }
     public string? Value { get; set; }
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public long? Rank { get; set; }
     public Period? Period { get; set; }
     
+    public enum SystemEnum
+    {
+        [Description("phone")]
+        Phone ,
+        [Description("fax")]
+        Fax ,
+        [Description("email")]
+        Email ,
+        [Description("pager")]
+        Pager ,
+        [Description("url")]
+        Url ,
+        [Description("sms")]
+        Sms ,
+        [Description("other")]
+        Other ,
+    }
+    public enum UseEnum
+    {
+        [Description("home")]
+        Home ,
+        [Description("work")]
+        Work ,
+        [Description("temp")]
+        Temp ,
+        [Description("old")]
+        Old ,
+        [Description("mobile")]
+        Mobile ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -827,9 +1446,20 @@ public class Element
 
 public class Narrative : Element
 {
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required string Div { get; set; }
     
+    public enum StatusEnum
+    {
+        [Description("generated")]
+        Generated ,
+        [Description("extensions")]
+        Extensions ,
+        [Description("additional")]
+        Additional ,
+        [Description("empty")]
+        Empty ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -839,13 +1469,32 @@ public class TriggerDefinition : Element
 {
     public ResourceReference? TimingReference { get; set; }
     public string? Name { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string? TimingDateTime { get; set; }
     public Timing? TimingTiming { get; set; }
     public ResourceExpression? Condition { get; set; }
     public string? TimingDate { get; set; }
     public DataRequirement[]? Data { get; set; }
     
+    public enum TypeEnum
+    {
+        [Description("named-event")]
+        NamedDashEvent ,
+        [Description("periodic")]
+        Periodic ,
+        [Description("data-changed")]
+        DataDashChanged ,
+        [Description("data-accessed")]
+        DataDashAccessed ,
+        [Description("data-access-ended")]
+        DataDashAccessDashEnded ,
+        [Description("data-added")]
+        DataDashAdded ,
+        [Description("data-modified")]
+        DataDashModified ,
+        [Description("data-removed")]
+        DataDashRemoved ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -884,7 +1533,7 @@ public class DataRequirement : Element
 {
     public long? Limit { get; set; }
     public CodeableConcept? SubjectCodeableConcept { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public string[]? MustSupport { get; set; }
     public DataRequirementCodeFilter[]? CodeFilter { get; set; }
     public ResourceReference? SubjectReference { get; set; }
@@ -920,14 +1569,450 @@ public class DataRequirement : Element
     public class DataRequirementSort : BackboneElement
     {
         public required string Path { get; set; }
-        public required string Direction { get; set; }
+        public required DirectionEnum Direction { get; set; }
         
+        public enum DirectionEnum
+        {
+            [Description("ascending")]
+            Ascending ,
+            [Description("descending")]
+            Descending ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum TypeEnum
+    {
+        [Description("Address")]
+        Address ,
+        [Description("Age")]
+        Age ,
+        [Description("Annotation")]
+        Annotation ,
+        [Description("Attachment")]
+        Attachment ,
+        [Description("BackboneElement")]
+        BackboneElement ,
+        [Description("CodeableConcept")]
+        CodeableConcept ,
+        [Description("Coding")]
+        Coding ,
+        [Description("ContactDetail")]
+        ContactDetail ,
+        [Description("ContactPoint")]
+        ContactPoint ,
+        [Description("Contributor")]
+        Contributor ,
+        [Description("Count")]
+        Count ,
+        [Description("DataRequirement")]
+        DataRequirement ,
+        [Description("Distance")]
+        Distance ,
+        [Description("Dosage")]
+        Dosage ,
+        [Description("Duration")]
+        Duration ,
+        [Description("Element")]
+        Element ,
+        [Description("ElementDefinition")]
+        ElementDefinition ,
+        [Description("Expression")]
+        Expression ,
+        [Description("Extension")]
+        Extension ,
+        [Description("HumanName")]
+        HumanName ,
+        [Description("Identifier")]
+        Identifier ,
+        [Description("MarketingStatus")]
+        MarketingStatus ,
+        [Description("Meta")]
+        Meta ,
+        [Description("Money")]
+        Money ,
+        [Description("MoneyQuantity")]
+        MoneyQuantity ,
+        [Description("Narrative")]
+        Narrative ,
+        [Description("ParameterDefinition")]
+        ParameterDefinition ,
+        [Description("Period")]
+        Period ,
+        [Description("Population")]
+        Population ,
+        [Description("ProdCharacteristic")]
+        ProdCharacteristic ,
+        [Description("ProductShelfLife")]
+        ProductShelfLife ,
+        [Description("Quantity")]
+        Quantity ,
+        [Description("Range")]
+        Range ,
+        [Description("Ratio")]
+        Ratio ,
+        [Description("Reference")]
+        Reference ,
+        [Description("RelatedArtifact")]
+        RelatedArtifact ,
+        [Description("SampledData")]
+        SampledData ,
+        [Description("Signature")]
+        Signature ,
+        [Description("SimpleQuantity")]
+        SimpleQuantity ,
+        [Description("SubstanceAmount")]
+        SubstanceAmount ,
+        [Description("Timing")]
+        Timing ,
+        [Description("TriggerDefinition")]
+        TriggerDefinition ,
+        [Description("UsageContext")]
+        UsageContext ,
+        [Description("base64Binary")]
+        Base64Binary ,
+        [Description("boolean")]
+        Boolean ,
+        [Description("canonical")]
+        Canonical ,
+        [Description("code")]
+        Code ,
+        [Description("date")]
+        Date ,
+        [Description("dateTime")]
+        DateTime ,
+        [Description("decimal")]
+        Decimal ,
+        [Description("id")]
+        Id ,
+        [Description("instant")]
+        Instant ,
+        [Description("integer")]
+        Integer ,
+        [Description("markdown")]
+        Markdown ,
+        [Description("oid")]
+        Oid ,
+        [Description("positiveInt")]
+        PositiveInt ,
+        [Description("string")]
+        String ,
+        [Description("time")]
+        Time ,
+        [Description("unsignedInt")]
+        UnsignedInt ,
+        [Description("uri")]
+        Uri ,
+        [Description("url")]
+        Url ,
+        [Description("uuid")]
+        Uuid ,
+        [Description("xhtml")]
+        Xhtml ,
+        [Description("Account")]
+        Account ,
+        [Description("ActivityDefinition")]
+        ActivityDefinition ,
+        [Description("AdverseEvent")]
+        AdverseEvent ,
+        [Description("AllergyIntolerance")]
+        AllergyIntolerance ,
+        [Description("Appointment")]
+        Appointment ,
+        [Description("AppointmentResponse")]
+        AppointmentResponse ,
+        [Description("AuditEvent")]
+        AuditEvent ,
+        [Description("Basic")]
+        Basic ,
+        [Description("Binary")]
+        Binary ,
+        [Description("BiologicallyDerivedProduct")]
+        BiologicallyDerivedProduct ,
+        [Description("BodyStructure")]
+        BodyStructure ,
+        [Description("Bundle")]
+        Bundle ,
+        [Description("CapabilityStatement")]
+        CapabilityStatement ,
+        [Description("CarePlan")]
+        CarePlan ,
+        [Description("CareTeam")]
+        CareTeam ,
+        [Description("CatalogEntry")]
+        CatalogEntry ,
+        [Description("ChargeItem")]
+        ChargeItem ,
+        [Description("ChargeItemDefinition")]
+        ChargeItemDefinition ,
+        [Description("Claim")]
+        Claim ,
+        [Description("ClaimResponse")]
+        ClaimResponse ,
+        [Description("ClinicalImpression")]
+        ClinicalImpression ,
+        [Description("CodeSystem")]
+        CodeSystem ,
+        [Description("Communication")]
+        Communication ,
+        [Description("CommunicationRequest")]
+        CommunicationRequest ,
+        [Description("CompartmentDefinition")]
+        CompartmentDefinition ,
+        [Description("Composition")]
+        Composition ,
+        [Description("ConceptMap")]
+        ConceptMap ,
+        [Description("Condition")]
+        Condition ,
+        [Description("Consent")]
+        Consent ,
+        [Description("Contract")]
+        Contract ,
+        [Description("Coverage")]
+        Coverage ,
+        [Description("CoverageEligibilityRequest")]
+        CoverageEligibilityRequest ,
+        [Description("CoverageEligibilityResponse")]
+        CoverageEligibilityResponse ,
+        [Description("DetectedIssue")]
+        DetectedIssue ,
+        [Description("Device")]
+        Device ,
+        [Description("DeviceDefinition")]
+        DeviceDefinition ,
+        [Description("DeviceMetric")]
+        DeviceMetric ,
+        [Description("DeviceRequest")]
+        DeviceRequest ,
+        [Description("DeviceUseStatement")]
+        DeviceUseStatement ,
+        [Description("DiagnosticReport")]
+        DiagnosticReport ,
+        [Description("DocumentManifest")]
+        DocumentManifest ,
+        [Description("DocumentReference")]
+        DocumentReference ,
+        [Description("DomainResource")]
+        DomainResource ,
+        [Description("EffectEvidenceSynthesis")]
+        EffectEvidenceSynthesis ,
+        [Description("Encounter")]
+        Encounter ,
+        [Description("Endpoint")]
+        Endpoint ,
+        [Description("EnrollmentRequest")]
+        EnrollmentRequest ,
+        [Description("EnrollmentResponse")]
+        EnrollmentResponse ,
+        [Description("EpisodeOfCare")]
+        EpisodeOfCare ,
+        [Description("EventDefinition")]
+        EventDefinition ,
+        [Description("Evidence")]
+        Evidence ,
+        [Description("EvidenceVariable")]
+        EvidenceVariable ,
+        [Description("ExampleScenario")]
+        ExampleScenario ,
+        [Description("ExplanationOfBenefit")]
+        ExplanationOfBenefit ,
+        [Description("FamilyMemberHistory")]
+        FamilyMemberHistory ,
+        [Description("Flag")]
+        Flag ,
+        [Description("Goal")]
+        Goal ,
+        [Description("GraphDefinition")]
+        GraphDefinition ,
+        [Description("Group")]
+        Group ,
+        [Description("GuidanceResponse")]
+        GuidanceResponse ,
+        [Description("HealthcareService")]
+        HealthcareService ,
+        [Description("ImagingStudy")]
+        ImagingStudy ,
+        [Description("Immunization")]
+        Immunization ,
+        [Description("ImmunizationEvaluation")]
+        ImmunizationEvaluation ,
+        [Description("ImmunizationRecommendation")]
+        ImmunizationRecommendation ,
+        [Description("ImplementationGuide")]
+        ImplementationGuide ,
+        [Description("InsurancePlan")]
+        InsurancePlan ,
+        [Description("Invoice")]
+        Invoice ,
+        [Description("Library")]
+        Library ,
+        [Description("Linkage")]
+        Linkage ,
+        [Description("List")]
+        List ,
+        [Description("Location")]
+        Location ,
+        [Description("Measure")]
+        Measure ,
+        [Description("MeasureReport")]
+        MeasureReport ,
+        [Description("Media")]
+        Media ,
+        [Description("Medication")]
+        Medication ,
+        [Description("MedicationAdministration")]
+        MedicationAdministration ,
+        [Description("MedicationDispense")]
+        MedicationDispense ,
+        [Description("MedicationKnowledge")]
+        MedicationKnowledge ,
+        [Description("MedicationRequest")]
+        MedicationRequest ,
+        [Description("MedicationStatement")]
+        MedicationStatement ,
+        [Description("MedicinalProduct")]
+        MedicinalProduct ,
+        [Description("MedicinalProductAuthorization")]
+        MedicinalProductAuthorization ,
+        [Description("MedicinalProductContraindication")]
+        MedicinalProductContraindication ,
+        [Description("MedicinalProductIndication")]
+        MedicinalProductIndication ,
+        [Description("MedicinalProductIngredient")]
+        MedicinalProductIngredient ,
+        [Description("MedicinalProductInteraction")]
+        MedicinalProductInteraction ,
+        [Description("MedicinalProductManufactured")]
+        MedicinalProductManufactured ,
+        [Description("MedicinalProductPackaged")]
+        MedicinalProductPackaged ,
+        [Description("MedicinalProductPharmaceutical")]
+        MedicinalProductPharmaceutical ,
+        [Description("MedicinalProductUndesirableEffect")]
+        MedicinalProductUndesirableEffect ,
+        [Description("MessageDefinition")]
+        MessageDefinition ,
+        [Description("MessageHeader")]
+        MessageHeader ,
+        [Description("MolecularSequence")]
+        MolecularSequence ,
+        [Description("NamingSystem")]
+        NamingSystem ,
+        [Description("NutritionOrder")]
+        NutritionOrder ,
+        [Description("Observation")]
+        Observation ,
+        [Description("ObservationDefinition")]
+        ObservationDefinition ,
+        [Description("OperationDefinition")]
+        OperationDefinition ,
+        [Description("OperationOutcome")]
+        OperationOutcome ,
+        [Description("Organization")]
+        Organization ,
+        [Description("OrganizationAffiliation")]
+        OrganizationAffiliation ,
+        [Description("Parameters")]
+        Parameters ,
+        [Description("Patient")]
+        Patient ,
+        [Description("PaymentNotice")]
+        PaymentNotice ,
+        [Description("PaymentReconciliation")]
+        PaymentReconciliation ,
+        [Description("Person")]
+        Person ,
+        [Description("PlanDefinition")]
+        PlanDefinition ,
+        [Description("Practitioner")]
+        Practitioner ,
+        [Description("PractitionerRole")]
+        PractitionerRole ,
+        [Description("Procedure")]
+        Procedure ,
+        [Description("Provenance")]
+        Provenance ,
+        [Description("Questionnaire")]
+        Questionnaire ,
+        [Description("QuestionnaireResponse")]
+        QuestionnaireResponse ,
+        [Description("RelatedPerson")]
+        RelatedPerson ,
+        [Description("RequestGroup")]
+        RequestGroup ,
+        [Description("ResearchDefinition")]
+        ResearchDefinition ,
+        [Description("ResearchElementDefinition")]
+        ResearchElementDefinition ,
+        [Description("ResearchStudy")]
+        ResearchStudy ,
+        [Description("ResearchSubject")]
+        ResearchSubject ,
+        [Description("Resource")]
+        Resource ,
+        [Description("RiskAssessment")]
+        RiskAssessment ,
+        [Description("RiskEvidenceSynthesis")]
+        RiskEvidenceSynthesis ,
+        [Description("Schedule")]
+        Schedule ,
+        [Description("SearchParameter")]
+        SearchParameter ,
+        [Description("ServiceRequest")]
+        ServiceRequest ,
+        [Description("Slot")]
+        Slot ,
+        [Description("Specimen")]
+        Specimen ,
+        [Description("SpecimenDefinition")]
+        SpecimenDefinition ,
+        [Description("StructureDefinition")]
+        StructureDefinition ,
+        [Description("StructureMap")]
+        StructureMap ,
+        [Description("Subscription")]
+        Subscription ,
+        [Description("Substance")]
+        Substance ,
+        [Description("SubstanceNucleicAcid")]
+        SubstanceNucleicAcid ,
+        [Description("SubstancePolymer")]
+        SubstancePolymer ,
+        [Description("SubstanceProtein")]
+        SubstanceProtein ,
+        [Description("SubstanceReferenceInformation")]
+        SubstanceReferenceInformation ,
+        [Description("SubstanceSourceMaterial")]
+        SubstanceSourceMaterial ,
+        [Description("SubstanceSpecification")]
+        SubstanceSpecification ,
+        [Description("SupplyDelivery")]
+        SupplyDelivery ,
+        [Description("SupplyRequest")]
+        SupplyRequest ,
+        [Description("Task")]
+        Task ,
+        [Description("TerminologyCapabilities")]
+        TerminologyCapabilities ,
+        [Description("TestReport")]
+        TestReport ,
+        [Description("TestScript")]
+        TestScript ,
+        [Description("ValueSet")]
+        ValueSet ,
+        [Description("VerificationResult")]
+        VerificationResult ,
+        [Description("VisionPrescription")]
+        VisionPrescription ,
+        [Description("Type")]
+        Type ,
+        [Description("Any")]
+        Any ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -945,13 +2030,26 @@ public class Money : Element
 
 public class Identifier : Element
 {
-    public string? Use { get; set; }
+    public UseEnum? Use { get; set; }
     public CodeableConcept? Type { get; set; }
     public string? System { get; set; }
     public string? Value { get; set; }
     public Period? Period { get; set; }
     public ResourceReference? Assigner { get; set; }
     
+    public enum UseEnum
+    {
+        [Description("usual")]
+        Usual ,
+        [Description("official")]
+        Official ,
+        [Description("temp")]
+        Temp ,
+        [Description("secondary")]
+        Secondary ,
+        [Description("old")]
+        Old ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
@@ -968,21 +2066,127 @@ public class Timing : BackboneElement
         public Range? BoundsRange { get; set; }
         public long? FrequencyMax { get; set; }
         public Period? BoundsPeriod { get; set; }
-        public string[]? When { get; set; }
+        public WhenEnum[]? When { get; set; }
         public long? Offset { get; set; }
-        public string? PeriodUnit { get; set; }
+        public PeriodUnitEnum? PeriodUnit { get; set; }
         public long? Frequency { get; set; }
         public decimal? DurationMax { get; set; }
         public decimal? Duration { get; set; }
         public Duration? BoundsDuration { get; set; }
-        public string? DurationUnit { get; set; }
-        public string[]? DayOfWeek { get; set; }
+        public DurationUnitEnum? DurationUnit { get; set; }
+        public DayOfWeekEnum[]? DayOfWeek { get; set; }
         public long? Count { get; set; }
         public decimal? PeriodMax { get; set; }
         public decimal? Period { get; set; }
         public long? CountMax { get; set; }
         public string[]? TimeOfDay { get; set; }
         
+        public enum WhenEnum
+        {
+            [Description("MORN")]
+            MORN ,
+            [Description("MORN.early")]
+            MORNDotearly ,
+            [Description("MORN.late")]
+            MORNDotlate ,
+            [Description("NOON")]
+            NOON ,
+            [Description("AFT")]
+            AFT ,
+            [Description("AFT.early")]
+            AFTDotearly ,
+            [Description("AFT.late")]
+            AFTDotlate ,
+            [Description("EVE")]
+            EVE ,
+            [Description("EVE.early")]
+            EVEDotearly ,
+            [Description("EVE.late")]
+            EVEDotlate ,
+            [Description("NIGHT")]
+            NIGHT ,
+            [Description("PHS")]
+            PHS ,
+            [Description("HS")]
+            HS ,
+            [Description("WAKE")]
+            WAKE ,
+            [Description("C")]
+            C ,
+            [Description("CM")]
+            CM ,
+            [Description("CD")]
+            CD ,
+            [Description("CV")]
+            CV ,
+            [Description("AC")]
+            AC ,
+            [Description("ACM")]
+            ACM ,
+            [Description("ACD")]
+            ACD ,
+            [Description("ACV")]
+            ACV ,
+            [Description("PC")]
+            PC ,
+            [Description("PCM")]
+            PCM ,
+            [Description("PCD")]
+            PCD ,
+            [Description("PCV")]
+            PCV ,
+        }
+        public enum PeriodUnitEnum
+        {
+            [Description("s")]
+            S ,
+            [Description("min")]
+            Min ,
+            [Description("h")]
+            H ,
+            [Description("d")]
+            D ,
+            [Description("wk")]
+            Wk ,
+            [Description("mo")]
+            Mo ,
+            [Description("a")]
+            A ,
+        }
+        public enum DurationUnitEnum
+        {
+            [Description("s")]
+            S ,
+            [Description("min")]
+            Min ,
+            [Description("h")]
+            H ,
+            [Description("d")]
+            D ,
+            [Description("wk")]
+            Wk ,
+            [Description("mo")]
+            Mo ,
+            [Description("a")]
+            A ,
+        }
+        public enum DayOfWeekEnum
+        {
+            [Description("mon")]
+            Mon ,
+            [Description("tue")]
+            Tue ,
+            [Description("wed")]
+            Wed ,
+            [Description("thu")]
+            Thu ,
+            [Description("fri")]
+            Fri ,
+            [Description("sat")]
+            Sat ,
+            [Description("sun")]
+            Sun ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

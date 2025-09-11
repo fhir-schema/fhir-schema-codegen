@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Account : DomainResource
@@ -12,7 +14,7 @@ public class Account : DomainResource
     public AccountCoverage[]? Coverage { get; set; }
     public CodeableConcept? Type { get; set; }
     public AccountGuarantor[]? Guarantor { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? PartOf { get; set; }
     public ResourceReference[]? Subject { get; set; }
@@ -40,6 +42,19 @@ public class Account : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("inactive")]
+        Inactive ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("on-hold")]
+        OnDashHold ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

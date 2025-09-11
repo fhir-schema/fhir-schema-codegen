@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ObservationDefinition : DomainResource
@@ -14,7 +16,7 @@ public class ObservationDefinition : DomainResource
     public ResourceReference? AbnormalCodedValueSet { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public string[]? PermittedDataType { get; set; }
+    public PermittedDataTypeEnum[]? PermittedDataType { get; set; }
     public bool? MultipleResultsAllowed { get; set; }
     public ResourceReference? NormalCodedValueSet { get; set; }
     public string? PreferredReportName { get; set; }
@@ -22,15 +24,35 @@ public class ObservationDefinition : DomainResource
     
     public class ObservationDefinitionQualifiedInterval : BackboneElement
     {
-        public string? Category { get; set; }
+        public CategoryEnum? Category { get; set; }
         public Range? Range { get; set; }
         public CodeableConcept? Context { get; set; }
         public CodeableConcept[]? AppliesTo { get; set; }
-        public string? Gender { get; set; }
+        public GenderEnum? Gender { get; set; }
         public Range? Age { get; set; }
         public Range? GestationalAge { get; set; }
         public string? Condition { get; set; }
         
+        public enum CategoryEnum
+        {
+            [Description("reference")]
+            Reference ,
+            [Description("critical")]
+            Critical ,
+            [Description("absolute")]
+            Absolute ,
+        }
+        public enum GenderEnum
+        {
+            [Description("male")]
+            Male ,
+            [Description("female")]
+            Female ,
+            [Description("other")]
+            Other ,
+            [Description("unknown")]
+            Unknown ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -49,6 +71,31 @@ public class ObservationDefinition : DomainResource
     }
     
     
+    public enum PermittedDataTypeEnum
+    {
+        [Description("Quantity")]
+        Quantity ,
+        [Description("CodeableConcept")]
+        CodeableConcept ,
+        [Description("string")]
+        String ,
+        [Description("boolean")]
+        Boolean ,
+        [Description("integer")]
+        Integer ,
+        [Description("Range")]
+        Range ,
+        [Description("Ratio")]
+        Ratio ,
+        [Description("SampledData")]
+        SampledData ,
+        [Description("time")]
+        Time ,
+        [Description("dateTime")]
+        DateTime ,
+        [Description("Period")]
+        Period ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

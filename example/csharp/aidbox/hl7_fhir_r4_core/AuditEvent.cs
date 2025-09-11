@@ -2,18 +2,20 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class AuditEvent : DomainResource
 {
     public string? OutcomeDesc { get; set; }
     public required Coding Type { get; set; }
-    public string? Outcome { get; set; }
+    public OutcomeEnum? Outcome { get; set; }
     public required AuditEventSource Source { get; set; }
     public required string Recorded { get; set; }
     public required AuditEventAgent[] Agent { get; set; }
     public CodeableConcept[]? PurposeOfEvent { get; set; }
-    public string? Action { get; set; }
+    public ActionEnum? Action { get; set; }
     public Period? Period { get; set; }
     public AuditEventEntity[]? Entity { get; set; }
     public Coding[]? Subtype { get; set; }
@@ -40,8 +42,21 @@ public class AuditEvent : DomainResource
     public class AuditEventAgentNetwork : BackboneElement
     {
         public string? Address { get; set; }
-        public string? Type { get; set; }
+        public TypeEnum? Type { get; set; }
         
+        public enum TypeEnum
+        {
+            [Description("1")]
+            _1 ,
+            [Description("2")]
+            _2 ,
+            [Description("3")]
+            _3 ,
+            [Description("4")]
+            _4 ,
+            [Description("5")]
+            _5 ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -87,6 +102,30 @@ public class AuditEvent : DomainResource
     }
     
     
+    public enum OutcomeEnum
+    {
+        [Description("0")]
+        _0 ,
+        [Description("4")]
+        _4 ,
+        [Description("8")]
+        _8 ,
+        [Description("12")]
+        _12 ,
+    }
+    public enum ActionEnum
+    {
+        [Description("C")]
+        C ,
+        [Description("R")]
+        R ,
+        [Description("U")]
+        U ,
+        [Description("D")]
+        D ,
+        [Description("E")]
+        E ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

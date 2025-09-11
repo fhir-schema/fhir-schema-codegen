@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class MeasureReport : DomainResource
@@ -9,10 +11,10 @@ public class MeasureReport : DomainResource
     public ResourceReference[]? EvaluatedResource { get; set; }
     public string? Date { get; set; }
     public MeasureReportGroup[]? Group { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public required string Measure { get; set; }
     public ResourceReference? Reporter { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public required Period Period { get; set; }
     public CodeableConcept? ImprovementNotation { get; set; }
@@ -85,6 +87,26 @@ public class MeasureReport : DomainResource
     }
     
     
+    public enum TypeEnum
+    {
+        [Description("individual")]
+        Individual ,
+        [Description("subject-list")]
+        SubjectDashList ,
+        [Description("summary")]
+        Summary ,
+        [Description("data-collection")]
+        DataDashCollection ,
+    }
+    public enum StatusEnum
+    {
+        [Description("complete")]
+        Complete ,
+        [Description("pending")]
+        Pending ,
+        [Description("error")]
+        Error ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -2,19 +2,21 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class AllergyIntolerance : DomainResource
 {
     public required ResourceReference Patient { get; set; }
-    public string[]? Category { get; set; }
-    public string? Criticality { get; set; }
+    public CategoryEnum[]? Category { get; set; }
+    public CriticalityEnum? Criticality { get; set; }
     public CodeableConcept? ClinicalStatus { get; set; }
     public Range? OnsetRange { get; set; }
     public Age? OnsetAge { get; set; }
     public ResourceReference? Encounter { get; set; }
     public Period? OnsetPeriod { get; set; }
-    public string? Type { get; set; }
+    public TypeEnum? Type { get; set; }
     public ResourceReference? Asserter { get; set; }
     public Annotation[]? Note { get; set; }
     public string? RecordedDate { get; set; }
@@ -33,16 +35,52 @@ public class AllergyIntolerance : DomainResource
         public required CodeableConcept[] Manifestation { get; set; }
         public string? Description { get; set; }
         public string? Onset { get; set; }
-        public string? Severity { get; set; }
+        public SeverityEnum? Severity { get; set; }
         public CodeableConcept? ExposureRoute { get; set; }
         public Annotation[]? Note { get; set; }
         
+        public enum SeverityEnum
+        {
+            [Description("mild")]
+            Mild ,
+            [Description("moderate")]
+            Moderate ,
+            [Description("severe")]
+            Severe ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum CategoryEnum
+    {
+        [Description("food")]
+        Food ,
+        [Description("medication")]
+        Medication ,
+        [Description("environment")]
+        Environment ,
+        [Description("biologic")]
+        Biologic ,
+    }
+    public enum CriticalityEnum
+    {
+        [Description("low")]
+        Low ,
+        [Description("high")]
+        High ,
+        [Description("unable-to-assess")]
+        UnableDashToDashAssess ,
+    }
+    public enum TypeEnum
+    {
+        [Description("allergy")]
+        Allergy ,
+        [Description("intolerance")]
+        Intolerance ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

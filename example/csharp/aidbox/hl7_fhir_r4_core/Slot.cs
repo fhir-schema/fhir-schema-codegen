@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Slot : DomainResource
@@ -12,12 +14,25 @@ public class Slot : DomainResource
     public required string Start { get; set; }
     public CodeableConcept[]? ServiceType { get; set; }
     public CodeableConcept? AppointmentType { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Comment { get; set; }
     public Identifier[]? Identifier { get; set; }
     public required string End { get; set; }
     public bool? Overbooked { get; set; }
     
+    public enum StatusEnum
+    {
+        [Description("busy")]
+        Busy ,
+        [Description("free")]
+        Free ,
+        [Description("busy-unavailable")]
+        BusyDashUnavailable ,
+        [Description("busy-tentative")]
+        BusyDashTentative ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

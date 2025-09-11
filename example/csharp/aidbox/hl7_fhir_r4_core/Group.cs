@@ -2,12 +2,14 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Group : DomainResource
 {
     public string? Name { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public GroupMember[]? Member { get; set; }
     public GroupCharacteristic[]? Characteristic { get; set; }
     public bool? Active { get; set; }
@@ -45,6 +47,21 @@ public class Group : DomainResource
     }
     
     
+    public enum TypeEnum
+    {
+        [Description("person")]
+        Person ,
+        [Description("animal")]
+        Animal ,
+        [Description("practitioner")]
+        Practitioner ,
+        [Description("device")]
+        Device ,
+        [Description("medication")]
+        Medication ,
+        [Description("substance")]
+        Substance ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

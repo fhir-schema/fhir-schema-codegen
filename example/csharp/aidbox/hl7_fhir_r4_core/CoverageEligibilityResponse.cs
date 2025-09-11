@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class CoverageEligibilityResponse : DomainResource
@@ -11,12 +13,12 @@ public class CoverageEligibilityResponse : DomainResource
     public CoverageEligibilityResponseInsurance[]? Insurance { get; set; }
     public required ResourceReference Request { get; set; }
     public string? PreAuthRef { get; set; }
-    public required string[] Purpose { get; set; }
+    public required PurposeEnum[] Purpose { get; set; }
     public required string Created { get; set; }
-    public required string Outcome { get; set; }
+    public required OutcomeEnum Outcome { get; set; }
     public string? Disposition { get; set; }
     public required ResourceReference Insurer { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? ServicedDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CoverageEligibilityResponseError[]? Error { get; set; }
@@ -82,6 +84,39 @@ public class CoverageEligibilityResponse : DomainResource
     }
     
     
+    public enum PurposeEnum
+    {
+        [Description("auth-requirements")]
+        AuthDashRequirements ,
+        [Description("benefits")]
+        Benefits ,
+        [Description("discovery")]
+        Discovery ,
+        [Description("validation")]
+        Validation ,
+    }
+    public enum OutcomeEnum
+    {
+        [Description("queued")]
+        Queued ,
+        [Description("complete")]
+        Complete ,
+        [Description("error")]
+        Error ,
+        [Description("partial")]
+        Partial ,
+    }
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("draft")]
+        Draft ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class SpecimenDefinition : DomainResource
@@ -17,13 +19,20 @@ public class SpecimenDefinition : DomainResource
     {
         public bool? IsDerived { get; set; }
         public CodeableConcept? Type { get; set; }
-        public required string Preference { get; set; }
+        public required PreferenceEnum Preference { get; set; }
         public SpecimenDefinitionTypeTestedContainer? Container { get; set; }
         public string? Requirement { get; set; }
         public Duration? RetentionTime { get; set; }
         public CodeableConcept[]? RejectionCriterion { get; set; }
         public SpecimenDefinitionTypeTestedHandling[]? Handling { get; set; }
         
+        public enum PreferenceEnum
+        {
+            [Description("preferred")]
+            Preferred ,
+            [Description("alternate")]
+            Alternate ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

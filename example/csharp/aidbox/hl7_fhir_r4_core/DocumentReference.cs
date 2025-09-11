@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class DocumentReference : DomainResource
@@ -9,13 +11,13 @@ public class DocumentReference : DomainResource
     public string? Description { get; set; }
     public CodeableConcept[]? Category { get; set; }
     public string? Date { get; set; }
-    public string? DocStatus { get; set; }
+    public DocStatusEnum? DocStatus { get; set; }
     public required DocumentReferenceContent[] Content { get; set; }
     public CodeableConcept? Type { get; set; }
     public ResourceReference[]? Author { get; set; }
     public Identifier? MasterIdentifier { get; set; }
     public ResourceReference? Custodian { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public DocumentReferenceRelatesTo[]? RelatesTo { get; set; }
     public DocumentReferenceContext? Context { get; set; }
@@ -50,15 +52,46 @@ public class DocumentReference : DomainResource
     
     public class DocumentReferenceRelatesTo : BackboneElement
     {
-        public required string Code { get; set; }
+        public required CodeEnum Code { get; set; }
         public required ResourceReference Target { get; set; }
         
+        public enum CodeEnum
+        {
+            [Description("replaces")]
+            Replaces ,
+            [Description("transforms")]
+            Transforms ,
+            [Description("signs")]
+            Signs ,
+            [Description("appends")]
+            Appends ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum DocStatusEnum
+    {
+        [Description("preliminary")]
+        Preliminary ,
+        [Description("final")]
+        Final ,
+        [Description("amended")]
+        Amended ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
+    public enum StatusEnum
+    {
+        [Description("current")]
+        Current ,
+        [Description("superseded")]
+        Superseded ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

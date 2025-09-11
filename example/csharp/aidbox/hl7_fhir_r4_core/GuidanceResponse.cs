@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class GuidanceResponse : DomainResource
@@ -14,7 +16,7 @@ public class GuidanceResponse : DomainResource
     public ResourceReference[]? EvaluationMessage { get; set; }
     public Identifier? RequestIdentifier { get; set; }
     public Annotation[]? Note { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ResourceReference? Result { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? ModuleCodeableConcept { get; set; }
@@ -24,6 +26,21 @@ public class GuidanceResponse : DomainResource
     public ResourceReference? Performer { get; set; }
     public ResourceReference[]? ReasonReference { get; set; }
     
+    public enum StatusEnum
+    {
+        [Description("success")]
+        Success ,
+        [Description("data-requested")]
+        DataDashRequested ,
+        [Description("data-required")]
+        DataDashRequired ,
+        [Description("in-progress")]
+        InDashProgress ,
+        [Description("failure")]
+        Failure ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

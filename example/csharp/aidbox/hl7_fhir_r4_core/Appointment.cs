@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class Appointment : DomainResource
@@ -21,7 +23,7 @@ public class Appointment : DomainResource
     public ResourceReference[]? SupportingInformation { get; set; }
     public long? Priority { get; set; }
     public CodeableConcept? AppointmentType { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Comment { get; set; }
     public long? MinutesDuration { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -33,16 +35,59 @@ public class Appointment : DomainResource
     {
         public CodeableConcept[]? Type { get; set; }
         public ResourceReference? Actor { get; set; }
-        public string? Required { get; set; }
-        public required string Status { get; set; }
+        public RequiredEnum? Required { get; set; }
+        public required StatusEnum Status { get; set; }
         public Period? Period { get; set; }
         
+        public enum RequiredEnum
+        {
+            [Description("required")]
+            Required ,
+            [Description("optional")]
+            Optional ,
+            [Description("information-only")]
+            InformationDashOnly ,
+        }
+        public enum StatusEnum
+        {
+            [Description("accepted")]
+            Accepted ,
+            [Description("declined")]
+            Declined ,
+            [Description("tentative")]
+            Tentative ,
+            [Description("needs-action")]
+            NeedsDashAction ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("proposed")]
+        Proposed ,
+        [Description("pending")]
+        Pending ,
+        [Description("booked")]
+        Booked ,
+        [Description("arrived")]
+        Arrived ,
+        [Description("fulfilled")]
+        Fulfilled ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("noshow")]
+        Noshow ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("checked-in")]
+        CheckedDashIn ,
+        [Description("waitlist")]
+        Waitlist ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

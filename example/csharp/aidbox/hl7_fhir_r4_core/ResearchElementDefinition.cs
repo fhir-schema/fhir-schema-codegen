@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ResearchElementDefinition : DomainResource
@@ -11,14 +13,14 @@ public class ResearchElementDefinition : DomainResource
     public ContactDetail[]? Endorser { get; set; }
     public string? Publisher { get; set; }
     public string? ApprovalDate { get; set; }
-    public string? VariableType { get; set; }
+    public VariableTypeEnum? VariableType { get; set; }
     public CodeableConcept[]? Jurisdiction { get; set; }
     public string? Purpose { get; set; }
     public CodeableConcept? SubjectCodeableConcept { get; set; }
     public string? Name { get; set; }
     public UsageContext[]? UseContext { get; set; }
     public string? Copyright { get; set; }
-    public required string Type { get; set; }
+    public required TypeEnum Type { get; set; }
     public bool? Experimental { get; set; }
     public CodeableConcept[]? Topic { get; set; }
     public string? Title { get; set; }
@@ -26,7 +28,7 @@ public class ResearchElementDefinition : DomainResource
     public ContactDetail[]? Author { get; set; }
     public required ResearchElementDefinitionCharacteristic[] Characteristic { get; set; }
     public string? Usage { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string[]? Comment { get; set; }
     public string? Url { get; set; }
@@ -50,9 +52,9 @@ public class ResearchElementDefinition : DomainResource
         public Duration? StudyEffectiveDuration { get; set; }
         public DataRequirement? DefinitionDataRequirement { get; set; }
         public string? DefinitionCanonical { get; set; }
-        public string? StudyEffectiveGroupMeasure { get; set; }
+        public StudyEffectiveGroupMeasureEnum? StudyEffectiveGroupMeasure { get; set; }
         public Timing? ParticipantEffectiveTiming { get; set; }
-        public string? ParticipantEffectiveGroupMeasure { get; set; }
+        public ParticipantEffectiveGroupMeasureEnum? ParticipantEffectiveGroupMeasure { get; set; }
         public string? StudyEffectiveDescription { get; set; }
         public string? ParticipantEffectiveDateTime { get; set; }
         public Duration? StudyEffectiveTimeFromStart { get; set; }
@@ -65,12 +67,71 @@ public class ResearchElementDefinition : DomainResource
         public Duration? ParticipantEffectiveTimeFromStart { get; set; }
         public string? StudyEffectiveDateTime { get; set; }
         
+        public enum StudyEffectiveGroupMeasureEnum
+        {
+            [Description("mean")]
+            Mean ,
+            [Description("median")]
+            Median ,
+            [Description("mean-of-mean")]
+            MeanDashOfDashMean ,
+            [Description("mean-of-median")]
+            MeanDashOfDashMedian ,
+            [Description("median-of-mean")]
+            MedianDashOfDashMean ,
+            [Description("median-of-median")]
+            MedianDashOfDashMedian ,
+        }
+        public enum ParticipantEffectiveGroupMeasureEnum
+        {
+            [Description("mean")]
+            Mean ,
+            [Description("median")]
+            Median ,
+            [Description("mean-of-mean")]
+            MeanDashOfDashMean ,
+            [Description("mean-of-median")]
+            MeanDashOfDashMedian ,
+            [Description("median-of-mean")]
+            MedianDashOfDashMean ,
+            [Description("median-of-median")]
+            MedianDashOfDashMedian ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum VariableTypeEnum
+    {
+        [Description("dichotomous")]
+        Dichotomous ,
+        [Description("continuous")]
+        Continuous ,
+        [Description("descriptive")]
+        Descriptive ,
+    }
+    public enum TypeEnum
+    {
+        [Description("population")]
+        Population ,
+        [Description("exposure")]
+        Exposure ,
+        [Description("outcome")]
+        Outcome ,
+    }
+    public enum StatusEnum
+    {
+        [Description("draft")]
+        Draft ,
+        [Description("active")]
+        Active ,
+        [Description("retired")]
+        Retired ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class BiologicallyDerivedProduct : DomainResource
@@ -9,12 +11,12 @@ public class BiologicallyDerivedProduct : DomainResource
     public ResourceReference[]? Request { get; set; }
     public BiologicallyDerivedProductProcessing[]? Processing { get; set; }
     public ResourceReference[]? Parent { get; set; }
-    public string? Status { get; set; }
+    public StatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public CodeableConcept? ProductCode { get; set; }
     public BiologicallyDerivedProductStorage[]? Storage { get; set; }
     public int? Quantity { get; set; }
-    public string? ProductCategory { get; set; }
+    public ProductCategoryEnum? ProductCategory { get; set; }
     public BiologicallyDerivedProductManipulation? Manipulation { get; set; }
     public BiologicallyDerivedProductCollection? Collection { get; set; }
     
@@ -58,15 +60,44 @@ public class BiologicallyDerivedProduct : DomainResource
     {
         public string? Description { get; set; }
         public decimal? Temperature { get; set; }
-        public string? Scale { get; set; }
+        public ScaleEnum? Scale { get; set; }
         public Period? Duration { get; set; }
         
+        public enum ScaleEnum
+        {
+            [Description("farenheit")]
+            Farenheit ,
+            [Description("celsius")]
+            Celsius ,
+            [Description("kelvin")]
+            Kelvin ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("available")]
+        Available ,
+        [Description("unavailable")]
+        Unavailable ,
+    }
+    public enum ProductCategoryEnum
+    {
+        [Description("organ")]
+        Organ ,
+        [Description("tissue")]
+        Tissue ,
+        [Description("fluid")]
+        Fluid ,
+        [Description("cells")]
+        Cells ,
+        [Description("biologicalAgent")]
+        BiologicalAgent ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

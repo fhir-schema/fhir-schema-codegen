@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ExplanationOfBenefit : DomainResource
@@ -17,13 +19,13 @@ public class ExplanationOfBenefit : DomainResource
     public ExplanationOfBenefitItemAdjudication[]? Adjudication { get; set; }
     public ResourceReference? Enterer { get; set; }
     public ExplanationOfBenefitSupportingInfo[]? SupportingInfo { get; set; }
-    public required string Use { get; set; }
+    public required UseEnum Use { get; set; }
     public ExplanationOfBenefitPayment? Payment { get; set; }
     public ExplanationOfBenefitItem[]? Item { get; set; }
     public required CodeableConcept Type { get; set; }
     public required string Created { get; set; }
     public ExplanationOfBenefitProcedure[]? Procedure { get; set; }
-    public required string Outcome { get; set; }
+    public required OutcomeEnum Outcome { get; set; }
     public ExplanationOfBenefitRelated[]? Related { get; set; }
     public string? Disposition { get; set; }
     public ResourceReference? Referral { get; set; }
@@ -33,7 +35,7 @@ public class ExplanationOfBenefit : DomainResource
     public CodeableConcept? FundsReserve { get; set; }
     public CodeableConcept? Priority { get; set; }
     public ExplanationOfBenefitAccident? Accident { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public ExplanationOfBenefitPayee? Payee { get; set; }
     public ResourceReference? Prescription { get; set; }
     public Period? BillablePeriod { get; set; }
@@ -322,10 +324,19 @@ public class ExplanationOfBenefit : DomainResource
     public class ExplanationOfBenefitProcessNote : BackboneElement
     {
         public long? Number { get; set; }
-        public string? Type { get; set; }
+        public TypeEnum? Type { get; set; }
         public string? Text { get; set; }
         public CodeableConcept? Language { get; set; }
         
+        public enum TypeEnum
+        {
+            [Description("display")]
+            Display ,
+            [Description("print")]
+            Print ,
+            [Description("printoper")]
+            Printoper ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         
@@ -372,6 +383,37 @@ public class ExplanationOfBenefit : DomainResource
     }
     
     
+    public enum UseEnum
+    {
+        [Description("claim")]
+        Claim ,
+        [Description("preauthorization")]
+        Preauthorization ,
+        [Description("predetermination")]
+        Predetermination ,
+    }
+    public enum OutcomeEnum
+    {
+        [Description("queued")]
+        Queued ,
+        [Description("complete")]
+        Complete ,
+        [Description("error")]
+        Error ,
+        [Description("partial")]
+        Partial ,
+    }
+    public enum StatusEnum
+    {
+        [Description("active")]
+        Active ,
+        [Description("cancelled")]
+        Cancelled ,
+        [Description("draft")]
+        Draft ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     

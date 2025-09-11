@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class PractitionerRole : DomainResource
@@ -23,11 +25,28 @@ public class PractitionerRole : DomainResource
     
     public class PractitionerRoleAvailableTime : BackboneElement
     {
-        public string[]? DaysOfWeek { get; set; }
+        public DaysOfWeekEnum[]? DaysOfWeek { get; set; }
         public bool? AllDay { get; set; }
         public string? AvailableStartTime { get; set; }
         public string? AvailableEndTime { get; set; }
         
+        public enum DaysOfWeekEnum
+        {
+            [Description("mon")]
+            Mon ,
+            [Description("tue")]
+            Tue ,
+            [Description("wed")]
+            Wed ,
+            [Description("thu")]
+            Thu ,
+            [Description("fri")]
+            Fri ,
+            [Description("sat")]
+            Sat ,
+            [Description("sun")]
+            Sun ,
+        }
         public override string ToString() => 
             JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
         

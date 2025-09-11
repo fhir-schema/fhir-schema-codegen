@@ -2,6 +2,8 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
+using System.ComponentModel;
+
 namespace Aidbox.FHIR.R4.Core;
 
 public class ChargeItem : DomainResource
@@ -21,7 +23,7 @@ public class ChargeItem : DomainResource
     public CodeableConcept[]? Reason { get; set; }
     public ResourceReference[]? SupportingInformation { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required string Status { get; set; }
+    public required StatusEnum Status { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Context { get; set; }
@@ -47,6 +49,23 @@ public class ChargeItem : DomainResource
     }
     
     
+    public enum StatusEnum
+    {
+        [Description("planned")]
+        Planned ,
+        [Description("billable")]
+        Billable ,
+        [Description("not-billable")]
+        NotDashBillable ,
+        [Description("aborted")]
+        Aborted ,
+        [Description("billed")]
+        Billed ,
+        [Description("entered-in-error")]
+        EnteredDashInDashError ,
+        [Description("unknown")]
+        Unknown ,
+    }
     public override string ToString() => 
         JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
     
