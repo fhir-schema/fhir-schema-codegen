@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class DetectedIssue : DomainResource
@@ -14,8 +12,8 @@ public class DetectedIssue : DomainResource
     public ResourceReference? Author { get; set; }
     public string? IdentifiedDateTime { get; set; }
     public string? Reference { get; set; }
-    public required StatusEnum Status { get; set; }
-    public SeverityEnum? Severity { get; set; }
+    public required DetectedIssueStatusEnum Status { get; set; }
+    public DetectedIssueSeverityEnum? Severity { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? Implicated { get; set; }
@@ -28,7 +26,7 @@ public class DetectedIssue : DomainResource
         public ResourceReference[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -39,41 +37,13 @@ public class DetectedIssue : DomainResource
         public ResourceReference? Author { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("registered")]
-        Registered ,
-        [Description("preliminary")]
-        Preliminary ,
-        [Description("final")]
-        Final ,
-        [Description("amended")]
-        Amended ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-        [Description("corrected")]
-        Corrected ,
-    }
-    public enum SeverityEnum
-    {
-        [Description("high")]
-        High ,
-        [Description("moderate")]
-        Moderate ,
-        [Description("low")]
-        Low ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

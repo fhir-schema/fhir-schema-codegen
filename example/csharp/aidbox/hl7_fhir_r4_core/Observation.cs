@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Observation : DomainResource
@@ -26,7 +24,7 @@ public class Observation : DomainResource
     public Annotation[]? Note { get; set; }
     public SampledData? ValueSampledData { get; set; }
     public string? EffectiveDateTime { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ObservationStatusEnum Status { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Timing? EffectiveTiming { get; set; }
@@ -65,7 +63,7 @@ public class Observation : DomainResource
         public CodeableConcept? DataAbsentReason { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -79,32 +77,13 @@ public class Observation : DomainResource
         public string? Text { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("registered")]
-        Registered ,
-        [Description("preliminary")]
-        Preliminary ,
-        [Description("final")]
-        Final ,
-        [Description("amended")]
-        Amended ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-        [Description("corrected")]
-        Corrected ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

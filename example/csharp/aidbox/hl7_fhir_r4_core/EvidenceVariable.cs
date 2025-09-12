@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class EvidenceVariable : DomainResource
@@ -17,13 +15,13 @@ public class EvidenceVariable : DomainResource
     public string? Name { get; set; }
     public UsageContext[]? UseContext { get; set; }
     public string? Copyright { get; set; }
-    public TypeEnum? Type { get; set; }
+    public EvidenceVariableTypeEnum? Type { get; set; }
     public CodeableConcept[]? Topic { get; set; }
     public string? Title { get; set; }
     public Annotation[]? Note { get; set; }
     public ContactDetail[]? Author { get; set; }
     public required EvidenceVariableCharacteristic[] Characteristic { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -54,49 +52,14 @@ public class EvidenceVariable : DomainResource
         public CodeableConcept? DefinitionCodeableConcept { get; set; }
         public UsageContext[]? UsageContext { get; set; }
         
-        public enum GroupMeasureEnum
-        {
-            [Description("mean")]
-            Mean ,
-            [Description("median")]
-            Median ,
-            [Description("mean-of-mean")]
-            MeanDashOfDashMean ,
-            [Description("mean-of-median")]
-            MeanDashOfDashMedian ,
-            [Description("median-of-mean")]
-            MedianDashOfDashMean ,
-            [Description("median-of-median")]
-            MedianDashOfDashMedian ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum TypeEnum
-    {
-        [Description("dichotomous")]
-        Dichotomous ,
-        [Description("continuous")]
-        Continuous ,
-        [Description("descriptive")]
-        Descriptive ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

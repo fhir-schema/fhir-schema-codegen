@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class PaymentNotice : DomainResource
@@ -15,25 +13,14 @@ public class PaymentNotice : DomainResource
     public required ResourceReference Recipient { get; set; }
     public required string Created { get; set; }
     public CodeableConcept? PaymentStatus { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PaymentNoticeStatusEnum Status { get; set; }
     public ResourceReference? Payee { get; set; }
     public string? PaymentDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Provider { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

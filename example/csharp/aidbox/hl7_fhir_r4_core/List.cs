@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class List : DomainResource
@@ -11,12 +9,12 @@ public class List : DomainResource
     public string? Date { get; set; }
     public ResourceReference? Encounter { get; set; }
     public CodeableConcept? OrderedBy { get; set; }
-    public required ModeEnum Mode { get; set; }
+    public required ListModeEnum Mode { get; set; }
     public ResourceReference? Source { get; set; }
     public string? Title { get; set; }
     public Annotation[]? Note { get; set; }
     public CodeableConcept? EmptyReason { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ListStatusEnum Status { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ListEntry[]? Entry { get; set; }
@@ -30,31 +28,13 @@ public class List : DomainResource
         public required ResourceReference Item { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum ModeEnum
-    {
-        [Description("working")]
-        Working ,
-        [Description("snapshot")]
-        Snapshot ,
-        [Description("changes")]
-        Changes ,
-    }
-    public enum StatusEnum
-    {
-        [Description("current")]
-        Current ,
-        [Description("retired")]
-        Retired ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

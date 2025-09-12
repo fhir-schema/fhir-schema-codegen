@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ServiceRequest : DomainResource
@@ -26,15 +24,15 @@ public class ServiceRequest : DomainResource
     public Identifier? Requisition { get; set; }
     public ResourceReference[]? LocationReference { get; set; }
     public ResourceReference? Requester { get; set; }
-    public PriorityEnum? Priority { get; set; }
+    public ServiceRequestPriorityEnum? Priority { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ServiceRequestStatusEnum Status { get; set; }
     public Ratio? QuantityRatio { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
     public bool? DoNotPerform { get; set; }
     public CodeableConcept[]? BodySite { get; set; }
-    public required IntentEnum Intent { get; set; }
+    public required ServiceRequestIntentEnum Intent { get; set; }
     public Range? QuantityRange { get; set; }
     public Quantity? QuantityQuantity { get; set; }
     public ResourceReference[]? Replaces { get; set; }
@@ -47,57 +45,8 @@ public class ServiceRequest : DomainResource
     public ResourceReference[]? Performer { get; set; }
     public ResourceReference[]? ReasonReference { get; set; }
     
-    public enum PriorityEnum
-    {
-        [Description("routine")]
-        Routine ,
-        [Description("urgent")]
-        Urgent ,
-        [Description("asap")]
-        Asap ,
-        [Description("stat")]
-        Stat ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("revoked")]
-        Revoked ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
-    public enum IntentEnum
-    {
-        [Description("proposal")]
-        Proposal ,
-        [Description("plan")]
-        Plan ,
-        [Description("directive")]
-        Directive ,
-        [Description("order")]
-        Order ,
-        [Description("option")]
-        Option ,
-        [Description("original-order")]
-        OriginalDashOrder ,
-        [Description("reflex-order")]
-        ReflexDashOrder ,
-        [Description("filler-order")]
-        FillerDashOrder ,
-        [Description("instance-order")]
-        InstanceDashOrder ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

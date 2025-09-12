@@ -2,14 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class AdverseEvent : DomainResource
 {
     public CodeableConcept[]? Category { get; set; }
-    public required ActualityEnum Actuality { get; set; }
+    public required AdverseEventActualityEnum Actuality { get; set; }
     public string? Date { get; set; }
     public ResourceReference[]? Study { get; set; }
     public ResourceReference? Encounter { get; set; }
@@ -35,7 +33,7 @@ public class AdverseEvent : DomainResource
         public AdverseEventSuspectEntityCausality[]? Causality { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -47,20 +45,13 @@ public class AdverseEvent : DomainResource
         public CodeableConcept? Method { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum ActualityEnum
-    {
-        [Description("actual")]
-        Actual ,
-        [Description("potential")]
-        Potential ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

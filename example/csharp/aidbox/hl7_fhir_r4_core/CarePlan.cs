@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class CarePlan : DomainResource
@@ -22,9 +20,9 @@ public class CarePlan : DomainResource
     public ResourceReference? Author { get; set; }
     public CarePlanActivity[]? Activity { get; set; }
     public ResourceReference[]? Contributor { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required CarePlanStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required IntentEnum Intent { get; set; }
+    public required CarePlanIntentEnum Intent { get; set; }
     public ResourceReference[]? Replaces { get; set; }
     public Period? Period { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
@@ -41,7 +39,7 @@ public class CarePlan : DomainResource
         public CarePlanActivityDetail? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -59,8 +57,8 @@ public class CarePlan : DomainResource
         public Timing? ScheduledTiming { get; set; }
         public Quantity? DailyAmount { get; set; }
         public string? ScheduledString { get; set; }
-        public required StatusEnum Status { get; set; }
-        public KindEnum? Kind { get; set; }
+        public required CarePlanActivityStatusEnum Status { get; set; }
+        public CarePlanActivityKindEnum? Kind { get; set; }
         public CodeableConcept? Code { get; set; }
         public bool? DoNotPerform { get; set; }
         public Quantity? Quantity { get; set; }
@@ -68,82 +66,14 @@ public class CarePlan : DomainResource
         public ResourceReference[]? Performer { get; set; }
         public ResourceReference[]? ReasonReference { get; set; }
         
-        public enum StatusEnum
-        {
-            [Description("not-started")]
-            NotDashStarted ,
-            [Description("scheduled")]
-            Scheduled ,
-            [Description("in-progress")]
-            InDashProgress ,
-            [Description("on-hold")]
-            OnDashHold ,
-            [Description("completed")]
-            Completed ,
-            [Description("cancelled")]
-            Cancelled ,
-            [Description("unknown")]
-            Unknown ,
-            [Description("entered-in-error")]
-            EnteredDashInDashError ,
-            [Description("stopped")]
-            Stopped ,
-        }
-        public enum KindEnum
-        {
-            [Description("Appointment")]
-            Appointment ,
-            [Description("CommunicationRequest")]
-            CommunicationRequest ,
-            [Description("DeviceRequest")]
-            DeviceRequest ,
-            [Description("MedicationRequest")]
-            MedicationRequest ,
-            [Description("NutritionOrder")]
-            NutritionOrder ,
-            [Description("Task")]
-            Task ,
-            [Description("ServiceRequest")]
-            ServiceRequest ,
-            [Description("VisionPrescription")]
-            VisionPrescription ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("revoked")]
-        Revoked ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
-    public enum IntentEnum
-    {
-        [Description("proposal")]
-        Proposal ,
-        [Description("plan")]
-        Plan ,
-        [Description("order")]
-        Order ,
-        [Description("option")]
-        Option ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

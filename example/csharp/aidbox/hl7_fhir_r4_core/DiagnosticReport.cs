@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class DiagnosticReport : DomainResource
@@ -15,7 +13,7 @@ public class DiagnosticReport : DomainResource
     public ResourceReference[]? Specimen { get; set; }
     public string? EffectiveDateTime { get; set; }
     public ResourceReference[]? ResultsInterpreter { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required DiagnosticReportStatusEnum Status { get; set; }
     public ResourceReference[]? Result { get; set; }
     public required CodeableConcept Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -34,36 +32,13 @@ public class DiagnosticReport : DomainResource
         public required ResourceReference Link { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("registered")]
-        Registered ,
-        [Description("partial")]
-        Partial ,
-        [Description("final")]
-        Final ,
-        [Description("amended")]
-        Amended ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-        [Description("preliminary")]
-        Preliminary ,
-        [Description("corrected")]
-        Corrected ,
-        [Description("appended")]
-        Appended ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class InsurancePlan : DomainResource
@@ -13,7 +11,7 @@ public class InsurancePlan : DomainResource
     public InsurancePlanCoverage[]? Coverage { get; set; }
     public CodeableConcept[]? Type { get; set; }
     public string[]? Alias { get; set; }
-    public StatusEnum? Status { get; set; }
+    public PublicationStatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? AdministeredBy { get; set; }
     public ResourceReference? OwnedBy { get; set; }
@@ -31,7 +29,7 @@ public class InsurancePlan : DomainResource
         public Address? Address { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -42,7 +40,7 @@ public class InsurancePlan : DomainResource
         public required InsurancePlanCoverageBenefit[] Benefit { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -53,7 +51,7 @@ public class InsurancePlan : DomainResource
         public InsurancePlanCoverageBenefitLimit[]? Limit { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -63,7 +61,7 @@ public class InsurancePlan : DomainResource
         public CodeableConcept? Code { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -77,7 +75,7 @@ public class InsurancePlan : DomainResource
         public InsurancePlanPlanSpecificCost[]? SpecificCost { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -89,7 +87,7 @@ public class InsurancePlan : DomainResource
         public string? Comment { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -99,7 +97,7 @@ public class InsurancePlan : DomainResource
         public InsurancePlanPlanSpecificCostBenefit[]? Benefit { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -109,7 +107,7 @@ public class InsurancePlan : DomainResource
         public InsurancePlanPlanSpecificCostBenefitCost[]? Cost { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -121,24 +119,13 @@ public class InsurancePlan : DomainResource
         public Quantity? Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

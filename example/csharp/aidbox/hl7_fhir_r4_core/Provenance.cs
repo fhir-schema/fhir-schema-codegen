@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Provenance : DomainResource
@@ -28,37 +26,24 @@ public class Provenance : DomainResource
         public ResourceReference? OnBehalfOf { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ProvenanceEntity : BackboneElement
     {
-        public required RoleEnum Role { get; set; }
+        public required ProvenanceEntityRoleEnum Role { get; set; }
         public required ResourceReference What { get; set; }
         public ProvenanceAgent[]? Agent { get; set; }
         
-        public enum RoleEnum
-        {
-            [Description("derivation")]
-            Derivation ,
-            [Description("revision")]
-            Revision ,
-            [Description("quotation")]
-            Quotation ,
-            [Description("source")]
-            Source ,
-            [Description("removal")]
-            Removal ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

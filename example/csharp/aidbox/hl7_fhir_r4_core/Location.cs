@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Location : DomainResource
@@ -12,10 +10,10 @@ public class Location : DomainResource
     public Address? Address { get; set; }
     public ResourceReference? ManagingOrganization { get; set; }
     public string? Name { get; set; }
-    public ModeEnum? Mode { get; set; }
+    public LocationModeEnum? Mode { get; set; }
     public CodeableConcept[]? Type { get; set; }
     public string[]? Alias { get; set; }
-    public StatusEnum? Status { get; set; }
+    public LocationStatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public LocationHoursOfOperation[]? HoursOfOperation { get; set; }
     public string? AvailabilityExceptions { get; set; }
@@ -33,25 +31,8 @@ public class Location : DomainResource
         public string? OpeningTime { get; set; }
         public string? ClosingTime { get; set; }
         
-        public enum DaysOfWeekEnum
-        {
-            [Description("mon")]
-            Mon ,
-            [Description("tue")]
-            Tue ,
-            [Description("wed")]
-            Wed ,
-            [Description("thu")]
-            Thu ,
-            [Description("fri")]
-            Fri ,
-            [Description("sat")]
-            Sat ,
-            [Description("sun")]
-            Sun ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -62,29 +43,13 @@ public class Location : DomainResource
         public decimal? Altitude { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum ModeEnum
-    {
-        [Description("instance")]
-        Instance ,
-        [Description("kind")]
-        Kind ,
-    }
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("suspended")]
-        Suspended ,
-        [Description("inactive")]
-        Inactive ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

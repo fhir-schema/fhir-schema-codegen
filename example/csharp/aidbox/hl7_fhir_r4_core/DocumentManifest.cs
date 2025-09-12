@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class DocumentManifest : DomainResource
@@ -17,7 +15,7 @@ public class DocumentManifest : DomainResource
     public string? Source { get; set; }
     public ResourceReference[]? Author { get; set; }
     public Identifier? MasterIdentifier { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required DocumentReferenceStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Subject { get; set; }
     
@@ -27,22 +25,13 @@ public class DocumentManifest : DomainResource
         public ResourceReference? Ref { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("current")]
-        Current ,
-        [Description("superseded")]
-        Superseded ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

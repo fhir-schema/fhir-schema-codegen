@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Patient : DomainResource
@@ -23,7 +21,7 @@ public class Patient : DomainResource
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
     public ResourceReference[]? GeneralPractitioner { get; set; }
-    public GenderEnum? Gender { get; set; }
+    public AdministrativeGenderEnum? Gender { get; set; }
     public CodeableConcept? MaritalStatus { get; set; }
     public PatientContact[]? Contact { get; set; }
     
@@ -33,7 +31,7 @@ public class Patient : DomainResource
         public bool? Preferred { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -43,61 +41,28 @@ public class Patient : DomainResource
         public HumanName? Name { get; set; }
         public ContactPoint[]? Telecom { get; set; }
         public Address? Address { get; set; }
-        public GenderEnum? Gender { get; set; }
+        public AdministrativeGenderEnum? Gender { get; set; }
         public ResourceReference? Organization { get; set; }
         public Period? Period { get; set; }
         
-        public enum GenderEnum
-        {
-            [Description("male")]
-            Male ,
-            [Description("female")]
-            Female ,
-            [Description("other")]
-            Other ,
-            [Description("unknown")]
-            Unknown ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class PatientLink : BackboneElement
     {
         public required ResourceReference Other { get; set; }
-        public required TypeEnum Type { get; set; }
+        public required LinkTypeEnum Type { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("replaced-by")]
-            ReplacedDashBy ,
-            [Description("replaces")]
-            Replaces ,
-            [Description("refer")]
-            Refer ,
-            [Description("seealso")]
-            Seealso ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum GenderEnum
-    {
-        [Description("male")]
-        Male ,
-        [Description("female")]
-        Female ,
-        [Description("other")]
-        Other ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

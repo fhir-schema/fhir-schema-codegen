@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class PlanDefinition : DomainResource
@@ -27,7 +25,7 @@ public class PlanDefinition : DomainResource
     public string[]? Library { get; set; }
     public ContactDetail[]? Author { get; set; }
     public string? Usage { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -59,104 +57,37 @@ public class PlanDefinition : DomainResource
         public string? Title { get; set; }
         public RelatedArtifact[]? Documentation { get; set; }
         public string? Prefix { get; set; }
-        public SelectionBehaviorEnum? SelectionBehavior { get; set; }
+        public ActionSelectionBehaviorEnum? SelectionBehavior { get; set; }
         public CodeableConcept[]? Reason { get; set; }
         public string? TimingDateTime { get; set; }
         public Timing? TimingTiming { get; set; }
         public Duration? TimingDuration { get; set; }
-        public PriorityEnum? Priority { get; set; }
-        public RequiredBehaviorEnum? RequiredBehavior { get; set; }
+        public RequestPriorityEnum? Priority { get; set; }
+        public ActionRequiredBehaviorEnum? RequiredBehavior { get; set; }
         public PlanDefinitionActionCondition[]? Condition { get; set; }
-        public GroupingBehaviorEnum? GroupingBehavior { get; set; }
+        public ActionGroupingBehaviorEnum? GroupingBehavior { get; set; }
         public PlanDefinitionActionDynamicValue[]? DynamicValue { get; set; }
         public CodeableConcept[]? Code { get; set; }
         public Age? TimingAge { get; set; }
         public PlanDefinitionAction[]? Action { get; set; }
-        public PrecheckBehaviorEnum? PrecheckBehavior { get; set; }
+        public ActionPrecheckBehaviorEnum? PrecheckBehavior { get; set; }
         public DataRequirement[]? Input { get; set; }
         public TriggerDefinition[]? Trigger { get; set; }
         public ResourceReference? SubjectReference { get; set; }
-        public CardinalityBehaviorEnum? CardinalityBehavior { get; set; }
+        public ActionCardinalityBehaviorEnum? CardinalityBehavior { get; set; }
         
-        public enum SelectionBehaviorEnum
-        {
-            [Description("any")]
-            Any ,
-            [Description("all")]
-            All ,
-            [Description("all-or-none")]
-            AllDashOrDashNone ,
-            [Description("exactly-one")]
-            ExactlyDashOne ,
-            [Description("at-most-one")]
-            AtDashMostDashOne ,
-            [Description("one-or-more")]
-            OneDashOrDashMore ,
-        }
-        public enum PriorityEnum
-        {
-            [Description("routine")]
-            Routine ,
-            [Description("urgent")]
-            Urgent ,
-            [Description("asap")]
-            Asap ,
-            [Description("stat")]
-            Stat ,
-        }
-        public enum RequiredBehaviorEnum
-        {
-            [Description("must")]
-            Must ,
-            [Description("could")]
-            Could ,
-            [Description("must-unless-documented")]
-            MustDashUnlessDashDocumented ,
-        }
-        public enum GroupingBehaviorEnum
-        {
-            [Description("visual-group")]
-            VisualDashGroup ,
-            [Description("logical-group")]
-            LogicalDashGroup ,
-            [Description("sentence-group")]
-            SentenceDashGroup ,
-        }
-        public enum PrecheckBehaviorEnum
-        {
-            [Description("yes")]
-            Yes ,
-            [Description("no")]
-            No ,
-        }
-        public enum CardinalityBehaviorEnum
-        {
-            [Description("single")]
-            Single ,
-            [Description("multiple")]
-            Multiple ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class PlanDefinitionActionCondition : BackboneElement
     {
-        public required KindEnum Kind { get; set; }
+        public required ActionConditionKindEnum Kind { get; set; }
         public ResourceExpression? Expression { get; set; }
         
-        public enum KindEnum
-        {
-            [Description("applicability")]
-            Applicability ,
-            [Description("start")]
-            Start ,
-            [Description("stop")]
-            Stop ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -166,61 +97,29 @@ public class PlanDefinition : DomainResource
         public ResourceExpression? Expression { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class PlanDefinitionActionParticipant : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required ActionParticipantTypeEnum Type { get; set; }
         public CodeableConcept? Role { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("patient")]
-            Patient ,
-            [Description("practitioner")]
-            Practitioner ,
-            [Description("related-person")]
-            RelatedDashPerson ,
-            [Description("device")]
-            Device ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class PlanDefinitionActionRelatedAction : BackboneElement
     {
         public required string ActionId { get; set; }
-        public required RelationshipEnum Relationship { get; set; }
+        public required ActionRelationshipTypeEnum Relationship { get; set; }
         public Duration? OffsetDuration { get; set; }
         public Range? OffsetRange { get; set; }
         
-        public enum RelationshipEnum
-        {
-            [Description("before-start")]
-            BeforeDashStart ,
-            [Description("before")]
-            Before ,
-            [Description("before-end")]
-            BeforeDashEnd ,
-            [Description("concurrent-with-start")]
-            ConcurrentDashWithDashStart ,
-            [Description("concurrent")]
-            Concurrent ,
-            [Description("concurrent-with-end")]
-            ConcurrentDashWithDashEnd ,
-            [Description("after-start")]
-            AfterDashStart ,
-            [Description("after")]
-            After ,
-            [Description("after-end")]
-            AfterDashEnd ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -235,7 +134,7 @@ public class PlanDefinition : DomainResource
         public PlanDefinitionGoalTarget[]? Target { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -248,24 +147,13 @@ public class PlanDefinition : DomainResource
         public Duration? Due { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Consent : DomainResource
@@ -18,7 +16,7 @@ public class Consent : DomainResource
     public ConsentPolicy[]? Policy { get; set; }
     public ResourceReference? SourceReference { get; set; }
     public string? DateTime { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ConsentStateEnum Status { get; set; }
     public CodeableConcept? PolicyRule { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? Performer { get; set; }
@@ -29,7 +27,7 @@ public class Consent : DomainResource
         public string? Uri { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -38,7 +36,7 @@ public class Consent : DomainResource
         public ConsentProvision[]? Provision { get; set; }
         public Coding[]? Purpose { get; set; }
         public Period? DataPeriod { get; set; }
-        public TypeEnum? Type { get; set; }
+        public ConsentProvisionTypeEnum? Type { get; set; }
         public Coding[]? Class { get; set; }
         public CodeableConcept[]? Code { get; set; }
         public CodeableConcept[]? Action { get; set; }
@@ -47,15 +45,8 @@ public class Consent : DomainResource
         public ConsentProvisionActor[]? Actor { get; set; }
         public ConsentProvisionData[]? Data { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("deny")]
-            Deny ,
-            [Description("permit")]
-            Permit ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -65,28 +56,17 @@ public class Consent : DomainResource
         public required ResourceReference Reference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ConsentProvisionData : BackboneElement
     {
-        public required MeaningEnum Meaning { get; set; }
+        public required ConsentDataMeaningEnum Meaning { get; set; }
         public required ResourceReference Reference { get; set; }
         
-        public enum MeaningEnum
-        {
-            [Description("instance")]
-            Instance ,
-            [Description("related")]
-            Related ,
-            [Description("dependents")]
-            Dependents ,
-            [Description("authoredby")]
-            Authoredby ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -97,28 +77,13 @@ public class Consent : DomainResource
         public string? VerificationDate { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("proposed")]
-        Proposed ,
-        [Description("active")]
-        Active ,
-        [Description("rejected")]
-        Rejected ,
-        [Description("inactive")]
-        Inactive ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

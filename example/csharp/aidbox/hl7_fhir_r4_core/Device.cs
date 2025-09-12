@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Device : DomainResource
@@ -21,7 +19,7 @@ public class Device : DomainResource
     public DeviceSpecialization[]? Specialization { get; set; }
     public string? DistinctIdentifier { get; set; }
     public Annotation[]? Note { get; set; }
-    public StatusEnum? Status { get; set; }
+    public FhirdeviceStatusEnum? Status { get; set; }
     public CodeableConcept[]? Safety { get; set; }
     public string? LotNumber { get; set; }
     public string? Url { get; set; }
@@ -38,25 +36,10 @@ public class Device : DomainResource
     public class DeviceDeviceName : BackboneElement
     {
         public required string Name { get; set; }
-        public required TypeEnum Type { get; set; }
+        public required DeviceNameTypeEnum Type { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("udi-label-name")]
-            UdiDashLabelDashName ,
-            [Description("user-friendly-name")]
-            UserDashFriendlyDashName ,
-            [Description("patient-reported-name")]
-            PatientDashReportedDashName ,
-            [Description("manufacturer-name")]
-            ManufacturerDashName ,
-            [Description("model-name")]
-            ModelDashName ,
-            [Description("other")]
-            Other ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -67,7 +50,7 @@ public class Device : DomainResource
         public CodeableConcept[]? ValueCode { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -77,7 +60,7 @@ public class Device : DomainResource
         public string? Version { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -88,25 +71,10 @@ public class Device : DomainResource
         public string? Jurisdiction { get; set; }
         public string? CarrierAIDC { get; set; }
         public string? CarrierHRF { get; set; }
-        public EntryTypeEnum? EntryType { get; set; }
+        public UdientryTypeEnum? EntryType { get; set; }
         
-        public enum EntryTypeEnum
-        {
-            [Description("barcode")]
-            Barcode ,
-            [Description("rfid")]
-            Rfid ,
-            [Description("manual")]
-            Manual ,
-            [Description("card")]
-            Card ,
-            [Description("self-reported")]
-            SelfDashReported ,
-            [Description("unknown")]
-            Unknown ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -117,24 +85,13 @@ public class Device : DomainResource
         public required string Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("inactive")]
-        Inactive ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

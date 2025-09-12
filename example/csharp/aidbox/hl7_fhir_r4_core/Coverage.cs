@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Coverage : DomainResource
@@ -17,7 +15,7 @@ public class Coverage : DomainResource
     public bool? Subrogation { get; set; }
     public ResourceReference? Subscriber { get; set; }
     public required ResourceReference[] Payor { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required CoverageStatusEnum Status { get; set; }
     public CoverageClass[]? Class { get; set; }
     public Identifier[]? Identifier { get; set; }
     public long? Order { get; set; }
@@ -33,7 +31,7 @@ public class Coverage : DomainResource
         public string? Name { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -45,7 +43,7 @@ public class Coverage : DomainResource
         public CoverageCostToBeneficiaryException[]? Exception { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -55,24 +53,13 @@ public class Coverage : DomainResource
         public Period? Period { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

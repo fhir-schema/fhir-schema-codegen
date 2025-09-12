@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class SupplyDelivery : DomainResource
@@ -14,7 +12,7 @@ public class SupplyDelivery : DomainResource
     public CodeableConcept? Type { get; set; }
     public Timing? OccurrenceTiming { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public StatusEnum? Status { get; set; }
+    public SupplyDeliveryStatusEnum? Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public ResourceReference[]? PartOf { get; set; }
@@ -29,24 +27,13 @@ public class SupplyDelivery : DomainResource
         public ResourceReference? ItemReference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("in-progress")]
-        InDashProgress ,
-        [Description("completed")]
-        Completed ,
-        [Description("abandoned")]
-        Abandoned ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

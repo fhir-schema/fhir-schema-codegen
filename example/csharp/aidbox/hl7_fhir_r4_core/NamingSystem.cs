@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class NamingSystem : DomainResource
@@ -17,58 +15,27 @@ public class NamingSystem : DomainResource
     public CodeableConcept? Type { get; set; }
     public string? Responsible { get; set; }
     public string? Usage { get; set; }
-    public required StatusEnum Status { get; set; }
-    public required KindEnum Kind { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
+    public required NamingSystemTypeEnum Kind { get; set; }
     public required NamingSystemUniqueId[] UniqueId { get; set; }
     public ContactDetail[]? Contact { get; set; }
     
     public class NamingSystemUniqueId : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required NamingSystemIdentifierTypeEnum Type { get; set; }
         public required string Value { get; set; }
         public bool? Preferred { get; set; }
         public string? Comment { get; set; }
         public Period? Period { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("oid")]
-            Oid ,
-            [Description("uuid")]
-            Uuid ,
-            [Description("uri")]
-            Uri ,
-            [Description("other")]
-            Other ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
-    public enum KindEnum
-    {
-        [Description("codesystem")]
-        Codesystem ,
-        [Description("identifier")]
-        Identifier ,
-        [Description("root")]
-        Root ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

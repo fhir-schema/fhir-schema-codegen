@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Person : DomainResource
@@ -17,43 +15,21 @@ public class Person : DomainResource
     public bool? Active { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ContactPoint[]? Telecom { get; set; }
-    public GenderEnum? Gender { get; set; }
+    public AdministrativeGenderEnum? Gender { get; set; }
     
     public class PersonLink : BackboneElement
     {
         public required ResourceReference Target { get; set; }
-        public AssuranceEnum? Assurance { get; set; }
+        public IdentityAssuranceLevelEnum? Assurance { get; set; }
         
-        public enum AssuranceEnum
-        {
-            [Description("level1")]
-            Level1 ,
-            [Description("level2")]
-            Level2 ,
-            [Description("level3")]
-            Level3 ,
-            [Description("level4")]
-            Level4 ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum GenderEnum
-    {
-        [Description("male")]
-        Male ,
-        [Description("female")]
-        Female ,
-        [Description("other")]
-        Other ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

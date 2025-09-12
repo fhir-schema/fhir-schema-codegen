@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ValueSet : DomainResource
@@ -20,7 +18,7 @@ public class ValueSet : DomainResource
     public bool? Experimental { get; set; }
     public ValueSetExpansion? Expansion { get; set; }
     public string? Title { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public bool? Immutable { get; set; }
@@ -35,7 +33,7 @@ public class ValueSet : DomainResource
         public ValueSetComposeInclude[]? Exclude { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -48,7 +46,7 @@ public class ValueSet : DomainResource
         public string[]? ValueSet { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -59,7 +57,7 @@ public class ValueSet : DomainResource
         public ValueSetComposeIncludeConceptDesignation[]? Designation { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -70,39 +68,18 @@ public class ValueSet : DomainResource
         public required string Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ValueSetComposeIncludeFilter : BackboneElement
     {
         public required string Property { get; set; }
-        public required OpEnum Op { get; set; }
+        public required FilterOperatorEnum Op { get; set; }
         public required string Value { get; set; }
         
-        public enum OpEnum
-        {
-            [Description("=")]
-            Equal ,
-            [Description("is-a")]
-            IsDashA ,
-            [Description("descendent-of")]
-            DescendentDashOf ,
-            [Description("is-not-a")]
-            IsDashNotDashA ,
-            [Description("regex")]
-            Regex ,
-            [Description("in")]
-            In ,
-            [Description("not-in")]
-            NotDashIn ,
-            [Description("generalizes")]
-            Generalizes ,
-            [Description("exists")]
-            Exists ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -116,7 +93,7 @@ public class ValueSet : DomainResource
         public ValueSetExpansionContains[]? Contains { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -132,7 +109,7 @@ public class ValueSet : DomainResource
         public ValueSetExpansionContains[]? Contains { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -148,24 +125,13 @@ public class ValueSet : DomainResource
         public int? ValueInteger { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

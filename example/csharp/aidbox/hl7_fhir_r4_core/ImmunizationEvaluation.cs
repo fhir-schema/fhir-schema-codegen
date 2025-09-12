@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ImmunizationEvaluation : DomainResource
@@ -19,20 +17,13 @@ public class ImmunizationEvaluation : DomainResource
     public string? SeriesDosesString { get; set; }
     public CodeableConcept[]? DoseStatusReason { get; set; }
     public required ResourceReference ImmunizationEvent { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ImmunizationEvaluationStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public required CodeableConcept TargetDisease { get; set; }
     public required CodeableConcept DoseStatus { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

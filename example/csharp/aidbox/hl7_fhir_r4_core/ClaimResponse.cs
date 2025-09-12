@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ClaimResponse : DomainResource
@@ -22,13 +20,13 @@ public class ClaimResponse : DomainResource
     public required CodeableConcept Type { get; set; }
     public required string Created { get; set; }
     public Period? PreAuthPeriod { get; set; }
-    public required OutcomeEnum Outcome { get; set; }
+    public required RemittanceOutcomeEnum Outcome { get; set; }
     public string? Disposition { get; set; }
     public ResourceReference[]? CommunicationRequest { get; set; }
     public ClaimResponseTotal[]? Total { get; set; }
     public required ResourceReference Insurer { get; set; }
     public CodeableConcept? FundsReserve { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ClaimResponseStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ClaimResponseError[]? Error { get; set; }
     public Attachment? Form { get; set; }
@@ -61,7 +59,7 @@ public class ClaimResponse : DomainResource
         public ClaimResponseAddItemDetail[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -78,7 +76,7 @@ public class ClaimResponse : DomainResource
         public Money? UnitPrice { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -94,7 +92,7 @@ public class ClaimResponse : DomainResource
         public required ClaimResponseItemAdjudication[] Adjudication { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -106,7 +104,7 @@ public class ClaimResponse : DomainResource
         public required CodeableConcept Code { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -119,7 +117,7 @@ public class ClaimResponse : DomainResource
         public ResourceReference? ClaimResponse { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -131,7 +129,7 @@ public class ClaimResponse : DomainResource
         public ClaimResponseItemDetail[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -143,7 +141,7 @@ public class ClaimResponse : DomainResource
         public decimal? Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -155,7 +153,7 @@ public class ClaimResponse : DomainResource
         public ClaimResponseItemDetailSubDetail[]? SubDetail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -166,7 +164,7 @@ public class ClaimResponse : DomainResource
         public ClaimResponseItemAdjudication[]? Adjudication { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -180,28 +178,19 @@ public class ClaimResponse : DomainResource
         public Identifier? Identifier { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ClaimResponseProcessNote : BackboneElement
     {
         public long? Number { get; set; }
-        public TypeEnum? Type { get; set; }
+        public NoteTypeEnum? Type { get; set; }
         public required string Text { get; set; }
         public CodeableConcept? Language { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("display")]
-            Display ,
-            [Description("print")]
-            Print ,
-            [Description("printoper")]
-            Printoper ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -211,44 +200,13 @@ public class ClaimResponse : DomainResource
         public required Money Amount { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum UseEnum
-    {
-        [Description("claim")]
-        Claim ,
-        [Description("preauthorization")]
-        Preauthorization ,
-        [Description("predetermination")]
-        Predetermination ,
-    }
-    public enum OutcomeEnum
-    {
-        [Description("queued")]
-        Queued ,
-        [Description("complete")]
-        Complete ,
-        [Description("error")]
-        Error ,
-        [Description("partial")]
-        Partial ,
-    }
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

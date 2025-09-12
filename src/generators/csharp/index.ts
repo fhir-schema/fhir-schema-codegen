@@ -35,6 +35,8 @@ const typeMap: Record<string, string> = {
 };
 
 export class CSharpGenerator extends Generator {
+    private enums: Record<string, string[]> = {};
+
     constructor(opts: CSharpScriptGeneratorOptions) {
         super({
             ...opts,
@@ -72,19 +74,8 @@ export class CSharpGenerator extends Generator {
 
     includeHelperMethods() {
         this.line('public override string ToString() => ');
-        this.line('    JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);');
+        this.line('    JsonSerializer.Serialize(this, Config.JsonSerializerOptions);');
         this.line();
-    }
-
-    writeEnum(enums: Record<string, string[]>) {
-        for (const name in enums) {
-            this.curlyBlock(['public', 'enum', name], () =>
-                enums[name].forEach((entry) => {
-                    this.line(`[Description("${entry}")]`);
-                    this.lineSM(formatHelper.formatEnumEntry(entry), ',');
-                }),
-            );
-        }
     }
 
     generateType(schema: TypeSchema | NestedTypeSchema) {
@@ -102,7 +93,6 @@ export class CSharpGenerator extends Generator {
 
         const base = schema.base ? `: ${schema.base.name}` : '';
         this.curlyBlock(['public', 'class', this.uppercaseFirstLetter(name), base], () => {
-            const enums: Record<string, string[]> = {};
             if (schema.fields) {
                 for (const [fieldName, field] of Object.entries(schema.fields)) {
                     if ('choices' in field) continue;
@@ -129,9 +119,9 @@ export class CSharpGenerator extends Generator {
                     }
 
                     if (field.enum) {
-                        const fieldName_ = formatHelper.formatName(fieldName);
-                        t = `${fieldName_}Enum`;
-                        enums[t] = field.enum;
+                        const enumName = formatHelper.formatName(field.binding?.name ?? fieldName);
+                        t = `${enumName}Enum`;
+                        this.enums[t] = field.enum;
                     }
 
                     const fieldType = baseNamespacePrefix + t + arraySpecifier + nullable;
@@ -148,18 +138,37 @@ export class CSharpGenerator extends Generator {
             }
 
             this.line();
-            if (Object.keys(enums).length > 0) this.writeEnum(enums);
             this.includeHelperMethods();
         });
         this.line();
+    }
+
+    writeEnum() {
+        this.dir('hl7_fhir_r4_core', async () => {
+            this.file('Enums.cs', () => {
+                this.generateDisclaimer();
+                this.lineSM('using', 'System.ComponentModel;');
+                this.line();
+                this.lineSM('using Aidbox.FHIR.R4.Core;');
+                this.lineSM('namespace Aidbox;');
+
+                for (const name in this.enums) {
+                    this.curlyBlock(['public', 'enum', name], () =>
+                        this.enums[name].forEach((entry) => {
+                            this.line(`[Description("${entry}")]`);
+                            this.lineSM(formatHelper.formatEnumEntry(entry), ',');
+                        }),
+                    );
+                    this.line();
+                }
+            });
+        });
     }
 
     generate() {
         this.dir('hl7_fhir_r4_core', async () => {
             this.file('base.cs', () => {
                 this.generateDisclaimer();
-
-                this.lineSM('using', 'System.ComponentModel;');
                 this.line();
                 this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
 
@@ -171,18 +180,6 @@ export class CSharpGenerator extends Generator {
             for (const schema of this.loader.resources()) {
                 this.file(`${schema.identifier.name}.cs`, () => {
                     this.generateDisclaimer();
-
-                    // if (schema.dependencies) {
-                    //     if (schema.dependencies.filter((d) => d.kind === 'complex-type').length) {
-                    //         // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
-                    //     }
-                    //
-                    //     if (schema.dependencies.filter((d) => d.kind === 'resource').length) {
-                    //         // this.lineSM('using', 'Aidbox.FHIR.R4.Core;');
-                    //     }
-                    // }
-                    this.lineSM('using', 'System.ComponentModel;');
-                    this.line();
                     this.lineSM('namespace', 'Aidbox.FHIR.R4.Core;');
                     this.line();
 
@@ -209,7 +206,7 @@ export class CSharpGenerator extends Generator {
                 this.lineSM('}');
             });
         });
-
+        this.writeEnum();
         this.copyStaticFiles();
     }
 }

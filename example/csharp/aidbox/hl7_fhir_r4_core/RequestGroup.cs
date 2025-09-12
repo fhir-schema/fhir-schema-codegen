@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class RequestGroup : DomainResource
@@ -15,12 +13,12 @@ public class RequestGroup : DomainResource
     public string? AuthoredOn { get; set; }
     public Annotation[]? Note { get; set; }
     public ResourceReference? Author { get; set; }
-    public PriorityEnum? Priority { get; set; }
-    public required StatusEnum Status { get; set; }
+    public RequestPriorityEnum? Priority { get; set; }
+    public required RequestStatusEnum Status { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required IntentEnum Intent { get; set; }
+    public required RequestIntentEnum Intent { get; set; }
     public RequestGroupAction[]? Action { get; set; }
     public ResourceReference[]? Replaces { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
@@ -39,188 +37,51 @@ public class RequestGroup : DomainResource
         public string? Title { get; set; }
         public RelatedArtifact[]? Documentation { get; set; }
         public string? Prefix { get; set; }
-        public SelectionBehaviorEnum? SelectionBehavior { get; set; }
+        public ActionSelectionBehaviorEnum? SelectionBehavior { get; set; }
         public string? TimingDateTime { get; set; }
         public Timing? TimingTiming { get; set; }
         public Duration? TimingDuration { get; set; }
-        public PriorityEnum? Priority { get; set; }
-        public RequiredBehaviorEnum? RequiredBehavior { get; set; }
+        public RequestPriorityEnum? Priority { get; set; }
+        public ActionRequiredBehaviorEnum? RequiredBehavior { get; set; }
         public RequestGroupActionCondition[]? Condition { get; set; }
         public ResourceReference? Resource { get; set; }
-        public GroupingBehaviorEnum? GroupingBehavior { get; set; }
+        public ActionGroupingBehaviorEnum? GroupingBehavior { get; set; }
         public CodeableConcept[]? Code { get; set; }
         public Age? TimingAge { get; set; }
         public RequestGroupAction[]? Action { get; set; }
-        public PrecheckBehaviorEnum? PrecheckBehavior { get; set; }
-        public CardinalityBehaviorEnum? CardinalityBehavior { get; set; }
+        public ActionPrecheckBehaviorEnum? PrecheckBehavior { get; set; }
+        public ActionCardinalityBehaviorEnum? CardinalityBehavior { get; set; }
         
-        public enum SelectionBehaviorEnum
-        {
-            [Description("any")]
-            Any ,
-            [Description("all")]
-            All ,
-            [Description("all-or-none")]
-            AllDashOrDashNone ,
-            [Description("exactly-one")]
-            ExactlyDashOne ,
-            [Description("at-most-one")]
-            AtDashMostDashOne ,
-            [Description("one-or-more")]
-            OneDashOrDashMore ,
-        }
-        public enum PriorityEnum
-        {
-            [Description("routine")]
-            Routine ,
-            [Description("urgent")]
-            Urgent ,
-            [Description("asap")]
-            Asap ,
-            [Description("stat")]
-            Stat ,
-        }
-        public enum RequiredBehaviorEnum
-        {
-            [Description("must")]
-            Must ,
-            [Description("could")]
-            Could ,
-            [Description("must-unless-documented")]
-            MustDashUnlessDashDocumented ,
-        }
-        public enum GroupingBehaviorEnum
-        {
-            [Description("visual-group")]
-            VisualDashGroup ,
-            [Description("logical-group")]
-            LogicalDashGroup ,
-            [Description("sentence-group")]
-            SentenceDashGroup ,
-        }
-        public enum PrecheckBehaviorEnum
-        {
-            [Description("yes")]
-            Yes ,
-            [Description("no")]
-            No ,
-        }
-        public enum CardinalityBehaviorEnum
-        {
-            [Description("single")]
-            Single ,
-            [Description("multiple")]
-            Multiple ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class RequestGroupActionCondition : BackboneElement
     {
-        public required KindEnum Kind { get; set; }
+        public required ActionConditionKindEnum Kind { get; set; }
         public ResourceExpression? Expression { get; set; }
         
-        public enum KindEnum
-        {
-            [Description("applicability")]
-            Applicability ,
-            [Description("start")]
-            Start ,
-            [Description("stop")]
-            Stop ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class RequestGroupActionRelatedAction : BackboneElement
     {
         public required string ActionId { get; set; }
-        public required RelationshipEnum Relationship { get; set; }
+        public required ActionRelationshipTypeEnum Relationship { get; set; }
         public Duration? OffsetDuration { get; set; }
         public Range? OffsetRange { get; set; }
         
-        public enum RelationshipEnum
-        {
-            [Description("before-start")]
-            BeforeDashStart ,
-            [Description("before")]
-            Before ,
-            [Description("before-end")]
-            BeforeDashEnd ,
-            [Description("concurrent-with-start")]
-            ConcurrentDashWithDashStart ,
-            [Description("concurrent")]
-            Concurrent ,
-            [Description("concurrent-with-end")]
-            ConcurrentDashWithDashEnd ,
-            [Description("after-start")]
-            AfterDashStart ,
-            [Description("after")]
-            After ,
-            [Description("after-end")]
-            AfterDashEnd ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum PriorityEnum
-    {
-        [Description("routine")]
-        Routine ,
-        [Description("urgent")]
-        Urgent ,
-        [Description("asap")]
-        Asap ,
-        [Description("stat")]
-        Stat ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("revoked")]
-        Revoked ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
-    public enum IntentEnum
-    {
-        [Description("proposal")]
-        Proposal ,
-        [Description("plan")]
-        Plan ,
-        [Description("directive")]
-        Directive ,
-        [Description("order")]
-        Order ,
-        [Description("option")]
-        Option ,
-        [Description("original-order")]
-        OriginalDashOrder ,
-        [Description("reflex-order")]
-        ReflexDashOrder ,
-        [Description("filler-order")]
-        FillerDashOrder ,
-        [Description("instance-order")]
-        InstanceDashOrder ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

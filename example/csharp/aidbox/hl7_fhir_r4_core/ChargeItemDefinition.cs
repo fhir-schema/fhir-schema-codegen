@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ChargeItemDefinition : DomainResource
@@ -20,7 +18,7 @@ public class ChargeItemDefinition : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public string[]? DerivedFromUri { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public required string Url { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -39,7 +37,7 @@ public class ChargeItemDefinition : DomainResource
         public string? Expression { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -49,51 +47,25 @@ public class ChargeItemDefinition : DomainResource
         public ChargeItemDefinitionPropertyGroupPriceComponent[]? PriceComponent { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ChargeItemDefinitionPropertyGroupPriceComponent : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required ChargeItemDefinitionPriceComponentTypeEnum Type { get; set; }
         public CodeableConcept? Code { get; set; }
         public decimal? Factor { get; set; }
         public Money? Amount { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("base")]
-            Base ,
-            [Description("surcharge")]
-            Surcharge ,
-            [Description("deduction")]
-            Deduction ,
-            [Description("discount")]
-            Discount ,
-            [Description("tax")]
-            Tax ,
-            [Description("informational")]
-            Informational ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

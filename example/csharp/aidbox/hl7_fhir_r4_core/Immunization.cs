@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Immunization : DomainResource
@@ -23,7 +21,7 @@ public class Immunization : DomainResource
     public CodeableConcept[]? ProgramEligibility { get; set; }
     public Annotation[]? Note { get; set; }
     public bool? PrimarySource { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ImmunizationStatusEnum Status { get; set; }
     public string? LotNumber { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Manufacturer { get; set; }
@@ -46,7 +44,7 @@ public class Immunization : DomainResource
         public string? PresentationDate { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -56,7 +54,7 @@ public class Immunization : DomainResource
         public required ResourceReference Actor { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -71,7 +69,7 @@ public class Immunization : DomainResource
         public CodeableConcept[]? TargetDisease { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -82,22 +80,13 @@ public class Immunization : DomainResource
         public bool? Reported { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("not-done")]
-        NotDashDone ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

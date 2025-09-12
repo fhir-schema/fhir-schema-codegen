@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class MolecularSequence : DomainResource
@@ -13,7 +11,7 @@ public class MolecularSequence : DomainResource
     public MolecularSequenceRepository[]? Repository { get; set; }
     public MolecularSequenceVariant[]? Variant { get; set; }
     public ResourceReference? Specimen { get; set; }
-    public TypeEnum? Type { get; set; }
+    public SequenceTypeEnum? Type { get; set; }
     public ResourceReference[]? Pointer { get; set; }
     public string? ObservedSeq { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -35,7 +33,7 @@ public class MolecularSequence : DomainResource
         public decimal? Precision { get; set; }
         public int? Start { get; set; }
         public decimal? QueryTP { get; set; }
-        public required TypeEnum Type { get; set; }
+        public required QualityTypeEnum Type { get; set; }
         public decimal? Recall { get; set; }
         public MolecularSequenceQualityRoc? Roc { get; set; }
         public Quantity? Score { get; set; }
@@ -43,17 +41,8 @@ public class MolecularSequence : DomainResource
         public CodeableConcept? StandardSequence { get; set; }
         public decimal? GtFP { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("indel")]
-            Indel ,
-            [Description("snp")]
-            Snp ,
-            [Description("unknown")]
-            Unknown ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -68,7 +57,7 @@ public class MolecularSequence : DomainResource
         public decimal[]? FMeasure { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -77,56 +66,29 @@ public class MolecularSequence : DomainResource
         public CodeableConcept? Chromosome { get; set; }
         public CodeableConcept? ReferenceSeqId { get; set; }
         public int? WindowEnd { get; set; }
-        public StrandEnum? Strand { get; set; }
+        public StrandTypeEnum? Strand { get; set; }
         public string? GenomeBuild { get; set; }
-        public OrientationEnum? Orientation { get; set; }
+        public OrientationTypeEnum? Orientation { get; set; }
         public ResourceReference? ReferenceSeqPointer { get; set; }
         public string? ReferenceSeqString { get; set; }
         public int? WindowStart { get; set; }
         
-        public enum StrandEnum
-        {
-            [Description("watson")]
-            Watson ,
-            [Description("crick")]
-            Crick ,
-        }
-        public enum OrientationEnum
-        {
-            [Description("sense")]
-            Sense ,
-            [Description("antisense")]
-            Antisense ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class MolecularSequenceRepository : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required RepositoryTypeEnum Type { get; set; }
         public string? Url { get; set; }
         public string? Name { get; set; }
         public string? DatasetId { get; set; }
         public string? VariantsetId { get; set; }
         public string? ReadsetId { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("directlink")]
-            Directlink ,
-            [Description("openapi")]
-            Openapi ,
-            [Description("login")]
-            Login ,
-            [Description("oauth")]
-            Oauth ,
-            [Description("other")]
-            Other ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -139,7 +101,7 @@ public class MolecularSequence : DomainResource
         public MolecularSequenceStructureVariantInner? Inner { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -149,7 +111,7 @@ public class MolecularSequence : DomainResource
         public int? End { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -159,7 +121,7 @@ public class MolecularSequence : DomainResource
         public int? End { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -173,22 +135,13 @@ public class MolecularSequence : DomainResource
         public ResourceReference? VariantPointer { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum TypeEnum
-    {
-        [Description("aa")]
-        Aa ,
-        [Description("dna")]
-        Dna ,
-        [Description("rna")]
-        Rna ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Specimen : DomainResource
@@ -14,7 +12,7 @@ public class Specimen : DomainResource
     public ResourceReference[]? Parent { get; set; }
     public CodeableConcept? Type { get; set; }
     public Annotation[]? Note { get; set; }
-    public StatusEnum? Status { get; set; }
+    public SpecimenStatusEnum? Status { get; set; }
     public CodeableConcept[]? Condition { get; set; }
     public SpecimenContainer[]? Container { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -35,7 +33,7 @@ public class Specimen : DomainResource
         public Period? CollectedPeriod { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -50,7 +48,7 @@ public class Specimen : DomainResource
         public ResourceReference? AdditiveReference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -63,24 +61,13 @@ public class Specimen : DomainResource
         public Period? TimePeriod { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("available")]
-        Available ,
-        [Description("unavailable")]
-        Unavailable ,
-        [Description("unsatisfactory")]
-        Unsatisfactory ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

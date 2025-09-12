@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ClinicalImpression : DomainResource
@@ -21,7 +19,7 @@ public class ClinicalImpression : DomainResource
     public string? Summary { get; set; }
     public string? EffectiveDateTime { get; set; }
     public CodeableConcept[]? PrognosisCodeableConcept { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ClinicalImpressionStatusEnum Status { get; set; }
     public ResourceReference? Previous { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -37,7 +35,7 @@ public class ClinicalImpression : DomainResource
         public string? Basis { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -47,22 +45,13 @@ public class ClinicalImpression : DomainResource
         public ResourceReference[]? Item { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("in-progress")]
-        InDashProgress ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

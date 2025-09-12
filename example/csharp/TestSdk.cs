@@ -1,3 +1,4 @@
+using Aidbox;
 using Aidbox.Client;
 using Aidbox.FHIR.R4.Core;
 using NUnit.Framework;
@@ -54,7 +55,7 @@ namespace csharp
                         Family = "Patient"
                     }
                 ],
-                Gender = Patient.GenderEnum.Female,
+                Gender = AdministrativeGenderEnum.Female,
                 BirthDate = "1980-01-01"
             };
 
@@ -110,7 +111,7 @@ namespace csharp
                         Family = "Test"
                     }
                 ],
-                Gender = Patient.GenderEnum.Female,
+                Gender = AdministrativeGenderEnum.Female,
                 BirthDate = "1980-01-01"
             };
 
@@ -131,7 +132,7 @@ namespace csharp
                 Assert.That(created.Id, Is.Not.Null);
                 Assert.That(created.Name, Is.Not.Null);
                 Assert.That(created.Name!.First().Family, Is.EqualTo("Test"));
-                Assert.That(created.Gender, Is.EqualTo(Patient.GenderEnum.Female));
+                Assert.That(created.Gender, Is.EqualTo(AdministrativeGenderEnum.Female));
                 Assert.That(created.BirthDate, Is.EqualTo("1980-01-01"));
 
                 if (created.Id != null)
@@ -186,14 +187,14 @@ namespace csharp
             Console.WriteLine($"   Gender: {patientToUpdate.Gender}");
 
             Assert.That(patientToUpdate.Id, Is.EqualTo(_createdPatient.Id));
-            Assert.That(patientToUpdate.Gender, Is.EqualTo(Patient.GenderEnum.Female));
+            Assert.That(patientToUpdate.Gender, Is.EqualTo(AdministrativeGenderEnum.Female));
             Assert.That(patientToUpdate.Name, Is.Not.Null);
             Assert.That(patientToUpdate.Name!.First().Family, Is.EqualTo("Patient"));
 
             Console.WriteLine("\nUpdating patient data...");
             patientToUpdate.Name!.First().Family = "UpdatedFamily";
             patientToUpdate.Name!.First().Given = ["UpdatedGiven"];
-            patientToUpdate.Gender = Patient.GenderEnum.Male;
+            patientToUpdate.Gender = AdministrativeGenderEnum.Male;
             
             var updatedPatient = _client.Update(patientToUpdate).Result.result!;
 
@@ -203,7 +204,7 @@ namespace csharp
             Console.WriteLine($"   Updated Gender: {updatedPatient.Gender}");
 
             Assert.That(updatedPatient.Id, Is.EqualTo(_createdPatient.Id)); 
-            Assert.That(updatedPatient.Gender, Is.EqualTo(Patient.GenderEnum.Male)); 
+            Assert.That(updatedPatient.Gender, Is.EqualTo(AdministrativeGenderEnum.Male)); 
             Assert.That(updatedPatient.Name, Is.Not.Null);
             Assert.That(updatedPatient.Name!.First().Family, Is.EqualTo("UpdatedFamily")); 
             Assert.That(updatedPatient.Name!.First().Given!.First(), Is.EqualTo("UpdatedGiven"));
@@ -216,7 +217,7 @@ namespace csharp
             Console.WriteLine($"   Re-read Name: {reReadPatient.Name?.First().Given?.First()} {reReadPatient.Name?.First().Family}");
             Console.WriteLine($"   Re-read Gender: {reReadPatient.Gender}");
             
-            Assert.That(reReadPatient.Gender, Is.EqualTo(Patient.GenderEnum.Male));
+            Assert.That(reReadPatient.Gender, Is.EqualTo(AdministrativeGenderEnum.Male));
             Assert.That(reReadPatient.Name, Is.Not.Null);
             Assert.That(reReadPatient.Name!.First().Family, Is.EqualTo("UpdatedFamily"));
             Assert.That(reReadPatient.Name!.First().Given!.First(), Is.EqualTo("UpdatedGiven"));
@@ -284,7 +285,7 @@ namespace csharp
                         Family = "Test"
                     }
                 ],
-                Gender = Patient.GenderEnum.Unknown
+                Gender = AdministrativeGenderEnum.Unknown
             };
 
             var strings = deletePatient.Name.First().Given;
@@ -335,7 +336,7 @@ namespace csharp
                         Family = "Serialization"
                     }
                 ],
-                Gender = Patient.GenderEnum.Female,
+                Gender = AdministrativeGenderEnum.Female,
                 BirthDate = "1990-05-15"
             };
 
@@ -352,7 +353,7 @@ namespace csharp
                 Console.WriteLine(json);
 
                 var deserializedPatient =
-                    JsonSerializer.Deserialize<Patient>(json, Aidbox.Config.JsonSerializerOptions)!;
+                    JsonSerializer.Deserialize<Patient>(json, Config.JsonSerializerOptions)!;
 
                 Console.WriteLine("\n Deserialization successful!");
                 Console.WriteLine(
@@ -364,7 +365,7 @@ namespace csharp
                 Assert.That(deserializedPatient.Name, Is.Not.Null);
                 Assert.That(deserializedPatient.Name!.First().Family, Is.EqualTo("Serialization"));
                 Assert.That(deserializedPatient.Name!.First().Given!.First(), Is.EqualTo("JsonTest"));
-                Assert.That(deserializedPatient.Gender, Is.EqualTo(Patient.GenderEnum.Female));
+                Assert.That(deserializedPatient.Gender, Is.EqualTo(AdministrativeGenderEnum.Female));
                 Assert.That(deserializedPatient.BirthDate, Is.EqualTo("1990-05-15"));
 
                 Console.WriteLine("\n JSON format validation:");
@@ -389,7 +390,7 @@ namespace csharp
             var patientType = typeof(Patient);
             Console.WriteLine($"Testing resource mapping for type: {patientType.Name}");
             
-            var hasMapping = Aidbox.Config.ResourceMap.TryGetValue(patientType, out var resourceName);
+            var hasMapping = Config.ResourceMap.TryGetValue(patientType, out var resourceName);
 
             Console.WriteLine(" Resource mapping result:");
             Console.WriteLine($"   Has mapping: {hasMapping}");

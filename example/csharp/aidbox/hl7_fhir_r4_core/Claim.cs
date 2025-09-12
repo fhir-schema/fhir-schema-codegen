@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Claim : DomainResource
@@ -26,7 +24,7 @@ public class Claim : DomainResource
     public CodeableConcept? FundsReserve { get; set; }
     public required CodeableConcept Priority { get; set; }
     public ClaimAccident? Accident { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ClaimStatusEnum Status { get; set; }
     public ClaimPayee? Payee { get; set; }
     public ResourceReference? Prescription { get; set; }
     public Period? BillablePeriod { get; set; }
@@ -44,7 +42,7 @@ public class Claim : DomainResource
         public ResourceReference? LocationReference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -57,7 +55,7 @@ public class Claim : DomainResource
         public CodeableConcept? Qualification { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -71,7 +69,7 @@ public class Claim : DomainResource
         public CodeableConcept? PackageCode { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -86,7 +84,7 @@ public class Claim : DomainResource
         public ResourceReference? ClaimResponse { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -118,7 +116,7 @@ public class Claim : DomainResource
         public ClaimItemDetail[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -138,7 +136,7 @@ public class Claim : DomainResource
         public Money? UnitPrice { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -157,7 +155,7 @@ public class Claim : DomainResource
         public Money? UnitPrice { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -167,7 +165,7 @@ public class Claim : DomainResource
         public ResourceReference? Party { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -181,7 +179,7 @@ public class Claim : DomainResource
         public ResourceReference[]? Udi { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -192,7 +190,7 @@ public class Claim : DomainResource
         public Identifier? Reference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -211,33 +209,13 @@ public class Claim : DomainResource
         public Attachment? ValueAttachment { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum UseEnum
-    {
-        [Description("claim")]
-        Claim ,
-        [Description("preauthorization")]
-        Preauthorization ,
-        [Description("predetermination")]
-        Predetermination ,
-    }
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

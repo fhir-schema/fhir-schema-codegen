@@ -2,100 +2,35 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class DeviceMetric : DomainResource
 {
-    public required CategoryEnum Category { get; set; }
+    public required DeviceMetricCategoryEnum Category { get; set; }
     public Timing? MeasurementPeriod { get; set; }
-    public ColorEnum? Color { get; set; }
+    public DeviceMetricColorEnum? Color { get; set; }
     public ResourceReference? Parent { get; set; }
     public CodeableConcept? Unit { get; set; }
     public required CodeableConcept Type { get; set; }
     public ResourceReference? Source { get; set; }
     public Identifier[]? Identifier { get; set; }
     public DeviceMetricCalibration[]? Calibration { get; set; }
-    public OperationalStatusEnum? OperationalStatus { get; set; }
+    public DeviceMetricOperationalStatusEnum? OperationalStatus { get; set; }
     
     public class DeviceMetricCalibration : BackboneElement
     {
-        public TypeEnum? Type { get; set; }
-        public StateEnum? State { get; set; }
+        public DeviceMetricCalibrationTypeEnum? Type { get; set; }
+        public DeviceMetricCalibrationStateEnum? State { get; set; }
         public string? Time { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("unspecified")]
-            Unspecified ,
-            [Description("offset")]
-            Offset ,
-            [Description("gain")]
-            Gain ,
-            [Description("two-point")]
-            TwoDashPoint ,
-        }
-        public enum StateEnum
-        {
-            [Description("not-calibrated")]
-            NotDashCalibrated ,
-            [Description("calibration-required")]
-            CalibrationDashRequired ,
-            [Description("calibrated")]
-            Calibrated ,
-            [Description("unspecified")]
-            Unspecified ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum CategoryEnum
-    {
-        [Description("measurement")]
-        Measurement ,
-        [Description("setting")]
-        Setting ,
-        [Description("calculation")]
-        Calculation ,
-        [Description("unspecified")]
-        Unspecified ,
-    }
-    public enum ColorEnum
-    {
-        [Description("black")]
-        Black ,
-        [Description("red")]
-        Red ,
-        [Description("green")]
-        Green ,
-        [Description("yellow")]
-        Yellow ,
-        [Description("blue")]
-        Blue ,
-        [Description("magenta")]
-        Magenta ,
-        [Description("cyan")]
-        Cyan ,
-        [Description("white")]
-        White ,
-    }
-    public enum OperationalStatusEnum
-    {
-        [Description("on")]
-        On ,
-        [Description("off")]
-        Off ,
-        [Description("standby")]
-        Standby ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

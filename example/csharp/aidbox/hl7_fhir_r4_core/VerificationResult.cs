@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class VerificationResult : DomainResource
@@ -35,7 +33,7 @@ public class VerificationResult : DomainResource
         public Signature? SourceSignature { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -50,7 +48,7 @@ public class VerificationResult : DomainResource
         public CodeableConcept[]? PushTypeAvailable { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -61,28 +59,13 @@ public class VerificationResult : DomainResource
         public Signature? AttestationSignature { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("attested")]
-        Attested ,
-        [Description("validated")]
-        Validated ,
-        [Description("in-process")]
-        InDashProcess ,
-        [Description("req-revalid")]
-        ReqDashRevalid ,
-        [Description("val-fail")]
-        ValDashFail ,
-        [Description("reval-fail")]
-        RevalDashFail ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class CodeSystem : DomainResource
@@ -14,7 +12,7 @@ public class CodeSystem : DomainResource
     public string? Publisher { get; set; }
     public CodeableConcept[]? Jurisdiction { get; set; }
     public string? Purpose { get; set; }
-    public required ContentEnum Content { get; set; }
+    public required CodeSystemContentModeEnum Content { get; set; }
     public CodeSystemProperty[]? Property { get; set; }
     public string? Name { get; set; }
     public UsageContext[]? UseContext { get; set; }
@@ -24,8 +22,8 @@ public class CodeSystem : DomainResource
     public CodeSystemFilter[]? Filter { get; set; }
     public string? Supplements { get; set; }
     public bool? Compositional { get; set; }
-    public required StatusEnum Status { get; set; }
-    public HierarchyMeaningEnum? HierarchyMeaning { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
+    public CodeSystemHierarchyMeaningEnum? HierarchyMeaning { get; set; }
     public string? ValueSet { get; set; }
     public long? Count { get; set; }
     public string? Url { get; set; }
@@ -45,7 +43,7 @@ public class CodeSystem : DomainResource
         public CodeSystemConcept[]? Concept { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -56,7 +54,7 @@ public class CodeSystem : DomainResource
         public required string Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -72,7 +70,7 @@ public class CodeSystem : DomainResource
         public int? ValueInteger { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -80,32 +78,11 @@ public class CodeSystem : DomainResource
     {
         public required string Code { get; set; }
         public string? Description { get; set; }
-        public required OperatorEnum[] Operator { get; set; }
+        public required FilterOperatorEnum[] Operator { get; set; }
         public required string Value { get; set; }
         
-        public enum OperatorEnum
-        {
-            [Description("=")]
-            Equal ,
-            [Description("is-a")]
-            IsDashA ,
-            [Description("descendent-of")]
-            DescendentDashOf ,
-            [Description("is-not-a")]
-            IsDashNotDashA ,
-            [Description("regex")]
-            Regex ,
-            [Description("in")]
-            In ,
-            [Description("not-in")]
-            NotDashIn ,
-            [Description("generalizes")]
-            Generalizes ,
-            [Description("exists")]
-            Exists ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -114,68 +91,16 @@ public class CodeSystem : DomainResource
         public required string Code { get; set; }
         public string? Uri { get; set; }
         public string? Description { get; set; }
-        public required TypeEnum Type { get; set; }
+        public required PropertyTypeEnum Type { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("code")]
-            Code ,
-            [Description("Coding")]
-            Coding ,
-            [Description("string")]
-            String ,
-            [Description("integer")]
-            Integer ,
-            [Description("boolean")]
-            Boolean ,
-            [Description("dateTime")]
-            DateTime ,
-            [Description("decimal")]
-            Decimal ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum ContentEnum
-    {
-        [Description("not-present")]
-        NotDashPresent ,
-        [Description("example")]
-        Example ,
-        [Description("fragment")]
-        Fragment ,
-        [Description("complete")]
-        Complete ,
-        [Description("supplement")]
-        Supplement ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
-    public enum HierarchyMeaningEnum
-    {
-        [Description("grouped-by")]
-        GroupedDashBy ,
-        [Description("is-a")]
-        IsDashA ,
-        [Description("part-of")]
-        PartDashOf ,
-        [Description("classified-with")]
-        ClassifiedDashWith ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 
