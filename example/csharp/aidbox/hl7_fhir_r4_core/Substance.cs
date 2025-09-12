@@ -2,14 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Substance : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public StatusEnum? Status { get; set; }
+    public FhirsubstanceStatusEnum? Status { get; set; }
     public CodeableConcept[]? Category { get; set; }
     public required CodeableConcept Code { get; set; }
     public string? Description { get; set; }
@@ -23,7 +21,7 @@ public class Substance : DomainResource
         public ResourceReference? SubstanceReference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -34,22 +32,13 @@ public class Substance : DomainResource
         public Quantity? Quantity { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("inactive")]
-        Inactive ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

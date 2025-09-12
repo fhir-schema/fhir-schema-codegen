@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class PaymentReconciliation : DomainResource
@@ -13,10 +11,10 @@ public class PaymentReconciliation : DomainResource
     public required Money PaymentAmount { get; set; }
     public PaymentReconciliationProcessNote[]? ProcessNote { get; set; }
     public required string Created { get; set; }
-    public OutcomeEnum? Outcome { get; set; }
+    public RemittanceOutcomeEnum? Outcome { get; set; }
     public string? Disposition { get; set; }
     public Identifier? PaymentIdentifier { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PaymentReconciliationStatusEnum Status { get; set; }
     public required string PaymentDate { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Period? Period { get; set; }
@@ -38,54 +36,23 @@ public class PaymentReconciliation : DomainResource
         public ResourceReference? Submitter { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class PaymentReconciliationProcessNote : BackboneElement
     {
-        public TypeEnum? Type { get; set; }
+        public NoteTypeEnum? Type { get; set; }
         public string? Text { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("display")]
-            Display ,
-            [Description("print")]
-            Print ,
-            [Description("printoper")]
-            Printoper ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum OutcomeEnum
-    {
-        [Description("queued")]
-        Queued ,
-        [Description("complete")]
-        Complete ,
-        [Description("error")]
-        Error ,
-        [Description("partial")]
-        Partial ,
-    }
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

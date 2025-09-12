@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Goal : DomainResource
@@ -24,7 +22,7 @@ public class Goal : DomainResource
     public GoalTarget[]? Target { get; set; }
     public ResourceReference[]? OutcomeReference { get; set; }
     public required ResourceReference Subject { get; set; }
-    public required LifecycleStatusEnum LifecycleStatus { get; set; }
+    public required GoalLifecycleStatusEnum LifecycleStatus { get; set; }
     
     public class GoalTarget : BackboneElement
     {
@@ -40,34 +38,13 @@ public class Goal : DomainResource
         public Duration? DueDuration { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum LifecycleStatusEnum
-    {
-        [Description("proposed")]
-        Proposed ,
-        [Description("planned")]
-        Planned ,
-        [Description("accepted")]
-        Accepted ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("rejected")]
-        Rejected ,
-        [Description("active")]
-        Active ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("completed")]
-        Completed ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

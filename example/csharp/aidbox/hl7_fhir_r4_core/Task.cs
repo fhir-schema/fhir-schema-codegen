@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Task : DomainResource
@@ -26,12 +24,12 @@ public class Task : DomainResource
     public ResourceReference? For { get; set; }
     public ResourceReference? Requester { get; set; }
     public string? LastModified { get; set; }
-    public PriorityEnum? Priority { get; set; }
-    public required StatusEnum Status { get; set; }
+    public TaskPriorityEnum? Priority { get; set; }
+    public required TaskStatusEnum Status { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public CodeableConcept? Code { get; set; }
     public Identifier[]? Identifier { get; set; }
-    public required IntentEnum Intent { get; set; }
+    public required TaskIntentEnum Intent { get; set; }
     public ResourceReference? Focus { get; set; }
     public TaskInput[]? Input { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
@@ -95,7 +93,7 @@ public class Task : DomainResource
         public string? ValueUrl { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -154,7 +152,7 @@ public class Task : DomainResource
         public string? ValueUrl { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -165,72 +163,13 @@ public class Task : DomainResource
         public ResourceReference[]? Recipient { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum PriorityEnum
-    {
-        [Description("routine")]
-        Routine ,
-        [Description("urgent")]
-        Urgent ,
-        [Description("asap")]
-        Asap ,
-        [Description("stat")]
-        Stat ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("requested")]
-        Requested ,
-        [Description("received")]
-        Received ,
-        [Description("accepted")]
-        Accepted ,
-        [Description("rejected")]
-        Rejected ,
-        [Description("ready")]
-        Ready ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("in-progress")]
-        InDashProgress ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("failed")]
-        Failed ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
-    public enum IntentEnum
-    {
-        [Description("unknown")]
-        Unknown ,
-        [Description("proposal")]
-        Proposal ,
-        [Description("plan")]
-        Plan ,
-        [Description("order")]
-        Order ,
-        [Description("original-order")]
-        OriginalDashOrder ,
-        [Description("reflex-order")]
-        ReflexDashOrder ,
-        [Description("filler-order")]
-        FillerDashOrder ,
-        [Description("instance-order")]
-        InstanceDashOrder ,
-        [Description("option")]
-        Option ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

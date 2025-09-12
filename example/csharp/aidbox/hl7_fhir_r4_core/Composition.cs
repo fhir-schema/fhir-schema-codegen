@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Composition : DomainResource
@@ -18,31 +16,20 @@ public class Composition : DomainResource
     public required ResourceReference[] Author { get; set; }
     public CompositionEvent[]? Event { get; set; }
     public ResourceReference? Custodian { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required CompositionStatusEnum Status { get; set; }
     public Identifier? Identifier { get; set; }
     public CompositionRelatesTo[]? RelatesTo { get; set; }
     public ResourceReference? Subject { get; set; }
-    public ConfidentialityEnum? Confidentiality { get; set; }
+    public DocumentConfidentialityEnum? Confidentiality { get; set; }
     
     public class CompositionAttester : BackboneElement
     {
-        public required ModeEnum Mode { get; set; }
+        public required CompositionAttestationModeEnum Mode { get; set; }
         public string? Time { get; set; }
         public ResourceReference? Party { get; set; }
         
-        public enum ModeEnum
-        {
-            [Description("personal")]
-            Personal ,
-            [Description("professional")]
-            Professional ,
-            [Description("legal")]
-            Legal ,
-            [Description("official")]
-            Official ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -53,29 +40,18 @@ public class Composition : DomainResource
         public ResourceReference[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class CompositionRelatesTo : BackboneElement
     {
-        public required CodeEnum Code { get; set; }
+        public required DocumentRelationshipTypeEnum Code { get; set; }
         public Identifier? TargetIdentifier { get; set; }
         public ResourceReference? TargetReference { get; set; }
         
-        public enum CodeEnum
-        {
-            [Description("replaces")]
-            Replaces ,
-            [Description("transforms")]
-            Transforms ,
-            [Description("signs")]
-            Signs ,
-            [Description("appends")]
-            Appends ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -83,7 +59,7 @@ public class Composition : DomainResource
     {
         public CodeableConcept? OrderedBy { get; set; }
         public CompositionSection[]? Section { get; set; }
-        public ModeEnum? Mode { get; set; }
+        public SectionModeEnum? Mode { get; set; }
         public string? Title { get; set; }
         public CodeableConcept? EmptyReason { get; set; }
         public ResourceReference[]? Author { get; set; }
@@ -92,49 +68,14 @@ public class Composition : DomainResource
         public ResourceReference[]? Entry { get; set; }
         public Narrative? Text { get; set; }
         
-        public enum ModeEnum
-        {
-            [Description("working")]
-            Working ,
-            [Description("snapshot")]
-            Snapshot ,
-            [Description("changes")]
-            Changes ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("preliminary")]
-        Preliminary ,
-        [Description("final")]
-        Final ,
-        [Description("amended")]
-        Amended ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
-    public enum ConfidentialityEnum
-    {
-        [Description("U")]
-        U ,
-        [Description("L")]
-        L ,
-        [Description("M")]
-        M ,
-        [Description("N")]
-        N ,
-        [Description("R")]
-        R ,
-        [Description("V")]
-        V ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

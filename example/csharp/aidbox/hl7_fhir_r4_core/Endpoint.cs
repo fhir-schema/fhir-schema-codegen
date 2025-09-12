@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Endpoint : DomainResource
@@ -15,28 +13,13 @@ public class Endpoint : DomainResource
     public string[]? PayloadMimeType { get; set; }
     public required CodeableConcept[] PayloadType { get; set; }
     public string[]? Header { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required EndpointStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Period? Period { get; set; }
     public ContactPoint[]? Contact { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("suspended")]
-        Suspended ,
-        [Description("error")]
-        Error ,
-        [Description("off")]
-        Off ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("test")]
-        Test ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,14 +2,12 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Flag : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required FlagStatusEnum Status { get; set; }
     public CodeableConcept[]? Category { get; set; }
     public required CodeableConcept Code { get; set; }
     public required ResourceReference Subject { get; set; }
@@ -17,17 +15,8 @@ public class Flag : DomainResource
     public ResourceReference? Encounter { get; set; }
     public ResourceReference? Author { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("inactive")]
-        Inactive ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Linkage : DomainResource
@@ -14,26 +12,17 @@ public class Linkage : DomainResource
     
     public class LinkageItem : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required LinkageTypeEnum Type { get; set; }
         public required ResourceReference Resource { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("source")]
-            Source ,
-            [Description("alternate")]
-            Alternate ,
-            [Description("historical")]
-            Historical ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

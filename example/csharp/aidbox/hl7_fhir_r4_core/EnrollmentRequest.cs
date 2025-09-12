@@ -2,33 +2,20 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class EnrollmentRequest : DomainResource
 {
     public Identifier[]? Identifier { get; set; }
-    public StatusEnum? Status { get; set; }
+    public EnrollmentRequestStatusEnum? Status { get; set; }
     public string? Created { get; set; }
     public ResourceReference? Insurer { get; set; }
     public ResourceReference? Provider { get; set; }
     public ResourceReference? Candidate { get; set; }
     public ResourceReference? Coverage { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

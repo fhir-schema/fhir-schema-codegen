@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ExampleScenario : DomainResource
@@ -19,7 +17,7 @@ public class ExampleScenario : DomainResource
     public string? Copyright { get; set; }
     public bool? Experimental { get; set; }
     public string[]? Workflow { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
     public string? Version { get; set; }
@@ -29,332 +27,26 @@ public class ExampleScenario : DomainResource
     public class ExampleScenarioActor : BackboneElement
     {
         public required string ActorId { get; set; }
-        public required TypeEnum Type { get; set; }
+        public required ExampleScenarioActorTypeEnum Type { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("person")]
-            Person ,
-            [Description("entity")]
-            Entity ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ExampleScenarioInstance : BackboneElement
     {
         public required string ResourceId { get; set; }
-        public required ResourceTypeEnum ResourceType { get; set; }
+        public required FhirresourceTypeEnum ResourceType { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public ExampleScenarioInstanceVersion[]? Version { get; set; }
         public ExampleScenarioInstanceContainedInstance[]? ContainedInstance { get; set; }
         
-        public enum ResourceTypeEnum
-        {
-            [Description("Account")]
-            Account ,
-            [Description("ActivityDefinition")]
-            ActivityDefinition ,
-            [Description("AdverseEvent")]
-            AdverseEvent ,
-            [Description("AllergyIntolerance")]
-            AllergyIntolerance ,
-            [Description("Appointment")]
-            Appointment ,
-            [Description("AppointmentResponse")]
-            AppointmentResponse ,
-            [Description("AuditEvent")]
-            AuditEvent ,
-            [Description("Basic")]
-            Basic ,
-            [Description("Binary")]
-            Binary ,
-            [Description("BiologicallyDerivedProduct")]
-            BiologicallyDerivedProduct ,
-            [Description("BodyStructure")]
-            BodyStructure ,
-            [Description("Bundle")]
-            Bundle ,
-            [Description("CapabilityStatement")]
-            CapabilityStatement ,
-            [Description("CarePlan")]
-            CarePlan ,
-            [Description("CareTeam")]
-            CareTeam ,
-            [Description("CatalogEntry")]
-            CatalogEntry ,
-            [Description("ChargeItem")]
-            ChargeItem ,
-            [Description("ChargeItemDefinition")]
-            ChargeItemDefinition ,
-            [Description("Claim")]
-            Claim ,
-            [Description("ClaimResponse")]
-            ClaimResponse ,
-            [Description("ClinicalImpression")]
-            ClinicalImpression ,
-            [Description("CodeSystem")]
-            CodeSystem ,
-            [Description("Communication")]
-            Communication ,
-            [Description("CommunicationRequest")]
-            CommunicationRequest ,
-            [Description("CompartmentDefinition")]
-            CompartmentDefinition ,
-            [Description("Composition")]
-            Composition ,
-            [Description("ConceptMap")]
-            ConceptMap ,
-            [Description("Condition")]
-            Condition ,
-            [Description("Consent")]
-            Consent ,
-            [Description("Contract")]
-            Contract ,
-            [Description("Coverage")]
-            Coverage ,
-            [Description("CoverageEligibilityRequest")]
-            CoverageEligibilityRequest ,
-            [Description("CoverageEligibilityResponse")]
-            CoverageEligibilityResponse ,
-            [Description("DetectedIssue")]
-            DetectedIssue ,
-            [Description("Device")]
-            Device ,
-            [Description("DeviceDefinition")]
-            DeviceDefinition ,
-            [Description("DeviceMetric")]
-            DeviceMetric ,
-            [Description("DeviceRequest")]
-            DeviceRequest ,
-            [Description("DeviceUseStatement")]
-            DeviceUseStatement ,
-            [Description("DiagnosticReport")]
-            DiagnosticReport ,
-            [Description("DocumentManifest")]
-            DocumentManifest ,
-            [Description("DocumentReference")]
-            DocumentReference ,
-            [Description("DomainResource")]
-            DomainResource ,
-            [Description("EffectEvidenceSynthesis")]
-            EffectEvidenceSynthesis ,
-            [Description("Encounter")]
-            Encounter ,
-            [Description("Endpoint")]
-            Endpoint ,
-            [Description("EnrollmentRequest")]
-            EnrollmentRequest ,
-            [Description("EnrollmentResponse")]
-            EnrollmentResponse ,
-            [Description("EpisodeOfCare")]
-            EpisodeOfCare ,
-            [Description("EventDefinition")]
-            EventDefinition ,
-            [Description("Evidence")]
-            Evidence ,
-            [Description("EvidenceVariable")]
-            EvidenceVariable ,
-            [Description("ExampleScenario")]
-            ExampleScenario ,
-            [Description("ExplanationOfBenefit")]
-            ExplanationOfBenefit ,
-            [Description("FamilyMemberHistory")]
-            FamilyMemberHistory ,
-            [Description("Flag")]
-            Flag ,
-            [Description("Goal")]
-            Goal ,
-            [Description("GraphDefinition")]
-            GraphDefinition ,
-            [Description("Group")]
-            Group ,
-            [Description("GuidanceResponse")]
-            GuidanceResponse ,
-            [Description("HealthcareService")]
-            HealthcareService ,
-            [Description("ImagingStudy")]
-            ImagingStudy ,
-            [Description("Immunization")]
-            Immunization ,
-            [Description("ImmunizationEvaluation")]
-            ImmunizationEvaluation ,
-            [Description("ImmunizationRecommendation")]
-            ImmunizationRecommendation ,
-            [Description("ImplementationGuide")]
-            ImplementationGuide ,
-            [Description("InsurancePlan")]
-            InsurancePlan ,
-            [Description("Invoice")]
-            Invoice ,
-            [Description("Library")]
-            Library ,
-            [Description("Linkage")]
-            Linkage ,
-            [Description("List")]
-            List ,
-            [Description("Location")]
-            Location ,
-            [Description("Measure")]
-            Measure ,
-            [Description("MeasureReport")]
-            MeasureReport ,
-            [Description("Media")]
-            Media ,
-            [Description("Medication")]
-            Medication ,
-            [Description("MedicationAdministration")]
-            MedicationAdministration ,
-            [Description("MedicationDispense")]
-            MedicationDispense ,
-            [Description("MedicationKnowledge")]
-            MedicationKnowledge ,
-            [Description("MedicationRequest")]
-            MedicationRequest ,
-            [Description("MedicationStatement")]
-            MedicationStatement ,
-            [Description("MedicinalProduct")]
-            MedicinalProduct ,
-            [Description("MedicinalProductAuthorization")]
-            MedicinalProductAuthorization ,
-            [Description("MedicinalProductContraindication")]
-            MedicinalProductContraindication ,
-            [Description("MedicinalProductIndication")]
-            MedicinalProductIndication ,
-            [Description("MedicinalProductIngredient")]
-            MedicinalProductIngredient ,
-            [Description("MedicinalProductInteraction")]
-            MedicinalProductInteraction ,
-            [Description("MedicinalProductManufactured")]
-            MedicinalProductManufactured ,
-            [Description("MedicinalProductPackaged")]
-            MedicinalProductPackaged ,
-            [Description("MedicinalProductPharmaceutical")]
-            MedicinalProductPharmaceutical ,
-            [Description("MedicinalProductUndesirableEffect")]
-            MedicinalProductUndesirableEffect ,
-            [Description("MessageDefinition")]
-            MessageDefinition ,
-            [Description("MessageHeader")]
-            MessageHeader ,
-            [Description("MolecularSequence")]
-            MolecularSequence ,
-            [Description("NamingSystem")]
-            NamingSystem ,
-            [Description("NutritionOrder")]
-            NutritionOrder ,
-            [Description("Observation")]
-            Observation ,
-            [Description("ObservationDefinition")]
-            ObservationDefinition ,
-            [Description("OperationDefinition")]
-            OperationDefinition ,
-            [Description("OperationOutcome")]
-            OperationOutcome ,
-            [Description("Organization")]
-            Organization ,
-            [Description("OrganizationAffiliation")]
-            OrganizationAffiliation ,
-            [Description("Parameters")]
-            Parameters ,
-            [Description("Patient")]
-            Patient ,
-            [Description("PaymentNotice")]
-            PaymentNotice ,
-            [Description("PaymentReconciliation")]
-            PaymentReconciliation ,
-            [Description("Person")]
-            Person ,
-            [Description("PlanDefinition")]
-            PlanDefinition ,
-            [Description("Practitioner")]
-            Practitioner ,
-            [Description("PractitionerRole")]
-            PractitionerRole ,
-            [Description("Procedure")]
-            Procedure ,
-            [Description("Provenance")]
-            Provenance ,
-            [Description("Questionnaire")]
-            Questionnaire ,
-            [Description("QuestionnaireResponse")]
-            QuestionnaireResponse ,
-            [Description("RelatedPerson")]
-            RelatedPerson ,
-            [Description("RequestGroup")]
-            RequestGroup ,
-            [Description("ResearchDefinition")]
-            ResearchDefinition ,
-            [Description("ResearchElementDefinition")]
-            ResearchElementDefinition ,
-            [Description("ResearchStudy")]
-            ResearchStudy ,
-            [Description("ResearchSubject")]
-            ResearchSubject ,
-            [Description("Resource")]
-            Resource ,
-            [Description("RiskAssessment")]
-            RiskAssessment ,
-            [Description("RiskEvidenceSynthesis")]
-            RiskEvidenceSynthesis ,
-            [Description("Schedule")]
-            Schedule ,
-            [Description("SearchParameter")]
-            SearchParameter ,
-            [Description("ServiceRequest")]
-            ServiceRequest ,
-            [Description("Slot")]
-            Slot ,
-            [Description("Specimen")]
-            Specimen ,
-            [Description("SpecimenDefinition")]
-            SpecimenDefinition ,
-            [Description("StructureDefinition")]
-            StructureDefinition ,
-            [Description("StructureMap")]
-            StructureMap ,
-            [Description("Subscription")]
-            Subscription ,
-            [Description("Substance")]
-            Substance ,
-            [Description("SubstanceNucleicAcid")]
-            SubstanceNucleicAcid ,
-            [Description("SubstancePolymer")]
-            SubstancePolymer ,
-            [Description("SubstanceProtein")]
-            SubstanceProtein ,
-            [Description("SubstanceReferenceInformation")]
-            SubstanceReferenceInformation ,
-            [Description("SubstanceSourceMaterial")]
-            SubstanceSourceMaterial ,
-            [Description("SubstanceSpecification")]
-            SubstanceSpecification ,
-            [Description("SupplyDelivery")]
-            SupplyDelivery ,
-            [Description("SupplyRequest")]
-            SupplyRequest ,
-            [Description("Task")]
-            Task ,
-            [Description("TerminologyCapabilities")]
-            TerminologyCapabilities ,
-            [Description("TestReport")]
-            TestReport ,
-            [Description("TestScript")]
-            TestScript ,
-            [Description("ValueSet")]
-            ValueSet ,
-            [Description("VerificationResult")]
-            VerificationResult ,
-            [Description("VisionPrescription")]
-            VisionPrescription ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -364,7 +56,7 @@ public class ExampleScenario : DomainResource
         public string? VersionId { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -374,7 +66,7 @@ public class ExampleScenario : DomainResource
         public required string Description { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -387,7 +79,7 @@ public class ExampleScenario : DomainResource
         public ExampleScenarioProcessStep[]? Step { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -399,7 +91,7 @@ public class ExampleScenario : DomainResource
         public ExampleScenarioProcessStepAlternative[]? Alternative { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -410,7 +102,7 @@ public class ExampleScenario : DomainResource
         public ExampleScenarioProcessStep[]? Step { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -428,24 +120,13 @@ public class ExampleScenario : DomainResource
         public string? Receiver { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

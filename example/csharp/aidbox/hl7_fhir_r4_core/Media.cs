@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Media : DomainResource
@@ -19,7 +17,7 @@ public class Media : DomainResource
     public decimal? Duration { get; set; }
     public Annotation[]? Note { get; set; }
     public Period? CreatedPeriod { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required MediaStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Operator { get; set; }
     public CodeableConcept? BodySite { get; set; }
@@ -32,27 +30,8 @@ public class Media : DomainResource
     public CodeableConcept? View { get; set; }
     public long? Height { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("preparation")]
-        Preparation ,
-        [Description("in-progress")]
-        InDashProgress ,
-        [Description("not-done")]
-        NotDashDone ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("stopped")]
-        Stopped ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class CommunicationRequest : DomainResource
@@ -18,9 +16,9 @@ public class CommunicationRequest : DomainResource
     public string? AuthoredOn { get; set; }
     public Annotation[]? Note { get; set; }
     public ResourceReference? Requester { get; set; }
-    public PriorityEnum? Priority { get; set; }
+    public CommunicationPriorityEnum? Priority { get; set; }
     public Period? OccurrencePeriod { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required CommunicationRequestStatusEnum Status { get; set; }
     public Identifier? GroupIdentifier { get; set; }
     public ResourceReference? Sender { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -39,41 +37,13 @@ public class CommunicationRequest : DomainResource
         public ResourceReference? ContentReference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum PriorityEnum
-    {
-        [Description("routine")]
-        Routine ,
-        [Description("urgent")]
-        Urgent ,
-        [Description("asap")]
-        Asap ,
-        [Description("stat")]
-        Stat ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("revoked")]
-        Revoked ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

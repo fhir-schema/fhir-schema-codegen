@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class TestScript : DomainResource
@@ -20,7 +18,7 @@ public class TestScript : DomainResource
     public bool? Experimental { get; set; }
     public string? Title { get; set; }
     public TestScriptSetup? Setup { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public required string Url { get; set; }
     public Identifier? Identifier { get; set; }
     public TestScriptOrigin[]? Origin { get; set; }
@@ -39,7 +37,7 @@ public class TestScript : DomainResource
         public required Coding Profile { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -50,7 +48,7 @@ public class TestScript : DomainResource
         public ResourceReference? Resource { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -60,7 +58,7 @@ public class TestScript : DomainResource
         public required TestScriptMetadataCapability[] Capability { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -75,7 +73,7 @@ public class TestScript : DomainResource
         public required string Capabilities { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -85,7 +83,7 @@ public class TestScript : DomainResource
         public string? Description { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -95,7 +93,7 @@ public class TestScript : DomainResource
         public required Coding Profile { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -104,7 +102,7 @@ public class TestScript : DomainResource
         public required TestScriptSetupAction[] Action { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -114,13 +112,13 @@ public class TestScript : DomainResource
         public TestScriptSetupActionAssert? Assert { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class TestScriptSetupActionAssert : BackboneElement
     {
-        public ResponseEnum? Response { get; set; }
+        public AssertionResponseTypesEnum? Response { get; set; }
         public string? Description { get; set; }
         public string? Path { get; set; }
         public string? HeaderField { get; set; }
@@ -130,529 +128,28 @@ public class TestScript : DomainResource
         public required bool WarningOnly { get; set; }
         public string? CompareToSourceExpression { get; set; }
         public string? Label { get; set; }
-        public ResourceEnum? Resource { get; set; }
+        public FhirdefinedTypeEnum? Resource { get; set; }
         public string? ResponseCode { get; set; }
         public string? MinimumId { get; set; }
-        public OperatorEnum? Operator { get; set; }
+        public AssertionOperatorTypeEnum? Operator { get; set; }
         public string? ContentType { get; set; }
         public string? CompareToSourcePath { get; set; }
         public string? ValidateProfileId { get; set; }
         public string? SourceId { get; set; }
-        public RequestMethodEnum? RequestMethod { get; set; }
+        public TestScriptRequestMethodCodeEnum? RequestMethod { get; set; }
         public string? RequestURL { get; set; }
-        public DirectionEnum? Direction { get; set; }
+        public AssertionDirectionTypeEnum? Direction { get; set; }
         public bool? NavigationLinks { get; set; }
         
-        public enum ResponseEnum
-        {
-            [Description("okay")]
-            Okay ,
-            [Description("created")]
-            Created ,
-            [Description("noContent")]
-            NoContent ,
-            [Description("notModified")]
-            NotModified ,
-            [Description("bad")]
-            Bad ,
-            [Description("forbidden")]
-            Forbidden ,
-            [Description("notFound")]
-            NotFound ,
-            [Description("methodNotAllowed")]
-            MethodNotAllowed ,
-            [Description("conflict")]
-            Conflict ,
-            [Description("gone")]
-            Gone ,
-            [Description("preconditionFailed")]
-            PreconditionFailed ,
-            [Description("unprocessable")]
-            Unprocessable ,
-        }
-        public enum ResourceEnum
-        {
-            [Description("Address")]
-            Address ,
-            [Description("Age")]
-            Age ,
-            [Description("Annotation")]
-            Annotation ,
-            [Description("Attachment")]
-            Attachment ,
-            [Description("BackboneElement")]
-            BackboneElement ,
-            [Description("CodeableConcept")]
-            CodeableConcept ,
-            [Description("Coding")]
-            Coding ,
-            [Description("ContactDetail")]
-            ContactDetail ,
-            [Description("ContactPoint")]
-            ContactPoint ,
-            [Description("Contributor")]
-            Contributor ,
-            [Description("Count")]
-            Count ,
-            [Description("DataRequirement")]
-            DataRequirement ,
-            [Description("Distance")]
-            Distance ,
-            [Description("Dosage")]
-            Dosage ,
-            [Description("Duration")]
-            Duration ,
-            [Description("Element")]
-            Element ,
-            [Description("ElementDefinition")]
-            ElementDefinition ,
-            [Description("Expression")]
-            Expression ,
-            [Description("Extension")]
-            Extension ,
-            [Description("HumanName")]
-            HumanName ,
-            [Description("Identifier")]
-            Identifier ,
-            [Description("MarketingStatus")]
-            MarketingStatus ,
-            [Description("Meta")]
-            Meta ,
-            [Description("Money")]
-            Money ,
-            [Description("MoneyQuantity")]
-            MoneyQuantity ,
-            [Description("Narrative")]
-            Narrative ,
-            [Description("ParameterDefinition")]
-            ParameterDefinition ,
-            [Description("Period")]
-            Period ,
-            [Description("Population")]
-            Population ,
-            [Description("ProdCharacteristic")]
-            ProdCharacteristic ,
-            [Description("ProductShelfLife")]
-            ProductShelfLife ,
-            [Description("Quantity")]
-            Quantity ,
-            [Description("Range")]
-            Range ,
-            [Description("Ratio")]
-            Ratio ,
-            [Description("Reference")]
-            Reference ,
-            [Description("RelatedArtifact")]
-            RelatedArtifact ,
-            [Description("SampledData")]
-            SampledData ,
-            [Description("Signature")]
-            Signature ,
-            [Description("SimpleQuantity")]
-            SimpleQuantity ,
-            [Description("SubstanceAmount")]
-            SubstanceAmount ,
-            [Description("Timing")]
-            Timing ,
-            [Description("TriggerDefinition")]
-            TriggerDefinition ,
-            [Description("UsageContext")]
-            UsageContext ,
-            [Description("base64Binary")]
-            Base64Binary ,
-            [Description("boolean")]
-            Boolean ,
-            [Description("canonical")]
-            Canonical ,
-            [Description("code")]
-            Code ,
-            [Description("date")]
-            Date ,
-            [Description("dateTime")]
-            DateTime ,
-            [Description("decimal")]
-            Decimal ,
-            [Description("id")]
-            Id ,
-            [Description("instant")]
-            Instant ,
-            [Description("integer")]
-            Integer ,
-            [Description("markdown")]
-            Markdown ,
-            [Description("oid")]
-            Oid ,
-            [Description("positiveInt")]
-            PositiveInt ,
-            [Description("string")]
-            String ,
-            [Description("time")]
-            Time ,
-            [Description("unsignedInt")]
-            UnsignedInt ,
-            [Description("uri")]
-            Uri ,
-            [Description("url")]
-            Url ,
-            [Description("uuid")]
-            Uuid ,
-            [Description("xhtml")]
-            Xhtml ,
-            [Description("Account")]
-            Account ,
-            [Description("ActivityDefinition")]
-            ActivityDefinition ,
-            [Description("AdverseEvent")]
-            AdverseEvent ,
-            [Description("AllergyIntolerance")]
-            AllergyIntolerance ,
-            [Description("Appointment")]
-            Appointment ,
-            [Description("AppointmentResponse")]
-            AppointmentResponse ,
-            [Description("AuditEvent")]
-            AuditEvent ,
-            [Description("Basic")]
-            Basic ,
-            [Description("Binary")]
-            Binary ,
-            [Description("BiologicallyDerivedProduct")]
-            BiologicallyDerivedProduct ,
-            [Description("BodyStructure")]
-            BodyStructure ,
-            [Description("Bundle")]
-            Bundle ,
-            [Description("CapabilityStatement")]
-            CapabilityStatement ,
-            [Description("CarePlan")]
-            CarePlan ,
-            [Description("CareTeam")]
-            CareTeam ,
-            [Description("CatalogEntry")]
-            CatalogEntry ,
-            [Description("ChargeItem")]
-            ChargeItem ,
-            [Description("ChargeItemDefinition")]
-            ChargeItemDefinition ,
-            [Description("Claim")]
-            Claim ,
-            [Description("ClaimResponse")]
-            ClaimResponse ,
-            [Description("ClinicalImpression")]
-            ClinicalImpression ,
-            [Description("CodeSystem")]
-            CodeSystem ,
-            [Description("Communication")]
-            Communication ,
-            [Description("CommunicationRequest")]
-            CommunicationRequest ,
-            [Description("CompartmentDefinition")]
-            CompartmentDefinition ,
-            [Description("Composition")]
-            Composition ,
-            [Description("ConceptMap")]
-            ConceptMap ,
-            [Description("Condition")]
-            Condition ,
-            [Description("Consent")]
-            Consent ,
-            [Description("Contract")]
-            Contract ,
-            [Description("Coverage")]
-            Coverage ,
-            [Description("CoverageEligibilityRequest")]
-            CoverageEligibilityRequest ,
-            [Description("CoverageEligibilityResponse")]
-            CoverageEligibilityResponse ,
-            [Description("DetectedIssue")]
-            DetectedIssue ,
-            [Description("Device")]
-            Device ,
-            [Description("DeviceDefinition")]
-            DeviceDefinition ,
-            [Description("DeviceMetric")]
-            DeviceMetric ,
-            [Description("DeviceRequest")]
-            DeviceRequest ,
-            [Description("DeviceUseStatement")]
-            DeviceUseStatement ,
-            [Description("DiagnosticReport")]
-            DiagnosticReport ,
-            [Description("DocumentManifest")]
-            DocumentManifest ,
-            [Description("DocumentReference")]
-            DocumentReference ,
-            [Description("DomainResource")]
-            DomainResource ,
-            [Description("EffectEvidenceSynthesis")]
-            EffectEvidenceSynthesis ,
-            [Description("Encounter")]
-            Encounter ,
-            [Description("Endpoint")]
-            Endpoint ,
-            [Description("EnrollmentRequest")]
-            EnrollmentRequest ,
-            [Description("EnrollmentResponse")]
-            EnrollmentResponse ,
-            [Description("EpisodeOfCare")]
-            EpisodeOfCare ,
-            [Description("EventDefinition")]
-            EventDefinition ,
-            [Description("Evidence")]
-            Evidence ,
-            [Description("EvidenceVariable")]
-            EvidenceVariable ,
-            [Description("ExampleScenario")]
-            ExampleScenario ,
-            [Description("ExplanationOfBenefit")]
-            ExplanationOfBenefit ,
-            [Description("FamilyMemberHistory")]
-            FamilyMemberHistory ,
-            [Description("Flag")]
-            Flag ,
-            [Description("Goal")]
-            Goal ,
-            [Description("GraphDefinition")]
-            GraphDefinition ,
-            [Description("Group")]
-            Group ,
-            [Description("GuidanceResponse")]
-            GuidanceResponse ,
-            [Description("HealthcareService")]
-            HealthcareService ,
-            [Description("ImagingStudy")]
-            ImagingStudy ,
-            [Description("Immunization")]
-            Immunization ,
-            [Description("ImmunizationEvaluation")]
-            ImmunizationEvaluation ,
-            [Description("ImmunizationRecommendation")]
-            ImmunizationRecommendation ,
-            [Description("ImplementationGuide")]
-            ImplementationGuide ,
-            [Description("InsurancePlan")]
-            InsurancePlan ,
-            [Description("Invoice")]
-            Invoice ,
-            [Description("Library")]
-            Library ,
-            [Description("Linkage")]
-            Linkage ,
-            [Description("List")]
-            List ,
-            [Description("Location")]
-            Location ,
-            [Description("Measure")]
-            Measure ,
-            [Description("MeasureReport")]
-            MeasureReport ,
-            [Description("Media")]
-            Media ,
-            [Description("Medication")]
-            Medication ,
-            [Description("MedicationAdministration")]
-            MedicationAdministration ,
-            [Description("MedicationDispense")]
-            MedicationDispense ,
-            [Description("MedicationKnowledge")]
-            MedicationKnowledge ,
-            [Description("MedicationRequest")]
-            MedicationRequest ,
-            [Description("MedicationStatement")]
-            MedicationStatement ,
-            [Description("MedicinalProduct")]
-            MedicinalProduct ,
-            [Description("MedicinalProductAuthorization")]
-            MedicinalProductAuthorization ,
-            [Description("MedicinalProductContraindication")]
-            MedicinalProductContraindication ,
-            [Description("MedicinalProductIndication")]
-            MedicinalProductIndication ,
-            [Description("MedicinalProductIngredient")]
-            MedicinalProductIngredient ,
-            [Description("MedicinalProductInteraction")]
-            MedicinalProductInteraction ,
-            [Description("MedicinalProductManufactured")]
-            MedicinalProductManufactured ,
-            [Description("MedicinalProductPackaged")]
-            MedicinalProductPackaged ,
-            [Description("MedicinalProductPharmaceutical")]
-            MedicinalProductPharmaceutical ,
-            [Description("MedicinalProductUndesirableEffect")]
-            MedicinalProductUndesirableEffect ,
-            [Description("MessageDefinition")]
-            MessageDefinition ,
-            [Description("MessageHeader")]
-            MessageHeader ,
-            [Description("MolecularSequence")]
-            MolecularSequence ,
-            [Description("NamingSystem")]
-            NamingSystem ,
-            [Description("NutritionOrder")]
-            NutritionOrder ,
-            [Description("Observation")]
-            Observation ,
-            [Description("ObservationDefinition")]
-            ObservationDefinition ,
-            [Description("OperationDefinition")]
-            OperationDefinition ,
-            [Description("OperationOutcome")]
-            OperationOutcome ,
-            [Description("Organization")]
-            Organization ,
-            [Description("OrganizationAffiliation")]
-            OrganizationAffiliation ,
-            [Description("Parameters")]
-            Parameters ,
-            [Description("Patient")]
-            Patient ,
-            [Description("PaymentNotice")]
-            PaymentNotice ,
-            [Description("PaymentReconciliation")]
-            PaymentReconciliation ,
-            [Description("Person")]
-            Person ,
-            [Description("PlanDefinition")]
-            PlanDefinition ,
-            [Description("Practitioner")]
-            Practitioner ,
-            [Description("PractitionerRole")]
-            PractitionerRole ,
-            [Description("Procedure")]
-            Procedure ,
-            [Description("Provenance")]
-            Provenance ,
-            [Description("Questionnaire")]
-            Questionnaire ,
-            [Description("QuestionnaireResponse")]
-            QuestionnaireResponse ,
-            [Description("RelatedPerson")]
-            RelatedPerson ,
-            [Description("RequestGroup")]
-            RequestGroup ,
-            [Description("ResearchDefinition")]
-            ResearchDefinition ,
-            [Description("ResearchElementDefinition")]
-            ResearchElementDefinition ,
-            [Description("ResearchStudy")]
-            ResearchStudy ,
-            [Description("ResearchSubject")]
-            ResearchSubject ,
-            [Description("Resource")]
-            Resource ,
-            [Description("RiskAssessment")]
-            RiskAssessment ,
-            [Description("RiskEvidenceSynthesis")]
-            RiskEvidenceSynthesis ,
-            [Description("Schedule")]
-            Schedule ,
-            [Description("SearchParameter")]
-            SearchParameter ,
-            [Description("ServiceRequest")]
-            ServiceRequest ,
-            [Description("Slot")]
-            Slot ,
-            [Description("Specimen")]
-            Specimen ,
-            [Description("SpecimenDefinition")]
-            SpecimenDefinition ,
-            [Description("StructureDefinition")]
-            StructureDefinition ,
-            [Description("StructureMap")]
-            StructureMap ,
-            [Description("Subscription")]
-            Subscription ,
-            [Description("Substance")]
-            Substance ,
-            [Description("SubstanceNucleicAcid")]
-            SubstanceNucleicAcid ,
-            [Description("SubstancePolymer")]
-            SubstancePolymer ,
-            [Description("SubstanceProtein")]
-            SubstanceProtein ,
-            [Description("SubstanceReferenceInformation")]
-            SubstanceReferenceInformation ,
-            [Description("SubstanceSourceMaterial")]
-            SubstanceSourceMaterial ,
-            [Description("SubstanceSpecification")]
-            SubstanceSpecification ,
-            [Description("SupplyDelivery")]
-            SupplyDelivery ,
-            [Description("SupplyRequest")]
-            SupplyRequest ,
-            [Description("Task")]
-            Task ,
-            [Description("TerminologyCapabilities")]
-            TerminologyCapabilities ,
-            [Description("TestReport")]
-            TestReport ,
-            [Description("TestScript")]
-            TestScript ,
-            [Description("ValueSet")]
-            ValueSet ,
-            [Description("VerificationResult")]
-            VerificationResult ,
-            [Description("VisionPrescription")]
-            VisionPrescription ,
-        }
-        public enum OperatorEnum
-        {
-            [Description("equals")]
-            Equals ,
-            [Description("notEquals")]
-            NotEquals ,
-            [Description("in")]
-            In ,
-            [Description("notIn")]
-            NotIn ,
-            [Description("greaterThan")]
-            GreaterThan ,
-            [Description("lessThan")]
-            LessThan ,
-            [Description("empty")]
-            Empty ,
-            [Description("notEmpty")]
-            NotEmpty ,
-            [Description("contains")]
-            Contains ,
-            [Description("notContains")]
-            NotContains ,
-            [Description("eval")]
-            Eval ,
-        }
-        public enum RequestMethodEnum
-        {
-            [Description("delete")]
-            Delete ,
-            [Description("get")]
-            Get ,
-            [Description("options")]
-            Options ,
-            [Description("patch")]
-            Patch ,
-            [Description("post")]
-            Post ,
-            [Description("put")]
-            Put ,
-            [Description("head")]
-            Head ,
-        }
-        public enum DirectionEnum
-        {
-            [Description("response")]
-            Response ,
-            [Description("request")]
-            Request ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class TestScriptSetupActionOperation : BackboneElement
     {
         public string? Description { get; set; }
-        public MethodEnum? Method { get; set; }
+        public TestScriptRequestMethodCodeEnum? Method { get; set; }
         public string? TargetId { get; set; }
         public TestScriptSetupActionOperationRequestHeader[]? RequestHeader { get; set; }
         public string? Params { get; set; }
@@ -660,7 +157,7 @@ public class TestScript : DomainResource
         public string? RequestId { get; set; }
         public required bool EncodeRequestUrl { get; set; }
         public string? Label { get; set; }
-        public ResourceEnum? Resource { get; set; }
+        public FhirdefinedTypeEnum? Resource { get; set; }
         public string? Url { get; set; }
         public int? Origin { get; set; }
         public string? ContentType { get; set; }
@@ -669,450 +166,8 @@ public class TestScript : DomainResource
         public int? Destination { get; set; }
         public string? Accept { get; set; }
         
-        public enum MethodEnum
-        {
-            [Description("delete")]
-            Delete ,
-            [Description("get")]
-            Get ,
-            [Description("options")]
-            Options ,
-            [Description("patch")]
-            Patch ,
-            [Description("post")]
-            Post ,
-            [Description("put")]
-            Put ,
-            [Description("head")]
-            Head ,
-        }
-        public enum ResourceEnum
-        {
-            [Description("Address")]
-            Address ,
-            [Description("Age")]
-            Age ,
-            [Description("Annotation")]
-            Annotation ,
-            [Description("Attachment")]
-            Attachment ,
-            [Description("BackboneElement")]
-            BackboneElement ,
-            [Description("CodeableConcept")]
-            CodeableConcept ,
-            [Description("Coding")]
-            Coding ,
-            [Description("ContactDetail")]
-            ContactDetail ,
-            [Description("ContactPoint")]
-            ContactPoint ,
-            [Description("Contributor")]
-            Contributor ,
-            [Description("Count")]
-            Count ,
-            [Description("DataRequirement")]
-            DataRequirement ,
-            [Description("Distance")]
-            Distance ,
-            [Description("Dosage")]
-            Dosage ,
-            [Description("Duration")]
-            Duration ,
-            [Description("Element")]
-            Element ,
-            [Description("ElementDefinition")]
-            ElementDefinition ,
-            [Description("Expression")]
-            Expression ,
-            [Description("Extension")]
-            Extension ,
-            [Description("HumanName")]
-            HumanName ,
-            [Description("Identifier")]
-            Identifier ,
-            [Description("MarketingStatus")]
-            MarketingStatus ,
-            [Description("Meta")]
-            Meta ,
-            [Description("Money")]
-            Money ,
-            [Description("MoneyQuantity")]
-            MoneyQuantity ,
-            [Description("Narrative")]
-            Narrative ,
-            [Description("ParameterDefinition")]
-            ParameterDefinition ,
-            [Description("Period")]
-            Period ,
-            [Description("Population")]
-            Population ,
-            [Description("ProdCharacteristic")]
-            ProdCharacteristic ,
-            [Description("ProductShelfLife")]
-            ProductShelfLife ,
-            [Description("Quantity")]
-            Quantity ,
-            [Description("Range")]
-            Range ,
-            [Description("Ratio")]
-            Ratio ,
-            [Description("Reference")]
-            Reference ,
-            [Description("RelatedArtifact")]
-            RelatedArtifact ,
-            [Description("SampledData")]
-            SampledData ,
-            [Description("Signature")]
-            Signature ,
-            [Description("SimpleQuantity")]
-            SimpleQuantity ,
-            [Description("SubstanceAmount")]
-            SubstanceAmount ,
-            [Description("Timing")]
-            Timing ,
-            [Description("TriggerDefinition")]
-            TriggerDefinition ,
-            [Description("UsageContext")]
-            UsageContext ,
-            [Description("base64Binary")]
-            Base64Binary ,
-            [Description("boolean")]
-            Boolean ,
-            [Description("canonical")]
-            Canonical ,
-            [Description("code")]
-            Code ,
-            [Description("date")]
-            Date ,
-            [Description("dateTime")]
-            DateTime ,
-            [Description("decimal")]
-            Decimal ,
-            [Description("id")]
-            Id ,
-            [Description("instant")]
-            Instant ,
-            [Description("integer")]
-            Integer ,
-            [Description("markdown")]
-            Markdown ,
-            [Description("oid")]
-            Oid ,
-            [Description("positiveInt")]
-            PositiveInt ,
-            [Description("string")]
-            String ,
-            [Description("time")]
-            Time ,
-            [Description("unsignedInt")]
-            UnsignedInt ,
-            [Description("uri")]
-            Uri ,
-            [Description("url")]
-            Url ,
-            [Description("uuid")]
-            Uuid ,
-            [Description("xhtml")]
-            Xhtml ,
-            [Description("Account")]
-            Account ,
-            [Description("ActivityDefinition")]
-            ActivityDefinition ,
-            [Description("AdverseEvent")]
-            AdverseEvent ,
-            [Description("AllergyIntolerance")]
-            AllergyIntolerance ,
-            [Description("Appointment")]
-            Appointment ,
-            [Description("AppointmentResponse")]
-            AppointmentResponse ,
-            [Description("AuditEvent")]
-            AuditEvent ,
-            [Description("Basic")]
-            Basic ,
-            [Description("Binary")]
-            Binary ,
-            [Description("BiologicallyDerivedProduct")]
-            BiologicallyDerivedProduct ,
-            [Description("BodyStructure")]
-            BodyStructure ,
-            [Description("Bundle")]
-            Bundle ,
-            [Description("CapabilityStatement")]
-            CapabilityStatement ,
-            [Description("CarePlan")]
-            CarePlan ,
-            [Description("CareTeam")]
-            CareTeam ,
-            [Description("CatalogEntry")]
-            CatalogEntry ,
-            [Description("ChargeItem")]
-            ChargeItem ,
-            [Description("ChargeItemDefinition")]
-            ChargeItemDefinition ,
-            [Description("Claim")]
-            Claim ,
-            [Description("ClaimResponse")]
-            ClaimResponse ,
-            [Description("ClinicalImpression")]
-            ClinicalImpression ,
-            [Description("CodeSystem")]
-            CodeSystem ,
-            [Description("Communication")]
-            Communication ,
-            [Description("CommunicationRequest")]
-            CommunicationRequest ,
-            [Description("CompartmentDefinition")]
-            CompartmentDefinition ,
-            [Description("Composition")]
-            Composition ,
-            [Description("ConceptMap")]
-            ConceptMap ,
-            [Description("Condition")]
-            Condition ,
-            [Description("Consent")]
-            Consent ,
-            [Description("Contract")]
-            Contract ,
-            [Description("Coverage")]
-            Coverage ,
-            [Description("CoverageEligibilityRequest")]
-            CoverageEligibilityRequest ,
-            [Description("CoverageEligibilityResponse")]
-            CoverageEligibilityResponse ,
-            [Description("DetectedIssue")]
-            DetectedIssue ,
-            [Description("Device")]
-            Device ,
-            [Description("DeviceDefinition")]
-            DeviceDefinition ,
-            [Description("DeviceMetric")]
-            DeviceMetric ,
-            [Description("DeviceRequest")]
-            DeviceRequest ,
-            [Description("DeviceUseStatement")]
-            DeviceUseStatement ,
-            [Description("DiagnosticReport")]
-            DiagnosticReport ,
-            [Description("DocumentManifest")]
-            DocumentManifest ,
-            [Description("DocumentReference")]
-            DocumentReference ,
-            [Description("DomainResource")]
-            DomainResource ,
-            [Description("EffectEvidenceSynthesis")]
-            EffectEvidenceSynthesis ,
-            [Description("Encounter")]
-            Encounter ,
-            [Description("Endpoint")]
-            Endpoint ,
-            [Description("EnrollmentRequest")]
-            EnrollmentRequest ,
-            [Description("EnrollmentResponse")]
-            EnrollmentResponse ,
-            [Description("EpisodeOfCare")]
-            EpisodeOfCare ,
-            [Description("EventDefinition")]
-            EventDefinition ,
-            [Description("Evidence")]
-            Evidence ,
-            [Description("EvidenceVariable")]
-            EvidenceVariable ,
-            [Description("ExampleScenario")]
-            ExampleScenario ,
-            [Description("ExplanationOfBenefit")]
-            ExplanationOfBenefit ,
-            [Description("FamilyMemberHistory")]
-            FamilyMemberHistory ,
-            [Description("Flag")]
-            Flag ,
-            [Description("Goal")]
-            Goal ,
-            [Description("GraphDefinition")]
-            GraphDefinition ,
-            [Description("Group")]
-            Group ,
-            [Description("GuidanceResponse")]
-            GuidanceResponse ,
-            [Description("HealthcareService")]
-            HealthcareService ,
-            [Description("ImagingStudy")]
-            ImagingStudy ,
-            [Description("Immunization")]
-            Immunization ,
-            [Description("ImmunizationEvaluation")]
-            ImmunizationEvaluation ,
-            [Description("ImmunizationRecommendation")]
-            ImmunizationRecommendation ,
-            [Description("ImplementationGuide")]
-            ImplementationGuide ,
-            [Description("InsurancePlan")]
-            InsurancePlan ,
-            [Description("Invoice")]
-            Invoice ,
-            [Description("Library")]
-            Library ,
-            [Description("Linkage")]
-            Linkage ,
-            [Description("List")]
-            List ,
-            [Description("Location")]
-            Location ,
-            [Description("Measure")]
-            Measure ,
-            [Description("MeasureReport")]
-            MeasureReport ,
-            [Description("Media")]
-            Media ,
-            [Description("Medication")]
-            Medication ,
-            [Description("MedicationAdministration")]
-            MedicationAdministration ,
-            [Description("MedicationDispense")]
-            MedicationDispense ,
-            [Description("MedicationKnowledge")]
-            MedicationKnowledge ,
-            [Description("MedicationRequest")]
-            MedicationRequest ,
-            [Description("MedicationStatement")]
-            MedicationStatement ,
-            [Description("MedicinalProduct")]
-            MedicinalProduct ,
-            [Description("MedicinalProductAuthorization")]
-            MedicinalProductAuthorization ,
-            [Description("MedicinalProductContraindication")]
-            MedicinalProductContraindication ,
-            [Description("MedicinalProductIndication")]
-            MedicinalProductIndication ,
-            [Description("MedicinalProductIngredient")]
-            MedicinalProductIngredient ,
-            [Description("MedicinalProductInteraction")]
-            MedicinalProductInteraction ,
-            [Description("MedicinalProductManufactured")]
-            MedicinalProductManufactured ,
-            [Description("MedicinalProductPackaged")]
-            MedicinalProductPackaged ,
-            [Description("MedicinalProductPharmaceutical")]
-            MedicinalProductPharmaceutical ,
-            [Description("MedicinalProductUndesirableEffect")]
-            MedicinalProductUndesirableEffect ,
-            [Description("MessageDefinition")]
-            MessageDefinition ,
-            [Description("MessageHeader")]
-            MessageHeader ,
-            [Description("MolecularSequence")]
-            MolecularSequence ,
-            [Description("NamingSystem")]
-            NamingSystem ,
-            [Description("NutritionOrder")]
-            NutritionOrder ,
-            [Description("Observation")]
-            Observation ,
-            [Description("ObservationDefinition")]
-            ObservationDefinition ,
-            [Description("OperationDefinition")]
-            OperationDefinition ,
-            [Description("OperationOutcome")]
-            OperationOutcome ,
-            [Description("Organization")]
-            Organization ,
-            [Description("OrganizationAffiliation")]
-            OrganizationAffiliation ,
-            [Description("Parameters")]
-            Parameters ,
-            [Description("Patient")]
-            Patient ,
-            [Description("PaymentNotice")]
-            PaymentNotice ,
-            [Description("PaymentReconciliation")]
-            PaymentReconciliation ,
-            [Description("Person")]
-            Person ,
-            [Description("PlanDefinition")]
-            PlanDefinition ,
-            [Description("Practitioner")]
-            Practitioner ,
-            [Description("PractitionerRole")]
-            PractitionerRole ,
-            [Description("Procedure")]
-            Procedure ,
-            [Description("Provenance")]
-            Provenance ,
-            [Description("Questionnaire")]
-            Questionnaire ,
-            [Description("QuestionnaireResponse")]
-            QuestionnaireResponse ,
-            [Description("RelatedPerson")]
-            RelatedPerson ,
-            [Description("RequestGroup")]
-            RequestGroup ,
-            [Description("ResearchDefinition")]
-            ResearchDefinition ,
-            [Description("ResearchElementDefinition")]
-            ResearchElementDefinition ,
-            [Description("ResearchStudy")]
-            ResearchStudy ,
-            [Description("ResearchSubject")]
-            ResearchSubject ,
-            [Description("Resource")]
-            Resource ,
-            [Description("RiskAssessment")]
-            RiskAssessment ,
-            [Description("RiskEvidenceSynthesis")]
-            RiskEvidenceSynthesis ,
-            [Description("Schedule")]
-            Schedule ,
-            [Description("SearchParameter")]
-            SearchParameter ,
-            [Description("ServiceRequest")]
-            ServiceRequest ,
-            [Description("Slot")]
-            Slot ,
-            [Description("Specimen")]
-            Specimen ,
-            [Description("SpecimenDefinition")]
-            SpecimenDefinition ,
-            [Description("StructureDefinition")]
-            StructureDefinition ,
-            [Description("StructureMap")]
-            StructureMap ,
-            [Description("Subscription")]
-            Subscription ,
-            [Description("Substance")]
-            Substance ,
-            [Description("SubstanceNucleicAcid")]
-            SubstanceNucleicAcid ,
-            [Description("SubstancePolymer")]
-            SubstancePolymer ,
-            [Description("SubstanceProtein")]
-            SubstanceProtein ,
-            [Description("SubstanceReferenceInformation")]
-            SubstanceReferenceInformation ,
-            [Description("SubstanceSourceMaterial")]
-            SubstanceSourceMaterial ,
-            [Description("SubstanceSpecification")]
-            SubstanceSpecification ,
-            [Description("SupplyDelivery")]
-            SupplyDelivery ,
-            [Description("SupplyRequest")]
-            SupplyRequest ,
-            [Description("Task")]
-            Task ,
-            [Description("TerminologyCapabilities")]
-            TerminologyCapabilities ,
-            [Description("TestReport")]
-            TestReport ,
-            [Description("TestScript")]
-            TestScript ,
-            [Description("ValueSet")]
-            ValueSet ,
-            [Description("VerificationResult")]
-            VerificationResult ,
-            [Description("VisionPrescription")]
-            VisionPrescription ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -1122,7 +177,7 @@ public class TestScript : DomainResource
         public required string Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -1131,7 +186,7 @@ public class TestScript : DomainResource
         public required TestScriptTeardownAction[] Action { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -1140,7 +195,7 @@ public class TestScript : DomainResource
         public required TestScriptSetupActionOperation Operation { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -1151,7 +206,7 @@ public class TestScript : DomainResource
         public required TestScriptTestAction[] Action { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -1161,7 +216,7 @@ public class TestScript : DomainResource
         public TestScriptSetupActionAssert? Assert { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -1177,24 +232,13 @@ public class TestScript : DomainResource
         public string? SourceId { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

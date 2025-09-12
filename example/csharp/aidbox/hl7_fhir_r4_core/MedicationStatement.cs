@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class MedicationStatement : DomainResource
@@ -16,7 +14,7 @@ public class MedicationStatement : DomainResource
     public CodeableConcept[]? StatusReason { get; set; }
     public Annotation[]? Note { get; set; }
     public string? EffectiveDateTime { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required MedicationStatementStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference? Context { get; set; }
     public string? DateAsserted { get; set; }
@@ -28,27 +26,8 @@ public class MedicationStatement : DomainResource
     public Period? EffectivePeriod { get; set; }
     public ResourceReference[]? ReasonReference { get; set; }
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("completed")]
-        Completed ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("intended")]
-        Intended ,
-        [Description("stopped")]
-        Stopped ,
-        [Description("on-hold")]
-        OnDashHold ,
-        [Description("unknown")]
-        Unknown ,
-        [Description("not-taken")]
-        NotDashTaken ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ExplanationOfBenefit : DomainResource
@@ -25,7 +23,7 @@ public class ExplanationOfBenefit : DomainResource
     public required CodeableConcept Type { get; set; }
     public required string Created { get; set; }
     public ExplanationOfBenefitProcedure[]? Procedure { get; set; }
-    public required OutcomeEnum Outcome { get; set; }
+    public required RemittanceOutcomeEnum Outcome { get; set; }
     public ExplanationOfBenefitRelated[]? Related { get; set; }
     public string? Disposition { get; set; }
     public ResourceReference? Referral { get; set; }
@@ -35,7 +33,7 @@ public class ExplanationOfBenefit : DomainResource
     public CodeableConcept? FundsReserve { get; set; }
     public CodeableConcept? Priority { get; set; }
     public ExplanationOfBenefitAccident? Accident { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ExplanationOfBenefitStatusEnum Status { get; set; }
     public ExplanationOfBenefitPayee? Payee { get; set; }
     public ResourceReference? Prescription { get; set; }
     public Period? BillablePeriod { get; set; }
@@ -60,7 +58,7 @@ public class ExplanationOfBenefit : DomainResource
         public ResourceReference? LocationReference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -89,7 +87,7 @@ public class ExplanationOfBenefit : DomainResource
         public ExplanationOfBenefitAddItemDetail[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -106,7 +104,7 @@ public class ExplanationOfBenefit : DomainResource
         public Money? UnitPrice { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -122,7 +120,7 @@ public class ExplanationOfBenefit : DomainResource
         public ExplanationOfBenefitItemAdjudication[]? Adjudication { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -138,7 +136,7 @@ public class ExplanationOfBenefit : DomainResource
         public ExplanationOfBenefitBenefitBalanceFinancial[]? Financial { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -152,7 +150,7 @@ public class ExplanationOfBenefit : DomainResource
         public Money? UsedMoney { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -165,7 +163,7 @@ public class ExplanationOfBenefit : DomainResource
         public CodeableConcept? Qualification { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -179,7 +177,7 @@ public class ExplanationOfBenefit : DomainResource
         public CodeableConcept? PackageCode { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -190,7 +188,7 @@ public class ExplanationOfBenefit : DomainResource
         public string[]? PreAuthRef { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -224,7 +222,7 @@ public class ExplanationOfBenefit : DomainResource
         public ExplanationOfBenefitItemDetail[]? Detail { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -236,7 +234,7 @@ public class ExplanationOfBenefit : DomainResource
         public decimal? Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -258,7 +256,7 @@ public class ExplanationOfBenefit : DomainResource
         public Money? UnitPrice { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -279,7 +277,7 @@ public class ExplanationOfBenefit : DomainResource
         public Money? UnitPrice { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -289,7 +287,7 @@ public class ExplanationOfBenefit : DomainResource
         public ResourceReference? Party { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -303,7 +301,7 @@ public class ExplanationOfBenefit : DomainResource
         public Identifier? Identifier { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -317,28 +315,19 @@ public class ExplanationOfBenefit : DomainResource
         public ResourceReference[]? Udi { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ExplanationOfBenefitProcessNote : BackboneElement
     {
         public long? Number { get; set; }
-        public TypeEnum? Type { get; set; }
+        public NoteTypeEnum? Type { get; set; }
         public string? Text { get; set; }
         public CodeableConcept? Language { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("display")]
-            Display ,
-            [Description("print")]
-            Print ,
-            [Description("printoper")]
-            Printoper ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -349,7 +338,7 @@ public class ExplanationOfBenefit : DomainResource
         public Identifier? Reference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -368,7 +357,7 @@ public class ExplanationOfBenefit : DomainResource
         public Attachment? ValueAttachment { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -378,44 +367,13 @@ public class ExplanationOfBenefit : DomainResource
         public required Money Amount { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum UseEnum
-    {
-        [Description("claim")]
-        Claim ,
-        [Description("preauthorization")]
-        Preauthorization ,
-        [Description("predetermination")]
-        Predetermination ,
-    }
-    public enum OutcomeEnum
-    {
-        [Description("queued")]
-        Queued ,
-        [Description("complete")]
-        Complete ,
-        [Description("error")]
-        Error ,
-        [Description("partial")]
-        Partial ,
-    }
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("draft")]
-        Draft ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

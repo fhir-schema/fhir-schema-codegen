@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ImagingStudy : DomainResource
@@ -19,7 +17,7 @@ public class ImagingStudy : DomainResource
     public Coding[]? Modality { get; set; }
     public Annotation[]? Note { get; set; }
     public ResourceReference? Referrer { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required ImagingStudyStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public ResourceReference[]? BasedOn { get; set; }
     public ResourceReference? Location { get; set; }
@@ -45,7 +43,7 @@ public class ImagingStudy : DomainResource
         public ImagingStudySeriesPerformer[]? Performer { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -57,7 +55,7 @@ public class ImagingStudy : DomainResource
         public string? Title { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -67,26 +65,13 @@ public class ImagingStudy : DomainResource
         public required ResourceReference Actor { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("registered")]
-        Registered ,
-        [Description("available")]
-        Available ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

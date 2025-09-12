@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class ActivityDefinition : DomainResource
@@ -37,10 +35,10 @@ public class ActivityDefinition : DomainResource
     public Timing? TimingTiming { get; set; }
     public string? Usage { get; set; }
     public Duration? TimingDuration { get; set; }
-    public PriorityEnum? Priority { get; set; }
-    public required StatusEnum Status { get; set; }
+    public RequestPriorityEnum? Priority { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public string? Subtitle { get; set; }
-    public KindEnum? Kind { get; set; }
+    public ActivityDefinitionKindEnum? Kind { get; set; }
     public ActivityDefinitionDynamicValue[]? DynamicValue { get; set; }
     public string? Url { get; set; }
     public CodeableConcept? Code { get; set; }
@@ -50,7 +48,7 @@ public class ActivityDefinition : DomainResource
     public bool? DoNotPerform { get; set; }
     public CodeableConcept[]? BodySite { get; set; }
     public Age? TimingAge { get; set; }
-    public IntentEnum? Intent { get; set; }
+    public RequestIntentEnum? Intent { get; set; }
     public ResourceReference[]? SpecimenRequirement { get; set; }
     public ContactDetail[]? Reviewer { get; set; }
     public Quantity? Quantity { get; set; }
@@ -68,110 +66,23 @@ public class ActivityDefinition : DomainResource
         public required ResourceExpression Expression { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class ActivityDefinitionParticipant : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required ActivityParticipantTypeEnum Type { get; set; }
         public CodeableConcept? Role { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("patient")]
-            Patient ,
-            [Description("practitioner")]
-            Practitioner ,
-            [Description("related-person")]
-            RelatedDashPerson ,
-            [Description("device")]
-            Device ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum PriorityEnum
-    {
-        [Description("routine")]
-        Routine ,
-        [Description("urgent")]
-        Urgent ,
-        [Description("asap")]
-        Asap ,
-        [Description("stat")]
-        Stat ,
-    }
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
-    public enum KindEnum
-    {
-        [Description("Appointment")]
-        Appointment ,
-        [Description("AppointmentResponse")]
-        AppointmentResponse ,
-        [Description("CarePlan")]
-        CarePlan ,
-        [Description("Claim")]
-        Claim ,
-        [Description("CommunicationRequest")]
-        CommunicationRequest ,
-        [Description("Contract")]
-        Contract ,
-        [Description("DeviceRequest")]
-        DeviceRequest ,
-        [Description("EnrollmentRequest")]
-        EnrollmentRequest ,
-        [Description("ImmunizationRecommendation")]
-        ImmunizationRecommendation ,
-        [Description("MedicationRequest")]
-        MedicationRequest ,
-        [Description("NutritionOrder")]
-        NutritionOrder ,
-        [Description("ServiceRequest")]
-        ServiceRequest ,
-        [Description("SupplyRequest")]
-        SupplyRequest ,
-        [Description("Task")]
-        Task ,
-        [Description("VisionPrescription")]
-        VisionPrescription ,
-    }
-    public enum IntentEnum
-    {
-        [Description("proposal")]
-        Proposal ,
-        [Description("plan")]
-        Plan ,
-        [Description("directive")]
-        Directive ,
-        [Description("order")]
-        Order ,
-        [Description("option")]
-        Option ,
-        [Description("original-order")]
-        OriginalDashOrder ,
-        [Description("reflex-order")]
-        ReflexDashOrder ,
-        [Description("filler-order")]
-        FillerDashOrder ,
-        [Description("instance-order")]
-        InstanceDashOrder ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

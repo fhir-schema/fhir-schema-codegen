@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class RiskEvidenceSynthesis : DomainResource
@@ -25,7 +23,7 @@ public class RiskEvidenceSynthesis : DomainResource
     public Annotation[]? Note { get; set; }
     public ContactDetail[]? Author { get; set; }
     public CodeableConcept? SynthesisType { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required PublicationStatusEnum Status { get; set; }
     public required ResourceReference Population { get; set; }
     public string? Url { get; set; }
     public Identifier[]? Identifier { get; set; }
@@ -47,7 +45,7 @@ public class RiskEvidenceSynthesis : DomainResource
         public RiskEvidenceSynthesisCertaintyCertaintySubcomponent[]? CertaintySubcomponent { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -58,7 +56,7 @@ public class RiskEvidenceSynthesis : DomainResource
         public Annotation[]? Note { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -73,7 +71,7 @@ public class RiskEvidenceSynthesis : DomainResource
         public RiskEvidenceSynthesisRiskEstimatePrecisionEstimate[]? PrecisionEstimate { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -85,7 +83,7 @@ public class RiskEvidenceSynthesis : DomainResource
         public decimal? To { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -96,24 +94,13 @@ public class RiskEvidenceSynthesis : DomainResource
         public int? NumberOfParticipants { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

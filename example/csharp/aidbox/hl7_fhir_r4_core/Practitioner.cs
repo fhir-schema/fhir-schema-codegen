@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class Practitioner : DomainResource
@@ -17,7 +15,7 @@ public class Practitioner : DomainResource
     public Identifier[]? Identifier { get; set; }
     public PractitionerQualification[]? Qualification { get; set; }
     public ContactPoint[]? Telecom { get; set; }
-    public GenderEnum? Gender { get; set; }
+    public AdministrativeGenderEnum? Gender { get; set; }
     
     public class PractitionerQualification : BackboneElement
     {
@@ -27,24 +25,13 @@ public class Practitioner : DomainResource
         public ResourceReference? Issuer { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum GenderEnum
-    {
-        [Description("male")]
-        Male ,
-        [Description("female")]
-        Female ,
-        [Description("other")]
-        Other ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

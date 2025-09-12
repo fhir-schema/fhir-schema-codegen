@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class EpisodeOfCare : DomainResource
@@ -15,7 +13,7 @@ public class EpisodeOfCare : DomainResource
     public ResourceReference[]? Account { get; set; }
     public ResourceReference[]? ReferralRequest { get; set; }
     public ResourceReference[]? Team { get; set; }
-    public required StatusEnum Status { get; set; }
+    public required EpisodeOfCareStatusEnum Status { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Period? Period { get; set; }
     public ResourceReference? CareManager { get; set; }
@@ -28,57 +26,23 @@ public class EpisodeOfCare : DomainResource
         public long? Rank { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class EpisodeOfCareStatusHistory : BackboneElement
     {
-        public required StatusEnum Status { get; set; }
+        public required EpisodeOfCareStatusEnum Status { get; set; }
         public required Period Period { get; set; }
         
-        public enum StatusEnum
-        {
-            [Description("planned")]
-            Planned ,
-            [Description("waitlist")]
-            Waitlist ,
-            [Description("active")]
-            Active ,
-            [Description("onhold")]
-            Onhold ,
-            [Description("finished")]
-            Finished ,
-            [Description("cancelled")]
-            Cancelled ,
-            [Description("entered-in-error")]
-            EnteredDashInDashError ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("planned")]
-        Planned ,
-        [Description("waitlist")]
-        Waitlist ,
-        [Description("active")]
-        Active ,
-        [Description("onhold")]
-        Onhold ,
-        [Description("finished")]
-        Finished ,
-        [Description("cancelled")]
-        Cancelled ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

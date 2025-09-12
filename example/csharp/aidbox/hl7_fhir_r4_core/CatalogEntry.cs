@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class CatalogEntry : DomainResource
@@ -15,7 +13,7 @@ public class CatalogEntry : DomainResource
     public CodeableConcept[]? Classification { get; set; }
     public Period? ValidityPeriod { get; set; }
     public required bool Orderable { get; set; }
-    public StatusEnum? Status { get; set; }
+    public PublicationStatusEnum? Status { get; set; }
     public string? ValidTo { get; set; }
     public Identifier[]? Identifier { get; set; }
     public Identifier[]? AdditionalIdentifier { get; set; }
@@ -24,35 +22,17 @@ public class CatalogEntry : DomainResource
     
     public class CatalogEntryRelatedEntry : BackboneElement
     {
-        public required RelationtypeEnum Relationtype { get; set; }
+        public required CatalogEntryRelationTypeEnum Relationtype { get; set; }
         public required ResourceReference Item { get; set; }
         
-        public enum RelationtypeEnum
-        {
-            [Description("triggers")]
-            Triggers ,
-            [Description("is-replaced-by")]
-            IsDashReplacedDashBy ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("draft")]
-        Draft ,
-        [Description("active")]
-        Active ,
-        [Description("retired")]
-        Retired ,
-        [Description("unknown")]
-        Unknown ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

@@ -27,10 +27,9 @@ export interface ClassField {
     reference?: TypeRef[];
     min?: number;
     max?: number;
-    // binding?: {
-    //     valueSet?: TypeRef;
-    //     strength?: 'required' | 'extensible' | 'preferred' | 'example';
-    // };
+    binding?: {
+        name: string;
+    };
 }
 
 export interface ChoiceField {

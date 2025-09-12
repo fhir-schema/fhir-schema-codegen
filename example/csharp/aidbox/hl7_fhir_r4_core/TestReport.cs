@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class TestReport : DomainResource
@@ -13,8 +11,8 @@ public class TestReport : DomainResource
     public required ResourceReference TestScript { get; set; }
     public TestReportParticipant[]? Participant { get; set; }
     public TestReportSetup? Setup { get; set; }
-    public required StatusEnum Status { get; set; }
-    public required ResultEnum Result { get; set; }
+    public required TestReportStatusEnum Status { get; set; }
+    public required TestReportResultEnum Result { get; set; }
     public decimal? Score { get; set; }
     public Identifier? Identifier { get; set; }
     public string? Issued { get; set; }
@@ -23,21 +21,12 @@ public class TestReport : DomainResource
     
     public class TestReportParticipant : BackboneElement
     {
-        public required TypeEnum Type { get; set; }
+        public required TestReportParticipantTypeEnum Type { get; set; }
         public required string Uri { get; set; }
         public string? Display { get; set; }
         
-        public enum TypeEnum
-        {
-            [Description("test-engine")]
-            TestDashEngine ,
-            [Description("client")]
-            Client ,
-            [Description("server")]
-            Server ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -46,7 +35,7 @@ public class TestReport : DomainResource
         public required TestReportSetupAction[] Action { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -56,55 +45,29 @@ public class TestReport : DomainResource
         public TestReportSetupActionAssert? Assert { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class TestReportSetupActionAssert : BackboneElement
     {
-        public required ResultEnum Result { get; set; }
+        public required TestReportActionResultEnum Result { get; set; }
         public string? Message { get; set; }
         public string? Detail { get; set; }
         
-        public enum ResultEnum
-        {
-            [Description("pass")]
-            Pass ,
-            [Description("skip")]
-            Skip ,
-            [Description("fail")]
-            Fail ,
-            [Description("warning")]
-            Warning ,
-            [Description("error")]
-            Error ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     public class TestReportSetupActionOperation : BackboneElement
     {
-        public required ResultEnum Result { get; set; }
+        public required TestReportActionResultEnum Result { get; set; }
         public string? Message { get; set; }
         public string? Detail { get; set; }
         
-        public enum ResultEnum
-        {
-            [Description("pass")]
-            Pass ,
-            [Description("skip")]
-            Skip ,
-            [Description("fail")]
-            Fail ,
-            [Description("warning")]
-            Warning ,
-            [Description("error")]
-            Error ,
-        }
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -113,7 +76,7 @@ public class TestReport : DomainResource
         public required TestReportTeardownAction[] Action { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -122,7 +85,7 @@ public class TestReport : DomainResource
         public required TestReportSetupActionOperation Operation { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -133,7 +96,7 @@ public class TestReport : DomainResource
         public required TestReportTestAction[] Action { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -143,35 +106,13 @@ public class TestReport : DomainResource
         public TestReportSetupActionAssert? Assert { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("completed")]
-        Completed ,
-        [Description("in-progress")]
-        InDashProgress ,
-        [Description("waiting")]
-        Waiting ,
-        [Description("stopped")]
-        Stopped ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
-    public enum ResultEnum
-    {
-        [Description("pass")]
-        Pass ,
-        [Description("fail")]
-        Fail ,
-        [Description("pending")]
-        Pending ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 

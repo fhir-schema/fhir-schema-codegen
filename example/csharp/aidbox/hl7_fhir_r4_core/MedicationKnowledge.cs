@@ -2,8 +2,6 @@
 // https://github.com/fhir-schema/fhir-schema-codegen
 // Any manual changes made to this file may be overwritten.
 
-using System.ComponentModel;
-
 namespace Aidbox.FHIR.R4.Core;
 
 public class MedicationKnowledge : DomainResource
@@ -23,7 +21,7 @@ public class MedicationKnowledge : DomainResource
     public MedicationKnowledgeIngredient[]? Ingredient { get; set; }
     public MedicationKnowledgeMonitoringProgram[]? MonitoringProgram { get; set; }
     public ResourceReference[]? Contraindication { get; set; }
-    public StatusEnum? Status { get; set; }
+    public MedicationKnowledgeStatusEnum? Status { get; set; }
     public CodeableConcept[]? ProductType { get; set; }
     public string[]? Synonym { get; set; }
     public CodeableConcept? Code { get; set; }
@@ -39,7 +37,7 @@ public class MedicationKnowledge : DomainResource
         public MedicationKnowledgeAdministrationGuidelinesPatientCharacteristics[]? PatientCharacteristics { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -49,7 +47,7 @@ public class MedicationKnowledge : DomainResource
         public required Dosage[] Dosage { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -60,7 +58,7 @@ public class MedicationKnowledge : DomainResource
         public string[]? Value { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -71,7 +69,7 @@ public class MedicationKnowledge : DomainResource
         public required Money Cost { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -84,7 +82,7 @@ public class MedicationKnowledge : DomainResource
         public string? ValueBase64Binary { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -96,7 +94,7 @@ public class MedicationKnowledge : DomainResource
         public Ratio? Strength { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -107,7 +105,7 @@ public class MedicationKnowledge : DomainResource
         public Duration? HalfLifePeriod { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -117,7 +115,7 @@ public class MedicationKnowledge : DomainResource
         public CodeableConcept[]? Classification { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -127,7 +125,7 @@ public class MedicationKnowledge : DomainResource
         public string? Name { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -137,7 +135,7 @@ public class MedicationKnowledge : DomainResource
         public ResourceReference? Source { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -147,7 +145,7 @@ public class MedicationKnowledge : DomainResource
         public Quantity? Quantity { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -159,7 +157,7 @@ public class MedicationKnowledge : DomainResource
         public MedicationKnowledgeRegulatoryMaxDispense? MaxDispense { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -169,7 +167,7 @@ public class MedicationKnowledge : DomainResource
         public Duration? Period { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -178,7 +176,7 @@ public class MedicationKnowledge : DomainResource
         public required CodeableConcept Schedule { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -188,7 +186,7 @@ public class MedicationKnowledge : DomainResource
         public required bool Allowed { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
@@ -198,22 +196,13 @@ public class MedicationKnowledge : DomainResource
         public required ResourceReference[] Reference { get; set; }
         
         public override string ToString() => 
-            JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+            JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
         
     }
     
     
-    public enum StatusEnum
-    {
-        [Description("active")]
-        Active ,
-        [Description("inactive")]
-        Inactive ,
-        [Description("entered-in-error")]
-        EnteredDashInDashError ,
-    }
     public override string ToString() => 
-        JsonSerializer.Serialize(this, Aidbox.Config.JsonSerializerOptions);
+        JsonSerializer.Serialize(this, Config.JsonSerializerOptions);
     
 }
 
