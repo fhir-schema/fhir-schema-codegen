@@ -1,4 +1,4 @@
-import fs, { existsSync } from 'node:fs';
+import fs, { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { type Command as Commander, Option } from 'commander';
 import { GeneratorError, generatorsRegistry } from '../generators-registry';
@@ -57,6 +57,10 @@ export class GenerateCommand extends BaseCommand {
             )
             .option('--profile', 'Enable profile generation')
             .option('--with-debug-comment', 'Enable debug comments in generated code')
+            .option(
+                '--hashed-type-schema <path>',
+                'A path to an existing type-schema ndjson file (used if type-schema fails to generate)',
+            )
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
                 if (!options.files && !options.packages) {
@@ -116,12 +120,31 @@ export class GenerateCommand extends BaseCommand {
                         logger.info('Processing packages with type-schema...');
 
                         try {
-                            const typeSchemaNdJson = await executeTypeSchema(
-                                options.packages,
-                                TYPE_SCHEMA_VERSION,
-                                options.typeSchemaExec,
-                                options.fhirSchema,
-                            );
+                            let typeSchemaNdJson: string | null = null;
+                            try {
+                                typeSchemaNdJson = await executeTypeSchema(
+                                    options.packages,
+                                    TYPE_SCHEMA_VERSION,
+                                    options.typeSchemaExec,
+                                    options.fhirSchema,
+                                );
+                            } catch {
+                                logger.warn(
+                                    'Failed to generate type schema, trying to collect a hashed version...',
+                                );
+                                const pathToSchema: string | null = options.hashedTypeSchema;
+                                if (!pathToSchema)
+                                    this.handleError(
+                                        'No schemas found:',
+                                        new Error('no path to schema is provided'),
+                                    );
+                                try {
+                                    typeSchemaNdJson = readFileSync(pathToSchema, 'utf-8');
+                                } catch (err) {
+                                    this.handleError('Error reading file:', err);
+                                }
+                            }
+
                             if (!typeSchemaNdJson) {
                                 this.handleError(
                                     'can not generate type schemas',
