@@ -4,6 +4,7 @@ import * as profile from '../../profile';
 import { type ClassField, type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import { canonicalToName, groupedByPackage, kebabCase, pascalCase } from '../../utils/code';
 import { Generator, type GeneratorOptions } from '../generator';
+import { type Relative, resourceRelatives, resourceChildren } from '../helper';
 
 // Naming conventions
 // directory naming: kebab-case
@@ -145,6 +146,8 @@ const fileName = (id: TypeRef): string => {
 };
 
 class TypeScriptGenerator extends Generator {
+    resourceRelatives: Relative[] = [];
+
     constructor(opts: TypeScriptGeneratorOptions) {
         super({
             ...opts,
@@ -224,11 +227,17 @@ class TypeScriptGenerator extends Generator {
                 return;
             }
 
-            // FIXME: comment out because require type family processing.
-            // if (schema.identifier.kind === 'resource') {
-            //     this.lineSM(`resourceType: '${schema.identifier.name}'`);
-            //     this.line()
-            // }
+            if (schema.identifier.kind === 'resource') {
+                this.lineSM(
+                    `resourceType: '${schema.identifier.name}' ${resourceChildren(
+                        this.resourceRelatives,
+                        schema.identifier,
+                    )
+                        .map((e) => `| '${e.name}'`)
+                        .join(' ')}`,
+                );
+                this.line();
+            }
 
             const fields = Object.entries(schema.fields).sort((a, b) => a[0].localeCompare(b[0]));
 
@@ -534,6 +543,8 @@ class TypeScriptGenerator extends Generator {
     }
 
     generate() {
+        this.resourceRelatives = resourceRelatives(this.loader);
+
         const typesOnly = (this.opts as TypeScriptGeneratorOptions).typesOnly || false;
         const typePath = typesOnly ? '' : 'types';
 
