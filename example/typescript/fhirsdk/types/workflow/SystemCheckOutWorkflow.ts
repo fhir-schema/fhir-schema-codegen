@@ -1,17 +1,17 @@
 export type SystemCheckOutWorkflowParams = {
-  clientId: string;
+    clientId: string;
 };
 
 export type SystemCheckOutWorkflowResult = {
-  messageId?: string;
+    messageId?: string;
 };
 
 export type SystemCheckOutWorkflowError = {
-  message?: string;
+    message?: string;
 };
 
 export type SystemCheckOutWorkflow = {
-  params?: SystemCheckOutWorkflowParams;
-  result?: SystemCheckOutWorkflowResult;
-  error?: SystemCheckOutWorkflowError;
+    params?: SystemCheckOutWorkflowParams;
+    result?: SystemCheckOutWorkflowResult;
+    error?: SystemCheckOutWorkflowError;
 };
