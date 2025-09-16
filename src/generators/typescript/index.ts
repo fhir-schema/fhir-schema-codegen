@@ -368,9 +368,92 @@ class TypeScriptGenerator extends Generator {
                     this.curlyBlock(['meta:'], () => {
                         this.line(`profile: ['${flatProfile.identifier.url}']`);
                     }, [',']);
-                    profileFields.forEach((fieldName, index) => {
-                        const isLast = index === profileFields.length - 1;
+                    profileFields.forEach((fieldName) => {
                         this.line(`${fieldName}:`, `profile.${fieldName},`);
+                    });
+                });
+            },
+        );
+    }
+
+    generateExtractProfile(flatProfile: TypeSchema) {
+        if (flatProfile.base === undefined) {
+            throw new Error(
+                'Profile must have a base type to generate profile-to-resource mapping:' +
+                    JSON.stringify(flatProfile.identifier),
+            );
+        }
+        const resName = resourceName(flatProfile.base);
+        const profName = resourceName(flatProfile.identifier);
+        const profileFields = Object.entries(flatProfile.fields || {})
+            .filter(([_fieldName, field]) => {
+                return field && field.type !== undefined;
+            })
+            .map(([fieldName]) => fieldName);
+        const specialization = this.loader.resolveTypeIdentifier(
+            profile.findSpecialization(this.loader, flatProfile.identifier),
+        );
+        if (specialization === undefined) {
+            throw new Error(`Specialization not found for ${flatProfile.identifier.url}`);
+        }
+        const shouldCast = {};
+        this.curlyBlock(
+            [`export const extract_${resName} =`, `(resource: ${resName}): ${profName}`, '=>'],
+            () => {
+                profileFields.forEach((fieldName) => {
+                    const pField = flatProfile.fields?.[fieldName];
+                    const rField = specialization.fields?.[fieldName];
+                    if (!pField || !rField) {
+                        return;
+                    }
+                    if (pField.required && !rField.required) {
+                        this.curlyBlock([`if (resource.${fieldName} === undefined)`], () =>
+                            this.lineSM(
+                                `throw new Error("'${fieldName}' is required for ${flatProfile.identifier.url}")`,
+                            ),
+                        );
+                        this.line();
+                    }
+
+                    const pRefs = pField?.reference?.map((ref) => ref.name);
+                    const rRefs = rField?.reference?.map((ref) => ref.name);
+                    if (pRefs && rRefs && pRefs.length !== rRefs.length) {
+                        const predName = `reference_pred_${fieldName}`;
+                        this.curlyBlock(['const', predName, '=', '(ref?: Reference)', '=>'], () => {
+                            this.line('return !ref');
+                            this.indentBlock(() => {
+                                rRefs.forEach((ref) => {
+                                    this.line(`|| ref.reference?.startsWith('${ref}/')`);
+                                });
+                                this.line(';');
+                            });
+                        });
+                        let cond: string = !pField?.required ? `!resource.${fieldName} || ` : '';
+                        if (pField.array) {
+                            cond += `resource.${fieldName}.every( (ref) => ${predName}(ref) )`;
+                        } else {
+                            cond += `${predName}(resource.${fieldName})`;
+                        }
+                        this.curlyBlock(['if (', cond, ')'], () => {
+                            this.lineSM(
+                                `throw new Error("'${fieldName}' has different references in profile and specialization")`,
+                            );
+                        });
+                        this.line();
+                        shouldCast[fieldName] = true;
+                    }
+                });
+                this.curlyBlock(['return'], () => {
+                    this.line(`__profileUrl: '${flatProfile.identifier.url}',`);
+                    profileFields.forEach((fieldName) => {
+                        if (shouldCast[fieldName]) {
+                            this.line(
+                                `${fieldName}:`,
+                                `resource.${fieldName} as ${profName}['${fieldName}'],`,
+                            );
+                        } else {
+                            this.line(`${fieldName}:`, `resource.${fieldName},`);
+                        }
                     });
                 });
             },
@@ -384,6 +467,8 @@ class TypeScriptGenerator extends Generator {
         this.line();
         this.generateProfileType(flatProfile);
         this.generateAttachProfile(flatProfile);
+        this.line();
+        this.generateExtractProfile(flatProfile);
     }
 
     generateResourceModule(schema: TypeSchema) {
