@@ -401,5 +401,48 @@ namespace csharp
             
             Console.WriteLine("=========================\n");
         }
+        
+        [Test]
+        public void TestEnumFields()
+        {
+            Console.WriteLine(" TEST: Enum Fields");
+            Console.WriteLine("=========================");
+            
+            var practitioner = new Practitioner()
+            {
+                Name = 
+                [
+                    new HumanName
+                    {
+                        Given = ["Practitioner"],
+                        Family = "EnumTest"
+                    }
+                ],
+                Gender = AdministrativeGenderEnum.Female,
+                BirthDate = "1980-01-01"
+            };
+            
+            var patient = new Patient
+            {
+                Id = "123",
+                Name =
+                [
+                    new HumanName
+                    {
+                        Given = ["Patient"],
+                        Family = "EnumTest"
+                    }
+                ],
+                Gender = AdministrativeGenderEnum.Female,
+                BirthDate = "1990-05-15"
+            };
+            
+            Console.WriteLine("Testing enum field definitions");
+
+            Assert.That( practitioner.Gender == patient.Gender, "Wrong enum fields definition");
+            
+            Console.WriteLine("=========================\n");
+        }
+        
     }
 }
