@@ -1,6 +1,6 @@
 import type { TypeRef, TypeSchema } from '../typeschema';
 import type { Generator } from './generator';
-import { SchemaLoader } from '../loader';
+import type { SchemaLoader } from '../loader';
 
 export interface Relative {
     parent: TypeRef;
