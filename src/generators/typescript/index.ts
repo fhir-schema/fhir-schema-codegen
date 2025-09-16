@@ -12,9 +12,12 @@ import { type Relative, resourceRelatives, resourceChildren } from '../helper';
 // function naming: camelCase
 // class naming: PascalCase
 
+type TypeScriptClient = 'legacy';
+
 interface TypeScriptGeneratorOptions extends GeneratorOptions {
     // tabSize: 2
     typesOnly?: boolean;
+    tsClient?: TypeScriptClient;
 }
 
 const primitiveType2tsType = {
@@ -227,7 +230,10 @@ class TypeScriptGenerator extends Generator {
                 return;
             }
 
-            if (schema.identifier.kind === 'resource') {
+            if (
+                schema.identifier.kind === 'resource' &&
+                (this.opts as TypeScriptGeneratorOptions).tsClient !== 'legacy'
+            ) {
                 this.lineSM(
                     `resourceType: '${schema.identifier.name}' ${resourceChildren(
                         this.resourceRelatives,
@@ -546,6 +552,7 @@ class TypeScriptGenerator extends Generator {
         this.resourceRelatives = resourceRelatives(this.loader);
 
         const typesOnly = (this.opts as TypeScriptGeneratorOptions).typesOnly || false;
+        const tsClient = (this.opts as TypeScriptGeneratorOptions).tsClient || 'legacy';
         const typePath = typesOnly ? '' : 'types';
 
         const typesToGenerate = [

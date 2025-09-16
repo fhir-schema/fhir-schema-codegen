@@ -56,6 +56,11 @@ export class GenerateCommand extends BaseCommand {
                 'Allow extra fields in Python resource models without validation (default: false, extra fields are forbidden)',
             )
             .option('--profile', 'Enable profile generation')
+            .option(
+                '--ts-client <client>',
+                'TypeScript client type to use (default: legacy)',
+                'legacy',
+            )
             .option('--with-debug-comment', 'Enable debug comments in generated code')
             .hook('preSubcommand', (thisCommand) => {
                 const options = thisCommand.opts();
@@ -146,6 +151,7 @@ export class GenerateCommand extends BaseCommand {
                                     ...(options.generator === 'typescript'
                                         ? {
                                               sdkPackage: options.tsSdkPackage,
+                                              tsClient: options.tsClient,
                                           }
                                         : {}),
                                 },
@@ -178,6 +184,7 @@ export class GenerateCommand extends BaseCommand {
                                 ...(options.generator === 'typescript'
                                     ? {
                                           sdkPackage: options.tsSdkPackage,
+                                          tsClient: options.tsClient,
                                       }
                                     : {}),
                             },

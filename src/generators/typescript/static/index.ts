@@ -15,6 +15,8 @@ import type {
     WorkflowDefinitionsMap,
 } from './types';
 
+export const clientType = 'legacy';
+
 export { HTTPError };
 
 const isBrowser = () => typeof window !== 'undefined';

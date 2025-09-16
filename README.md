@@ -60,6 +60,7 @@ Options:
 - `--custom-generator <path>` - Path to your custom generator template
 - `--with-debug-comment` - Enable debug comments in generated code
 - `--profile` - Enable profile generation
+- `--ts-client <client>` - TypeScript client type to use (default: legacy)
 
 Example:
 
@@ -121,6 +122,9 @@ fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1
 
 # With debug comments:
 fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1 --with-debug-comment
+
+# With custom client type:
+fscg generate -g typescript -o ./ts-sdk -p hl7.fhir.r4.core@4.0.1 --ts-client legacy
 ```
 
 ### C# Generator
