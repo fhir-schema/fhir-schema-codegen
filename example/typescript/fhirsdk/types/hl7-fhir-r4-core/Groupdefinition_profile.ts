@@ -24,3 +24,11 @@ export const attach_Groupdefinition = (resource: Group, profile: Groupdefinition
         member: profile.member,
     }
 }
+
+export const extract_Group = (resource: Group): Groupdefinition => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/groupdefinition',
+        actual: resource.actual,
+        member: resource.member,
+    }
+}

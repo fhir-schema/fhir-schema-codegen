@@ -27,3 +27,12 @@ export const attach_Cqllibrary = (resource: Library, profile: Cqllibrary): Libra
         dataRequirement: profile.dataRequirement,
     }
 }
+
+export const extract_Library = (resource: Library): Cqllibrary => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cqllibrary',
+        type: resource.type,
+        parameter: resource.parameter,
+        dataRequirement: resource.dataRequirement,
+    }
+}

@@ -44,3 +44,19 @@ export const attach_EhrsrleProvenance = (resource: Provenance, profile: EhrsrleP
         occurredPeriod: profile.occurredPeriod,
     }
 }
+
+export const extract_Provenance = (resource: Provenance): EhrsrleProvenance => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/ehrsrle-provenance',
+        signature: resource.signature,
+        occurredDateTime: resource.occurredDateTime,
+        recorded: resource.recorded,
+        agent: resource.agent,
+        policy: resource.policy,
+        reason: resource.reason,
+        activity: resource.activity,
+        target: resource.target,
+        location: resource.location,
+        occurredPeriod: resource.occurredPeriod,
+    }
+}

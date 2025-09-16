@@ -25,3 +25,10 @@ export const attach_CqfQuestionnaire = (resource: Questionnaire, profile: CqfQue
         extension: profile.extension,
     }
 }
+
+export const extract_Questionnaire = (resource: Questionnaire): CqfQuestionnaire => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cqf-questionnaire',
+        extension: resource.extension,
+    }
+}

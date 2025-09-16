@@ -25,3 +25,11 @@ export const attach_DiagnosticreportGenetics = (resource: DiagnosticReport, prof
         conclusionCode: profile.conclusionCode,
     }
 }
+
+export const extract_DiagnosticReport = (resource: DiagnosticReport): DiagnosticreportGenetics => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/diagnosticreport-genetics',
+        extension: resource.extension,
+        conclusionCode: resource.conclusionCode,
+    }
+}

@@ -53,3 +53,45 @@ export const attach_Shareableplandefinition = (resource: PlanDefinition, profile
         contact: profile.contact,
     }
 }
+
+export const extract_PlanDefinition = (resource: PlanDefinition): Shareableplandefinition => {
+    if (resource.description === undefined) {
+        throw new Error("'description' is required for http://hl7.org/fhir/StructureDefinition/shareableplandefinition");
+    }
+    
+    if (resource.publisher === undefined) {
+        throw new Error("'publisher' is required for http://hl7.org/fhir/StructureDefinition/shareableplandefinition");
+    }
+    
+    if (resource.name === undefined) {
+        throw new Error("'name' is required for http://hl7.org/fhir/StructureDefinition/shareableplandefinition");
+    }
+    
+    if (resource.experimental === undefined) {
+        throw new Error("'experimental' is required for http://hl7.org/fhir/StructureDefinition/shareableplandefinition");
+    }
+    
+    if (resource.url === undefined) {
+        throw new Error("'url' is required for http://hl7.org/fhir/StructureDefinition/shareableplandefinition");
+    }
+    
+    if (resource.version === undefined) {
+        throw new Error("'version' is required for http://hl7.org/fhir/StructureDefinition/shareableplandefinition");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareableplandefinition',
+        description: resource.description,
+        date: resource.date,
+        publisher: resource.publisher,
+        jurisdiction: resource.jurisdiction,
+        name: resource.name,
+        useContext: resource.useContext,
+        experimental: resource.experimental,
+        title: resource.title,
+        url: resource.url,
+        identifier: resource.identifier,
+        version: resource.version,
+        contact: resource.contact,
+    }
+}

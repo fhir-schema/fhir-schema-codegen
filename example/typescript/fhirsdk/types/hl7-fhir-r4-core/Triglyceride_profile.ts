@@ -38,3 +38,16 @@ export const attach_Triglyceride = (resource: Observation, profile: Triglyceride
         derivedFrom: profile.derivedFrom,
     }
 }
+
+export const extract_Observation = (resource: Observation): Triglyceride => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/triglyceride',
+        code: resource.code,
+        valueQuantity: resource.valueQuantity,
+        interpretation: resource.interpretation,
+        note: resource.note,
+        referenceRange: resource.referenceRange,
+        hasMember: resource.hasMember,
+        derivedFrom: resource.derivedFrom,
+    }
+}

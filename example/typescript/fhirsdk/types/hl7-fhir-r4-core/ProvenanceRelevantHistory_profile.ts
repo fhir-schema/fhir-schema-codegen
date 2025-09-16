@@ -32,3 +32,18 @@ export const attach_ProvenanceRelevantHistory = (resource: Provenance, profile: 
         agent: profile.agent,
     }
 }
+
+export const extract_Provenance = (resource: Provenance): ProvenanceRelevantHistory => {
+    if (resource.activity === undefined) {
+        throw new Error("'activity' is required for http://hl7.org/fhir/StructureDefinition/provenance-relevant-history");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/provenance-relevant-history',
+        target: resource.target,
+        occurredDateTime: resource.occurredDateTime,
+        reason: resource.reason,
+        activity: resource.activity,
+        agent: resource.agent,
+    }
+}

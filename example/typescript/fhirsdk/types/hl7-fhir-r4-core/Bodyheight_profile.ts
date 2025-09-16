@@ -69,3 +69,50 @@ export const attach_Bodyheight = (resource: Observation, profile: Bodyheight): O
         effectivePeriod: profile.effectivePeriod,
     }
 }
+
+export const extract_Observation = (resource: Observation): Bodyheight => {
+    if (resource.category === undefined) {
+        throw new Error("'category' is required for http://hl7.org/fhir/StructureDefinition/bodyheight");
+    }
+    
+    if (resource.subject === undefined) {
+        throw new Error("'subject' is required for http://hl7.org/fhir/StructureDefinition/bodyheight");
+    }
+    
+    const reference_pred_subject = (ref?: Reference) => {
+        return !ref
+            || ref.reference?.startsWith('Device/')
+            || ref.reference?.startsWith('Group/')
+            || ref.reference?.startsWith('Location/')
+            || ref.reference?.startsWith('Patient/')
+            ;
+    }
+    if ( reference_pred_subject(resource.subject) ) {
+        throw new Error("'subject' has different references in profile and specialization");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/bodyheight',
+        category: resource.category,
+        hasMember: resource.hasMember,
+        derivedFrom: resource.derivedFrom,
+        valueTime: resource.valueTime,
+        valueQuantity: resource.valueQuantity,
+        valueString: resource.valueString,
+        valueRatio: resource.valueRatio,
+        valueBoolean: resource.valueBoolean,
+        valueDateTime: resource.valueDateTime,
+        component: resource.component,
+        valueSampledData: resource.valueSampledData,
+        effectiveDateTime: resource.effectiveDateTime,
+        status: resource.status,
+        code: resource.code,
+        valueCodeableConcept: resource.valueCodeableConcept,
+        valuePeriod: resource.valuePeriod,
+        valueRange: resource.valueRange,
+        valueInteger: resource.valueInteger,
+        subject: resource.subject as Bodyheight['subject'],
+        dataAbsentReason: resource.dataAbsentReason,
+        effectivePeriod: resource.effectivePeriod,
+    }
+}

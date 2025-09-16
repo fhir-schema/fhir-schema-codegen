@@ -21,3 +21,10 @@ export const attach_ServicerequestGenetics = (resource: ServiceRequest, profile:
         extension: profile.extension,
     }
 }
+
+export const extract_ServiceRequest = (resource: ServiceRequest): ServicerequestGenetics => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/servicerequest-genetics',
+        extension: resource.extension,
+    }
+}

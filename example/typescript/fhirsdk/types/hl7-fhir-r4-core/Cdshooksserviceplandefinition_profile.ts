@@ -30,3 +30,11 @@ export const attach_Cdshooksserviceplandefinition = (resource: PlanDefinition, p
         action: profile.action,
     }
 }
+
+export const extract_PlanDefinition = (resource: PlanDefinition): Cdshooksserviceplandefinition => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cdshooksserviceplandefinition',
+        extension: resource.extension,
+        action: resource.action,
+    }
+}

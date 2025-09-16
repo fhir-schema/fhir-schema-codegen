@@ -22,3 +22,10 @@ export const attach_Hlaresult = (resource: DiagnosticReport, profile: Hlaresult)
         extension: profile.extension,
     }
 }
+
+export const extract_DiagnosticReport = (resource: DiagnosticReport): Hlaresult => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/hlaresult',
+        extension: resource.extension,
+    }
+}

@@ -40,3 +40,40 @@ export const attach_Shareablevalueset = (resource: ValueSet, profile: Shareablev
         description: profile.description,
     }
 }
+
+export const extract_ValueSet = (resource: ValueSet): Shareablevalueset => {
+    if (resource.url === undefined) {
+        throw new Error("'url' is required for http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+    }
+    
+    if (resource.version === undefined) {
+        throw new Error("'version' is required for http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+    }
+    
+    if (resource.name === undefined) {
+        throw new Error("'name' is required for http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+    }
+    
+    if (resource.experimental === undefined) {
+        throw new Error("'experimental' is required for http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+    }
+    
+    if (resource.publisher === undefined) {
+        throw new Error("'publisher' is required for http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+    }
+    
+    if (resource.description === undefined) {
+        throw new Error("'description' is required for http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareablevalueset',
+        url: resource.url,
+        version: resource.version,
+        name: resource.name,
+        status: resource.status,
+        experimental: resource.experimental,
+        publisher: resource.publisher,
+        description: resource.description,
+    }
+}

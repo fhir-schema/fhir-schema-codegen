@@ -54,3 +54,24 @@ export const attach_FamilymemberhistoryGenetic = (resource: FamilyMemberHistory,
         bornDate: profile.bornDate,
     }
 }
+
+export const extract_FamilyMemberHistory = (resource: FamilyMemberHistory): FamilymemberhistoryGenetic => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/familymemberhistory-genetic',
+        deceasedAge: resource.deceasedAge,
+        sex: resource.sex,
+        ageRange: resource.ageRange,
+        bornString: resource.bornString,
+        deceasedBoolean: resource.deceasedBoolean,
+        relationship: resource.relationship,
+        extension: resource.extension,
+        condition: resource.condition,
+        ageString: resource.ageString,
+        deceasedRange: resource.deceasedRange,
+        deceasedDate: resource.deceasedDate,
+        bornPeriod: resource.bornPeriod,
+        deceasedString: resource.deceasedString,
+        ageAge: resource.ageAge,
+        bornDate: resource.bornDate,
+    }
+}

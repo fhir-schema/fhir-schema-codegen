@@ -41,3 +41,17 @@ export const attach_EhrsrleAuditevent = (resource: AuditEvent, profile: EhrsrleA
         entity: profile.entity,
     }
 }
+
+export const extract_AuditEvent = (resource: AuditEvent): EhrsrleAuditevent => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent',
+        type: resource.type,
+        subtype: resource.subtype,
+        action: resource.action,
+        recorded: resource.recorded,
+        purposeOfEvent: resource.purposeOfEvent,
+        agent: resource.agent,
+        source: resource.source,
+        entity: resource.entity,
+    }
+}

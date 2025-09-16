@@ -41,3 +41,42 @@ export const attach_Shareablecodesystem = (resource: CodeSystem, profile: Sharea
         version: profile.version,
     }
 }
+
+export const extract_CodeSystem = (resource: CodeSystem): Shareablecodesystem => {
+    if (resource.description === undefined) {
+        throw new Error("'description' is required for http://hl7.org/fhir/StructureDefinition/shareablecodesystem");
+    }
+    
+    if (resource.publisher === undefined) {
+        throw new Error("'publisher' is required for http://hl7.org/fhir/StructureDefinition/shareablecodesystem");
+    }
+    
+    if (resource.name === undefined) {
+        throw new Error("'name' is required for http://hl7.org/fhir/StructureDefinition/shareablecodesystem");
+    }
+    
+    if (resource.experimental === undefined) {
+        throw new Error("'experimental' is required for http://hl7.org/fhir/StructureDefinition/shareablecodesystem");
+    }
+    
+    if (resource.url === undefined) {
+        throw new Error("'url' is required for http://hl7.org/fhir/StructureDefinition/shareablecodesystem");
+    }
+    
+    if (resource.version === undefined) {
+        throw new Error("'version' is required for http://hl7.org/fhir/StructureDefinition/shareablecodesystem");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareablecodesystem',
+        description: resource.description,
+        publisher: resource.publisher,
+        name: resource.name,
+        experimental: resource.experimental,
+        status: resource.status,
+        url: resource.url,
+        concept: resource.concept,
+        caseSensitive: resource.caseSensitive,
+        version: resource.version,
+    }
+}

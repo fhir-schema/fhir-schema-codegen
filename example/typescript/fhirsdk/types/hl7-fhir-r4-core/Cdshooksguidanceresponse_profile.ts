@@ -37,3 +37,29 @@ export const attach_Cdshooksguidanceresponse = (resource: GuidanceResponse, prof
         result: profile.result,
     }
 }
+
+export const extract_GuidanceResponse = (resource: GuidanceResponse): Cdshooksguidanceresponse => {
+    if (resource.requestIdentifier === undefined) {
+        throw new Error("'requestIdentifier' is required for http://hl7.org/fhir/StructureDefinition/cdshooksguidanceresponse");
+    }
+    
+    if (resource.identifier === undefined) {
+        throw new Error("'identifier' is required for http://hl7.org/fhir/StructureDefinition/cdshooksguidanceresponse");
+    }
+    
+    if (resource.moduleUri === undefined) {
+        throw new Error("'moduleUri' is required for http://hl7.org/fhir/StructureDefinition/cdshooksguidanceresponse");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cdshooksguidanceresponse',
+        extension: resource.extension,
+        requestIdentifier: resource.requestIdentifier,
+        identifier: resource.identifier,
+        moduleUri: resource.moduleUri,
+        subject: resource.subject,
+        occurrenceDateTime: resource.occurrenceDateTime,
+        performer: resource.performer,
+        result: resource.result,
+    }
+}

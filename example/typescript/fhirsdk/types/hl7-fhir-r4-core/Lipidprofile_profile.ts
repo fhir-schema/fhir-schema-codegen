@@ -29,3 +29,13 @@ export const attach_Lipidprofile = (resource: DiagnosticReport, profile: Lipidpr
         conclusionCode: profile.conclusionCode,
     }
 }
+
+export const extract_DiagnosticReport = (resource: DiagnosticReport): Lipidprofile => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/lipidprofile',
+        code: resource.code,
+        result: resource.result,
+        conclusion: resource.conclusion,
+        conclusionCode: resource.conclusionCode,
+    }
+}

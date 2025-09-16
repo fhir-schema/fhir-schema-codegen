@@ -28,3 +28,20 @@ export const attach_Clinicaldocument = (resource: Composition, profile: Clinical
         subject: profile.subject,
     }
 }
+
+export const extract_Composition = (resource: Composition): Clinicaldocument => {
+    const reference_pred_subject = (ref?: Reference) => {
+        return !ref
+            || ref.reference?.startsWith('Resource/')
+            ;
+    }
+    if ( !resource.subject || reference_pred_subject(resource.subject) ) {
+        throw new Error("'subject' has different references in profile and specialization");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/clinicaldocument',
+        extension: resource.extension,
+        subject: resource.subject as Clinicaldocument['subject'],
+    }
+}

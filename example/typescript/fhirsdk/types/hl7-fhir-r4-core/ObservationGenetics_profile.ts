@@ -23,3 +23,10 @@ export const attach_ObservationGenetics = (resource: Observation, profile: Obser
         extension: profile.extension,
     }
 }
+
+export const extract_Observation = (resource: Observation): ObservationGenetics => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/observation-genetics',
+        extension: resource.extension,
+    }
+}

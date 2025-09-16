@@ -38,3 +38,16 @@ export const attach_Ldlcholesterol = (resource: Observation, profile: Ldlcholest
         derivedFrom: profile.derivedFrom,
     }
 }
+
+export const extract_Observation = (resource: Observation): Ldlcholesterol => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/ldlcholesterol',
+        code: resource.code,
+        valueQuantity: resource.valueQuantity,
+        interpretation: resource.interpretation,
+        note: resource.note,
+        referenceRange: resource.referenceRange,
+        hasMember: resource.hasMember,
+        derivedFrom: resource.derivedFrom,
+    }
+}

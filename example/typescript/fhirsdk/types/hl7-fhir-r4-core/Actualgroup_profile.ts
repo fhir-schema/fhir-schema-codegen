@@ -24,3 +24,11 @@ export const attach_Actualgroup = (resource: Group, profile: Actualgroup): Group
         characteristic: profile.characteristic,
     }
 }
+
+export const extract_Group = (resource: Group): Actualgroup => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/actualgroup',
+        actual: resource.actual,
+        characteristic: resource.characteristic,
+    }
+}

@@ -37,3 +37,19 @@ export const attach_Catalog = (resource: Composition, profile: Catalog): Composi
         section: profile.section,
     }
 }
+
+export const extract_Composition = (resource: Composition): Catalog => {
+    if (resource.category === undefined) {
+        throw new Error("'category' is required for http://hl7.org/fhir/StructureDefinition/catalog");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/catalog',
+        extension: resource.extension,
+        type: resource.type,
+        category: resource.category,
+        subject: resource.subject,
+        date: resource.date,
+        section: resource.section,
+    }
+}

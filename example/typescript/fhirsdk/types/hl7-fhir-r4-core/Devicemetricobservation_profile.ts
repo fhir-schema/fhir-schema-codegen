@@ -81,3 +81,94 @@ export const attach_Devicemetricobservation = (resource: Observation, profile: D
         dataAbsentReason: profile.dataAbsentReason,
     }
 }
+
+export const extract_Observation = (resource: Observation): Devicemetricobservation => {
+    const reference_pred_hasMember = (ref?: Reference) => {
+        return !ref
+            || ref.reference?.startsWith('MolecularSequence/')
+            || ref.reference?.startsWith('Observation/')
+            || ref.reference?.startsWith('QuestionnaireResponse/')
+            ;
+    }
+    if ( !resource.hasMember || resource.hasMember.every( (ref) => reference_pred_hasMember(ref) ) ) {
+        throw new Error("'hasMember' has different references in profile and specialization");
+    }
+    
+    const reference_pred_derivedFrom = (ref?: Reference) => {
+        return !ref
+            || ref.reference?.startsWith('DocumentReference/')
+            || ref.reference?.startsWith('ImagingStudy/')
+            || ref.reference?.startsWith('Media/')
+            || ref.reference?.startsWith('MolecularSequence/')
+            || ref.reference?.startsWith('Observation/')
+            || ref.reference?.startsWith('QuestionnaireResponse/')
+            ;
+    }
+    if ( !resource.derivedFrom || resource.derivedFrom.every( (ref) => reference_pred_derivedFrom(ref) ) ) {
+        throw new Error("'derivedFrom' has different references in profile and specialization");
+    }
+    
+    if (resource.effectiveDateTime === undefined) {
+        throw new Error("'effectiveDateTime' is required for http://hl7.org/fhir/StructureDefinition/devicemetricobservation");
+    }
+    
+    if (resource.device === undefined) {
+        throw new Error("'device' is required for http://hl7.org/fhir/StructureDefinition/devicemetricobservation");
+    }
+    
+    const reference_pred_device = (ref?: Reference) => {
+        return !ref
+            || ref.reference?.startsWith('Device/')
+            || ref.reference?.startsWith('DeviceMetric/')
+            ;
+    }
+    if ( reference_pred_device(resource.device) ) {
+        throw new Error("'device' has different references in profile and specialization");
+    }
+    
+    if (resource.subject === undefined) {
+        throw new Error("'subject' is required for http://hl7.org/fhir/StructureDefinition/devicemetricobservation");
+    }
+    
+    const reference_pred_subject = (ref?: Reference) => {
+        return !ref
+            || ref.reference?.startsWith('Device/')
+            || ref.reference?.startsWith('Group/')
+            || ref.reference?.startsWith('Location/')
+            || ref.reference?.startsWith('Patient/')
+            ;
+    }
+    if ( reference_pred_subject(resource.subject) ) {
+        throw new Error("'subject' has different references in profile and specialization");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/devicemetricobservation',
+        referenceRange: resource.referenceRange,
+        hasMember: resource.hasMember as Devicemetricobservation['hasMember'],
+        derivedFrom: resource.derivedFrom as Devicemetricobservation['derivedFrom'],
+        interpretation: resource.interpretation,
+        encounter: resource.encounter,
+        method: resource.method,
+        valueTime: resource.valueTime,
+        specimen: resource.specimen,
+        valueQuantity: resource.valueQuantity,
+        valueString: resource.valueString,
+        valueRatio: resource.valueRatio,
+        valueDateTime: resource.valueDateTime,
+        note: resource.note,
+        valueSampledData: resource.valueSampledData,
+        effectiveDateTime: resource.effectiveDateTime,
+        status: resource.status,
+        code: resource.code,
+        identifier: resource.identifier,
+        valueCodeableConcept: resource.valueCodeableConcept,
+        bodySite: resource.bodySite,
+        issued: resource.issued,
+        valuePeriod: resource.valuePeriod,
+        device: resource.device as Devicemetricobservation['device'],
+        valueRange: resource.valueRange,
+        subject: resource.subject as Devicemetricobservation['subject'],
+        dataAbsentReason: resource.dataAbsentReason,
+    }
+}

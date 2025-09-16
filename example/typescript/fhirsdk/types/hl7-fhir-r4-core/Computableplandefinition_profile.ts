@@ -27,3 +27,14 @@ export const attach_Computableplandefinition = (resource: PlanDefinition, profil
         library: profile.library,
     }
 }
+
+export const extract_PlanDefinition = (resource: PlanDefinition): Computableplandefinition => {
+    if (resource.library === undefined) {
+        throw new Error("'library' is required for http://hl7.org/fhir/StructureDefinition/computableplandefinition");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/computableplandefinition',
+        library: resource.library,
+    }
+}

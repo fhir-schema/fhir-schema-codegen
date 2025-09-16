@@ -37,3 +37,17 @@ export const attach_Picoelement = (resource: EvidenceVariable, profile: Picoelem
         characteristic: profile.characteristic,
     }
 }
+
+export const extract_EvidenceVariable = (resource: EvidenceVariable): Picoelement => {
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/picoelement',
+        identifier: resource.identifier,
+        title: resource.title,
+        shortTitle: resource.shortTitle,
+        date: resource.date,
+        description: resource.description,
+        note: resource.note,
+        type: resource.type,
+        characteristic: resource.characteristic,
+    }
+}

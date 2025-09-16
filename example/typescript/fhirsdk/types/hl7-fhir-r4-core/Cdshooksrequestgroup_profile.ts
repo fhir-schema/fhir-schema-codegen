@@ -37,3 +37,24 @@ export const attach_Cdshooksrequestgroup = (resource: RequestGroup, profile: Cds
         action: profile.action,
     }
 }
+
+export const extract_RequestGroup = (resource: RequestGroup): Cdshooksrequestgroup => {
+    if (resource.identifier === undefined) {
+        throw new Error("'identifier' is required for http://hl7.org/fhir/StructureDefinition/cdshooksrequestgroup");
+    }
+    
+    if (resource.instantiatesUri === undefined) {
+        throw new Error("'instantiatesUri' is required for http://hl7.org/fhir/StructureDefinition/cdshooksrequestgroup");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/cdshooksrequestgroup',
+        identifier: resource.identifier,
+        instantiatesUri: resource.instantiatesUri,
+        priority: resource.priority,
+        subject: resource.subject,
+        authoredOn: resource.authoredOn,
+        author: resource.author,
+        action: resource.action,
+    }
+}

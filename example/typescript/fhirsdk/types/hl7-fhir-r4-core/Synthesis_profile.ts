@@ -67,3 +67,39 @@ export const attach_Synthesis = (resource: Evidence, profile: Synthesis): Eviden
         exposureVariant: profile.exposureVariant,
     }
 }
+
+export const extract_Evidence = (resource: Evidence): Synthesis => {
+    if (resource.outcome === undefined) {
+        throw new Error("'outcome' is required for http://hl7.org/fhir/StructureDefinition/synthesis");
+    }
+    
+    if (resource.exposureVariant === undefined) {
+        throw new Error("'exposureVariant' is required for http://hl7.org/fhir/StructureDefinition/synthesis");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/synthesis',
+        description: resource.description,
+        date: resource.date,
+        publisher: resource.publisher,
+        approvalDate: resource.approvalDate,
+        copyright: resource.copyright,
+        outcome: resource.outcome,
+        title: resource.title,
+        note: resource.note,
+        author: resource.author,
+        status: resource.status,
+        subtitle: resource.subtitle,
+        url: resource.url,
+        identifier: resource.identifier,
+        lastReviewDate: resource.lastReviewDate,
+        editor: resource.editor,
+        reviewer: resource.reviewer,
+        shortTitle: resource.shortTitle,
+        version: resource.version,
+        relatedArtifact: resource.relatedArtifact,
+        contact: resource.contact,
+        exposureBackground: resource.exposureBackground,
+        exposureVariant: resource.exposureVariant,
+    }
+}

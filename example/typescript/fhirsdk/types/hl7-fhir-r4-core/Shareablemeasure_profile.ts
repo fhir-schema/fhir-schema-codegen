@@ -51,3 +51,45 @@ export const attach_Shareablemeasure = (resource: Measure, profile: Shareablemea
         contact: profile.contact,
     }
 }
+
+export const extract_Measure = (resource: Measure): Shareablemeasure => {
+    if (resource.description === undefined) {
+        throw new Error("'description' is required for http://hl7.org/fhir/StructureDefinition/shareablemeasure");
+    }
+    
+    if (resource.publisher === undefined) {
+        throw new Error("'publisher' is required for http://hl7.org/fhir/StructureDefinition/shareablemeasure");
+    }
+    
+    if (resource.name === undefined) {
+        throw new Error("'name' is required for http://hl7.org/fhir/StructureDefinition/shareablemeasure");
+    }
+    
+    if (resource.experimental === undefined) {
+        throw new Error("'experimental' is required for http://hl7.org/fhir/StructureDefinition/shareablemeasure");
+    }
+    
+    if (resource.url === undefined) {
+        throw new Error("'url' is required for http://hl7.org/fhir/StructureDefinition/shareablemeasure");
+    }
+    
+    if (resource.version === undefined) {
+        throw new Error("'version' is required for http://hl7.org/fhir/StructureDefinition/shareablemeasure");
+    }
+    
+    return {
+        __profileUrl: 'http://hl7.org/fhir/StructureDefinition/shareablemeasure',
+        description: resource.description,
+        date: resource.date,
+        publisher: resource.publisher,
+        jurisdiction: resource.jurisdiction,
+        name: resource.name,
+        useContext: resource.useContext,
+        experimental: resource.experimental,
+        title: resource.title,
+        url: resource.url,
+        identifier: resource.identifier,
+        version: resource.version,
+        contact: resource.contact,
+    }
+}
