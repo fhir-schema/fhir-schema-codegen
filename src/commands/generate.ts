@@ -29,6 +29,8 @@ export class GenerateCommand extends BaseCommand {
             'Source fhir packages (example: hl7.fhir.r4.core@4.0.1)',
         ).conflicts('files');
 
+        const defaultPathToSchema = './tmp/type-schema.ndjson';
+
         program
             .command('generate')
             .description('Generate code from FHIR Schema')
@@ -120,7 +122,7 @@ export class GenerateCommand extends BaseCommand {
                         logger.info('Processing packages with type-schema...');
 
                         try {
-                            let typeSchemaNdJson: string | null = null;
+                            let typeSchemaNdJson: string | undefined = undefined;
                             try {
                                 typeSchemaNdJson = await executeTypeSchema(
                                     options.packages,
@@ -130,14 +132,15 @@ export class GenerateCommand extends BaseCommand {
                                 );
                             } catch {
                                 logger.warn(
-                                    'Failed to generate type schema, trying to collect a hashed version...',
+                                    'Failed to generate type schema, trying to collect a cashed version...',
                                 );
-                                const pathToSchema: string | null = options.hashedTypeSchema;
-                                if (!pathToSchema)
-                                    this.handleError(
-                                        'No schemas found:',
-                                        new Error('no path to schema is provided'),
+                                let pathToSchema: string | null = options.hashedTypeSchema;
+                                if (!pathToSchema) {
+                                    logger.warn(
+                                        `No path to schema is provided, trying to use a default path (${defaultPathToSchema})...`,
                                     );
+                                    pathToSchema = defaultPathToSchema;
+                                }
                                 try {
                                     typeSchemaNdJson = readFileSync(pathToSchema, 'utf-8');
                                 } catch (err) {
