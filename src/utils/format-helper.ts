@@ -1,4 +1,4 @@
-import { camelCase } from '../../utils/code';
+import { camelCase } from './code';
 
 const ops: Record<string, string> = {
     '!': 'Not',

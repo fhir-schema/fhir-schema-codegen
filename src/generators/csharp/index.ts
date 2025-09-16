@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { type NestedTypeSchema, type TypeRef, TypeSchema } from '../../typeschema';
 import { Generator, type GeneratorOptions } from '../generator';
-import * as formatHelper from './format-helper';
+import * as formatHelper from '../../utils/format-helper';
 
 export interface CSharpScriptGeneratorOptions extends GeneratorOptions {
     generateClasses?: boolean;
