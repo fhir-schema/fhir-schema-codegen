@@ -66,6 +66,8 @@ export async function executeTypeSchema(
     version: string = TYPE_SCHEMA_VERSION,
     customExecCommand?: string,
     fhirSchemas?: string[],
+    outputDir = './tmp',
+    outputFile = './tmp/type-schema.ndjson',
 ): Promise<string> {
     const binaryPath = customExecCommand || (await ensureBinaryExists(version));
 
@@ -82,11 +84,9 @@ export async function executeTypeSchema(
         await ensureBinaryExists(version, true);
     }
 
-    const outputPath = './tmp';
-    if (!fs.existsSync(outputPath)) {
-        fs.mkdirSync(outputPath, { recursive: true });
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
     }
-    const outputFile = `${outputPath}/type-schema.ndjson`;
 
     let cmdParts: string[] = [];
     if (customExecCommand) {
