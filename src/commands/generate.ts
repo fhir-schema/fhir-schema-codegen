@@ -5,6 +5,7 @@ import { GeneratorError, generatorsRegistry } from '../generators-registry';
 import { logger } from '../logger';
 import { executeTypeSchema, TYPE_SCHEMA_VERSION } from '../utils/type-schema';
 import { BaseCommand } from './command';
+import crypto from 'node:crypto';
 
 /**
  * Command to generate code from FHIR schema
@@ -28,8 +29,6 @@ export class GenerateCommand extends BaseCommand {
             '-p, --packages <names...>',
             'Source fhir packages (example: hl7.fhir.r4.core@4.0.1)',
         ).conflicts('files');
-
-        const defaultPathToSchema = './tmp/type-schema.ndjson';
 
         program
             .command('generate')
@@ -60,7 +59,7 @@ export class GenerateCommand extends BaseCommand {
             .option('--profile', 'Enable profile generation')
             .option('--with-debug-comment', 'Enable debug comments in generated code')
             .option(
-                '--hashed-type-schema <path>',
+                '--cashed-type-schema <path>',
                 'A path to an existing type-schema ndjson file (used if type-schema fails to generate)',
             )
             .hook('preSubcommand', (thisCommand) => {
@@ -120,8 +119,13 @@ export class GenerateCommand extends BaseCommand {
 
                     if (options.packages) {
                         logger.info('Processing packages with type-schema...');
-
                         try {
+                            const cacheDir = './tmp';
+                            const cachePath = this.buildCachePath(
+                                options.packages,
+                                options.fhirSchema,
+                                cacheDir,
+                            );
                             let typeSchemaNdJson: string | undefined = undefined;
                             try {
                                 typeSchemaNdJson = await executeTypeSchema(
@@ -129,17 +133,19 @@ export class GenerateCommand extends BaseCommand {
                                     TYPE_SCHEMA_VERSION,
                                     options.typeSchemaExec,
                                     options.fhirSchema,
+                                    cacheDir,
+                                    cachePath,
                                 );
                             } catch {
                                 logger.warn(
                                     'Failed to generate type schema, trying to collect a cashed version...',
                                 );
-                                let pathToSchema: string | null = options.hashedTypeSchema;
+                                let pathToSchema: string | null = options.cashedTypeSchema;
                                 if (!pathToSchema) {
                                     logger.warn(
-                                        `No path to schema is provided, trying to use a default path (${defaultPathToSchema})...`,
+                                        `No path to schema is provided, trying to use a default path (${cachePath})...`,
                                     );
-                                    pathToSchema = defaultPathToSchema;
+                                    pathToSchema = cachePath;
                                 }
                                 try {
                                     typeSchemaNdJson = readFileSync(pathToSchema, 'utf-8');
@@ -218,6 +224,14 @@ export class GenerateCommand extends BaseCommand {
                     this.handleError('can not generate SDK', error);
                 }
             });
+    }
+
+    private buildCachePath(packages: string[], fhirSchemaFiles: string[], baseDir: string) {
+        const hash = crypto
+            .createHash('md5')
+            .update(JSON.stringify({ packages, fhirSchemaFiles }))
+            .digest('hex');
+        return path.join(baseDir, `schema-cache-${hash}.ndjson`);
     }
 
     private handleError(msg: string, error: unknown): never {
