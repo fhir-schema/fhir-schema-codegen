@@ -39,6 +39,7 @@ export const DEFAULT_FILE_BASED_MUSTACHE_GENERATOR_OPTIONS: FileBasedMustacheGen
         field: [],
     },
     renderings: {
+        utility: [],
         resource: [],
         complexType: []
     },

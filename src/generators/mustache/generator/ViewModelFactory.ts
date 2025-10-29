@@ -11,6 +11,7 @@ import {ListElementInformationMixinProvider} from "@fscg/generators/mustache/gen
 import {PRIMITIVE_TYPES} from "@fscg/generators/mustache/types/PrimitiveType";
 import {FieldViewModel} from "@fscg/generators/mustache/types/FieldViewModel";
 import {IsPrefixed} from "@fscg/generators/mustache/UtilityTypes";
+import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
 
 export type ViewModelCache = {
     resourcesByUri: Record<string, ResourceViewModel>;
@@ -20,6 +21,10 @@ export type ViewModelCache = {
 export class ViewModelFactory {
     private arrayMixinProvider: ListElementInformationMixinProvider = new ListElementInformationMixinProvider();
     constructor(private readonly loader: SchemaLoaderFacade, private readonly nameGenerator: NameGenerator) {
+    }
+
+    public createUtility(): ViewModel {
+        return {};
     }
 
     public createComplexType(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): ComplexTypeWithParentsViewModel{

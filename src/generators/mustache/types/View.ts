@@ -1,8 +1,9 @@
 import {NamedViewModel} from "@fscg/generators/mustache/types/NamedViewModel";
 import {LambdaMixin} from "@fscg/generators/mustache/types/LambdaMixin";
+import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
 
 
-export type View<T extends NamedViewModel> = LambdaMixin & {
+export type View<T extends ViewModel> = LambdaMixin & {
     model: T,
     meta: {
         timestamp: string,

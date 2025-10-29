@@ -22,6 +22,7 @@ import {DebugMixinProvider} from "@fscg/generators/mustache/generator/DebugMixin
 import { spawn } from 'child_process';
 import {TypeViewModel} from "@fscg/generators/mustache/types/TypeViewModel";
 import {HookType} from "@fscg/generators/mustache/types/HookType";
+import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
 
 
 export interface MustacheGeneratorOptions extends GeneratorOptions {
@@ -41,6 +42,7 @@ export interface MustacheGeneratorOptions extends GeneratorOptions {
     unsaveCharacterPattern: string | RegExp;
     nameTransformations: DistinctNameConfigurationType<NameTransformation[]>,
     renderings: {
+        utility: Rendering[],
         resource: Rendering[],
         complexType: Rendering[]
     }
@@ -95,6 +97,9 @@ export class MustacheGenerator extends Generator {
         schemaLoaderFacade.getResourceNames()
             .map(viewModel => modelFactory.createResource(viewModel, cache))
             .forEach(this._renderResource.bind(this));
+
+        this._renderUtility(modelFactory.createUtility());
+
         this.copyStaticFiles();
 
         await this._runHooks(this.mustacheGeneratorOptions.hooks.afterGenerate);
@@ -119,6 +124,18 @@ export class MustacheGenerator extends Generator {
             return true;
         }
         return !rendering.filter.whitelist?.length;
+    }
+
+    private _renderUtility(model: ViewModel){
+        this.mustacheGeneratorOptions.renderings.utility
+            .forEach(rendering => {
+                    this.dir(rendering.path, () => {
+                        this.file(rendering.fileNameFormat, () => {
+                            this.write(this._render(model, rendering));
+                        });
+                    });
+                }
+            );
     }
 
     private _renderResource(model: ResourceViewModel){
@@ -151,7 +168,7 @@ export class MustacheGenerator extends Generator {
         return util.format(rendering.fileNameFormat, model.saveName);
     }
 
-    private _render<T extends NamedViewModel>(model: T, rendering: Rendering): string{
+    private _render<T extends ViewModel>(model: T, rendering: Rendering): string{
         let view: View<T> = this.lambdaMixinProvider.apply({
             meta: {
                 timestamp: this.mustacheGeneratorOptions.meta.timestamp ?? new Date().toISOString(),
