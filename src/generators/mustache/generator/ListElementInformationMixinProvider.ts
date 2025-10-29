@@ -19,7 +19,7 @@ export class ListElementInformationMixinProvider {
                         '-length': array.length,
                         '-first': index === 0,
                         '-last': index === array.length - 1,
-                    }
+                    } satisfies ListElementInformationMixin
                 }
                 return v;
             });
