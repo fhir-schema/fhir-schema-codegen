@@ -29,6 +29,12 @@ export const kebabCase = (s: string) => {
         .join('-');
 };
 
+export const titleCase = (input: string) => {
+    return words(input)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
 const buildDependencyGraph = (schemas: TypeSchema[]): Record<string, string[]> => {
     const nameToMap: Record<string, TypeSchema> = {};
     for (const schema of schemas) {

@@ -1,0 +1,130 @@
+{
+  "debug": "OFF",
+  "hooks": {
+    "afterGenerate": [
+      {"cmd": "mvn","args": ["generate-sources","--batch-mode"]}
+    ]
+  },
+  "renderings": {
+    "resource": [
+      {
+        "source":"type.mustache",
+        "path": "src/main/java/de/solutio/fhir/models/resources",
+        "fileNameFormat":"%s.java",
+        "properties": {
+          "package": "de.solutio.fhir.models.resources",
+          "additional_imports": [
+            "de.solutio.fhir.models.complex_types.*"
+          ]
+        }
+      }
+    ],
+    "complexType": [
+      {
+        "source":"type.mustache",
+        "path": "src/main/java/de/solutio/fhir/models/complex_types",
+        "fileNameFormat":"%s.java",
+        "properties": {
+          "package": "de.solutio.fhir.models.complex_types",
+          "additional_imports": []
+        }
+      }
+    ]
+  },
+  "nameTransformations": {
+    "common": [
+      {"pattern": "^(?<number>\\d+)(?<rest>.*)$", "format": "_$<number>$<rest>"}
+    ],
+    "enumValue": [
+      {"pattern": "^<=$", "format": "LESS_OR_EQUAL"},
+      {"pattern": "^>=$", "format": "GREATER_OR_EQUAL"},
+      {"pattern": "^<$",  "format": "LESS"},
+      {"pattern": "^=$",  "format": "EQUAL"},
+      {"pattern": "^>$",  "format": "GREATER"}
+    ],
+    "type": [
+      {"pattern": "^List$", "format": "FHIRList"}
+    ]
+  },
+  "keywords": [
+    "abstract",
+    "assert",
+    "boolean",
+    "break",
+    "byte",
+    "case",
+    "catch",
+    "char",
+    "class",
+    "const",
+    "continue",
+    "default",
+    "do",
+    "double",
+    "else",
+    "enum",
+    "extends",
+    "final",
+    "finally",
+    "float",
+    "for",
+    "goto",
+    "if",
+    "implements",
+    "import",
+    "instanceof",
+    "int",
+    "interface",
+    "long",
+    "native",
+    "new",
+    "package",
+    "private",
+    "protected",
+    "public",
+    "return",
+    "short",
+    "static",
+    "strictfp",
+    "super",
+    "switch",
+    "synchronized",
+    "this",
+    "throw",
+    "throws",
+    "transient",
+    "try",
+    "void",
+    "volatile",
+    "while",
+    "true",
+    "false",
+    "null"
+  ],
+  "typeMap":{
+    "boolean": "Boolean",
+    "instant": "Instant",
+    "time": "LocalTime",
+    "date": "LocalDate",
+    "dateTime": "LocalDateTime",
+
+    "decimal": "BigDecimal",
+    "integer": "Integer",
+    "unsignedInt": "Long",
+    "positiveInt": "Long",
+    "integer64": "Long",
+    "base64Binary": "String",
+
+    "uri": "URI",
+    "url": "URI",
+    "canonical": "String",
+    "oid": "String",
+    "uuid": "UUID",
+
+    "string": "String",
+    "code": "String",
+    "markdown": "String",
+    "id": "String",
+    "xhtml": "String"
+  }
+}

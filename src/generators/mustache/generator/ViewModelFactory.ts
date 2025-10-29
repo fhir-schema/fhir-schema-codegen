@@ -1,0 +1,188 @@
+import {ClassField, NestedTypeSchema, TypeRef, TypeSchema} from "@fscg/typeschema";
+import {ComplexTypeViewModel} from "@fscg/generators/mustache/types/ComplexTypeViewModel";
+import {ResourceViewModel} from "@fscg/generators/mustache/types/ResourceViewModel";
+import {NameGenerator} from "@fscg/generators/mustache/generator/NameGenerator";
+import {EnumViewModel} from "@fscg/generators/mustache/types/EnumViewModel";
+import {TypeViewModel} from "@fscg/generators/mustache/types/TypeViewModel";
+import {ResourceWithParentsViewModel} from "@fscg/generators/mustache/types/ResourceWithParentsViewModel";
+import {ComplexTypeWithParentsViewModel} from "@fscg/generators/mustache/types/ComplexTypeWithParentsViewModel";
+import {SchemaLoaderFacade} from "@fscg/generators/mustache/generator/SchemaLoaderFacade";
+import {ListElementInformationMixinProvider} from "@fscg/generators/mustache/generator/ListElementInformationMixinProvider";
+import {PRIMITIVE_TYPES} from "@fscg/generators/mustache/types/PrimitiveType";
+import {FieldViewModel} from "@fscg/generators/mustache/types/FieldViewModel";
+import {IsPrefixed} from "@fscg/generators/mustache/UtilityTypes";
+
+export type ViewModelCache = {
+    resourcesByUri: Record<string, ResourceViewModel>;
+    complexTypesByUri: Record<string, ComplexTypeViewModel>;
+}
+
+export class ViewModelFactory {
+    private arrayMixinProvider: ListElementInformationMixinProvider = new ListElementInformationMixinProvider();
+    constructor(private readonly loader: SchemaLoaderFacade, private readonly nameGenerator: NameGenerator) {
+    }
+
+    public createComplexType(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): ComplexTypeWithParentsViewModel{
+        const base = this._createForComplexType(name, cache);
+        const parents = this._createParentsFor(base.schema, cache);
+        return this.arrayMixinProvider.apply({
+            ...base,
+            parents,
+            inheritedFields: parents.flatMap(p=>p.fields),
+            allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
+        });
+    }
+    public createResource(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): ResourceWithParentsViewModel{
+        const base = this._createForResource(name, cache);
+        const parents = this._createParentsFor(base.schema, cache);
+        return this.arrayMixinProvider.apply({
+            ...base,
+            parents,
+            inheritedFields: parents.flatMap(p=>p.fields),
+            allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
+        });
+    }
+
+    private _createFor(typeRef: TypeRef, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
+        if(typeRef.kind === 'complex-type'){
+            return this._createForComplexType(typeRef.name, cache, nestedIn);
+        }
+        if(typeRef.kind === 'resource'){
+            return this._createForResource(typeRef.name, cache, nestedIn);
+        }
+        throw new Error(`Unknown type ${typeRef.kind}`);
+    }
+
+    private _createForComplexType(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): ComplexTypeViewModel{
+        const type = this.loader.getComplexType(name);
+        if(!type){
+            throw new Error(`ComplexType ${name} not found`)
+        }
+        if(!cache.complexTypesByUri.hasOwnProperty(type.identifier.url)){
+            cache.complexTypesByUri[type.identifier.url] = this._createTypeViewModel(type, cache, nestedIn);
+        }
+        return cache.complexTypesByUri[type.identifier.url];
+    }
+
+    private _createForResource(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): ResourceViewModel{
+        const type = this.loader.getResource(name);
+        if(!type){
+            throw new Error(`Resource ${name} not found`)
+        }
+        if(!cache.resourcesByUri.hasOwnProperty(type.identifier.url)){
+            cache.resourcesByUri[type.identifier.url] = this._createTypeViewModel(type, cache, nestedIn);
+        }
+        return cache.resourcesByUri[type.identifier.url];
+    }
+
+    private _createParentsFor(base: TypeSchema | NestedTypeSchema, cache: ViewModelCache){
+        const parents: TypeViewModel[] = [];
+        let parentRef: TypeRef | undefined = base.base;
+        while(parentRef){
+            parents.push(this._createFor(parentRef, cache, undefined));
+            const parent = this.loader.get(parentRef);
+            parentRef = parent?.base;
+        }
+        return parents;
+    }
+
+    private _createForNestedType(nested: NestedTypeSchema, cache: ViewModelCache, nestedIn?: TypeSchema): ComplexTypeWithParentsViewModel{
+        const base = this._createTypeViewModel(nested, cache, nestedIn);
+        const parents = this._createParentsFor(nested, cache);
+        return {
+            ...base,
+            parents,
+            inheritedFields: parents.flatMap(p=>p.fields),
+            allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
+        }
+    }
+
+    private _createTypeViewModel(schema: TypeSchema | NestedTypeSchema, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
+        const fields = Object.entries(schema.fields ?? {});
+        const nestedComplexTypes = this._collectNestedComplex(schema, cache);
+        const nestedEnums = this._collectNestedEnums(fields);
+        return {
+            nestedComplexTypes,
+            nestedEnums,
+            isNested: !!nestedIn,
+            schema: schema,
+            name: schema.identifier.name,
+            saveName: this.nameGenerator.generateType(schema),
+            isResource: this._createIsResource(schema.identifier),
+            isComplexType: this._createIsComplexType(schema.identifier),
+            fields: fields
+                .filter(([_fieldName, fieldSchema])=>!!fieldSchema.type)
+                .sort((a,b)=>a[0].localeCompare(b[0]))
+                .map(([fieldName, fieldSchema])=>{
+
+                    return {
+                        schema: fieldSchema,
+                        name: fieldName,
+                        saveName: this.nameGenerator.generateField(fieldName),
+                        typeName: this.nameGenerator.generateFieldType(fieldSchema),
+
+                        isArray: fieldSchema.array,
+                        isRequired: fieldSchema.required,
+                        isEnum: !!fieldSchema.enum,
+                        isPrimitive: this._createIsPrimitiveType(fieldSchema.type),
+
+                        isSizeConstrained: fieldSchema.min !== undefined || fieldSchema.max !== undefined,
+                        min: fieldSchema.min,
+                        max: fieldSchema.max,
+
+                        isResource: this._createIsResource(fieldSchema.type),
+                        isComplexType: this._createIsComplexType(fieldSchema.type),
+                        isPrimitiveType: fieldSchema.type.kind === 'primitive-type',
+
+                        isCode: fieldSchema.type.name === 'code',
+                        isIdentifier: fieldSchema.type.name === 'Identifier',
+                        isReference: fieldSchema.type.name === 'Reference'
+                    };
+                }
+            )
+        }
+    }
+
+    private _createIsResource(typeRef: TypeRef): Record<IsPrefixed<string>, boolean> | false {
+        if(typeRef.kind !== 'resource'){
+            return false;
+        }
+        return Object.fromEntries(this.loader.getResourceNames().map(name=>[`is${name.charAt(0).toUpperCase()+name.slice(1)}`, name === typeRef.name])) as Record<IsPrefixed<string>, boolean>;
+    }
+    private _createIsComplexType(typeRef: TypeRef): Record<IsPrefixed<string>, boolean> | false {
+        if(typeRef.kind !== 'complex-type' && typeRef.kind !== 'nested'){
+            return false;
+        }
+        return Object.fromEntries(this.loader.getComplexTypeNames().map(name=>[`is${name.charAt(0).toUpperCase()+name.slice(1)}`, name === typeRef.name])) as Record<IsPrefixed<string>, boolean>;
+    }
+    private _createIsPrimitiveType(typeRef: TypeRef): Record<IsPrefixed<string>, boolean> | false {
+        if(typeRef.kind !== 'primitive-type'){
+            return false;
+        }
+        return Object.fromEntries(PRIMITIVE_TYPES.map(type=>(['is'+type.charAt(0).toUpperCase()+type.slice(1), typeRef.name === type]))) as FieldViewModel['isPrimitive'];
+    }
+
+    private _collectNestedComplex(schema: TypeSchema | NestedTypeSchema, cache: ViewModelCache,): ComplexTypeWithParentsViewModel[] {
+        const nested: ComplexTypeWithParentsViewModel[] = [];
+        if('nested' in schema && schema.nested){
+            schema.nested.map(nested => this._createForNestedType(nested, cache, schema)).forEach(n=>nested.push(n));
+        }
+        return nested;
+    }
+    private _collectNestedEnums(fields:[string, ClassField][]): EnumViewModel[] {
+        const nestedEnumValues: Record<string, Set<string>> = {};
+        fields.forEach(([fieldName, fieldSchema])=>{if(fieldSchema.enum){
+            const name = fieldSchema.binding?.name ?? fieldName;
+            nestedEnumValues[name] = nestedEnumValues[name] ?? new Set<string>();
+            fieldSchema.enum.forEach(nestedEnumValues[name].add.bind(nestedEnumValues[name]));
+        }});
+        return Object.entries(nestedEnumValues).map(([name, values])=>({
+            name: name,
+            saveName: this.nameGenerator.generateEnumType(name),
+            values: Array.from(values).map(value=>({
+                name: value,
+                saveName: this.nameGenerator.generateEnumValue(value)
+            }))
+        }))
+    }
+}

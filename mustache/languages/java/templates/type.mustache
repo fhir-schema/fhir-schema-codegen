@@ -1,0 +1,37 @@
+package {{{properties.package}}};
+
+import static java.util.Objects.requireNonNull;
+
+import jakarta.annotation.Generated;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Generated;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
+
+{{#properties.additional_imports}}
+import {{{.}}};
+{{/properties.additional_imports}}
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.net.URI;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+@Generated(value="{{{meta.generator}}}", date="{{{meta.timestamp}}}")
+{{#model}}
+{{>nested_type}}
+{{/model}}

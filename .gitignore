@@ -20,7 +20,7 @@ example/csharp/bin
 *.sln
 
 # SDK Examples
-
+/java-sdk
 example/docker-compose.yaml
 
 # Python SDK
