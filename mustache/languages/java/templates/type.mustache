@@ -18,6 +18,10 @@ import {{{.}}};
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.net.URI;
 import java.math.BigDecimal;
@@ -33,5 +37,8 @@ import java.util.Map;
 
 @Generated(value="{{{meta.generator}}}", date="{{{meta.timestamp}}}")
 {{#model}}
+{{#isResource.isResource}}
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "resourceType")
+{{/isResource.isResource}}
 {{>nested_type}}
 {{/model}}

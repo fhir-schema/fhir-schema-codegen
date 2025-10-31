@@ -1,6 +1,4 @@
-import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
-
-export type NamedViewModel = ViewModel & {
+export type NamedViewModel = {
     name: string;
     saveName: string;
 }

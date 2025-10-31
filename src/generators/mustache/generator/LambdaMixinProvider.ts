@@ -1,6 +1,6 @@
 import {NameGenerator} from "@fscg/generators/mustache/generator/NameGenerator";
 import {LambdaMixin} from "@fscg/generators/mustache/types/LambdaMixin";
-import {camelCase, kebabCase, pascalCase, snakeCase, titleCase} from "@fscg/utils/code";
+import {camelCase, kebabCase, pascalCase, snakeCase} from "@fscg/utils/code";
 
 
 export class LambdaMixinProvider {
@@ -10,7 +10,6 @@ export class LambdaMixinProvider {
             camelCase: () => (text, render) => camelCase(render(text)),
             snakeCase: () => (text, render) => snakeCase(render(text)),
             pascalCase: () => (text, render) => pascalCase(render(text)),
-            titleCase: () => (text, render) => titleCase(render(text)),
             kebabCase: () => (text, render) => kebabCase(render(text)),
             lowerCase: () => (text, render) => render(text).toLowerCase(),
             upperCase: () => (text, render) => render(text).toUpperCase(),

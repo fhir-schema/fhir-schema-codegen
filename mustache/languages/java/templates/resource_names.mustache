@@ -1,0 +1,27 @@
+package {{{properties.package}}};
+
+import static java.util.Objects.requireNonNull;
+import jakarta.annotation.Generated;
+
+@Generated(value="{{{meta.generator}}}", date="{{{meta.timestamp}}}")
+{{#model}}
+public enum ResourceName{
+    {{#resources}}
+        {{#lambda.upperCase}}{{#lambda.snakeCase}}{{saveName}}{{/lambda.snakeCase}}{{/lambda.upperCase}}("{{{saveName}}}"){
+            public Class<{{{properties.resourcePackage}}}.{{{saveName}}}> resourceClass() {
+                return {{{properties.resourcePackage}}}.{{{saveName}}}.class;
+            }
+        }{{^-last}},{{/-last}}
+    {{/resources}};
+
+    private final String typeName;
+    ResourceName(String typeName) {
+        this.typeName = requireNonNull(typeName);
+    }
+
+    public String typeName() {
+        return typeName;
+    }
+    public abstract Class<? extends {{{properties.resourcePackage}}}.Resource> resourceClass();
+}
+{{/model}}

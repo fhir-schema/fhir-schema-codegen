@@ -1,4 +1,3 @@
-import {NamedViewModel} from "@fscg/generators/mustache/types/NamedViewModel";
 import {LambdaMixin} from "@fscg/generators/mustache/types/LambdaMixin";
 import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
 

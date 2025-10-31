@@ -1,21 +1,19 @@
 import {ClassField, NestedTypeSchema, TypeRef, TypeSchema} from "@fscg/typeschema";
-import {ComplexTypeViewModel} from "@fscg/generators/mustache/types/ComplexTypeViewModel";
-import {ResourceViewModel} from "@fscg/generators/mustache/types/ResourceViewModel";
 import {NameGenerator} from "@fscg/generators/mustache/generator/NameGenerator";
 import {EnumViewModel} from "@fscg/generators/mustache/types/EnumViewModel";
 import {TypeViewModel} from "@fscg/generators/mustache/types/TypeViewModel";
-import {ResourceWithParentsViewModel} from "@fscg/generators/mustache/types/ResourceWithParentsViewModel";
-import {ComplexTypeWithParentsViewModel} from "@fscg/generators/mustache/types/ComplexTypeWithParentsViewModel";
+import {ResolvedTypeViewModel} from "@fscg/generators/mustache/types/ResolvedTypeViewModel";
 import {SchemaLoaderFacade} from "@fscg/generators/mustache/generator/SchemaLoaderFacade";
 import {ListElementInformationMixinProvider} from "@fscg/generators/mustache/generator/ListElementInformationMixinProvider";
 import {PRIMITIVE_TYPES} from "@fscg/generators/mustache/types/PrimitiveType";
 import {FieldViewModel} from "@fscg/generators/mustache/types/FieldViewModel";
 import {IsPrefixed} from "@fscg/generators/mustache/UtilityTypes";
 import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
+import {RootViewModel} from "@fscg/generators/mustache/types/RootViewModel";
 
 export type ViewModelCache = {
-    resourcesByUri: Record<string, ResourceViewModel>;
-    complexTypesByUri: Record<string, ComplexTypeViewModel>;
+    resourcesByUri: Record<string, TypeViewModel>;
+    complexTypesByUri: Record<string, TypeViewModel>;
 }
 
 export class ViewModelFactory {
@@ -23,24 +21,26 @@ export class ViewModelFactory {
     constructor(private readonly loader: SchemaLoaderFacade, private readonly nameGenerator: NameGenerator) {
     }
 
-    public createUtility(): ViewModel {
-        return {};
+    public createUtility(): RootViewModel<ViewModel> {
+        return this._createForRoot();
     }
 
-    public createComplexType(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): ComplexTypeWithParentsViewModel{
+    public createComplexType(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
         const base = this._createForComplexType(name, cache);
         const parents = this._createParentsFor(base.schema, cache);
         return this.arrayMixinProvider.apply({
+            ...this._createForRoot(),
             ...base,
             parents,
             inheritedFields: parents.flatMap(p=>p.fields),
             allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
         });
     }
-    public createResource(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): ResourceWithParentsViewModel{
+    public createResource(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
         const base = this._createForResource(name, cache);
         const parents = this._createParentsFor(base.schema, cache);
         return this.arrayMixinProvider.apply({
+            ...this._createForRoot(),
             ...base,
             parents,
             inheritedFields: parents.flatMap(p=>p.fields),
@@ -58,7 +58,7 @@ export class ViewModelFactory {
         throw new Error(`Unknown type ${typeRef.kind}`);
     }
 
-    private _createForComplexType(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): ComplexTypeViewModel{
+    private _createForComplexType(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
         const type = this.loader.getComplexType(name);
         if(!type){
             throw new Error(`ComplexType ${name} not found`)
@@ -69,7 +69,7 @@ export class ViewModelFactory {
         return cache.complexTypesByUri[type.identifier.url];
     }
 
-    private _createForResource(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): ResourceViewModel{
+    private _createForResource(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
         const type = this.loader.getResource(name);
         if(!type){
             throw new Error(`Resource ${name} not found`)
@@ -91,7 +91,7 @@ export class ViewModelFactory {
         return parents;
     }
 
-    private _createForNestedType(nested: NestedTypeSchema, cache: ViewModelCache, nestedIn?: TypeSchema): ComplexTypeWithParentsViewModel{
+    private _createForNestedType(nested: NestedTypeSchema, cache: ViewModelCache, nestedIn?: TypeSchema): ResolvedTypeViewModel{
         const base = this._createTypeViewModel(nested, cache, nestedIn);
         const parents = this._createParentsFor(nested, cache);
         return {
@@ -167,8 +167,8 @@ export class ViewModelFactory {
         return Object.fromEntries(PRIMITIVE_TYPES.map(type=>(['is'+type.charAt(0).toUpperCase()+type.slice(1), typeRef.name === type]))) as FieldViewModel['isPrimitive'];
     }
 
-    private _collectNestedComplex(schema: TypeSchema | NestedTypeSchema, cache: ViewModelCache,): ComplexTypeWithParentsViewModel[] {
-        const nested: ComplexTypeWithParentsViewModel[] = [];
+    private _collectNestedComplex(schema: TypeSchema | NestedTypeSchema, cache: ViewModelCache,): ResolvedTypeViewModel[] {
+        const nested: ResolvedTypeViewModel[] = [];
         if('nested' in schema && schema.nested){
             schema.nested.map(nested => this._createForNestedType(nested, cache, schema)).forEach(n=>nested.push(n));
         }
@@ -189,5 +189,19 @@ export class ViewModelFactory {
                 saveName: this.nameGenerator.generateEnumValue(value)
             }))
         }))
+    }
+
+
+    private _createForRoot(): Pick<RootViewModel<unknown>, 'resources' |'complexTypes'>{
+        return this.arrayMixinProvider.apply({
+            complexTypes: this.loader.getComplexTypeNames().map(name=>({
+                name,
+                saveName: this.nameGenerator.generateType(name)
+            })),
+            resources: this.loader.getResourceNames().map(name => ({
+                name,
+                saveName: this.nameGenerator.generateType(name)
+            }))
+        });
     }
 }

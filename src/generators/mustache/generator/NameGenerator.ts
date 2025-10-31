@@ -62,6 +62,7 @@ export class NameGenerator {
         return this._generateTypeName(typeRef.url.split('/').pop()?.split('#').map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join('') ?? '<UNKNOWN>');
     }
 
+
     public generateFieldType(schema: ClassField): string{
         if(schema.enum){
             return this.generateEnumType(schema.binding?.name ?? schema.type.name);
@@ -69,8 +70,11 @@ export class NameGenerator {
         return this._generateTypeFromTypeRef(schema.type);
     }
 
-    public generateType(schema: TypeSchema | NestedTypeSchema): string {
-        return this._generateTypeFromTypeRef(schema.identifier);
+    public generateType(schemaOrName: TypeSchema | NestedTypeSchema | string): string {
+        if(typeof schemaOrName === 'string'){
+            return this._generateTypeName(schemaOrName);
+        }
+        return this._generateTypeFromTypeRef(schemaOrName.identifier);
     }
 
     public generateField(name: string): string {

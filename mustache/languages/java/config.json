@@ -8,12 +8,12 @@
   "renderings": {
     "utility": [
       {
-        "source":"http_client.mustache",
+        "source":"resource_names.mustache",
         "path": "src/main/java/de/solutio/fhir/client",
-        "fileNameFormat":"HttpClient.java",
+        "fileNameFormat":"ResourceName.java",
         "properties": {
           "package": "de.solutio.fhir.client",
-          "additional_imports": []
+          "resourcePackage": "de.solutio.fhir.models.resources"
         }
       }
     ],

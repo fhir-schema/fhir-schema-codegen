@@ -2,8 +2,6 @@ import path from 'node:path';
 
 import * as Mustache from 'mustache';
 import {Generator, type GeneratorOptions} from '../../generator';
-import {ResourceViewModel} from "@fscg/generators/mustache/types/ResourceViewModel";
-import {ComplexTypeViewModel} from "@fscg/generators/mustache/types/ComplexTypeViewModel";
 import {ViewModelCache, ViewModelFactory} from "@fscg/generators/mustache/generator/ViewModelFactory";
 import {Rendering} from "@fscg/generators/mustache/types/Rendering";
 import * as util from "node:util";
@@ -138,7 +136,7 @@ export class MustacheGenerator extends Generator {
             );
     }
 
-    private _renderResource(model: ResourceViewModel){
+    private _renderResource(model: TypeViewModel){
         this.mustacheGeneratorOptions.renderings.resource
             .filter(rendering=> this._checkRenderingFilter(model, rendering))
             .forEach(rendering => {
@@ -151,7 +149,7 @@ export class MustacheGenerator extends Generator {
         );
     }
 
-    private _renderComplexType(model: ComplexTypeViewModel){
+    private _renderComplexType(model: TypeViewModel){
         this.mustacheGeneratorOptions.renderings.complexType
             .filter(rendering=> this._checkRenderingFilter(model, rendering))
             .forEach(rendering => {
@@ -167,6 +165,7 @@ export class MustacheGenerator extends Generator {
     private _calculateFilename(model: NamedViewModel, rendering: Rendering): string{
         return util.format(rendering.fileNameFormat, model.saveName);
     }
+
 
     private _render<T extends ViewModel>(model: T, rendering: Rendering): string{
         let view: View<T> = this.lambdaMixinProvider.apply({

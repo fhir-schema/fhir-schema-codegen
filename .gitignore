@@ -8,6 +8,7 @@ bin/
 .fhir-packages
 .DS_Store
 .idea
+.run
 .vscode
 .env
 output
