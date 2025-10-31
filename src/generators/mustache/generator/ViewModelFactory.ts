@@ -18,6 +18,7 @@ export type ViewModelCache = {
 
 export class ViewModelFactory {
     private arrayMixinProvider: ListElementInformationMixinProvider = new ListElementInformationMixinProvider();
+
     constructor(private readonly loader: SchemaLoaderFacade, private readonly nameGenerator: NameGenerator) {
     }
 
@@ -25,24 +26,28 @@ export class ViewModelFactory {
         return this._createForRoot();
     }
 
-    public createComplexType(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
-        const base = this._createForComplexType(name, cache);
+    public createComplexType(typeRef: TypeRef, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
+        const base = this._createForComplexType(typeRef, cache);
         const parents = this._createParentsFor(base.schema, cache);
+        const children = this._createChildrenFor(typeRef, cache);
         return this.arrayMixinProvider.apply({
             ...this._createForRoot(),
             ...base,
             parents,
+            children,
             inheritedFields: parents.flatMap(p=>p.fields),
             allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
         });
     }
-    public createResource(name: string, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
-        const base = this._createForResource(name, cache);
+    public createResource(typeRef: TypeRef, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
+        const base = this._createForResource(typeRef, cache);
         const parents = this._createParentsFor(base.schema, cache);
+        const children = this._createChildrenFor(typeRef, cache);
         return this.arrayMixinProvider.apply({
             ...this._createForRoot(),
             ...base,
             parents,
+            children,
             inheritedFields: parents.flatMap(p=>p.fields),
             allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
         });
@@ -50,18 +55,18 @@ export class ViewModelFactory {
 
     private _createFor(typeRef: TypeRef, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
         if(typeRef.kind === 'complex-type'){
-            return this._createForComplexType(typeRef.name, cache, nestedIn);
+            return this._createForComplexType(typeRef, cache, nestedIn);
         }
         if(typeRef.kind === 'resource'){
-            return this._createForResource(typeRef.name, cache, nestedIn);
+            return this._createForResource(typeRef, cache, nestedIn);
         }
         throw new Error(`Unknown type ${typeRef.kind}`);
     }
 
-    private _createForComplexType(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
-        const type = this.loader.getComplexType(name);
+    private _createForComplexType(typeRef: TypeRef, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
+        const type = this.loader.getComplexType(typeRef);
         if(!type){
-            throw new Error(`ComplexType ${name} not found`)
+            throw new Error(`ComplexType ${typeRef.name} not found`)
         }
         if(!cache.complexTypesByUri.hasOwnProperty(type.identifier.url)){
             cache.complexTypesByUri[type.identifier.url] = this._createTypeViewModel(type, cache, nestedIn);
@@ -69,15 +74,20 @@ export class ViewModelFactory {
         return cache.complexTypesByUri[type.identifier.url];
     }
 
-    private _createForResource(name: string, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
-        const type = this.loader.getResource(name);
+    private _createForResource(typeRef: TypeRef, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel{
+        const type = this.loader.getResource(typeRef);
         if(!type){
-            throw new Error(`Resource ${name} not found`)
+            throw new Error(`Resource ${typeRef.name} not found`)
         }
         if(!cache.resourcesByUri.hasOwnProperty(type.identifier.url)){
             cache.resourcesByUri[type.identifier.url] = this._createTypeViewModel(type, cache, nestedIn);
         }
         return cache.resourcesByUri[type.identifier.url];
+    }
+
+    private _createChildrenFor(typeRef: TypeRef, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel[] {
+        return this.loader.getChildResources(typeRef)
+            .map(childRef => this._createFor(childRef, cache, nestedIn));
     }
 
     private _createParentsFor(base: TypeSchema | NestedTypeSchema, cache: ViewModelCache){
@@ -94,9 +104,11 @@ export class ViewModelFactory {
     private _createForNestedType(nested: NestedTypeSchema, cache: ViewModelCache, nestedIn?: TypeSchema): ResolvedTypeViewModel{
         const base = this._createTypeViewModel(nested, cache, nestedIn);
         const parents = this._createParentsFor(nested, cache);
+        const children = this._createChildrenFor(nested.identifier, cache, nestedIn);
         return {
             ...base,
             parents,
+            children,
             inheritedFields: parents.flatMap(p=>p.fields),
             allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
         }
@@ -152,13 +164,13 @@ export class ViewModelFactory {
         if(typeRef.kind !== 'resource'){
             return false;
         }
-        return Object.fromEntries(this.loader.getResourceNames().map(name=>[`is${name.charAt(0).toUpperCase()+name.slice(1)}`, name === typeRef.name])) as Record<IsPrefixed<string>, boolean>;
+        return Object.fromEntries(this.loader.getResources().map(resourceRef=>[`is${resourceRef.name.charAt(0).toUpperCase()+resourceRef.name.slice(1)}`, resourceRef.url === typeRef.url])) as Record<IsPrefixed<string>, boolean>;
     }
     private _createIsComplexType(typeRef: TypeRef): Record<IsPrefixed<string>, boolean> | false {
         if(typeRef.kind !== 'complex-type' && typeRef.kind !== 'nested'){
             return false;
         }
-        return Object.fromEntries(this.loader.getComplexTypeNames().map(name=>[`is${name.charAt(0).toUpperCase()+name.slice(1)}`, name === typeRef.name])) as Record<IsPrefixed<string>, boolean>;
+        return Object.fromEntries(this.loader.getComplexTypes().map(complexTypeRef=>[`is${complexTypeRef.name.charAt(0).toUpperCase()+complexTypeRef.name.slice(1)}`, complexTypeRef.url === typeRef.url])) as Record<IsPrefixed<string>, boolean>;
     }
     private _createIsPrimitiveType(typeRef: TypeRef): Record<IsPrefixed<string>, boolean> | false {
         if(typeRef.kind !== 'primitive-type'){
@@ -191,16 +203,15 @@ export class ViewModelFactory {
         }))
     }
 
-
     private _createForRoot(): Pick<RootViewModel<unknown>, 'resources' |'complexTypes'>{
         return this.arrayMixinProvider.apply({
-            complexTypes: this.loader.getComplexTypeNames().map(name=>({
-                name,
-                saveName: this.nameGenerator.generateType(name)
+            complexTypes: this.loader.getComplexTypes().map(typeRef=>({
+                name: typeRef.name,
+                saveName: this.nameGenerator.generateType(typeRef)
             })),
-            resources: this.loader.getResourceNames().map(name => ({
-                name,
-                saveName: this.nameGenerator.generateType(name)
+            resources: this.loader.getResources().map(typeRef => ({
+                name: typeRef.name,
+                saveName: this.nameGenerator.generateType(typeRef)
             }))
         });
     }

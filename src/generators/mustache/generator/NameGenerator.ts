@@ -70,11 +70,11 @@ export class NameGenerator {
         return this._generateTypeFromTypeRef(schema.type);
     }
 
-    public generateType(schemaOrName: TypeSchema | NestedTypeSchema | string): string {
-        if(typeof schemaOrName === 'string'){
-            return this._generateTypeName(schemaOrName);
+    public generateType(schemaOrRef: TypeSchema | NestedTypeSchema | TypeRef): string {
+        if('url' in schemaOrRef){
+            return this._generateTypeFromTypeRef(schemaOrRef);
         }
-        return this._generateTypeFromTypeRef(schemaOrName.identifier);
+        return this._generateTypeFromTypeRef(schemaOrRef.identifier);
     }
 
     public generateField(name: string): string {

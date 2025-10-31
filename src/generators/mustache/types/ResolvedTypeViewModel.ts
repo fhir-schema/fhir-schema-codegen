@@ -6,4 +6,5 @@ export type ResolvedTypeViewModel = TypeViewModel & {
     allFields: FieldViewModel[];
     inheritedFields: FieldViewModel[];
     parents: TypeViewModel[];
+    children: TypeViewModel[];
 }

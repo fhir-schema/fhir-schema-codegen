@@ -88,12 +88,12 @@ export class MustacheGenerator extends Generator {
             resourcesByUri: {},
             complexTypesByUri: {}
         };
-        schemaLoaderFacade.getComplexTypeNames()
-            .map(viewModel => modelFactory.createComplexType(viewModel, cache))
+        schemaLoaderFacade.getComplexTypes()
+            .map(typeRef => modelFactory.createComplexType(typeRef, cache))
             .forEach(this._renderComplexType.bind(this));
 
-        schemaLoaderFacade.getResourceNames()
-            .map(viewModel => modelFactory.createResource(viewModel, cache))
+        schemaLoaderFacade.getResources()
+            .map(typeRef => modelFactory.createResource(typeRef, cache))
             .forEach(this._renderResource.bind(this));
 
         this._renderUtility(modelFactory.createUtility());
