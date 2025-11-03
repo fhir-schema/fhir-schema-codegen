@@ -24,13 +24,14 @@ export type FileBasedGeneratorOptions = GeneratorOptions & {
     mustacheLanguagePath: string;
 };
 
-type FileBasedMustacheGeneratorOptions = Pick<MustacheGeneratorOptions, 'debug' | 'renderings' | 'typeMap' | 'meta' | 'hooks' | 'nameTransformations' | 'unsaveCharacterPattern'> & {
+type FileBasedMustacheGeneratorOptions = Pick<MustacheGeneratorOptions, 'debug' | 'renderings' | 'typeMap' | 'filters' | 'meta' | 'hooks' | 'nameTransformations' | 'unsaveCharacterPattern'> & {
     keywords?: string[];
 }
 export const DEFAULT_FILE_BASED_MUSTACHE_GENERATOR_OPTIONS: FileBasedMustacheGeneratorOptions = {
     debug: 'OFF',
     hooks: {},
     meta:{},
+    filters: {},
     unsaveCharacterPattern: /[^a-zA-Z0-9]/g,
     nameTransformations: {
         common: [],
@@ -73,6 +74,10 @@ export const createGenerator = (options: FileBasedGeneratorOptions): MustacheGen
             ...DEFAULT_FILE_BASED_MUSTACHE_GENERATOR_OPTIONS.typeMap,
             ...options.typeMap,
             ...(optionsFromFile.typeMap ?? {})
+        },
+        filters: {
+          ...DEFAULT_FILE_BASED_MUSTACHE_GENERATOR_OPTIONS.filters,
+          ...(optionsFromFile.filters ?? {})
         },
         keywords: new Set<string>([...(options.keywords??[]),...(optionsFromFile.keywords??[])]),
         sources:{

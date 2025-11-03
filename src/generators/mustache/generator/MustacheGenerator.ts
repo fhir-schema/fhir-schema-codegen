@@ -21,6 +21,7 @@ import { spawn } from 'child_process';
 import {TypeViewModel} from "@fscg/generators/mustache/types/TypeViewModel";
 import {HookType} from "@fscg/generators/mustache/types/HookType";
 import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
+import {FilterType} from "@fscg/generators/mustache/types/FilterType";
 
 
 export interface MustacheGeneratorOptions extends GeneratorOptions {
@@ -31,7 +32,11 @@ export interface MustacheGeneratorOptions extends GeneratorOptions {
     meta: {
         timestamp?: string;
         generator?: string;
-    }
+    },
+    filters: {
+        resource?: FilterType,
+        complexType?: FilterType
+    },
     sources:{
         templateSource: string;
         staticSource: string;
@@ -81,7 +86,7 @@ export class MustacheGenerator extends Generator {
     }
     public async generate() {
         this.clear();
-        const schemaLoaderFacade = new SchemaLoaderFacade(this.loader);
+        const schemaLoaderFacade = new SchemaLoaderFacade(this.loader, this.mustacheGeneratorOptions.filters);
         const modelFactory = new ViewModelFactory(schemaLoaderFacade, this.nameGenerator);
 
         const cache: ViewModelCache = {

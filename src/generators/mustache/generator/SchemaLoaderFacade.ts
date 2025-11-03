@@ -1,5 +1,6 @@
 import {SchemaLoader} from "@fscg/loader";
 import {TypeRef, TypeSchema} from "@fscg/typeschema";
+import {FilterType} from "@fscg/generators/mustache/types/FilterType";
 
 export class SchemaLoaderFacade {
     private readonly complexTypesByUri: Record<string, TypeSchema> = {};
@@ -11,7 +12,7 @@ export class SchemaLoaderFacade {
     private complexTypeRefs : TypeRef[] | undefined = undefined;
     private resourceRefs : TypeRef[] | undefined = undefined;
 
-    constructor(private readonly loader: SchemaLoader) {
+    constructor(private readonly loader: SchemaLoader, private readonly filters: {resource?: FilterType, complexType?: FilterType} ) {
         this.loader.complexTypes().forEach(schema => {
             this.complexTypesByUri[schema.identifier.url] = schema;
             if(schema.base){
@@ -52,18 +53,23 @@ export class SchemaLoaderFacade {
     public getChildComplexTypes(parentTypeRef: TypeRef): TypeRef[] {
         return (this.childComplexTypeUrisByParentUri[parentTypeRef.url] ?? [])
             .map(uri => this.complexTypesByUri[uri])
-            .map(t => t.identifier);
+            .map(t => t.identifier)
+            .filter(t => this._checkFilter(t))
+            .sort((a, b) => a.url.localeCompare(b.url));
     }
     public getChildResources(parentTypeRef: TypeRef): TypeRef[] {
         return (this.childResourceUrisByParentUri[parentTypeRef.url] ?? [])
             .map(uri => this.resourcesByUri[uri])
-            .map(t => t.identifier);
+            .map(t => t.identifier)
+            .filter(t => this._checkFilter(t))
+            .sort((a, b) => a.url.localeCompare(b.url));
     }
 
     public getComplexTypes(): TypeRef[]{
         if(this.complexTypeRefs === undefined){
             this.complexTypeRefs = this.loader.complexTypes()
                 .map(t=> t.identifier)
+                .filter(t => this._checkFilter(t))
                 .sort((a, b) => a.url.localeCompare(b.url));
         }
         return this.complexTypeRefs;
@@ -72,8 +78,30 @@ export class SchemaLoaderFacade {
         if(this.resourceRefs === undefined){
             this.resourceRefs = this.loader.resources()
                 .map(t=> t.identifier)
+                .filter(t => this._checkFilter(t))
                 .sort((a, b) => a.url.localeCompare(b.url));
         }
         return this.resourceRefs;
+    }
+
+    private _checkFilter(type: TypeRef): boolean{
+        if(type.kind !== 'complex-type' && type.kind !== 'resource'){
+            return true;
+        }
+        if(!this.filters[type.kind]){
+            return true;
+        }
+        const whitelist = this.filters[type.kind]?.whitelist ?? [];
+        const blacklist = this.filters[type.kind]?.blacklist ?? [];
+        if(!whitelist.length && !blacklist.length){
+            return true;
+        }
+        if(blacklist.find(pattern => type.name.match(pattern))){
+            return false;
+        }
+        if(whitelist.find(pattern => type.name.match(pattern))){
+            return true;
+        }
+        return whitelist.length === 0;
     }
 }

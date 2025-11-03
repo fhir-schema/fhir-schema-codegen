@@ -1,10 +1,9 @@
+import {FilterType} from "@fscg/generators/mustache/types/FilterType";
+
 export type Rendering = {
     source: string;
     fileNameFormat: string;
     path: string;
-    filter?: {
-        whitelist?: (string | RegExp)[];
-        blacklist?: (string | RegExp)[];
-    }
+    filter?: FilterType;
     properties?: Record<string, any>;
 }
