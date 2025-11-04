@@ -1,0 +1,47 @@
+{{#isResource}}
+@JsonTypeName("{{{saveName}}}")
+{{#children.0}}
+@JsonSubTypes({
+{{#children}}
+    @JsonSubTypes.Type(value = {{{saveName}}}.class){{^-last}},{{/-last}}
+{{/children}}
+})
+{{/children.0}}{{/isResource}}
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}extends {{{parents.0.saveName}}}{{/parents.0}}{
+
+{{#nestedComplexTypes}}
+    {{>inner_resource_or_complex_type}}
+{{/nestedComplexTypes}}
+
+{{#nestedEnums}}
+    {{>inner_enum}}
+{{/nestedEnums}}
+
+{{>abstract_builder.mustache}}
+
+{{>builder.mustache}}
+
+{{#fields}}
+    private final {{>annotated_type}} {{{saveName}}};
+{{/fields}}
+
+    private {{{saveName}}}({{{saveName}}}Builder builder) {
+        this((Abstract{{{saveName}}}Builder<?,?>)requireNonNull(builder));
+    }
+
+    protected {{{saveName}}}(Abstract{{{saveName}}}Builder<?,?> builder) {
+        {{#parents.0}}super(requireNonNull(builder));{{/parents.0}}
+        {{#fields}}
+        this.{{{saveName}}} = {{#isRequired}}requireNonNull({{/isRequired}}builder.{{{saveName}}}{{#isRequired}}){{/isRequired}};
+        {{/fields}}
+    }
+
+    protected {{{saveName}}}({{#allFields}}
+        {{>plain_type}} {{{saveName}}}{{^-last}},{{/-last}}{{/allFields}}) {
+        {{#parents.0}}super({{#inheritedFields}}{{{saveName}}}{{^-last}},{{/-last}}{{/inheritedFields}});{{/parents.0}}
+        {{#fields}}
+            this.{{{saveName}}} = {{{saveName}}};
+        {{/fields}}
+    }
+}

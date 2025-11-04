@@ -1,0 +1,31 @@
+
+
+protected static abstract class Abstract{{{saveName}}}Builder<T, B extends Abstract{{{saveName}}}Builder<T,B>> {{#parents.0}}extends Abstract{{{parents.0.saveName}}}Builder<T,B>{{/parents.0}}{
+
+    {{#fields}}
+        {{^isArray}}@Nullable{{/isArray}}
+        private {{#isArray}}final{{/isArray}} {{>plain_type}} {{{saveName}}} = {{^isArray}}null{{/isArray}}{{#isArray}}new ArrayList<>(){{/isArray}};
+    {{/fields}}
+
+    {{#fields}}
+        {{#isArray}}
+            public final B {{{saveName}}}(@Nullable {{>plain_type}} {{{saveName}}}) {
+                this.{{{saveName}}}.clear();
+                if ({{{saveName}}} != null) this.{{{saveName}}}.addAll({{{saveName}}});
+                return this.self();
+            }
+            public final B add{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}(@Nullable {{>plain_type}} {{{saveName}}}) {
+                if ({{{saveName}}} != null) this.{{{saveName}}}.addAll({{{saveName}}});
+                return this.self();
+            }
+        {{/isArray}}
+        {{^isArray}}
+        public final B {{{saveName}}}(@Nullable {{>plain_type}} {{{saveName}}}) {
+            this.{{{saveName}}} = {{{saveName}}};
+            return this.self();
+        }
+        {{/isArray}}
+    {{/fields}}
+
+    protected abstract B self();
+}

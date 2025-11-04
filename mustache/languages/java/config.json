@@ -19,7 +19,7 @@
     ],
     "resource": [
       {
-        "source":"type.mustache",
+        "source":"resource_or_complex_type.mustache",
         "path": "src/main/java/de/solutio/fhir/models/resources",
         "fileNameFormat":"%s.java",
         "properties": {
@@ -32,7 +32,7 @@
     ],
     "complexType": [
       {
-        "source":"type.mustache",
+        "source":"resource_or_complex_type.mustache",
         "path": "src/main/java/de/solutio/fhir/models/complex_types",
         "fileNameFormat":"%s.java",
         "properties": {
@@ -55,6 +55,10 @@
     ],
     "type": [
       {"pattern": "^List$", "format": "FHIRList"}
+    ],
+    "field": [
+      {"pattern": "^addItem$", "format": "addedItem"},
+      {"pattern": "^for$", "format": "forReference"}
     ]
   },
   "keywords": [
