@@ -9,6 +9,10 @@ export type TypeViewModel = NamedViewModel & {
     schema: TypeSchema | NestedTypeSchema;
     fields: FieldViewModel[];
 
+    hasFields: boolean;
+    hasNestedComplexTypes: boolean;
+    hasNestedEnums: boolean;
+
     isNested: boolean;
     isComplexType: Record<IsPrefixed<string>, boolean> | false;
     isResource: Record<IsPrefixed<string>, boolean> | false;

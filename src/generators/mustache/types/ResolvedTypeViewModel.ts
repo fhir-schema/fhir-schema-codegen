@@ -7,4 +7,8 @@ export type ResolvedTypeViewModel = TypeViewModel & {
     inheritedFields: FieldViewModel[];
     parents: TypeViewModel[];
     children: TypeViewModel[];
+
+    hasChildren: boolean;
+    hasParents: boolean;
+    hasInheritedFields: boolean;
 }

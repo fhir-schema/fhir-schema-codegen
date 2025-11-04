@@ -1,6 +1,6 @@
 
 
-protected static abstract class Abstract{{{saveName}}}Builder<T, B extends Abstract{{{saveName}}}Builder<T,B>> {{#parents.0}}extends Abstract{{{parents.0.saveName}}}Builder<T,B>{{/parents.0}}{
+protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveName}}}, B extends Abstract{{{saveName}}}Builder<T,B>> {{#hasParents}}extends Abstract{{{parents.0.saveName}}}Builder<T,B>{{/hasParents}}{
 
     {{#fields}}
         @Nullable

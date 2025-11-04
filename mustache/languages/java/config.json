@@ -2,7 +2,8 @@
   "debug": "OFF",
   "hooks": {
     "afterGenerate": [
-      {"cmd": "mvn","args": ["generate-sources","--batch-mode"]}
+      {"cmd": "mvn","args": ["spotless:apply","--batch-mode"]},
+      {"cmd": "mvn","args": ["clean","test", "--batch-mode"]}
     ]
   },
   "renderings": {
@@ -26,7 +27,12 @@
           "package": "de.solutio.fhir.models.resources",
           "additional_imports": [
             "de.solutio.fhir.models.complex_types.*"
-          ]
+          ],
+          "features": {
+            "hash_code_equals": true,
+            "builder": true,
+            "wither": true
+          }
         }
       }
     ],
@@ -37,7 +43,12 @@
         "fileNameFormat":"%s.java",
         "properties": {
           "package": "de.solutio.fhir.models.complex_types",
-          "additional_imports": []
+          "additional_imports": [],
+          "features": {
+            "hash_code_equals": true,
+            "builder": true,
+            "wither": true
+          }
         }
       }
     ]

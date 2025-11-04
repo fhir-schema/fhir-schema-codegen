@@ -30,26 +30,36 @@ export class ViewModelFactory {
         const base = this._createForComplexType(typeRef, cache);
         const parents = this._createParentsFor(base.schema, cache);
         const children = this._createChildrenFor(typeRef, cache);
+        const inheritedFields = parents.flatMap(p=>p.fields);
         return this.arrayMixinProvider.apply({
             ...this._createForRoot(),
             ...base,
             parents,
             children,
-            inheritedFields: parents.flatMap(p=>p.fields),
-            allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
+            inheritedFields,
+            allFields: [...base.fields,...parents.flatMap(p=>p.fields)],
+
+            hasChildren: children.length > 0,
+            hasParents: parents.length > 0,
+            hasInheritedFields: inheritedFields.length > 0
         });
     }
     public createResource(typeRef: TypeRef, cache: ViewModelCache = {resourcesByUri: {}, complexTypesByUri: {}}): RootViewModel<ResolvedTypeViewModel>{
         const base = this._createForResource(typeRef, cache);
         const parents = this._createParentsFor(base.schema, cache);
         const children = this._createChildrenFor(typeRef, cache);
+        const inheritedFields = parents.flatMap(p=>p.fields);
         return this.arrayMixinProvider.apply({
             ...this._createForRoot(),
             ...base,
             parents,
             children,
-            inheritedFields: parents.flatMap(p=>p.fields),
-            allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
+            inheritedFields,
+            allFields: [...base.fields,...inheritedFields],
+
+            hasChildren: children.length > 0,
+            hasParents: parents.length > 0,
+            hasInheritedFields: inheritedFields.length > 0
         });
     }
 
@@ -86,8 +96,15 @@ export class ViewModelFactory {
     }
 
     private _createChildrenFor(typeRef: TypeRef, cache: ViewModelCache, nestedIn?: TypeSchema): TypeViewModel[] {
-        return this.loader.getChildResources(typeRef)
-            .map(childRef => this._createFor(childRef, cache, nestedIn));
+        if(typeRef.kind === 'complex-type'){
+            return this.loader.getChildComplexTypes(typeRef)
+                .map(childRef => this._createFor(childRef, cache, nestedIn));
+        }
+        if(typeRef.kind === 'resource'){
+            return this.loader.getChildResources(typeRef)
+                .map(childRef => this._createFor(childRef, cache, nestedIn));
+        }
+        return [];
     }
 
     private _createParentsFor(base: TypeSchema | NestedTypeSchema, cache: ViewModelCache){
@@ -105,12 +122,17 @@ export class ViewModelFactory {
         const base = this._createTypeViewModel(nested, cache, nestedIn);
         const parents = this._createParentsFor(nested, cache);
         const children = this._createChildrenFor(nested.identifier, cache, nestedIn);
+        const inheritedFields = parents.flatMap(p=>p.fields);
         return {
             ...base,
             parents,
             children,
-            inheritedFields: parents.flatMap(p=>p.fields),
-            allFields: [...base.fields,...parents.flatMap(p=>p.fields)]
+            inheritedFields,
+            allFields: [...base.fields,...inheritedFields],
+
+            hasChildren: children.length > 0,
+            hasParents: parents.length > 0,
+            hasInheritedFields: inheritedFields.length > 0
         }
     }
 
@@ -127,6 +149,10 @@ export class ViewModelFactory {
             saveName: this.nameGenerator.generateType(schema),
             isResource: this._createIsResource(schema.identifier),
             isComplexType: this._createIsComplexType(schema.identifier),
+
+            hasFields: fields.length > 0,
+            hasNestedComplexTypes: nestedComplexTypes.length > 0,
+            hasNestedEnums: nestedEnums.length > 0,
             fields: fields
                 .filter(([_fieldName, fieldSchema])=>!!fieldSchema.type)
                 .sort((a,b)=>a[0].localeCompare(b[0]))
