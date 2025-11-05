@@ -7,7 +7,7 @@ import jakarta.annotation.Generated;
 {{#model}}
 public enum ResourceName{
     {{#resources}}
-        {{#lambda.upperCase}}{{#lambda.snakeCase}}{{saveName}}{{/lambda.snakeCase}}{{/lambda.upperCase}}("{{{saveName}}}"){
+        {{#lambda.upperCase}}{{#lambda.snakeCase}}{{saveName}}{{/lambda.snakeCase}}{{/lambda.upperCase}}("{{{name}}}"){
             public Class<{{{properties.resourcePackage}}}.{{{saveName}}}> resourceClass() {
                 return {{{properties.resourcePackage}}}.{{{saveName}}}.class;
             }
@@ -22,6 +22,6 @@ public enum ResourceName{
     public String typeName() {
         return typeName;
     }
-    public abstract Class<? extends {{{properties.resourcePackage}}}.Resource> resourceClass();
+    public abstract Class<? extends {{{properties.resourcePackage}}}.{{#lambda.saveTypeName}}Resource{{/lambda.saveTypeName}}> resourceClass();
 }
 {{/model}}

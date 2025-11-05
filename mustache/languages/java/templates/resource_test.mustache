@@ -1,0 +1,28 @@
+package {{{properties.package}}};
+
+import static {{{properties.resourcePackage}}}.{{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}}.{{#lambda.saveTypeName}}TaskInput{{/lambda.saveTypeName}};
+import static {{{properties.resourcePackage}}}.{{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}}.{{#lambda.saveTypeName}}TaskIntent{{/lambda.saveTypeName}};
+import static {{{properties.resourcePackage}}}.{{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}}.{{#lambda.saveTypeName}}TaskStatus{{/lambda.saveTypeName}};
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import {{{properties.complexTypePackage}}}.{{#lambda.saveTypeName}}CodeableConcept{{/lambda.saveTypeName}};
+import org.junit.jupiter.api.Test;
+
+class ResourceTest {
+
+    @Test
+    public void json() throws JsonProcessingException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}} task = {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}}.builder()
+                        .intent({{#lambda.saveTypeName}}TaskIntent{{/lambda.saveTypeName}}.PLAN)
+                        .status({{#lambda.saveTypeName}}TaskStatus{{/lambda.saveTypeName}}.REQUESTED)
+                        .input({{#lambda.saveTypeName}}TaskInput{{/lambda.saveTypeName}}.builder().type({{#lambda.saveTypeName}}CodeableConcept{{/lambda.saveTypeName}}.builder().build()).build())
+                        .build();
+        final String json = objectMapper.writeValueAsString(task);
+        assertThat(json).isNotBlank();
+        final {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}} read = objectMapper.readValue(json, {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}}.class);
+        assertThat(read).isEqualTo(task);
+    }
+}
