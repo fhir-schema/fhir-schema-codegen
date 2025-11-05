@@ -10,6 +10,7 @@ import {FieldViewModel} from "@fscg/generators/mustache/types/FieldViewModel";
 import {IsPrefixed} from "@fscg/generators/mustache/UtilityTypes";
 import {ViewModel} from "@fscg/generators/mustache/types/ViewModel";
 import {RootViewModel} from "@fscg/generators/mustache/types/RootViewModel";
+import {NamedViewModel} from "@fscg/generators/mustache/types/NamedViewModel";
 
 export type ViewModelCache = {
     resourcesByUri: Record<string, TypeViewModel>;
@@ -140,13 +141,16 @@ export class ViewModelFactory {
         const fields = Object.entries(schema.fields ?? {});
         const nestedComplexTypes = this._collectNestedComplex(schema, cache);
         const nestedEnums = this._collectNestedEnums(fields);
+        const name: NamedViewModel = {
+            name: schema.identifier.name,
+            saveName: this.nameGenerator.generateType(schema)
+        };
         return {
             nestedComplexTypes,
             nestedEnums,
             isNested: !!nestedIn,
             schema: schema,
-            name: schema.identifier.name,
-            saveName: this.nameGenerator.generateType(schema),
+            ...name,
             isResource: this._createIsResource(schema.identifier),
             isComplexType: this._createIsComplexType(schema.identifier),
 
@@ -159,6 +163,7 @@ export class ViewModelFactory {
                 .map(([fieldName, fieldSchema])=>{
 
                     return {
+                        owner: name,
                         schema: fieldSchema,
                         name: fieldName,
                         saveName: this.nameGenerator.generateField(fieldName),
@@ -167,7 +172,6 @@ export class ViewModelFactory {
                         isArray: fieldSchema.array,
                         isRequired: fieldSchema.required,
                         isEnum: !!fieldSchema.enum,
-                        isPrimitive: this._createIsPrimitiveType(fieldSchema.type),
 
                         isSizeConstrained: fieldSchema.min !== undefined || fieldSchema.max !== undefined,
                         min: fieldSchema.min,
@@ -175,7 +179,7 @@ export class ViewModelFactory {
 
                         isResource: this._createIsResource(fieldSchema.type),
                         isComplexType: this._createIsComplexType(fieldSchema.type),
-                        isPrimitiveType: fieldSchema.type.kind === 'primitive-type',
+                        isPrimitive: this._createIsPrimitiveType(fieldSchema.type),
 
                         isCode: fieldSchema.type.name === 'code',
                         isIdentifier: fieldSchema.type.name === 'Identifier',

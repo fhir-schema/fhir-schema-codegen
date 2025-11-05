@@ -47,3 +47,7 @@ protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B buil
 public {{{saveName}}}Builder to{{#hasChildren}}{{{saveName}}}{{/hasChildren}}Builder() {
     return this.applyToBuilder({{{saveName}}}.builder());
 }
+
+{{#properties.features.builder.wither}}
+    {{>feature_builder_wither}}
+{{/properties.features.builder.wither}}

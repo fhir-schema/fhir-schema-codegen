@@ -1,15 +1,17 @@
 import {ClassField} from "@fscg/typeschema";
 import {PrimitiveType} from "@fscg/generators/mustache/types/PrimitiveType";
 import {IsPrefixed} from "@fscg/generators/mustache/UtilityTypes";
+import {TypeViewModel} from "@fscg/generators/mustache/types/TypeViewModel";
+import {NamedViewModel} from "@fscg/generators/mustache/types/NamedViewModel";
 
 export type FieldViewModel = {
+    owner: NamedViewModel;
+
     schema: ClassField;
     name: string;
     saveName: string;
 
     typeName: string;
-
-    isPrimitive: Record<IsPrefixed<PrimitiveType>, boolean> | false;
 
     isSizeConstrained: boolean;
     min?: number;
@@ -19,7 +21,7 @@ export type FieldViewModel = {
     isRequired: boolean;
     isEnum: boolean;
 
-    isPrimitiveType: boolean;
+    isPrimitive: Record<IsPrefixed<PrimitiveType>, boolean> | false;
     isComplexType: Record<IsPrefixed<string>, boolean> | false;
     isResource: Record<IsPrefixed<string>, boolean> | false;
     

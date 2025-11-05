@@ -2,8 +2,8 @@
   "debug": "OFF",
   "hooks": {
     "afterGenerate": [
-      {"cmd": "mvn","args": ["spotless:apply","--batch-mode"]},
-      {"cmd": "mvn","args": ["clean","test", "--batch-mode"]}
+      {"cmd": "mvn","args": ["spotless:apply","--batch-mode", "--no-transfer-progress"]},
+      {"cmd": "mvn","args": ["clean","test", "--batch-mode","--no-transfer-progress"]}
     ]
   },
   "renderings": {
@@ -30,8 +30,9 @@
           ],
           "features": {
             "hash_code_equals": true,
-            "builder": true,
-            "wither": true
+            "builder": {
+              "wither": true
+            }
           }
         }
       }
@@ -46,8 +47,9 @@
           "additional_imports": [],
           "features": {
             "hash_code_equals": true,
-            "builder": true,
-            "wither": true
+            "builder": {
+              "wither": true
+            }
           }
         }
       }
