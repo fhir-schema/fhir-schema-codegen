@@ -5,6 +5,10 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
     {{#fields}}
         @Nullable
         private {{>plain_type}} {{{saveName}}} = null;
+        {{#isPrimitive}}
+            @Nullable
+            private {{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}} {{{saveName}}}Element = null;
+        {{/isPrimitive}}
     {{/fields}}
     private final Lock lock = new ReentrantLock();
 
@@ -73,6 +77,12 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
             return this.self();
         }
         {{/isArray}}
+        {{#isPrimitive}}
+            public final B {{{saveName}}}Element(@Nullable {{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}} {{{saveName}}}Element) {
+                this.{{{saveName}}}Element = {{{saveName}}}Element;
+                return this.self();
+            }
+        {{/isPrimitive}}
     {{/fields}}
 
     protected abstract B self();

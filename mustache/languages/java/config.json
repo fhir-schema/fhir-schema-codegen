@@ -15,16 +15,6 @@
         "properties": {
           "package": "de.solutio.fhir.models.resources"
         }
-      },
-      {
-        "source":"resource_test.mustache",
-        "path": "src/test/java/de/solutio/fhir/models/resources",
-        "fileNameFormat":"ResourceTest.java",
-        "properties": {
-          "package": "de.solutio.fhir.models.resources",
-          "resourcePackage": "de.solutio.fhir.models.resources",
-          "complexTypePackage": "de.solutio.fhir.models.complex_types"
-        }
       }
     ],
     "resource": [

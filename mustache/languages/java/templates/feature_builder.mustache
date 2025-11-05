@@ -1,16 +1,6 @@
-{{#hasChildren}}
-    public static {{{saveName}}}Builder {{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder() {
-        return new {{{saveName}}}Builder();
-    }
-    private static {{{saveName}}}Builder builder() {
-        return new {{{saveName}}}Builder();
-    }
-{{/hasChildren}}
-{{^hasChildren}}
-    public static {{{saveName}}}Builder builder() {
-        return new {{{saveName}}}Builder();
-    }
-{{/hasChildren}}
+public static {{{saveName}}}Builder {{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder() {
+    return new {{{saveName}}}Builder();
+}
 
 {{>feature_builder_abstract_builder.mustache}}
 {{>feature_builder_builder.mustache}}
@@ -31,6 +21,9 @@ protected {{{saveName}}}(Abstract{{{saveName}}}Builder<?,?> builder) {
         {{^isArray}}
             this.{{{saveName}}} = builder.{{{saveName}}};
         {{/isArray}}
+        {{#isPrimitive}}
+            this.{{{saveName}}}Element = builder.{{{saveName}}}Element;
+        {{/isPrimitive}}
     {{/fields}}
 }
 protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B builder) {
@@ -40,21 +33,24 @@ protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B buil
         builder
         {{#fields}}
                 .{{{saveName}}}(this.{{{saveName}}})
+                {{#isPrimitive}}
+                    .{{{saveName}}}Element(this.{{{saveName}}}Element)
+                {{/isPrimitive}}
         {{/fields}};
     {{/hasFields}}
     return builder;
 }
 {{#hasChildren}}
-private final {{{saveName}}}Builder toBuilder() {
-    return this.applyToBuilder({{{saveName}}}.builder());
+protected Abstract{{{saveName}}}Builder<?,?> toBuilder() {
+    return this.toBuilder();
 }
 public final {{{saveName}}}Builder to{{{saveName}}}Builder() {
-    return this.toBuilder();
+    return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
 }
 {{/hasChildren}}
 {{^hasChildren}}
-public {{{saveName}}}Builder toBuilder() {
-    return this.applyToBuilder({{{saveName}}}.builder());
+public final {{{saveName}}}Builder toBuilder() {
+    return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
 }
 {{/hasChildren}}
 
