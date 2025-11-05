@@ -1,0 +1,9 @@
+
+public Optional<{{#lambda.saveTypeName}}Extension{{/lambda.saveTypeName}}> findFirstExtensionByURL(URI url){
+    requireNonNull(url);
+    return this.{{#lambda.saveFieldName}}extension{{/lambda.saveFieldName}}.stream().filter(e -> e.{{#lambda.saveFieldName}}url{{/lambda.saveFieldName}}().equals(url)).findFirst();
+}
+public List<{{#lambda.saveTypeName}}Extension{{/lambda.saveTypeName}}> findExtensionsByURL(URI url){
+    requireNonNull(url);
+    return this.{{#lambda.saveFieldName}}extension{{/lambda.saveFieldName}}.stream().filter(e -> e.{{#lambda.saveFieldName}}url{{/lambda.saveFieldName}}().equals(url)).toList();
+}
