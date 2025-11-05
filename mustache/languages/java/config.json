@@ -39,9 +39,7 @@
           ],
           "features": {
             "hash_code_equals": true,
-            "builder": {
-              "wither": true
-            }
+            "builder": true
           }
         }
       }
@@ -56,9 +54,7 @@
           "additional_imports": [],
           "features": {
             "hash_code_equals": true,
-            "builder": {
-              "wither": true
-            }
+            "builder": true
           }
         }
       }

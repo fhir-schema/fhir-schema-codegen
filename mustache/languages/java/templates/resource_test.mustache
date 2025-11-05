@@ -8,6 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import {{{properties.complexTypePackage}}}.{{#lambda.saveTypeName}}CodeableConcept{{/lambda.saveTypeName}};
+import {{{properties.complexTypePackage}}}.{{#lambda.saveTypeName}}Extension{{/lambda.saveTypeName}};
+import java.net.URI;
 import org.junit.jupiter.api.Test;
 
 class ResourceTest {
@@ -24,5 +26,9 @@ class ResourceTest {
         assertThat(json).isNotBlank();
         final {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}} read = objectMapper.readValue(json, {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}}.class);
         assertThat(read).isEqualTo(task);
+
+        final {{#lambda.saveTypeName}}Task{{/lambda.saveTypeName}} taskWithExtension = task.toBuilder().addExtension({{#lambda.saveTypeName}}Extension{{/lambda.saveTypeName}}.builder().url(URI.create("https://www.google.com")).build()).build();
+        assertThat(taskWithExtension.intent()).isEqualTo(task.intent());
+        assertThat(taskWithExtension.status()).isEqualTo(task.status());
     }
 }

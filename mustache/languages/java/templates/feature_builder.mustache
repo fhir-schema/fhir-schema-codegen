@@ -45,10 +45,10 @@ protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B buil
     return builder;
 }
 {{#hasChildren}}
-private {{{saveName}}}Builder toBuilder() {
+private final {{{saveName}}}Builder toBuilder() {
     return this.applyToBuilder({{{saveName}}}.builder());
 }
-public {{{saveName}}}Builder to{{{saveName}}}Builder() {
+public final {{{saveName}}}Builder to{{{saveName}}}Builder() {
     return this.toBuilder();
 }
 {{/hasChildren}}

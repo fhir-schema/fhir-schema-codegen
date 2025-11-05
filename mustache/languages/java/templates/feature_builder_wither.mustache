@@ -1,6 +1,0 @@
-{{#fields}}
-public {{{owner.saveName}}} with{{#lambda.saveFieldName}}{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}{{/lambda.saveFieldName}}({{^isRequired}}@Nullable {{/isRequired}}{{>plain_type}} {{{saveName}}}){
-    {{#isRequired}}requireNonNull({{{saveName}}});{{/isRequired}}
-    return this.toBuilder().{{saveName}}({{{saveName}}}).build();
-}
-{{/fields}}
