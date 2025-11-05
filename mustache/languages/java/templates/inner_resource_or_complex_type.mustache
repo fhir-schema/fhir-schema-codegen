@@ -16,6 +16,9 @@
     creatorVisibility = JsonAutoDetect.Visibility.NONE
 )
 public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}extends {{{parents.0.saveName}}}{{/parents.0}}{
+    {{#isResource}}
+    public static final ResourceName NAME = ResourceName.{{#lambda.upperCase}}{{#lambda.snakeCase}}{{saveName}}{{/lambda.snakeCase}}{{/lambda.upperCase}};
+    {{/isResource}}
 
     {{#nestedComplexTypes}}
         {{>inner_resource_or_complex_type}}
@@ -34,6 +37,11 @@ public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}exten
             this.{{{saveName}}} = null;
         {{/fields}}
     }
+    {{#isResource}}
+    public ResourceName resourceName() {
+        return {{{saveName}}}.NAME;
+    }
+    {{/isResource}}
 
     {{#fields}}
         {{>field_getter}}

@@ -10,11 +10,10 @@
     "utility": [
       {
         "source":"resource_names.mustache",
-        "path": "src/main/java/de/solutio/fhir/client",
+        "path": "src/main/java/de/solutio/fhir/models/resources",
         "fileNameFormat":"ResourceName.java",
         "properties": {
-          "package": "de.solutio.fhir.client",
-          "resourcePackage": "de.solutio.fhir.models.resources"
+          "package": "de.solutio.fhir.models.resources"
         }
       },
       {
