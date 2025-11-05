@@ -129,10 +129,10 @@
   ],
   "typeMap":{
     "boolean": "Boolean",
-    "instant": "Instant",
+    "instant": "OffsetDateTime",
     "time": "LocalTime",
-    "date": "LocalDate",
-    "dateTime": "LocalDateTime",
+    "date": "String",
+    "dateTime": "OffsetDateTime",
 
     "decimal": "BigDecimal",
     "integer": "Integer",

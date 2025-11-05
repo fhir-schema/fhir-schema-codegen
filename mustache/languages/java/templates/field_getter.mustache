@@ -1,0 +1,10 @@
+public {{^isRequired}}Optional<{{/isRequired}}{{>plain_type}}{{^isRequired}}>{{/isRequired}} {{#lambda.saveFieldName}}{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}{{/lambda.saveFieldName}}() {
+    return {{^isRequired}}Optional.ofNullable({{/isRequired}}this.{{{saveName}}}{{^isRequired}}){{/isRequired}};
+}
+
+{{#isPrimitive.isDateTime}}
+    {{>field_getter_local_date_time}}
+{{/isPrimitive.isDateTime}}
+{{#isPrimitive.isInstant}}
+    {{>field_getter_local_date_time}}
+{{/isPrimitive.isInstant}}
