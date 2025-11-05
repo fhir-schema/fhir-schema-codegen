@@ -34,10 +34,33 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
                     this.lock.unlock();
                 }
             }
-            public final B add{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}(@Nullable {{>plain_type}} {{{saveName}}}) {
+            public final B {{{saveName}}}({{{typeName}}} {{{saveName}}}, {{{typeName}}}... further) {
+                requireNonNull({{{saveName}}});
+                this.lock.lock();
+                try{
+                    this.{{{saveName}}}().clear();
+                    this.{{{saveName}}}().add({{{saveName}}});
+                    this.{{{saveName}}}().addAll(Arrays.asList(further));
+                    return this.self();
+                }finally{
+                    this.lock.unlock();
+                }
+            }
+            public final B add{{#lambda.saveFieldName}}{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}{{/lambda.saveFieldName}}(@Nullable {{>plain_type}} {{{saveName}}}) {
                 this.lock.lock();
                 try{
                     if ({{{saveName}}} != null) this.{{{saveName}}}().addAll({{{saveName}}});
+                    return this.self();
+                }finally{
+                    this.lock.unlock();
+                }
+            }
+            public final B add{{#lambda.saveFieldName}}{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}{{/lambda.saveFieldName}}({{{typeName}}} {{{saveName}}}, {{{typeName}}}... further) {
+                requireNonNull({{{saveName}}});
+                this.lock.lock();
+                try{
+                    this.{{{saveName}}}().add({{{saveName}}});
+                    this.{{{saveName}}}().addAll(Arrays.asList(further));
                     return this.self();
                 }finally{
                     this.lock.unlock();

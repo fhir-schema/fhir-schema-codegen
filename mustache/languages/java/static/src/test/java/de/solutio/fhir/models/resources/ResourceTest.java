@@ -13,11 +13,12 @@ class ResourceTest {
     @Test
     public void json() throws JsonProcessingException {
         final ObjectMapper objectMapper = new ObjectMapper();
-        final Task task = Task.builder()
-                .intent(Task.TaskIntent.PLAN)
-                .status(Task.TaskStatus.REQUESTED)
-                .addInput(List.of(Task.TaskInput.builder().type(CodeableConcept.builder().build()).build()))
-                .build();
+        final Task task =
+                Task.builder()
+                        .intent(Task.TaskIntent.PLAN)
+                        .status(Task.TaskStatus.REQUESTED)
+                        .input(Task.TaskInput.builder().type(CodeableConcept.builder().build()).build())
+                        .build();
         final String json = objectMapper.writeValueAsString(task);
         assertThat(json).isNotBlank();
         final Task read = objectMapper.readValue(json, Task.class);
