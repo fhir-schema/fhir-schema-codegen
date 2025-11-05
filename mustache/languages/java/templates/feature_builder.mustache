@@ -26,7 +26,7 @@ protected {{{saveName}}}(Abstract{{{saveName}}}Builder<?,?> builder) {
     {{/fields}}
     {{#fields}}
         {{#isArray}}
-            this.{{{saveName}}} = {{#isRequired}}List.copyOf({{/isRequired}}builder.{{{saveName}}}{{^isRequired}} != null ? List.copyOf(builder.{{{saveName}}}) : List.of(){{/isRequired}}{{#isRequired}}){{/isRequired}};
+            this.{{{saveName}}} = {{#isRequired}}List.copyOf({{/isRequired}}builder.{{{saveName}}}{{^isRequired}} != null ? List.copyOf(builder.{{{saveName}}}) : null{{/isRequired}}{{#isRequired}}){{/isRequired}};
         {{/isArray}}
         {{^isArray}}
             this.{{{saveName}}} = builder.{{{saveName}}};
