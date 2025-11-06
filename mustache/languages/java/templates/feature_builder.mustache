@@ -49,7 +49,7 @@ protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B buil
 }
 {{#hasChildren}}
     protected Abstract{{{saveName}}}Builder<?,?> toBuilder() {
-        return this.toBuilder();
+        return this.to{{{saveName}}}Builder();
     }
     public final {{{saveName}}}Builder to{{{saveName}}}Builder() {
         return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());

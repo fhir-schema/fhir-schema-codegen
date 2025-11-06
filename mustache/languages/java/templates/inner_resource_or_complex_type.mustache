@@ -57,11 +57,13 @@ public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}exten
     {{#isComplexType.isElement}}
         {{>additional_extension_behaviour}}
     {{/isComplexType.isElement}}
+    {{#isComplexType.isCodeableConcept}}
+        {{>additional_codeable_concept_behaviour}}
+    {{/isComplexType.isCodeableConcept}}
 
     {{#fields}}
         {{>field_getter}}
     {{/fields}}
-
 
     {{#properties.features.builder}}
         {{>feature_builder}}
