@@ -17,13 +17,16 @@ protected {{{saveName}}}(Abstract{{{saveName}}}Builder<?,?> builder) {
     {{#fields}}
         {{#isArray}}
             this.{{{saveName}}} = {{#isRequired}}List.copyOf({{/isRequired}}builder.{{{saveName}}}{{^isRequired}} != null ? List.copyOf(builder.{{{saveName}}}) : null{{/isRequired}}{{#isRequired}}){{/isRequired}};
+            {{#isPrimitive}}
+                this.{{{saveName}}}Element = builder.{{{saveName}}}Element != null ? List.copyOf(builder.{{{saveName}}}Element) : null;
+            {{/isPrimitive}}
         {{/isArray}}
         {{^isArray}}
             this.{{{saveName}}} = builder.{{{saveName}}};
+            {{#isPrimitive}}
+                this.{{{saveName}}}Element = builder.{{{saveName}}}Element;
+            {{/isPrimitive}}
         {{/isArray}}
-        {{#isPrimitive}}
-            this.{{{saveName}}}Element = builder.{{{saveName}}}Element;
-        {{/isPrimitive}}
     {{/fields}}
 }
 protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B builder) {
@@ -53,7 +56,3 @@ public final {{{saveName}}}Builder toBuilder() {
     return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
 }
 {{/hasChildren}}
-
-{{#properties.features.builder.wither}}
-    {{>feature_builder_wither}}
-{{/properties.features.builder.wither}}

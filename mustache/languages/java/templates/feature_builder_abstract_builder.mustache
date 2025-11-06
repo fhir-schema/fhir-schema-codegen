@@ -7,7 +7,7 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
         private {{>plain_type}} {{{saveName}}} = null;
         {{#isPrimitive}}
             @Nullable
-            private {{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}} {{{saveName}}}Element = null;
+            private {{#isArray}}List<{{/isArray}}{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}{{#isArray}}>{{/isArray}} {{{saveName}}}Element = null;
         {{/isPrimitive}}
     {{/fields}}
     private final Lock lock = new ReentrantLock();
@@ -17,6 +17,33 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
 
     {{#fields}}
         {{#isArray}}
+            {{#isPrimitive}}
+                private final List<{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}> {{{saveName}}}Element(){
+                    this.lock.lock();
+                    try{
+                        if(this.{{{saveName}}}Element == null) {
+                            this.{{{saveName}}}Element = new ArrayList<>();
+                        }
+                        return this.{{{saveName}}}Element;
+                    }finally{
+                        this.lock.unlock();
+                    }
+                }
+                {{#isPrimitive}}
+                    public final B {{{saveName}}}Element(@Nullable List<{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}> {{{saveName}}}Element) {
+                        this.lock.lock();
+                        try{
+                            this.{{{saveName}}}Element().clear();
+                            if ({{{saveName}}}Element != null) {
+                                this.{{{saveName}}}Element().addAll({{{saveName}}}Element);
+                            }
+                            return this.self();
+                        }finally{
+                            this.lock.unlock();
+                        }
+                    }
+                {{/isPrimitive}}
+            {{/isPrimitive}}
             private final {{>plain_type}} {{{saveName}}}(){
                 this.lock.lock();
                 try{
@@ -32,7 +59,9 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
                 this.lock.lock();
                 try{
                     this.{{{saveName}}}().clear();
-                    if ({{{saveName}}} != null) this.{{{saveName}}}().addAll({{{saveName}}});
+                    if ({{{saveName}}} != null) {
+                        this.{{{saveName}}}().addAll({{{saveName}}});
+                    }
                     return this.self();
                 }finally{
                     this.lock.unlock();
@@ -53,7 +82,9 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
             public final B add{{#lambda.saveFieldName}}{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}{{/lambda.saveFieldName}}(@Nullable {{>plain_type}} {{{saveName}}}) {
                 this.lock.lock();
                 try{
-                    if ({{{saveName}}} != null) this.{{{saveName}}}().addAll({{{saveName}}});
+                    if ({{{saveName}}} != null) {
+                        this.{{{saveName}}}().addAll({{{saveName}}});
+                    }
                     return this.self();
                 }finally{
                     this.lock.unlock();
@@ -72,17 +103,17 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
             }
         {{/isArray}}
         {{^isArray}}
-        public final B {{{saveName}}}(@Nullable {{>plain_type}} {{{saveName}}}) {
-            this.{{{saveName}}} = {{{saveName}}};
-            return this.self();
-        }
-        {{/isArray}}
-        {{#isPrimitive}}
-            public final B {{{saveName}}}Element(@Nullable {{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}} {{{saveName}}}Element) {
-                this.{{{saveName}}}Element = {{{saveName}}}Element;
+            public final B {{{saveName}}}(@Nullable {{>plain_type}} {{{saveName}}}) {
+                this.{{{saveName}}} = {{{saveName}}};
                 return this.self();
             }
-        {{/isPrimitive}}
+            {{#isPrimitive}}
+                public final B {{{saveName}}}Element(@Nullable {{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}} {{{saveName}}}Element) {
+                    this.{{{saveName}}}Element = {{{saveName}}}Element;
+                    return this.self();
+                }
+            {{/isPrimitive}}
+        {{/isArray}}
     {{/fields}}
 
     protected abstract B self();
