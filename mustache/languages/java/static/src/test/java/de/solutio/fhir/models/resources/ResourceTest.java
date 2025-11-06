@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
-import java.util.List;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 class ResourceTest {
@@ -20,9 +20,12 @@ class ResourceTest {
     @Test
     public void json() throws JsonProcessingException {
         final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
+
         final TaskDTO task =
                 taskDtoBuilder()
                         .description("some description")
+                        .authoredOn(LocalDateTime.now(), elementDtoBuilder().extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build()).build())
                         .intent(TaskIntentDTO.PLAN)
                         .status(TaskStatusDTO.REQUESTED)
                         .input(taskInputDtoBuilder().type(codeableConceptDtoBuilder().build()).build())
@@ -36,7 +39,8 @@ class ResourceTest {
                 task.toBuilder()
                         ._description(
                                 elementDtoBuilder()
-                                        .extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
+                                        .extension(
+                                                extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
                                         .build())
                         .extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
                         .build();

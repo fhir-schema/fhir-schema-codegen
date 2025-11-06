@@ -1,0 +1,36 @@
+package de.solutio.fhir.models;
+
+import jakarta.annotation.Nullable;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
+
+public enum Utils {
+  ;
+
+  public static boolean equals(@Nullable Object a, @Nullable Object b) {
+      return Objects.equals(a, b);
+  }
+
+  public static boolean equals(@Nullable List<OffsetDateTime> a, @Nullable List<OffsetDateTime> b) {
+    if (a == b) {
+      return true;
+    }
+    if (a == null || b == null) {
+      return false;
+    }
+    if (a.size() != b.size()) {
+      return false;
+    }
+    for (int i = 0; i < a.size(); i++) {
+      if (!Utils.equals(a.get(i), b.get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static boolean equals(@Nullable OffsetDateTime a, @Nullable OffsetDateTime b) {
+    return (a == b) || (a != null && b != null && a.isEqual(b));
+  }
+}

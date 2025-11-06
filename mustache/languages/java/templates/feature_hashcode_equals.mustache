@@ -17,7 +17,7 @@
         }
         {{#hasFields}}
             final {{{saveName}}} other = ({{{saveName}}}) obj;
-            return {{#fields}}Objects.equals(this.{{{saveName}}}, other.{{{saveName}}}){{^-last}} && {{/-last}}{{/fields}};
+            return {{#fields}}Utils.equals(this.{{{saveName}}}, other.{{{saveName}}}){{^-last}} && {{/-last}}{{/fields}};
         {{/hasFields}}
         {{^hasFields}}
             return true;
