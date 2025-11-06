@@ -168,6 +168,12 @@ class TypeScriptGenerator extends Generator {
                         name: this.uppercaseFirstLetter(dep.name),
                     })),
                 ...schema.dependencies
+                    .filter((dep) => ['constraint', 'complex-type-constraint'].includes(dep.kind))
+                    .map((dep) => ({
+                        tsPackage: `../${kebabCase(dep.package)}/${fileNameStem(dep)}`,
+                        name: resourceName(dep),
+                    })),
+                ...schema.dependencies
                     .filter((dep) => ['nested'].includes(dep.kind))
                     .map((dep) => ({
                         tsPackage: `../${kebabCase(dep.package)}/${pascalCase(canonicalToName(dep.url) ?? '')}`,
@@ -204,6 +210,140 @@ class TypeScriptGenerator extends Generator {
         if (field.type.kind === 'primitive-type') {
             this.lineSM(`_${this.getFieldName(fieldName)}?: Element`);
         }
+    }
+
+    wrapText(text: string, maxWidth = 80, prefix = ' *'): string[] {
+        const words = text.split(' ');
+        const lines: string[] = [];
+        let currentLine = prefix;
+
+        words.forEach((word) => {
+            if ((currentLine + ' ' + word).length > maxWidth) {
+                if (currentLine.length > prefix.length) {
+                    lines.push(currentLine);
+                    currentLine = `${prefix} ${word}`;
+                } else {
+                    currentLine += ` ${word}`;
+                }
+            } else {
+                currentLine += currentLine === prefix ? ` ${word}` : ` ${word}`;
+            }
+        });
+        if (currentLine.length > prefix.length) {
+            lines.push(currentLine);
+        }
+        return lines;
+    }
+
+    generateFieldJsDoc(field: ClassField): void {
+        const hasDoc =
+            field.short ||
+            field.definition ||
+            field.comment ||
+            field.requirements ||
+            field.isModifier ||
+            field.alias ||
+            field.example ||
+            field.meaningWhenMissing ||
+            field.mustSupport === false;
+
+        if (!hasDoc) return;
+
+        this.line('/**');
+
+        // 1. Summary (short)
+        if (field.short) {
+            this.line(' * @summary');
+            this.line(` * ${field.short}`);
+        }
+
+        // 2. Description (detailed definition)
+        if (field.definition) {
+            this.line(' *');
+            this.line(' * @description');
+            const defLines = field.definition.split(/\r?\n/).filter((l) => l.trim());
+            defLines.forEach((line) => {
+                this.wrapText(line.trim()).forEach((wrappedLine) => {
+                    this.line(wrappedLine);
+                });
+            });
+        }
+
+        // 3. Multiple Remarks (comment, requirements, modifier, meaningWhenMissing, mustSupport)
+        if (field.comment) {
+            this.line(' *');
+            this.line(' * @remarks');
+            this.wrapText(field.comment).forEach((line) => this.line(line));
+        }
+
+        if (field.requirements) {
+            this.line(' *');
+            this.line(' * @remarks Business requirement');
+            this.wrapText(field.requirements).forEach((line) => this.line(line));
+        }
+
+        if (field.isModifier) {
+            const reason = field.isModifierReason || 'Changes resource interpretation';
+            this.line(' *');
+            this.line(' * @remarks ⚠️ MODIFIER ELEMENT');
+            this.wrapText(reason).forEach((line) => this.line(line));
+        }
+
+        if (field.meaningWhenMissing) {
+            this.line(' *');
+            this.line(' * @remarks When missing');
+            this.wrapText(field.meaningWhenMissing).forEach((line) => this.line(line));
+        }
+
+        if (field.mustSupport === false) {
+            this.line(' *');
+            this.line(' * @remarks Limited support');
+            this.line(' * This field has limited support in this profile (mustSupport: false)');
+        }
+
+        // 4. Example (show valid values)
+        if (field.example) {
+            this.line(' *');
+            this.line(' * @example');
+            if (field.example.label) {
+                this.line(` * ${field.example.label}`);
+            }
+            this.line(' * ```typescript');
+            const exampleValue =
+                typeof field.example.value === 'string'
+                    ? `"${field.example.value}"`
+                    : JSON.stringify(field.example.value);
+            this.line(` * ${exampleValue}`);
+            this.line(' * ```');
+        }
+
+        // 5. Binding information (based on strength)
+        if (field.bindingInfo) {
+            const { strength, description, valueSet } = field.bindingInfo;
+
+            if (strength === 'preferred' && (description || valueSet)) {
+                this.line(' *');
+                const text = description || '';
+                const full = valueSet ? `"${text}" (${valueSet})` : `"${text}"`;
+                this.line(` * @remarks Preferred: ${full}`);
+            } else if (strength === 'example' && (description || valueSet)) {
+                this.line(' *');
+                const text = description || '';
+                const full = valueSet ? `"${text}" (${valueSet})` : `"${text}"`;
+                this.line(` * @example ${full}`);
+            }
+            // Skip 'required' (already shown via enum) and 'extensible' (can add later if needed)
+        }
+
+        // 6. Alias (localized names)
+        if (field.alias && field.alias.length > 0) {
+            this.line(' *');
+            field.alias.forEach((alias) => {
+                this.line(` * @alias ${alias}`);
+            });
+        }
+
+        this.line(' */');
     }
 
     generateType(schema: TypeSchema | NestedTypeSchema) {
@@ -283,8 +423,13 @@ class TypeScriptGenerator extends Generator {
 
     generateProfileType(schema: TypeSchema) {
         const name = resourceName(schema.identifier);
+
+        // Generate extends clause for base type
+        const parent = fmap(normalizeName)(canonicalToName(schema.base?.url));
+        const extendsClause = parent && `extends ${parent}`;
+
         this.debugComment(schema.identifier);
-        this.curlyBlock(['export', 'interface', name], () => {
+        this.curlyBlock(['export', 'interface', name, extendsClause], () => {
             this.lineSM(`__profileUrl: '${schema.identifier.url}'`);
             this.line();
 
@@ -293,9 +438,17 @@ class TypeScriptGenerator extends Generator {
 
                 if ('choices' in field) continue;
 
+                // Generate JSDoc comment if documentation exists
+                this.generateFieldJsDoc(field);
+
                 const tsName = this.getFieldName(fieldName);
                 let tsType: string;
-                if (field.type.kind === 'nested') {
+
+                // Check for profile constraints first (from type-schema profileConstraints field)
+                if (field.profileConstraints && field.profileConstraints.length > 0) {
+                    const constraint = field.profileConstraints[0];
+                    tsType = resourceName(constraint);
+                } else if (field.type.kind === 'nested') {
                     tsType = this.deriveNestedSchemaName(field.type.url, true);
                 } else if (field.enum) {
                     tsType = field.enum.map((e) => `'${e}'`).join(' | ');
@@ -482,7 +635,10 @@ class TypeScriptGenerator extends Generator {
                 this.line();
                 this.generateNestedTypes(schema);
                 this.generateType(schema);
-            } else if (schema.identifier.kind === 'constraint') {
+            } else if (
+                schema.identifier.kind === 'constraint' ||
+                schema.identifier.kind === 'complex-type-constraint'
+            ) {
                 this.generateProfile(schema);
             } else {
                 throw new Error(

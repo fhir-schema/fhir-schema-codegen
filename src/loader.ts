@@ -128,7 +128,9 @@ export class SchemaLoader {
 
     profiles(): TypeSchema[] {
         return this.canonicalResources.package.filter(
-            (res: TypeSchema) => res.identifier.kind === 'constraint',
+            (res: TypeSchema) =>
+                res.identifier.kind === 'constraint' ||
+                res.identifier.kind === 'complex-type-constraint',
         );
     }
 
