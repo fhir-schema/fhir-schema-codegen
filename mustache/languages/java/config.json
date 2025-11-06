@@ -15,6 +15,15 @@
         "properties": {
           "package": "de.solutio.fhir.models.resources"
         }
+      },
+      {
+        "source":"primitive.mustache",
+        "path": "src/main/java/de/solutio/fhir/models",
+        "fileNameFormat":"Primitive.java",
+        "properties": {
+          "package": "de.solutio.fhir.models",
+          "complexTypePackage": "de.solutio.fhir.models.complex_types"
+        }
       }
     ],
     "resource": [
@@ -25,7 +34,8 @@
         "properties": {
           "package": "de.solutio.fhir.models.resources",
           "additional_imports": [
-            "de.solutio.fhir.models.complex_types.*"
+            "de.solutio.fhir.models.complex_types.*",
+            "de.solutio.fhir.models.Primitive"
           ],
           "features": {
             "hash_code_equals": true,
@@ -41,7 +51,9 @@
         "fileNameFormat":"%s.java",
         "properties": {
           "package": "de.solutio.fhir.models.complex_types",
-          "additional_imports": [],
+          "additional_imports": [
+            "de.solutio.fhir.models.Primitive"
+          ],
           "features": {
             "hash_code_equals": true,
             "builder": true

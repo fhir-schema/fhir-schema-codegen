@@ -15,16 +15,23 @@ protected {{{saveName}}}(Abstract{{{saveName}}}Builder<?,?> builder) {
         {{#isRequired}}requireNonNull(builder.{{{saveName}}}, "missing '{{{saveName}}}'");{{/isRequired}}
     {{/fields}}
     {{#fields}}
+        {{#isRequired}}requireNonNull(builder.{{{saveName}}}, "missing '{{{saveName}}}'");{{/isRequired}}
         {{#isArray}}
-            this.{{{saveName}}} = {{#isRequired}}List.copyOf({{/isRequired}}builder.{{{saveName}}}{{^isRequired}} != null ? List.copyOf(builder.{{{saveName}}}) : null{{/isRequired}}{{#isRequired}}){{/isRequired}};
             {{#isPrimitive}}
-                this.{{{saveName}}}Element = builder.{{{saveName}}}Element != null ? List.copyOf(builder.{{{saveName}}}Element) : null;
+                this.{{{saveName}}} = {{^isRequired}}builder.{{{saveName}}} != null ? {{/isRequired}}builder.{{{saveName}}}.stream().map(Primitive::value).toList(){{^isRequired}} : null{{/isRequired}};
+                this._{{{saveName}}} = {{^isRequired}}builder.{{{saveName}}} != null ? {{/isRequired}}builder.{{{saveName}}}.stream().map(Primitive::element).toList(){{^isRequired}} : null{{/isRequired}};
+            {{/isPrimitive}}
+            {{^isPrimitive}}
+                this.{{{saveName}}} = {{^isRequired}}builder.{{{saveName}}} != null ? {{/isRequired}}List.copyOf(builder.{{{saveName}}}){{^isRequired}} : null{{/isRequired}};
             {{/isPrimitive}}
         {{/isArray}}
         {{^isArray}}
-            this.{{{saveName}}} = builder.{{{saveName}}};
             {{#isPrimitive}}
-                this.{{{saveName}}}Element = builder.{{{saveName}}}Element;
+                this.{{{saveName}}} = {{^isRequired}}builder.{{{saveName}}} != null ? {{/isRequired}}requireNonNull(builder.{{{saveName}}}.value()){{^isRequired}} : null{{/isRequired}};
+                this._{{{saveName}}} = {{^isRequired}}builder.{{{saveName}}} != null ? {{/isRequired}} builder.{{{saveName}}}.element(){{^isRequired}} : null{{/isRequired}};
+            {{/isPrimitive}}
+            {{^isPrimitive}}
+                this.{{{saveName}}} = builder.{{{saveName}}};
             {{/isPrimitive}}
         {{/isArray}}
     {{/fields}}
@@ -35,24 +42,21 @@ protected <B extends Abstract{{{saveName}}}Builder<?,B>> B applyToBuilder(B buil
     {{#hasFields}}
         builder
         {{#fields}}
-                .{{{saveName}}}(this.{{{saveName}}})
-                {{#isPrimitive}}
-                    .{{{saveName}}}Element(this.{{{saveName}}}Element)
-                {{/isPrimitive}}
+                .{{{saveName}}}(this.{{{saveName}}}{{#isPrimitive}},this._{{{saveName}}}{{/isPrimitive}})
         {{/fields}};
     {{/hasFields}}
     return builder;
 }
 {{#hasChildren}}
-protected Abstract{{{saveName}}}Builder<?,?> toBuilder() {
-    return this.toBuilder();
-}
-public final {{{saveName}}}Builder to{{{saveName}}}Builder() {
-    return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
-}
+    protected Abstract{{{saveName}}}Builder<?,?> toBuilder() {
+        return this.toBuilder();
+    }
+    public final {{{saveName}}}Builder to{{{saveName}}}Builder() {
+        return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
+    }
 {{/hasChildren}}
 {{^hasChildren}}
-public final {{{saveName}}}Builder toBuilder() {
-    return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
-}
+    public final {{{saveName}}}Builder toBuilder() {
+        return this.applyToBuilder({{{saveName}}}.{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}Builder());
+    }
 {{/hasChildren}}

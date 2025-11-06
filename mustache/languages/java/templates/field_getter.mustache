@@ -2,8 +2,8 @@ public {{^isRequired}}Optional<{{/isRequired}}{{>plain_type}}{{^isRequired}}>{{/
     return {{^isRequired}}Optional.ofNullable({{/isRequired}}this.{{{saveName}}}{{^isRequired}}){{/isRequired}};
 }
 {{#isPrimitive}}
-    public Optional<{{#isArray}}List<{{/isArray}}{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}>{{#isArray}}>{{/isArray}} {{#lambda.saveFieldName}}{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}{{/lambda.saveFieldName}}Element() {
-        return Optional.ofNullable(this.{{{saveName}}}Element);
+    public Optional<{{#isArray}}List<{{/isArray}}{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}>{{#isArray}}>{{/isArray}} _{{#lambda.saveFieldName}}{{#lambda.camelCase}}{{{saveName}}}{{/lambda.camelCase}}{{/lambda.saveFieldName}}() {
+        return Optional.ofNullable(this._{{{saveName}}});
     }
     {{#isDateTime}}
         {{>field_getter_local_date_time}}

@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class ResourceTest {
@@ -33,10 +34,11 @@ class ResourceTest {
 
         final TaskDTO taskWithExtension =
                 task.toBuilder()
-                        .descriptionElement(elementDtoBuilder()
-                                .extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
-                                .build())
-                        .addExtension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
+                        ._description(
+                                elementDtoBuilder()
+                                        .extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
+                                        .build())
+                        .extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
                         .build();
         assertThat(taskWithExtension.description()).isEqualTo(task.description());
         assertThat(taskWithExtension.intent()).isEqualTo(task.intent());
