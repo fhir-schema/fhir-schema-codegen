@@ -48,7 +48,8 @@
           ],
           "features": {
             "hash_code_equals": true,
-            "builder": true
+            "builder": true,
+            "to_string": true
           }
         }
       }
@@ -66,7 +67,8 @@
           ],
           "features": {
             "hash_code_equals": true,
-            "builder": true
+            "builder": true,
+            "to_string": true
           }
         }
       }

@@ -72,4 +72,8 @@ public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}exten
     {{#properties.features.hash_code_equals}}
         {{>feature_hashcode_equals}}
     {{/properties.features.hash_code_equals}}
+
+    {{#properties.features.to_string}}
+        {{>feature_to_string}}
+    {{/properties.features.to_string}}
 }
