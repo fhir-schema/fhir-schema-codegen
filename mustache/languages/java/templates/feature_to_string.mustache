@@ -2,6 +2,9 @@ protected Utils.ToStringHelper toStringHelper(){
     return {{#hasParents}}super.toStringHelper(){{/hasParents}}{{^hasParents}}Utils.toStringHelper(this){{/hasParents}}
         {{#fields}}
             .add("{{saveName}}", this.{{saveName}})
+            {{#isPrimitive}}
+                .add("_{{saveName}}", this._{{saveName}})
+            {{/isPrimitive}}
         {{/fields}};
 }
 
