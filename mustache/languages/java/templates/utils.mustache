@@ -37,6 +37,15 @@ public enum Utils {
     return (a == b) || (a != null && b != null && a.isEqual(b));
   }
 
+  public static ToStringHelper toStringHelper(Class<?> clazz) {
+    requireNonNull(clazz);
+    return new ToStringHelper(clazz.getSimpleName());
+  }
+  public static ToStringHelper toStringHelper(Object object) {
+    requireNonNull(object);
+    return Utils.toStringHelper(object.getClass());
+  }
+
   public static final class ToStringHelper {
     private record Value(String name, Object value) {
         public Value{
@@ -51,7 +60,7 @@ public enum Utils {
         this.values = new LinkedList<>();
     }
 
-    public ToStringHelper addValue(String name, @Nullable Object value) {
+    public ToStringHelper add(String name, @Nullable Object value) {
         this.values.add(new Value(name, value));
         return this;
     }
@@ -59,7 +68,10 @@ public enum Utils {
         final StringBuilder builder = new StringBuilder(this.name).append('{');
         int i = 0;
         for(Value value : this.values) {
-            builder.append(value.name()).append('=').append(value.value().toString());
+            if(value.value() == null) {
+                continue;
+            }
+            builder.append(value.name()).append('=').append(value.value());
             if (i < this.values.size() - 1) {
                 builder.append(", ");
             }

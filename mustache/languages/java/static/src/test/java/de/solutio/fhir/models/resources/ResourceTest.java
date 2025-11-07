@@ -25,15 +25,22 @@ class ResourceTest {
         final TaskDTO task =
                 taskDtoBuilder()
                         .description("some description")
-                        .authoredOn(LocalDateTime.now(), elementDtoBuilder().extension(extensionDtoBuilder().url(URI.create("https://www.google.com")).build()).build())
+                        .authoredOn(
+                                LocalDateTime.now(),
+                                elementDtoBuilder()
+                                        .extension(
+                                                extensionDtoBuilder().url(URI.create("https://www.google.com")).build())
+                                        .build())
                         .intent(TaskIntentDTO.PLAN)
                         .status(TaskStatusDTO.REQUESTED)
                         .input(taskInputDtoBuilder().type(codeableConceptDtoBuilder().build()).build())
                         .build();
+        assertThat(task.toString()).isNotBlank();
         final String json = objectMapper.writeValueAsString(task);
         assertThat(json).isNotBlank();
         final TaskDTO read = objectMapper.readValue(json, TaskDTO.class);
         assertThat(read).isEqualTo(task);
+        assertThat(read.toString()).isNotBlank();
 
         final TaskDTO taskWithExtension =
                 task.toBuilder()
@@ -47,8 +54,10 @@ class ResourceTest {
         assertThat(taskWithExtension.description()).isEqualTo(task.description());
         assertThat(taskWithExtension.intent()).isEqualTo(task.intent());
         assertThat(taskWithExtension.status()).isEqualTo(task.status());
+        assertThat(taskWithExtension.toString()).isNotBlank();
         final String jsonWithExtension = objectMapper.writeValueAsString(taskWithExtension);
         final TaskDTO readWithExtension = objectMapper.readValue(jsonWithExtension, TaskDTO.class);
         assertThat(readWithExtension).isEqualTo(taskWithExtension);
+        assertThat(readWithExtension.toString()).isNotBlank();
     }
 }
