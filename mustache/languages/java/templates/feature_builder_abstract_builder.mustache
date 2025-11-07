@@ -9,6 +9,10 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
     protected Abstract{{{saveName}}}Builder() {
     }
 
+    {{#isComplexType.isReference}}
+        {{>feature_builder_abstract_builder_additional_resource_behaviour}}
+    {{/isComplexType.isReference}}
+
     {{#fields}}
         {{#isArray}}
             private final {{>feature_builder_plain_type}} {{{saveName}}}(){

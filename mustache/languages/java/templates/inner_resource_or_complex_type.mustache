@@ -58,6 +58,9 @@ public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}exten
     {{#isComplexType.isCodeableConcept}}
         {{>additional_codeable_concept_behaviour}}
     {{/isComplexType.isCodeableConcept}}
+    {{#isComplexType.isReference}}
+        {{>additional_reference_behaviour}}
+    {{/isComplexType.isReference}}
 
     {{#fields}}
         {{>field_getter}}

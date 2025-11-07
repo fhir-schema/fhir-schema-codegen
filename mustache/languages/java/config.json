@@ -18,10 +18,11 @@
       },
       {
         "source":"resource_names.mustache",
-        "path": "src/main/java/de/solutio/fhir/models/resources",
+        "path": "src/main/java/de/solutio/fhir/models",
         "fileNameFormat":"ResourceName.java",
         "properties": {
-          "package": "de.solutio.fhir.models.resources"
+          "package": "de.solutio.fhir.models",
+          "resourcePackage": "de.solutio.fhir.models.resources"
         }
       },
       {
@@ -44,6 +45,7 @@
           "additional_imports": [
             "de.solutio.fhir.models.complex_types.*",
             "de.solutio.fhir.models.Primitive",
+            "de.solutio.fhir.models.ResourceName",
             "de.solutio.fhir.models.Utils"
           ],
           "features": {
@@ -63,6 +65,7 @@
           "package": "de.solutio.fhir.models.complex_types",
           "additional_imports": [
             "de.solutio.fhir.models.Primitive",
+            "de.solutio.fhir.models.ResourceName",
             "de.solutio.fhir.models.Utils"
           ],
           "features": {
