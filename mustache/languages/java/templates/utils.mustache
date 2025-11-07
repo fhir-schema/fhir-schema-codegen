@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -66,17 +67,11 @@ public enum Utils {
     }
     public String toString() {
         final StringBuilder builder = new StringBuilder(this.name).append('{');
-        int i = 0;
-        for(Value value : this.values) {
-            if(value.value() == null) {
-                continue;
-            }
-            builder.append(value.name()).append('=').append(value.value());
-            if (i < this.values.size() - 1) {
-                builder.append(", ");
-            }
-            i++;
-        }
+        builder.append(this.values.stream()
+            .filter(value -> value.value() != null)
+            .map(value -> value.name() + '=' + value.value())
+            .collect(Collectors.joining(", "))
+        );
         return builder.append('}').toString();
     }
   }
