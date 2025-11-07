@@ -3,8 +3,7 @@
 protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveName}}}, B extends Abstract{{{saveName}}}Builder<T,B>> {{#hasParents}}extends Abstract{{{parents.0.saveName}}}Builder<T,B>{{/hasParents}}{
 
     {{#fields}}
-        @Nullable
-        private {{>feature_builder_plain_type}} {{{saveName}}} = null;
+        private @Nullable {{>feature_builder_plain_type}} {{{saveName}}} = null;
     {{/fields}}
 
     protected Abstract{{{saveName}}}Builder() {

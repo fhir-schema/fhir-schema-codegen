@@ -31,9 +31,7 @@ public {{#isNested}}static{{/isNested}} class {{{saveName}}} {{#parents.0}}exten
     {{#fields}}
         private final {{>annotated_type}} {{{saveName}}};
         {{#isPrimitive}}
-            @Nullable
-            @JsonProperty("_{{{name}}}")
-            private final {{#isArray}}List<{{/isArray}}{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}{{#isArray}}>{{/isArray}} _{{{saveName}}};
+            private final @Nullable @JsonProperty("_{{{name}}}") {{#isArray}}List<{{/isArray}}{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}}{{#isArray}}>{{/isArray}} _{{{saveName}}};
         {{/isPrimitive}}
     {{/fields}}
 

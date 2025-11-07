@@ -15,7 +15,6 @@ protected {{{saveName}}}(Abstract{{{saveName}}}Builder<?,?> builder) {
         {{#isRequired}}requireNonNull(builder.{{{saveName}}}, "missing '{{{saveName}}}'");{{/isRequired}}
     {{/fields}}
     {{#fields}}
-        {{#isRequired}}requireNonNull(builder.{{{saveName}}}, "missing '{{{saveName}}}'");{{/isRequired}}
         {{#isArray}}
             {{#isPrimitive}}
                 this.{{{saveName}}} = {{^isRequired}}builder.{{{saveName}}} != null ? {{/isRequired}}builder.{{{saveName}}}.stream().map(Primitive::value).toList(){{^isRequired}} : null{{/isRequired}};
