@@ -15,13 +15,13 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
 
     {{#fields}}
         {{#isArray}}
-            private final {{>feature_builder_plain_type}} {{{saveName}}}(){
+            private {{>feature_builder_plain_type}} {{{saveName}}}(){
                 if(this.{{{saveName}}} == null) {
                     this.{{{saveName}}} = new ArrayList<>();
                 }
                 return this.{{{saveName}}};
             }
-            private final void clear{{#lambda.saveFieldName}}{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}{{/lambda.saveFieldName}}(){
+            private void clear{{#lambda.saveFieldName}}{{#lambda.pascalCase}}{{{saveName}}}{{/lambda.pascalCase}}{{/lambda.saveFieldName}}(){
                 if(this.{{{saveName}}} != null) {
                     this.{{{saveName}}}.clear();
                 }

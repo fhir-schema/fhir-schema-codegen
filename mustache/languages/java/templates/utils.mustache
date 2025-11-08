@@ -66,13 +66,12 @@ public enum Utils {
         return this;
     }
     public String toString() {
-        final StringBuilder builder = new StringBuilder(this.name).append('{');
-        builder.append(this.values.stream()
-            .filter(value -> value.value() != null)
-            .map(value -> value.name() + '=' + value.value())
-            .collect(Collectors.joining(", "))
-        );
-        return builder.append('}').toString();
+        return this.name + '{' +
+            this.values.stream()
+                .filter(value -> value.value() != null)
+                .map(value -> value.name() + '=' + value.value())
+                .collect(Collectors.joining(", ")) +
+        '}';
     }
   }
 }
