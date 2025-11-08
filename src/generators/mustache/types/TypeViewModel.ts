@@ -9,6 +9,11 @@ export type TypeViewModel = NamedViewModel & {
     schema: TypeSchema | NestedTypeSchema;
     fields: FieldViewModel[];
 
+    dependencies: {
+        resources: NamedViewModel[],
+        complexTypes: NamedViewModel[],
+    }
+
     hasFields: boolean;
     hasNestedComplexTypes: boolean;
     hasNestedEnums: boolean;

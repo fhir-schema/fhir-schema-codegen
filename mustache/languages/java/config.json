@@ -42,8 +42,9 @@
         "fileNameFormat":"%s.java",
         "properties": {
           "package": "de.solutio.fhir.models.resources",
+          "complexTypePackage": "de.solutio.fhir.models.complex_types",
+          "resourcePackage": "de.solutio.fhir.models.resources",
           "additional_imports": [
-            "de.solutio.fhir.models.complex_types.*",
             "de.solutio.fhir.models.Primitive",
             "de.solutio.fhir.models.ResourceName",
             "de.solutio.fhir.models.Utils"
@@ -63,6 +64,8 @@
         "fileNameFormat":"%s.java",
         "properties": {
           "package": "de.solutio.fhir.models.complex_types",
+          "complexTypePackage": "de.solutio.fhir.models.complex_types",
+          "resourcePackage": "de.solutio.fhir.models.resources",
           "additional_imports": [
             "de.solutio.fhir.models.Primitive",
             "de.solutio.fhir.models.ResourceName",

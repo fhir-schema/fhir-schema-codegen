@@ -15,6 +15,21 @@ import jakarta.validation.Valid;
 import {{{.}}};
 {{/properties.additional_imports}}
 
+{{#model.isResource}}
+    import {{{properties.complexTypePackage}}}.{{#lambda.saveTypeName}}Reference{{/lambda.saveTypeName}};
+{{/model.isResource}}
+import {{{properties.complexTypePackage}}}.{{#lambda.saveTypeName}}Element{{/lambda.saveTypeName}};
+
+{{#model.dependencies}}
+    {{#complexTypes}}
+        import {{{properties.complexTypePackage}}}.{{{saveName}}};
+    {{/complexTypes}}
+
+    {{#resources}}
+        import {{{properties.resourcePackage}}}.{{{saveName}}};
+    {{/resources}}
+{{/model.dependencies}}
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;

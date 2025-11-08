@@ -141,6 +141,7 @@ export class ViewModelFactory {
         const fields = Object.entries(schema.fields ?? {});
         const nestedComplexTypes = this._collectNestedComplex(schema, cache);
         const nestedEnums = this._collectNestedEnums(fields);
+        const dependencies = this._collectDependencies(schema);
         const name: NamedViewModel = {
             name: schema.identifier.name,
             saveName: this.nameGenerator.generateType(schema)
@@ -148,6 +149,7 @@ export class ViewModelFactory {
         return {
             nestedComplexTypes,
             nestedEnums,
+            dependencies,
             isNested: !!nestedIn,
             schema: schema,
             ...name,
@@ -188,6 +190,30 @@ export class ViewModelFactory {
                 }
             )
         }
+    }
+
+    private _collectDependencies(schema: TypeSchema | NestedTypeSchema): TypeViewModel['dependencies'] {
+        const dependencies: TypeViewModel['dependencies'] = {
+            resources: [],
+            complexTypes: []
+        }
+        if('dependencies' in schema && schema.dependencies){
+            schema.dependencies
+                .filter(dependency=>dependency.kind === 'complex-type')
+                .map(dependency=>({name: dependency.name, saveName: this.nameGenerator.generateType(dependency)}))
+                .forEach(dependency=>dependencies.complexTypes.push(dependency));
+            schema.dependencies
+                .filter(dependency=>dependency.kind === 'resource')
+                .map(dependency=>({name: dependency.name, saveName: this.nameGenerator.generateType(dependency)}))
+                .forEach(dependency=>dependencies.resources.push(dependency));
+        }
+        if('nested' in schema && schema.nested){
+            schema.nested.map(nested => this._collectDependencies(nested)).forEach(d=>{
+                d.complexTypes.filter(complexType=>!dependencies.complexTypes.some(dependency=>dependency.name === complexType.name)).forEach(complexType=>dependencies.complexTypes.push(complexType));
+                d.resources.filter(resource=>!dependencies.resources.some(dependency=>dependency.name === resource.name)).forEach(resource=>dependencies.resources.push(resource));
+            });
+        }
+        return dependencies;
     }
 
     private _createIsResource(typeRef: TypeRef): Record<IsPrefixed<string>, boolean> | false {
