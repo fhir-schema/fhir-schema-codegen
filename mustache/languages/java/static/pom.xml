@@ -86,9 +86,7 @@
                 <version>${spotless-maven-plugin.version}</version>
                 <configuration>
                     <java>
-                        <eclipse>
-                            <file>${project.basedir}/formatter.xml</file>
-                        </eclipse>
+                        <googleJavaFormat/>
                         <replaceRegex>
                             <name>collapse all blank lines</name>
                             <searchRegex>(?m)(\r?\n){2,}</searchRegex>
