@@ -9,16 +9,16 @@
   "renderings": {
     "utility": [
       {
-        "source":"utils.mustache",
-        "path": "src/main/java/de/solutio/fhir/models/",
+        "source":"model/utils/utils.mustache",
+        "path": "model/src/main/java/de/solutio/fhir/models/",
         "fileNameFormat":"Utils.java",
         "properties": {
           "package": "de.solutio.fhir.models"
         }
       },
       {
-        "source":"resource_names.mustache",
-        "path": "src/main/java/de/solutio/fhir/models",
+        "source":"model/utils/resource_names.mustache",
+        "path": "model/src/main/java/de/solutio/fhir/models",
         "fileNameFormat":"ResourceName.java",
         "properties": {
           "package": "de.solutio.fhir.models",
@@ -26,8 +26,8 @@
         }
       },
       {
-        "source":"primitive.mustache",
-        "path": "src/main/java/de/solutio/fhir/models",
+        "source":"model/utils/primitive.mustache",
+        "path": "model/src/main/java/de/solutio/fhir/models",
         "fileNameFormat":"Primitive.java",
         "properties": {
           "package": "de.solutio.fhir.models",
@@ -37,8 +37,8 @@
     ],
     "resource": [
       {
-        "source":"resource_or_complex_type.mustache",
-        "path": "src/main/java/de/solutio/fhir/models/resources",
+        "source":"model/resource_or_complex_type.mustache",
+        "path": "model/src/main/java/de/solutio/fhir/models/resources",
         "fileNameFormat":"%s.java",
         "properties": {
           "package": "de.solutio.fhir.models.resources",
@@ -59,8 +59,8 @@
     ],
     "complexType": [
       {
-        "source":"resource_or_complex_type.mustache",
-        "path": "src/main/java/de/solutio/fhir/models/complex_types",
+        "source":"model/resource_or_complex_type.mustache",
+        "path": "model/src/main/java/de/solutio/fhir/models/complex_types",
         "fileNameFormat":"%s.java",
         "properties": {
           "package": "de.solutio.fhir.models.complex_types",

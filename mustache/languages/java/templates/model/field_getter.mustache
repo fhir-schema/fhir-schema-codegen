@@ -6,9 +6,9 @@ public {{^isRequired}}Optional<{{/isRequired}}{{>plain_type}}{{^isRequired}}>{{/
         return Optional.ofNullable(this._{{{saveName}}});
     }
     {{#isDateTime}}
-        {{>field_getter_local_date_time}}
+        {{>model/field_getter_local_date_time}}
     {{/isDateTime}}
     {{#isInstant}}
-        {{>field_getter_local_date_time}}
+        {{>model/field_getter_local_date_time}}
     {{/isInstant}}
 {{/isPrimitive}}

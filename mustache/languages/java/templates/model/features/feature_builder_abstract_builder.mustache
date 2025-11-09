@@ -3,19 +3,19 @@
 protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveName}}}, B extends Abstract{{{saveName}}}Builder<T,B>> {{#hasParents}}extends Abstract{{{parents.0.saveName}}}Builder<T,B>{{/hasParents}}{
 
     {{#fields}}
-        private @Nullable {{>feature_builder_plain_type}} {{{saveName}}} = null;
+        private @Nullable {{>primitive_wrapped_plain_type}} {{{saveName}}} = null;
     {{/fields}}
 
     protected Abstract{{{saveName}}}Builder() {
     }
 
     {{#isComplexType.isReference}}
-        {{>feature_builder_abstract_builder_additional_resource_behaviour}}
+        {{>model/features/feature_builder_abstract_builder_additional_resource_behaviour}}
     {{/isComplexType.isReference}}
 
     {{#fields}}
         {{#isArray}}
-            private {{>feature_builder_plain_type}} {{{saveName}}}(){
+            private {{>primitive_wrapped_plain_type}} {{{saveName}}}(){
                 if(this.{{{saveName}}} == null) {
                     this.{{{saveName}}} = new ArrayList<>();
                 }
@@ -58,10 +58,10 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
                     return this.self();
                 }
                 {{#isDateTime}}
-                    {{>feature_builder_local_date_time}}
+                    {{>model/features/feature_builder_local_date_time}}
                 {{/isDateTime}}
                 {{#isInstant}}
-                    {{>feature_builder_local_date_time}}
+                    {{>model/features/feature_builder_local_date_time}}
                 {{/isInstant}}
             {{/isPrimitive}}
             {{^isPrimitive}}
@@ -97,10 +97,10 @@ protected static abstract class Abstract{{{saveName}}}Builder<T extends {{{saveN
                     return this.self();
                 }
                 {{#isDateTime}}
-                    {{>feature_builder_local_date_time}}
+                    {{>model/features/feature_builder_local_date_time}}
                 {{/isDateTime}}
                 {{#isInstant}}
-                    {{>feature_builder_local_date_time}}
+                    {{>model/features/feature_builder_local_date_time}}
                 {{/isInstant}}
             {{/isPrimitive}}
             {{^isPrimitive}}

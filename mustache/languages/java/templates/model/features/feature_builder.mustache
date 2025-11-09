@@ -2,8 +2,8 @@ public static {{{saveName}}}Builder {{#lambda.camelCase}}{{{saveName}}}{{/lambda
     return new {{{saveName}}}Builder();
 }
 
-{{>feature_builder_abstract_builder.mustache}}
-{{>feature_builder_builder.mustache}}
+{{>model/features/feature_builder_abstract_builder.mustache}}
+{{>model/features/feature_builder_builder.mustache}}
 
 private {{{saveName}}}({{{saveName}}}Builder builder) {
     this((Abstract{{{saveName}}}Builder<?,?>)requireNonNull(builder));

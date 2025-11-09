@@ -63,5 +63,5 @@ import java.util.stream.IntStream;
 {{#isResource.isResource}}
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "resourceType")
 {{/isResource.isResource}}
-{{>inner_resource_or_complex_type}}
+{{>model/inner_resource_or_complex_type}}
 {{/model}}
