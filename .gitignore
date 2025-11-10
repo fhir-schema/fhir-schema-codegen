@@ -8,6 +8,7 @@ bin/
 .fhir-packages
 .DS_Store
 .idea
+.run
 .vscode
 .env
 output
@@ -20,7 +21,7 @@ example/csharp/bin
 *.sln
 
 # SDK Examples
-
+/java-sdk
 example/docker-compose.yaml
 
 # Python SDK

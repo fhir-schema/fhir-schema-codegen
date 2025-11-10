@@ -15,6 +15,7 @@ describe('GeneratorsRegistry', () => {
             // Test built-in names
             expect(registry.validateGeneratorName('typescript').isValid).toBe(false);
             expect(registry.validateGeneratorName('csharp').isValid).toBe(false);
+            expect(registry.validateGeneratorName('mustache').isValid).toBe(false);
             expect(registry.validateGeneratorName('python').isValid).toBe(false);
         });
 
@@ -38,7 +39,6 @@ describe('GeneratorsRegistry', () => {
 
         it('should accept valid names', () => {
             // Test valid names
-            expect(registry.validateGeneratorName('java').isValid).toBe(true);
             expect(registry.validateGeneratorName('swift').isValid).toBe(true);
             expect(registry.validateGeneratorName('kotlin').isValid).toBe(true);
             expect(registry.validateGeneratorName('go-lang').isValid).toBe(true);
@@ -65,10 +65,11 @@ describe('GeneratorsRegistry', () => {
             expect(registry.isBuiltInGeneratorName('typescript')).toBe(true);
             expect(registry.isBuiltInGeneratorName('csharp')).toBe(true);
             expect(registry.isBuiltInGeneratorName('python')).toBe(true);
+            expect(registry.isBuiltInGeneratorName('mustache')).toBe(true);
         });
 
         it('should return false for non-built-in names', () => {
-            expect(registry.isBuiltInGeneratorName('java')).toBe(false);
+            expect(registry.isBuiltInGeneratorName('cotlin')).toBe(false);
             expect(registry.isBuiltInGeneratorName('nonexistent')).toBe(false);
         });
     });
@@ -78,10 +79,11 @@ describe('GeneratorsRegistry', () => {
             expect(registry.hasGenerator('typescript')).toBe(true);
             expect(registry.hasGenerator('csharp')).toBe(true);
             expect(registry.hasGenerator('python')).toBe(true);
+            expect(registry.hasGenerator('mustache')).toBe(true);
         });
 
         it('should return false for unregistered generators', () => {
-            expect(registry.hasGenerator('java')).toBe(false);
+            expect(registry.hasGenerator('cotlin')).toBe(false);
             expect(registry.hasGenerator('nonexistent')).toBe(false);
         });
     });
