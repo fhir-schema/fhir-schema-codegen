@@ -786,7 +786,7 @@ class TypeScriptGenerator extends Generator {
     }
 
     generateProfile(schema: TypeSchema) {
-        assert(schema.identifier.kind === 'constraint');
+        assert(schema.identifier.kind === 'constraint' || schema.identifier.kind === 'complex-type-constraint');
         const flatProfile = profile.flatProfile(this.loader, schema);
 
         // Extensions have specialized generation per FHIR extensibility spec
