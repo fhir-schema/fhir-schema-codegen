@@ -586,7 +586,7 @@ class TypeScriptGenerator extends Generator {
      * Generate Extension profile type
      * Extensions have special handling per FHIR extensibility spec:
      * - Must extend Element (not Extension) to avoid inheriting all 55+ value[x] types
-     * - value[x] is a polymorphic element - generate as discriminated union
+     * - value[x] uses shared ExtractExtensionValue helper from extension-values.ts
      * - Fixed URL should be typed as literal string
      * - Can have nested extensions OR value, but not both
      */
@@ -597,26 +597,15 @@ class TypeScriptGenerator extends Generator {
 
         this.debugComment(schema.identifier);
 
-        // Generate discriminated union type for value[x] if there are constraints
+        // Generate type alias using shared ExtractExtensionValue if there are constraints
         if (valueConstraints.length > 0) {
             const valueTypeName = `${name}Value`;
+            const fieldNames = valueConstraints.map(([fieldName]) => `'${this.getFieldName(fieldName)}'`);
+            const extractType = fieldNames.length === 1
+                ? fieldNames[0]
+                : fieldNames.join(' | ');
 
-            if (valueConstraints.length === 1) {
-                // Single type - use simple type alias
-                const [fieldName, typeName] = valueConstraints[0];
-                const tsFieldName = this.getFieldName(fieldName);
-                this.lineSM(`export type ${valueTypeName} = { ${tsFieldName}: ${typeName} }`);
-            } else {
-                // Multiple types - generate discriminated union
-                this.line(`export type ${valueTypeName} =`);
-                this.indentBlock(() => {
-                    valueConstraints.forEach(([fieldName, typeName], index) => {
-                        const tsFieldName = this.getFieldName(fieldName);
-                        const separator = index < valueConstraints.length - 1 ? ' |' : '';
-                        this.lineSM(`| { ${tsFieldName}: ${typeName} }${separator}`);
-                    });
-                });
-            }
+            this.lineSM(`export type ${valueTypeName} = ExtractExtensionValue<${extractType}>`);
             this.line();
         }
 
@@ -629,7 +618,7 @@ class TypeScriptGenerator extends Generator {
                 this.lineSM(`url: string`);
             }
 
-            // Generate value field as discriminated union OR extension array
+            // Generate value field using type alias OR extension array
             if (valueConstraints.length > 0) {
                 const valueTypeName = `${name}Value`;
                 this.lineSM(`value?: ${valueTypeName}`);
@@ -658,6 +647,9 @@ class TypeScriptGenerator extends Generator {
             })
             .map(([fieldName]) => fieldName);
 
+        // Check if base type is a resource (has meta property)
+        const isResourceProfile = flatProfile.base.kind === 'resource';
+
         this.curlyBlock(
             [
                 `export const attach_${profName} =`,
@@ -667,10 +659,13 @@ class TypeScriptGenerator extends Generator {
             () => {
                 this.curlyBlock(['return'], () => {
                     this.line('...resource,');
-                    // FIXME: don't rewrite all profiles
-                    this.curlyBlock(['meta:'], () => {
-                        this.line(`profile: ['${flatProfile.identifier.url}']`);
-                    }, [',']);
+                    // Only add meta for resource profiles (not complex-type profiles)
+                    if (isResourceProfile) {
+                        // FIXME: don't rewrite all profiles
+                        this.curlyBlock(['meta:'], () => {
+                            this.line(`profile: ['${flatProfile.identifier.url}']`);
+                        }, [',']);
+                    }
                     profileFields.forEach((fieldName) => {
                         this.line(`${fieldName}:`, `profile.${fieldName},`);
                     });
@@ -765,7 +760,7 @@ class TypeScriptGenerator extends Generator {
 
     /**
      * Generate imports for extension profiles
-     * Only import types that are actually used in the constrained value[x] types
+     * Uses shared ExtractExtensionValue helper from extension-values.ts
      */
     generateExtensionImports(schema: TypeSchema) {
         const valueConstraints = this.extractValueXConstraints(schema);
@@ -784,24 +779,9 @@ class TypeScriptGenerator extends Generator {
             }
         }
 
-        // Import only the types used in constrained value[x]
-        if (valueConstraints.length > 0 && schema.dependencies) {
-            const usedTypeNames = new Set(valueConstraints.map(([, typeName]) => typeName));
-
-            const deps = schema.dependencies
-                .filter((dep) =>
-                    ['complex-type', 'resource', 'logical'].includes(dep.kind) &&
-                    usedTypeNames.has(dep.name)
-                )
-                .map((dep) => ({
-                    tsPackage: `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`,
-                    name: this.uppercaseFirstLetter(dep.name),
-                }))
-                .sort((a, b) => a.name.localeCompare(b.name));
-
-            for (const dep of deps) {
-                this.tsImportFrom(dep.tsPackage, dep.name);
-            }
+        // Import ExtractExtensionValue helper for value constraints
+        if (valueConstraints.length > 0) {
+            this.tsImportFrom('../../extension-values', 'ExtractExtensionValue');
         }
     }
 
