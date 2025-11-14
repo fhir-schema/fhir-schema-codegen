@@ -421,6 +421,95 @@ class TypeScriptGenerator extends Generator {
         this.line();
     }
 
+    /**
+     * Detect if a schema is an Extension profile
+     */
+    private isExtensionProfile(schema: TypeSchema): boolean {
+        return schema.base?.url === 'http://hl7.org/fhir/StructureDefinition/Extension';
+    }
+
+    /**
+     * Extract constrained value[x] types from an Extension profile
+     * Returns array of [fieldName, typeName] tuples for constrained value types
+     *
+     * Strategy: For extensions, ALL value[x] fields in the flattened profile come from
+     * the base Extension type. The differential only contains the CONSTRAINED type(s).
+     * We need to look at the "choices" metadata to identify which value[x] was constrained.
+     *
+     * Extension types:
+     * 1. Simple extension with constrained value: choices array has 1-5 specific types
+     * 2. Complex extension with sub-extensions: choices array has ALL 52 types (or has extension field)
+     */
+    private extractValueXConstraints(schema: TypeSchema): Array<[string, string]> {
+        const constraints: Array<[string, string]> = [];
+
+        if (!schema.fields) {
+            return constraints;
+        }
+
+        // Check if this extension has nested sub-extensions
+        const hasNestedExtensions = schema.fields['extension'] !== undefined;
+
+        // Look for the choice field first - this tells us which types are constrained
+        const valueChoice = Object.entries(schema.fields).find(
+            ([fieldName, field]) => fieldName === 'value' && 'choices' in field
+        );
+
+        if (!valueChoice) {
+            // No value choice field means no value constraints (nested extensions only)
+            return constraints;
+        }
+
+        const [, choiceField] = valueChoice;
+        if (!('choices' in choiceField) || !choiceField.choices) {
+            return constraints;
+        }
+
+        // Complex extensions have nested sub-extensions and typically have ALL value[x] types
+        // If choices array is very large (>10 types), it's likely a complex extension
+        // In this case, return empty to use extension[] instead
+        if (hasNestedExtensions && choiceField.choices.length > 10) {
+            return constraints;
+        }
+
+        // The choices array contains field names (strings) of constrained value[x] variants
+        for (const fieldName of choiceField.choices) {
+            const field = schema.fields[fieldName];
+
+            if (!field || 'choices' in field) {
+                continue;
+            }
+
+            // Extract type name
+            const typeName = field.type.kind === 'primitive-type'
+                ? (primitiveType2tsType[field.type.name as keyof typeof primitiveType2tsType] ?? 'string')
+                : field.type.name;
+
+            constraints.push([fieldName, typeName]);
+        }
+
+        return constraints;
+    }
+
+    /**
+     * Extract fixed URL value from an Extension profile
+     * Returns the fixed URL string if present, null otherwise
+     */
+    private extractFixedUrl(schema: TypeSchema): string | null {
+        const urlField = schema.fields?.['url'];
+
+        if (!urlField) {
+            return null;
+        }
+
+        // Fixed URL is represented as an enum with a single value
+        if (urlField.enum && urlField.enum.length === 1) {
+            return urlField.enum[0];
+        }
+
+        return null;
+    }
+
     generateProfileType(schema: TypeSchema) {
         const name = resourceName(schema.identifier);
 
@@ -487,6 +576,67 @@ class TypeScriptGenerator extends Generator {
                 this.lineSM(
                     `${tsName}${!field.required ? '?' : ''}: ${tsType}${field.array ? '[]' : ''}`,
                 );
+            }
+        });
+
+        this.line();
+    }
+
+    /**
+     * Generate Extension profile type
+     * Extensions have special handling per FHIR extensibility spec:
+     * - Must extend Element (not Extension) to avoid inheriting all 55+ value[x] types
+     * - value[x] is a polymorphic element - generate as discriminated union
+     * - Fixed URL should be typed as literal string
+     * - Can have nested extensions OR value, but not both
+     */
+    generateExtensionProfile(schema: TypeSchema) {
+        const name = resourceName(schema.identifier);
+        const valueConstraints = this.extractValueXConstraints(schema);
+        const fixedUrl = this.extractFixedUrl(schema);
+
+        this.debugComment(schema.identifier);
+
+        // Generate discriminated union type for value[x] if there are constraints
+        if (valueConstraints.length > 0) {
+            const valueTypeName = `${name}Value`;
+
+            if (valueConstraints.length === 1) {
+                // Single type - use simple type alias
+                const [fieldName, typeName] = valueConstraints[0];
+                const tsFieldName = this.getFieldName(fieldName);
+                this.lineSM(`export type ${valueTypeName} = { ${tsFieldName}: ${typeName} }`);
+            } else {
+                // Multiple types - generate discriminated union
+                this.line(`export type ${valueTypeName} =`);
+                this.indentBlock(() => {
+                    valueConstraints.forEach(([fieldName, typeName], index) => {
+                        const tsFieldName = this.getFieldName(fieldName);
+                        const separator = index < valueConstraints.length - 1 ? ' |' : '';
+                        this.lineSM(`| { ${tsFieldName}: ${typeName} }${separator}`);
+                    });
+                });
+            }
+            this.line();
+        }
+
+        // Generate the interface
+        this.curlyBlock(['export', 'interface', name, 'extends Element'], () => {
+            // Generate URL field - fixed literal type if constrained, string otherwise
+            if (fixedUrl) {
+                this.lineSM(`url: '${fixedUrl}'`);
+            } else {
+                this.lineSM(`url: string`);
+            }
+
+            // Generate value field as discriminated union OR extension array
+            if (valueConstraints.length > 0) {
+                const valueTypeName = `${name}Value`;
+                this.lineSM(`value?: ${valueTypeName}`);
+            } else {
+                // No value constraints means this extension uses nested extensions
+                // Add extension[] field to support sub-extensions
+                this.lineSM(`extension?: Extension[]`);
             }
         });
 
@@ -613,15 +763,66 @@ class TypeScriptGenerator extends Generator {
         );
     }
 
+    /**
+     * Generate imports for extension profiles
+     * Only import types that are actually used in the constrained value[x] types
+     */
+    generateExtensionImports(schema: TypeSchema) {
+        const valueConstraints = this.extractValueXConstraints(schema);
+
+        // Always need Element
+        const elementDep = this.loader.complexTypes().find((e) => e.identifier.name === 'Element');
+        if (elementDep) {
+            this.tsImportFrom(`../${kebabCase(elementDep.identifier.package)}/Element`, 'Element');
+        }
+
+        // Import Extension if this is a complex extension with nested extensions
+        if (valueConstraints.length === 0) {
+            const extensionDep = this.loader.complexTypes().find((e) => e.identifier.name === 'Extension');
+            if (extensionDep) {
+                this.tsImportFrom(`../${kebabCase(extensionDep.identifier.package)}/Extension`, 'Extension');
+            }
+        }
+
+        // Import only the types used in constrained value[x]
+        if (valueConstraints.length > 0 && schema.dependencies) {
+            const usedTypeNames = new Set(valueConstraints.map(([, typeName]) => typeName));
+
+            const deps = schema.dependencies
+                .filter((dep) =>
+                    ['complex-type', 'resource', 'logical'].includes(dep.kind) &&
+                    usedTypeNames.has(dep.name)
+                )
+                .map((dep) => ({
+                    tsPackage: `../${kebabCase(dep.package)}/${pascalCase(dep.name)}`,
+                    name: this.uppercaseFirstLetter(dep.name),
+                }))
+                .sort((a, b) => a.name.localeCompare(b.name));
+
+            for (const dep of deps) {
+                this.tsImportFrom(dep.tsPackage, dep.name);
+            }
+        }
+    }
+
     generateProfile(schema: TypeSchema) {
         assert(schema.identifier.kind === 'constraint');
         const flatProfile = profile.flatProfile(this.loader, schema);
-        this.generateDependenciesImports(flatProfile);
-        this.line();
-        this.generateProfileType(flatProfile);
-        this.generateAttachProfile(flatProfile);
-        this.line();
-        this.generateExtractProfile(flatProfile);
+
+        // Extensions have specialized generation per FHIR extensibility spec
+        if (this.isExtensionProfile(flatProfile)) {
+            this.generateExtensionImports(flatProfile);
+            this.line();
+            this.generateExtensionProfile(flatProfile);
+            // Extensions don't use attach/extract helpers - they're used directly
+        } else {
+            this.generateDependenciesImports(flatProfile);
+            this.line();
+            this.generateProfileType(flatProfile);
+            this.generateAttachProfile(flatProfile);
+            this.line();
+            this.generateExtractProfile(flatProfile);
+        }
     }
 
     generateResourceModule(schema: TypeSchema) {
