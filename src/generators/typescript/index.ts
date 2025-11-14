@@ -848,7 +848,7 @@ class TypeScriptGenerator extends Generator {
                 this.debugComment(exp.identifier);
                 this.tsImportFrom(`./${exp.fileName}`, exp.name);
             }
-            this.lineSM(`export { ${exports.map((e) => e.name).join(', ')} }`);
+            this.lineSM(`export type { ${exports.map((e) => e.name).join(', ')} }`);
 
             this.line('');
 
