@@ -59,6 +59,14 @@ export class GenerateCommand extends BaseCommand {
             .option('--profile', 'Enable profile generation')
             .option('--with-debug-comment', 'Enable debug comments in generated code')
             .option(
+                '--include-profile-constraints',
+                'Include FHIR profile constraints from type-schema (requires type-schema >= 0.0.16)',
+            )
+            .option(
+                '--include-field-docs',
+                'Include field documentation from type-schema (requires type-schema >= 0.0.16)',
+            )
+            .option(
                 '--cashed-type-schema <path>',
                 'A path to an existing type-schema ndjson file (used if type-schema fails to generate)',
             )
@@ -135,6 +143,8 @@ export class GenerateCommand extends BaseCommand {
                                     options.fhirSchema,
                                     cacheDir,
                                     cachePath,
+                                    options.includeProfileConstraints,
+                                    options.includeFieldDocs,
                                 );
                             } catch {
                                 logger.warn(
