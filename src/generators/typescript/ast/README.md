@@ -116,7 +116,6 @@ Expr.arrow(['x'], ['return x * 2;'])
 #### Templates
 
 ```typescript
-// Simple API (recommended)
 Expr.templateString('Hello ${0}!', [Expr.id('name')])
 // Result: `Hello ${name}!`
 
@@ -186,7 +185,6 @@ Type.object([
 #### Template Literal Types
 
 ```typescript
-// Simple API (recommended)
 Type.templateLiteralString('${0}/${1}', ['T', 'string'])
 // Result: `${T}/${string}`
 

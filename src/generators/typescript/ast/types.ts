@@ -186,28 +186,6 @@ export const Type = {
     /**
      * Create template literal type: `` `${T}/${string}` ``
      *
-     * Note: This follows JavaScript's tagged template literal structure where
-     * parts.length === types.length + 1. For a simpler API, use templateLiteralString.
-     *
-     * @example
-     * // For `${T}/${string}`:
-     * templateLiteral(['', '/', ''], ['T', 'string'])
-     */
-    templateLiteral: (parts: string[], types: TypeNode[]): TypeNode => {
-        let result = '`';
-        for (let i = 0; i < parts.length; i++) {
-            result += parts[i];
-            if (i < types.length) {
-                result += '${' + types[i] + '}';
-            }
-        }
-        result += '`';
-        return result;
-    },
-
-    /**
-     * Create template literal type string (simpler API)
-     *
      * @example
      * templateLiteralString('${0}/${1}', ['T', 'string'])
      * // Result: `${T}/${string}`
