@@ -80,9 +80,17 @@ describe('TypeScript AST Builders', () => {
             expect(expr).toBe('x === undefined');
         });
 
-        it('should create template literals', () => {
+        it('should create template literals (old API)', () => {
             const expr = Expr.template(['Hello ', '!'], [Expr.id('name')]);
             expect(expr).toBe('`Hello ${name}!`');
+        });
+
+        it('should create template literals (new API)', () => {
+            const expr = Expr.templateString('Hello ${0}!', [Expr.id('name')]);
+            expect(expr).toBe('`Hello ${name}!`');
+
+            const expr2 = Expr.templateString('${0}/${1}', ['T', 'string']);
+            expect(expr2).toBe('`${T}/${string}`');
         });
 
         it('should create arrow functions', () => {
@@ -129,9 +137,17 @@ describe('TypeScript AST Builders', () => {
             expect(type).toBe('{ id: string; name?: string }');
         });
 
-        it('should create template literal types', () => {
+        it('should create template literal types (old API)', () => {
             const type = Type.templateLiteral(['', '/', ''], ['T', 'string']);
             expect(type).toBe('`${T}/${string}`');
+        });
+
+        it('should create template literal types (new API)', () => {
+            const type = Type.templateLiteralString('${0}/${1}', ['T', 'string']);
+            expect(type).toBe('`${T}/${string}`');
+
+            const type2 = Type.templateLiteralString('hello-${0}', ['string']);
+            expect(type2).toBe('`hello-${string}`');
         });
     });
 

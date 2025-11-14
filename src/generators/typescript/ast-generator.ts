@@ -98,7 +98,7 @@ export class TypeScriptASTGenerator extends Generator {
         } else {
             // Handle special case for Reference.reference field
             if (schema?.identifier.name === 'Reference' && this.getFieldName(field.type.name) === 'reference') {
-                type = Type.templateLiteral(['', '/', ''], ['T', 'string']);
+                type = Type.templateLiteralString('${0}/${1}', ['T', 'string']);
             } else {
                 type = normalizeName(field.type.name);
             }

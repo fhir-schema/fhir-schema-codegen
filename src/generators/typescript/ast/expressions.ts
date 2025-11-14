@@ -195,6 +195,13 @@ export const Expr = {
 
     /**
      * Create template literal: `` `Hello ${name}` ``
+     *
+     * Note: This follows JavaScript's tagged template literal structure where
+     * parts.length === expressions.length + 1. For a simpler API, use templateString.
+     *
+     * @example
+     * // For `Hello ${name}!`:
+     * template(['Hello ', '!'], [Expr.id('name')])
      */
     template: (parts: string[], expressions: Expression[]): Expression => {
         let result = '`';
@@ -206,6 +213,24 @@ export const Expr = {
         }
         result += '`';
         return result;
+    },
+
+    /**
+     * Create template literal string (simpler API)
+     *
+     * @example
+     * templateString('Hello ${0}!', [Expr.id('name')])
+     * // Result: `Hello ${name}!`
+     *
+     * templateString('${0}/${1}', ['T', 'string'])
+     * // Result: `${T}/${string}`
+     */
+    templateString: (template: string, expressions: Expression[]): Expression => {
+        let result = template;
+        expressions.forEach((expr, index) => {
+            result = result.replace(`\${${index}}`, `\${${expr}}`);
+        });
+        return `\`${result}\``;
     },
 
     /**

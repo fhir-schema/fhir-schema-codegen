@@ -116,8 +116,12 @@ Expr.arrow(['x'], ['return x * 2;'])
 #### Templates
 
 ```typescript
-Expr.template(['Hello ', '!'], [Expr.id('name')])
+// Simple API (recommended)
+Expr.templateString('Hello ${0}!', [Expr.id('name')])
 // Result: `Hello ${name}!`
+
+Expr.templateString('${0}/${1}', ['T', 'string'])
+// Result: `${T}/${string}`
 ```
 
 ### 2. `Type` - Type Builders
@@ -182,8 +186,12 @@ Type.object([
 #### Template Literal Types
 
 ```typescript
-Type.templateLiteral(['', '/', ''], ['T', 'string'])
+// Simple API (recommended)
+Type.templateLiteralString('${0}/${1}', ['T', 'string'])
 // Result: `${T}/${string}`
+
+Type.templateLiteralString('hello-${0}', ['string'])
+// Result: `hello-${string}`
 ```
 
 #### Utility Types
