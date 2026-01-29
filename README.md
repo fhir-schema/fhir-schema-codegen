@@ -5,6 +5,8 @@
 [![py-sdk](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/python-sdk-tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/python-sdk-tests.yml)
 [![ts-sdk](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/typescript-sdk-tests.yml/badge.svg)](https://github.com/fhir-schema/fhir-schema-codegen/actions/workflows/typescript-sdk-tests.yml)
 
+Status: **Migration to TypeScript stack [atomic-ehr/codegen](https://github.com/atomic-ehr/codegen) as part of the AtomicEHR project**
+
 Library that generates language-specific models from FHIR StructureDefinition using type-schema ([Github](https://github.com/fhir-clj/type-schema)), enabling developers to work with strongly-typed FHIR resources in their preferred programming language.
 
 ## How does it work?
