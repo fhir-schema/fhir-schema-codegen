@@ -59,6 +59,7 @@
         "@type-challenges/utils": "^0.1.1",
         "@types/jest": "^29.5.14",
         "@types/node": "^22.8.7",
+        "@types/mustache": "^4.2.6",
         "@vitest/coverage-v8": "^3.0.9",
         "copyfiles": "^2.4.1",
         "ts-node": "^10.9.2",
@@ -68,6 +69,7 @@
     },
     "dependencies": {
         "commander": "13.1.0",
+        "mustache": "^4.2.0",
         "picocolors": "^1.1.1"
     },
     "publishConfig": {
