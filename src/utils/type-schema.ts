@@ -9,7 +9,7 @@ import { logger } from '../logger';
 
 const execAsync = promisify(exec);
 
-export const TYPE_SCHEMA_VERSION = '0.0.15';
+export const TYPE_SCHEMA_VERSION = '0.0.16';
 const BIN_DIR = 'tmp/bin';
 
 interface BinaryInfo {
@@ -68,6 +68,8 @@ export async function executeTypeSchema(
     fhirSchemas?: string[],
     outputDir = './tmp',
     outputFile = './tmp/type-schema.ndjson',
+    includeProfileConstraints?: boolean,
+    includeFieldDocs?: boolean,
 ): Promise<string> {
     const binaryPath = customExecCommand || (await ensureBinaryExists(version));
 
@@ -102,6 +104,15 @@ export async function executeTypeSchema(
             cmdParts.push('--fhir-schema', schema);
         });
     }
+
+    if (includeProfileConstraints) {
+        cmdParts.push('--include-profile-constraints');
+    }
+
+    if (includeFieldDocs) {
+        cmdParts.push('--include-field-docs');
+    }
+
     cmdParts.push('--output', outputFile);
     logger.debug(`Exec: ${cmdParts.join(' ')}`);
 

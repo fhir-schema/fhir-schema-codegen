@@ -2,6 +2,7 @@ export type TypeRefType =
     | 'resource'
     | 'nested'
     | 'constraint'
+    | 'complex-type-constraint'
     | 'logical'
     | 'complex-type'
     | 'primitive-type'
@@ -29,6 +30,26 @@ export interface ClassField {
     max?: number;
     binding?: {
         name: string;
+    };
+    // New fields from type-schema v0.0.16 (--include-profile-constraints, --include-field-docs)
+    profileConstraints?: TypeRef[];
+    short?: string;
+    definition?: string;
+    comment?: string;
+    requirements?: string;
+    alias?: string[];
+    mustSupport?: boolean;
+    isModifier?: boolean;
+    isModifierReason?: string;
+    meaningWhenMissing?: string;
+    example?: {
+        label?: string;
+        value: any;
+    };
+    bindingInfo?: {
+        strength?: string;
+        description?: string;
+        valueSet?: string;
     };
 }
 
