@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This project is deprecated and archived. All development has moved to [atomic-ehr/codegen](https://github.com/atomic-ehr/codegen).
+ 
 # fhir-schema codegen
 
 [![NPM Version](https://img.shields.io/npm/v/%40fhirschema%2Fcodegen)](https://www.npmjs.com/package/%40fhirschema%2Fcodegen)
