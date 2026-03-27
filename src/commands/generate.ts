@@ -37,6 +37,7 @@ export class GenerateCommand extends BaseCommand {
             .addOption(filesOption)
             .addOption(packageOption)
             .requiredOption('-o, --output <directory>', 'Output directory')
+            .option('--mustache-language <directory>', 'Path to Mustache language files')
             .option('--custom-generator <path>', 'Additional path to look for custom generators')
             .option(
                 '--types-only',
@@ -179,6 +180,11 @@ export class GenerateCommand extends BaseCommand {
                                         ? {
                                               sdkPackage: options.tsSdkPackage,
                                           }
+                                        : {}),
+                                    ...(options.generator === 'mustache'
+                                        ? {
+                                            mustacheLanguagePath: options.mustacheLanguage,
+                                        }
                                         : {}),
                                 },
                             );

@@ -83,6 +83,7 @@ export class GeneratorsRegistry {
      * Registers the default built-in generators.
      */
     registerDefaultBuiltIns(): void {
+        this.registerBuiltIn('mustache', 'Mustache', 'Generates using mustache template engine');
         this.registerBuiltIn(
             'typescript',
             'TypeScript',
