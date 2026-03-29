@@ -86,7 +86,10 @@ export const sortSchemasByDeps = (schemas: TypeSchema[]): TypeSchema[] => {
 
 export const removeConstraints = (shemas: TypeSchema[]): TypeSchema[] => {
     return shemas.filter((schema) => {
-        return schema.identifier.kind !== 'constraint';
+        return (
+            schema.identifier.kind !== 'constraint' &&
+            schema.identifier.kind !== 'complex-type-constraint'
+        );
     });
 };
 
